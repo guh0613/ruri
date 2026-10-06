@@ -3,105 +3,105 @@ import Foundation
 
 extension Messages {
     public enum AppRepositoryImportRecoveryView {
+        /// 已取消，工作文件已保留。
+        ///
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.cancelledWorkFilesKept`.
+        public static var cancelledWorkFilesKept: LocalizedMessage {
+            .init(key: "AppRepositoryImportRecoveryView.cancelledWorkFilesKept", table: "Interface", fallback: "已取消，工作文件已保留。")
+        }
         /// 复制收尾
         ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText1`.
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.copyCleanup`.
         public static var copyCleanup: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText1", table: "Interface", fallback: "复制收尾")
-        }
-        /// 未完成的实例复制
-        ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText2`.
-        public static var incompleteCopy: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText2", table: "Interface", fallback: "未完成的实例复制")
-        }
-        /// 导入收尾
-        ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText3`.
-        public static var importCleanup: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText3", table: "Interface", fallback: "导入收尾")
-        }
-        /// 未完成的整合包导入
-        ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText4`.
-        public static var incompleteImport: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText4", table: "Interface", fallback: "未完成的整合包导入")
+            .init(key: "AppRepositoryImportRecoveryView.copyCleanup", table: "Interface", fallback: "复制收尾")
         }
         /// 实例文件已准备好，可以完成操作。
         ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText5`.
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.filesReady`.
         public static var filesReady: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText5", table: "Interface", fallback: "实例文件已准备好，可以完成操作。")
-        }
-        /// 操作尚未完成。可以保留工作文件并取消，再重新尝试。
-        ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText6`.
-        public static var operationIncomplete: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText6", table: "Interface", fallback: "操作尚未完成。可以保留工作文件并取消，再重新尝试。")
-        }
-        /// 完成导入
-        ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText7`.
-        public static var finishImport: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText7", table: "Interface", fallback: "完成导入")
+            .init(key: "AppRepositoryImportRecoveryView.filesReady", table: "Interface", fallback: "实例文件已准备好，可以完成操作。")
         }
         /// 完成复制
         ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText8`.
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.finishCopy`.
         public static var finishCopy: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText8", table: "Interface", fallback: "完成复制")
+            .init(key: "AppRepositoryImportRecoveryView.finishCopy", table: "Interface", fallback: "完成复制")
         }
-        /// 保留文件并取消
+        /// 完成导入
         ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText9`.
-        public static var keepAndCancel: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText9", table: "Interface", fallback: "保留文件并取消")
-        }
-        /// 查看工作文件
-        ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.bodyText10`.
-        public static var viewWorkFiles: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.bodyText10", table: "Interface", fallback: "查看工作文件")
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.finishImport`.
+        public static var finishImport: LocalizedMessage {
+            .init(key: "AppRepositoryImportRecoveryView.finishImport", table: "Interface", fallback: "完成导入")
         }
         /// 完成实例操作
         ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.baseText1`.
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.finishInstanceOperation`.
         public static var finishInstanceOperation: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.baseText1", table: "Interface", fallback: "完成实例操作")
+            .init(key: "AppRepositoryImportRecoveryView.finishInstanceOperation", table: "Interface", fallback: "完成实例操作")
+        }
+        /// 导入收尾
+        ///
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.importCleanup`.
+        public static var importCleanup: LocalizedMessage {
+            .init(key: "AppRepositoryImportRecoveryView.importCleanup", table: "Interface", fallback: "导入收尾")
+        }
+        /// 未完成的实例复制
+        ///
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.incompleteCopy`.
+        public static var incompleteCopy: LocalizedMessage {
+            .init(key: "AppRepositoryImportRecoveryView.incompleteCopy", table: "Interface", fallback: "未完成的实例复制")
+        }
+        /// 未完成的整合包导入
+        ///
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.incompleteImport`.
+        public static var incompleteImport: LocalizedMessage {
+            .init(key: "AppRepositoryImportRecoveryView.incompleteImport", table: "Interface", fallback: "未完成的整合包导入")
+        }
+        /// 保留文件并取消
+        ///
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.keepAndCancel`.
+        public static var keepAndCancel: LocalizedMessage {
+            .init(key: "AppRepositoryImportRecoveryView.keepAndCancel", table: "Interface", fallback: "保留文件并取消")
         }
         /// 保留工作文件
         ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.baseText2`.
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.keepWorkFiles`.
         public static var keepWorkFiles: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.baseText2", table: "Interface", fallback: "保留工作文件")
+            .init(key: "AppRepositoryImportRecoveryView.keepWorkFiles", table: "Interface", fallback: "保留工作文件")
+        }
+        /// 操作尚未完成。可以保留工作文件并取消，再重新尝试。
+        ///
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.operationIncomplete`.
+        public static var operationIncomplete: LocalizedMessage {
+            .init(key: "AppRepositoryImportRecoveryView.operationIncomplete", table: "Interface", fallback: "操作尚未完成。可以保留工作文件并取消，再重新尝试。")
         }
         /// %1$@ 已就绪
         ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.keptText1`.
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.ready`.
         public static func ready(_ value0: String) -> LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.keptText1", table: "Interface", fallback: "%1$@ 已就绪", arguments: [.text(value0)])
+            .init(key: "AppRepositoryImportRecoveryView.ready", table: "Interface", fallback: "%1$@ 已就绪", arguments: [.text(value0)])
         }
-        /// 已取消，工作文件已保留。
+        /// 查看工作文件
         ///
-        /// Resource: `Interface.appRepositoryImportRecoveryView.keptText2`.
-        public static var cancelledWorkFilesKept: LocalizedMessage {
-            .init(key: "appRepositoryImportRecoveryView.keptText2", table: "Interface", fallback: "已取消，工作文件已保留。")
+        /// Resource: `Interface.AppRepositoryImportRecoveryView.viewWorkFiles`.
+        public static var viewWorkFiles: LocalizedMessage {
+            .init(key: "AppRepositoryImportRecoveryView.viewWorkFiles", table: "Interface", fallback: "查看工作文件")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appRepositoryImportRecoveryView.bodyText1": .init("复制收尾", []),
-            "Interface:appRepositoryImportRecoveryView.bodyText2": .init("未完成的实例复制", []),
-            "Interface:appRepositoryImportRecoveryView.bodyText3": .init("导入收尾", []),
-            "Interface:appRepositoryImportRecoveryView.bodyText4": .init("未完成的整合包导入", []),
-            "Interface:appRepositoryImportRecoveryView.bodyText5": .init("实例文件已准备好，可以完成操作。", []),
-            "Interface:appRepositoryImportRecoveryView.bodyText6": .init("操作尚未完成。可以保留工作文件并取消，再重新尝试。", []),
-            "Interface:appRepositoryImportRecoveryView.bodyText7": .init("完成导入", []),
-            "Interface:appRepositoryImportRecoveryView.bodyText8": .init("完成复制", []),
-            "Interface:appRepositoryImportRecoveryView.bodyText9": .init("保留文件并取消", []),
-            "Interface:appRepositoryImportRecoveryView.bodyText10": .init("查看工作文件", []),
-            "Interface:appRepositoryImportRecoveryView.baseText1": .init("完成实例操作", []),
-            "Interface:appRepositoryImportRecoveryView.baseText2": .init("保留工作文件", []),
-            "Interface:appRepositoryImportRecoveryView.keptText1": .init("%1$@ 已就绪", [.text]),
-            "Interface:appRepositoryImportRecoveryView.keptText2": .init("已取消，工作文件已保留。", []),
+            "Interface:AppRepositoryImportRecoveryView.cancelledWorkFilesKept": .init("已取消，工作文件已保留。", []),
+            "Interface:AppRepositoryImportRecoveryView.copyCleanup": .init("复制收尾", []),
+            "Interface:AppRepositoryImportRecoveryView.filesReady": .init("实例文件已准备好，可以完成操作。", []),
+            "Interface:AppRepositoryImportRecoveryView.finishCopy": .init("完成复制", []),
+            "Interface:AppRepositoryImportRecoveryView.finishImport": .init("完成导入", []),
+            "Interface:AppRepositoryImportRecoveryView.finishInstanceOperation": .init("完成实例操作", []),
+            "Interface:AppRepositoryImportRecoveryView.importCleanup": .init("导入收尾", []),
+            "Interface:AppRepositoryImportRecoveryView.incompleteCopy": .init("未完成的实例复制", []),
+            "Interface:AppRepositoryImportRecoveryView.incompleteImport": .init("未完成的整合包导入", []),
+            "Interface:AppRepositoryImportRecoveryView.keepAndCancel": .init("保留文件并取消", []),
+            "Interface:AppRepositoryImportRecoveryView.keepWorkFiles": .init("保留工作文件", []),
+            "Interface:AppRepositoryImportRecoveryView.operationIncomplete": .init("操作尚未完成。可以保留工作文件并取消，再重新尝试。", []),
+            "Interface:AppRepositoryImportRecoveryView.ready": .init("%1$@ 已就绪", [.text]),
+            "Interface:AppRepositoryImportRecoveryView.viewWorkFiles": .init("查看工作文件", []),
         ]
     }
 }

@@ -3,56 +3,56 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftInstallationCopy {
-        /// 源版本已移除，请刷新后重试。
-        ///
-        /// Resource: `Errors.coreMinecraftInstallationCopy.selectedText1`.
-        public static var sourceVersionRemoved: LocalizedMessage {
-            .init(key: "coreMinecraftInstallationCopy.selectedText1", table: "Errors", fallback: "源版本已移除，请刷新后重试。")
-        }
-        /// 源版本缺少完整启动清单，请先修复。
-        ///
-        /// Resource: `Errors.coreMinecraftInstallationCopy.fileText1`.
-        public static var incompleteLaunchManifest: LocalizedMessage {
-            .init(key: "coreMinecraftInstallationCopy.fileText1", table: "Errors", fallback: "源版本缺少完整启动清单，请先修复。")
-        }
-        /// 所需安装文件缺失或不是普通文件：%1$@
-        ///
-        /// Resource: `Errors.coreMinecraftInstallationCopy.sizeText1`.
-        public static func installationFileMissing(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftInstallationCopy.sizeText1", table: "Errors", fallback: "所需安装文件缺失或不是普通文件：%1$@", arguments: [.text(value0)])
-        }
-        /// 读取期间安装文件改变，请刷新复制预览。
-        ///
-        /// Resource: `Errors.coreMinecraftInstallationCopy.afterText1`.
-        public static var installationFileChanged: LocalizedMessage {
-            .init(key: "coreMinecraftInstallationCopy.afterText1", table: "Errors", fallback: "读取期间安装文件改变，请刷新复制预览。")
-        }
         /// 安装文件在同一路径有不同内容：%1$@
         ///
-        /// Resource: `Errors.coreMinecraftInstallationCopy.previousText1`.
+        /// Resource: `Errors.CoreMinecraftInstallationCopy.contentConflict`.
         public static func contentConflict(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftInstallationCopy.previousText1", table: "Errors", fallback: "安装文件在同一路径有不同内容：%1$@", arguments: [.text(value0)])
-        }
-        /// 资源索引超过复制限制。
-        ///
-        /// Resource: `Errors.coreMinecraftInstallationCopy.decodedText1`.
-        public static var resourceIndexTooLarge: LocalizedMessage {
-            .init(key: "coreMinecraftInstallationCopy.decodedText1", table: "Errors", fallback: "资源索引超过复制限制。")
+            .init(key: "CoreMinecraftInstallationCopy.contentConflict", table: "Errors", fallback: "安装文件在同一路径有不同内容：%1$@", arguments: [.text(value0)])
         }
         /// 安装文件缺少复制路径。
         ///
-        /// Resource: `Errors.coreMinecraftInstallationCopy.valueText1`.
+        /// Resource: `Errors.CoreMinecraftInstallationCopy.copyPathMissing`.
         public static var copyPathMissing: LocalizedMessage {
-            .init(key: "coreMinecraftInstallationCopy.valueText1", table: "Errors", fallback: "安装文件缺少复制路径。")
+            .init(key: "CoreMinecraftInstallationCopy.copyPathMissing", table: "Errors", fallback: "安装文件缺少复制路径。")
+        }
+        /// 源版本缺少完整启动清单，请先修复。
+        ///
+        /// Resource: `Errors.CoreMinecraftInstallationCopy.incompleteLaunchManifest`.
+        public static var incompleteLaunchManifest: LocalizedMessage {
+            .init(key: "CoreMinecraftInstallationCopy.incompleteLaunchManifest", table: "Errors", fallback: "源版本缺少完整启动清单，请先修复。")
+        }
+        /// 读取期间安装文件改变，请刷新复制预览。
+        ///
+        /// Resource: `Errors.CoreMinecraftInstallationCopy.installationFileChanged`.
+        public static var installationFileChanged: LocalizedMessage {
+            .init(key: "CoreMinecraftInstallationCopy.installationFileChanged", table: "Errors", fallback: "读取期间安装文件改变，请刷新复制预览。")
+        }
+        /// 所需安装文件缺失或不是普通文件：%1$@
+        ///
+        /// Resource: `Errors.CoreMinecraftInstallationCopy.installationFileMissing`.
+        public static func installationFileMissing(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMinecraftInstallationCopy.installationFileMissing", table: "Errors", fallback: "所需安装文件缺失或不是普通文件：%1$@", arguments: [.text(value0)])
+        }
+        /// 资源索引超过复制限制。
+        ///
+        /// Resource: `Errors.CoreMinecraftInstallationCopy.resourceIndexTooLarge`.
+        public static var resourceIndexTooLarge: LocalizedMessage {
+            .init(key: "CoreMinecraftInstallationCopy.resourceIndexTooLarge", table: "Errors", fallback: "资源索引超过复制限制。")
+        }
+        /// 源版本已移除，请刷新后重试。
+        ///
+        /// Resource: `Errors.CoreMinecraftInstallationCopy.sourceVersionRemoved`.
+        public static var sourceVersionRemoved: LocalizedMessage {
+            .init(key: "CoreMinecraftInstallationCopy.sourceVersionRemoved", table: "Errors", fallback: "源版本已移除，请刷新后重试。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreMinecraftInstallationCopy.selectedText1": .init("源版本已移除，请刷新后重试。", []),
-            "Errors:coreMinecraftInstallationCopy.fileText1": .init("源版本缺少完整启动清单，请先修复。", []),
-            "Errors:coreMinecraftInstallationCopy.sizeText1": .init("所需安装文件缺失或不是普通文件：%1$@", [.text]),
-            "Errors:coreMinecraftInstallationCopy.afterText1": .init("读取期间安装文件改变，请刷新复制预览。", []),
-            "Errors:coreMinecraftInstallationCopy.previousText1": .init("安装文件在同一路径有不同内容：%1$@", [.text]),
-            "Errors:coreMinecraftInstallationCopy.decodedText1": .init("资源索引超过复制限制。", []),
-            "Errors:coreMinecraftInstallationCopy.valueText1": .init("安装文件缺少复制路径。", []),
+            "Errors:CoreMinecraftInstallationCopy.contentConflict": .init("安装文件在同一路径有不同内容：%1$@", [.text]),
+            "Errors:CoreMinecraftInstallationCopy.copyPathMissing": .init("安装文件缺少复制路径。", []),
+            "Errors:CoreMinecraftInstallationCopy.incompleteLaunchManifest": .init("源版本缺少完整启动清单，请先修复。", []),
+            "Errors:CoreMinecraftInstallationCopy.installationFileChanged": .init("读取期间安装文件改变，请刷新复制预览。", []),
+            "Errors:CoreMinecraftInstallationCopy.installationFileMissing": .init("所需安装文件缺失或不是普通文件：%1$@", [.text]),
+            "Errors:CoreMinecraftInstallationCopy.resourceIndexTooLarge": .init("资源索引超过复制限制。", []),
+            "Errors:CoreMinecraftInstallationCopy.sourceVersionRemoved": .init("源版本已移除，请刷新后重试。", []),
         ]
     }
 }

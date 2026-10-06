@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum CoreModpackRegistry {
-        /// 整合包版本记录无效
-        ///
-        /// Resource: `Errors.coreModpackRegistry.infoText1`.
-        public static var invalidPackVersion: LocalizedMessage {
-            .init(key: "coreModpackRegistry.infoText1", table: "Errors", fallback: "整合包版本记录无效")
-        }
-        /// 整合包版本记录不受支持或包含重复文件
-        ///
-        /// Resource: `Errors.coreModpackRegistry.validateText1`.
-        public static var unsupportedOrDuplicatePackVersion: LocalizedMessage {
-            .init(key: "coreModpackRegistry.validateText1", table: "Errors", fallback: "整合包版本记录不受支持或包含重复文件")
-        }
         /// 整合包初始文件校验信息无效
         ///
-        /// Resource: `Errors.coreModpackRegistry.validateText2`.
+        /// Resource: `Errors.CoreModpackRegistry.invalidInitialChecksums`.
         public static var invalidInitialChecksums: LocalizedMessage {
-            .init(key: "coreModpackRegistry.validateText2", table: "Errors", fallback: "整合包初始文件校验信息无效")
+            .init(key: "CoreModpackRegistry.invalidInitialChecksums", table: "Errors", fallback: "整合包初始文件校验信息无效")
         }
         /// 整合包来源标识无效
         ///
-        /// Resource: `Errors.coreModpackRegistry.originText1`.
+        /// Resource: `Errors.CoreModpackRegistry.invalidPackOrigin`.
         public static var invalidPackOrigin: LocalizedMessage {
-            .init(key: "coreModpackRegistry.originText1", table: "Errors", fallback: "整合包来源标识无效")
+            .init(key: "CoreModpackRegistry.invalidPackOrigin", table: "Errors", fallback: "整合包来源标识无效")
+        }
+        /// 整合包版本记录无效
+        ///
+        /// Resource: `Errors.CoreModpackRegistry.invalidPackVersion`.
+        public static var invalidPackVersion: LocalizedMessage {
+            .init(key: "CoreModpackRegistry.invalidPackVersion", table: "Errors", fallback: "整合包版本记录无效")
         }
         /// 整合包更新地址无效
         ///
-        /// Resource: `Errors.coreModpackRegistry.urlText1`.
+        /// Resource: `Errors.CoreModpackRegistry.invalidUpdateURL`.
         public static var invalidUpdateURL: LocalizedMessage {
-            .init(key: "coreModpackRegistry.urlText1", table: "Errors", fallback: "整合包更新地址无效")
+            .init(key: "CoreModpackRegistry.invalidUpdateURL", table: "Errors", fallback: "整合包更新地址无效")
+        }
+        /// 整合包版本记录不受支持或包含重复文件
+        ///
+        /// Resource: `Errors.CoreModpackRegistry.unsupportedOrDuplicatePackVersion`.
+        public static var unsupportedOrDuplicatePackVersion: LocalizedMessage {
+            .init(key: "CoreModpackRegistry.unsupportedOrDuplicatePackVersion", table: "Errors", fallback: "整合包版本记录不受支持或包含重复文件")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreModpackRegistry.infoText1": .init("整合包版本记录无效", []),
-            "Errors:coreModpackRegistry.validateText1": .init("整合包版本记录不受支持或包含重复文件", []),
-            "Errors:coreModpackRegistry.validateText2": .init("整合包初始文件校验信息无效", []),
-            "Errors:coreModpackRegistry.originText1": .init("整合包来源标识无效", []),
-            "Errors:coreModpackRegistry.urlText1": .init("整合包更新地址无效", []),
+            "Errors:CoreModpackRegistry.invalidInitialChecksums": .init("整合包初始文件校验信息无效", []),
+            "Errors:CoreModpackRegistry.invalidPackOrigin": .init("整合包来源标识无效", []),
+            "Errors:CoreModpackRegistry.invalidPackVersion": .init("整合包版本记录无效", []),
+            "Errors:CoreModpackRegistry.invalidUpdateURL": .init("整合包更新地址无效", []),
+            "Errors:CoreModpackRegistry.unsupportedOrDuplicatePackVersion": .init("整合包版本记录不受支持或包含重复文件", []),
         ]
     }
 }

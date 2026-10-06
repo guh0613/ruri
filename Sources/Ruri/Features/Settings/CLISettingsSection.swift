@@ -54,7 +54,7 @@ struct CLISettingsSection: View {
                             }
                             if setup.ready { Button(Messages.CLISetup.reinstall.localized) { setup.change(.install) } }
                             if setup.owned || setup.legacyLink != nil {
-                                Button(Messages.CLIInterface.t06bc14b60f35.localized, role: .destructive) { setup.change(.uninstall) }
+                                Button(Messages.CLIInterface.uninstallAction.localized, role: .destructive) { setup.change(.uninstall) }
                             }
                         }
                         .controlSize(.small)
@@ -67,7 +67,7 @@ struct CLISettingsSection: View {
                 .padding(.top, 12)
                 .padding(.bottom, 8)
             }
-        } header: { Text(Messages.CLIInterface.t56f8e5b9417c.localized) } footer: {
+        } header: { Text(Messages.CLIInterface.commandLineAndAutomationTitle.localized) } footer: {
             Text(Messages.CLISetup.footer.localized)
         }
         .disabled(setup.working)

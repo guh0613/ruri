@@ -3,100 +3,100 @@ import Foundation
 
 extension Messages {
     public enum CoreCustomRunDirectory {
-        /// 请选择已存在的游戏文件夹。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectory.candidateText1`.
-        public static var existingGameFolderRequired: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.candidateText1", table: "Errors", fallback: "请选择已存在的游戏文件夹。")
-        }
-        /// 自定义运行目录登记信息无效。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectory.validateConfigurationText1`.
-        public static var invalidConfiguration: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.validateConfigurationText1", table: "Errors", fallback: "自定义运行目录登记信息无效。")
-        }
-        /// 路径已失联或不再是原文件夹。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectory.valuesText1`.
-        public static var pathUnlinked: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.valuesText1", table: "Errors", fallback: "路径已失联或不再是原文件夹。")
-        }
         /// 目录身份与选取时不一致。
         ///
-        /// Resource: `Errors.coreCustomRunDirectory.recordText1`.
+        /// Resource: `Errors.CoreCustomRunDirectory.directoryIdentityChanged`.
         public static var directoryIdentityChanged: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.recordText1", table: "Errors", fallback: "目录身份与选取时不一致。")
+            .init(key: "CoreCustomRunDirectory.directoryIdentityChanged", table: "Errors", fallback: "目录身份与选取时不一致。")
         }
         /// 无法访问自定义运行目录：%1$@
         /// 请连接原磁盘、检查权限或重新定位原文件夹。
         /// %2$@
         ///
-        /// Resource: `Errors.coreCustomRunDirectory.recordText2`.
+        /// Resource: `Errors.CoreCustomRunDirectory.directoryUnavailable`.
         public static func directoryUnavailable(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.recordText2", table: "Errors", fallback: "无法访问自定义运行目录：%1$@\n请连接原磁盘、检查权限或重新定位原文件夹。\n%2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 无法读取自定义目录身份标记。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectory.fdText1`.
-        public static var markerUnreadable: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.fdText1", table: "Errors", fallback: "无法读取自定义目录身份标记。")
-        }
-        /// 自定义目录身份标记无效。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectory.infoText1`.
-        public static var invalidMarker: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.infoText1", table: "Errors", fallback: "自定义目录身份标记无效。")
-        }
-        /// 自定义目录标记过大。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectory.dataText1`.
-        public static var oversizedMarker: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.dataText1", table: "Errors", fallback: "自定义目录标记过大。")
-        }
-        /// 自定义目录标记版本无效。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectory.markerText1`.
-        public static var invalidMarkerVersion: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.markerText1", table: "Errors", fallback: "自定义目录标记版本无效。")
-        }
-        /// 自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectory.overlapsText1`.
-        public static var overlappingDirectory: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.overlapsText1", table: "Errors", fallback: "自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。")
-        }
-        /// 同一路径的目录身份已经改变，请重新检查原目录。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectory.existingText1`.
-        public static var identityChanged: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.existingText1", table: "Errors", fallback: "同一路径的目录身份已经改变，请重新检查原目录。")
+            .init(key: "CoreCustomRunDirectory.directoryUnavailable", table: "Errors", fallback: "无法访问自定义运行目录：%1$@\n请连接原磁盘、检查权限或重新定位原文件夹。\n%2$@", arguments: [.text(value0), .text(value1)])
         }
         /// 此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。
         ///
-        /// Resource: `Errors.coreCustomRunDirectory.existingText2`.
+        /// Resource: `Errors.CoreCustomRunDirectory.duplicateDirectory`.
         public static var duplicateDirectory: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.existingText2", table: "Errors", fallback: "此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。")
+            .init(key: "CoreCustomRunDirectory.duplicateDirectory", table: "Errors", fallback: "此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。")
+        }
+        /// 请选择已存在的游戏文件夹。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectory.existingGameFolderRequired`.
+        public static var existingGameFolderRequired: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectory.existingGameFolderRequired", table: "Errors", fallback: "请选择已存在的游戏文件夹。")
+        }
+        /// 同一路径的目录身份已经改变，请重新检查原目录。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectory.identityChanged`.
+        public static var identityChanged: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectory.identityChanged", table: "Errors", fallback: "同一路径的目录身份已经改变，请重新检查原目录。")
+        }
+        /// 自定义运行目录登记信息无效。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectory.invalidConfiguration`.
+        public static var invalidConfiguration: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectory.invalidConfiguration", table: "Errors", fallback: "自定义运行目录登记信息无效。")
+        }
+        /// 自定义目录身份标记无效。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectory.invalidMarker`.
+        public static var invalidMarker: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectory.invalidMarker", table: "Errors", fallback: "自定义目录身份标记无效。")
+        }
+        /// 自定义目录标记版本无效。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectory.invalidMarkerVersion`.
+        public static var invalidMarkerVersion: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectory.invalidMarkerVersion", table: "Errors", fallback: "自定义目录标记版本无效。")
+        }
+        /// 无法读取自定义目录身份标记。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectory.markerUnreadable`.
+        public static var markerUnreadable: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectory.markerUnreadable", table: "Errors", fallback: "无法读取自定义目录身份标记。")
         }
         /// 自定义运行目录之间不能相互嵌套。
         ///
-        /// Resource: `Errors.coreCustomRunDirectory.existingText3`.
+        /// Resource: `Errors.CoreCustomRunDirectory.nestedDirectories`.
         public static var nestedDirectories: LocalizedMessage {
-            .init(key: "coreCustomRunDirectory.existingText3", table: "Errors", fallback: "自定义运行目录之间不能相互嵌套。")
+            .init(key: "CoreCustomRunDirectory.nestedDirectories", table: "Errors", fallback: "自定义运行目录之间不能相互嵌套。")
+        }
+        /// 自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectory.overlappingDirectory`.
+        public static var overlappingDirectory: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectory.overlappingDirectory", table: "Errors", fallback: "自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。")
+        }
+        /// 自定义目录标记过大。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectory.oversizedMarker`.
+        public static var oversizedMarker: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectory.oversizedMarker", table: "Errors", fallback: "自定义目录标记过大。")
+        }
+        /// 路径已失联或不再是原文件夹。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectory.pathUnlinked`.
+        public static var pathUnlinked: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectory.pathUnlinked", table: "Errors", fallback: "路径已失联或不再是原文件夹。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreCustomRunDirectory.candidateText1": .init("请选择已存在的游戏文件夹。", []),
-            "Errors:coreCustomRunDirectory.validateConfigurationText1": .init("自定义运行目录登记信息无效。", []),
-            "Errors:coreCustomRunDirectory.valuesText1": .init("路径已失联或不再是原文件夹。", []),
-            "Errors:coreCustomRunDirectory.recordText1": .init("目录身份与选取时不一致。", []),
-            "Errors:coreCustomRunDirectory.recordText2": .init("无法访问自定义运行目录：%1$@\n请连接原磁盘、检查权限或重新定位原文件夹。\n%2$@", [.text, .text]),
-            "Errors:coreCustomRunDirectory.fdText1": .init("无法读取自定义目录身份标记。", []),
-            "Errors:coreCustomRunDirectory.infoText1": .init("自定义目录身份标记无效。", []),
-            "Errors:coreCustomRunDirectory.dataText1": .init("自定义目录标记过大。", []),
-            "Errors:coreCustomRunDirectory.markerText1": .init("自定义目录标记版本无效。", []),
-            "Errors:coreCustomRunDirectory.overlapsText1": .init("自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。", []),
-            "Errors:coreCustomRunDirectory.existingText1": .init("同一路径的目录身份已经改变，请重新检查原目录。", []),
-            "Errors:coreCustomRunDirectory.existingText2": .init("此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。", []),
-            "Errors:coreCustomRunDirectory.existingText3": .init("自定义运行目录之间不能相互嵌套。", []),
+            "Errors:CoreCustomRunDirectory.directoryIdentityChanged": .init("目录身份与选取时不一致。", []),
+            "Errors:CoreCustomRunDirectory.directoryUnavailable": .init("无法访问自定义运行目录：%1$@\n请连接原磁盘、检查权限或重新定位原文件夹。\n%2$@", [.text, .text]),
+            "Errors:CoreCustomRunDirectory.duplicateDirectory": .init("此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。", []),
+            "Errors:CoreCustomRunDirectory.existingGameFolderRequired": .init("请选择已存在的游戏文件夹。", []),
+            "Errors:CoreCustomRunDirectory.identityChanged": .init("同一路径的目录身份已经改变，请重新检查原目录。", []),
+            "Errors:CoreCustomRunDirectory.invalidConfiguration": .init("自定义运行目录登记信息无效。", []),
+            "Errors:CoreCustomRunDirectory.invalidMarker": .init("自定义目录身份标记无效。", []),
+            "Errors:CoreCustomRunDirectory.invalidMarkerVersion": .init("自定义目录标记版本无效。", []),
+            "Errors:CoreCustomRunDirectory.markerUnreadable": .init("无法读取自定义目录身份标记。", []),
+            "Errors:CoreCustomRunDirectory.nestedDirectories": .init("自定义运行目录之间不能相互嵌套。", []),
+            "Errors:CoreCustomRunDirectory.overlappingDirectory": .init("自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。", []),
+            "Errors:CoreCustomRunDirectory.oversizedMarker": .init("自定义目录标记过大。", []),
+            "Errors:CoreCustomRunDirectory.pathUnlinked": .init("路径已失联或不再是原文件夹。", []),
         ]
     }
 }

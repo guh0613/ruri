@@ -3,84 +3,84 @@ import Foundation
 
 extension Messages {
     public enum CoreRunDirectoryFileCopy {
-        /// 无法读取待复制文件：%1$@
-        ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.inputFDText1`.
-        public static func inputFileReadFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.inputFDText1", table: "Errors", fallback: "无法读取待复制文件：%1$@", arguments: [.text(value0)])
-        }
-        /// 复制源不是普通文件。
-        ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.infoText1`.
-        public static var sourceNotRegularFile: LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.infoText1", table: "Errors", fallback: "复制源不是普通文件。")
-        }
-        /// 无法创建复制副本：%1$@
-        ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.outputFDText1`.
-        public static func outputFileCreateFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.outputFDText1", table: "Errors", fallback: "无法创建复制副本：%1$@", arguments: [.text(value0)])
-        }
-        /// 无法为发布副本分配空间。
-        ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.outputText1`.
-        public static var publishSpaceAllocationFailed: LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.outputText1", table: "Errors", fallback: "无法为发布副本分配空间。")
-        }
-        /// 复制期间源文件长度改变。
-        ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.bytesText1`.
-        public static var sourceLengthChanged: LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.bytesText1", table: "Errors", fallback: "复制期间源文件长度改变。")
-        }
         /// 无法发布或收回复制项目，目标可能已存在或磁盘位置发生变化：%1$@
         ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.moveWithoutReplacingText1`.
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.copyProjectMoveFailed`.
         public static func copyProjectMoveFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.moveWithoutReplacingText1", table: "Errors", fallback: "无法发布或收回复制项目，目标可能已存在或磁盘位置发生变化：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreRunDirectoryFileCopy.copyProjectMoveFailed", table: "Errors", fallback: "无法发布或收回复制项目，目标可能已存在或磁盘位置发生变化：%1$@", arguments: [.text(value0)])
         }
         /// 无法发布复制项目，目标可能已存在或磁盘位置发生变化：%1$@
         ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.publishText1`.
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.copyProjectPublishFailed`.
         public static func copyProjectPublishFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.publishText1", table: "Errors", fallback: "无法发布复制项目，目标可能已存在或磁盘位置发生变化：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreRunDirectoryFileCopy.copyProjectPublishFailed", table: "Errors", fallback: "无法发布复制项目，目标可能已存在或磁盘位置发生变化：%1$@", arguments: [.text(value0)])
         }
         /// 发布目标的文件身份已改变，未继续写入。
         ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.checkText1`.
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.destinationIdentityChanged`.
         public static var destinationIdentityChanged: LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.checkText1", table: "Errors", fallback: "发布目标的文件身份已改变，未继续写入。")
+            .init(key: "CoreRunDirectoryFileCopy.destinationIdentityChanged", table: "Errors", fallback: "发布目标的文件身份已改变，未继续写入。")
+        }
+        /// 无法读取待复制文件：%1$@
+        ///
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.inputFileReadFailed`.
+        public static func inputFileReadFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreRunDirectoryFileCopy.inputFileReadFailed", table: "Errors", fallback: "无法读取待复制文件：%1$@", arguments: [.text(value0)])
+        }
+        /// 无法创建复制副本：%1$@
+        ///
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.outputFileCreateFailed`.
+        public static func outputFileCreateFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreRunDirectoryFileCopy.outputFileCreateFailed", table: "Errors", fallback: "无法创建复制副本：%1$@", arguments: [.text(value0)])
         }
         /// 无法创建发布目录，已有内容未覆盖：%1$@
         ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.checkText2`.
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.publishDirectoryCreateFailed`.
         public static func publishDirectoryCreateFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.checkText2", table: "Errors", fallback: "无法创建发布目录，已有内容未覆盖：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreRunDirectoryFileCopy.publishDirectoryCreateFailed", table: "Errors", fallback: "无法创建发布目录，已有内容未覆盖：%1$@", arguments: [.text(value0)])
         }
-        /// 无法创建用于保留发布副本的目录。
+        /// 无法为发布副本分配空间。
         ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.uniqueText1`.
-        public static var retainedCopyDirectoryCreateFailed: LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.uniqueText1", table: "Errors", fallback: "无法创建用于保留发布副本的目录。")
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.publishSpaceAllocationFailed`.
+        public static var publishSpaceAllocationFailed: LocalizedMessage {
+            .init(key: "CoreRunDirectoryFileCopy.publishSpaceAllocationFailed", table: "Errors", fallback: "无法为发布副本分配空间。")
         }
         /// 无法收回发布的副本，文件和复制记录已保留。
         ///
-        /// Resource: `Errors.coreRunDirectoryFileCopy.uniqueText2`.
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.publishedCopyRecoveryFailed`.
         public static var publishedCopyRecoveryFailed: LocalizedMessage {
-            .init(key: "coreRunDirectoryFileCopy.uniqueText2", table: "Errors", fallback: "无法收回发布的副本，文件和复制记录已保留。")
+            .init(key: "CoreRunDirectoryFileCopy.publishedCopyRecoveryFailed", table: "Errors", fallback: "无法收回发布的副本，文件和复制记录已保留。")
+        }
+        /// 无法创建用于保留发布副本的目录。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.retainedCopyDirectoryCreateFailed`.
+        public static var retainedCopyDirectoryCreateFailed: LocalizedMessage {
+            .init(key: "CoreRunDirectoryFileCopy.retainedCopyDirectoryCreateFailed", table: "Errors", fallback: "无法创建用于保留发布副本的目录。")
+        }
+        /// 复制期间源文件长度改变。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.sourceLengthChanged`.
+        public static var sourceLengthChanged: LocalizedMessage {
+            .init(key: "CoreRunDirectoryFileCopy.sourceLengthChanged", table: "Errors", fallback: "复制期间源文件长度改变。")
+        }
+        /// 复制源不是普通文件。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryFileCopy.sourceNotRegularFile`.
+        public static var sourceNotRegularFile: LocalizedMessage {
+            .init(key: "CoreRunDirectoryFileCopy.sourceNotRegularFile", table: "Errors", fallback: "复制源不是普通文件。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreRunDirectoryFileCopy.inputFDText1": .init("无法读取待复制文件：%1$@", [.text]),
-            "Errors:coreRunDirectoryFileCopy.infoText1": .init("复制源不是普通文件。", []),
-            "Errors:coreRunDirectoryFileCopy.outputFDText1": .init("无法创建复制副本：%1$@", [.text]),
-            "Errors:coreRunDirectoryFileCopy.outputText1": .init("无法为发布副本分配空间。", []),
-            "Errors:coreRunDirectoryFileCopy.bytesText1": .init("复制期间源文件长度改变。", []),
-            "Errors:coreRunDirectoryFileCopy.moveWithoutReplacingText1": .init("无法发布或收回复制项目，目标可能已存在或磁盘位置发生变化：%1$@", [.text]),
-            "Errors:coreRunDirectoryFileCopy.publishText1": .init("无法发布复制项目，目标可能已存在或磁盘位置发生变化：%1$@", [.text]),
-            "Errors:coreRunDirectoryFileCopy.checkText1": .init("发布目标的文件身份已改变，未继续写入。", []),
-            "Errors:coreRunDirectoryFileCopy.checkText2": .init("无法创建发布目录，已有内容未覆盖：%1$@", [.text]),
-            "Errors:coreRunDirectoryFileCopy.uniqueText1": .init("无法创建用于保留发布副本的目录。", []),
-            "Errors:coreRunDirectoryFileCopy.uniqueText2": .init("无法收回发布的副本，文件和复制记录已保留。", []),
+            "Errors:CoreRunDirectoryFileCopy.copyProjectMoveFailed": .init("无法发布或收回复制项目，目标可能已存在或磁盘位置发生变化：%1$@", [.text]),
+            "Errors:CoreRunDirectoryFileCopy.copyProjectPublishFailed": .init("无法发布复制项目，目标可能已存在或磁盘位置发生变化：%1$@", [.text]),
+            "Errors:CoreRunDirectoryFileCopy.destinationIdentityChanged": .init("发布目标的文件身份已改变，未继续写入。", []),
+            "Errors:CoreRunDirectoryFileCopy.inputFileReadFailed": .init("无法读取待复制文件：%1$@", [.text]),
+            "Errors:CoreRunDirectoryFileCopy.outputFileCreateFailed": .init("无法创建复制副本：%1$@", [.text]),
+            "Errors:CoreRunDirectoryFileCopy.publishDirectoryCreateFailed": .init("无法创建发布目录，已有内容未覆盖：%1$@", [.text]),
+            "Errors:CoreRunDirectoryFileCopy.publishSpaceAllocationFailed": .init("无法为发布副本分配空间。", []),
+            "Errors:CoreRunDirectoryFileCopy.publishedCopyRecoveryFailed": .init("无法收回发布的副本，文件和复制记录已保留。", []),
+            "Errors:CoreRunDirectoryFileCopy.retainedCopyDirectoryCreateFailed": .init("无法创建用于保留发布副本的目录。", []),
+            "Errors:CoreRunDirectoryFileCopy.sourceLengthChanged": .init("复制期间源文件长度改变。", []),
+            "Errors:CoreRunDirectoryFileCopy.sourceNotRegularFile": .init("复制源不是普通文件。", []),
         ]
     }
 }

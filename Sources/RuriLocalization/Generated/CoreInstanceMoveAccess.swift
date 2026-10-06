@@ -3,35 +3,35 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceMoveAccess {
-        /// 实例还有未完成的文件操作，请先恢复后再移动。
-        ///
-        /// Resource: `Errors.coreInstanceMoveAccess.lockText1`.
-        public static var unfinishedFileOperations: LocalizedMessage {
-            .init(key: "coreInstanceMoveAccess.lockText1", table: "Errors", fallback: "实例还有未完成的文件操作，请先恢复后再移动。")
-        }
         /// 运行记录数量过多，请先整理后再移动。
         ///
-        /// Resource: `Errors.coreInstanceMoveAccess.entriesText1`.
+        /// Resource: `Errors.CoreInstanceMoveAccess.tooManyRunRecords`.
         public static var tooManyRunRecords: LocalizedMessage {
-            .init(key: "coreInstanceMoveAccess.entriesText1", table: "Errors", fallback: "运行记录数量过多，请先整理后再移动。")
+            .init(key: "CoreInstanceMoveAccess.tooManyRunRecords", table: "Errors", fallback: "运行记录数量过多，请先整理后再移动。")
         }
-        /// 运行记录目录包含无法确认的项目，请先检查后再移动：%1$@
+        /// 实例还有未完成的文件操作，请先恢复后再移动。
         ///
-        /// Resource: `Errors.coreInstanceMoveAccess.idText1`.
-        public static func unknownRunRecordEntry(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceMoveAccess.idText1", table: "Errors", fallback: "运行记录目录包含无法确认的项目，请先检查后再移动：%1$@", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreInstanceMoveAccess.unfinishedFileOperations`.
+        public static var unfinishedFileOperations: LocalizedMessage {
+            .init(key: "CoreInstanceMoveAccess.unfinishedFileOperations", table: "Errors", fallback: "实例还有未完成的文件操作，请先恢复后再移动。")
         }
         /// 实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。
         ///
-        /// Resource: `Errors.coreInstanceMoveAccess.recordText1`.
+        /// Resource: `Errors.CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession`.
         public static var unfinishedOrUnconfirmedSession: LocalizedMessage {
-            .init(key: "coreInstanceMoveAccess.recordText1", table: "Errors", fallback: "实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。")
+            .init(key: "CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession", table: "Errors", fallback: "实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。")
+        }
+        /// 运行记录目录包含无法确认的项目，请先检查后再移动：%1$@
+        ///
+        /// Resource: `Errors.CoreInstanceMoveAccess.unknownRunRecordEntry`.
+        public static func unknownRunRecordEntry(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceMoveAccess.unknownRunRecordEntry", table: "Errors", fallback: "运行记录目录包含无法确认的项目，请先检查后再移动：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstanceMoveAccess.lockText1": .init("实例还有未完成的文件操作，请先恢复后再移动。", []),
-            "Errors:coreInstanceMoveAccess.entriesText1": .init("运行记录数量过多，请先整理后再移动。", []),
-            "Errors:coreInstanceMoveAccess.idText1": .init("运行记录目录包含无法确认的项目，请先检查后再移动：%1$@", [.text]),
-            "Errors:coreInstanceMoveAccess.recordText1": .init("实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。", []),
+            "Errors:CoreInstanceMoveAccess.tooManyRunRecords": .init("运行记录数量过多，请先整理后再移动。", []),
+            "Errors:CoreInstanceMoveAccess.unfinishedFileOperations": .init("实例还有未完成的文件操作，请先恢复后再移动。", []),
+            "Errors:CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession": .init("实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。", []),
+            "Errors:CoreInstanceMoveAccess.unknownRunRecordEntry": .init("运行记录目录包含无法确认的项目，请先检查后再移动：%1$@", [.text]),
         ]
     }
 }

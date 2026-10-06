@@ -3,21 +3,21 @@ import Foundation
 
 extension Messages {
     public enum CoreLauncherPaths {
-        /// 不安全的文件路径：%1$@
-        ///
-        /// Resource: `Errors.coreLauncherPaths.safePathText1`.
-        public static func unsafeFilePath(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLauncherPaths.safePathText1", table: "Errors", fallback: "不安全的文件路径：%1$@", arguments: [.text(value0)])
-        }
         /// 文件路径超出实例目录：%1$@
         ///
-        /// Resource: `Errors.coreLauncherPaths.resolvedText1`.
+        /// Resource: `Errors.CoreLauncherPaths.pathOutsideInstanceDirectory`.
         public static func pathOutsideInstanceDirectory(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLauncherPaths.resolvedText1", table: "Errors", fallback: "文件路径超出实例目录：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreLauncherPaths.pathOutsideInstanceDirectory", table: "Errors", fallback: "文件路径超出实例目录：%1$@", arguments: [.text(value0)])
+        }
+        /// 不安全的文件路径：%1$@
+        ///
+        /// Resource: `Errors.CoreLauncherPaths.unsafeFilePath`.
+        public static func unsafeFilePath(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreLauncherPaths.unsafeFilePath", table: "Errors", fallback: "不安全的文件路径：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreLauncherPaths.safePathText1": .init("不安全的文件路径：%1$@", [.text]),
-            "Errors:coreLauncherPaths.resolvedText1": .init("文件路径超出实例目录：%1$@", [.text]),
+            "Errors:CoreLauncherPaths.pathOutsideInstanceDirectory": .init("文件路径超出实例目录：%1$@", [.text]),
+            "Errors:CoreLauncherPaths.unsafeFilePath": .init("不安全的文件路径：%1$@", [.text]),
         ]
     }
 }

@@ -1,0 +1,105 @@
+{
+  "sourceLanguage" : "zh-Hans",
+  "strings" : {
+    "ContentImport.copyHint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件将复制到当前实例"
+          }
+        }
+      }
+    },
+    "ContentImport.dropTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "松开以导入 %1$lld 项%2$@"
+          }
+        }
+      }
+    },
+    "ContentImport.emptyHint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从 Finder 拖入资源，或使用上方的“导入…”。"
+          }
+        }
+      }
+    },
+    "ContentImport.importing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入%1$@"
+          }
+        }
+      }
+    },
+    "ContentImport.invalidDrop" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未能读取拖入的文件，请从 Finder 重新拖入，或使用“导入…”。"
+          }
+        }
+      }
+    },
+    "ContentImport.modFormats" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JAR 或 LITEMOD 文件"
+          }
+        }
+      }
+    },
+    "ContentImport.resourcePackFormats" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源包 ZIP 或文件夹"
+          }
+        }
+      }
+    },
+    "ContentImport.shaderFormats" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光影 ZIP 或文件夹"
+          }
+        }
+      }
+    },
+    "ContentImport.unavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前暂不能导入资源"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

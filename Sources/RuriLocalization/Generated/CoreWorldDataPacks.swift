@@ -3,182 +3,182 @@ import Foundation
 
 extension Messages {
     public enum CoreWorldDataPacks {
-        /// 无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.disabledText1`.
-        public static var levelDataReadFailed: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.disabledText1", table: "Errors", fallback: "无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。")
-        }
-        /// 存档缺少 Data 标签
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.rootText1`.
-        public static var missingDataTag: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.rootText1", table: "Errors", fallback: "存档缺少 Data 标签")
-        }
-        /// 存档数据包配置无效
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.packsText1`.
-        public static var invalidPackConfiguration: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.packsText1", table: "Errors", fallback: "存档数据包配置无效")
-        }
-        /// 存档数据包列表无效
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.itemsText1`.
-        public static var invalidPackList: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.itemsText1", table: "Errors", fallback: "存档数据包列表无效")
-        }
-        /// 存档信息已改变，请刷新后重试。
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.updatedText1`.
-        public static var worldInfoChanged: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.updatedText1", table: "Errors", fallback: "存档信息已改变，请刷新后重试。")
-        }
-        /// 数据包列表已改变，请刷新后重新调整顺序。
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.currentText1`.
-        public static var packListChanged: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.currentText1", table: "Errors", fallback: "数据包列表已改变，请刷新后重新调整顺序。")
-        }
-        /// 调整优先级不能添加、移除或重复数据包。
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.currentText2`.
-        public static var invalidPriorityChange: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.currentText2", table: "Errors", fallback: "调整优先级不能添加、移除或重复数据包。")
-        }
-        /// 内置、模组与缺失数据包的相对顺序必须保留。
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.currentText3`.
-        public static var invalidRelativeOrder: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.currentText3", table: "Errors", fallback: "内置、模组与缺失数据包的相对顺序必须保留。")
-        }
         /// 启用与停用文件同时存在，请先移除其中一份：%1$@
         ///
-        /// Resource: `Errors.coreWorldDataPacks.isDirectoryText1`.
+        /// Resource: `Errors.CoreWorldDataPacks.duplicateEnabledDisabledPack`.
         public static func duplicateEnabledDisabledPack(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreWorldDataPacks.isDirectoryText1", table: "Errors", fallback: "启用与停用文件同时存在，请先移除其中一份：%1$@", arguments: [.text(value0)])
-        }
-        /// 启用后的文件名已存在：%1$@
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.needsRenameText1`.
-        public static func existingEnabledName(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreWorldDataPacks.needsRenameText1", table: "Errors", fallback: "启用后的文件名已存在：%1$@", arguments: [.text(value0)])
-        }
-        /// 请选择 1–200 个数据包。
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.importDataPacksText1`.
-        public static var invalidPackCount: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.importDataPacksText1", table: "Errors", fallback: "请选择 1–200 个数据包。")
-        }
-        /// 请选择 ZIP 格式的数据包。
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.isDirectoryText2`.
-        public static var zipRequired: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.isDirectoryText2", table: "Errors", fallback: "请选择 ZIP 格式的数据包。")
-        }
-        /// 请先启用数据包再导入。
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.isDirectoryText3`.
-        public static var enableBeforeImport: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.isDirectoryText3", table: "Errors", fallback: "请先启用数据包再导入。")
+            .init(key: "CoreWorldDataPacks.duplicateEnabledDisabledPack", table: "Errors", fallback: "启用与停用文件同时存在，请先移除其中一份：%1$@", arguments: [.text(value0)])
         }
         /// 同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。
         ///
-        /// Resource: `Errors.coreWorldDataPacks.targetText1`.
+        /// Resource: `Errors.CoreWorldDataPacks.duplicatePackName`.
         public static func duplicatePackName(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreWorldDataPacks.targetText1", table: "Errors", fallback: "同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。", arguments: [.text(value0)])
+            .init(key: "CoreWorldDataPacks.duplicatePackName", table: "Errors", fallback: "同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。", arguments: [.text(value0)])
         }
-        /// 数据包已不存在，请刷新列表。
+        /// 请先启用数据包再导入。
         ///
-        /// Resource: `Errors.coreWorldDataPacks.targetText2`.
-        public static var packRemoved: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.targetText2", table: "Errors", fallback: "数据包已不存在，请刷新列表。")
+        /// Resource: `Errors.CoreWorldDataPacks.enableBeforeImport`.
+        public static var enableBeforeImport: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.enableBeforeImport", table: "Errors", fallback: "请先启用数据包再导入。")
         }
-        /// 数据包目录不能是符号链接。
+        /// 启用后的文件名已存在：%1$@
         ///
-        /// Resource: `Errors.coreWorldDataPacks.directoryText1`.
-        public static var symlinkDirectoryDisallowed: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.directoryText1", table: "Errors", fallback: "数据包目录不能是符号链接。")
+        /// Resource: `Errors.CoreWorldDataPacks.existingEnabledName`.
+        public static func existingEnabledName(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.existingEnabledName", table: "Errors", fallback: "启用后的文件名已存在：%1$@", arguments: [.text(value0)])
+        }
+        /// 存档数据包配置无效
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.invalidPackConfiguration`.
+        public static var invalidPackConfiguration: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.invalidPackConfiguration", table: "Errors", fallback: "存档数据包配置无效")
+        }
+        /// 请选择 1–200 个数据包。
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.invalidPackCount`.
+        public static var invalidPackCount: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.invalidPackCount", table: "Errors", fallback: "请选择 1–200 个数据包。")
         }
         /// 无效的数据包文件名
         ///
-        /// Resource: `Errors.coreWorldDataPacks.packURLText1`.
+        /// Resource: `Errors.CoreWorldDataPacks.invalidPackFilename`.
         public static var invalidPackFilename: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.packURLText1", table: "Errors", fallback: "无效的数据包文件名")
+            .init(key: "CoreWorldDataPacks.invalidPackFilename", table: "Errors", fallback: "无效的数据包文件名")
         }
-        /// 不修改符号链接数据包。
+        /// 存档数据包列表无效
         ///
-        /// Resource: `Errors.coreWorldDataPacks.urlText1`.
-        public static var symlinkPackUnmodified: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.urlText1", table: "Errors", fallback: "不修改符号链接数据包。")
+        /// Resource: `Errors.CoreWorldDataPacks.invalidPackList`.
+        public static var invalidPackList: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.invalidPackList", table: "Errors", fallback: "存档数据包列表无效")
         }
-        /// 请选择实际数据包文件。
+        /// 调整优先级不能添加、移除或重复数据包。
         ///
-        /// Resource: `Errors.coreWorldDataPacks.infoText1`.
-        public static var packFileRequired: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.infoText1", table: "Errors", fallback: "请选择实际数据包文件。")
+        /// Resource: `Errors.CoreWorldDataPacks.invalidPriorityChange`.
+        public static var invalidPriorityChange: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.invalidPriorityChange", table: "Errors", fallback: "调整优先级不能添加、移除或重复数据包。")
         }
-        /// 无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。
+        /// 内置、模组与缺失数据包的相对顺序必须保留。
         ///
-        /// Resource: `Errors.coreWorldDataPacks.metadataText1`.
-        public static var packMetadataReadFailed: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.metadataText1", table: "Errors", fallback: "无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。")
+        /// Resource: `Errors.CoreWorldDataPacks.invalidRelativeOrder`.
+        public static var invalidRelativeOrder: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.invalidRelativeOrder", table: "Errors", fallback: "内置、模组与缺失数据包的相对顺序必须保留。")
         }
-        /// 数据包文件无效或大于 512 MB
+        /// 无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。
         ///
-        /// Resource: `Errors.coreWorldDataPacks.metadataText2`.
-        public static var packFileTooLarge: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.metadataText2", table: "Errors", fallback: "数据包文件无效或大于 512 MB")
+        /// Resource: `Errors.CoreWorldDataPacks.levelDataReadFailed`.
+        public static var levelDataReadFailed: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.levelDataReadFailed", table: "Errors", fallback: "无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。")
+        }
+        /// 存档缺少 Data 标签
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.missingDataTag`.
+        public static var missingDataTag: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.missingDataTag", table: "Errors", fallback: "存档缺少 Data 标签")
         }
         /// 数据包根目录缺少 pack.mcmeta
         ///
-        /// Resource: `Errors.coreWorldDataPacks.entryText1`.
+        /// Resource: `Errors.CoreWorldDataPacks.missingPackMetadata`.
         public static var missingPackMetadata: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.entryText1", table: "Errors", fallback: "数据包根目录缺少 pack.mcmeta")
-        }
-        /// 数据包说明过大
-        ///
-        /// Resource: `Errors.coreWorldDataPacks.checksumText1`.
-        public static var packDescriptionTooLarge: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.checksumText1", table: "Errors", fallback: "数据包说明过大")
+            .init(key: "CoreWorldDataPacks.missingPackMetadata", table: "Errors", fallback: "数据包根目录缺少 pack.mcmeta")
         }
         /// 数据包说明校验失败
         ///
-        /// Resource: `Errors.coreWorldDataPacks.checksumText2`.
+        /// Resource: `Errors.CoreWorldDataPacks.packDescriptionChecksumFailed`.
         public static var packDescriptionChecksumFailed: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.checksumText2", table: "Errors", fallback: "数据包说明校验失败")
+            .init(key: "CoreWorldDataPacks.packDescriptionChecksumFailed", table: "Errors", fallback: "数据包说明校验失败")
         }
         /// 数据包说明缺少 pack 或 description
         ///
-        /// Resource: `Errors.coreWorldDataPacks.packText1`.
+        /// Resource: `Errors.CoreWorldDataPacks.packDescriptionMissingFields`.
         public static var packDescriptionMissingFields: LocalizedMessage {
-            .init(key: "coreWorldDataPacks.packText1", table: "Errors", fallback: "数据包说明缺少 pack 或 description")
+            .init(key: "CoreWorldDataPacks.packDescriptionMissingFields", table: "Errors", fallback: "数据包说明缺少 pack 或 description")
+        }
+        /// 数据包说明过大
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.packDescriptionTooLarge`.
+        public static var packDescriptionTooLarge: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.packDescriptionTooLarge", table: "Errors", fallback: "数据包说明过大")
+        }
+        /// 请选择实际数据包文件。
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.packFileRequired`.
+        public static var packFileRequired: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.packFileRequired", table: "Errors", fallback: "请选择实际数据包文件。")
+        }
+        /// 数据包文件无效或大于 512 MB
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.packFileTooLarge`.
+        public static var packFileTooLarge: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.packFileTooLarge", table: "Errors", fallback: "数据包文件无效或大于 512 MB")
+        }
+        /// 数据包列表已改变，请刷新后重新调整顺序。
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.packListChanged`.
+        public static var packListChanged: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.packListChanged", table: "Errors", fallback: "数据包列表已改变，请刷新后重新调整顺序。")
+        }
+        /// 无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.packMetadataReadFailed`.
+        public static var packMetadataReadFailed: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.packMetadataReadFailed", table: "Errors", fallback: "无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。")
+        }
+        /// 数据包已不存在，请刷新列表。
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.packRemoved`.
+        public static var packRemoved: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.packRemoved", table: "Errors", fallback: "数据包已不存在，请刷新列表。")
+        }
+        /// 数据包目录不能是符号链接。
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.symlinkDirectoryDisallowed`.
+        public static var symlinkDirectoryDisallowed: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.symlinkDirectoryDisallowed", table: "Errors", fallback: "数据包目录不能是符号链接。")
+        }
+        /// 不修改符号链接数据包。
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.symlinkPackUnmodified`.
+        public static var symlinkPackUnmodified: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.symlinkPackUnmodified", table: "Errors", fallback: "不修改符号链接数据包。")
+        }
+        /// 存档信息已改变，请刷新后重试。
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.worldInfoChanged`.
+        public static var worldInfoChanged: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.worldInfoChanged", table: "Errors", fallback: "存档信息已改变，请刷新后重试。")
+        }
+        /// 请选择 ZIP 格式的数据包。
+        ///
+        /// Resource: `Errors.CoreWorldDataPacks.zipRequired`.
+        public static var zipRequired: LocalizedMessage {
+            .init(key: "CoreWorldDataPacks.zipRequired", table: "Errors", fallback: "请选择 ZIP 格式的数据包。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreWorldDataPacks.disabledText1": .init("无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。", []),
-            "Errors:coreWorldDataPacks.rootText1": .init("存档缺少 Data 标签", []),
-            "Errors:coreWorldDataPacks.packsText1": .init("存档数据包配置无效", []),
-            "Errors:coreWorldDataPacks.itemsText1": .init("存档数据包列表无效", []),
-            "Errors:coreWorldDataPacks.updatedText1": .init("存档信息已改变，请刷新后重试。", []),
-            "Errors:coreWorldDataPacks.currentText1": .init("数据包列表已改变，请刷新后重新调整顺序。", []),
-            "Errors:coreWorldDataPacks.currentText2": .init("调整优先级不能添加、移除或重复数据包。", []),
-            "Errors:coreWorldDataPacks.currentText3": .init("内置、模组与缺失数据包的相对顺序必须保留。", []),
-            "Errors:coreWorldDataPacks.isDirectoryText1": .init("启用与停用文件同时存在，请先移除其中一份：%1$@", [.text]),
-            "Errors:coreWorldDataPacks.needsRenameText1": .init("启用后的文件名已存在：%1$@", [.text]),
-            "Errors:coreWorldDataPacks.importDataPacksText1": .init("请选择 1–200 个数据包。", []),
-            "Errors:coreWorldDataPacks.isDirectoryText2": .init("请选择 ZIP 格式的数据包。", []),
-            "Errors:coreWorldDataPacks.isDirectoryText3": .init("请先启用数据包再导入。", []),
-            "Errors:coreWorldDataPacks.targetText1": .init("同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。", [.text]),
-            "Errors:coreWorldDataPacks.targetText2": .init("数据包已不存在，请刷新列表。", []),
-            "Errors:coreWorldDataPacks.directoryText1": .init("数据包目录不能是符号链接。", []),
-            "Errors:coreWorldDataPacks.packURLText1": .init("无效的数据包文件名", []),
-            "Errors:coreWorldDataPacks.urlText1": .init("不修改符号链接数据包。", []),
-            "Errors:coreWorldDataPacks.infoText1": .init("请选择实际数据包文件。", []),
-            "Errors:coreWorldDataPacks.metadataText1": .init("无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。", []),
-            "Errors:coreWorldDataPacks.metadataText2": .init("数据包文件无效或大于 512 MB", []),
-            "Errors:coreWorldDataPacks.entryText1": .init("数据包根目录缺少 pack.mcmeta", []),
-            "Errors:coreWorldDataPacks.checksumText1": .init("数据包说明过大", []),
-            "Errors:coreWorldDataPacks.checksumText2": .init("数据包说明校验失败", []),
-            "Errors:coreWorldDataPacks.packText1": .init("数据包说明缺少 pack 或 description", []),
+            "Errors:CoreWorldDataPacks.duplicateEnabledDisabledPack": .init("启用与停用文件同时存在，请先移除其中一份：%1$@", [.text]),
+            "Errors:CoreWorldDataPacks.duplicatePackName": .init("同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。", [.text]),
+            "Errors:CoreWorldDataPacks.enableBeforeImport": .init("请先启用数据包再导入。", []),
+            "Errors:CoreWorldDataPacks.existingEnabledName": .init("启用后的文件名已存在：%1$@", [.text]),
+            "Errors:CoreWorldDataPacks.invalidPackConfiguration": .init("存档数据包配置无效", []),
+            "Errors:CoreWorldDataPacks.invalidPackCount": .init("请选择 1–200 个数据包。", []),
+            "Errors:CoreWorldDataPacks.invalidPackFilename": .init("无效的数据包文件名", []),
+            "Errors:CoreWorldDataPacks.invalidPackList": .init("存档数据包列表无效", []),
+            "Errors:CoreWorldDataPacks.invalidPriorityChange": .init("调整优先级不能添加、移除或重复数据包。", []),
+            "Errors:CoreWorldDataPacks.invalidRelativeOrder": .init("内置、模组与缺失数据包的相对顺序必须保留。", []),
+            "Errors:CoreWorldDataPacks.levelDataReadFailed": .init("无法读取存档的 level.dat，请检查文件是否完整且不超过 32 MB。", []),
+            "Errors:CoreWorldDataPacks.missingDataTag": .init("存档缺少 Data 标签", []),
+            "Errors:CoreWorldDataPacks.missingPackMetadata": .init("数据包根目录缺少 pack.mcmeta", []),
+            "Errors:CoreWorldDataPacks.packDescriptionChecksumFailed": .init("数据包说明校验失败", []),
+            "Errors:CoreWorldDataPacks.packDescriptionMissingFields": .init("数据包说明缺少 pack 或 description", []),
+            "Errors:CoreWorldDataPacks.packDescriptionTooLarge": .init("数据包说明过大", []),
+            "Errors:CoreWorldDataPacks.packFileRequired": .init("请选择实际数据包文件。", []),
+            "Errors:CoreWorldDataPacks.packFileTooLarge": .init("数据包文件无效或大于 512 MB", []),
+            "Errors:CoreWorldDataPacks.packListChanged": .init("数据包列表已改变，请刷新后重新调整顺序。", []),
+            "Errors:CoreWorldDataPacks.packMetadataReadFailed": .init("无法读取数据包根目录的 pack.mcmeta，请检查文件是否完整且不超过 1 MB。", []),
+            "Errors:CoreWorldDataPacks.packRemoved": .init("数据包已不存在，请刷新列表。", []),
+            "Errors:CoreWorldDataPacks.symlinkDirectoryDisallowed": .init("数据包目录不能是符号链接。", []),
+            "Errors:CoreWorldDataPacks.symlinkPackUnmodified": .init("不修改符号链接数据包。", []),
+            "Errors:CoreWorldDataPacks.worldInfoChanged": .init("存档信息已改变，请刷新后重试。", []),
+            "Errors:CoreWorldDataPacks.zipRequired": .init("请选择 ZIP 格式的数据包。", []),
         ]
     }
 }

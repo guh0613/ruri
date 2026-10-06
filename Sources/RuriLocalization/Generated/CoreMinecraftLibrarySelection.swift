@@ -3,21 +3,21 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftLibrarySelection {
-        /// 依赖库声明数量超过限制。
-        ///
-        /// Resource: `Errors.coreMinecraftLibrarySelection.selectText1`.
-        public static var tooManyLibraries: LocalizedMessage {
-            .init(key: "coreMinecraftLibrarySelection.selectText1", table: "Errors", fallback: "依赖库声明数量超过限制。")
-        }
         /// 依赖库名称或版本号过长。
         ///
-        /// Resource: `Errors.coreMinecraftLibrarySelection.versionText1`.
+        /// Resource: `Errors.CoreMinecraftLibrarySelection.libraryNameTooLong`.
         public static var libraryNameTooLong: LocalizedMessage {
-            .init(key: "coreMinecraftLibrarySelection.versionText1", table: "Errors", fallback: "依赖库名称或版本号过长。")
+            .init(key: "CoreMinecraftLibrarySelection.libraryNameTooLong", table: "Errors", fallback: "依赖库名称或版本号过长。")
+        }
+        /// 依赖库声明数量超过限制。
+        ///
+        /// Resource: `Errors.CoreMinecraftLibrarySelection.tooManyLibraries`.
+        public static var tooManyLibraries: LocalizedMessage {
+            .init(key: "CoreMinecraftLibrarySelection.tooManyLibraries", table: "Errors", fallback: "依赖库声明数量超过限制。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreMinecraftLibrarySelection.selectText1": .init("依赖库声明数量超过限制。", []),
-            "Errors:coreMinecraftLibrarySelection.versionText1": .init("依赖库名称或版本号过长。", []),
+            "Errors:CoreMinecraftLibrarySelection.libraryNameTooLong": .init("依赖库名称或版本号过长。", []),
+            "Errors:CoreMinecraftLibrarySelection.tooManyLibraries": .init("依赖库声明数量超过限制。", []),
         ]
     }
 }

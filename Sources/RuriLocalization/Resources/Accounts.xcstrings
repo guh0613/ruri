@@ -1,0 +1,963 @@
+{
+  "sourceLanguage" : "zh-Hans",
+  "strings" : {
+    "AccountCenter.accountActions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号操作"
+          }
+        }
+      }
+    },
+    "AccountCenter.accountCount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld 个账号"
+          }
+        }
+      }
+    },
+    "AccountCenter.accountDetails" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号信息"
+          }
+        }
+      }
+    },
+    "AccountCenter.accountType" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号类型"
+          }
+        }
+      }
+    },
+    "AccountCenter.addAccountHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择登录方式，开始你的下一段旅程。"
+          }
+        }
+      }
+    },
+    "AccountCenter.appearanceNotLoaded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接账号后即可管理披风。"
+          }
+        }
+      }
+    },
+    "AccountCenter.appearanceReset" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已恢复默认外观。"
+          }
+        }
+      }
+    },
+    "AccountCenter.appearanceSection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外观分类"
+          }
+        }
+      }
+    },
+    "AccountCenter.appearanceUnavailableOffline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接账号后即可管理皮肤和披风。"
+          }
+        }
+      }
+    },
+    "AccountCenter.applyCape" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用披风"
+          }
+        }
+      }
+    },
+    "AccountCenter.applyingAppearance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在应用外观…"
+          }
+        }
+      }
+    },
+    "AccountCenter.armsChanged" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已切换手臂模型"
+          }
+        }
+      }
+    },
+    "AccountCenter.browserLoginHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。"
+          }
+        }
+      }
+    },
+    "AccountCenter.capeActions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "披风操作"
+          }
+        }
+      }
+    },
+    "AccountCenter.capeSection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "披风"
+          }
+        }
+      }
+    },
+    "AccountCenter.characterPreview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可旋转的角色外观预览"
+          }
+        }
+      }
+    },
+    "AccountCenter.chooseCapeHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入一张披风 PNG，或保持不使用披风。"
+          }
+        }
+      }
+    },
+    "AccountCenter.chooseSkinHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入一张皮肤 PNG，旋转查看角色并选择手臂模型。"
+          }
+        }
+      }
+    },
+    "AccountCenter.classicArms" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "经典"
+          }
+        }
+      }
+    },
+    "AccountCenter.clearLocalPreview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复默认皮肤"
+          }
+        }
+      }
+    },
+    "AccountCenter.confirmAppearanceHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拖动角色查看各个角度，确认后应用到此账号。"
+          }
+        }
+      }
+    },
+    "AccountCenter.confirmReset" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复默认"
+          }
+        }
+      }
+    },
+    "AccountCenter.connected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已连接"
+          }
+        }
+      }
+    },
+    "AccountCenter.connecting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在连接账号…"
+          }
+        }
+      }
+    },
+    "AccountCenter.copyUUID" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制 UUID"
+          }
+        }
+      }
+    },
+    "AccountCenter.currentAppearance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前外观"
+          }
+        }
+      }
+    },
+    "AccountCenter.defaultSkin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认皮肤"
+          }
+        }
+      }
+    },
+    "AccountCenter.defaultSkinHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未设置皮肤，游戏中会显示默认角色。"
+          }
+        }
+      }
+    },
+    "AccountCenter.draftPreview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "预览 · 尚未应用"
+          }
+        }
+      }
+    },
+    "AccountCenter.importSkin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入皮肤…"
+          }
+        }
+      }
+    },
+    "AccountCenter.invalidSavedSkin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取保存的皮肤，文件可能已损坏。"
+          }
+        }
+      }
+    },
+    "AccountCenter.invalidSkinName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "皮肤名称需为 1–80 个字符。"
+          }
+        }
+      }
+    },
+    "AccountCenter.legacySkinHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旧版皮肤使用经典手臂，预览会自动补全左右肢体。"
+          }
+        }
+      }
+    },
+    "AccountCenter.libraryEmpty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "皮肤库为空"
+          }
+        }
+      }
+    },
+    "AccountCenter.libraryEmptyHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入 PNG，或把账号当前皮肤保存到这里。"
+          }
+        }
+      }
+    },
+    "AccountCenter.libraryHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收藏你喜欢的皮肤，随时预览和使用。"
+          }
+        }
+      }
+    },
+    "AccountCenter.localAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地账号"
+          }
+        }
+      }
+    },
+    "AccountCenter.localPreviewSaved" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "皮肤已应用，下次启动游戏时生效。"
+          }
+        }
+      }
+    },
+    "AccountCenter.logoutHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。"
+          }
+        }
+      }
+    },
+    "AccountCenter.logoutTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出此账号？"
+          }
+        }
+      }
+    },
+    "AccountCenter.microsoftLogin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用微软账号登录"
+          }
+        }
+      }
+    },
+    "AccountCenter.microsoftSkinHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。"
+          }
+        }
+      }
+    },
+    "AccountCenter.offlineLoginHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "离线账号可用于本地游戏，无法加入要求正版验证的服务器。"
+          }
+        }
+      }
+    },
+    "AccountCenter.offlinePreviewHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新启动游戏后，所选皮肤将在本机生效。"
+          }
+        }
+      }
+    },
+    "AccountCenter.outerLayer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示外层皮肤"
+          }
+        }
+      }
+    },
+    "AccountCenter.placeholderPreview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "示意模型 · 未加载皮肤"
+          }
+        }
+      }
+    },
+    "AccountCenter.previewAndUse" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "预览与使用"
+          }
+        }
+      }
+    },
+    "AccountCenter.previewBeforeApply" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认你的新外观"
+          }
+        }
+      }
+    },
+    "AccountCenter.reloginHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。"
+          }
+        }
+      }
+    },
+    "AccountCenter.reloginTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新登录"
+          }
+        }
+      }
+    },
+    "AccountCenter.removeAccountHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这会移除 Ruri 中保存的账号及其登录凭据。游戏实例和皮肤库会保留。"
+          }
+        }
+      }
+    },
+    "AccountCenter.removeAccountTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除“%1$@”？"
+          }
+        }
+      }
+    },
+    "AccountCenter.removeSkin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除皮肤"
+          }
+        }
+      }
+    },
+    "AccountCenter.removeSkinHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已应用的账号外观和原始 PNG 文件会保留。"
+          }
+        }
+      }
+    },
+    "AccountCenter.removeSkinTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从皮肤库移除这款皮肤？"
+          }
+        }
+      }
+    },
+    "AccountCenter.renameSkin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重命名皮肤"
+          }
+        }
+      }
+    },
+    "AccountCenter.replaceSkin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更换…"
+          }
+        }
+      }
+    },
+    "AccountCenter.resetAppearance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复默认外观？"
+          }
+        }
+      }
+    },
+    "AccountCenter.resetView" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置视角"
+          }
+        }
+      }
+    },
+    "AccountCenter.retry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
+        }
+      }
+    },
+    "AccountCenter.rotation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旋转角色"
+          }
+        }
+      }
+    },
+    "AccountCenter.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
+          }
+        }
+      }
+    },
+    "AccountCenter.saveToLibrary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存到皮肤库"
+          }
+        }
+      }
+    },
+    "AccountCenter.savedToLibrary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已保存到皮肤库。"
+          }
+        }
+      }
+    },
+    "AccountCenter.searchAccounts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索账号"
+          }
+        }
+      }
+    },
+    "AccountCenter.selectAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择一个账号"
+          }
+        }
+      }
+    },
+    "AccountCenter.showSkinFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看皮肤文件夹"
+          }
+        }
+      }
+    },
+    "AccountCenter.skinActions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "皮肤操作"
+          }
+        }
+      }
+    },
+    "AccountCenter.skinCount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld 款皮肤"
+          }
+        }
+      }
+    },
+    "AccountCenter.skinLibrary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "皮肤库"
+          }
+        }
+      }
+    },
+    "AccountCenter.skinName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "皮肤名称"
+          }
+        }
+      }
+    },
+    "AccountCenter.skinSection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "皮肤"
+          }
+        }
+      }
+    },
+    "AccountCenter.slimArms" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纤细"
+          }
+        }
+      }
+    },
+    "AccountCenter.textureSize" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld × %2$lld PNG"
+          }
+        }
+      }
+    },
+    "AccountCenter.unreadableSkins" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有 %1$lld 份收藏无法读取，其他收藏仍可使用。"
+          }
+        }
+      }
+    },
+    "AccountCenter.unverified" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未连接"
+          }
+        }
+      }
+    },
+    "AccountCenter.useLittleSkin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 LittleSkin"
+          }
+        }
+      }
+    },
+    "AccountCenter.useLocalPreview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用皮肤"
+          }
+        }
+      }
+    },
+    "AccountCenter.useSkin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用…"
+          }
+        }
+      }
+    },
+    "AccountCenter.welcome" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加你的 Minecraft 账号"
+          }
+        }
+      }
+    },
+    "AccountCenter.welcomeHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录微软账号、连接第三方认证服务器，或创建一个离线角色。"
+          }
+        }
+      }
+    },
+    "AccountCenter.wrongLoginAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。"
+          }
+        }
+      }
+    },
+    "OfflineSkin.invalidConfiguration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "离线皮肤配置无效，请重新应用皮肤后再启动游戏。"
+          }
+        }
+      }
+    },
+    "OfflineSkin.preparing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在准备离线皮肤…"
+          }
+        }
+      }
+    },
+    "OfflineSkin.ready" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] 离线皮肤服务已就绪。"
+          }
+        }
+      }
+    },
+    "OfflineSkin.serviceFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地皮肤服务未能启动，请重试。"
+          }
+        }
+      }
+    },
+    "OfflineSkin.signingFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法为离线皮肤生成签名。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

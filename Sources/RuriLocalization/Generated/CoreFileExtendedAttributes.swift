@@ -5,89 +5,89 @@ extension Messages {
     public enum CoreFileExtendedAttributes {
         /// 无法核对文件附加信息：%1$@
         ///
-        /// Resource: `Core.coreFileExtendedAttributes.failureText1`.
+        /// Resource: `Core.CoreFileExtendedAttributes.attributeVerificationFailed`.
         public static func attributeVerificationFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.failureText1", table: "Core", fallback: "无法核对文件附加信息：%1$@", arguments: [.text(value0)])
-        }
-        /// 文件附加信息数量超过限制。
-        ///
-        /// Resource: `Errors.coreFileExtendedAttributes.namesText1`.
-        public static var tooManyAttributes: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.namesText1", table: "Errors", fallback: "文件附加信息数量超过限制。")
-        }
-        /// 文件附加信息无法读取或超过大小限制：%1$@ · %2$@
-        ///
-        /// Resource: `Errors.coreFileExtendedAttributes.sizeText1`.
-        public static func attributesUnreadableOrTooLarge(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.sizeText1", table: "Errors", fallback: "文件附加信息无法读取或超过大小限制：%1$@ · %2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 单个文件的附加信息超过大小限制。
-        ///
-        /// Resource: `Errors.coreFileExtendedAttributes.sizeText2`.
-        public static var singleAttributeTooLarge: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.sizeText2", table: "Errors", fallback: "单个文件的附加信息超过大小限制。")
-        }
-        /// 文件附加信息在校验期间改变，请重试。
-        ///
-        /// Resource: `Errors.coreFileExtendedAttributes.countText1`.
-        public static var attributesChangedDuringVerification: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.countText1", table: "Errors", fallback: "文件附加信息在校验期间改变，请重试。")
-        }
-        /// 文件附加信息的校验记录无效。
-        ///
-        /// Resource: `Errors.coreFileExtendedAttributes.validateText1`.
-        public static var invalidAttributeDigest: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.validateText1", table: "Errors", fallback: "文件附加信息的校验记录无效。")
-        }
-        /// 无法保留文件附加信息，原文件已保留。
-        ///
-        /// Resource: `Errors.coreFileExtendedAttributes.copyText1`.
-        public static var attributesPreservationFailed: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.copyText1", table: "Errors", fallback: "无法保留文件附加信息，原文件已保留。")
-        }
-        /// 实例元数据的附加信息在更新期间改变。
-        ///
-        /// Resource: `Errors.coreFileExtendedAttributes.beforeText1`.
-        public static var metadataAttributesChanged: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.beforeText1", table: "Errors", fallback: "实例元数据的附加信息在更新期间改变。")
-        }
-        /// 无法更新实例元数据。
-        ///
-        /// Resource: `Errors.coreFileExtendedAttributes.beforeText2`.
-        public static var metadataUpdateFailed: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.beforeText2", table: "Errors", fallback: "无法更新实例元数据。")
-        }
-        /// 无法读取文件附加信息列表。
-        ///
-        /// Resource: `Errors.coreFileExtendedAttributes.sizeText3`.
-        public static var attributeListReadFailed: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.sizeText3", table: "Errors", fallback: "无法读取文件附加信息列表。")
+            .init(key: "CoreFileExtendedAttributes.attributeVerificationFailed", table: "Core", fallback: "无法核对文件附加信息：%1$@", arguments: [.text(value0)])
         }
         /// 文件附加信息列表在读取期间改变。
         ///
-        /// Resource: `Errors.coreFileExtendedAttributes.bufferText1`.
+        /// Resource: `Errors.CoreFileExtendedAttributes.attributeListChangedDuringRead`.
         public static var attributeListChangedDuringRead: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.bufferText1", table: "Errors", fallback: "文件附加信息列表在读取期间改变。")
+            .init(key: "CoreFileExtendedAttributes.attributeListChangedDuringRead", table: "Errors", fallback: "文件附加信息列表在读取期间改变。")
+        }
+        /// 无法读取文件附加信息列表。
+        ///
+        /// Resource: `Errors.CoreFileExtendedAttributes.attributeListReadFailed`.
+        public static var attributeListReadFailed: LocalizedMessage {
+            .init(key: "CoreFileExtendedAttributes.attributeListReadFailed", table: "Errors", fallback: "无法读取文件附加信息列表。")
+        }
+        /// 文件附加信息在校验期间改变，请重试。
+        ///
+        /// Resource: `Errors.CoreFileExtendedAttributes.attributesChangedDuringVerification`.
+        public static var attributesChangedDuringVerification: LocalizedMessage {
+            .init(key: "CoreFileExtendedAttributes.attributesChangedDuringVerification", table: "Errors", fallback: "文件附加信息在校验期间改变，请重试。")
+        }
+        /// 无法保留文件附加信息，原文件已保留。
+        ///
+        /// Resource: `Errors.CoreFileExtendedAttributes.attributesPreservationFailed`.
+        public static var attributesPreservationFailed: LocalizedMessage {
+            .init(key: "CoreFileExtendedAttributes.attributesPreservationFailed", table: "Errors", fallback: "无法保留文件附加信息，原文件已保留。")
+        }
+        /// 文件附加信息无法读取或超过大小限制：%1$@ · %2$@
+        ///
+        /// Resource: `Errors.CoreFileExtendedAttributes.attributesUnreadableOrTooLarge`.
+        public static func attributesUnreadableOrTooLarge(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreFileExtendedAttributes.attributesUnreadableOrTooLarge", table: "Errors", fallback: "文件附加信息无法读取或超过大小限制：%1$@ · %2$@", arguments: [.text(value0), .text(value1)])
+        }
+        /// 文件附加信息的校验记录无效。
+        ///
+        /// Resource: `Errors.CoreFileExtendedAttributes.invalidAttributeDigest`.
+        public static var invalidAttributeDigest: LocalizedMessage {
+            .init(key: "CoreFileExtendedAttributes.invalidAttributeDigest", table: "Errors", fallback: "文件附加信息的校验记录无效。")
         }
         /// 文件附加信息名称无效。
         ///
-        /// Resource: `Errors.coreFileExtendedAttributes.nameText1`.
+        /// Resource: `Errors.CoreFileExtendedAttributes.invalidAttributeName`.
         public static var invalidAttributeName: LocalizedMessage {
-            .init(key: "coreFileExtendedAttributes.nameText1", table: "Errors", fallback: "文件附加信息名称无效。")
+            .init(key: "CoreFileExtendedAttributes.invalidAttributeName", table: "Errors", fallback: "文件附加信息名称无效。")
+        }
+        /// 实例元数据的附加信息在更新期间改变。
+        ///
+        /// Resource: `Errors.CoreFileExtendedAttributes.metadataAttributesChanged`.
+        public static var metadataAttributesChanged: LocalizedMessage {
+            .init(key: "CoreFileExtendedAttributes.metadataAttributesChanged", table: "Errors", fallback: "实例元数据的附加信息在更新期间改变。")
+        }
+        /// 无法更新实例元数据。
+        ///
+        /// Resource: `Errors.CoreFileExtendedAttributes.metadataUpdateFailed`.
+        public static var metadataUpdateFailed: LocalizedMessage {
+            .init(key: "CoreFileExtendedAttributes.metadataUpdateFailed", table: "Errors", fallback: "无法更新实例元数据。")
+        }
+        /// 单个文件的附加信息超过大小限制。
+        ///
+        /// Resource: `Errors.CoreFileExtendedAttributes.singleAttributeTooLarge`.
+        public static var singleAttributeTooLarge: LocalizedMessage {
+            .init(key: "CoreFileExtendedAttributes.singleAttributeTooLarge", table: "Errors", fallback: "单个文件的附加信息超过大小限制。")
+        }
+        /// 文件附加信息数量超过限制。
+        ///
+        /// Resource: `Errors.CoreFileExtendedAttributes.tooManyAttributes`.
+        public static var tooManyAttributes: LocalizedMessage {
+            .init(key: "CoreFileExtendedAttributes.tooManyAttributes", table: "Errors", fallback: "文件附加信息数量超过限制。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreFileExtendedAttributes.failureText1": .init("无法核对文件附加信息：%1$@", [.text]),
-            "Errors:coreFileExtendedAttributes.namesText1": .init("文件附加信息数量超过限制。", []),
-            "Errors:coreFileExtendedAttributes.sizeText1": .init("文件附加信息无法读取或超过大小限制：%1$@ · %2$@", [.text, .text]),
-            "Errors:coreFileExtendedAttributes.sizeText2": .init("单个文件的附加信息超过大小限制。", []),
-            "Errors:coreFileExtendedAttributes.countText1": .init("文件附加信息在校验期间改变，请重试。", []),
-            "Errors:coreFileExtendedAttributes.validateText1": .init("文件附加信息的校验记录无效。", []),
-            "Errors:coreFileExtendedAttributes.copyText1": .init("无法保留文件附加信息，原文件已保留。", []),
-            "Errors:coreFileExtendedAttributes.beforeText1": .init("实例元数据的附加信息在更新期间改变。", []),
-            "Errors:coreFileExtendedAttributes.beforeText2": .init("无法更新实例元数据。", []),
-            "Errors:coreFileExtendedAttributes.sizeText3": .init("无法读取文件附加信息列表。", []),
-            "Errors:coreFileExtendedAttributes.bufferText1": .init("文件附加信息列表在读取期间改变。", []),
-            "Errors:coreFileExtendedAttributes.nameText1": .init("文件附加信息名称无效。", []),
+            "Core:CoreFileExtendedAttributes.attributeVerificationFailed": .init("无法核对文件附加信息：%1$@", [.text]),
+            "Errors:CoreFileExtendedAttributes.attributeListChangedDuringRead": .init("文件附加信息列表在读取期间改变。", []),
+            "Errors:CoreFileExtendedAttributes.attributeListReadFailed": .init("无法读取文件附加信息列表。", []),
+            "Errors:CoreFileExtendedAttributes.attributesChangedDuringVerification": .init("文件附加信息在校验期间改变，请重试。", []),
+            "Errors:CoreFileExtendedAttributes.attributesPreservationFailed": .init("无法保留文件附加信息，原文件已保留。", []),
+            "Errors:CoreFileExtendedAttributes.attributesUnreadableOrTooLarge": .init("文件附加信息无法读取或超过大小限制：%1$@ · %2$@", [.text, .text]),
+            "Errors:CoreFileExtendedAttributes.invalidAttributeDigest": .init("文件附加信息的校验记录无效。", []),
+            "Errors:CoreFileExtendedAttributes.invalidAttributeName": .init("文件附加信息名称无效。", []),
+            "Errors:CoreFileExtendedAttributes.metadataAttributesChanged": .init("实例元数据的附加信息在更新期间改变。", []),
+            "Errors:CoreFileExtendedAttributes.metadataUpdateFailed": .init("无法更新实例元数据。", []),
+            "Errors:CoreFileExtendedAttributes.singleAttributeTooLarge": .init("单个文件的附加信息超过大小限制。", []),
+            "Errors:CoreFileExtendedAttributes.tooManyAttributes": .init("文件附加信息数量超过限制。", []),
         ]
     }
 }

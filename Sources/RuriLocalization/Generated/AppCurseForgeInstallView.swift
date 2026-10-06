@@ -3,154 +3,154 @@ import Foundation
 
 extension Messages {
     public enum AppCurseForgeInstallView {
-        /// 社区创作
+        /// 返回
         ///
-        /// Resource: `Interface.appCurseForgeInstallView.bodyText1`.
-        public static var communityContent: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.bodyText1", table: "Interface", fallback: "社区创作")
-        }
-        /// 将为 %1$@ 安装 %2$lld 个文件，包含必需依赖。
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText1`.
-        public static func installPlan(_ value0: String, _ value1: Int64) -> LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText1", table: "Interface", fallback: "将为 %1$@ 安装 %2$lld 个文件，包含必需依赖。", arguments: [.text(value0), .integer(value1)])
-        }
-        /// 安装到实例
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText2`.
-        public static var installToInstance: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText2", table: "Interface", fallback: "安装到实例")
+        /// Resource: `Interface.AppCurseForgeInstallView.back`.
+        public static var back: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.back", table: "Interface", fallback: "返回")
         }
         /// 选择实例
         ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText3`.
+        /// Resource: `Interface.AppCurseForgeInstallView.chooseInstance`.
         public static var chooseInstance: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText3", table: "Interface", fallback: "选择实例")
+            .init(key: "AppCurseForgeInstallView.chooseInstance", table: "Interface", fallback: "选择实例")
         }
-        /// 查找兼容版本…
+        /// 社区创作
         ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText4`.
-        public static var findCompatibleVersions: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText4", table: "Interface", fallback: "查找兼容版本…")
+        /// Resource: `Interface.AppCurseForgeInstallView.communityContent`.
+        public static var communityContent: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.communityContent", table: "Interface", fallback: "社区创作")
         }
         /// 内容版本
         ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText5`.
+        /// Resource: `Interface.AppCurseForgeInstallView.contentVersion`.
         public static var contentVersion: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText5", table: "Interface", fallback: "内容版本")
+            .init(key: "AppCurseForgeInstallView.contentVersion", table: "Interface", fallback: "内容版本")
         }
-        /// 这一页没有兼容版本。
+        /// 查找兼容版本…
         ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText6`.
-        public static var noCompatibleVersions: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText6", table: "Interface", fallback: "这一页没有兼容版本。")
-        }
-        /// 请先选择已安装的实例；模组需要相应加载器。
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText7`.
-        public static var instanceSelectionNotice: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText7", table: "Interface", fallback: "请先选择已安装的实例；模组需要相应加载器。")
-        }
-        /// 上一页
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText8`.
-        public static var previousPage: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText8", table: "Interface", fallback: "上一页")
-        }
-        /// 第 %1$lld 页
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText9`.
-        public static func pageNumber(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText9", table: "Interface", fallback: "第 %1$lld 页", arguments: [.integer(value0)])
-        }
-        /// 下一页
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.planText10`.
-        public static var nextPage: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.planText10", table: "Interface", fallback: "下一页")
-        }
-        /// 整合包清单
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.fileText1`.
-        public static var packManifest: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.fileText1", table: "Interface", fallback: "整合包清单")
-        }
-        /// 使用光影需要安装 Iris 或其他兼容的光影模组。
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.fileText2`.
-        public static var shaderpackNotice: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.fileText2", table: "Interface", fallback: "使用光影需要安装 Iris 或其他兼容的光影模组。")
-        }
-        /// 正在解析必需依赖…
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.fileText3`.
-        public static var resolveDependencies: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.fileText3", table: "Interface", fallback: "正在解析必需依赖…")
-        }
-        /// 返回
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.errorText1`.
-        public static var back: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.errorText1", table: "Interface", fallback: "返回")
-        }
-        /// 读取整合包
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.errorText2`.
-        public static var readPack: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.errorText2", table: "Interface", fallback: "读取整合包")
-        }
-        /// 查看安装清单
-        ///
-        /// Resource: `Interface.appCurseForgeInstallView.errorText3`.
-        public static var viewInstallPlan: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.errorText3", table: "Interface", fallback: "查看安装清单")
+        /// Resource: `Interface.AppCurseForgeInstallView.findCompatibleVersions`.
+        public static var findCompatibleVersions: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.findCompatibleVersions", table: "Interface", fallback: "查找兼容版本…")
         }
         /// 安装
         ///
-        /// Resource: `Interface.appCurseForgeInstallView.errorText4`.
+        /// Resource: `Interface.AppCurseForgeInstallView.install`.
         public static var install: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.errorText4", table: "Interface", fallback: "安装")
+            .init(key: "AppCurseForgeInstallView.install", table: "Interface", fallback: "安装")
         }
-        /// 更新 %1$@
+        /// 将为 %1$@ 安装 %2$lld 个文件，包含必需依赖。
         ///
-        /// Resource: `Interface.appCurseForgeInstallView.bodyText2`.
-        public static func updatePack(_ value0: String) -> LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.bodyText2", table: "Interface", fallback: "更新 %1$@", arguments: [.text(value0)])
+        /// Resource: `Interface.AppCurseForgeInstallView.installPlan`.
+        public static func installPlan(_ value0: String, _ value1: Int64) -> LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.installPlan", table: "Interface", fallback: "将为 %1$@ 安装 %2$lld 个文件，包含必需依赖。", arguments: [.text(value0), .integer(value1)])
         }
-        /// %1$@ · %2$lld 个文件，包含必需依赖
+        /// 安装到实例
         ///
-        /// Resource: `Interface.appCurseForgeInstallView.bodyText3`.
-        public static func updateSummary(_ value0: String, _ value1: Int64) -> LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.bodyText3", table: "Interface", fallback: "%1$@ · %2$lld 个文件，包含必需依赖", arguments: [.text(value0), .integer(value1)])
+        /// Resource: `Interface.AppCurseForgeInstallView.installToInstance`.
+        public static var installToInstance: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.installToInstance", table: "Interface", fallback: "安装到实例")
+        }
+        /// 请先选择已安装的实例；模组需要相应加载器。
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.instanceSelectionNotice`.
+        public static var instanceSelectionNotice: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.instanceSelectionNotice", table: "Interface", fallback: "请先选择已安装的实例；模组需要相应加载器。")
+        }
+        /// 下一页
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.nextPage`.
+        public static var nextPage: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.nextPage", table: "Interface", fallback: "下一页")
+        }
+        /// 这一页没有兼容版本。
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.noCompatibleVersions`.
+        public static var noCompatibleVersions: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.noCompatibleVersions", table: "Interface", fallback: "这一页没有兼容版本。")
+        }
+        /// 整合包清单
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.packManifest`.
+        public static var packManifest: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.packManifest", table: "Interface", fallback: "整合包清单")
+        }
+        /// 第 %1$lld 页
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.pageNumber`.
+        public static func pageNumber(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.pageNumber", table: "Interface", fallback: "第 %1$lld 页", arguments: [.integer(value0)])
+        }
+        /// 上一页
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.previousPage`.
+        public static var previousPage: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.previousPage", table: "Interface", fallback: "上一页")
+        }
+        /// 读取整合包
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.readPack`.
+        public static var readPack: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.readPack", table: "Interface", fallback: "读取整合包")
+        }
+        /// 正在解析必需依赖…
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.resolveDependencies`.
+        public static var resolveDependencies: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.resolveDependencies", table: "Interface", fallback: "正在解析必需依赖…")
+        }
+        /// 使用光影需要安装 Iris 或其他兼容的光影模组。
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.shaderpackNotice`.
+        public static var shaderpackNotice: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.shaderpackNotice", table: "Interface", fallback: "使用光影需要安装 Iris 或其他兼容的光影模组。")
         }
         /// 更新
         ///
-        /// Resource: `Interface.appCurseForgeInstallView.bodyText4`.
+        /// Resource: `Interface.AppCurseForgeInstallView.update`.
         public static var update: LocalizedMessage {
-            .init(key: "appCurseForgeInstallView.bodyText4", table: "Interface", fallback: "更新")
+            .init(key: "AppCurseForgeInstallView.update", table: "Interface", fallback: "更新")
+        }
+        /// 更新 %1$@
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.updatePack`.
+        public static func updatePack(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.updatePack", table: "Interface", fallback: "更新 %1$@", arguments: [.text(value0)])
+        }
+        /// %1$@ · %2$lld 个文件，包含必需依赖
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.updateSummary`.
+        public static func updateSummary(_ value0: String, _ value1: Int64) -> LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.updateSummary", table: "Interface", fallback: "%1$@ · %2$lld 个文件，包含必需依赖", arguments: [.text(value0), .integer(value1)])
+        }
+        /// 查看安装清单
+        ///
+        /// Resource: `Interface.AppCurseForgeInstallView.viewInstallPlan`.
+        public static var viewInstallPlan: LocalizedMessage {
+            .init(key: "AppCurseForgeInstallView.viewInstallPlan", table: "Interface", fallback: "查看安装清单")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appCurseForgeInstallView.bodyText1": .init("社区创作", []),
-            "Interface:appCurseForgeInstallView.planText1": .init("将为 %1$@ 安装 %2$lld 个文件，包含必需依赖。", [.text, .integer]),
-            "Interface:appCurseForgeInstallView.planText2": .init("安装到实例", []),
-            "Interface:appCurseForgeInstallView.planText3": .init("选择实例", []),
-            "Interface:appCurseForgeInstallView.planText4": .init("查找兼容版本…", []),
-            "Interface:appCurseForgeInstallView.planText5": .init("内容版本", []),
-            "Interface:appCurseForgeInstallView.planText6": .init("这一页没有兼容版本。", []),
-            "Interface:appCurseForgeInstallView.planText7": .init("请先选择已安装的实例；模组需要相应加载器。", []),
-            "Interface:appCurseForgeInstallView.planText8": .init("上一页", []),
-            "Interface:appCurseForgeInstallView.planText9": .init("第 %1$lld 页", [.integer]),
-            "Interface:appCurseForgeInstallView.planText10": .init("下一页", []),
-            "Interface:appCurseForgeInstallView.fileText1": .init("整合包清单", []),
-            "Interface:appCurseForgeInstallView.fileText2": .init("使用光影需要安装 Iris 或其他兼容的光影模组。", []),
-            "Interface:appCurseForgeInstallView.fileText3": .init("正在解析必需依赖…", []),
-            "Interface:appCurseForgeInstallView.errorText1": .init("返回", []),
-            "Interface:appCurseForgeInstallView.errorText2": .init("读取整合包", []),
-            "Interface:appCurseForgeInstallView.errorText3": .init("查看安装清单", []),
-            "Interface:appCurseForgeInstallView.errorText4": .init("安装", []),
-            "Interface:appCurseForgeInstallView.bodyText2": .init("更新 %1$@", [.text]),
-            "Interface:appCurseForgeInstallView.bodyText3": .init("%1$@ · %2$lld 个文件，包含必需依赖", [.text, .integer]),
-            "Interface:appCurseForgeInstallView.bodyText4": .init("更新", []),
+            "Interface:AppCurseForgeInstallView.back": .init("返回", []),
+            "Interface:AppCurseForgeInstallView.chooseInstance": .init("选择实例", []),
+            "Interface:AppCurseForgeInstallView.communityContent": .init("社区创作", []),
+            "Interface:AppCurseForgeInstallView.contentVersion": .init("内容版本", []),
+            "Interface:AppCurseForgeInstallView.findCompatibleVersions": .init("查找兼容版本…", []),
+            "Interface:AppCurseForgeInstallView.install": .init("安装", []),
+            "Interface:AppCurseForgeInstallView.installPlan": .init("将为 %1$@ 安装 %2$lld 个文件，包含必需依赖。", [.text, .integer]),
+            "Interface:AppCurseForgeInstallView.installToInstance": .init("安装到实例", []),
+            "Interface:AppCurseForgeInstallView.instanceSelectionNotice": .init("请先选择已安装的实例；模组需要相应加载器。", []),
+            "Interface:AppCurseForgeInstallView.nextPage": .init("下一页", []),
+            "Interface:AppCurseForgeInstallView.noCompatibleVersions": .init("这一页没有兼容版本。", []),
+            "Interface:AppCurseForgeInstallView.packManifest": .init("整合包清单", []),
+            "Interface:AppCurseForgeInstallView.pageNumber": .init("第 %1$lld 页", [.integer]),
+            "Interface:AppCurseForgeInstallView.previousPage": .init("上一页", []),
+            "Interface:AppCurseForgeInstallView.readPack": .init("读取整合包", []),
+            "Interface:AppCurseForgeInstallView.resolveDependencies": .init("正在解析必需依赖…", []),
+            "Interface:AppCurseForgeInstallView.shaderpackNotice": .init("使用光影需要安装 Iris 或其他兼容的光影模组。", []),
+            "Interface:AppCurseForgeInstallView.update": .init("更新", []),
+            "Interface:AppCurseForgeInstallView.updatePack": .init("更新 %1$@", [.text]),
+            "Interface:AppCurseForgeInstallView.updateSummary": .init("%1$@ · %2$lld 个文件，包含必需依赖", [.text, .integer]),
+            "Interface:AppCurseForgeInstallView.viewInstallPlan": .init("查看安装清单", []),
         ]
     }
 }

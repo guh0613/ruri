@@ -11,10 +11,10 @@ public final class OperationLease: Sendable {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let path = try LauncherPaths.safePath(name, within: directory)
         let fd = open(path.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw OperationFailure("LOCK_UNAVAILABLE", Messages.CLIInterface.teff59600ae41.localized) }
+        guard fd >= 0 else { throw OperationFailure("LOCK_UNAVAILABLE", Messages.CLIInterface.operationLockOpenFailed.localized) }
         var info = stat(), lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET)
         guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
-            close(fd); throw OperationFailure("RESOURCE_BUSY", Messages.CLIInterface.tce7693c68759.localized, retryable: true)
+            close(fd); throw OperationFailure("RESOURCE_BUSY", Messages.CLIInterface.resourceInUseByAnotherProcess.localized, retryable: true)
         }
         return OperationLease(fd)
     }

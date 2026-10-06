@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreInstallerProcess {
         /// 安装程序已经在运行
         ///
-        /// Resource: `Errors.coreInstallerProcess.runText1`.
+        /// Resource: `Errors.CoreInstallerProcess.installerAlreadyRunning`.
         public static var installerAlreadyRunning: LocalizedMessage {
-            .init(key: "coreInstallerProcess.runText1", table: "Errors", fallback: "安装程序已经在运行")
+            .init(key: "CoreInstallerProcess.installerAlreadyRunning", table: "Errors", fallback: "安装程序已经在运行")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstallerProcess.runText1": .init("安装程序已经在运行", []),
+            "Errors:CoreInstallerProcess.installerAlreadyRunning": .init("安装程序已经在运行", []),
         ]
     }
 }

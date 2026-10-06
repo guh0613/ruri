@@ -3,196 +3,196 @@ import Foundation
 
 extension Messages {
     public enum CoreWorldManager {
-        /// 手动备份
+        /// 冒险
         ///
-        /// Resource: `Core.coreWorldManager.backupText1`.
-        public static var manualBackup: LocalizedMessage {
-            .init(key: "coreWorldManager.backupText1", table: "Core", fallback: "手动备份")
+        /// Resource: `Core.CoreWorldManager.adventureMode`.
+        public static var adventureMode: LocalizedMessage {
+            .init(key: "CoreWorldManager.adventureMode", table: "Core", fallback: "冒险")
         }
         /// 恢复前自动备份
         ///
-        /// Resource: `Core.coreWorldManager.lockText1`.
+        /// Resource: `Core.CoreWorldManager.automaticBackup`.
         public static var automaticBackup: LocalizedMessage {
-            .init(key: "coreWorldManager.lockText1", table: "Core", fallback: "恢复前自动备份")
-        }
-        /// 导入的世界
-        ///
-        /// Resource: `Core.coreWorldManager.baseText1`.
-        public static var importedWorld: LocalizedMessage {
-            .init(key: "coreWorldManager.baseText1", table: "Core", fallback: "导入的世界")
-        }
-        /// 无法读取存档信息，仍可备份文件。
-        ///
-        /// Resource: `Core.coreWorldManager.readerText1`.
-        public static var worldInfoReadFailed: LocalizedMessage {
-            .init(key: "coreWorldManager.readerText1", table: "Core", fallback: "无法读取存档信息，仍可备份文件。")
-        }
-        /// 生存
-        ///
-        /// Resource: `Core.coreWorldManager.modesText1`.
-        public static var survivalMode: LocalizedMessage {
-            .init(key: "coreWorldManager.modesText1", table: "Core", fallback: "生存")
+            .init(key: "CoreWorldManager.automaticBackup", table: "Core", fallback: "恢复前自动备份")
         }
         /// 创造
         ///
-        /// Resource: `Core.coreWorldManager.modesText2`.
+        /// Resource: `Core.CoreWorldManager.creativeMode`.
         public static var creativeMode: LocalizedMessage {
-            .init(key: "coreWorldManager.modesText2", table: "Core", fallback: "创造")
-        }
-        /// 冒险
-        ///
-        /// Resource: `Core.coreWorldManager.modesText3`.
-        public static var adventureMode: LocalizedMessage {
-            .init(key: "coreWorldManager.modesText3", table: "Core", fallback: "冒险")
-        }
-        /// 旁观
-        ///
-        /// Resource: `Core.coreWorldManager.modesText4`.
-        public static var spectatorMode: LocalizedMessage {
-            .init(key: "coreWorldManager.modesText4", table: "Core", fallback: "旁观")
+            .init(key: "CoreWorldManager.creativeMode", table: "Core", fallback: "创造")
         }
         /// 极限
         ///
-        /// Resource: `Core.coreWorldManager.modeText1`.
+        /// Resource: `Core.CoreWorldManager.hardcoreMode`.
         public static var hardcoreMode: LocalizedMessage {
-            .init(key: "coreWorldManager.modeText1", table: "Core", fallback: "极限")
+            .init(key: "CoreWorldManager.hardcoreMode", table: "Core", fallback: "极限")
+        }
+        /// 导入的世界
+        ///
+        /// Resource: `Core.CoreWorldManager.importedWorld`.
+        public static var importedWorld: LocalizedMessage {
+            .init(key: "CoreWorldManager.importedWorld", table: "Core", fallback: "导入的世界")
+        }
+        /// 手动备份
+        ///
+        /// Resource: `Core.CoreWorldManager.manualBackup`.
+        public static var manualBackup: LocalizedMessage {
+            .init(key: "CoreWorldManager.manualBackup", table: "Core", fallback: "手动备份")
         }
         /// %1$@ 恢复
         ///
-        /// Resource: `Core.coreWorldManager.restoredFolder`.
+        /// Resource: `Core.CoreWorldManager.restoredFolder`.
         public static func restoredFolder(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreWorldManager.restoredFolder", table: "Core", fallback: "%1$@ 恢复", arguments: [.text(value0)])
+            .init(key: "CoreWorldManager.restoredFolder", table: "Core", fallback: "%1$@ 恢复", arguments: [.text(value0)])
         }
-        /// 无效的存档目录名
+        /// 旁观
         ///
-        /// Resource: `Errors.coreWorldManager.worldURLText1`.
-        public static var invalidWorldDirectoryName: LocalizedMessage {
-            .init(key: "coreWorldManager.worldURLText1", table: "Errors", fallback: "无效的存档目录名")
+        /// Resource: `Core.CoreWorldManager.spectatorMode`.
+        public static var spectatorMode: LocalizedMessage {
+            .init(key: "CoreWorldManager.spectatorMode", table: "Core", fallback: "旁观")
         }
-        /// 存档管理不修改符号链接目录
+        /// 生存
         ///
-        /// Resource: `Errors.coreWorldManager.targetText1`.
-        public static var symlinkDirectoryUnmodified: LocalizedMessage {
-            .init(key: "coreWorldManager.targetText1", table: "Errors", fallback: "存档管理不修改符号链接目录")
+        /// Resource: `Core.CoreWorldManager.survivalMode`.
+        public static var survivalMode: LocalizedMessage {
+            .init(key: "CoreWorldManager.survivalMode", table: "Core", fallback: "生存")
         }
-        /// 找不到存档的 level.dat
+        /// 无法读取存档信息，仍可备份文件。
         ///
-        /// Resource: `Errors.coreWorldManager.worldText1`.
-        public static var levelDataMissing: LocalizedMessage {
-            .init(key: "coreWorldManager.worldText1", table: "Errors", fallback: "找不到存档的 level.dat")
+        /// Resource: `Core.CoreWorldManager.worldInfoReadFailed`.
+        public static var worldInfoReadFailed: LocalizedMessage {
+            .init(key: "CoreWorldManager.worldInfoReadFailed", table: "Core", fallback: "无法读取存档信息，仍可备份文件。")
         }
         /// 备份缺少存档数据
         ///
-        /// Resource: `Errors.coreWorldManager.sourceText1`.
+        /// Resource: `Errors.CoreWorldManager.backupDataMissing`.
         public static var backupDataMissing: LocalizedMessage {
-            .init(key: "coreWorldManager.sourceText1", table: "Errors", fallback: "备份缺少存档数据")
-        }
-        /// 存档恢复需要检查，文件保留在 %1$@。%2$@
-        ///
-        /// Resource: `Errors.coreWorldManager.journalText1`.
-        public static func restoreNeedsReview(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreWorldManager.journalText1", table: "Errors", fallback: "存档恢复需要检查，文件保留在 %1$@。%2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 恢复目录与现有存档发生冲突，已保留两份数据
-        ///
-        /// Resource: `Errors.coreWorldManager.hasTargetText1`.
-        public static var restoreDirectoryConflict: LocalizedMessage {
-            .init(key: "coreWorldManager.hasTargetText1", table: "Errors", fallback: "恢复目录与现有存档发生冲突，已保留两份数据")
-        }
-        /// 恢复前的存档目录缺失，请使用自动备份恢复
-        ///
-        /// Resource: `Errors.coreWorldManager.hasTargetText2`.
-        public static var originalWorldMissing: LocalizedMessage {
-            .init(key: "coreWorldManager.hasTargetText2", table: "Errors", fallback: "恢复前的存档目录缺失，请使用自动备份恢复")
-        }
-        /// 请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件
-        ///
-        /// Resource: `Errors.coreWorldManager.candidateText1`.
-        public static var invalidWorldFolder: LocalizedMessage {
-            .init(key: "coreWorldManager.candidateText1", table: "Errors", fallback: "请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件")
-        }
-        /// 存档不存在
-        ///
-        /// Resource: `Errors.coreWorldManager.worldText2`.
-        public static var worldMissing: LocalizedMessage {
-            .init(key: "coreWorldManager.worldText2", table: "Errors", fallback: "存档不存在")
+            .init(key: "CoreWorldManager.backupDataMissing", table: "Errors", fallback: "备份缺少存档数据")
         }
         /// 备份不属于当前实例
         ///
-        /// Resource: `Errors.coreWorldManager.fileText1`.
+        /// Resource: `Errors.CoreWorldManager.backupWrongInstance`.
         public static var backupWrongInstance: LocalizedMessage {
-            .init(key: "coreWorldManager.fileText1", table: "Errors", fallback: "备份不属于当前实例")
-        }
-        /// 无法生成唯一存档目录
-        ///
-        /// Resource: `Errors.coreWorldManager.nameText1`.
-        public static var uniqueWorldDirectory: LocalizedMessage {
-            .init(key: "coreWorldManager.nameText1", table: "Errors", fallback: "无法生成唯一存档目录")
-        }
-        /// 不是有效的 Ruri 存档备份
-        ///
-        /// Resource: `Errors.coreWorldManager.entryText1`.
-        public static var invalidBackup: LocalizedMessage {
-            .init(key: "coreWorldManager.entryText1", table: "Errors", fallback: "不是有效的 Ruri 存档备份")
+            .init(key: "CoreWorldManager.backupWrongInstance", table: "Errors", fallback: "备份不属于当前实例")
         }
         /// 备份元数据校验失败
         ///
-        /// Resource: `Errors.coreWorldManager.checksumText1`.
+        /// Resource: `Errors.CoreWorldManager.checksumFailed`.
         public static var checksumFailed: LocalizedMessage {
-            .init(key: "coreWorldManager.checksumText1", table: "Errors", fallback: "备份元数据校验失败")
+            .init(key: "CoreWorldManager.checksumFailed", table: "Errors", fallback: "备份元数据校验失败")
         }
-        /// 备份版本不受支持
+        /// 不是有效的 Ruri 存档备份
         ///
-        /// Resource: `Errors.coreWorldManager.resultText1`.
-        public static var unsupportedBackupVersion: LocalizedMessage {
-            .init(key: "coreWorldManager.resultText1", table: "Errors", fallback: "备份版本不受支持")
+        /// Resource: `Errors.CoreWorldManager.invalidBackup`.
+        public static var invalidBackup: LocalizedMessage {
+            .init(key: "CoreWorldManager.invalidBackup", table: "Errors", fallback: "不是有效的 Ruri 存档备份")
         }
-        /// NBT 文件过大
+        /// 无效的存档目录名
         ///
-        /// Resource: `Errors.coreWorldManager.fileText2`.
-        public static var nbtTooLarge: LocalizedMessage {
-            .init(key: "coreWorldManager.fileText2", table: "Errors", fallback: "NBT 文件过大")
+        /// Resource: `Errors.CoreWorldManager.invalidWorldDirectoryName`.
+        public static var invalidWorldDirectoryName: LocalizedMessage {
+            .init(key: "CoreWorldManager.invalidWorldDirectoryName", table: "Errors", fallback: "无效的存档目录名")
+        }
+        /// 请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件
+        ///
+        /// Resource: `Errors.CoreWorldManager.invalidWorldFolder`.
+        public static var invalidWorldFolder: LocalizedMessage {
+            .init(key: "CoreWorldManager.invalidWorldFolder", table: "Errors", fallback: "请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件")
+        }
+        /// 找不到存档的 level.dat
+        ///
+        /// Resource: `Errors.CoreWorldManager.levelDataMissing`.
+        public static var levelDataMissing: LocalizedMessage {
+            .init(key: "CoreWorldManager.levelDataMissing", table: "Errors", fallback: "找不到存档的 level.dat")
         }
         /// 无法读取存档锁文件
         ///
-        /// Resource: `Errors.coreWorldManager.fdText1`.
+        /// Resource: `Errors.CoreWorldManager.lockReadFailed`.
         public static var lockReadFailed: LocalizedMessage {
-            .init(key: "coreWorldManager.fdText1", table: "Errors", fallback: "无法读取存档锁文件")
+            .init(key: "CoreWorldManager.lockReadFailed", table: "Errors", fallback: "无法读取存档锁文件")
+        }
+        /// NBT 文件过大
+        ///
+        /// Resource: `Errors.CoreWorldManager.nbtTooLarge`.
+        public static var nbtTooLarge: LocalizedMessage {
+            .init(key: "CoreWorldManager.nbtTooLarge", table: "Errors", fallback: "NBT 文件过大")
+        }
+        /// 恢复前的存档目录缺失，请使用自动备份恢复
+        ///
+        /// Resource: `Errors.CoreWorldManager.originalWorldMissing`.
+        public static var originalWorldMissing: LocalizedMessage {
+            .init(key: "CoreWorldManager.originalWorldMissing", table: "Errors", fallback: "恢复前的存档目录缺失，请使用自动备份恢复")
+        }
+        /// 恢复目录与现有存档发生冲突，已保留两份数据
+        ///
+        /// Resource: `Errors.CoreWorldManager.restoreDirectoryConflict`.
+        public static var restoreDirectoryConflict: LocalizedMessage {
+            .init(key: "CoreWorldManager.restoreDirectoryConflict", table: "Errors", fallback: "恢复目录与现有存档发生冲突，已保留两份数据")
+        }
+        /// 存档恢复需要检查，文件保留在 %1$@。%2$@
+        ///
+        /// Resource: `Errors.CoreWorldManager.restoreNeedsReview`.
+        public static func restoreNeedsReview(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreWorldManager.restoreNeedsReview", table: "Errors", fallback: "存档恢复需要检查，文件保留在 %1$@。%2$@", arguments: [.text(value0), .text(value1)])
+        }
+        /// 存档管理不修改符号链接目录
+        ///
+        /// Resource: `Errors.CoreWorldManager.symlinkDirectoryUnmodified`.
+        public static var symlinkDirectoryUnmodified: LocalizedMessage {
+            .init(key: "CoreWorldManager.symlinkDirectoryUnmodified", table: "Errors", fallback: "存档管理不修改符号链接目录")
+        }
+        /// 无法生成唯一存档目录
+        ///
+        /// Resource: `Errors.CoreWorldManager.uniqueWorldDirectory`.
+        public static var uniqueWorldDirectory: LocalizedMessage {
+            .init(key: "CoreWorldManager.uniqueWorldDirectory", table: "Errors", fallback: "无法生成唯一存档目录")
+        }
+        /// 备份版本不受支持
+        ///
+        /// Resource: `Errors.CoreWorldManager.unsupportedBackupVersion`.
+        public static var unsupportedBackupVersion: LocalizedMessage {
+            .init(key: "CoreWorldManager.unsupportedBackupVersion", table: "Errors", fallback: "备份版本不受支持")
         }
         /// 存档正在被游戏使用，请退出该世界后重试。
         ///
-        /// Resource: `Errors.coreWorldManager.lockText2`.
+        /// Resource: `Errors.CoreWorldManager.worldInUse`.
         public static var worldInUse: LocalizedMessage {
-            .init(key: "coreWorldManager.lockText2", table: "Errors", fallback: "存档正在被游戏使用，请退出该世界后重试。")
+            .init(key: "CoreWorldManager.worldInUse", table: "Errors", fallback: "存档正在被游戏使用，请退出该世界后重试。")
+        }
+        /// 存档不存在
+        ///
+        /// Resource: `Errors.CoreWorldManager.worldMissing`.
+        public static var worldMissing: LocalizedMessage {
+            .init(key: "CoreWorldManager.worldMissing", table: "Errors", fallback: "存档不存在")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreWorldManager.backupText1": .init("手动备份", []),
-            "Core:coreWorldManager.lockText1": .init("恢复前自动备份", []),
-            "Core:coreWorldManager.baseText1": .init("导入的世界", []),
-            "Core:coreWorldManager.readerText1": .init("无法读取存档信息，仍可备份文件。", []),
-            "Core:coreWorldManager.modesText1": .init("生存", []),
-            "Core:coreWorldManager.modesText2": .init("创造", []),
-            "Core:coreWorldManager.modesText3": .init("冒险", []),
-            "Core:coreWorldManager.modesText4": .init("旁观", []),
-            "Core:coreWorldManager.modeText1": .init("极限", []),
-            "Core:coreWorldManager.restoredFolder": .init("%1$@ 恢复", [.text]),
-            "Errors:coreWorldManager.worldURLText1": .init("无效的存档目录名", []),
-            "Errors:coreWorldManager.targetText1": .init("存档管理不修改符号链接目录", []),
-            "Errors:coreWorldManager.worldText1": .init("找不到存档的 level.dat", []),
-            "Errors:coreWorldManager.sourceText1": .init("备份缺少存档数据", []),
-            "Errors:coreWorldManager.journalText1": .init("存档恢复需要检查，文件保留在 %1$@。%2$@", [.text, .text]),
-            "Errors:coreWorldManager.hasTargetText1": .init("恢复目录与现有存档发生冲突，已保留两份数据", []),
-            "Errors:coreWorldManager.hasTargetText2": .init("恢复前的存档目录缺失，请使用自动备份恢复", []),
-            "Errors:coreWorldManager.candidateText1": .init("请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件", []),
-            "Errors:coreWorldManager.worldText2": .init("存档不存在", []),
-            "Errors:coreWorldManager.fileText1": .init("备份不属于当前实例", []),
-            "Errors:coreWorldManager.nameText1": .init("无法生成唯一存档目录", []),
-            "Errors:coreWorldManager.entryText1": .init("不是有效的 Ruri 存档备份", []),
-            "Errors:coreWorldManager.checksumText1": .init("备份元数据校验失败", []),
-            "Errors:coreWorldManager.resultText1": .init("备份版本不受支持", []),
-            "Errors:coreWorldManager.fileText2": .init("NBT 文件过大", []),
-            "Errors:coreWorldManager.fdText1": .init("无法读取存档锁文件", []),
-            "Errors:coreWorldManager.lockText2": .init("存档正在被游戏使用，请退出该世界后重试。", []),
+            "Core:CoreWorldManager.adventureMode": .init("冒险", []),
+            "Core:CoreWorldManager.automaticBackup": .init("恢复前自动备份", []),
+            "Core:CoreWorldManager.creativeMode": .init("创造", []),
+            "Core:CoreWorldManager.hardcoreMode": .init("极限", []),
+            "Core:CoreWorldManager.importedWorld": .init("导入的世界", []),
+            "Core:CoreWorldManager.manualBackup": .init("手动备份", []),
+            "Core:CoreWorldManager.restoredFolder": .init("%1$@ 恢复", [.text]),
+            "Core:CoreWorldManager.spectatorMode": .init("旁观", []),
+            "Core:CoreWorldManager.survivalMode": .init("生存", []),
+            "Core:CoreWorldManager.worldInfoReadFailed": .init("无法读取存档信息，仍可备份文件。", []),
+            "Errors:CoreWorldManager.backupDataMissing": .init("备份缺少存档数据", []),
+            "Errors:CoreWorldManager.backupWrongInstance": .init("备份不属于当前实例", []),
+            "Errors:CoreWorldManager.checksumFailed": .init("备份元数据校验失败", []),
+            "Errors:CoreWorldManager.invalidBackup": .init("不是有效的 Ruri 存档备份", []),
+            "Errors:CoreWorldManager.invalidWorldDirectoryName": .init("无效的存档目录名", []),
+            "Errors:CoreWorldManager.invalidWorldFolder": .init("请选择包含单个 Minecraft 存档的文件夹或 ZIP 文件", []),
+            "Errors:CoreWorldManager.levelDataMissing": .init("找不到存档的 level.dat", []),
+            "Errors:CoreWorldManager.lockReadFailed": .init("无法读取存档锁文件", []),
+            "Errors:CoreWorldManager.nbtTooLarge": .init("NBT 文件过大", []),
+            "Errors:CoreWorldManager.originalWorldMissing": .init("恢复前的存档目录缺失，请使用自动备份恢复", []),
+            "Errors:CoreWorldManager.restoreDirectoryConflict": .init("恢复目录与现有存档发生冲突，已保留两份数据", []),
+            "Errors:CoreWorldManager.restoreNeedsReview": .init("存档恢复需要检查，文件保留在 %1$@。%2$@", [.text, .text]),
+            "Errors:CoreWorldManager.symlinkDirectoryUnmodified": .init("存档管理不修改符号链接目录", []),
+            "Errors:CoreWorldManager.uniqueWorldDirectory": .init("无法生成唯一存档目录", []),
+            "Errors:CoreWorldManager.unsupportedBackupVersion": .init("备份版本不受支持", []),
+            "Errors:CoreWorldManager.worldInUse": .init("存档正在被游戏使用，请退出该世界后重试。", []),
+            "Errors:CoreWorldManager.worldMissing": .init("存档不存在", []),
         ]
     }
 }

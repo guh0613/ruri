@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreFileAppleDouble {
         /// 文件附加信息在枚举期间改变，请重试。
         ///
-        /// Resource: `Errors.coreFileAppleDouble.afterText1`.
+        /// Resource: `Errors.CoreFileAppleDouble.fileChangedDuringEnumeration`.
         public static var fileChangedDuringEnumeration: LocalizedMessage {
-            .init(key: "coreFileAppleDouble.afterText1", table: "Errors", fallback: "文件附加信息在枚举期间改变，请重试。")
+            .init(key: "CoreFileAppleDouble.fileChangedDuringEnumeration", table: "Errors", fallback: "文件附加信息在枚举期间改变，请重试。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreFileAppleDouble.afterText1": .init("文件附加信息在枚举期间改变，请重试。", []),
+            "Errors:CoreFileAppleDouble.fileChangedDuringEnumeration": .init("文件附加信息在枚举期间改变，请重试。", []),
         ]
     }
 }

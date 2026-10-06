@@ -3,119 +3,119 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftManifestGraph {
-        /// 补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。
-        ///
-        /// Resource: `Core.coreMinecraftManifestGraph.warningText1`.
-        public static var nestedPatchWarning: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.warningText1", table: "Core", fallback: "补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。")
-        }
-        /// 依赖库
-        ///
-        /// Resource: `Core.coreMinecraftManifestGraph.warningText2`.
-        public static var libraries: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.warningText2", table: "Core", fallback: "依赖库")
-        }
         /// 兼容规则
         ///
-        /// Resource: `Core.coreMinecraftManifestGraph.compatibilityText1`.
+        /// Resource: `Core.CoreMinecraftManifestGraph.compatibilityRules`.
         public static var compatibilityRules: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.compatibilityText1", table: "Core", fallback: "兼容规则")
+            .init(key: "CoreMinecraftManifestGraph.compatibilityRules", table: "Core", fallback: "兼容规则")
         }
         /// 启动参数
         ///
-        /// Resource: `Core.coreMinecraftManifestGraph.valuesText1`.
+        /// Resource: `Core.CoreMinecraftManifestGraph.launchArguments`.
         public static var launchArguments: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.valuesText1", table: "Core", fallback: "启动参数")
+            .init(key: "CoreMinecraftManifestGraph.launchArguments", table: "Core", fallback: "启动参数")
         }
-        /// 版本继承存在循环或层级过深。
+        /// 依赖库
         ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.resolveManifestText1`.
-        public static var inheritanceCycle: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.resolveManifestText1", table: "Errors", fallback: "版本继承存在循环或层级过深。")
+        /// Resource: `Core.CoreMinecraftManifestGraph.libraries`.
+        public static var libraries: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.libraries", table: "Core", fallback: "依赖库")
         }
-        /// 版本清单的 root 标记无效。
+        /// 补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。
         ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.numberText1`.
-        public static var invalidRoot: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.numberText1", table: "Errors", fallback: "版本清单的 root 标记无效。")
-        }
-        /// 版本补丁清单格式无效。
-        ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.listText1`.
-        public static var invalidPatchList: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.listText1", table: "Errors", fallback: "版本补丁清单格式无效。")
-        }
-        /// 版本组件数量超过读取限制。
-        ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.listText2`.
-        public static var componentLimit: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.listText2", table: "Errors", fallback: "版本组件数量超过读取限制。")
-        }
-        /// 版本文件下载信息格式无效。
-        ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.mapText1`.
-        public static var invalidDownloadInfo: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.mapText1", table: "Errors", fallback: "版本文件下载信息格式无效。")
-        }
-        /// 版本文件下载信息包含重复类型：%1$@
-        ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.canonicalText1`.
-        public static func duplicateDownloadType(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.canonicalText1", table: "Errors", fallback: "版本文件下载信息包含重复类型：%1$@", arguments: [.text(value0)])
-        }
-        /// 合并后的依赖库数量超过限制。
-        ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.childLibrariesText1`.
-        public static var libraryLimit: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.childLibrariesText1", table: "Errors", fallback: "合并后的依赖库数量超过限制。")
+        /// Resource: `Core.CoreMinecraftManifestGraph.nestedPatchWarning`.
+        public static var nestedPatchWarning: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.nestedPatchWarning", table: "Core", fallback: "补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。")
         }
         /// 合并后的启动参数数量超过限制。
         ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.valuesText2`.
+        /// Resource: `Errors.CoreMinecraftManifestGraph.argumentLimit`.
         public static var argumentLimit: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.valuesText2", table: "Errors", fallback: "合并后的启动参数数量超过限制。")
+            .init(key: "CoreMinecraftManifestGraph.argumentLimit", table: "Errors", fallback: "合并后的启动参数数量超过限制。")
         }
-        /// 清单的最低启动器版本无效。
+        /// 版本组件数量超过读取限制。
         ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.numberText2`.
-        public static var invalidLauncherVersion: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.numberText2", table: "Errors", fallback: "清单的最低启动器版本无效。")
+        /// Resource: `Errors.CoreMinecraftManifestGraph.componentLimit`.
+        public static var componentLimit: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.componentLimit", table: "Errors", fallback: "版本组件数量超过读取限制。")
+        }
+        /// 版本文件下载信息包含重复类型：%1$@
+        ///
+        /// Resource: `Errors.CoreMinecraftManifestGraph.duplicateDownloadType`.
+        public static func duplicateDownloadType(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.duplicateDownloadType", table: "Errors", fallback: "版本文件下载信息包含重复类型：%1$@", arguments: [.text(value0)])
+        }
+        /// 版本继承存在循环或层级过深。
+        ///
+        /// Resource: `Errors.CoreMinecraftManifestGraph.inheritanceCycle`.
+        public static var inheritanceCycle: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.inheritanceCycle", table: "Errors", fallback: "版本继承存在循环或层级过深。")
         }
         /// 启动参数不是有效对象。
         ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.objectText1`.
+        /// Resource: `Errors.CoreMinecraftManifestGraph.invalidArgumentObject`.
         public static var invalidArgumentObject: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.objectText1", table: "Errors", fallback: "启动参数不是有效对象。")
+            .init(key: "CoreMinecraftManifestGraph.invalidArgumentObject", table: "Errors", fallback: "启动参数不是有效对象。")
+        }
+        /// 版本文件下载信息格式无效。
+        ///
+        /// Resource: `Errors.CoreMinecraftManifestGraph.invalidDownloadInfo`.
+        public static var invalidDownloadInfo: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.invalidDownloadInfo", table: "Errors", fallback: "版本文件下载信息格式无效。")
+        }
+        /// 清单的最低启动器版本无效。
+        ///
+        /// Resource: `Errors.CoreMinecraftManifestGraph.invalidLauncherVersion`.
+        public static var invalidLauncherVersion: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.invalidLauncherVersion", table: "Errors", fallback: "清单的最低启动器版本无效。")
         }
         /// %1$@清单格式或数量无效。
         ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.arrayText1`.
+        /// Resource: `Errors.CoreMinecraftManifestGraph.invalidManifestArray`.
         public static func invalidManifestArray(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.arrayText1", table: "Errors", fallback: "%1$@清单格式或数量无效。", arguments: [.text(value0)])
+            .init(key: "CoreMinecraftManifestGraph.invalidManifestArray", table: "Errors", fallback: "%1$@清单格式或数量无效。", arguments: [.text(value0)])
+        }
+        /// 版本补丁清单格式无效。
+        ///
+        /// Resource: `Errors.CoreMinecraftManifestGraph.invalidPatchList`.
+        public static var invalidPatchList: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.invalidPatchList", table: "Errors", fallback: "版本补丁清单格式无效。")
         }
         /// 版本补丁优先级无效。
         ///
-        /// Resource: `Errors.coreMinecraftManifestGraph.numberText3`.
+        /// Resource: `Errors.CoreMinecraftManifestGraph.invalidPatchPriority`.
         public static var invalidPatchPriority: LocalizedMessage {
-            .init(key: "coreMinecraftManifestGraph.numberText3", table: "Errors", fallback: "版本补丁优先级无效。")
+            .init(key: "CoreMinecraftManifestGraph.invalidPatchPriority", table: "Errors", fallback: "版本补丁优先级无效。")
+        }
+        /// 版本清单的 root 标记无效。
+        ///
+        /// Resource: `Errors.CoreMinecraftManifestGraph.invalidRoot`.
+        public static var invalidRoot: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.invalidRoot", table: "Errors", fallback: "版本清单的 root 标记无效。")
+        }
+        /// 合并后的依赖库数量超过限制。
+        ///
+        /// Resource: `Errors.CoreMinecraftManifestGraph.libraryLimit`.
+        public static var libraryLimit: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestGraph.libraryLimit", table: "Errors", fallback: "合并后的依赖库数量超过限制。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreMinecraftManifestGraph.warningText1": .init("补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。", []),
-            "Core:coreMinecraftManifestGraph.warningText2": .init("依赖库", []),
-            "Core:coreMinecraftManifestGraph.compatibilityText1": .init("兼容规则", []),
-            "Core:coreMinecraftManifestGraph.valuesText1": .init("启动参数", []),
-            "Errors:coreMinecraftManifestGraph.resolveManifestText1": .init("版本继承存在循环或层级过深。", []),
-            "Errors:coreMinecraftManifestGraph.numberText1": .init("版本清单的 root 标记无效。", []),
-            "Errors:coreMinecraftManifestGraph.listText1": .init("版本补丁清单格式无效。", []),
-            "Errors:coreMinecraftManifestGraph.listText2": .init("版本组件数量超过读取限制。", []),
-            "Errors:coreMinecraftManifestGraph.mapText1": .init("版本文件下载信息格式无效。", []),
-            "Errors:coreMinecraftManifestGraph.canonicalText1": .init("版本文件下载信息包含重复类型：%1$@", [.text]),
-            "Errors:coreMinecraftManifestGraph.childLibrariesText1": .init("合并后的依赖库数量超过限制。", []),
-            "Errors:coreMinecraftManifestGraph.valuesText2": .init("合并后的启动参数数量超过限制。", []),
-            "Errors:coreMinecraftManifestGraph.numberText2": .init("清单的最低启动器版本无效。", []),
-            "Errors:coreMinecraftManifestGraph.objectText1": .init("启动参数不是有效对象。", []),
-            "Errors:coreMinecraftManifestGraph.arrayText1": .init("%1$@清单格式或数量无效。", [.text]),
-            "Errors:coreMinecraftManifestGraph.numberText3": .init("版本补丁优先级无效。", []),
+            "Core:CoreMinecraftManifestGraph.compatibilityRules": .init("兼容规则", []),
+            "Core:CoreMinecraftManifestGraph.launchArguments": .init("启动参数", []),
+            "Core:CoreMinecraftManifestGraph.libraries": .init("依赖库", []),
+            "Core:CoreMinecraftManifestGraph.nestedPatchWarning": .init("补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。", []),
+            "Errors:CoreMinecraftManifestGraph.argumentLimit": .init("合并后的启动参数数量超过限制。", []),
+            "Errors:CoreMinecraftManifestGraph.componentLimit": .init("版本组件数量超过读取限制。", []),
+            "Errors:CoreMinecraftManifestGraph.duplicateDownloadType": .init("版本文件下载信息包含重复类型：%1$@", [.text]),
+            "Errors:CoreMinecraftManifestGraph.inheritanceCycle": .init("版本继承存在循环或层级过深。", []),
+            "Errors:CoreMinecraftManifestGraph.invalidArgumentObject": .init("启动参数不是有效对象。", []),
+            "Errors:CoreMinecraftManifestGraph.invalidDownloadInfo": .init("版本文件下载信息格式无效。", []),
+            "Errors:CoreMinecraftManifestGraph.invalidLauncherVersion": .init("清单的最低启动器版本无效。", []),
+            "Errors:CoreMinecraftManifestGraph.invalidManifestArray": .init("%1$@清单格式或数量无效。", [.text]),
+            "Errors:CoreMinecraftManifestGraph.invalidPatchList": .init("版本补丁清单格式无效。", []),
+            "Errors:CoreMinecraftManifestGraph.invalidPatchPriority": .init("版本补丁优先级无效。", []),
+            "Errors:CoreMinecraftManifestGraph.invalidRoot": .init("版本清单的 root 标记无效。", []),
+            "Errors:CoreMinecraftManifestGraph.libraryLimit": .init("合并后的依赖库数量超过限制。", []),
         ]
     }
 }

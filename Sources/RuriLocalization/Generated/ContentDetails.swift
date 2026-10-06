@@ -3,357 +3,357 @@ import Foundation
 
 extension Messages {
     public enum ContentDetails {
-        /// 资源详情
-        ///
-        /// Resource: `ContentDetails.contentDetails.details`.
-        public static var details: LocalizedMessage {
-            .init(key: "contentDetails.details", table: "ContentDetails", fallback: "资源详情")
-        }
-        /// 在线项目
-        ///
-        /// Resource: `ContentDetails.contentDetails.onlineProjects`.
-        public static var onlineProjects: LocalizedMessage {
-            .init(key: "contentDetails.onlineProjects", table: "ContentDetails", fallback: "在线项目")
-        }
-        /// 正在识别在线项目…
-        ///
-        /// Resource: `ContentDetails.contentDetails.lookingUp`.
-        public static var lookingUp: LocalizedMessage {
-            .init(key: "contentDetails.lookingUp", table: "ContentDetails", fallback: "正在识别在线项目…")
-        }
-        /// 未找到与此文件匹配的在线项目。
-        ///
-        /// Resource: `ContentDetails.contentDetails.noMatch`.
-        public static var noMatch: LocalizedMessage {
-            .init(key: "contentDetails.noMatch", table: "ContentDetails", fallback: "未找到与此文件匹配的在线项目。")
-        }
-        /// 重新识别
-        ///
-        /// Resource: `ContentDetails.contentDetails.retry`.
-        public static var retry: LocalizedMessage {
-            .init(key: "contentDetails.retry", table: "ContentDetails", fallback: "重新识别")
-        }
-        /// 本地导入
-        ///
-        /// Resource: `ContentDetails.contentDetails.localFile`.
-        public static var localFile: LocalizedMessage {
-            .init(key: "contentDetails.localFile", table: "ContentDetails", fallback: "本地导入")
-        }
         /// 作者
         ///
-        /// Resource: `ContentDetails.contentDetails.authors`.
+        /// Resource: `ContentDetails.ContentDetails.authors`.
         public static var authors: LocalizedMessage {
-            .init(key: "contentDetails.authors", table: "ContentDetails", fallback: "作者")
-        }
-        /// 简介
-        ///
-        /// Resource: `ContentDetails.contentDetails.description`.
-        public static var description: LocalizedMessage {
-            .init(key: "contentDetails.description", table: "ContentDetails", fallback: "简介")
-        }
-        /// 模组 ID
-        ///
-        /// Resource: `ContentDetails.contentDetails.modID`.
-        public static var modID: LocalizedMessage {
-            .init(key: "contentDetails.modID", table: "ContentDetails", fallback: "模组 ID")
-        }
-        /// 官方网站
-        ///
-        /// Resource: `ContentDetails.contentDetails.homepage`.
-        public static var homepage: LocalizedMessage {
-            .init(key: "contentDetails.homepage", table: "ContentDetails", fallback: "官方网站")
-        }
-        /// MC 百科
-        ///
-        /// Resource: `ContentDetails.contentDetails.encyclopedia`.
-        public static var encyclopedia: LocalizedMessage {
-            .init(key: "contentDetails.encyclopedia", table: "ContentDetails", fallback: "MC 百科")
-        }
-        /// 在 MC 百科搜索
-        ///
-        /// Resource: `ContentDetails.contentDetails.searchEncyclopedia`.
-        public static var searchEncyclopedia: LocalizedMessage {
-            .init(key: "contentDetails.searchEncyclopedia", table: "ContentDetails", fallback: "在 MC 百科搜索")
-        }
-        /// 文件名
-        ///
-        /// Resource: `ContentDetails.contentDetails.filename`.
-        public static var filename: LocalizedMessage {
-            .init(key: "contentDetails.filename", table: "ContentDetails", fallback: "文件名")
-        }
-        /// 版本
-        ///
-        /// Resource: `ContentDetails.contentDetails.version`.
-        public static var version: LocalizedMessage {
-            .init(key: "contentDetails.version", table: "ContentDetails", fallback: "版本")
-        }
-        /// 大小
-        ///
-        /// Resource: `ContentDetails.contentDetails.size`.
-        public static var size: LocalizedMessage {
-            .init(key: "contentDetails.size", table: "ContentDetails", fallback: "大小")
-        }
-        /// 安装来源
-        ///
-        /// Resource: `ContentDetails.contentDetails.source`.
-        public static var source: LocalizedMessage {
-            .init(key: "contentDetails.source", table: "ContentDetails", fallback: "安装来源")
-        }
-        /// 这个文件没有提供简介。
-        ///
-        /// Resource: `ContentDetails.contentDetails.noDescription`.
-        public static var noDescription: LocalizedMessage {
-            .init(key: "contentDetails.noDescription", table: "ContentDetails", fallback: "这个文件没有提供简介。")
-        }
-        /// 配置 CurseForge API Key 后可同时识别该平台。
-        ///
-        /// Resource: `ContentDetails.contentDetails.curseforgeUnavailable`.
-        public static var curseforgeUnavailable: LocalizedMessage {
-            .init(key: "contentDetails.curseforgeUnavailable", table: "ContentDetails", fallback: "配置 CurseForge API Key 后可同时识别该平台。")
-        }
-        /// 文件已发生变化，请刷新后重试：%1$@
-        ///
-        /// Resource: `ContentDetails.contentDetails.fileChanged`.
-        public static func fileChanged(_ value0: String) -> LocalizedMessage {
-            .init(key: "contentDetails.fileChanged", table: "ContentDetails", fallback: "文件已发生变化，请刷新后重试：%1$@", arguments: [.text(value0)])
-        }
-        /// 暂时无法读取匹配项目的信息，请稍后重试。
-        ///
-        /// Resource: `ContentDetails.contentDetails.projectUnavailable`.
-        public static var projectUnavailable: LocalizedMessage {
-            .init(key: "contentDetails.projectUnavailable", table: "ContentDetails", fallback: "暂时无法读取匹配项目的信息，请稍后重试。")
-        }
-        /// %1$@：%2$@
-        ///
-        /// Resource: `ContentDetails.contentDetails.serviceFailure`.
-        public static func serviceFailure(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "contentDetails.serviceFailure", table: "ContentDetails", fallback: "%1$@：%2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 获取资源
-        ///
-        /// Resource: `ContentDetails.contentDetails.download`.
-        public static var download: LocalizedMessage {
-            .init(key: "contentDetails.download", table: "ContentDetails", fallback: "获取资源")
-        }
-        /// 打开文件夹
-        ///
-        /// Resource: `ContentDetails.contentDetails.openFolder`.
-        public static var openFolder: LocalizedMessage {
-            .init(key: "contentDetails.openFolder", table: "ContentDetails", fallback: "打开文件夹")
-        }
-        /// 以下文件对应重复项目，暂未纳入更新：%1$@
-        ///
-        /// Resource: `ContentDetails.contentDetails.duplicateProjects`.
-        public static func duplicateProjects(_ value0: String) -> LocalizedMessage {
-            .init(key: "contentDetails.duplicateProjects", table: "ContentDetails", fallback: "以下文件对应重复项目，暂未纳入更新：%1$@", arguments: [.text(value0)])
-        }
-        /// 已识别的资源暂无更新
-        ///
-        /// Resource: `ContentDetails.contentDetails.noIdentifiedUpdates`.
-        public static var noIdentifiedUpdates: LocalizedMessage {
-            .init(key: "contentDetails.noIdentifiedUpdates", table: "ContentDetails", fallback: "已识别的资源暂无更新")
-        }
-        /// %1$lld 项资源尚未关联在线项目
-        ///
-        /// Resource: `ContentDetails.contentDetails.unmatchedCount`.
-        public static func unmatchedCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "contentDetails.unmatchedCount", table: "ContentDetails", fallback: "%1$lld 项资源尚未关联在线项目", arguments: [.integer(value0)])
-        }
-        /// 正在识别资源并检查更新…
-        ///
-        /// Resource: `ContentDetails.contentDetails.identifyingUpdates`.
-        public static var identifyingUpdates: LocalizedMessage {
-            .init(key: "contentDetails.identifyingUpdates", table: "ContentDetails", fallback: "正在识别资源并检查更新…")
-        }
-        /// 刷新列表
-        ///
-        /// Resource: `ContentDetails.contentDetails.refresh`.
-        public static var refresh: LocalizedMessage {
-            .init(key: "contentDetails.refresh", table: "ContentDetails", fallback: "刷新列表")
-        }
-        /// 中文名称与百科关联来自 MC 百科，由 HMCL 整理。
-        ///
-        /// Resource: `ContentDetails.contentDetails.metadataAttribution`.
-        public static var metadataAttribution: LocalizedMessage {
-            .init(key: "contentDetails.metadataAttribution", table: "ContentDetails", fallback: "中文名称与百科关联来自 MC 百科，由 HMCL 整理。")
-        }
-        /// %1$lld 项结果
-        ///
-        /// Resource: `ContentDetails.contentDetails.resultCount`.
-        public static func resultCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "contentDetails.resultCount", table: "ContentDetails", fallback: "%1$lld 项结果", arguments: [.integer(value0)])
-        }
-        /// 正在读取资源信息…
-        ///
-        /// Resource: `ContentDetails.contentDetails.loadingMetadata`.
-        public static var loadingMetadata: LocalizedMessage {
-            .init(key: "contentDetails.loadingMetadata", table: "ContentDetails", fallback: "正在读取资源信息…")
-        }
-        /// 请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。
-        ///
-        /// Resource: `ContentDetails.contentDetails.invalidPackFolder`.
-        public static var invalidPackFolder: LocalizedMessage {
-            .init(key: "contentDetails.invalidPackFolder", table: "ContentDetails", fallback: "请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。")
-        }
-        /// 文件夹
-        ///
-        /// Resource: `ContentDetails.contentDetails.folder`.
-        public static var folder: LocalizedMessage {
-            .init(key: "contentDetails.folder", table: "ContentDetails", fallback: "文件夹")
-        }
-        /// 包含文件夹
-        ///
-        /// Resource: `ContentDetails.contentDetails.includesFolders`.
-        public static var includesFolders: LocalizedMessage {
-            .init(key: "contentDetails.includesFolders", table: "ContentDetails", fallback: "包含文件夹")
-        }
-        /// 文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。
-        ///
-        /// Resource: `ContentDetails.contentDetails.folderOnlineInfo`.
-        public static var folderOnlineInfo: LocalizedMessage {
-            .init(key: "contentDetails.folderOnlineInfo", table: "ContentDetails", fallback: "文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。")
-        }
-        /// 资源格式
-        ///
-        /// Resource: `ContentDetails.contentDetails.packFormat`.
-        public static var packFormat: LocalizedMessage {
-            .init(key: "contentDetails.packFormat", table: "ContentDetails", fallback: "资源格式")
-        }
-        /// 当前游戏格式
-        ///
-        /// Resource: `ContentDetails.contentDetails.gameFormat`.
-        public static var gameFormat: LocalizedMessage {
-            .init(key: "contentDetails.gameFormat", table: "ContentDetails", fallback: "当前游戏格式")
+            .init(key: "ContentDetails.authors", table: "ContentDetails", fallback: "作者")
         }
         /// 兼容性
         ///
-        /// Resource: `ContentDetails.contentDetails.compatibility`.
+        /// Resource: `ContentDetails.ContentDetails.compatibility`.
         public static var compatibility: LocalizedMessage {
-            .init(key: "contentDetails.compatibility", table: "ContentDetails", fallback: "兼容性")
+            .init(key: "ContentDetails.compatibility", table: "ContentDetails", fallback: "兼容性")
         }
         /// 格式兼容
         ///
-        /// Resource: `ContentDetails.contentDetails.compatible`.
+        /// Resource: `ContentDetails.ContentDetails.compatible`.
         public static var compatible: LocalizedMessage {
-            .init(key: "contentDetails.compatible", table: "ContentDetails", fallback: "格式兼容")
+            .init(key: "ContentDetails.compatible", table: "ContentDetails", fallback: "格式兼容")
         }
-        /// 适用于较早的游戏版本
+        /// 配置 CurseForge API Key 后可同时识别该平台。
         ///
-        /// Resource: `ContentDetails.contentDetails.packTooOld`.
-        public static var packTooOld: LocalizedMessage {
-            .init(key: "contentDetails.packTooOld", table: "ContentDetails", fallback: "适用于较早的游戏版本")
+        /// Resource: `ContentDetails.ContentDetails.curseforgeUnavailable`.
+        public static var curseforgeUnavailable: LocalizedMessage {
+            .init(key: "ContentDetails.curseforgeUnavailable", table: "ContentDetails", fallback: "配置 CurseForge API Key 后可同时识别该平台。")
         }
-        /// 需要较新的游戏版本
+        /// 简介
         ///
-        /// Resource: `ContentDetails.contentDetails.packTooNew`.
-        public static var packTooNew: LocalizedMessage {
-            .init(key: "contentDetails.packTooNew", table: "ContentDetails", fallback: "需要较新的游戏版本")
+        /// Resource: `ContentDetails.ContentDetails.description`.
+        public static var description: LocalizedMessage {
+            .init(key: "ContentDetails.description", table: "ContentDetails", fallback: "简介")
         }
-        /// 资源包信息无效
+        /// 资源详情
         ///
-        /// Resource: `ContentDetails.contentDetails.invalidPackMetadata`.
-        public static var invalidPackMetadata: LocalizedMessage {
-            .init(key: "contentDetails.invalidPackMetadata", table: "ContentDetails", fallback: "资源包信息无效")
+        /// Resource: `ContentDetails.ContentDetails.details`.
+        public static var details: LocalizedMessage {
+            .init(key: "ContentDetails.details", table: "ContentDetails", fallback: "资源详情")
         }
-        /// 缺少资源包信息
+        /// 获取资源
         ///
-        /// Resource: `ContentDetails.contentDetails.missingPackMetadata`.
-        public static var missingPackMetadata: LocalizedMessage {
-            .init(key: "contentDetails.missingPackMetadata", table: "ContentDetails", fallback: "缺少资源包信息")
+        /// Resource: `ContentDetails.ContentDetails.download`.
+        public static var download: LocalizedMessage {
+            .init(key: "ContentDetails.download", table: "ContentDetails", fallback: "获取资源")
         }
-        /// 暂时无法判断
+        /// 以下文件对应重复项目，暂未纳入更新：%1$@
         ///
-        /// Resource: `ContentDetails.contentDetails.unknownCompatibility`.
-        public static var unknownCompatibility: LocalizedMessage {
-            .init(key: "contentDetails.unknownCompatibility", table: "ContentDetails", fallback: "暂时无法判断")
+        /// Resource: `ContentDetails.ContentDetails.duplicateProjects`.
+        public static func duplicateProjects(_ value0: String) -> LocalizedMessage {
+            .init(key: "ContentDetails.duplicateProjects", table: "ContentDetails", fallback: "以下文件对应重复项目，暂未纳入更新：%1$@", arguments: [.text(value0)])
         }
-        /// 未找到光影文件
+        /// MC 百科
         ///
-        /// Resource: `ContentDetails.contentDetails.missingShaders`.
-        public static var missingShaders: LocalizedMessage {
-            .init(key: "contentDetails.missingShaders", table: "ContentDetails", fallback: "未找到光影文件")
+        /// Resource: `ContentDetails.ContentDetails.encyclopedia`.
+        public static var encyclopedia: LocalizedMessage {
+            .init(key: "ContentDetails.encyclopedia", table: "ContentDetails", fallback: "MC 百科")
+        }
+        /// 文件已发生变化，请刷新后重试：%1$@
+        ///
+        /// Resource: `ContentDetails.ContentDetails.fileChanged`.
+        public static func fileChanged(_ value0: String) -> LocalizedMessage {
+            .init(key: "ContentDetails.fileChanged", table: "ContentDetails", fallback: "文件已发生变化，请刷新后重试：%1$@", arguments: [.text(value0)])
+        }
+        /// 文件名
+        ///
+        /// Resource: `ContentDetails.ContentDetails.filename`.
+        public static var filename: LocalizedMessage {
+            .init(key: "ContentDetails.filename", table: "ContentDetails", fallback: "文件名")
+        }
+        /// 文件夹
+        ///
+        /// Resource: `ContentDetails.ContentDetails.folder`.
+        public static var folder: LocalizedMessage {
+            .init(key: "ContentDetails.folder", table: "ContentDetails", fallback: "文件夹")
+        }
+        /// 文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。
+        ///
+        /// Resource: `ContentDetails.ContentDetails.folderOnlineInfo`.
+        public static var folderOnlineInfo: LocalizedMessage {
+            .init(key: "ContentDetails.folderOnlineInfo", table: "ContentDetails", fallback: "文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。")
+        }
+        /// 当前游戏格式
+        ///
+        /// Resource: `ContentDetails.ContentDetails.gameFormat`.
+        public static var gameFormat: LocalizedMessage {
+            .init(key: "ContentDetails.gameFormat", table: "ContentDetails", fallback: "当前游戏格式")
         }
         /// 游戏版本
         ///
-        /// Resource: `ContentDetails.contentDetails.gameVersions`.
+        /// Resource: `ContentDetails.ContentDetails.gameVersions`.
         public static var gameVersions: LocalizedMessage {
-            .init(key: "contentDetails.gameVersions", table: "ContentDetails", fallback: "游戏版本")
+            .init(key: "ContentDetails.gameVersions", table: "ContentDetails", fallback: "游戏版本")
+        }
+        /// 官方网站
+        ///
+        /// Resource: `ContentDetails.ContentDetails.homepage`.
+        public static var homepage: LocalizedMessage {
+            .init(key: "ContentDetails.homepage", table: "ContentDetails", fallback: "官方网站")
+        }
+        /// 正在识别资源并检查更新…
+        ///
+        /// Resource: `ContentDetails.ContentDetails.identifyingUpdates`.
+        public static var identifyingUpdates: LocalizedMessage {
+            .init(key: "ContentDetails.identifyingUpdates", table: "ContentDetails", fallback: "正在识别资源并检查更新…")
+        }
+        /// 包含文件夹
+        ///
+        /// Resource: `ContentDetails.ContentDetails.includesFolders`.
+        public static var includesFolders: LocalizedMessage {
+            .init(key: "ContentDetails.includesFolders", table: "ContentDetails", fallback: "包含文件夹")
+        }
+        /// 请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。
+        ///
+        /// Resource: `ContentDetails.ContentDetails.invalidPackFolder`.
+        public static var invalidPackFolder: LocalizedMessage {
+            .init(key: "ContentDetails.invalidPackFolder", table: "ContentDetails", fallback: "请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。")
+        }
+        /// 资源包信息无效
+        ///
+        /// Resource: `ContentDetails.ContentDetails.invalidPackMetadata`.
+        public static var invalidPackMetadata: LocalizedMessage {
+            .init(key: "ContentDetails.invalidPackMetadata", table: "ContentDetails", fallback: "资源包信息无效")
         }
         /// Iris 功能要求
         ///
-        /// Resource: `ContentDetails.contentDetails.irisFeatures`.
+        /// Resource: `ContentDetails.ContentDetails.irisFeatures`.
         public static var irisFeatures: LocalizedMessage {
-            .init(key: "contentDetails.irisFeatures", table: "ContentDetails", fallback: "Iris 功能要求")
+            .init(key: "ContentDetails.irisFeatures", table: "ContentDetails", fallback: "Iris 功能要求")
+        }
+        /// 正在读取资源信息…
+        ///
+        /// Resource: `ContentDetails.ContentDetails.loadingMetadata`.
+        public static var loadingMetadata: LocalizedMessage {
+            .init(key: "ContentDetails.loadingMetadata", table: "ContentDetails", fallback: "正在读取资源信息…")
+        }
+        /// 本地导入
+        ///
+        /// Resource: `ContentDetails.ContentDetails.localFile`.
+        public static var localFile: LocalizedMessage {
+            .init(key: "ContentDetails.localFile", table: "ContentDetails", fallback: "本地导入")
+        }
+        /// 正在识别在线项目…
+        ///
+        /// Resource: `ContentDetails.ContentDetails.lookingUp`.
+        public static var lookingUp: LocalizedMessage {
+            .init(key: "ContentDetails.lookingUp", table: "ContentDetails", fallback: "正在识别在线项目…")
+        }
+        /// 中文名称与百科关联来自 MC 百科，由 HMCL 整理。
+        ///
+        /// Resource: `ContentDetails.ContentDetails.metadataAttribution`.
+        public static var metadataAttribution: LocalizedMessage {
+            .init(key: "ContentDetails.metadataAttribution", table: "ContentDetails", fallback: "中文名称与百科关联来自 MC 百科，由 HMCL 整理。")
+        }
+        /// 缺少资源包信息
+        ///
+        /// Resource: `ContentDetails.ContentDetails.missingPackMetadata`.
+        public static var missingPackMetadata: LocalizedMessage {
+            .init(key: "ContentDetails.missingPackMetadata", table: "ContentDetails", fallback: "缺少资源包信息")
+        }
+        /// 未找到光影文件
+        ///
+        /// Resource: `ContentDetails.ContentDetails.missingShaders`.
+        public static var missingShaders: LocalizedMessage {
+            .init(key: "ContentDetails.missingShaders", table: "ContentDetails", fallback: "未找到光影文件")
+        }
+        /// 模组 ID
+        ///
+        /// Resource: `ContentDetails.ContentDetails.modID`.
+        public static var modID: LocalizedMessage {
+            .init(key: "ContentDetails.modID", table: "ContentDetails", fallback: "模组 ID")
+        }
+        /// 这个文件没有提供简介。
+        ///
+        /// Resource: `ContentDetails.ContentDetails.noDescription`.
+        public static var noDescription: LocalizedMessage {
+            .init(key: "ContentDetails.noDescription", table: "ContentDetails", fallback: "这个文件没有提供简介。")
+        }
+        /// 已识别的资源暂无更新
+        ///
+        /// Resource: `ContentDetails.ContentDetails.noIdentifiedUpdates`.
+        public static var noIdentifiedUpdates: LocalizedMessage {
+            .init(key: "ContentDetails.noIdentifiedUpdates", table: "ContentDetails", fallback: "已识别的资源暂无更新")
+        }
+        /// 未找到与此文件匹配的在线项目。
+        ///
+        /// Resource: `ContentDetails.ContentDetails.noMatch`.
+        public static var noMatch: LocalizedMessage {
+            .init(key: "ContentDetails.noMatch", table: "ContentDetails", fallback: "未找到与此文件匹配的在线项目。")
+        }
+        /// 在线项目
+        ///
+        /// Resource: `ContentDetails.ContentDetails.onlineProjects`.
+        public static var onlineProjects: LocalizedMessage {
+            .init(key: "ContentDetails.onlineProjects", table: "ContentDetails", fallback: "在线项目")
+        }
+        /// 打开文件夹
+        ///
+        /// Resource: `ContentDetails.ContentDetails.openFolder`.
+        public static var openFolder: LocalizedMessage {
+            .init(key: "ContentDetails.openFolder", table: "ContentDetails", fallback: "打开文件夹")
+        }
+        /// 资源格式
+        ///
+        /// Resource: `ContentDetails.ContentDetails.packFormat`.
+        public static var packFormat: LocalizedMessage {
+            .init(key: "ContentDetails.packFormat", table: "ContentDetails", fallback: "资源格式")
+        }
+        /// 需要较新的游戏版本
+        ///
+        /// Resource: `ContentDetails.ContentDetails.packTooNew`.
+        public static var packTooNew: LocalizedMessage {
+            .init(key: "ContentDetails.packTooNew", table: "ContentDetails", fallback: "需要较新的游戏版本")
+        }
+        /// 适用于较早的游戏版本
+        ///
+        /// Resource: `ContentDetails.ContentDetails.packTooOld`.
+        public static var packTooOld: LocalizedMessage {
+            .init(key: "ContentDetails.packTooOld", table: "ContentDetails", fallback: "适用于较早的游戏版本")
+        }
+        /// 暂时无法读取匹配项目的信息，请稍后重试。
+        ///
+        /// Resource: `ContentDetails.ContentDetails.projectUnavailable`.
+        public static var projectUnavailable: LocalizedMessage {
+            .init(key: "ContentDetails.projectUnavailable", table: "ContentDetails", fallback: "暂时无法读取匹配项目的信息，请稍后重试。")
+        }
+        /// 刷新列表
+        ///
+        /// Resource: `ContentDetails.ContentDetails.refresh`.
+        public static var refresh: LocalizedMessage {
+            .init(key: "ContentDetails.refresh", table: "ContentDetails", fallback: "刷新列表")
+        }
+        /// %1$lld 项结果
+        ///
+        /// Resource: `ContentDetails.ContentDetails.resultCount`.
+        public static func resultCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "ContentDetails.resultCount", table: "ContentDetails", fallback: "%1$lld 项结果", arguments: [.integer(value0)])
+        }
+        /// 重新识别
+        ///
+        /// Resource: `ContentDetails.ContentDetails.retry`.
+        public static var retry: LocalizedMessage {
+            .init(key: "ContentDetails.retry", table: "ContentDetails", fallback: "重新识别")
+        }
+        /// 在 MC 百科搜索
+        ///
+        /// Resource: `ContentDetails.ContentDetails.searchEncyclopedia`.
+        public static var searchEncyclopedia: LocalizedMessage {
+            .init(key: "ContentDetails.searchEncyclopedia", table: "ContentDetails", fallback: "在 MC 百科搜索")
         }
         /// %1$@：%2$@
         ///
-        /// Resource: `ContentDetails.contentDetails.updateFailure`.
+        /// Resource: `ContentDetails.ContentDetails.serviceFailure`.
+        public static func serviceFailure(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "ContentDetails.serviceFailure", table: "ContentDetails", fallback: "%1$@：%2$@", arguments: [.text(value0), .text(value1)])
+        }
+        /// 大小
+        ///
+        /// Resource: `ContentDetails.ContentDetails.size`.
+        public static var size: LocalizedMessage {
+            .init(key: "ContentDetails.size", table: "ContentDetails", fallback: "大小")
+        }
+        /// 安装来源
+        ///
+        /// Resource: `ContentDetails.ContentDetails.source`.
+        public static var source: LocalizedMessage {
+            .init(key: "ContentDetails.source", table: "ContentDetails", fallback: "安装来源")
+        }
+        /// 暂时无法判断
+        ///
+        /// Resource: `ContentDetails.ContentDetails.unknownCompatibility`.
+        public static var unknownCompatibility: LocalizedMessage {
+            .init(key: "ContentDetails.unknownCompatibility", table: "ContentDetails", fallback: "暂时无法判断")
+        }
+        /// %1$lld 项资源尚未关联在线项目
+        ///
+        /// Resource: `ContentDetails.ContentDetails.unmatchedCount`.
+        public static func unmatchedCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "ContentDetails.unmatchedCount", table: "ContentDetails", fallback: "%1$lld 项资源尚未关联在线项目", arguments: [.integer(value0)])
+        }
+        /// %1$@：%2$@
+        ///
+        /// Resource: `ContentDetails.ContentDetails.updateFailure`.
         public static func updateFailure(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "contentDetails.updateFailure", table: "ContentDetails", fallback: "%1$@：%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "ContentDetails.updateFailure", table: "ContentDetails", fallback: "%1$@：%2$@", arguments: [.text(value0), .text(value1)])
         }
         /// 另外 %1$lld 项未能完成更新检查。
         ///
-        /// Resource: `ContentDetails.contentDetails.updateFailuresRemaining`.
+        /// Resource: `ContentDetails.ContentDetails.updateFailuresRemaining`.
         public static func updateFailuresRemaining(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "contentDetails.updateFailuresRemaining", table: "ContentDetails", fallback: "另外 %1$lld 项未能完成更新检查。", arguments: [.integer(value0)])
+            .init(key: "ContentDetails.updateFailuresRemaining", table: "ContentDetails", fallback: "另外 %1$lld 项未能完成更新检查。", arguments: [.integer(value0)])
         }
         /// 正在检查更新，已处理 %1$lld/%2$lld 项
         ///
-        /// Resource: `ContentDetails.contentDetails.updateProgress`.
+        /// Resource: `ContentDetails.ContentDetails.updateProgress`.
         public static func updateProgress(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
-            .init(key: "contentDetails.updateProgress", table: "ContentDetails", fallback: "正在检查更新，已处理 %1$lld/%2$lld 项", arguments: [.integer(value0), .integer(value1)])
+            .init(key: "ContentDetails.updateProgress", table: "ContentDetails", fallback: "正在检查更新，已处理 %1$lld/%2$lld 项", arguments: [.integer(value0), .integer(value1)])
+        }
+        /// 版本
+        ///
+        /// Resource: `ContentDetails.ContentDetails.version`.
+        public static var version: LocalizedMessage {
+            .init(key: "ContentDetails.version", table: "ContentDetails", fallback: "版本")
         }
         static let definitions: [String: MessageDefinition] = [
-            "ContentDetails:contentDetails.details": .init("资源详情", []),
-            "ContentDetails:contentDetails.onlineProjects": .init("在线项目", []),
-            "ContentDetails:contentDetails.lookingUp": .init("正在识别在线项目…", []),
-            "ContentDetails:contentDetails.noMatch": .init("未找到与此文件匹配的在线项目。", []),
-            "ContentDetails:contentDetails.retry": .init("重新识别", []),
-            "ContentDetails:contentDetails.localFile": .init("本地导入", []),
-            "ContentDetails:contentDetails.authors": .init("作者", []),
-            "ContentDetails:contentDetails.description": .init("简介", []),
-            "ContentDetails:contentDetails.modID": .init("模组 ID", []),
-            "ContentDetails:contentDetails.homepage": .init("官方网站", []),
-            "ContentDetails:contentDetails.encyclopedia": .init("MC 百科", []),
-            "ContentDetails:contentDetails.searchEncyclopedia": .init("在 MC 百科搜索", []),
-            "ContentDetails:contentDetails.filename": .init("文件名", []),
-            "ContentDetails:contentDetails.version": .init("版本", []),
-            "ContentDetails:contentDetails.size": .init("大小", []),
-            "ContentDetails:contentDetails.source": .init("安装来源", []),
-            "ContentDetails:contentDetails.noDescription": .init("这个文件没有提供简介。", []),
-            "ContentDetails:contentDetails.curseforgeUnavailable": .init("配置 CurseForge API Key 后可同时识别该平台。", []),
-            "ContentDetails:contentDetails.fileChanged": .init("文件已发生变化，请刷新后重试：%1$@", [.text]),
-            "ContentDetails:contentDetails.projectUnavailable": .init("暂时无法读取匹配项目的信息，请稍后重试。", []),
-            "ContentDetails:contentDetails.serviceFailure": .init("%1$@：%2$@", [.text, .text]),
-            "ContentDetails:contentDetails.download": .init("获取资源", []),
-            "ContentDetails:contentDetails.openFolder": .init("打开文件夹", []),
-            "ContentDetails:contentDetails.duplicateProjects": .init("以下文件对应重复项目，暂未纳入更新：%1$@", [.text]),
-            "ContentDetails:contentDetails.noIdentifiedUpdates": .init("已识别的资源暂无更新", []),
-            "ContentDetails:contentDetails.unmatchedCount": .init("%1$lld 项资源尚未关联在线项目", [.integer]),
-            "ContentDetails:contentDetails.identifyingUpdates": .init("正在识别资源并检查更新…", []),
-            "ContentDetails:contentDetails.refresh": .init("刷新列表", []),
-            "ContentDetails:contentDetails.metadataAttribution": .init("中文名称与百科关联来自 MC 百科，由 HMCL 整理。", []),
-            "ContentDetails:contentDetails.resultCount": .init("%1$lld 项结果", [.integer]),
-            "ContentDetails:contentDetails.loadingMetadata": .init("正在读取资源信息…", []),
-            "ContentDetails:contentDetails.invalidPackFolder": .init("请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。", []),
-            "ContentDetails:contentDetails.folder": .init("文件夹", []),
-            "ContentDetails:contentDetails.includesFolders": .init("包含文件夹", []),
-            "ContentDetails:contentDetails.folderOnlineInfo": .init("文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。", []),
-            "ContentDetails:contentDetails.packFormat": .init("资源格式", []),
-            "ContentDetails:contentDetails.gameFormat": .init("当前游戏格式", []),
-            "ContentDetails:contentDetails.compatibility": .init("兼容性", []),
-            "ContentDetails:contentDetails.compatible": .init("格式兼容", []),
-            "ContentDetails:contentDetails.packTooOld": .init("适用于较早的游戏版本", []),
-            "ContentDetails:contentDetails.packTooNew": .init("需要较新的游戏版本", []),
-            "ContentDetails:contentDetails.invalidPackMetadata": .init("资源包信息无效", []),
-            "ContentDetails:contentDetails.missingPackMetadata": .init("缺少资源包信息", []),
-            "ContentDetails:contentDetails.unknownCompatibility": .init("暂时无法判断", []),
-            "ContentDetails:contentDetails.missingShaders": .init("未找到光影文件", []),
-            "ContentDetails:contentDetails.gameVersions": .init("游戏版本", []),
-            "ContentDetails:contentDetails.irisFeatures": .init("Iris 功能要求", []),
-            "ContentDetails:contentDetails.updateFailure": .init("%1$@：%2$@", [.text, .text]),
-            "ContentDetails:contentDetails.updateFailuresRemaining": .init("另外 %1$lld 项未能完成更新检查。", [.integer]),
-            "ContentDetails:contentDetails.updateProgress": .init("正在检查更新，已处理 %1$lld/%2$lld 项", [.integer, .integer]),
+            "ContentDetails:ContentDetails.authors": .init("作者", []),
+            "ContentDetails:ContentDetails.compatibility": .init("兼容性", []),
+            "ContentDetails:ContentDetails.compatible": .init("格式兼容", []),
+            "ContentDetails:ContentDetails.curseforgeUnavailable": .init("配置 CurseForge API Key 后可同时识别该平台。", []),
+            "ContentDetails:ContentDetails.description": .init("简介", []),
+            "ContentDetails:ContentDetails.details": .init("资源详情", []),
+            "ContentDetails:ContentDetails.download": .init("获取资源", []),
+            "ContentDetails:ContentDetails.duplicateProjects": .init("以下文件对应重复项目，暂未纳入更新：%1$@", [.text]),
+            "ContentDetails:ContentDetails.encyclopedia": .init("MC 百科", []),
+            "ContentDetails:ContentDetails.fileChanged": .init("文件已发生变化，请刷新后重试：%1$@", [.text]),
+            "ContentDetails:ContentDetails.filename": .init("文件名", []),
+            "ContentDetails:ContentDetails.folder": .init("文件夹", []),
+            "ContentDetails:ContentDetails.folderOnlineInfo": .init("文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。", []),
+            "ContentDetails:ContentDetails.gameFormat": .init("当前游戏格式", []),
+            "ContentDetails:ContentDetails.gameVersions": .init("游戏版本", []),
+            "ContentDetails:ContentDetails.homepage": .init("官方网站", []),
+            "ContentDetails:ContentDetails.identifyingUpdates": .init("正在识别资源并检查更新…", []),
+            "ContentDetails:ContentDetails.includesFolders": .init("包含文件夹", []),
+            "ContentDetails:ContentDetails.invalidPackFolder": .init("请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。", []),
+            "ContentDetails:ContentDetails.invalidPackMetadata": .init("资源包信息无效", []),
+            "ContentDetails:ContentDetails.irisFeatures": .init("Iris 功能要求", []),
+            "ContentDetails:ContentDetails.loadingMetadata": .init("正在读取资源信息…", []),
+            "ContentDetails:ContentDetails.localFile": .init("本地导入", []),
+            "ContentDetails:ContentDetails.lookingUp": .init("正在识别在线项目…", []),
+            "ContentDetails:ContentDetails.metadataAttribution": .init("中文名称与百科关联来自 MC 百科，由 HMCL 整理。", []),
+            "ContentDetails:ContentDetails.missingPackMetadata": .init("缺少资源包信息", []),
+            "ContentDetails:ContentDetails.missingShaders": .init("未找到光影文件", []),
+            "ContentDetails:ContentDetails.modID": .init("模组 ID", []),
+            "ContentDetails:ContentDetails.noDescription": .init("这个文件没有提供简介。", []),
+            "ContentDetails:ContentDetails.noIdentifiedUpdates": .init("已识别的资源暂无更新", []),
+            "ContentDetails:ContentDetails.noMatch": .init("未找到与此文件匹配的在线项目。", []),
+            "ContentDetails:ContentDetails.onlineProjects": .init("在线项目", []),
+            "ContentDetails:ContentDetails.openFolder": .init("打开文件夹", []),
+            "ContentDetails:ContentDetails.packFormat": .init("资源格式", []),
+            "ContentDetails:ContentDetails.packTooNew": .init("需要较新的游戏版本", []),
+            "ContentDetails:ContentDetails.packTooOld": .init("适用于较早的游戏版本", []),
+            "ContentDetails:ContentDetails.projectUnavailable": .init("暂时无法读取匹配项目的信息，请稍后重试。", []),
+            "ContentDetails:ContentDetails.refresh": .init("刷新列表", []),
+            "ContentDetails:ContentDetails.resultCount": .init("%1$lld 项结果", [.integer]),
+            "ContentDetails:ContentDetails.retry": .init("重新识别", []),
+            "ContentDetails:ContentDetails.searchEncyclopedia": .init("在 MC 百科搜索", []),
+            "ContentDetails:ContentDetails.serviceFailure": .init("%1$@：%2$@", [.text, .text]),
+            "ContentDetails:ContentDetails.size": .init("大小", []),
+            "ContentDetails:ContentDetails.source": .init("安装来源", []),
+            "ContentDetails:ContentDetails.unknownCompatibility": .init("暂时无法判断", []),
+            "ContentDetails:ContentDetails.unmatchedCount": .init("%1$lld 项资源尚未关联在线项目", [.integer]),
+            "ContentDetails:ContentDetails.updateFailure": .init("%1$@：%2$@", [.text, .text]),
+            "ContentDetails:ContentDetails.updateFailuresRemaining": .init("另外 %1$lld 项未能完成更新检查。", [.integer]),
+            "ContentDetails:ContentDetails.updateProgress": .init("正在检查更新，已处理 %1$lld/%2$lld 项", [.integer, .integer]),
+            "ContentDetails:ContentDetails.version": .init("版本", []),
         ]
     }
 }

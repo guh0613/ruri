@@ -3,177 +3,177 @@ import Foundation
 
 extension Messages {
     public enum CoreGameRunDirectoryCopy {
-        /// 正在校验文件内容…
+        /// 目标目录中有 %1$lld 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。
         ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.progressText1`.
-        public static var validatingFileContents: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.progressText1", table: "Core", fallback: "正在校验文件内容…")
-        }
-        /// 正在复制游戏文件（%1$@ / %2$@）
-        ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.progressText2`.
-        public static func copyingGameFiles(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.progressText2", table: "Core", fallback: "正在复制游戏文件（%1$@ / %2$@）", arguments: [.text(value0), .text(value1)])
-        }
-        /// 正在写入目标（%1$@ / %2$@）
-        ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.progressText3`.
-        public static func writingDestination(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.progressText3", table: "Core", fallback: "正在写入目标（%1$@ / %2$@）", arguments: [.text(value0), .text(value1)])
+        /// Resource: `Core.CoreGameRunDirectoryCopy.changedFileIdentitiesRetained`.
+        public static func changedFileIdentitiesRetained(_ value0: Int64, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.changedFileIdentitiesRetained", table: "Core", fallback: "目标目录中有 %1$lld 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。", arguments: [.integer(value0), .text(value1)])
         }
         /// 目录已更新，正在清理复制记录
         ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.progressText4`.
+        /// Resource: `Core.CoreGameRunDirectoryCopy.cleaningCopyRecord`.
         public static var cleaningCopyRecord: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.progressText4", table: "Core", fallback: "目录已更新，正在清理复制记录")
-        }
-        ///
-        /// 工作副本保留在：%1$@
-        ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.errorDescriptionText1`.
-        public static func workCopyRetained(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.errorDescriptionText1", table: "Core", fallback: "\n工作副本保留在：%1$@", arguments: [.text(value0)])
-        }
-        /// 运行目录复制尚未开始：%1$@
-        ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.remainderText1`.
-        public static func copyNotStarted(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.remainderText1", table: "Core", fallback: "运行目录复制尚未开始：%1$@", arguments: [.text(value0)])
-        }
-        /// 无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@
-        ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.savedText1`.
-        public static func directorySettingsUnconfirmed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.savedText1", table: "Core", fallback: "无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@", arguments: [.text(value0)])
-        }
-        /// 目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@
-        ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.committedText1`.
-        public static func directorySwitchedCleanupPending(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.committedText1", table: "Core", fallback: "目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreGameRunDirectoryCopy.cleaningCopyRecord", table: "Core", fallback: "目录已更新，正在清理复制记录")
         }
         /// 运行目录复制已取消，原目录和设置未改动。
         ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.reasonText1`.
+        /// Resource: `Core.CoreGameRunDirectoryCopy.copyCancelled`.
         public static var copyCancelled: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.reasonText1", table: "Core", fallback: "运行目录复制已取消，原目录和设置未改动。")
+            .init(key: "CoreGameRunDirectoryCopy.copyCancelled", table: "Core", fallback: "运行目录复制已取消，原目录和设置未改动。")
         }
         /// 运行目录复制未完成：%1$@
         ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.reasonText2`.
+        /// Resource: `Core.CoreGameRunDirectoryCopy.copyIncomplete`.
         public static func copyIncomplete(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.reasonText2", table: "Core", fallback: "运行目录复制未完成：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreGameRunDirectoryCopy.copyIncomplete", table: "Core", fallback: "运行目录复制未完成：%1$@", arguments: [.text(value0)])
         }
-        /// 目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。
+        /// 运行目录复制尚未开始：%1$@
         ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.cleanupWarningText1`.
-        public static var temporaryFilesCleanupWarning: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.cleanupWarningText1", table: "Core", fallback: "目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。")
+        /// Resource: `Core.CoreGameRunDirectoryCopy.copyNotStarted`.
+        public static func copyNotStarted(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.copyNotStarted", table: "Core", fallback: "运行目录复制尚未开始：%1$@", arguments: [.text(value0)])
         }
-        /// 目标目录中有 %1$lld 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。
+        /// 正在复制游戏文件（%1$@ / %2$@）
         ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.warningText1`.
-        public static func changedFileIdentitiesRetained(_ value0: Int64, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.warningText1", table: "Core", fallback: "目标目录中有 %1$lld 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。", arguments: [.integer(value0), .text(value1)])
+        /// Resource: `Core.CoreGameRunDirectoryCopy.copyingGameFiles`.
+        public static func copyingGameFiles(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.copyingGameFiles", table: "Core", fallback: "正在复制游戏文件（%1$@ / %2$@）", arguments: [.text(value0), .text(value1)])
+        }
+        /// 无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@
+        ///
+        /// Resource: `Core.CoreGameRunDirectoryCopy.directorySettingsUnconfirmed`.
+        public static func directorySettingsUnconfirmed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.directorySettingsUnconfirmed", table: "Core", fallback: "无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@", arguments: [.text(value0)])
+        }
+        /// 目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@
+        ///
+        /// Resource: `Core.CoreGameRunDirectoryCopy.directorySwitchedCleanupPending`.
+        public static func directorySwitchedCleanupPending(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.directorySwitchedCleanupPending", table: "Core", fallback: "目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@", arguments: [.text(value0)])
         }
         /// %1$@
         /// 自动恢复尚未完成，请在实例设置中恢复复制。%2$@
         ///
-        /// Resource: `Core.coreGameRunDirectoryCopy.recoveryFailure`.
+        /// Resource: `Core.CoreGameRunDirectoryCopy.recoveryFailure`.
         public static func recoveryFailure(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.recoveryFailure", table: "Core", fallback: "%1$@\n自动恢复尚未完成，请在实例设置中恢复复制。%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreGameRunDirectoryCopy.recoveryFailure", table: "Core", fallback: "%1$@\n自动恢复尚未完成，请在实例设置中恢复复制。%2$@", arguments: [.text(value0), .text(value1)])
         }
-        /// 目标已有文件或备份，不能以复制方式覆盖。请使用目标现有内容或选择空目录。
+        /// 目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。
         ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.issueText1`.
-        public static var destinationConflict: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.issueText1", table: "Errors", fallback: "目标已有文件或备份，不能以复制方式覆盖。请使用目标现有内容或选择空目录。")
+        /// Resource: `Core.CoreGameRunDirectoryCopy.temporaryFilesCleanupWarning`.
+        public static var temporaryFilesCleanupWarning: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.temporaryFilesCleanupWarning", table: "Core", fallback: "目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。")
         }
-        /// 游戏目录的顶层项目过多，无法记录安全的发布过程。
+        /// 正在校验文件内容…
         ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.incomingText1`.
-        public static var tooManyTopLevelItems: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.incomingText1", table: "Errors", fallback: "游戏目录的顶层项目过多，无法记录安全的发布过程。")
+        /// Resource: `Core.CoreGameRunDirectoryCopy.validatingFileContents`.
+        public static var validatingFileContents: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.validatingFileContents", table: "Core", fallback: "正在校验文件内容…")
         }
-        /// 复制项目在发布时身份改变，已保留工作区。
         ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.completedBytesText1`.
-        public static var publishedItemChanged: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.completedBytesText1", table: "Errors", fallback: "复制项目在发布时身份改变，已保留工作区。")
+        /// 工作副本保留在：%1$@
+        ///
+        /// Resource: `Core.CoreGameRunDirectoryCopy.workCopyRetained`.
+        public static func workCopyRetained(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.workCopyRetained", table: "Core", fallback: "\n工作副本保留在：%1$@", arguments: [.text(value0)])
+        }
+        /// 正在写入目标（%1$@ / %2$@）
+        ///
+        /// Resource: `Core.CoreGameRunDirectoryCopy.writingDestination`.
+        public static func writingDestination(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.writingDestination", table: "Core", fallback: "正在写入目标（%1$@ / %2$@）", arguments: [.text(value0), .text(value1)])
         }
         /// 待恢复的复制记录已经变化，请刷新后重试。
         ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.journalText1`.
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.copyJournalChanged`.
         public static var copyJournalChanged: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.journalText1", table: "Errors", fallback: "待恢复的复制记录已经变化，请刷新后重试。")
+            .init(key: "CoreGameRunDirectoryCopy.copyJournalChanged", table: "Errors", fallback: "待恢复的复制记录已经变化，请刷新后重试。")
         }
         /// 复制记录已经变化。
         ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.latestText1`.
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.copyRecordChanged`.
         public static var copyRecordChanged: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.latestText1", table: "Errors", fallback: "复制记录已经变化。")
+            .init(key: "CoreGameRunDirectoryCopy.copyRecordChanged", table: "Errors", fallback: "复制记录已经变化。")
         }
-        /// 实例设置在复制中断后改变，工作区已保留，请先核对原实例。
+        /// 目标已有文件或备份，不能以复制方式覆盖。请使用目标现有内容或选择空目录。
         ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.validateJournalBindingText1`.
-        public static var instanceSettingsChangedDuringCopy: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.validateJournalBindingText1", table: "Errors", fallback: "实例设置在复制中断后改变，工作区已保留，请先核对原实例。")
-        }
-        /// 自定义源目录在复制中断后改变，请先核对原位置。
-        ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.expectedText1`.
-        public static var sourceDirectoryChangedDuringCopy: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.expectedText1", table: "Errors", fallback: "自定义源目录在复制中断后改变，请先核对原位置。")
-        }
-        /// 目标目录在发布前出现新文件，未覆盖这些内容。
-        ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.entriesText1`.
-        public static var newDestinationFiles: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.entriesText1", table: "Errors", fallback: "目标目录在发布前出现新文件，未覆盖这些内容。")
-        }
-        /// 目标空目录发生变化，未删除新增文件。
-        ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.entriesText2`.
-        public static var newFilesInEmptyDestination: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.entriesText2", table: "Errors", fallback: "目标空目录发生变化，未删除新增文件。")
-        }
-        /// 目标目录并非空目录，未替换。
-        ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.entriesText3`.
-        public static var destinationNotEmpty: LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.entriesText3", table: "Errors", fallback: "目标目录并非空目录，未替换。")
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.destinationConflict`.
+        public static var destinationConflict: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.destinationConflict", table: "Errors", fallback: "目标已有文件或备份，不能以复制方式覆盖。请使用目标现有内容或选择空目录。")
         }
         /// 无法检查目标项目，复制记录已保留：%1$@
         ///
-        /// Resource: `Errors.coreGameRunDirectoryCopy.infoText1`.
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.destinationInspectionFailed`.
         public static func destinationInspectionFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameRunDirectoryCopy.infoText1", table: "Errors", fallback: "无法检查目标项目，复制记录已保留：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreGameRunDirectoryCopy.destinationInspectionFailed", table: "Errors", fallback: "无法检查目标项目，复制记录已保留：%1$@", arguments: [.text(value0)])
+        }
+        /// 目标目录并非空目录，未替换。
+        ///
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.destinationNotEmpty`.
+        public static var destinationNotEmpty: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.destinationNotEmpty", table: "Errors", fallback: "目标目录并非空目录，未替换。")
+        }
+        /// 实例设置在复制中断后改变，工作区已保留，请先核对原实例。
+        ///
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.instanceSettingsChangedDuringCopy`.
+        public static var instanceSettingsChangedDuringCopy: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.instanceSettingsChangedDuringCopy", table: "Errors", fallback: "实例设置在复制中断后改变，工作区已保留，请先核对原实例。")
+        }
+        /// 目标目录在发布前出现新文件，未覆盖这些内容。
+        ///
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.newDestinationFiles`.
+        public static var newDestinationFiles: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.newDestinationFiles", table: "Errors", fallback: "目标目录在发布前出现新文件，未覆盖这些内容。")
+        }
+        /// 目标空目录发生变化，未删除新增文件。
+        ///
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.newFilesInEmptyDestination`.
+        public static var newFilesInEmptyDestination: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.newFilesInEmptyDestination", table: "Errors", fallback: "目标空目录发生变化，未删除新增文件。")
+        }
+        /// 复制项目在发布时身份改变，已保留工作区。
+        ///
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.publishedItemChanged`.
+        public static var publishedItemChanged: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.publishedItemChanged", table: "Errors", fallback: "复制项目在发布时身份改变，已保留工作区。")
+        }
+        /// 自定义源目录在复制中断后改变，请先核对原位置。
+        ///
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.sourceDirectoryChangedDuringCopy`.
+        public static var sourceDirectoryChangedDuringCopy: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.sourceDirectoryChangedDuringCopy", table: "Errors", fallback: "自定义源目录在复制中断后改变，请先核对原位置。")
+        }
+        /// 游戏目录的顶层项目过多，无法记录安全的发布过程。
+        ///
+        /// Resource: `Errors.CoreGameRunDirectoryCopy.tooManyTopLevelItems`.
+        public static var tooManyTopLevelItems: LocalizedMessage {
+            .init(key: "CoreGameRunDirectoryCopy.tooManyTopLevelItems", table: "Errors", fallback: "游戏目录的顶层项目过多，无法记录安全的发布过程。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreGameRunDirectoryCopy.progressText1": .init("正在校验文件内容…", []),
-            "Core:coreGameRunDirectoryCopy.progressText2": .init("正在复制游戏文件（%1$@ / %2$@）", [.text, .text]),
-            "Core:coreGameRunDirectoryCopy.progressText3": .init("正在写入目标（%1$@ / %2$@）", [.text, .text]),
-            "Core:coreGameRunDirectoryCopy.progressText4": .init("目录已更新，正在清理复制记录", []),
-            "Core:coreGameRunDirectoryCopy.errorDescriptionText1": .init("\n工作副本保留在：%1$@", [.text]),
-            "Core:coreGameRunDirectoryCopy.remainderText1": .init("运行目录复制尚未开始：%1$@", [.text]),
-            "Core:coreGameRunDirectoryCopy.savedText1": .init("无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@", [.text]),
-            "Core:coreGameRunDirectoryCopy.committedText1": .init("目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@", [.text]),
-            "Core:coreGameRunDirectoryCopy.reasonText1": .init("运行目录复制已取消，原目录和设置未改动。", []),
-            "Core:coreGameRunDirectoryCopy.reasonText2": .init("运行目录复制未完成：%1$@", [.text]),
-            "Core:coreGameRunDirectoryCopy.cleanupWarningText1": .init("目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。", []),
-            "Core:coreGameRunDirectoryCopy.warningText1": .init("目标目录中有 %1$lld 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。", [.integer, .text]),
-            "Core:coreGameRunDirectoryCopy.recoveryFailure": .init("%1$@\n自动恢复尚未完成，请在实例设置中恢复复制。%2$@", [.text, .text]),
-            "Errors:coreGameRunDirectoryCopy.issueText1": .init("目标已有文件或备份，不能以复制方式覆盖。请使用目标现有内容或选择空目录。", []),
-            "Errors:coreGameRunDirectoryCopy.incomingText1": .init("游戏目录的顶层项目过多，无法记录安全的发布过程。", []),
-            "Errors:coreGameRunDirectoryCopy.completedBytesText1": .init("复制项目在发布时身份改变，已保留工作区。", []),
-            "Errors:coreGameRunDirectoryCopy.journalText1": .init("待恢复的复制记录已经变化，请刷新后重试。", []),
-            "Errors:coreGameRunDirectoryCopy.latestText1": .init("复制记录已经变化。", []),
-            "Errors:coreGameRunDirectoryCopy.validateJournalBindingText1": .init("实例设置在复制中断后改变，工作区已保留，请先核对原实例。", []),
-            "Errors:coreGameRunDirectoryCopy.expectedText1": .init("自定义源目录在复制中断后改变，请先核对原位置。", []),
-            "Errors:coreGameRunDirectoryCopy.entriesText1": .init("目标目录在发布前出现新文件，未覆盖这些内容。", []),
-            "Errors:coreGameRunDirectoryCopy.entriesText2": .init("目标空目录发生变化，未删除新增文件。", []),
-            "Errors:coreGameRunDirectoryCopy.entriesText3": .init("目标目录并非空目录，未替换。", []),
-            "Errors:coreGameRunDirectoryCopy.infoText1": .init("无法检查目标项目，复制记录已保留：%1$@", [.text]),
+            "Core:CoreGameRunDirectoryCopy.changedFileIdentitiesRetained": .init("目标目录中有 %1$lld 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。", [.integer, .text]),
+            "Core:CoreGameRunDirectoryCopy.cleaningCopyRecord": .init("目录已更新，正在清理复制记录", []),
+            "Core:CoreGameRunDirectoryCopy.copyCancelled": .init("运行目录复制已取消，原目录和设置未改动。", []),
+            "Core:CoreGameRunDirectoryCopy.copyIncomplete": .init("运行目录复制未完成：%1$@", [.text]),
+            "Core:CoreGameRunDirectoryCopy.copyNotStarted": .init("运行目录复制尚未开始：%1$@", [.text]),
+            "Core:CoreGameRunDirectoryCopy.copyingGameFiles": .init("正在复制游戏文件（%1$@ / %2$@）", [.text, .text]),
+            "Core:CoreGameRunDirectoryCopy.directorySettingsUnconfirmed": .init("无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@", [.text]),
+            "Core:CoreGameRunDirectoryCopy.directorySwitchedCleanupPending": .init("目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@", [.text]),
+            "Core:CoreGameRunDirectoryCopy.recoveryFailure": .init("%1$@\n自动恢复尚未完成，请在实例设置中恢复复制。%2$@", [.text, .text]),
+            "Core:CoreGameRunDirectoryCopy.temporaryFilesCleanupWarning": .init("目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。", []),
+            "Core:CoreGameRunDirectoryCopy.validatingFileContents": .init("正在校验文件内容…", []),
+            "Core:CoreGameRunDirectoryCopy.workCopyRetained": .init("\n工作副本保留在：%1$@", [.text]),
+            "Core:CoreGameRunDirectoryCopy.writingDestination": .init("正在写入目标（%1$@ / %2$@）", [.text, .text]),
+            "Errors:CoreGameRunDirectoryCopy.copyJournalChanged": .init("待恢复的复制记录已经变化，请刷新后重试。", []),
+            "Errors:CoreGameRunDirectoryCopy.copyRecordChanged": .init("复制记录已经变化。", []),
+            "Errors:CoreGameRunDirectoryCopy.destinationConflict": .init("目标已有文件或备份，不能以复制方式覆盖。请使用目标现有内容或选择空目录。", []),
+            "Errors:CoreGameRunDirectoryCopy.destinationInspectionFailed": .init("无法检查目标项目，复制记录已保留：%1$@", [.text]),
+            "Errors:CoreGameRunDirectoryCopy.destinationNotEmpty": .init("目标目录并非空目录，未替换。", []),
+            "Errors:CoreGameRunDirectoryCopy.instanceSettingsChangedDuringCopy": .init("实例设置在复制中断后改变，工作区已保留，请先核对原实例。", []),
+            "Errors:CoreGameRunDirectoryCopy.newDestinationFiles": .init("目标目录在发布前出现新文件，未覆盖这些内容。", []),
+            "Errors:CoreGameRunDirectoryCopy.newFilesInEmptyDestination": .init("目标空目录发生变化，未删除新增文件。", []),
+            "Errors:CoreGameRunDirectoryCopy.publishedItemChanged": .init("复制项目在发布时身份改变，已保留工作区。", []),
+            "Errors:CoreGameRunDirectoryCopy.sourceDirectoryChangedDuringCopy": .init("自定义源目录在复制中断后改变，请先核对原位置。", []),
+            "Errors:CoreGameRunDirectoryCopy.tooManyTopLevelItems": .init("游戏目录的顶层项目过多，无法记录安全的发布过程。", []),
         ]
     }
 }

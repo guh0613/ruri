@@ -3,49 +3,49 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceLocationLease {
-        /// 此实例的导入或复制尚未完成，请先在实例库处理工作文件。
-        ///
-        /// Resource: `Errors.coreInstanceLocationLease.requireCurrentDirectoryText1`.
-        public static var requireCurrentDirectory: LocalizedMessage {
-            .init(key: "coreInstanceLocationLease.requireCurrentDirectoryText1", table: "Errors", fallback: "此实例的导入或复制尚未完成，请先在实例库处理工作文件。")
-        }
         /// 此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。
         ///
-        /// Resource: `Errors.coreInstanceLocationLease.stateText1`.
+        /// Resource: `Errors.CoreInstanceLocationLease.folderRemoved`.
         public static var folderRemoved: LocalizedMessage {
-            .init(key: "coreInstanceLocationLease.stateText1", table: "Errors", fallback: "此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。")
+            .init(key: "CoreInstanceLocationLease.folderRemoved", table: "Errors", fallback: "此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。")
         }
         /// 此实例已移动到另一个文件夹，请刷新后重试。
         ///
-        /// Resource: `Errors.coreInstanceLocationLease.instanceText1`.
+        /// Resource: `Errors.CoreInstanceLocationLease.instanceMoved`.
         public static var instanceMoved: LocalizedMessage {
-            .init(key: "coreInstanceLocationLease.instanceText1", table: "Errors", fallback: "此实例已移动到另一个文件夹，请刷新后重试。")
+            .init(key: "CoreInstanceLocationLease.instanceMoved", table: "Errors", fallback: "此实例已移动到另一个文件夹，请刷新后重试。")
         }
         /// 无法锁定实例位置。
         ///
-        /// Resource: `Errors.coreInstanceLocationLease.fdText1`.
+        /// Resource: `Errors.CoreInstanceLocationLease.lockFailed`.
         public static var lockFailed: LocalizedMessage {
-            .init(key: "coreInstanceLocationLease.fdText1", table: "Errors", fallback: "无法锁定实例位置。")
+            .init(key: "CoreInstanceLocationLease.lockFailed", table: "Errors", fallback: "无法锁定实例位置。")
         }
         /// 实例位置锁不是普通文件。
         ///
-        /// Resource: `Errors.coreInstanceLocationLease.infoText1`.
+        /// Resource: `Errors.CoreInstanceLocationLease.lockNotRegularFile`.
         public static var lockNotRegularFile: LocalizedMessage {
-            .init(key: "coreInstanceLocationLease.infoText1", table: "Errors", fallback: "实例位置锁不是普通文件。")
+            .init(key: "CoreInstanceLocationLease.lockNotRegularFile", table: "Errors", fallback: "实例位置锁不是普通文件。")
         }
         /// 实例正在移动或仍有文件操作，请稍后重试。
         ///
-        /// Resource: `Errors.coreInstanceLocationLease.lockText1`.
+        /// Resource: `Errors.CoreInstanceLocationLease.operationInProgress`.
         public static var operationInProgress: LocalizedMessage {
-            .init(key: "coreInstanceLocationLease.lockText1", table: "Errors", fallback: "实例正在移动或仍有文件操作，请稍后重试。")
+            .init(key: "CoreInstanceLocationLease.operationInProgress", table: "Errors", fallback: "实例正在移动或仍有文件操作，请稍后重试。")
+        }
+        /// 此实例的导入或复制尚未完成，请先在实例库处理工作文件。
+        ///
+        /// Resource: `Errors.CoreInstanceLocationLease.requireCurrentDirectory`.
+        public static var requireCurrentDirectory: LocalizedMessage {
+            .init(key: "CoreInstanceLocationLease.requireCurrentDirectory", table: "Errors", fallback: "此实例的导入或复制尚未完成，请先在实例库处理工作文件。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstanceLocationLease.requireCurrentDirectoryText1": .init("此实例的导入或复制尚未完成，请先在实例库处理工作文件。", []),
-            "Errors:coreInstanceLocationLease.stateText1": .init("此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。", []),
-            "Errors:coreInstanceLocationLease.instanceText1": .init("此实例已移动到另一个文件夹，请刷新后重试。", []),
-            "Errors:coreInstanceLocationLease.fdText1": .init("无法锁定实例位置。", []),
-            "Errors:coreInstanceLocationLease.infoText1": .init("实例位置锁不是普通文件。", []),
-            "Errors:coreInstanceLocationLease.lockText1": .init("实例正在移动或仍有文件操作，请稍后重试。", []),
+            "Errors:CoreInstanceLocationLease.folderRemoved": .init("此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。", []),
+            "Errors:CoreInstanceLocationLease.instanceMoved": .init("此实例已移动到另一个文件夹，请刷新后重试。", []),
+            "Errors:CoreInstanceLocationLease.lockFailed": .init("无法锁定实例位置。", []),
+            "Errors:CoreInstanceLocationLease.lockNotRegularFile": .init("实例位置锁不是普通文件。", []),
+            "Errors:CoreInstanceLocationLease.operationInProgress": .init("实例正在移动或仍有文件操作，请稍后重试。", []),
+            "Errors:CoreInstanceLocationLease.requireCurrentDirectory": .init("此实例的导入或复制尚未完成，请先在实例库处理工作文件。", []),
         ]
     }
 }

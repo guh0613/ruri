@@ -3,63 +3,63 @@ import Foundation
 
 extension Messages {
     public enum AppDownloadsView {
-        /// 没有下载任务
+        /// 第 %1$lld 次尝试
         ///
-        /// Resource: `Interface.appDownloadsView.bodyText1`.
-        public static var noDownloadTasks: LocalizedMessage {
-            .init(key: "appDownloadsView.bodyText1", table: "Interface", fallback: "没有下载任务")
-        }
-        /// 游戏安装和内容下载的进度会显示在此处。
-        ///
-        /// Resource: `Interface.appDownloadsView.bodyText2`.
-        public static var downloadProgressDetails: LocalizedMessage {
-            .init(key: "appDownloadsView.bodyText2", table: "Interface", fallback: "游戏安装和内容下载的进度会显示在此处。")
-        }
-        /// 已完成
-        ///
-        /// Resource: `Interface.appDownloadsView.bodyText3`.
-        public static var completed: LocalizedMessage {
-            .init(key: "appDownloadsView.bodyText3", table: "Interface", fallback: "已完成")
+        /// Resource: `Interface.AppDownloadsView.attemptNumber`.
+        public static func attemptNumber(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppDownloadsView.attemptNumber", table: "Interface", fallback: "第 %1$lld 次尝试", arguments: [.integer(value0)])
         }
         /// 已取消
         ///
-        /// Resource: `Interface.appDownloadsView.bodyText4`.
+        /// Resource: `Interface.AppDownloadsView.cancelled`.
         public static var cancelled: LocalizedMessage {
-            .init(key: "appDownloadsView.bodyText4", table: "Interface", fallback: "已取消")
+            .init(key: "AppDownloadsView.cancelled", table: "Interface", fallback: "已取消")
+        }
+        /// 已完成
+        ///
+        /// Resource: `Interface.AppDownloadsView.completed`.
+        public static var completed: LocalizedMessage {
+            .init(key: "AppDownloadsView.completed", table: "Interface", fallback: "已完成")
+        }
+        /// 游戏安装和内容下载的进度会显示在此处。
+        ///
+        /// Resource: `Interface.AppDownloadsView.downloadProgressDetails`.
+        public static var downloadProgressDetails: LocalizedMessage {
+            .init(key: "AppDownloadsView.downloadProgressDetails", table: "Interface", fallback: "游戏安装和内容下载的进度会显示在此处。")
         }
         /// 失败
         ///
-        /// Resource: `Interface.appDownloadsView.bodyText5`.
+        /// Resource: `Interface.AppDownloadsView.failed`.
         public static var failed: LocalizedMessage {
-            .init(key: "appDownloadsView.bodyText5", table: "Interface", fallback: "失败")
+            .init(key: "AppDownloadsView.failed", table: "Interface", fallback: "失败")
+        }
+        /// 没有下载任务
+        ///
+        /// Resource: `Interface.AppDownloadsView.noDownloadTasks`.
+        public static var noDownloadTasks: LocalizedMessage {
+            .init(key: "AppDownloadsView.noDownloadTasks", table: "Interface", fallback: "没有下载任务")
         }
         /// 最近的文件传输
         ///
-        /// Resource: `Interface.appDownloadsView.errorText1`.
+        /// Resource: `Interface.AppDownloadsView.recentFileTransfers`.
         public static var recentFileTransfers: LocalizedMessage {
-            .init(key: "appDownloadsView.errorText1", table: "Interface", fallback: "最近的文件传输")
-        }
-        /// 第 %1$lld 次尝试
-        ///
-        /// Resource: `Interface.appDownloadsView.sourceInfoText1`.
-        public static func attemptNumber(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appDownloadsView.sourceInfoText1", table: "Interface", fallback: "第 %1$lld 次尝试", arguments: [.integer(value0)])
+            .init(key: "AppDownloadsView.recentFileTransfers", table: "Interface", fallback: "最近的文件传输")
         }
         /// 续传 %1$@
         ///
-        /// Resource: `Interface.appDownloadsView.sourceInfoText2`.
+        /// Resource: `Interface.AppDownloadsView.resumeDownload`.
         public static func resumeDownload(_ value0: String) -> LocalizedMessage {
-            .init(key: "appDownloadsView.sourceInfoText2", table: "Interface", fallback: "续传 %1$@", arguments: [.text(value0)])
+            .init(key: "AppDownloadsView.resumeDownload", table: "Interface", fallback: "续传 %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appDownloadsView.bodyText1": .init("没有下载任务", []),
-            "Interface:appDownloadsView.bodyText2": .init("游戏安装和内容下载的进度会显示在此处。", []),
-            "Interface:appDownloadsView.bodyText3": .init("已完成", []),
-            "Interface:appDownloadsView.bodyText4": .init("已取消", []),
-            "Interface:appDownloadsView.bodyText5": .init("失败", []),
-            "Interface:appDownloadsView.errorText1": .init("最近的文件传输", []),
-            "Interface:appDownloadsView.sourceInfoText1": .init("第 %1$lld 次尝试", [.integer]),
-            "Interface:appDownloadsView.sourceInfoText2": .init("续传 %1$@", [.text]),
+            "Interface:AppDownloadsView.attemptNumber": .init("第 %1$lld 次尝试", [.integer]),
+            "Interface:AppDownloadsView.cancelled": .init("已取消", []),
+            "Interface:AppDownloadsView.completed": .init("已完成", []),
+            "Interface:AppDownloadsView.downloadProgressDetails": .init("游戏安装和内容下载的进度会显示在此处。", []),
+            "Interface:AppDownloadsView.failed": .init("失败", []),
+            "Interface:AppDownloadsView.noDownloadTasks": .init("没有下载任务", []),
+            "Interface:AppDownloadsView.recentFileTransfers": .init("最近的文件传输", []),
+            "Interface:AppDownloadsView.resumeDownload": .init("续传 %1$@", [.text]),
         ]
     }
 }

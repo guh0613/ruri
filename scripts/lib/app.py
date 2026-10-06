@@ -7,6 +7,12 @@ import plistlib
 import re
 import sys
 import uuid
+sys.dont_write_bytecode = True
+try:
+    from .localization import shipping_languages
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from lib.localization import shipping_languages
 
 ROOT = Path(__file__).resolve().parents[2]
 KEY_VARIABLE = "RURI_CURSEFORGE_API_KEY"
@@ -15,9 +21,8 @@ KEY_VARIABLE = "RURI_CURSEFORGE_API_KEY"
 def configure_metadata(path: Path) -> None:
     with path.open("rb") as source:
         info = plistlib.load(source)
-    resources = ROOT / "Sources/RuriLocalization/Resources"
     info["CFBundleDevelopmentRegion"] = "zh-Hans"
-    info["CFBundleLocalizations"] = sorted(p.stem for p in resources.glob("*.lproj"))
+    info["CFBundleLocalizations"] = shipping_languages(ROOT)
     version = os.environ.get("RURI_VERSION") or info.get("RuriVersion") or info["CFBundleShortVersionString"]
     number = r"(?:0|[1-9][0-9]*)"
     identifier = r"(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)"

@@ -3,77 +3,77 @@ import Foundation
 
 extension Messages {
     public enum AppGameQuitControls {
+        /// 取消命令
+        ///
+        /// Resource: `Interface.AppGameQuitControls.cancelCommand`.
+        public static var cancelCommand: LocalizedMessage {
+            .init(key: "AppGameQuitControls.cancelCommand", table: "Interface", fallback: "取消命令")
+        }
         /// 取消命令后将停止本次启动。
         ///
-        /// Resource: `Interface.appGameQuitControls.bodyText1`.
+        /// Resource: `Interface.AppGameQuitControls.cancelWillStop`.
         public static var cancelWillStop: LocalizedMessage {
-            .init(key: "appGameQuitControls.bodyText1", table: "Interface", fallback: "取消命令后将停止本次启动。")
+            .init(key: "AppGameQuitControls.cancelWillStop", table: "Interface", fallback: "取消命令后将停止本次启动。")
         }
         /// 游戏已退出，可以取消仍在运行的收尾命令。
         ///
-        /// Resource: `Interface.appGameQuitControls.bodyText2`.
+        /// Resource: `Interface.AppGameQuitControls.gameExited`.
         public static var gameExited: LocalizedMessage {
-            .init(key: "appGameQuitControls.bodyText2", table: "Interface", fallback: "游戏已退出，可以取消仍在运行的收尾命令。")
-        }
-        /// 取消命令
-        ///
-        /// Resource: `Interface.appGameQuitControls.bodyText3`.
-        public static var cancelCommand: LocalizedMessage {
-            .init(key: "appGameQuitControls.bodyText3", table: "Interface", fallback: "取消命令")
+            .init(key: "AppGameQuitControls.gameExited", table: "Interface", fallback: "游戏已退出，可以取消仍在运行的收尾命令。")
         }
         /// 游戏尚未退出，可能正在保存或等待操作。可返回游戏查看。
         ///
-        /// Resource: `Interface.appGameQuitControls.attemptText1`.
+        /// Resource: `Interface.AppGameQuitControls.gameStillRunning`.
         public static var gameStillRunning: LocalizedMessage {
-            .init(key: "appGameQuitControls.attemptText1", table: "Interface", fallback: "游戏尚未退出，可能正在保存或等待操作。可返回游戏查看。")
+            .init(key: "AppGameQuitControls.gameStillRunning", table: "Interface", fallback: "游戏尚未退出，可能正在保存或等待操作。可返回游戏查看。")
         }
         /// 本次启动请通过游戏菜单正常退出。
         ///
-        /// Resource: `Interface.appGameQuitControls.attemptText2`.
+        /// Resource: `Interface.AppGameQuitControls.normalExitNotice`.
         public static var normalExitNotice: LocalizedMessage {
-            .init(key: "appGameQuitControls.attemptText2", table: "Interface", fallback: "本次启动请通过游戏菜单正常退出。")
-        }
-        /// 返回游戏
-        ///
-        /// Resource: `Interface.appGameQuitControls.attemptText3`.
-        public static var returnToGame: LocalizedMessage {
-            .init(key: "appGameQuitControls.attemptText3", table: "Interface", fallback: "返回游戏")
+            .init(key: "AppGameQuitControls.normalExitNotice", table: "Interface", fallback: "本次启动请通过游戏菜单正常退出。")
         }
         /// 再次请求退出
         ///
-        /// Resource: `Interface.appGameQuitControls.attemptText4`.
+        /// Resource: `Interface.AppGameQuitControls.requestExitAgain`.
         public static var requestExitAgain: LocalizedMessage {
-            .init(key: "appGameQuitControls.attemptText4", table: "Interface", fallback: "再次请求退出")
+            .init(key: "AppGameQuitControls.requestExitAgain", table: "Interface", fallback: "再次请求退出")
         }
         /// 请求正常退出
         ///
-        /// Resource: `Interface.appGameQuitControls.attemptText5`.
+        /// Resource: `Interface.AppGameQuitControls.requestNormalExit`.
         public static var requestNormalExit: LocalizedMessage {
-            .init(key: "appGameQuitControls.attemptText5", table: "Interface", fallback: "请求正常退出")
+            .init(key: "AppGameQuitControls.requestNormalExit", table: "Interface", fallback: "请求正常退出")
+        }
+        /// 返回游戏
+        ///
+        /// Resource: `Interface.AppGameQuitControls.returnToGame`.
+        public static var returnToGame: LocalizedMessage {
+            .init(key: "AppGameQuitControls.returnToGame", table: "Interface", fallback: "返回游戏")
         }
         /// 终止游戏进程…
         ///
-        /// Resource: `Interface.appGameQuitControls.attemptText6`.
+        /// Resource: `Interface.AppGameQuitControls.terminateProcess`.
         public static var terminateProcess: LocalizedMessage {
-            .init(key: "appGameQuitControls.attemptText6", table: "Interface", fallback: "终止游戏进程…")
+            .init(key: "AppGameQuitControls.terminateProcess", table: "Interface", fallback: "终止游戏进程…")
         }
         /// 游戏没有响应时的操作
         ///
-        /// Resource: `Interface.appGameQuitControls.attemptText7`.
+        /// Resource: `Interface.AppGameQuitControls.unresponsiveGameAction`.
         public static var unresponsiveGameAction: LocalizedMessage {
-            .init(key: "appGameQuitControls.attemptText7", table: "Interface", fallback: "游戏没有响应时的操作")
+            .init(key: "AppGameQuitControls.unresponsiveGameAction", table: "Interface", fallback: "游戏没有响应时的操作")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appGameQuitControls.bodyText1": .init("取消命令后将停止本次启动。", []),
-            "Interface:appGameQuitControls.bodyText2": .init("游戏已退出，可以取消仍在运行的收尾命令。", []),
-            "Interface:appGameQuitControls.bodyText3": .init("取消命令", []),
-            "Interface:appGameQuitControls.attemptText1": .init("游戏尚未退出，可能正在保存或等待操作。可返回游戏查看。", []),
-            "Interface:appGameQuitControls.attemptText2": .init("本次启动请通过游戏菜单正常退出。", []),
-            "Interface:appGameQuitControls.attemptText3": .init("返回游戏", []),
-            "Interface:appGameQuitControls.attemptText4": .init("再次请求退出", []),
-            "Interface:appGameQuitControls.attemptText5": .init("请求正常退出", []),
-            "Interface:appGameQuitControls.attemptText6": .init("终止游戏进程…", []),
-            "Interface:appGameQuitControls.attemptText7": .init("游戏没有响应时的操作", []),
+            "Interface:AppGameQuitControls.cancelCommand": .init("取消命令", []),
+            "Interface:AppGameQuitControls.cancelWillStop": .init("取消命令后将停止本次启动。", []),
+            "Interface:AppGameQuitControls.gameExited": .init("游戏已退出，可以取消仍在运行的收尾命令。", []),
+            "Interface:AppGameQuitControls.gameStillRunning": .init("游戏尚未退出，可能正在保存或等待操作。可返回游戏查看。", []),
+            "Interface:AppGameQuitControls.normalExitNotice": .init("本次启动请通过游戏菜单正常退出。", []),
+            "Interface:AppGameQuitControls.requestExitAgain": .init("再次请求退出", []),
+            "Interface:AppGameQuitControls.requestNormalExit": .init("请求正常退出", []),
+            "Interface:AppGameQuitControls.returnToGame": .init("返回游戏", []),
+            "Interface:AppGameQuitControls.terminateProcess": .init("终止游戏进程…", []),
+            "Interface:AppGameQuitControls.unresponsiveGameAction": .init("游戏没有响应时的操作", []),
         ]
     }
 }

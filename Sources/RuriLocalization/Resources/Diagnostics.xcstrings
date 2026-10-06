@@ -1,0 +1,1349 @@
+{
+  "sourceLanguage" : "zh-Hans",
+  "strings" : {
+    "CoreGameDiagnosis.actionFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@失败"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.analysisReadLimit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分析读取量已达 16 MiB，未读取 %1$@。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.architectureCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "核对所选 Java 的 ARM64 / Intel 架构，并使用适用于这套游戏的版本。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.architectureMismatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地库或 Java 的架构不匹配"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.architectureMismatchExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统明确报告二进制架构不兼容，需要让 Java 与游戏本地库使用匹配的架构。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.architectureModCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查提供本地库的模组是否支持当前架构；之后修复实例以重新准备本地库。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.boundedTail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 仅分析有界片段，可能缺少上下文；原有文件未修改。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.checkAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查账号"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.checkInstanceSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查实例设置"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.classVersionCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在实例设置核对 Java，按游戏和整合包要求选择版本。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.classVersionModCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果刚替换过模组，检查该模组是否要求另一代 Java 或 Minecraft。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.classVersionUnreadable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 无法读取所需的类版本"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.classVersionUnsupported" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 明确报告类文件版本不受支持。游戏、加载器和模组都可能对 Java 有要求。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.cluesNeedingVerification" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要验证的线索"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.collectDiagnosticReports" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收集诊断报告"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.configBackup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "先查看原文的文件名和底层错误；修改前把该配置复制到别处留作备份。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.configReadExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载器在错误上下文中指出无法读取配置。可能是内容格式、版本差异或文件访问问题。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.configReadFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置文件读取失败"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.configRepair" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按对应模组说明修正配置；需要重新生成时只处理该文件，避免清空整套配置。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.confirmedAbnormalExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏异常退出，暂时无法确定原因。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.debugCrash" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "报告注明手动触发调试崩溃"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.debugCrashExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minecraft 报告的描述是手动调试崩溃，不据此推断模组不兼容。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.debugCrashRetry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若这是有意触发的调试操作，保存所需报告后正常重新启动。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.duplicateMod" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载器发现重复模组"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.duplicateModCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在模组管理中核对原文列出的文件和版本。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.duplicateModExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同一个模组被加载多次，可能存在不同版本或重复来源。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.duplicateModRetry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停用多余的一份后重试；不要同时删掉所有版本。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.evidenceNotRegularFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "证据不是普通文件。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.exitCode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出码"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.exitSummary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@：%2$@；Ruri 结束请求：%3$@"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.guidanceCheckErrors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "核对下方原始错误以及对应设置，处理后重新启动。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.guidanceCollectRetry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若仍然失败，收集这次运行记录，以便比较重试前后的错误。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.hasExitStatus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.invalidEvidencePathSkipped" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跳过无效证据路径。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.javaNotRecorded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未记录 Java"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.jvmCrash" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM 记录了本机崩溃"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.jvmCrashCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "核对所用 Java 和含本地库的模组版本，将报告与复现步骤一起提供给维护者。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.jvmCrashExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "虚拟机报告致命错误；Problematic frame 只是崩溃位置，仍需结合本地库、Java 与系统环境判断原因。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.jvmCrashReport" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留 JVM 报告的错误信号、Problematic frame 与 Java 版本。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.lastRecordedPhase" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最后记录阶段：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.launchArgumentCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "核对实例的附加 JVM 参数，保留副本后逐项撤销最近增加的参数。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.launchArgumentExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "虚拟机报告参数或内存上限无效，游戏尚未正常启动。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.launchArgumentRejected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 启动参数被拒绝"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.launchArgumentRetry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认内存上限与所选 Java 匹配，然后重试。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.launchCancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动已取消，没有证据表明游戏发生了崩溃。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.launchPreparationFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.loaderModConflict" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载器拒绝了模组组合"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.loaderModConflictCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按证据中的模组 ID 和版本范围核对依赖，并确认 Minecraft 与加载器版本。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.loaderModConflictExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载器报告缺少依赖、版本要求不满足或模组冲突。原文通常包含需要的版本范围。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.loaderModConflictRetry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在模组管理中处理最近的变更；一次只改一组相关依赖，保留恢复余地后重试。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.logExplicitReport" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日志明确报告"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.mainThreadCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "核对游戏所需的 Java 和加载器版本，检查自定义参数是否影响首线程启动。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.mainThreadReport" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留报告中的 Java、macOS 与错误原文，便于确认是否需要修正启动器的启动方式。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.mainThreadViolation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "窗口初始化违反 macOS 主线程要求"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.mainThreadViolationExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cocoa 或 GLFW 明确报告窗口必须在主线程创建。需要检查 Java、LWJGL 与首线程启动参数的组合。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.manageMods" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理模组"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.memoryLimit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · 内存上限 %2$@ MB"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.missingLaunchEntry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找不到游戏启动入口"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.missingMainClass" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找不到或无法加载主类"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.missingMainClassCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查实例所用的游戏与加载器版本，再使用实例的修复功能补全安装文件。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.missingMainClassCjk" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找不到或無法載入主要類別"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.missingMainClassExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 明确报告无法加载主类。版本文件、加载器安装或启动入口需要检查。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.missingMainClassReport" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留现有配置与存档；若修复后仍失败，附上这次报告。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.mixinApplyExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是模组修改游戏代码时的失败线索。文件名或堆栈中的模组不能直接当作唯一责任方。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.mixinApplyFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "错误上下文中有 Mixin 应用失败"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.mixinDependencyCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "先处理上方明确的依赖或入口错误，再检查这里涉及的模组版本组合。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.mixinModCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过模组管理逐步停用最近改动的模组来验证，之后仍能重新启用；不要根据单条警告批量删除模组。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.modInitializationCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "核对证据中列出的模组、依赖与加载器版本。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.modInitializationExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载器指出某个入口或模组实例初始化失败；依赖或其他模组仍可能参与其中。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.modInitializationFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模组初始化失败"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.modInitializationRetry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若错误紧随一次更新出现，先核对此前版本；可在模组管理中停用最近加入的模组来验证，之后仍能重新启用。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.monitoringInterrupted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控记录已中断，未取得游戏的退出结果。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.nativeMemoryAllocationExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM 报告本机内存分配失败。增大 Java 堆上限可能进一步挤占系统内存。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.nativeMemoryAllocationFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "虚拟机无法分配所需内存"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.nativeMemoryCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查系统内存压力与其他程序占用，核对是否设置了过大的 Java 堆。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.nativeMemoryRetry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调整后重新启动；保留 JVM 报告中的分配大小和失败位置供排查。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.noExitStatus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.normalExitRequested" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统曾接收 Ruri 的正常退出请求。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.outOfMemory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 报告内存耗尽"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.outOfMemoryCheck" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅在堆内存不足时考虑调整实例内存，并给 macOS 留出余量；同时检查最近加入的模组或高分辨率资源。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.outOfMemoryExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "错误上下文出现 OutOfMemoryError；仅凭这一类错误还不能判断应增加哪一种内存。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.outOfMemoryTypes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "先查看原文是 Java heap space、Direct buffer memory、Metaspace 还是无法创建线程。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.preparationError" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这是启动器记录的准备阶段错误，尚不能归为游戏崩溃。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.processIdentityInvalid" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原进程身份已失效"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.processTerminated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.recoveryBasis" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复依据：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.recoveryRecordTime" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复记录时间：%1$@（不是游戏退出时间）"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.relatedErrorCount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.repairInstallationFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修复安装文件"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.reportLimit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "本次有 %1$lld 份报告，仅分析前 12 份；其余仍可在运行目录查看。"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.runCompleted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本次运行已经结束，无需进行崩溃处理。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.runWithoutExitRecord" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本次运行尚无最终退出记录，暂不判断崩溃原因。可继续查看实时日志和进程状态。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.sessionLogReadFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未能读取会话日志：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.tailTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@（末段）"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.terminationSignal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "终止信号"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.unreadableReport" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未能读取 %1$@：%2$@"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.userConfirmedExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用户确认游戏已退出"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosis.viewRunFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看运行文件"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.bodyLineNumberHeading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正文从原文件第 1 行开始"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.completeFileHeading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已读取的完整文件"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.diagnosticBundleSaveFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存诊断包。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.diagnosticConclusionHeader" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "诊断结论与处理步骤"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.diagnosticReportHeader" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri 本地诊断报告\n分析器版本：1\n运行时间：%1$@\n\n%2$@\n%3$@\n\n"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.diagnosticRunMismatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "诊断与运行记录不匹配，请重新分析。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.diagnosticSaveLocationInvalid" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请将诊断包保存在 Ruri 数据目录和实例文件夹之外。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.environment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minecraft: %1$@\nLoader: %2$@ %3$@\nJava: %4$@\nMemory: %5$@\nSystem: %6$@\nHost architecture: %7$@\nAccount type: %8$@\nStarted: %9$@\nLast recorded stage: %10$@\nState: %11$@\nExit kind: %12$@\nExit status: %13$@\nStop requested through Ruri: %14$@\nNormal quit request sent: %15$@"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.environmentUnrecorded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未记录"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.excerptHeading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · 片段"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.exitPending" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "yes (exit not recorded)"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.gameJavaSystemEnvironment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏、Java 与系统环境"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.heapLimit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "堆上限 %1$@ MB"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.invalidReportSelection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择有效的报告内容。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.no" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.noReadErrors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未发现读取截断或读取错误。"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.readScopeHeader" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n读取范围与缺失信息\n"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.recoveryEnvironment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\nRecovery observed at (not exit time): %1$@\nRecovery basis: %2$@\n%3$@"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.sourceRangeHeading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来源：%1$@\n范围：%2$@\n行号：%3$@\n\n"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.tailLineNumberHeading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "末段内从 1 开始，不是原文件行号"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.truncatedFileHeading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "片段，可能缺少上下文"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.yes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "yes"
+          }
+        }
+      }
+    },
+    "CoreGameDiagnosticBundle.zipSaveLocationSelection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择 ZIP 文件保存位置。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

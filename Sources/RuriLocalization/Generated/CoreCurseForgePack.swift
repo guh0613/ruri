@@ -3,56 +3,56 @@ import Foundation
 
 extension Messages {
     public enum CoreCurseForgePack {
-        /// 不支持的 CurseForge 整合包格式
+        /// 请先解析并下载整合包清单中的 CurseForge 文件。
         ///
-        /// Resource: `Errors.coreCurseForgePack.manifestText1`.
-        public static var unsupportedManifestFormat: LocalizedMessage {
-            .init(key: "coreCurseForgePack.manifestText1", table: "Errors", fallback: "不支持的 CurseForge 整合包格式")
-        }
-        /// 此整合包包含多个加载器，暂时无法安装。
-        ///
-        /// Resource: `Errors.coreCurseForgePack.manifestText2`.
-        public static var multipleLoadersInPack: LocalizedMessage {
-            .init(key: "coreCurseForgePack.manifestText2", table: "Errors", fallback: "此整合包包含多个加载器，暂时无法安装。")
-        }
-        /// 尚未支持的整合包加载器：%1$@
-        ///
-        /// Resource: `Errors.coreCurseForgePack.kindText1`.
-        public static func unsupportedPackLoader(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForgePack.kindText1", table: "Errors", fallback: "尚未支持的整合包加载器：%1$@", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreCurseForgePack.curseForgeFilesNeedResolution`.
+        public static var curseForgeFilesNeedResolution: LocalizedMessage {
+            .init(key: "CoreCurseForgePack.curseForgeFilesNeedResolution", table: "Errors", fallback: "请先解析并下载整合包清单中的 CurseForge 文件。")
         }
         /// 整合包包含重复项目或无效文件标识
         ///
-        /// Resource: `Errors.coreCurseForgePack.instanceText1`.
+        /// Resource: `Errors.CoreCurseForgePack.duplicateOrInvalidPackFile`.
         public static var duplicateOrInvalidPackFile: LocalizedMessage {
-            .init(key: "coreCurseForgePack.instanceText1", table: "Errors", fallback: "整合包包含重复项目或无效文件标识")
+            .init(key: "CoreCurseForgePack.duplicateOrInvalidPackFile", table: "Errors", fallback: "整合包包含重复项目或无效文件标识")
         }
         /// 整合包 overrides 必须是实际目录
         ///
-        /// Resource: `Errors.coreCurseForgePack.infoText1`.
+        /// Resource: `Errors.CoreCurseForgePack.invalidOverridesDirectory`.
         public static var invalidOverridesDirectory: LocalizedMessage {
-            .init(key: "coreCurseForgePack.infoText1", table: "Errors", fallback: "整合包 overrides 必须是实际目录")
+            .init(key: "CoreCurseForgePack.invalidOverridesDirectory", table: "Errors", fallback: "整合包 overrides 必须是实际目录")
         }
-        /// 请先解析并下载整合包清单中的 CurseForge 文件。
+        /// 此整合包包含多个加载器，暂时无法安装。
         ///
-        /// Resource: `Errors.coreCurseForgePack.actualText1`.
-        public static var curseForgeFilesNeedResolution: LocalizedMessage {
-            .init(key: "coreCurseForgePack.actualText1", table: "Errors", fallback: "请先解析并下载整合包清单中的 CurseForge 文件。")
+        /// Resource: `Errors.CoreCurseForgePack.multipleLoadersInPack`.
+        public static var multipleLoadersInPack: LocalizedMessage {
+            .init(key: "CoreCurseForgePack.multipleLoadersInPack", table: "Errors", fallback: "此整合包包含多个加载器，暂时无法安装。")
         }
         /// 整合包文件校验失败：%1$@
         ///
-        /// Resource: `Errors.coreCurseForgePack.recordText1`.
+        /// Resource: `Errors.CoreCurseForgePack.packFileChecksumFailed`.
         public static func packFileChecksumFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForgePack.recordText1", table: "Errors", fallback: "整合包文件校验失败：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreCurseForgePack.packFileChecksumFailed", table: "Errors", fallback: "整合包文件校验失败：%1$@", arguments: [.text(value0)])
+        }
+        /// 不支持的 CurseForge 整合包格式
+        ///
+        /// Resource: `Errors.CoreCurseForgePack.unsupportedManifestFormat`.
+        public static var unsupportedManifestFormat: LocalizedMessage {
+            .init(key: "CoreCurseForgePack.unsupportedManifestFormat", table: "Errors", fallback: "不支持的 CurseForge 整合包格式")
+        }
+        /// 尚未支持的整合包加载器：%1$@
+        ///
+        /// Resource: `Errors.CoreCurseForgePack.unsupportedPackLoader`.
+        public static func unsupportedPackLoader(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreCurseForgePack.unsupportedPackLoader", table: "Errors", fallback: "尚未支持的整合包加载器：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreCurseForgePack.manifestText1": .init("不支持的 CurseForge 整合包格式", []),
-            "Errors:coreCurseForgePack.manifestText2": .init("此整合包包含多个加载器，暂时无法安装。", []),
-            "Errors:coreCurseForgePack.kindText1": .init("尚未支持的整合包加载器：%1$@", [.text]),
-            "Errors:coreCurseForgePack.instanceText1": .init("整合包包含重复项目或无效文件标识", []),
-            "Errors:coreCurseForgePack.infoText1": .init("整合包 overrides 必须是实际目录", []),
-            "Errors:coreCurseForgePack.actualText1": .init("请先解析并下载整合包清单中的 CurseForge 文件。", []),
-            "Errors:coreCurseForgePack.recordText1": .init("整合包文件校验失败：%1$@", [.text]),
+            "Errors:CoreCurseForgePack.curseForgeFilesNeedResolution": .init("请先解析并下载整合包清单中的 CurseForge 文件。", []),
+            "Errors:CoreCurseForgePack.duplicateOrInvalidPackFile": .init("整合包包含重复项目或无效文件标识", []),
+            "Errors:CoreCurseForgePack.invalidOverridesDirectory": .init("整合包 overrides 必须是实际目录", []),
+            "Errors:CoreCurseForgePack.multipleLoadersInPack": .init("此整合包包含多个加载器，暂时无法安装。", []),
+            "Errors:CoreCurseForgePack.packFileChecksumFailed": .init("整合包文件校验失败：%1$@", [.text]),
+            "Errors:CoreCurseForgePack.unsupportedManifestFormat": .init("不支持的 CurseForge 整合包格式", []),
+            "Errors:CoreCurseForgePack.unsupportedPackLoader": .init("尚未支持的整合包加载器：%1$@", [.text]),
         ]
     }
 }

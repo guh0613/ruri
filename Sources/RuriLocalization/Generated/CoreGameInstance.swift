@@ -5,33 +5,33 @@ extension Messages {
     public enum CoreGameInstance {
         /// 原版
         ///
-        /// Resource: `Core.coreGameInstance.componentsText1`.
+        /// Resource: `Core.CoreGameInstance.vanilla`.
         public static var vanilla: LocalizedMessage {
-            .init(key: "coreGameInstance.componentsText1", table: "Core", fallback: "原版")
+            .init(key: "CoreGameInstance.vanilla", table: "Core", fallback: "原版")
         }
         /// 指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。
         ///
-        /// Resource: `Errors.coreGameInstance.selectedText1`.
+        /// Resource: `Errors.CoreGameInstance.javaBelowRequiredVersion`.
         public static func javaBelowRequiredVersion(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreGameInstance.selectedText1", table: "Errors", fallback: "指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreGameInstance.javaBelowRequiredVersion", table: "Errors", fallback: "指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。", arguments: [.text(value0), .text(value1)])
         }
         /// 指定的 Java %1$@ 不在此整合包支持的版本中。
         ///
-        /// Resource: `Errors.coreGameInstance.selectedText2`.
+        /// Resource: `Errors.CoreGameInstance.javaUnsupportedByPack`.
         public static func javaUnsupportedByPack(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameInstance.selectedText2", table: "Errors", fallback: "指定的 Java %1$@ 不在此整合包支持的版本中。", arguments: [.text(value0)])
+            .init(key: "CoreGameInstance.javaUnsupportedByPack", table: "Errors", fallback: "指定的 Java %1$@ 不在此整合包支持的版本中。", arguments: [.text(value0)])
         }
         /// 整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。
         ///
-        /// Resource: `Errors.coreGameInstance.selectedText3`.
+        /// Resource: `Errors.CoreGameInstance.packJavaVersionMismatch`.
         public static func packJavaVersionMismatch(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameInstance.selectedText3", table: "Errors", fallback: "整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。", arguments: [.text(value0)])
+            .init(key: "CoreGameInstance.packJavaVersionMismatch", table: "Errors", fallback: "整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreGameInstance.componentsText1": .init("原版", []),
-            "Errors:coreGameInstance.selectedText1": .init("指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。", [.text, .text]),
-            "Errors:coreGameInstance.selectedText2": .init("指定的 Java %1$@ 不在此整合包支持的版本中。", [.text]),
-            "Errors:coreGameInstance.selectedText3": .init("整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。", [.text]),
+            "Core:CoreGameInstance.vanilla": .init("原版", []),
+            "Errors:CoreGameInstance.javaBelowRequiredVersion": .init("指定的 Java %1$@ 不符合游戏要求，请选择 Java %2$@ 或更高版本。", [.text, .text]),
+            "Errors:CoreGameInstance.javaUnsupportedByPack": .init("指定的 Java %1$@ 不在此整合包支持的版本中。", [.text]),
+            "Errors:CoreGameInstance.packJavaVersionMismatch": .init("整合包指定的 Java 版本与游戏要求的 Java %1$@ 不兼容。", [.text]),
         ]
     }
 }

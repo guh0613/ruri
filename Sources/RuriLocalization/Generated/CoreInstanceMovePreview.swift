@@ -3,70 +3,70 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceMovePreview {
-        /// 找不到要移动的实例，请刷新后重试。
+        /// 实例文件夹的位置或身份在预览后改变，请重新预览。
         ///
-        /// Resource: `Errors.coreInstanceMovePreview.sourceText1`.
-        public static var sourceInstanceMissing: LocalizedMessage {
-            .init(key: "coreInstanceMovePreview.sourceText1", table: "Errors", fallback: "找不到要移动的实例，请刷新后重试。")
-        }
-        /// 此实例已经位于所选文件夹中。
-        ///
-        /// Resource: `Errors.coreInstanceMovePreview.sourceText2`.
-        public static var sourceAlreadyInTarget: LocalizedMessage {
-            .init(key: "coreInstanceMovePreview.sourceText2", table: "Errors", fallback: "此实例已经位于所选文件夹中。")
-        }
-        /// 找不到目标实例文件夹。
-        ///
-        /// Resource: `Errors.coreInstanceMovePreview.sourceText3`.
-        public static var targetInstanceMissing: LocalizedMessage {
-            .init(key: "coreInstanceMovePreview.sourceText3", table: "Errors", fallback: "找不到目标实例文件夹。")
-        }
-        /// 源实例文件夹在预览期间被替换，请重新预览。
-        ///
-        /// Resource: `Errors.coreInstanceMovePreview.snapshotText1`.
-        public static var sourceFolderReplacedDuringPreview: LocalizedMessage {
-            .init(key: "coreInstanceMovePreview.snapshotText1", table: "Errors", fallback: "源实例文件夹在预览期间被替换，请重新预览。")
-        }
-        /// 实例设置在预览期间改变，请重新预览。
-        ///
-        /// Resource: `Errors.coreInstanceMovePreview.snapshotText2`.
-        public static var settingsChangedDuringPreview: LocalizedMessage {
-            .init(key: "coreInstanceMovePreview.snapshotText2", table: "Errors", fallback: "实例设置在预览期间改变，请重新预览。")
+        /// Resource: `Errors.CoreInstanceMovePreview.locationChangedAfterPreview`.
+        public static var locationChangedAfterPreview: LocalizedMessage {
+            .init(key: "CoreInstanceMovePreview.locationChangedAfterPreview", table: "Errors", fallback: "实例文件夹的位置或身份在预览后改变，请重新预览。")
         }
         /// 实例设置在预览后改变，请重新预览。
         ///
-        /// Resource: `Errors.coreInstanceMovePreview.validateText1`.
+        /// Resource: `Errors.CoreInstanceMovePreview.settingsChangedAfterPreview`.
         public static var settingsChangedAfterPreview: LocalizedMessage {
-            .init(key: "coreInstanceMovePreview.validateText1", table: "Errors", fallback: "实例设置在预览后改变，请重新预览。")
+            .init(key: "CoreInstanceMovePreview.settingsChangedAfterPreview", table: "Errors", fallback: "实例设置在预览后改变，请重新预览。")
         }
-        /// 实例文件夹的位置或身份在预览后改变，请重新预览。
+        /// 实例设置在预览期间改变，请重新预览。
         ///
-        /// Resource: `Errors.coreInstanceMovePreview.currentText1`.
-        public static var locationChangedAfterPreview: LocalizedMessage {
-            .init(key: "coreInstanceMovePreview.currentText1", table: "Errors", fallback: "实例文件夹的位置或身份在预览后改变，请重新预览。")
+        /// Resource: `Errors.CoreInstanceMovePreview.settingsChangedDuringPreview`.
+        public static var settingsChangedDuringPreview: LocalizedMessage {
+            .init(key: "CoreInstanceMovePreview.settingsChangedDuringPreview", table: "Errors", fallback: "实例设置在预览期间改变，请重新预览。")
+        }
+        /// 此实例已经位于所选文件夹中。
+        ///
+        /// Resource: `Errors.CoreInstanceMovePreview.sourceAlreadyInTarget`.
+        public static var sourceAlreadyInTarget: LocalizedMessage {
+            .init(key: "CoreInstanceMovePreview.sourceAlreadyInTarget", table: "Errors", fallback: "此实例已经位于所选文件夹中。")
+        }
+        /// 源实例文件夹在预览期间被替换，请重新预览。
+        ///
+        /// Resource: `Errors.CoreInstanceMovePreview.sourceFolderReplacedDuringPreview`.
+        public static var sourceFolderReplacedDuringPreview: LocalizedMessage {
+            .init(key: "CoreInstanceMovePreview.sourceFolderReplacedDuringPreview", table: "Errors", fallback: "源实例文件夹在预览期间被替换，请重新预览。")
+        }
+        /// 找不到要移动的实例，请刷新后重试。
+        ///
+        /// Resource: `Errors.CoreInstanceMovePreview.sourceInstanceMissing`.
+        public static var sourceInstanceMissing: LocalizedMessage {
+            .init(key: "CoreInstanceMovePreview.sourceInstanceMissing", table: "Errors", fallback: "找不到要移动的实例，请刷新后重试。")
         }
         /// 目标位置已经有同一实例的文件，原文件不会被覆盖。请先在 Finder 中核对。
         ///
-        /// Resource: `Errors.coreInstanceMovePreview.infoText1`.
+        /// Resource: `Errors.CoreInstanceMovePreview.targetAlreadyContainsInstance`.
         public static var targetAlreadyContainsInstance: LocalizedMessage {
-            .init(key: "coreInstanceMovePreview.infoText1", table: "Errors", fallback: "目标位置已经有同一实例的文件，原文件不会被覆盖。请先在 Finder 中核对。")
+            .init(key: "CoreInstanceMovePreview.targetAlreadyContainsInstance", table: "Errors", fallback: "目标位置已经有同一实例的文件，原文件不会被覆盖。请先在 Finder 中核对。")
         }
         /// 无法确认目标位置是否为空，请检查磁盘与访问权限。
         ///
-        /// Resource: `Errors.coreInstanceMovePreview.infoText2`.
+        /// Resource: `Errors.CoreInstanceMovePreview.targetAvailabilityUnknown`.
         public static var targetAvailabilityUnknown: LocalizedMessage {
-            .init(key: "coreInstanceMovePreview.infoText2", table: "Errors", fallback: "无法确认目标位置是否为空，请检查磁盘与访问权限。")
+            .init(key: "CoreInstanceMovePreview.targetAvailabilityUnknown", table: "Errors", fallback: "无法确认目标位置是否为空，请检查磁盘与访问权限。")
+        }
+        /// 找不到目标实例文件夹。
+        ///
+        /// Resource: `Errors.CoreInstanceMovePreview.targetInstanceMissing`.
+        public static var targetInstanceMissing: LocalizedMessage {
+            .init(key: "CoreInstanceMovePreview.targetInstanceMissing", table: "Errors", fallback: "找不到目标实例文件夹。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstanceMovePreview.sourceText1": .init("找不到要移动的实例，请刷新后重试。", []),
-            "Errors:coreInstanceMovePreview.sourceText2": .init("此实例已经位于所选文件夹中。", []),
-            "Errors:coreInstanceMovePreview.sourceText3": .init("找不到目标实例文件夹。", []),
-            "Errors:coreInstanceMovePreview.snapshotText1": .init("源实例文件夹在预览期间被替换，请重新预览。", []),
-            "Errors:coreInstanceMovePreview.snapshotText2": .init("实例设置在预览期间改变，请重新预览。", []),
-            "Errors:coreInstanceMovePreview.validateText1": .init("实例设置在预览后改变，请重新预览。", []),
-            "Errors:coreInstanceMovePreview.currentText1": .init("实例文件夹的位置或身份在预览后改变，请重新预览。", []),
-            "Errors:coreInstanceMovePreview.infoText1": .init("目标位置已经有同一实例的文件，原文件不会被覆盖。请先在 Finder 中核对。", []),
-            "Errors:coreInstanceMovePreview.infoText2": .init("无法确认目标位置是否为空，请检查磁盘与访问权限。", []),
+            "Errors:CoreInstanceMovePreview.locationChangedAfterPreview": .init("实例文件夹的位置或身份在预览后改变，请重新预览。", []),
+            "Errors:CoreInstanceMovePreview.settingsChangedAfterPreview": .init("实例设置在预览后改变，请重新预览。", []),
+            "Errors:CoreInstanceMovePreview.settingsChangedDuringPreview": .init("实例设置在预览期间改变，请重新预览。", []),
+            "Errors:CoreInstanceMovePreview.sourceAlreadyInTarget": .init("此实例已经位于所选文件夹中。", []),
+            "Errors:CoreInstanceMovePreview.sourceFolderReplacedDuringPreview": .init("源实例文件夹在预览期间被替换，请重新预览。", []),
+            "Errors:CoreInstanceMovePreview.sourceInstanceMissing": .init("找不到要移动的实例，请刷新后重试。", []),
+            "Errors:CoreInstanceMovePreview.targetAlreadyContainsInstance": .init("目标位置已经有同一实例的文件，原文件不会被覆盖。请先在 Finder 中核对。", []),
+            "Errors:CoreInstanceMovePreview.targetAvailabilityUnknown": .init("无法确认目标位置是否为空，请检查磁盘与访问权限。", []),
+            "Errors:CoreInstanceMovePreview.targetInstanceMissing": .init("找不到目标实例文件夹。", []),
         ]
     }
 }

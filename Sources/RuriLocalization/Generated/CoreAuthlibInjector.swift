@@ -3,28 +3,28 @@ import Foundation
 
 extension Messages {
     public enum CoreAuthlibInjector {
+        /// authlib-injector 文件校验失败，请重试。
+        ///
+        /// Resource: `Errors.CoreAuthlibInjector.authlibInjectorChecksumFailed`.
+        public static var authlibInjectorChecksumFailed: LocalizedMessage {
+            .init(key: "CoreAuthlibInjector.authlibInjectorChecksumFailed", table: "Errors", fallback: "authlib-injector 文件校验失败，请重试。")
+        }
         /// 外置认证组件尚未准备好。
         ///
-        /// Resource: `Errors.coreAuthlibInjector.argumentsText1`.
+        /// Resource: `Errors.CoreAuthlibInjector.externalAuthComponentNotReady`.
         public static var externalAuthComponentNotReady: LocalizedMessage {
-            .init(key: "coreAuthlibInjector.argumentsText1", table: "Errors", fallback: "外置认证组件尚未准备好。")
+            .init(key: "CoreAuthlibInjector.externalAuthComponentNotReady", table: "Errors", fallback: "外置认证组件尚未准备好。")
         }
         /// authlib-injector 下载信息无效。
         ///
-        /// Resource: `Errors.coreAuthlibInjector.validateText1`.
+        /// Resource: `Errors.CoreAuthlibInjector.invalidAuthlibInjectorDownloadInfo`.
         public static var invalidAuthlibInjectorDownloadInfo: LocalizedMessage {
-            .init(key: "coreAuthlibInjector.validateText1", table: "Errors", fallback: "authlib-injector 下载信息无效。")
-        }
-        /// authlib-injector 文件校验失败，请重试。
-        ///
-        /// Resource: `Errors.coreAuthlibInjector.dataText1`.
-        public static var authlibInjectorChecksumFailed: LocalizedMessage {
-            .init(key: "coreAuthlibInjector.dataText1", table: "Errors", fallback: "authlib-injector 文件校验失败，请重试。")
+            .init(key: "CoreAuthlibInjector.invalidAuthlibInjectorDownloadInfo", table: "Errors", fallback: "authlib-injector 下载信息无效。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreAuthlibInjector.argumentsText1": .init("外置认证组件尚未准备好。", []),
-            "Errors:coreAuthlibInjector.validateText1": .init("authlib-injector 下载信息无效。", []),
-            "Errors:coreAuthlibInjector.dataText1": .init("authlib-injector 文件校验失败，请重试。", []),
+            "Errors:CoreAuthlibInjector.authlibInjectorChecksumFailed": .init("authlib-injector 文件校验失败，请重试。", []),
+            "Errors:CoreAuthlibInjector.externalAuthComponentNotReady": .init("外置认证组件尚未准备好。", []),
+            "Errors:CoreAuthlibInjector.invalidAuthlibInjectorDownloadInfo": .init("authlib-injector 下载信息无效。", []),
         ]
     }
 }

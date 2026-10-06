@@ -1,0 +1,4324 @@
+{
+  "sourceLanguage" : "zh-Hans",
+  "strings" : {
+    "CoreAccount.externalAuth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "认证服务器"
+          }
+        }
+      }
+    },
+    "CoreAccount.externalServer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外置认证 · %1$@"
+          }
+        }
+      }
+    },
+    "CoreAccount.microsoftAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microsoft 账号"
+          }
+        }
+      }
+    },
+    "CoreAccount.offlineAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "离线账号"
+          }
+        }
+      }
+    },
+    "CoreAccountAppearance.cape" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "披风"
+          }
+        }
+      }
+    },
+    "CoreAccountAppearance.currentCape" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前披风"
+          }
+        }
+      }
+    },
+    "CoreAccountAppearance.currentSkin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前皮肤"
+          }
+        }
+      }
+    },
+    "CoreAuthentication.authenticationService" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "认证服务"
+          }
+        }
+      }
+    },
+    "CoreAuthentication.childAccountFamilyApprovalRequired" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此儿童账号需要加入 Microsoft 家庭并由家长授权。"
+          }
+        }
+      }
+    },
+    "CoreAuthentication.keychainAccessFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "钥匙串访问失败（%1$@），请重新登录或检查系统授权。"
+          }
+        }
+      }
+    },
+    "CoreAuthentication.loginCancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录已取消。"
+          }
+        }
+      }
+    },
+    "CoreAuthentication.microsoftLoginExpiredOrFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microsoft 登录已过期或失败，请重试。"
+          }
+        }
+      }
+    },
+    "CoreAuthentication.xboxAgeVerificationRequired" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此账号需要在 Xbox 完成年龄验证。"
+          }
+        }
+      }
+    },
+    "CoreAuthentication.xboxLiveUnavailableInRegion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xbox Live 在此账号所在地区不可用。"
+          }
+        }
+      }
+    },
+    "CoreAuthentication.xboxLoginFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xbox 登录失败（%1$@）。"
+          }
+        }
+      }
+    },
+    "CoreAuthentication.xboxProfileMissing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此账号尚未建立 Xbox 资料，请先登录 xbox.com 完成设置。"
+          }
+        }
+      }
+    },
+    "CoreBuildConfiguration.developmentVersion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Development"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开发版本"
+          }
+        }
+      }
+    },
+    "CoreContentBatch.removalFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri 已移除的内容 %1$@"
+          }
+        }
+      }
+    },
+    "CoreContentManager.importedIDsSeparator" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " 或 "
+          }
+        }
+      }
+    },
+    "CoreContentManager.localFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地文件"
+          }
+        }
+      }
+    },
+    "CoreContentManager.mods" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模组"
+          }
+        }
+      }
+    },
+    "CoreContentManager.resourcePacks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源包"
+          }
+        }
+      }
+    },
+    "CoreContentManager.shaders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光影"
+          }
+        }
+      }
+    },
+    "CoreCurseForge.apiKeyMissing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先在设置中配置 Ruri 的 CurseForge API Key。"
+          }
+        }
+      }
+    },
+    "CoreCurseForge.apiKeyReadFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取 CurseForge API Key（钥匙串状态 %1$@）。"
+          }
+        }
+      }
+    },
+    "CoreCurseForge.bulkContentUpdate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "批量内容更新"
+          }
+        }
+      }
+    },
+    "CoreDownloadActivity.cancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已取消"
+          }
+        }
+      }
+    },
+    "CoreDownloadActivity.downloading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载中"
+          }
+        }
+      }
+    },
+    "CoreDownloadActivity.failed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "失败"
+          }
+        }
+      }
+    },
+    "CoreDownloadActivity.retrying" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在重试"
+          }
+        }
+      }
+    },
+    "CoreDownloadActivity.validated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已校验"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.downloadEndedEarly" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载提前结束，可以继续重试"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.downloadExceedsExpectedSize" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载数据超过清单大小"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.downloadHTTPError" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载服务返回 HTTP %1$@"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.downloadSaveFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存下载文件"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.downloadSizeMismatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器文件大小与清单不一致"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.insecureDownloadRedirect" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载服务重定向到了非 HTTPS 地址"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.invalidDownloadRange" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器返回了无效的下载范围"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.invalidDownloadResponse" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载服务响应无效"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.missingDownloadHash" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载服务未提供可校验的原始文件"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.missingDownloadResponse" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载数据缺少有效响应"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.resumeFileChanged" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地续传文件在下载期间发生变化"
+          }
+        }
+      }
+    },
+    "CoreDownloadStream.resumeRangeMismatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器续传范围与本地文件不一致"
+          }
+        }
+      }
+    },
+    "CoreExternalAuthentication.authenticationServerName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "认证服务器"
+          }
+        }
+      }
+    },
+    "CoreFileExtendedAttributes.attributeVerificationFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法核对文件附加信息：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameExit.crashExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏异常退出（退出码 %1$@）"
+          }
+        }
+      }
+    },
+    "CoreGameExit.exitCodeLabel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出码"
+          }
+        }
+      }
+    },
+    "CoreGameExit.exitLogLine" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] %1$@；PID %2$@；%3$@ %4$@；Ruri 结束请求：%5$@；正常退出请求：%6$@；开始 %7$@；结束 %8$@"
+          }
+        }
+      }
+    },
+    "CoreGameExit.exitStatusNeedsLogs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。"
+          }
+        }
+      }
+    },
+    "CoreGameExit.javaTerminationSignal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。"
+          }
+        }
+      }
+    },
+    "CoreGameExit.javaVirtualMachine" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 虚拟机"
+          }
+        }
+      }
+    },
+    "CoreGameExit.noLabel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "否"
+          }
+        }
+      }
+    },
+    "CoreGameExit.normalExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏已正常退出"
+          }
+        }
+      }
+    },
+    "CoreGameExit.normalExitSucceeded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。"
+          }
+        }
+      }
+    },
+    "CoreGameExit.processExitReason" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏进程因 %1$@ 退出"
+          }
+        }
+      }
+    },
+    "CoreGameExit.processExitedSuccessfully" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏进程返回成功状态。"
+          }
+        }
+      }
+    },
+    "CoreGameExit.requestedExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏已按要求结束"
+          }
+        }
+      }
+    },
+    "CoreGameExit.ruriRequestedExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。"
+          }
+        }
+      }
+    },
+    "CoreGameExit.signalLabel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "信号"
+          }
+        }
+      }
+    },
+    "CoreGameExit.signalValue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "信号 %1$@"
+          }
+        }
+      }
+    },
+    "CoreGameExit.terminationSignalReceived" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。"
+          }
+        }
+      }
+    },
+    "CoreGameExit.yesLabel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是"
+          }
+        }
+      }
+    },
+    "CoreGameInstance.vanilla" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原版"
+          }
+        }
+      }
+    },
+    "CoreGameMonitor.environmentNames" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] 自定义环境变量：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameMonitor.gameProcessInfoSaveFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] 无法保存游戏进程信息：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameMonitor.monitorStartFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控启动失败"
+          }
+        }
+      }
+    },
+    "CoreGameNormalQuit.normalExitRequestFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。"
+          }
+        }
+      }
+    },
+    "CoreGameNormalQuit.normalExitRequestPending" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统已接收正常退出请求，正在等待游戏处理；Ruri 会继续采集日志，不会自动升级为终止进程。"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectory.allNewInstancesIsolated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有新实例独立"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectory.customDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义运行目录"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectory.customDirectoryDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectory.isolatedDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "独立运行目录"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectory.isolatedDirectoryDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此实例单独保存模组、存档和游戏设置。"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectory.loaderInstancesIsolated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有模组加载器的实例独立"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectory.newInstancesShared" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新实例使用共享目录"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectory.sharedDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共享运行目录"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectory.sharedDirectoryDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.changedFileIdentitiesRetained" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "目标目录中有 %1$lld 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.cleaningCopyRecord" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目录已更新，正在清理复制记录"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.copyCancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行目录复制已取消，原目录和设置未改动。"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.copyIncomplete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行目录复制未完成：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.copyNotStarted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行目录复制尚未开始：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.copyingGameFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在复制游戏文件（%1$@ / %2$@）"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.directorySettingsUnconfirmed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.directorySwitchedCleanupPending" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.recoveryFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@\n自动恢复尚未完成，请在实例设置中恢复复制。%2$@"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.temporaryFilesCleanupWarning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.validatingFileContents" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在校验文件内容…"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.workCopyRetained" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n工作副本保留在：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameRunDirectoryCopy.writingDestination" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在写入目标（%1$@ / %2$@）"
+          }
+        }
+      }
+    },
+    "CoreGameSession.buildingLaunchArguments" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Building launch arguments"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "构建启动参数"
+          }
+        }
+      }
+    },
+    "CoreGameSession.checkingInstance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checking instance"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查实例"
+          }
+        }
+      }
+    },
+    "CoreGameSession.gameExited" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game exited"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏已退出"
+          }
+        }
+      }
+    },
+    "CoreGameSession.gameProcessRunning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game process running"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏进程运行"
+          }
+        }
+      }
+    },
+    "CoreGameSession.installingGame" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installing game"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安装游戏"
+          }
+        }
+      }
+    },
+    "CoreGameSession.launchCancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launch cancelled"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动已取消"
+          }
+        }
+      }
+    },
+    "CoreGameSession.launchFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launch failed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动失败"
+          }
+        }
+      }
+    },
+    "CoreGameSession.monitoringFinishedUnknownExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring ended · Exit result unknown"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控记录已收尾 · 退出结果未知"
+          }
+        }
+      }
+    },
+    "CoreGameSession.phaseFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ failed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@失败"
+          }
+        }
+      }
+    },
+    "CoreGameSession.playtimeSaveFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] Could not save playtime: %1$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] 未能保存游玩时长：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameSession.preparingJava" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing Java"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "准备 Java"
+          }
+        }
+      }
+    },
+    "CoreGameSession.preparingLaunch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing launch"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "准备启动"
+          }
+        }
+      }
+    },
+    "CoreGameSession.readingVersion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reading version"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取版本"
+          }
+        }
+      }
+    },
+    "CoreGameSession.recoveringInterruptedRecord" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recovering interrupted session"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复中断记录"
+          }
+        }
+      }
+    },
+    "CoreGameSession.reportCopyFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] Could not save report copy %1$@: %2$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] 未能保存报告副本 %1$@：%2$@"
+          }
+        }
+      }
+    },
+    "CoreGameSession.reportCopySaveFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] Could not save report copy: %1$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] 未能保存报告副本：%1$@"
+          }
+        }
+      }
+    },
+    "CoreGameSession.reportTooLargeNotice" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n[Ruri] Report exceeds 8 MiB; only the beginning was copied.\n"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n[Ruri] 报告超过 8 MiB，副本仅保留开头。\n"
+          }
+        }
+      }
+    },
+    "CoreGameSession.requestingGameExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requesting game exit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求结束游戏"
+          }
+        }
+      }
+    },
+    "CoreGameSession.runFinished" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session ended"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行已结束"
+          }
+        }
+      }
+    },
+    "CoreGameSession.runningAfterCommand" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Running post-exit command"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "执行退出后命令"
+          }
+        }
+      }
+    },
+    "CoreGameSession.runningAfterCommandAfterExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game exited · Running post-exit command"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏已退出 · 正在执行退出后命令"
+          }
+        }
+      }
+    },
+    "CoreGameSession.runningBeforeCommand" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Running pre-launch command"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "执行启动前命令"
+          }
+        }
+      }
+    },
+    "CoreGameSession.startedWithoutCompletion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · No completion record"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · 尚无完成记录"
+          }
+        }
+      }
+    },
+    "CoreGameSession.startedWithoutExitRecord" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game started · No exit record"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏已启动 · 尚无退出记录"
+          }
+        }
+      }
+    },
+    "CoreGameSession.startingGameProcess" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starting game process"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建游戏进程"
+          }
+        }
+      }
+    },
+    "CoreGameSession.truncatedLogNotice" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] Showing the log tail. The full log is in the session directory.\n"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n"
+          }
+        }
+      }
+    },
+    "CoreGameSession.validatingAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Validating account"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "验证账号"
+          }
+        }
+      }
+    },
+    "CoreGameSession.waitingForGameExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for the game to exit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待游戏处理退出请求"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.cannotCheckMonitorProcess" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cannot verify the monitor process yet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂时无法核对监控进程"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.gameProcessGoneWithoutExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game process gone; exit result missing"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏进程已消失，缺少退出结果"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.gameRunningMonitorDisconnected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game running; monitor disconnected"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏仍在运行，监控已断开"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.insufficientProcessInformation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The system did not provide enough process information to confirm monitor exit. Refresh shortly. Records that may still be written will remain open."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统没有提供足够的进程信息，当前不能确认监控是否已经退出。请稍后刷新；这时不会收尾仍可能被写入的记录。"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.interruptedGameProcessGone" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The monitor was interrupted. Process identity checks confirm the original game process is gone. Actual exit code and time are unavailable."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控已中断，核对记录中的身份后确认原游戏进程已消失。没有取得实际退出码或退出时间。"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.interruptedUnknownCommandResult" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitor interrupted; command result unknown"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控中断，命令结果未知"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.interruptedUnverifiedGameExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The monitor was interrupted and game process identity was unavailable. The record was finalized after user confirmation. Actual exit code and time are unavailable."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控已中断且缺少游戏进程身份，由用户确认游戏已退出后收尾。没有取得实际退出码或退出时间。"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.launchCommandRunningMonitorDisconnected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launch command running; monitor disconnected"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动命令仍在运行，监控已断开"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.launchCommandStillExists" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The command process still exists. Stop it in Activity Monitor before recovering the record. The command will not run again."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.matchingProcessIdentity" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The process identity still matches. Exit through the game's menu first. Console output may no longer be saved."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进程身份仍然匹配。请先返回游戏，通过游戏菜单退出；这期间控制台输出可能无法继续保存。"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.monitorInterruptedAfterExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The monitor was interrupted while finalizing exit. Recorded exit code and playtime are preserved. The post-exit command will not run again."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.monitorInterruptedUnknownGameState" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitor interrupted; game state unknown"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控已中断，无法确认游戏状态"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.monitorStillRunning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitor still running"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控组件仍在运行"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.noRecoveryNeeded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This record no longer needs recovery."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无需再恢复这条记录。"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.originalProcessGone" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The original game process is gone. The instance can be recovered for launching again. Exit code and end time are unknown."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原游戏进程已不存在，可以恢复实例的启动入口。退出码和结束时间未知。"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.recordAlreadyFinished" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session record already finalized"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行记录已经结束"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.unverifiedGameExit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The game process could not be verified. Confirm it has exited in the game, Dock, or Activity Monitor before recovering."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法确认游戏进程。请先在游戏、Dock 或活动监视器中确认游戏已退出，再恢复启动入口。"
+          }
+        }
+      }
+    },
+    "CoreGameSessionRecovery.waitForMonitorOrCheckGame" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wait for the monitor to finalize, or check the game."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请等待监控完成收尾，或返回游戏查看当前状态。"
+          }
+        }
+      }
+    },
+    "CoreHMCLPack.reinstallDependenciesForMac" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏与加载器依赖会重新安装，以匹配当前 Mac。"
+          }
+        }
+      }
+    },
+    "CoreInstanceComponents.installationRequired" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先完成此实例的安装。"
+          }
+        }
+      }
+    },
+    "CoreInstanceComponents.multipleLoadersUnsupported" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此实例同时使用多个加载器，暂不支持保留组合的更换操作。"
+          }
+        }
+      }
+    },
+    "CoreInstanceComponents.unsupportedComponents" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此实例还有 %1$@，暂不支持保留这些组件的更换操作。"
+          }
+        }
+      }
+    },
+    "CoreInstanceCopier.copyCancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例复制已取消，原实例及其文件保留。"
+          }
+        }
+      }
+    },
+    "CoreInstanceCopier.copyCleanupIncomplete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制已完成，部分临时文件未删除，可在 Finder 中查看。"
+          }
+        }
+      }
+    },
+    "CoreInstanceCopier.copyCommitUncertain" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法确认实例复制是否已提交，请通过恢复入口检查。%1$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceCopier.copyCommittedCleanupPending" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例已复制，工作记录尚未清理，请通过恢复入口完成清理。%1$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceCopier.copyCompletedWithTemporaryFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例已复制，部分临时文件保留，可在 Finder 中查看。"
+          }
+        }
+      }
+    },
+    "CoreInstanceCopier.copyFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例复制未完成：%1$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceCopier.recoveryFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@\n自动恢复尚未完成，请连接原磁盘并恢复实例复制。%2$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceCopier.unknownTargetFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：%1$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceCopier.workFilesKept" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制尚未完成，工作文件已保留，可以重新复制。"
+          }
+        }
+      }
+    },
+    "CoreInstanceMoveProgress.cleaningVerifiedOriginalFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在清理已核验的原文件…"
+          }
+        }
+      }
+    },
+    "CoreInstanceMoveProgress.copyingInstanceFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在复制实例文件…"
+          }
+        }
+      }
+    },
+    "CoreInstanceMoveProgress.organizingOriginalFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在整理原实例文件…"
+          }
+        }
+      }
+    },
+    "CoreInstanceMoveProgress.validatingInstanceFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在校验实例文件…"
+          }
+        }
+      }
+    },
+    "CoreInstanceMoveProgress.verifyingMovedInstance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例已移动，正在核对原文件…"
+          }
+        }
+      }
+    },
+    "CoreInstanceMoveProgress.writingDestinationFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在写入目标文件夹…"
+          }
+        }
+      }
+    },
+    "CoreInstanceMover.moveCancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动已取消，原实例保留，工作副本已另存。"
+          }
+        }
+      }
+    },
+    "CoreInstanceMover.moveCommitUnknown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法确认实例移动是否已经提交，请通过恢复入口检查。%1$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceMover.moveCommitted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例已移动，原文件或工作记录还需检查。请恢复实例移动。%1$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceMover.moveFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动未完成，原实例保留。请连接原磁盘并恢复移动。%1$@\n%2$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceMover.moveIncomplete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动未完成，原实例保留。%1$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceMover.moveRecovered" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未完成的移动已恢复，原实例和工作副本保留。"
+          }
+        }
+      }
+    },
+    "CoreInstanceMover.originalOrWorkspaceFilesRetained" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例已移动，部分原文件或工作文件保留，可在 Finder 中检查。"
+          }
+        }
+      }
+    },
+    "CoreInstanceTransfer.importNeedsRecovery" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceTransfer.multipleInstanceDirectories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目录包含多个实例，请选择其中一个实例目录。"
+          }
+        }
+      }
+    },
+    "CoreInstanceTransfer.operationCancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作已取消。"
+          }
+        }
+      }
+    },
+    "CoreInstanceTransfer.packImportIncomplete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "整合包导入未完成，工作文件已保留，可重新导入。\n%1$@"
+          }
+        }
+      }
+    },
+    "CoreInstanceTransfer.retainedCommands" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。"
+          }
+        }
+      }
+    },
+    "CoreInstanceTransfer.ruriFullCopy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri 完整副本"
+          }
+        }
+      }
+    },
+    "CoreInstanceTransfer.ruriInstance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri 实例"
+          }
+        }
+      }
+    },
+    "CoreInstanceTransfer.unsupportedManifest" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.capabilitiesUnknown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取 Java 支持的参数"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.collectorChosenByUser" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由附加 JVM 参数指定"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.compactHeaders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "紧凑对象头，减少堆占用（实验性）"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.defaultCollector" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由 Java 决定"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.diagnosticHeader" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM 优化：%1$@ · 垃圾回收器：%2$@"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.diagnostics" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留完整异常堆栈，便于排查崩溃"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.disabled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已关闭"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.experimental" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推荐 + 实验性"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.g1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "G1 垃圾回收，按低停顿调优"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.heapRaised" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ZGC 不压缩对象引用，堆上限从 %1$@ 提高到 %2$@"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.legacyForge" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旧版 Forge 跳过游戏文件签名和补丁校验"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.off" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不添加"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.recommended" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推荐"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.settingTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM 优化参数"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.systemProxy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏联网跟随 macOS 系统代理"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.unsafeMemoryAccess" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允许旧模组继续使用 Unsafe 内存访问"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.zgc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分代 ZGC，大型整合包下停顿更短"
+          }
+        }
+      }
+    },
+    "CoreJVMTuning.zgcHeadroom" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内存余量不足，未使用 ZGC"
+          }
+        }
+      }
+    },
+    "CoreJavaRuntimeStore.addedManually" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手动添加"
+          }
+        }
+      }
+    },
+    "CoreJavaRuntimeStore.defaultLaunchSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认启动设置"
+          }
+        }
+      }
+    },
+    "CoreJavaRuntimeStore.detectedAutomatically" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动检测"
+          }
+        }
+      }
+    },
+    "CoreJavaRuntimeStore.downloadedByRuri" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruri 下载"
+          }
+        }
+      }
+    },
+    "CoreJavaRuntimeStore.fromLaunchSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动设置"
+          }
+        }
+      }
+    },
+    "CoreLaunch.longLogLineOmitted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Ruri] 单行日志过长，已省略"
+          }
+        }
+      }
+    },
+    "CoreLaunchCommands.afterExitCommand" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出后命令"
+          }
+        }
+      }
+    },
+    "CoreLaunchCommands.beforeLaunchCommand" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动前命令"
+          }
+        }
+      }
+    },
+    "CoreLaunchCommands.commandCancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@已取消"
+          }
+        }
+      }
+    },
+    "CoreLaunchCommands.commandCompleted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@已完成"
+          }
+        }
+      }
+    },
+    "CoreLaunchCommands.commandExitStatus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@失败，退出码 %2$@"
+          }
+        }
+      }
+    },
+    "CoreLaunchCommands.commandFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@失败：%2$@"
+          }
+        }
+      }
+    },
+    "CoreLaunchCommands.commandTimedOut" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@超时"
+          }
+        }
+      }
+    },
+    "CoreLaunchCommands.unknownResult" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知"
+          }
+        }
+      }
+    },
+    "CoreLaunchSettings.environmentVariables" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game environment variables"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏环境变量"
+          }
+        }
+      }
+    },
+    "CoreLaunchSettings.gameArguments" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Additional game arguments"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "附加游戏参数"
+          }
+        }
+      }
+    },
+    "CoreLaunchSettings.gameWindow" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game window"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏窗口"
+          }
+        }
+      }
+    },
+    "CoreLaunchSettings.javaRuntime" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java runtime"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 运行时"
+          }
+        }
+      }
+    },
+    "CoreLaunchSettings.jvmArguments" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Additional JVM arguments"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "附加 JVM 参数"
+          }
+        }
+      }
+    },
+    "CoreLaunchSettings.launchCommands" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launch commands"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动命令"
+          }
+        }
+      }
+    },
+    "CoreLaunchSettings.launcherAndLogs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launcher and logs"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动器与日志"
+          }
+        }
+      }
+    },
+    "CoreLaunchSettings.memory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memory"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内存"
+          }
+        }
+      }
+    },
+    "CoreLoaderKind.vanilla" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原版"
+          }
+        }
+      }
+    },
+    "CoreMCBBSPack.packMissingFilesNotice" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。"
+          }
+        }
+      }
+    },
+    "CoreMemoryEstimate.availableMemory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "剩余内存 %1$@"
+          }
+        }
+      }
+    },
+    "CoreMemoryEstimate.constrained" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内容需要 %1$@，受本机内存限制为 %2$@"
+          }
+        }
+      }
+    },
+    "CoreMemoryEstimate.modCount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld 个 Mod"
+          }
+        }
+      }
+    },
+    "CoreMemorySettings.automaticEstimation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic estimate"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动估算"
+          }
+        }
+      }
+    },
+    "CoreMemorySettings.automaticallyManagedMemory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Managed by the JVM"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由 JVM 自动决定"
+          }
+        }
+      }
+    },
+    "CoreMemorySettings.jvmOverride" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM argument override"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM 参数覆盖"
+          }
+        }
+      }
+    },
+    "CoreMemorySettings.memorySettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memory settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内存设置"
+          }
+        }
+      }
+    },
+    "CoreMemorySettings.memorySummary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum heap %1$@ · Initial %2$@ · %3$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "堆上限 %1$@ · 初始 %2$@ · %3$@"
+          }
+        }
+      }
+    },
+    "CoreMinecraftDirectoryCatalog.minecraftVersionPending" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minecraft 版本待确认"
+          }
+        }
+      }
+    },
+    "CoreMinecraftFolderStore.pendingWorkFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入或复制尚需完成，请处理实例库中的工作文件。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftFolderStore.versionDirectoryMissing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameDataFiles.contentCollisions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前游戏内容包含目标位置保留的文件或目录：%1$@。请选择其他目标，以保留这些内容和原有安装文件。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameDataFiles.nestedSourceAndTargetDirectories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "源目录与目标目录互相包含，无法复制。请选择互不嵌套的游戏目录。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.gameSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏设置"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.hmclCustomDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HMCL 自定义目录"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.hmclCustomDirectoryMissing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旧版 HMCL 的自定义目录无法定位，请手动确认。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.hmclCustomDirectoryWarning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HMCL 的自定义目录不是可直接使用的 macOS 绝对路径，请手动确认游戏数据位置。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.hmclDirectoryPolicyUnreadable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取旧版 HMCL 的目录策略，请确认游戏数据位置。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.hmclGlobalDirectoryWarning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此版本继承 HMCL 的全局目录设置，请确认实际使用的存档和模组目录。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.hmclGlobalSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此版本继承旧版 HMCL 的全局设置，请确认游戏数据位置。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.launcherGameData" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原启动器为此版本指定的游戏数据位置。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.modConfigs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模组配置"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.mods" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模组"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.multipleLauncherProfiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此版本有多个启动配置，使用不同游戏目录；请选择本次要接入的内容。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.noRunDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有找到明确的运行目录设置，请选择存档、模组实际所在的位置。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.officialCustomDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "官方启动器自定义目录"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.officialDirectoryMissing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一个官方启动器配置使用了无法定位的游戏目录，请确认要接入哪个配置。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.resourcePacks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源包"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.shaders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光影"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.sharedDirectoryContents" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此 Minecraft 目录中的多个版本可能共用这些存档、模组和设置。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.sharedGameDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共享游戏目录"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.versionDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本独立目录"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.versionDirectoryContents" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用版本隔离时，游戏数据通常位于这个版本文件夹。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftGameLocations.worlds" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存档"
+          }
+        }
+      }
+    },
+    "CoreMinecraftManifestGraph.compatibilityRules" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "兼容规则"
+          }
+        }
+      }
+    },
+    "CoreMinecraftManifestGraph.launchArguments" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动参数"
+          }
+        }
+      }
+    },
+    "CoreMinecraftManifestGraph.libraries" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "依赖库"
+          }
+        }
+      }
+    },
+    "CoreMinecraftManifestGraph.nestedPatchWarning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "补丁还包含嵌套字段；按照 HMCL 规则仅合并顶层补丁，原字段会保留。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftVersionMetadata.actualVersionUnknown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法确定实际 Minecraft 版本，不能仅按文件夹名称判断。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftVersionMetadata.declaredVersionMismatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏 JAR 与清单声明的版本不同，需要在接入前核对。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftVersionMetadata.jarVersionReadFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法从游戏 JAR 读取版本信息：%1$@"
+          }
+        }
+      }
+    },
+    "CoreMinecraftVersionMetadata.localJarMissing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地游戏 JAR 缺失，接入时需要补齐游戏文件。"
+          }
+        }
+      }
+    },
+    "CoreMinecraftVersionMetadata.unknownLaunchEntry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此版本使用尚未识别的启动入口：%1$@"
+          }
+        }
+      }
+    },
+    "CoreModpackUpdatePlan.keepLocalFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留本地"
+          }
+        }
+      }
+    },
+    "CoreModpackUpdatePlan.localModificationConflict" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地文件已有修改或与个人文件同名"
+          }
+        }
+      }
+    },
+    "CoreModpackUpdatePlan.locallyRemoved" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此文件已在本地移除"
+          }
+        }
+      }
+    },
+    "CoreModpackUpdatePlan.newFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增"
+          }
+        }
+      }
+    },
+    "CoreModpackUpdatePlan.packRequiresReadd" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此文件已在本地移除，整合包要求重新添加"
+          }
+        }
+      }
+    },
+    "CoreModpackUpdatePlan.removedFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除"
+          }
+        }
+      }
+    },
+    "CoreModpackUpdatePlan.removedUpstreamLocallyModified" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新版不再包含此文件，但本地内容已修改"
+          }
+        }
+      }
+    },
+    "CoreModpackUpdatePlan.replacedFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "替换"
+          }
+        }
+      }
+    },
+    "CoreModpackUpdatePlan.replacementRequiredLocalModified" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "整合包要求替换；本地文件已有修改"
+          }
+        }
+      }
+    },
+    "CoreNetwork.downloadChecksumFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File checksum mismatch: %1$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件校验失败：%1$@"
+          }
+        }
+      }
+    },
+    "CoreNetwork.serviceName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务"
+          }
+        }
+      }
+    },
+    "CoreNetwork.unknownSource" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown source"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知来源"
+          }
+        }
+      }
+    },
+    "CoreNetworkRouting.automaticRouting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动切换"
+          }
+        }
+      }
+    },
+    "CoreNetworkRouting.bmclapiPreferred" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMCLAPI 优先"
+          }
+        }
+      }
+    },
+    "CoreNetworkRouting.officialSource" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "官方源"
+          }
+        }
+      }
+    },
+    "CoreOptiFineCatalog.invalidVersionInfo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OptiFine 安装包的版本信息无效。"
+          }
+        }
+      }
+    },
+    "CorePlayerTextureImage.capeTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "披风"
+          }
+        }
+      }
+    },
+    "CorePlayerTextureImage.classicArmsTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "经典（宽手臂）"
+          }
+        }
+      }
+    },
+    "CorePlayerTextureImage.invalidMicrosoftSkinSize" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。"
+          }
+        }
+      }
+    },
+    "CorePlayerTextureImage.invalidSkinDimensions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。"
+          }
+        }
+      }
+    },
+    "CorePlayerTextureImage.invalidSkinImage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。"
+          }
+        }
+      }
+    },
+    "CorePlayerTextureImage.skinTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "皮肤"
+          }
+        }
+      }
+    },
+    "CorePlayerTextureImage.slimArmsTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纤细（窄手臂）"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceCopy.copyCancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例复制已取消，原实例及其文件保留。"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceCopy.copyCleanupPending" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "副本已创建，部分工作文件尚未清理，可在实例库完成清理。"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceCopy.copyIncomplete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例复制未完成：%1$@"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceCopy.recoveryFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@\n工作文件需要恢复，请在目标实例库处理未完成的复制。%2$@"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceMover.moveCancelledWithBackup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动已取消，原实例保留，工作副本已另存。"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceMover.moveCommittedNeedsRecovery" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例已移动，原文件与工作记录尚需处理，请恢复实例移动。%1$@"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceMover.moveIncompleteOriginalRetained" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动未完成，原实例保留。%1$@"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceMover.moveRecoveredWithFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未完成的移动已恢复，原实例及工作副本保留。"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceMover.moveRecoveryRequired" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动需要恢复，原实例保留。%1$@\n%2$@"
+          }
+        }
+      }
+    },
+    "CoreRepositoryInstanceMover.movedWithRetainedFiles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例已移动，部分原文件或工作文件保留，可在 Finder 中检查。"
+          }
+        }
+      }
+    },
+    "CoreStateStore.appearance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "appearance"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外观"
+          }
+        }
+      }
+    },
+    "CoreStateStore.dataUpdatedElsewhere" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data was updated by another Ruri process."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据已由另一个 Ruri 更新"
+          }
+        }
+      }
+    },
+    "CoreStateStore.defaultMemoryPolicy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "default memory policy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认内存策略"
+          }
+        }
+      }
+    },
+    "CoreStateStore.downloadSource" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "download source"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载源"
+          }
+        }
+      }
+    },
+    "CoreStateStore.favoriteStatus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pinned state"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "固定状态"
+          }
+        }
+      }
+    },
+    "CoreStateStore.fieldConflict" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changes to %1$@ conflict with another window (%2$@)."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@的修改与另一窗口冲突（%2$@）"
+          }
+        }
+      }
+    },
+    "CoreStateStore.gameArguments" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "game arguments"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏参数"
+          }
+        }
+      }
+    },
+    "CoreStateStore.invalidDataFormat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid data format."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据格式无效"
+          }
+        }
+      }
+    },
+    "CoreStateStore.javaSelection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java selection"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 选择"
+          }
+        }
+      }
+    },
+    "CoreStateStore.jvmArguments" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM arguments"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM 参数"
+          }
+        }
+      }
+    },
+    "CoreStateStore.launcherSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "launcher settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动器设置"
+          }
+        }
+      }
+    },
+    "CoreStateStore.memory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "memory"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内存"
+          }
+        }
+      }
+    },
+    "CoreStateStore.memoryPolicy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "memory policy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内存策略"
+          }
+        }
+      }
+    },
+    "CoreStateStore.name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
+          }
+        }
+      }
+    },
+    "CoreStateStore.owningFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "parent directory"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所属文件夹"
+          }
+        }
+      }
+    },
+    "CoreStateStore.retainedFolderRecord" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "retained directory record"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留的文件夹记录"
+          }
+        }
+      }
+    },
+    "CoreStateStore.sameAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "same account"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同一账号"
+          }
+        }
+      }
+    },
+    "CoreStateStore.sameInstance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "same instance"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同一实例"
+          }
+        }
+      }
+    },
+    "CoreStateStore.sameInstanceDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "same instance directory"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同一实例文件夹"
+          }
+        }
+      }
+    },
+    "CoreStateStore.saveConflictPreservingOriginal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save conflict: %1$@. The original file was preserved. Reload before editing."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存冲突：%1$@。原文件已保留，请重新载入后再修改。"
+          }
+        }
+      }
+    },
+    "CoreStateStore.selectionChangedElsewhere" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The selected instance, directory, or account changed in another window."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前实例、文件夹或账号的选择已在另一窗口改变"
+          }
+        }
+      }
+    },
+    "CoreStateStore.subjectChangeConflict" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changes to %1$@ conflict with another window."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@的修改与另一窗口冲突"
+          }
+        }
+      }
+    },
+    "CoreStateStore.subjectConflict" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ conflicts with another window."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@与另一窗口冲突"
+          }
+        }
+      }
+    },
+    "CoreStateStore.windowHeight" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "window height"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "窗口高度"
+          }
+        }
+      }
+    },
+    "CoreStateStore.windowWidth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "window width"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "窗口宽度"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.adventureMode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冒险"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.automaticBackup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复前自动备份"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.creativeMode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创造"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.hardcoreMode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "极限"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.importedWorld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入的世界"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.manualBackup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手动备份"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.restoredFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 恢复"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.spectatorMode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旁观"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.survivalMode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生存"
+          }
+        }
+      }
+    },
+    "CoreWorldManager.worldInfoReadFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取存档信息，仍可备份文件。"
+          }
+        }
+      }
+    },
+    "GameHost.architecture" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 架构不受宿主支持"
+          }
+        }
+      }
+    },
+    "GameHost.compatibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用常规 Java 启动：%@"
+          }
+        }
+      }
+    },
+    "GameHost.directory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法进入游戏运行目录"
+          }
+        }
+      }
+    },
+    "GameHost.disabled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS 游戏集成未启用"
+          }
+        }
+      }
+    },
+    "GameHost.enableIntegration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用 macOS 游戏集成"
+          }
+        }
+      }
+    },
+    "GameHost.failed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏宿主启动失败：%@"
+          }
+        }
+      }
+    },
+    "GameHost.fullscreen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏处于 macOS 原生全屏"
+          }
+        }
+      }
+    },
+    "GameHost.hostMissing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前安装缺少游戏宿主"
+          }
+        }
+      }
+    },
+    "GameHost.instanceAppearance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用实例图标和窗口名称"
+          }
+        }
+      }
+    },
+    "GameHost.invalidRequest" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏宿主无法处理启动请求"
+          }
+        }
+      }
+    },
+    "GameHost.javaExec" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法启动所选 Java"
+          }
+        }
+      }
+    },
+    "GameHost.jvmStarting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在启动游戏 JVM"
+          }
+        }
+      }
+    },
+    "GameHost.nativeFullscreen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全屏启动时使用 macOS 原生全屏"
+          }
+        }
+      }
+    },
+    "GameHost.runtimeUnavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选 Java 无法通过游戏宿主加载"
+          }
+        }
+      }
+    },
+    "GameHost.settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS 游戏集成"
+          }
+        }
+      }
+    },
+    "GameHost.settingsHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。"
+          }
+        }
+      }
+    },
+    "GameHost.starting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在准备 macOS 游戏集成"
+          }
+        }
+      }
+    },
+    "GameHost.statusWriteFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存游戏宿主状态"
+          }
+        }
+      }
+    },
+    "GameHost.transport" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏宿主启动通信失败"
+          }
+        }
+      }
+    },
+    "GameHost.windowReady" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏窗口已就绪"
+          }
+        }
+      }
+    },
+    "GameHost.wrapper" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已配置自定义包装命令"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -3,91 +3,91 @@ import Foundation
 
 extension Messages {
     public enum AppAccountsView {
-        /// 添加 Microsoft、外置认证或离线账号。
-        ///
-        /// Resource: `Interface.appAccountsView.bodyText1`.
-        public static var emptyState: LocalizedMessage {
-            .init(key: "appAccountsView.bodyText1", table: "Interface", fallback: "添加 Microsoft、外置认证或离线账号。")
-        }
         /// 账号
         ///
-        /// Resource: `Interface.appAccountsView.bodyText2`.
+        /// Resource: `Interface.AppAccountsView.account`.
         public static var account: LocalizedMessage {
-            .init(key: "appAccountsView.bodyText2", table: "Interface", fallback: "账号")
-        }
-        /// 登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。
-        ///
-        /// Resource: `Interface.appAccountsView.bodyText3`.
-        public static var credentials: LocalizedMessage {
-            .init(key: "appAccountsView.bodyText3", table: "Interface", fallback: "登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。")
+            .init(key: "AppAccountsView.account", table: "Interface", fallback: "账号")
         }
         /// 添加账号
         ///
-        /// Resource: `Interface.appAccountsView.bodyText4`.
+        /// Resource: `Interface.AppAccountsView.addAccount`.
         public static var addAccount: LocalizedMessage {
-            .init(key: "appAccountsView.bodyText4", table: "Interface", fallback: "添加账号")
-        }
-        /// 当前使用
-        ///
-        /// Resource: `Interface.appAccountsView.loginText1`.
-        public static var currentAccount: LocalizedMessage {
-            .init(key: "appAccountsView.loginText1", table: "Interface", fallback: "当前使用")
-        }
-        /// 使用此账号
-        ///
-        /// Resource: `Interface.appAccountsView.loginText2`.
-        public static var useAccount: LocalizedMessage {
-            .init(key: "appAccountsView.loginText2", table: "Interface", fallback: "使用此账号")
+            .init(key: "AppAccountsView.addAccount", table: "Interface", fallback: "添加账号")
         }
         /// 皮肤与披风…
         ///
-        /// Resource: `Interface.appAccountsView.loginText3`.
+        /// Resource: `Interface.AppAccountsView.appearance`.
         public static var appearance: LocalizedMessage {
-            .init(key: "appAccountsView.loginText3", table: "Interface", fallback: "皮肤与披风…")
+            .init(key: "AppAccountsView.appearance", table: "Interface", fallback: "皮肤与披风…")
+        }
+        /// 登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。
+        ///
+        /// Resource: `Interface.AppAccountsView.credentials`.
+        public static var credentials: LocalizedMessage {
+            .init(key: "AppAccountsView.credentials", table: "Interface", fallback: "登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。")
+        }
+        /// 当前使用
+        ///
+        /// Resource: `Interface.AppAccountsView.currentAccount`.
+        public static var currentAccount: LocalizedMessage {
+            .init(key: "AppAccountsView.currentAccount", table: "Interface", fallback: "当前使用")
+        }
+        /// 添加 Microsoft、外置认证或离线账号。
+        ///
+        /// Resource: `Interface.AppAccountsView.emptyState`.
+        public static var emptyState: LocalizedMessage {
+            .init(key: "AppAccountsView.emptyState", table: "Interface", fallback: "添加 Microsoft、外置认证或离线账号。")
         }
         /// 刷新登录状态
         ///
-        /// Resource: `Interface.appAccountsView.loginText4`.
+        /// Resource: `Interface.AppAccountsView.refreshLogin`.
         public static var refreshLogin: LocalizedMessage {
-            .init(key: "appAccountsView.loginText4", table: "Interface", fallback: "刷新登录状态")
+            .init(key: "AppAccountsView.refreshLogin", table: "Interface", fallback: "刷新登录状态")
         }
         /// 重新登录
         ///
-        /// Resource: `Interface.appAccountsView.loginText5`.
+        /// Resource: `Interface.AppAccountsView.relogin`.
         public static var relogin: LocalizedMessage {
-            .init(key: "appAccountsView.loginText5", table: "Interface", fallback: "重新登录")
-        }
-        /// 退出登录并移除
-        ///
-        /// Resource: `Interface.appAccountsView.loginText6`.
-        public static var removeLogin: LocalizedMessage {
-            .init(key: "appAccountsView.loginText6", table: "Interface", fallback: "退出登录并移除")
+            .init(key: "AppAccountsView.relogin", table: "Interface", fallback: "重新登录")
         }
         /// 从 Ruri 移除账号
         ///
-        /// Resource: `Interface.appAccountsView.loginText7`.
+        /// Resource: `Interface.AppAccountsView.removeFromRuri`.
         public static var removeFromRuri: LocalizedMessage {
-            .init(key: "appAccountsView.loginText7", table: "Interface", fallback: "从 Ruri 移除账号")
+            .init(key: "AppAccountsView.removeFromRuri", table: "Interface", fallback: "从 Ruri 移除账号")
+        }
+        /// 退出登录并移除
+        ///
+        /// Resource: `Interface.AppAccountsView.removeLogin`.
+        public static var removeLogin: LocalizedMessage {
+            .init(key: "AppAccountsView.removeLogin", table: "Interface", fallback: "退出登录并移除")
         }
         /// 更新账号
         ///
-        /// Resource: `Interface.appAccountsView.runText1`.
+        /// Resource: `Interface.AppAccountsView.updateAccount`.
         public static var updateAccount: LocalizedMessage {
-            .init(key: "appAccountsView.runText1", table: "Interface", fallback: "更新账号")
+            .init(key: "AppAccountsView.updateAccount", table: "Interface", fallback: "更新账号")
+        }
+        /// 使用此账号
+        ///
+        /// Resource: `Interface.AppAccountsView.useAccount`.
+        public static var useAccount: LocalizedMessage {
+            .init(key: "AppAccountsView.useAccount", table: "Interface", fallback: "使用此账号")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAccountsView.bodyText1": .init("添加 Microsoft、外置认证或离线账号。", []),
-            "Interface:appAccountsView.bodyText2": .init("账号", []),
-            "Interface:appAccountsView.bodyText3": .init("登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。", []),
-            "Interface:appAccountsView.bodyText4": .init("添加账号", []),
-            "Interface:appAccountsView.loginText1": .init("当前使用", []),
-            "Interface:appAccountsView.loginText2": .init("使用此账号", []),
-            "Interface:appAccountsView.loginText3": .init("皮肤与披风…", []),
-            "Interface:appAccountsView.loginText4": .init("刷新登录状态", []),
-            "Interface:appAccountsView.loginText5": .init("重新登录", []),
-            "Interface:appAccountsView.loginText6": .init("退出登录并移除", []),
-            "Interface:appAccountsView.loginText7": .init("从 Ruri 移除账号", []),
-            "Interface:appAccountsView.runText1": .init("更新账号", []),
+            "Interface:AppAccountsView.account": .init("账号", []),
+            "Interface:AppAccountsView.addAccount": .init("添加账号", []),
+            "Interface:AppAccountsView.appearance": .init("皮肤与披风…", []),
+            "Interface:AppAccountsView.credentials": .init("登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。", []),
+            "Interface:AppAccountsView.currentAccount": .init("当前使用", []),
+            "Interface:AppAccountsView.emptyState": .init("添加 Microsoft、外置认证或离线账号。", []),
+            "Interface:AppAccountsView.refreshLogin": .init("刷新登录状态", []),
+            "Interface:AppAccountsView.relogin": .init("重新登录", []),
+            "Interface:AppAccountsView.removeFromRuri": .init("从 Ruri 移除账号", []),
+            "Interface:AppAccountsView.removeLogin": .init("退出登录并移除", []),
+            "Interface:AppAccountsView.updateAccount": .init("更新账号", []),
+            "Interface:AppAccountsView.useAccount": .init("使用此账号", []),
         ]
     }
 }

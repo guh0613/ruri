@@ -5,215 +5,215 @@ extension Messages {
     public enum CoreCurseForge {
         /// 请先在设置中配置 Ruri 的 CurseForge API Key。
         ///
-        /// Resource: `Core.coreCurseForge.keyText1`.
+        /// Resource: `Core.CoreCurseForge.apiKeyMissing`.
         public static var apiKeyMissing: LocalizedMessage {
-            .init(key: "coreCurseForge.keyText1", table: "Core", fallback: "请先在设置中配置 Ruri 的 CurseForge API Key。")
+            .init(key: "CoreCurseForge.apiKeyMissing", table: "Core", fallback: "请先在设置中配置 Ruri 的 CurseForge API Key。")
         }
         /// 无法读取 CurseForge API Key（钥匙串状态 %1$@）。
         ///
-        /// Resource: `Core.coreCurseForge.keyText2`.
+        /// Resource: `Core.CoreCurseForge.apiKeyReadFailed`.
         public static func apiKeyReadFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.keyText2", table: "Core", fallback: "无法读取 CurseForge API Key（钥匙串状态 %1$@）。", arguments: [.text(value0)])
+            .init(key: "CoreCurseForge.apiKeyReadFailed", table: "Core", fallback: "无法读取 CurseForge API Key（钥匙串状态 %1$@）。", arguments: [.text(value0)])
         }
         /// 批量内容更新
         ///
-        /// Resource: `Core.coreCurseForge.idsText2`.
+        /// Resource: `Core.CoreCurseForge.bulkContentUpdate`.
         public static var bulkContentUpdate: LocalizedMessage {
-            .init(key: "coreCurseForge.idsText2", table: "Core", fallback: "批量内容更新")
-        }
-        /// 请输入有效的 CurseForge API Key
-        ///
-        /// Resource: `Errors.coreCurseForge.keyText3`.
-        public static var invalidApiKey: LocalizedMessage {
-            .init(key: "coreCurseForge.keyText3", table: "Errors", fallback: "请输入有效的 CurseForge API Key")
-        }
-        /// 保存 API Key 失败（钥匙串状态 %1$@）
-        ///
-        /// Resource: `Errors.coreCurseForge.addedText1`.
-        public static func apiKeySaveFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.addedText1", table: "Errors", fallback: "保存 API Key 失败（钥匙串状态 %1$@）", arguments: [.text(value0)])
+            .init(key: "CoreCurseForge.bulkContentUpdate", table: "Core", fallback: "批量内容更新")
         }
         /// 移除 API Key 失败（钥匙串状态 %1$@）
         ///
-        /// Resource: `Errors.coreCurseForge.statusText1`.
+        /// Resource: `Errors.CoreCurseForge.apiKeyRemoveFailed`.
         public static func apiKeyRemoveFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.statusText1", table: "Errors", fallback: "移除 API Key 失败（钥匙串状态 %1$@）", arguments: [.text(value0)])
-        }
-        /// %1$@ 不可用或缺少有效的文件校验信息。
-        ///
-        /// Resource: `Errors.coreCurseForge.validateDownloadMetadataText1`.
-        public static func invalidDownloadMetadata(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.validateDownloadMetadataText1", table: "Errors", fallback: "%1$@ 不可用或缺少有效的文件校验信息。", arguments: [.text(value0)])
-        }
-        /// CurseForge 返回了无效文件名
-        ///
-        /// Resource: `Errors.coreCurseForge.validateDownloadMetadataText2`.
-        public static var invalidFileName: LocalizedMessage {
-            .init(key: "coreCurseForge.validateDownloadMetadataText2", table: "Errors", fallback: "CurseForge 返回了无效文件名")
-        }
-        /// 所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。
-        ///
-        /// Resource: `Errors.coreCurseForge.infoText1`.
-        public static func fileMismatch(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.infoText1", table: "Errors", fallback: "所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。", arguments: [.text(value0)])
-        }
-        /// 复制期间文件发生变化，请重新选择。
-        ///
-        /// Resource: `Errors.coreCurseForge.temporaryText1`.
-        public static var packDownloadChanged: LocalizedMessage {
-            .init(key: "coreCurseForge.temporaryText1", table: "Errors", fallback: "复制期间文件发生变化，请重新选择。")
-        }
-        /// 无法缓存已下载文件
-        ///
-        /// Resource: `Errors.coreCurseForge.temporaryText2`.
-        public static var cacheFileFailed: LocalizedMessage {
-            .init(key: "coreCurseForge.temporaryText2", table: "Errors", fallback: "无法缓存已下载文件")
+            .init(key: "CoreCurseForge.apiKeyRemoveFailed", table: "Errors", fallback: "移除 API Key 失败（钥匙串状态 %1$@）", arguments: [.text(value0)])
         }
         /// 请先在设置中配置 Ruri 的 CurseForge API Key。
         ///
-        /// Resource: `Errors.coreCurseForge.requestText1`.
+        /// Resource: `Errors.CoreCurseForge.apiKeyRequired`.
         public static var apiKeyRequired: LocalizedMessage {
-            .init(key: "coreCurseForge.requestText1", table: "Errors", fallback: "请先在设置中配置 Ruri 的 CurseForge API Key。")
+            .init(key: "CoreCurseForge.apiKeyRequired", table: "Errors", fallback: "请先在设置中配置 Ruri 的 CurseForge API Key。")
         }
-        /// 不支持的 CurseForge 内容类型
+        /// 保存 API Key 失败（钥匙串状态 %1$@）
         ///
-        /// Resource: `Errors.coreCurseForge.categoryText1`.
-        public static var unsupportedContentType: LocalizedMessage {
-            .init(key: "coreCurseForge.categoryText1", table: "Errors", fallback: "不支持的 CurseForge 内容类型")
+        /// Resource: `Errors.CoreCurseForge.apiKeySaveFailed`.
+        public static func apiKeySaveFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreCurseForge.apiKeySaveFailed", table: "Errors", fallback: "保存 API Key 失败（钥匙串状态 %1$@）", arguments: [.text(value0)])
         }
-        /// 无效的 CurseForge 项目标识
+        /// 无法缓存已下载文件
         ///
-        /// Resource: `Errors.coreCurseForge.projectText1`.
-        public static var invalidProjectID: LocalizedMessage {
-            .init(key: "coreCurseForge.projectText1", table: "Errors", fallback: "无效的 CurseForge 项目标识")
-        }
-        /// CurseForge 项目与请求不一致
-        ///
-        /// Resource: `Errors.coreCurseForge.resultText1`.
-        public static var projectMismatch: LocalizedMessage {
-            .init(key: "coreCurseForge.resultText1", table: "Errors", fallback: "CurseForge 项目与请求不一致")
-        }
-        /// 无效的 CurseForge 文件标识
-        ///
-        /// Resource: `Errors.coreCurseForge.fileText1`.
-        public static var invalidFileID: LocalizedMessage {
-            .init(key: "coreCurseForge.fileText1", table: "Errors", fallback: "无效的 CurseForge 文件标识")
-        }
-        /// CurseForge 文件与请求不一致
-        ///
-        /// Resource: `Errors.coreCurseForge.resultText2`.
-        public static var fileMismatchRequest: LocalizedMessage {
-            .init(key: "coreCurseForge.resultText2", table: "Errors", fallback: "CurseForge 文件与请求不一致")
-        }
-        /// CurseForge 返回的版本列表与项目不一致
-        ///
-        /// Resource: `Errors.coreCurseForge.resultText3`.
-        public static var versionListMismatch: LocalizedMessage {
-            .init(key: "coreCurseForge.resultText3", table: "Errors", fallback: "CurseForge 返回的版本列表与项目不一致")
-        }
-        /// 整合包文件标识或数量无效
-        ///
-        /// Resource: `Errors.coreCurseForge.resolveText1`.
-        public static var invalidPackFiles: LocalizedMessage {
-            .init(key: "coreCurseForge.resolveText1", table: "Errors", fallback: "整合包文件标识或数量无效")
-        }
-        /// 找不到整合包文件：项目 %1$@，文件 %2$@
-        ///
-        /// Resource: `Errors.coreCurseForge.kindText1`.
-        public static func packFileMissing(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.kindText1", table: "Errors", fallback: "找不到整合包文件：项目 %1$@，文件 %2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 依赖要求同一项目的不同版本
-        ///
-        /// Resource: `Errors.coreCurseForge.priorText1`.
-        public static var requiredDependencyVersionConflict: LocalizedMessage {
-            .init(key: "coreCurseForge.priorText1", table: "Errors", fallback: "依赖要求同一项目的不同版本")
-        }
-        /// 必需依赖数量超过限制
-        ///
-        /// Resource: `Errors.coreCurseForge.priorText2`.
-        public static var tooManyRequiredDependencies: LocalizedMessage {
-            .init(key: "coreCurseForge.priorText2", table: "Errors", fallback: "必需依赖数量超过限制")
-        }
-        /// %1$@ 与此游戏版本或加载器不兼容
-        ///
-        /// Resource: `Errors.coreCurseForge.kindText2`.
-        public static func incompatibleGameOrLoader(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.kindText2", table: "Errors", fallback: "%1$@ 与此游戏版本或加载器不兼容", arguments: [.text(value0)])
-        }
-        /// 找不到兼容的必需依赖：%1$@
-        ///
-        /// Resource: `Errors.coreCurseForge.matchText1`.
-        public static func missingRequiredDependency(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.matchText1", table: "Errors", fallback: "找不到兼容的必需依赖：%1$@", arguments: [.text(value0)])
-        }
-        /// %1$@ 与项目 %2$@ 不兼容
-        ///
-        /// Resource: `Errors.coreCurseForge.matchText2`.
-        public static func projectDependencyMismatch(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.matchText2", table: "Errors", fallback: "%1$@ 与项目 %2$@ 不兼容", arguments: [.text(value0), .text(value1)])
-        }
-        /// 必需依赖之间存在不兼容关系
-        ///
-        /// Resource: `Errors.coreCurseForge.idsText1`.
-        public static var incompatibleDependencies: LocalizedMessage {
-            .init(key: "coreCurseForge.idsText1", table: "Errors", fallback: "必需依赖之间存在不兼容关系")
-        }
-        /// %1$@ 需要从 CurseForge 网页手动下载，再选择该文件继续。
-        ///
-        /// Resource: `Errors.coreCurseForge.fileText2`.
-        public static func manualDownloadRequired(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.fileText2", table: "Errors", fallback: "%1$@ 需要从 CurseForge 网页手动下载，再选择该文件继续。", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreCurseForge.cacheFileFailed`.
+        public static var cacheFileFailed: LocalizedMessage {
+            .init(key: "CoreCurseForge.cacheFileFailed", table: "Errors", fallback: "无法缓存已下载文件")
         }
         /// 所选文件与 %1$@ 的校验信息不符
         ///
-        /// Resource: `Errors.coreCurseForge.checkText1`.
+        /// Resource: `Errors.CoreCurseForge.checksumMismatch`.
         public static func checksumMismatch(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.checkText1", table: "Errors", fallback: "所选文件与 %1$@ 的校验信息不符", arguments: [.text(value0)])
+            .init(key: "CoreCurseForge.checksumMismatch", table: "Errors", fallback: "所选文件与 %1$@ 的校验信息不符", arguments: [.text(value0)])
         }
         /// 文件校验失败：%1$@
         ///
-        /// Resource: `Errors.coreCurseForge.checkText2`.
+        /// Resource: `Errors.CoreCurseForge.fileChecksumFailed`.
         public static func fileChecksumFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.checkText2", table: "Errors", fallback: "文件校验失败：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreCurseForge.fileChecksumFailed", table: "Errors", fallback: "文件校验失败：%1$@", arguments: [.text(value0)])
+        }
+        /// 所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。
+        ///
+        /// Resource: `Errors.CoreCurseForge.fileMismatch`.
+        public static func fileMismatch(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreCurseForge.fileMismatch", table: "Errors", fallback: "所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。", arguments: [.text(value0)])
+        }
+        /// CurseForge 文件与请求不一致
+        ///
+        /// Resource: `Errors.CoreCurseForge.fileMismatchRequest`.
+        public static var fileMismatchRequest: LocalizedMessage {
+            .init(key: "CoreCurseForge.fileMismatchRequest", table: "Errors", fallback: "CurseForge 文件与请求不一致")
+        }
+        /// 必需依赖之间存在不兼容关系
+        ///
+        /// Resource: `Errors.CoreCurseForge.incompatibleDependencies`.
+        public static var incompatibleDependencies: LocalizedMessage {
+            .init(key: "CoreCurseForge.incompatibleDependencies", table: "Errors", fallback: "必需依赖之间存在不兼容关系")
+        }
+        /// %1$@ 与此游戏版本或加载器不兼容
+        ///
+        /// Resource: `Errors.CoreCurseForge.incompatibleGameOrLoader`.
+        public static func incompatibleGameOrLoader(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreCurseForge.incompatibleGameOrLoader", table: "Errors", fallback: "%1$@ 与此游戏版本或加载器不兼容", arguments: [.text(value0)])
+        }
+        /// 请输入有效的 CurseForge API Key
+        ///
+        /// Resource: `Errors.CoreCurseForge.invalidApiKey`.
+        public static var invalidApiKey: LocalizedMessage {
+            .init(key: "CoreCurseForge.invalidApiKey", table: "Errors", fallback: "请输入有效的 CurseForge API Key")
+        }
+        /// %1$@ 不可用或缺少有效的文件校验信息。
+        ///
+        /// Resource: `Errors.CoreCurseForge.invalidDownloadMetadata`.
+        public static func invalidDownloadMetadata(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreCurseForge.invalidDownloadMetadata", table: "Errors", fallback: "%1$@ 不可用或缺少有效的文件校验信息。", arguments: [.text(value0)])
+        }
+        /// 无效的 CurseForge 文件标识
+        ///
+        /// Resource: `Errors.CoreCurseForge.invalidFileID`.
+        public static var invalidFileID: LocalizedMessage {
+            .init(key: "CoreCurseForge.invalidFileID", table: "Errors", fallback: "无效的 CurseForge 文件标识")
+        }
+        /// CurseForge 返回了无效文件名
+        ///
+        /// Resource: `Errors.CoreCurseForge.invalidFileName`.
+        public static var invalidFileName: LocalizedMessage {
+            .init(key: "CoreCurseForge.invalidFileName", table: "Errors", fallback: "CurseForge 返回了无效文件名")
+        }
+        /// 整合包文件标识或数量无效
+        ///
+        /// Resource: `Errors.CoreCurseForge.invalidPackFiles`.
+        public static var invalidPackFiles: LocalizedMessage {
+            .init(key: "CoreCurseForge.invalidPackFiles", table: "Errors", fallback: "整合包文件标识或数量无效")
+        }
+        /// 无效的 CurseForge 项目标识
+        ///
+        /// Resource: `Errors.CoreCurseForge.invalidProjectID`.
+        public static var invalidProjectID: LocalizedMessage {
+            .init(key: "CoreCurseForge.invalidProjectID", table: "Errors", fallback: "无效的 CurseForge 项目标识")
+        }
+        /// %1$@ 需要从 CurseForge 网页手动下载，再选择该文件继续。
+        ///
+        /// Resource: `Errors.CoreCurseForge.manualDownloadRequired`.
+        public static func manualDownloadRequired(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreCurseForge.manualDownloadRequired", table: "Errors", fallback: "%1$@ 需要从 CurseForge 网页手动下载，再选择该文件继续。", arguments: [.text(value0)])
+        }
+        /// 找不到兼容的必需依赖：%1$@
+        ///
+        /// Resource: `Errors.CoreCurseForge.missingRequiredDependency`.
+        public static func missingRequiredDependency(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreCurseForge.missingRequiredDependency", table: "Errors", fallback: "找不到兼容的必需依赖：%1$@", arguments: [.text(value0)])
+        }
+        /// 复制期间文件发生变化，请重新选择。
+        ///
+        /// Resource: `Errors.CoreCurseForge.packDownloadChanged`.
+        public static var packDownloadChanged: LocalizedMessage {
+            .init(key: "CoreCurseForge.packDownloadChanged", table: "Errors", fallback: "复制期间文件发生变化，请重新选择。")
+        }
+        /// 找不到整合包文件：项目 %1$@，文件 %2$@
+        ///
+        /// Resource: `Errors.CoreCurseForge.packFileMissing`.
+        public static func packFileMissing(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreCurseForge.packFileMissing", table: "Errors", fallback: "找不到整合包文件：项目 %1$@，文件 %2$@", arguments: [.text(value0), .text(value1)])
+        }
+        /// %1$@ 与项目 %2$@ 不兼容
+        ///
+        /// Resource: `Errors.CoreCurseForge.projectDependencyMismatch`.
+        public static func projectDependencyMismatch(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreCurseForge.projectDependencyMismatch", table: "Errors", fallback: "%1$@ 与项目 %2$@ 不兼容", arguments: [.text(value0), .text(value1)])
+        }
+        /// CurseForge 项目与请求不一致
+        ///
+        /// Resource: `Errors.CoreCurseForge.projectMismatch`.
+        public static var projectMismatch: LocalizedMessage {
+            .init(key: "CoreCurseForge.projectMismatch", table: "Errors", fallback: "CurseForge 项目与请求不一致")
+        }
+        /// 依赖要求同一项目的不同版本
+        ///
+        /// Resource: `Errors.CoreCurseForge.requiredDependencyVersionConflict`.
+        public static var requiredDependencyVersionConflict: LocalizedMessage {
+            .init(key: "CoreCurseForge.requiredDependencyVersionConflict", table: "Errors", fallback: "依赖要求同一项目的不同版本")
+        }
+        /// 必需依赖数量超过限制
+        ///
+        /// Resource: `Errors.CoreCurseForge.tooManyRequiredDependencies`.
+        public static var tooManyRequiredDependencies: LocalizedMessage {
+            .init(key: "CoreCurseForge.tooManyRequiredDependencies", table: "Errors", fallback: "必需依赖数量超过限制")
+        }
+        /// 不支持的 CurseForge 内容类型
+        ///
+        /// Resource: `Errors.CoreCurseForge.unsupportedContentType`.
+        public static var unsupportedContentType: LocalizedMessage {
+            .init(key: "CoreCurseForge.unsupportedContentType", table: "Errors", fallback: "不支持的 CurseForge 内容类型")
+        }
+        /// CurseForge 返回的版本列表与项目不一致
+        ///
+        /// Resource: `Errors.CoreCurseForge.versionListMismatch`.
+        public static var versionListMismatch: LocalizedMessage {
+            .init(key: "CoreCurseForge.versionListMismatch", table: "Errors", fallback: "CurseForge 返回的版本列表与项目不一致")
         }
         /// 下载 %1$@
         ///
-        /// Resource: `Progress.coreCurseForge.cacheText1`.
+        /// Resource: `Progress.CoreCurseForge.downloadFile`.
         public static func downloadFile(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreCurseForge.cacheText1", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
+            .init(key: "CoreCurseForge.downloadFile", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreCurseForge.keyText1": .init("请先在设置中配置 Ruri 的 CurseForge API Key。", []),
-            "Core:coreCurseForge.keyText2": .init("无法读取 CurseForge API Key（钥匙串状态 %1$@）。", [.text]),
-            "Core:coreCurseForge.idsText2": .init("批量内容更新", []),
-            "Errors:coreCurseForge.keyText3": .init("请输入有效的 CurseForge API Key", []),
-            "Errors:coreCurseForge.addedText1": .init("保存 API Key 失败（钥匙串状态 %1$@）", [.text]),
-            "Errors:coreCurseForge.statusText1": .init("移除 API Key 失败（钥匙串状态 %1$@）", [.text]),
-            "Errors:coreCurseForge.validateDownloadMetadataText1": .init("%1$@ 不可用或缺少有效的文件校验信息。", [.text]),
-            "Errors:coreCurseForge.validateDownloadMetadataText2": .init("CurseForge 返回了无效文件名", []),
-            "Errors:coreCurseForge.infoText1": .init("所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。", [.text]),
-            "Errors:coreCurseForge.temporaryText1": .init("复制期间文件发生变化，请重新选择。", []),
-            "Errors:coreCurseForge.temporaryText2": .init("无法缓存已下载文件", []),
-            "Errors:coreCurseForge.requestText1": .init("请先在设置中配置 Ruri 的 CurseForge API Key。", []),
-            "Errors:coreCurseForge.categoryText1": .init("不支持的 CurseForge 内容类型", []),
-            "Errors:coreCurseForge.projectText1": .init("无效的 CurseForge 项目标识", []),
-            "Errors:coreCurseForge.resultText1": .init("CurseForge 项目与请求不一致", []),
-            "Errors:coreCurseForge.fileText1": .init("无效的 CurseForge 文件标识", []),
-            "Errors:coreCurseForge.resultText2": .init("CurseForge 文件与请求不一致", []),
-            "Errors:coreCurseForge.resultText3": .init("CurseForge 返回的版本列表与项目不一致", []),
-            "Errors:coreCurseForge.resolveText1": .init("整合包文件标识或数量无效", []),
-            "Errors:coreCurseForge.kindText1": .init("找不到整合包文件：项目 %1$@，文件 %2$@", [.text, .text]),
-            "Errors:coreCurseForge.priorText1": .init("依赖要求同一项目的不同版本", []),
-            "Errors:coreCurseForge.priorText2": .init("必需依赖数量超过限制", []),
-            "Errors:coreCurseForge.kindText2": .init("%1$@ 与此游戏版本或加载器不兼容", [.text]),
-            "Errors:coreCurseForge.matchText1": .init("找不到兼容的必需依赖：%1$@", [.text]),
-            "Errors:coreCurseForge.matchText2": .init("%1$@ 与项目 %2$@ 不兼容", [.text, .text]),
-            "Errors:coreCurseForge.idsText1": .init("必需依赖之间存在不兼容关系", []),
-            "Errors:coreCurseForge.fileText2": .init("%1$@ 需要从 CurseForge 网页手动下载，再选择该文件继续。", [.text]),
-            "Errors:coreCurseForge.checkText1": .init("所选文件与 %1$@ 的校验信息不符", [.text]),
-            "Errors:coreCurseForge.checkText2": .init("文件校验失败：%1$@", [.text]),
-            "Progress:coreCurseForge.cacheText1": .init("下载 %1$@", [.text]),
+            "Core:CoreCurseForge.apiKeyMissing": .init("请先在设置中配置 Ruri 的 CurseForge API Key。", []),
+            "Core:CoreCurseForge.apiKeyReadFailed": .init("无法读取 CurseForge API Key（钥匙串状态 %1$@）。", [.text]),
+            "Core:CoreCurseForge.bulkContentUpdate": .init("批量内容更新", []),
+            "Errors:CoreCurseForge.apiKeyRemoveFailed": .init("移除 API Key 失败（钥匙串状态 %1$@）", [.text]),
+            "Errors:CoreCurseForge.apiKeyRequired": .init("请先在设置中配置 Ruri 的 CurseForge API Key。", []),
+            "Errors:CoreCurseForge.apiKeySaveFailed": .init("保存 API Key 失败（钥匙串状态 %1$@）", [.text]),
+            "Errors:CoreCurseForge.cacheFileFailed": .init("无法缓存已下载文件", []),
+            "Errors:CoreCurseForge.checksumMismatch": .init("所选文件与 %1$@ 的校验信息不符", [.text]),
+            "Errors:CoreCurseForge.fileChecksumFailed": .init("文件校验失败：%1$@", [.text]),
+            "Errors:CoreCurseForge.fileMismatch": .init("所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。", [.text]),
+            "Errors:CoreCurseForge.fileMismatchRequest": .init("CurseForge 文件与请求不一致", []),
+            "Errors:CoreCurseForge.incompatibleDependencies": .init("必需依赖之间存在不兼容关系", []),
+            "Errors:CoreCurseForge.incompatibleGameOrLoader": .init("%1$@ 与此游戏版本或加载器不兼容", [.text]),
+            "Errors:CoreCurseForge.invalidApiKey": .init("请输入有效的 CurseForge API Key", []),
+            "Errors:CoreCurseForge.invalidDownloadMetadata": .init("%1$@ 不可用或缺少有效的文件校验信息。", [.text]),
+            "Errors:CoreCurseForge.invalidFileID": .init("无效的 CurseForge 文件标识", []),
+            "Errors:CoreCurseForge.invalidFileName": .init("CurseForge 返回了无效文件名", []),
+            "Errors:CoreCurseForge.invalidPackFiles": .init("整合包文件标识或数量无效", []),
+            "Errors:CoreCurseForge.invalidProjectID": .init("无效的 CurseForge 项目标识", []),
+            "Errors:CoreCurseForge.manualDownloadRequired": .init("%1$@ 需要从 CurseForge 网页手动下载，再选择该文件继续。", [.text]),
+            "Errors:CoreCurseForge.missingRequiredDependency": .init("找不到兼容的必需依赖：%1$@", [.text]),
+            "Errors:CoreCurseForge.packDownloadChanged": .init("复制期间文件发生变化，请重新选择。", []),
+            "Errors:CoreCurseForge.packFileMissing": .init("找不到整合包文件：项目 %1$@，文件 %2$@", [.text, .text]),
+            "Errors:CoreCurseForge.projectDependencyMismatch": .init("%1$@ 与项目 %2$@ 不兼容", [.text, .text]),
+            "Errors:CoreCurseForge.projectMismatch": .init("CurseForge 项目与请求不一致", []),
+            "Errors:CoreCurseForge.requiredDependencyVersionConflict": .init("依赖要求同一项目的不同版本", []),
+            "Errors:CoreCurseForge.tooManyRequiredDependencies": .init("必需依赖数量超过限制", []),
+            "Errors:CoreCurseForge.unsupportedContentType": .init("不支持的 CurseForge 内容类型", []),
+            "Errors:CoreCurseForge.versionListMismatch": .init("CurseForge 返回的版本列表与项目不一致", []),
+            "Progress:CoreCurseForge.downloadFile": .init("下载 %1$@", [.text]),
         ]
     }
 }

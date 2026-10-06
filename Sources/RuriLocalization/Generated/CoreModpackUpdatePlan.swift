@@ -3,105 +3,105 @@ import Foundation
 
 extension Messages {
     public enum CoreModpackUpdatePlan {
-        /// 新增
-        ///
-        /// Resource: `Core.coreModpackUpdatePlan.titleText1`.
-        public static var newFile: LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.titleText1", table: "Core", fallback: "新增")
-        }
-        /// 替换
-        ///
-        /// Resource: `Core.coreModpackUpdatePlan.titleText2`.
-        public static var replacedFile: LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.titleText2", table: "Core", fallback: "替换")
-        }
-        /// 移除
-        ///
-        /// Resource: `Core.coreModpackUpdatePlan.titleText3`.
-        public static var removedFile: LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.titleText3", table: "Core", fallback: "移除")
-        }
         /// 保留本地
         ///
-        /// Resource: `Core.coreModpackUpdatePlan.titleText4`.
+        /// Resource: `Core.CoreModpackUpdatePlan.keepLocalFile`.
         public static var keepLocalFile: LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.titleText4", table: "Core", fallback: "保留本地")
-        }
-        /// 此文件已在本地移除，整合包要求重新添加
-        ///
-        /// Resource: `Core.coreModpackUpdatePlan.incomingText1`.
-        public static var packRequiresReadd: LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.incomingText1", table: "Core", fallback: "此文件已在本地移除，整合包要求重新添加")
-        }
-        /// 此文件已在本地移除
-        ///
-        /// Resource: `Core.coreModpackUpdatePlan.incomingText2`.
-        public static var locallyRemoved: LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.incomingText2", table: "Core", fallback: "此文件已在本地移除")
-        }
-        /// 新版不再包含此文件，但本地内容已修改
-        ///
-        /// Resource: `Core.coreModpackUpdatePlan.incomingText3`.
-        public static var removedUpstreamLocallyModified: LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.incomingText3", table: "Core", fallback: "新版不再包含此文件，但本地内容已修改")
-        }
-        /// 整合包要求替换；本地文件已有修改
-        ///
-        /// Resource: `Core.coreModpackUpdatePlan.incomingText4`.
-        public static var replacementRequiredLocalModified: LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.incomingText4", table: "Core", fallback: "整合包要求替换；本地文件已有修改")
+            .init(key: "CoreModpackUpdatePlan.keepLocalFile", table: "Core", fallback: "保留本地")
         }
         /// 本地文件已有修改或与个人文件同名
         ///
-        /// Resource: `Core.coreModpackUpdatePlan.incomingText5`.
+        /// Resource: `Core.CoreModpackUpdatePlan.localModificationConflict`.
         public static var localModificationConflict: LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.incomingText5", table: "Core", fallback: "本地文件已有修改或与个人文件同名")
+            .init(key: "CoreModpackUpdatePlan.localModificationConflict", table: "Core", fallback: "本地文件已有修改或与个人文件同名")
         }
-        /// 更新不修改符号链接：%1$@
+        /// 此文件已在本地移除
         ///
-        /// Resource: `Errors.coreModpackUpdatePlan.digestText1`.
-        public static func symlinkUpdateSkipped(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.digestText1", table: "Errors", fallback: "更新不修改符号链接：%1$@", arguments: [.text(value0)])
+        /// Resource: `Core.CoreModpackUpdatePlan.locallyRemoved`.
+        public static var locallyRemoved: LocalizedMessage {
+            .init(key: "CoreModpackUpdatePlan.locallyRemoved", table: "Core", fallback: "此文件已在本地移除")
+        }
+        /// 新增
+        ///
+        /// Resource: `Core.CoreModpackUpdatePlan.newFile`.
+        public static var newFile: LocalizedMessage {
+            .init(key: "CoreModpackUpdatePlan.newFile", table: "Core", fallback: "新增")
+        }
+        /// 此文件已在本地移除，整合包要求重新添加
+        ///
+        /// Resource: `Core.CoreModpackUpdatePlan.packRequiresReadd`.
+        public static var packRequiresReadd: LocalizedMessage {
+            .init(key: "CoreModpackUpdatePlan.packRequiresReadd", table: "Core", fallback: "此文件已在本地移除，整合包要求重新添加")
+        }
+        /// 移除
+        ///
+        /// Resource: `Core.CoreModpackUpdatePlan.removedFile`.
+        public static var removedFile: LocalizedMessage {
+            .init(key: "CoreModpackUpdatePlan.removedFile", table: "Core", fallback: "移除")
+        }
+        /// 新版不再包含此文件，但本地内容已修改
+        ///
+        /// Resource: `Core.CoreModpackUpdatePlan.removedUpstreamLocallyModified`.
+        public static var removedUpstreamLocallyModified: LocalizedMessage {
+            .init(key: "CoreModpackUpdatePlan.removedUpstreamLocallyModified", table: "Core", fallback: "新版不再包含此文件，但本地内容已修改")
+        }
+        /// 替换
+        ///
+        /// Resource: `Core.CoreModpackUpdatePlan.replacedFile`.
+        public static var replacedFile: LocalizedMessage {
+            .init(key: "CoreModpackUpdatePlan.replacedFile", table: "Core", fallback: "替换")
+        }
+        /// 整合包要求替换；本地文件已有修改
+        ///
+        /// Resource: `Core.CoreModpackUpdatePlan.replacementRequiredLocalModified`.
+        public static var replacementRequiredLocalModified: LocalizedMessage {
+            .init(key: "CoreModpackUpdatePlan.replacementRequiredLocalModified", table: "Core", fallback: "整合包要求替换；本地文件已有修改")
         }
         /// 待更新文件的位置已有文件夹：%1$@
         ///
-        /// Resource: `Errors.coreModpackUpdatePlan.infoText1`.
+        /// Resource: `Errors.CoreModpackUpdatePlan.destinationFolderExists`.
         public static func destinationFolderExists(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.infoText1", table: "Errors", fallback: "待更新文件的位置已有文件夹：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreModpackUpdatePlan.destinationFolderExists", table: "Errors", fallback: "待更新文件的位置已有文件夹：%1$@", arguments: [.text(value0)])
         }
         /// 此整合包文件对应多个本地版本，请先处理重复内容：%1$@
         ///
-        /// Resource: `Errors.coreModpackUpdatePlan.foundText1`.
+        /// Resource: `Errors.CoreModpackUpdatePlan.duplicateLocalMatches`.
         public static func duplicateLocalMatches(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.foundText1", table: "Errors", fallback: "此整合包文件对应多个本地版本，请先处理重复内容：%1$@", arguments: [.text(value0)])
-        }
-        /// 整合包包含重复项目，无法确定要替换的文件：%1$@
-        ///
-        /// Resource: `Errors.coreModpackUpdatePlan.matchesText1`.
-        public static func multipleFilesForProject(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.matchesText1", table: "Errors", fallback: "整合包包含重复项目，无法确定要替换的文件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreModpackUpdatePlan.duplicateLocalMatches", table: "Errors", fallback: "此整合包文件对应多个本地版本，请先处理重复内容：%1$@", arguments: [.text(value0)])
         }
         /// 新版整合包为同一项目提供了多个文件：%1$@
         ///
-        /// Resource: `Errors.coreModpackUpdatePlan.previousText1`.
+        /// Resource: `Errors.CoreModpackUpdatePlan.duplicatePackFiles`.
         public static func duplicatePackFiles(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModpackUpdatePlan.previousText1", table: "Errors", fallback: "新版整合包为同一项目提供了多个文件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreModpackUpdatePlan.duplicatePackFiles", table: "Errors", fallback: "新版整合包为同一项目提供了多个文件：%1$@", arguments: [.text(value0)])
+        }
+        /// 整合包包含重复项目，无法确定要替换的文件：%1$@
+        ///
+        /// Resource: `Errors.CoreModpackUpdatePlan.multipleFilesForProject`.
+        public static func multipleFilesForProject(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreModpackUpdatePlan.multipleFilesForProject", table: "Errors", fallback: "整合包包含重复项目，无法确定要替换的文件：%1$@", arguments: [.text(value0)])
+        }
+        /// 更新不修改符号链接：%1$@
+        ///
+        /// Resource: `Errors.CoreModpackUpdatePlan.symlinkUpdateSkipped`.
+        public static func symlinkUpdateSkipped(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreModpackUpdatePlan.symlinkUpdateSkipped", table: "Errors", fallback: "更新不修改符号链接：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreModpackUpdatePlan.titleText1": .init("新增", []),
-            "Core:coreModpackUpdatePlan.titleText2": .init("替换", []),
-            "Core:coreModpackUpdatePlan.titleText3": .init("移除", []),
-            "Core:coreModpackUpdatePlan.titleText4": .init("保留本地", []),
-            "Core:coreModpackUpdatePlan.incomingText1": .init("此文件已在本地移除，整合包要求重新添加", []),
-            "Core:coreModpackUpdatePlan.incomingText2": .init("此文件已在本地移除", []),
-            "Core:coreModpackUpdatePlan.incomingText3": .init("新版不再包含此文件，但本地内容已修改", []),
-            "Core:coreModpackUpdatePlan.incomingText4": .init("整合包要求替换；本地文件已有修改", []),
-            "Core:coreModpackUpdatePlan.incomingText5": .init("本地文件已有修改或与个人文件同名", []),
-            "Errors:coreModpackUpdatePlan.digestText1": .init("更新不修改符号链接：%1$@", [.text]),
-            "Errors:coreModpackUpdatePlan.infoText1": .init("待更新文件的位置已有文件夹：%1$@", [.text]),
-            "Errors:coreModpackUpdatePlan.foundText1": .init("此整合包文件对应多个本地版本，请先处理重复内容：%1$@", [.text]),
-            "Errors:coreModpackUpdatePlan.matchesText1": .init("整合包包含重复项目，无法确定要替换的文件：%1$@", [.text]),
-            "Errors:coreModpackUpdatePlan.previousText1": .init("新版整合包为同一项目提供了多个文件：%1$@", [.text]),
+            "Core:CoreModpackUpdatePlan.keepLocalFile": .init("保留本地", []),
+            "Core:CoreModpackUpdatePlan.localModificationConflict": .init("本地文件已有修改或与个人文件同名", []),
+            "Core:CoreModpackUpdatePlan.locallyRemoved": .init("此文件已在本地移除", []),
+            "Core:CoreModpackUpdatePlan.newFile": .init("新增", []),
+            "Core:CoreModpackUpdatePlan.packRequiresReadd": .init("此文件已在本地移除，整合包要求重新添加", []),
+            "Core:CoreModpackUpdatePlan.removedFile": .init("移除", []),
+            "Core:CoreModpackUpdatePlan.removedUpstreamLocallyModified": .init("新版不再包含此文件，但本地内容已修改", []),
+            "Core:CoreModpackUpdatePlan.replacedFile": .init("替换", []),
+            "Core:CoreModpackUpdatePlan.replacementRequiredLocalModified": .init("整合包要求替换；本地文件已有修改", []),
+            "Errors:CoreModpackUpdatePlan.destinationFolderExists": .init("待更新文件的位置已有文件夹：%1$@", [.text]),
+            "Errors:CoreModpackUpdatePlan.duplicateLocalMatches": .init("此整合包文件对应多个本地版本，请先处理重复内容：%1$@", [.text]),
+            "Errors:CoreModpackUpdatePlan.duplicatePackFiles": .init("新版整合包为同一项目提供了多个文件：%1$@", [.text]),
+            "Errors:CoreModpackUpdatePlan.multipleFilesForProject": .init("整合包包含重复项目，无法确定要替换的文件：%1$@", [.text]),
+            "Errors:CoreModpackUpdatePlan.symlinkUpdateSkipped": .init("更新不修改符号链接：%1$@", [.text]),
         ]
     }
 }

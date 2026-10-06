@@ -3,35 +3,35 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelMinecraftDirectory {
-        /// 恢复游戏文件夹
-        ///
-        /// Resource: `Interface.appAppModelMinecraftDirectory.baseText1`.
-        public static var recoverGameFolder: LocalizedMessage {
-            .init(key: "appAppModelMinecraftDirectory.baseText1", table: "Interface", fallback: "恢复游戏文件夹")
-        }
         /// 添加文件夹
         ///
-        /// Resource: `Interface.appAppModelMinecraftDirectory.panelText1`.
+        /// Resource: `Interface.AppAppModelMinecraftDirectory.addGameFolder`.
         public static var addGameFolder: LocalizedMessage {
-            .init(key: "appAppModelMinecraftDirectory.panelText1", table: "Interface", fallback: "添加文件夹")
-        }
-        /// 选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。
-        ///
-        /// Resource: `Interface.appAppModelMinecraftDirectory.panelText2`.
-        public static var folderSelectionHelp: LocalizedMessage {
-            .init(key: "appAppModelMinecraftDirectory.panelText2", table: "Interface", fallback: "选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。")
+            .init(key: "AppAppModelMinecraftDirectory.addGameFolder", table: "Interface", fallback: "添加文件夹")
         }
         /// 添加游戏文件夹
         ///
-        /// Resource: `Interface.appAppModelMinecraftDirectory.baseText2`.
+        /// Resource: `Interface.AppAppModelMinecraftDirectory.addGameFolderEntry`.
         public static var addGameFolderEntry: LocalizedMessage {
-            .init(key: "appAppModelMinecraftDirectory.baseText2", table: "Interface", fallback: "添加游戏文件夹")
+            .init(key: "AppAppModelMinecraftDirectory.addGameFolderEntry", table: "Interface", fallback: "添加游戏文件夹")
+        }
+        /// 选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。
+        ///
+        /// Resource: `Interface.AppAppModelMinecraftDirectory.folderSelectionHelp`.
+        public static var folderSelectionHelp: LocalizedMessage {
+            .init(key: "AppAppModelMinecraftDirectory.folderSelectionHelp", table: "Interface", fallback: "选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。")
+        }
+        /// 恢复游戏文件夹
+        ///
+        /// Resource: `Interface.AppAppModelMinecraftDirectory.recoverGameFolder`.
+        public static var recoverGameFolder: LocalizedMessage {
+            .init(key: "AppAppModelMinecraftDirectory.recoverGameFolder", table: "Interface", fallback: "恢复游戏文件夹")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAppModelMinecraftDirectory.baseText1": .init("恢复游戏文件夹", []),
-            "Interface:appAppModelMinecraftDirectory.panelText1": .init("添加文件夹", []),
-            "Interface:appAppModelMinecraftDirectory.panelText2": .init("选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。", []),
-            "Interface:appAppModelMinecraftDirectory.baseText2": .init("添加游戏文件夹", []),
+            "Interface:AppAppModelMinecraftDirectory.addGameFolder": .init("添加文件夹", []),
+            "Interface:AppAppModelMinecraftDirectory.addGameFolderEntry": .init("添加游戏文件夹", []),
+            "Interface:AppAppModelMinecraftDirectory.folderSelectionHelp": .init("选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。", []),
+            "Interface:AppAppModelMinecraftDirectory.recoverGameFolder": .init("恢复游戏文件夹", []),
         ]
     }
 }

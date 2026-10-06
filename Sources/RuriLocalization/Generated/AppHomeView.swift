@@ -3,273 +3,273 @@ import Foundation
 
 extension Messages {
     public enum AppHomeView {
-        /// 还没有游戏实例
+        /// 启动游戏前需要一个账号
         ///
-        /// Resource: `Interface.appHomeView.emptyStateText1`.
-        public static var noInstances: LocalizedMessage {
-            .init(key: "appHomeView.emptyStateText1", table: "Interface", fallback: "还没有游戏实例")
-        }
-        /// 新建一个实例，或导入整合包开始游戏。
-        ///
-        /// Resource: `Interface.appHomeView.emptyStateText2`.
-        public static var emptyStateDescription: LocalizedMessage {
-            .init(key: "appHomeView.emptyStateText2", table: "Interface", fallback: "新建一个实例，或导入整合包开始游戏。")
-        }
-        /// 新建实例
-        ///
-        /// Resource: `Interface.appHomeView.emptyStateText3`.
-        public static var createInstance: LocalizedMessage {
-            .init(key: "appHomeView.emptyStateText3", table: "Interface", fallback: "新建实例")
-        }
-        /// 导入整合包…
-        ///
-        /// Resource: `Interface.appHomeView.emptyStateText4`.
-        public static var importPack: LocalizedMessage {
-            .init(key: "appHomeView.emptyStateText4", table: "Interface", fallback: "导入整合包…")
-        }
-        /// 添加已有游戏文件夹…
-        ///
-        /// Resource: `Interface.appHomeView.addExistingGameFolder`.
-        public static var addExistingGameFolder: LocalizedMessage {
-            .init(key: "appHomeView.addExistingGameFolder", table: "Interface", fallback: "添加已有游戏文件夹…")
-        }
-        /// 本机已有游戏，或用过其他启动器？
-        ///
-        /// Resource: `Interface.appHomeView.existingGameFolderHint`.
-        public static var existingGameFolderHint: LocalizedMessage {
-            .init(key: "appHomeView.existingGameFolderHint", table: "Interface", fallback: "本机已有游戏，或用过其他启动器？")
-        }
-        /// 继续游戏
-        ///
-        /// Resource: `Interface.appHomeView.featuredSectionText1`.
-        public static var continuePlaying: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText1", table: "Interface", fallback: "继续游戏")
-        }
-        /// 全部实例
-        ///
-        /// Resource: `Interface.appHomeView.featuredSectionText2`.
-        public static var allInstances: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText2", table: "Interface", fallback: "全部实例")
-        }
-        /// 更换图标或编辑实例设置
-        ///
-        /// Resource: `Interface.appHomeView.featuredSectionText3`.
-        public static var editInstance: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText3", table: "Interface", fallback: "更换图标或编辑实例设置")
-        }
-        /// 游玩时长
-        ///
-        /// Resource: `Interface.appHomeView.featuredSectionText4`.
-        public static var playTime: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText4", table: "Interface", fallback: "游玩时长")
-        }
-        /// 上次游玩
-        ///
-        /// Resource: `Interface.appHomeView.featuredSectionText5`.
-        public static var lastPlayed: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText5", table: "Interface", fallback: "上次游玩")
-        }
-        /// 尚未游玩
-        ///
-        /// Resource: `Interface.appHomeView.featuredSectionText6`.
-        public static var neverPlayed: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText6", table: "Interface", fallback: "尚未游玩")
-        }
-        /// 游戏版本
-        ///
-        /// Resource: `Interface.appHomeView.featuredSectionText7`.
-        public static var gameVersion: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText7", table: "Interface", fallback: "游戏版本")
-        }
-        /// 内存
-        ///
-        /// Resource: `Interface.appHomeView.featuredSectionText8`.
-        public static var memory: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText8", table: "Interface", fallback: "内存")
-        }
-        /// 请先添加账号再启动游戏。
-        ///
-        /// Resource: `Interface.appHomeView.featuredSectionText9`.
-        public static var noAccountNotice: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText9", table: "Interface", fallback: "请先添加账号再启动游戏。")
+        /// Resource: `Interface.AppHomeView.accountRequired`.
+        public static var accountRequired: LocalizedMessage {
+            .init(key: "AppHomeView.accountRequired", table: "Interface", fallback: "启动游戏前需要一个账号")
         }
         /// 添加账号
         ///
-        /// Resource: `Interface.appHomeView.featuredSectionText10`.
+        /// Resource: `Interface.AppHomeView.addAccount`.
         public static var addAccount: LocalizedMessage {
-            .init(key: "appHomeView.featuredSectionText10", table: "Interface", fallback: "添加账号")
+            .init(key: "AppHomeView.addAccount", table: "Interface", fallback: "添加账号")
         }
-        /// 就绪
+        /// 添加已有游戏文件夹…
         ///
-        /// Resource: `Interface.appHomeView.statusLineText1`.
-        public static var ready: LocalizedMessage {
-            .init(key: "appHomeView.statusLineText1", table: "Interface", fallback: "就绪")
+        /// Resource: `Interface.AppHomeView.addExistingGameFolder`.
+        public static var addExistingGameFolder: LocalizedMessage {
+            .init(key: "AppHomeView.addExistingGameFolder", table: "Interface", fallback: "添加已有游戏文件夹…")
         }
-        /// 未完成安装
+        /// 全部实例
         ///
-        /// Resource: `Interface.appHomeView.statusLineText2`.
-        public static var installationIncomplete: LocalizedMessage {
-            .init(key: "appHomeView.statusLineText2", table: "Interface", fallback: "未完成安装")
-        }
-        /// 正在运行
-        ///
-        /// Resource: `Interface.appHomeView.runningSectionText1`.
-        public static var running: LocalizedMessage {
-            .init(key: "appHomeView.runningSectionText1", table: "Interface", fallback: "正在运行")
-        }
-        /// 运行记录
-        ///
-        /// Resource: `Interface.appHomeView.instanceText1`.
-        public static var runHistory: LocalizedMessage {
-            .init(key: "appHomeView.instanceText1", table: "Interface", fallback: "运行记录")
-        }
-        /// 返回游戏
-        ///
-        /// Resource: `Interface.appHomeView.instanceText2`.
-        public static var returnToGame: LocalizedMessage {
-            .init(key: "appHomeView.instanceText2", table: "Interface", fallback: "返回游戏")
-        }
-        /// 正在进行
-        ///
-        /// Resource: `Interface.appHomeView.activitySectionText1`.
-        public static var inProgress: LocalizedMessage {
-            .init(key: "appHomeView.activitySectionText1", table: "Interface", fallback: "正在进行")
+        /// Resource: `Interface.AppHomeView.allInstances`.
+        public static var allInstances: LocalizedMessage {
+            .init(key: "AppHomeView.allInstances", table: "Interface", fallback: "全部实例")
         }
         /// 全部任务
         ///
-        /// Resource: `Interface.appHomeView.activitySectionText2`.
+        /// Resource: `Interface.AppHomeView.allTasks`.
         public static var allTasks: LocalizedMessage {
-            .init(key: "appHomeView.activitySectionText2", table: "Interface", fallback: "全部任务")
-        }
-        /// 最近游玩
-        ///
-        /// Resource: `Interface.appHomeView.recentSectionText1`.
-        public static var recentlyPlayed: LocalizedMessage {
-            .init(key: "appHomeView.recentSectionText1", table: "Interface", fallback: "最近游玩")
-        }
-        /// 点按以在实例库中查看
-        ///
-        /// Resource: `Interface.appHomeView.recentRowText1`.
-        public static var showInLibraryHint: LocalizedMessage {
-            .init(key: "appHomeView.recentRowText1", table: "Interface", fallback: "点按以在实例库中查看")
-        }
-        /// 在实例库中显示
-        ///
-        /// Resource: `Interface.appHomeView.recentRowText2`.
-        public static var showInLibrary: LocalizedMessage {
-            .init(key: "appHomeView.recentRowText2", table: "Interface", fallback: "在实例库中显示")
-        }
-        /// 已固定
-        ///
-        /// Resource: `Interface.appHomeView.pinnedSectionText1`.
-        public static var pinned: LocalizedMessage {
-            .init(key: "appHomeView.pinnedSectionText1", table: "Interface", fallback: "已固定")
-        }
-        /// 实例设置
-        ///
-        /// Resource: `Interface.appHomeView.recentRowText3`.
-        public static var instanceSettings: LocalizedMessage {
-            .init(key: "appHomeView.recentRowText3", table: "Interface", fallback: "实例设置")
-        }
-        /// 在 Finder 中显示
-        ///
-        /// Resource: `Interface.appHomeView.recentRowText4`.
-        public static var showInFinder: LocalizedMessage {
-            .init(key: "appHomeView.recentRowText4", table: "Interface", fallback: "在 Finder 中显示")
-        }
-        /// 快捷操作
-        ///
-        /// Resource: `Interface.appHomeView.quickActionsText1`.
-        public static var quickActions: LocalizedMessage {
-            .init(key: "appHomeView.quickActionsText1", table: "Interface", fallback: "快捷操作")
-        }
-        /// 选择游戏版本和加载器
-        ///
-        /// Resource: `Interface.appHomeView.quickActionsText2`.
-        public static var chooseVersionAndLoader: LocalizedMessage {
-            .init(key: "appHomeView.quickActionsText2", table: "Interface", fallback: "选择游戏版本和加载器")
-        }
-        /// 导入整合包
-        ///
-        /// Resource: `Interface.appHomeView.quickActionsText3`.
-        public static var importPackAction: LocalizedMessage {
-            .init(key: "appHomeView.quickActionsText3", table: "Interface", fallback: "导入整合包")
-        }
-        /// mrpack、CurseForge、HMCL 等格式
-        ///
-        /// Resource: `Interface.appHomeView.quickActionsText4`.
-        public static var supportedPackFormats: LocalizedMessage {
-            .init(key: "appHomeView.quickActionsText4", table: "Interface", fallback: "mrpack、CurseForge、HMCL 等格式")
-        }
-        /// 发现内容
-        ///
-        /// Resource: `Interface.appHomeView.quickActionsText5`.
-        public static var discoverContent: LocalizedMessage {
-            .init(key: "appHomeView.quickActionsText5", table: "Interface", fallback: "发现内容")
+            .init(key: "AppHomeView.allTasks", table: "Interface", fallback: "全部任务")
         }
         /// 浏览 Modrinth 与 CurseForge
         ///
-        /// Resource: `Interface.appHomeView.quickActionsText6`.
+        /// Resource: `Interface.AppHomeView.browseContentSources`.
         public static var browseContentSources: LocalizedMessage {
-            .init(key: "appHomeView.quickActionsText6", table: "Interface", fallback: "浏览 Modrinth 与 CurseForge")
+            .init(key: "AppHomeView.browseContentSources", table: "Interface", fallback: "浏览 Modrinth 与 CurseForge")
         }
-        /// 启动游戏前需要一个账号
+        /// 选择游戏版本和加载器
         ///
-        /// Resource: `Interface.appHomeView.quickActionsText7`.
-        public static var accountRequired: LocalizedMessage {
-            .init(key: "appHomeView.quickActionsText7", table: "Interface", fallback: "启动游戏前需要一个账号")
+        /// Resource: `Interface.AppHomeView.chooseVersionAndLoader`.
+        public static var chooseVersionAndLoader: LocalizedMessage {
+            .init(key: "AppHomeView.chooseVersionAndLoader", table: "Interface", fallback: "选择游戏版本和加载器")
         }
-        /// Java 运行时
+        /// 继续游戏
         ///
-        /// Resource: `Interface.appHomeView.quickActionsText8`.
-        public static var javaRuntime: LocalizedMessage {
-            .init(key: "appHomeView.quickActionsText8", table: "Interface", fallback: "Java 运行时")
+        /// Resource: `Interface.AppHomeView.continuePlaying`.
+        public static var continuePlaying: LocalizedMessage {
+            .init(key: "AppHomeView.continuePlaying", table: "Interface", fallback: "继续游戏")
+        }
+        /// 新建实例
+        ///
+        /// Resource: `Interface.AppHomeView.createInstance`.
+        public static var createInstance: LocalizedMessage {
+            .init(key: "AppHomeView.createInstance", table: "Interface", fallback: "新建实例")
         }
         /// 检测本机 Java 或下载官方运行时
         ///
-        /// Resource: `Interface.appHomeView.quickActionsText9`.
+        /// Resource: `Interface.AppHomeView.detectOrDownloadJava`.
         public static var detectOrDownloadJava: LocalizedMessage {
-            .init(key: "appHomeView.quickActionsText9", table: "Interface", fallback: "检测本机 Java 或下载官方运行时")
+            .init(key: "AppHomeView.detectOrDownloadJava", table: "Interface", fallback: "检测本机 Java 或下载官方运行时")
+        }
+        /// 发现内容
+        ///
+        /// Resource: `Interface.AppHomeView.discoverContent`.
+        public static var discoverContent: LocalizedMessage {
+            .init(key: "AppHomeView.discoverContent", table: "Interface", fallback: "发现内容")
+        }
+        /// 更换图标或编辑实例设置
+        ///
+        /// Resource: `Interface.AppHomeView.editInstance`.
+        public static var editInstance: LocalizedMessage {
+            .init(key: "AppHomeView.editInstance", table: "Interface", fallback: "更换图标或编辑实例设置")
+        }
+        /// 新建一个实例，或导入整合包开始游戏。
+        ///
+        /// Resource: `Interface.AppHomeView.emptyStateDescription`.
+        public static var emptyStateDescription: LocalizedMessage {
+            .init(key: "AppHomeView.emptyStateDescription", table: "Interface", fallback: "新建一个实例，或导入整合包开始游戏。")
+        }
+        /// 本机已有游戏，或用过其他启动器？
+        ///
+        /// Resource: `Interface.AppHomeView.existingGameFolderHint`.
+        public static var existingGameFolderHint: LocalizedMessage {
+            .init(key: "AppHomeView.existingGameFolderHint", table: "Interface", fallback: "本机已有游戏，或用过其他启动器？")
+        }
+        /// 游戏版本
+        ///
+        /// Resource: `Interface.AppHomeView.gameVersion`.
+        public static var gameVersion: LocalizedMessage {
+            .init(key: "AppHomeView.gameVersion", table: "Interface", fallback: "游戏版本")
+        }
+        /// 导入整合包…
+        ///
+        /// Resource: `Interface.AppHomeView.importPack`.
+        public static var importPack: LocalizedMessage {
+            .init(key: "AppHomeView.importPack", table: "Interface", fallback: "导入整合包…")
+        }
+        /// 导入整合包
+        ///
+        /// Resource: `Interface.AppHomeView.importPackAction`.
+        public static var importPackAction: LocalizedMessage {
+            .init(key: "AppHomeView.importPackAction", table: "Interface", fallback: "导入整合包")
+        }
+        /// 正在进行
+        ///
+        /// Resource: `Interface.AppHomeView.inProgress`.
+        public static var inProgress: LocalizedMessage {
+            .init(key: "AppHomeView.inProgress", table: "Interface", fallback: "正在进行")
+        }
+        /// 未完成安装
+        ///
+        /// Resource: `Interface.AppHomeView.installationIncomplete`.
+        public static var installationIncomplete: LocalizedMessage {
+            .init(key: "AppHomeView.installationIncomplete", table: "Interface", fallback: "未完成安装")
+        }
+        /// 实例设置
+        ///
+        /// Resource: `Interface.AppHomeView.instanceSettings`.
+        public static var instanceSettings: LocalizedMessage {
+            .init(key: "AppHomeView.instanceSettings", table: "Interface", fallback: "实例设置")
+        }
+        /// Java 运行时
+        ///
+        /// Resource: `Interface.AppHomeView.javaRuntime`.
+        public static var javaRuntime: LocalizedMessage {
+            .init(key: "AppHomeView.javaRuntime", table: "Interface", fallback: "Java 运行时")
+        }
+        /// 上次游玩
+        ///
+        /// Resource: `Interface.AppHomeView.lastPlayed`.
+        public static var lastPlayed: LocalizedMessage {
+            .init(key: "AppHomeView.lastPlayed", table: "Interface", fallback: "上次游玩")
+        }
+        /// 内存
+        ///
+        /// Resource: `Interface.AppHomeView.memory`.
+        public static var memory: LocalizedMessage {
+            .init(key: "AppHomeView.memory", table: "Interface", fallback: "内存")
+        }
+        /// 尚未游玩
+        ///
+        /// Resource: `Interface.AppHomeView.neverPlayed`.
+        public static var neverPlayed: LocalizedMessage {
+            .init(key: "AppHomeView.neverPlayed", table: "Interface", fallback: "尚未游玩")
+        }
+        /// 请先添加账号再启动游戏。
+        ///
+        /// Resource: `Interface.AppHomeView.noAccountNotice`.
+        public static var noAccountNotice: LocalizedMessage {
+            .init(key: "AppHomeView.noAccountNotice", table: "Interface", fallback: "请先添加账号再启动游戏。")
+        }
+        /// 还没有游戏实例
+        ///
+        /// Resource: `Interface.AppHomeView.noInstances`.
+        public static var noInstances: LocalizedMessage {
+            .init(key: "AppHomeView.noInstances", table: "Interface", fallback: "还没有游戏实例")
+        }
+        /// 已固定
+        ///
+        /// Resource: `Interface.AppHomeView.pinned`.
+        public static var pinned: LocalizedMessage {
+            .init(key: "AppHomeView.pinned", table: "Interface", fallback: "已固定")
+        }
+        /// 游玩时长
+        ///
+        /// Resource: `Interface.AppHomeView.playTime`.
+        public static var playTime: LocalizedMessage {
+            .init(key: "AppHomeView.playTime", table: "Interface", fallback: "游玩时长")
+        }
+        /// 快捷操作
+        ///
+        /// Resource: `Interface.AppHomeView.quickActions`.
+        public static var quickActions: LocalizedMessage {
+            .init(key: "AppHomeView.quickActions", table: "Interface", fallback: "快捷操作")
+        }
+        /// 就绪
+        ///
+        /// Resource: `Interface.AppHomeView.ready`.
+        public static var ready: LocalizedMessage {
+            .init(key: "AppHomeView.ready", table: "Interface", fallback: "就绪")
+        }
+        /// 最近游玩
+        ///
+        /// Resource: `Interface.AppHomeView.recentlyPlayed`.
+        public static var recentlyPlayed: LocalizedMessage {
+            .init(key: "AppHomeView.recentlyPlayed", table: "Interface", fallback: "最近游玩")
+        }
+        /// 返回游戏
+        ///
+        /// Resource: `Interface.AppHomeView.returnToGame`.
+        public static var returnToGame: LocalizedMessage {
+            .init(key: "AppHomeView.returnToGame", table: "Interface", fallback: "返回游戏")
+        }
+        /// 运行记录
+        ///
+        /// Resource: `Interface.AppHomeView.runHistory`.
+        public static var runHistory: LocalizedMessage {
+            .init(key: "AppHomeView.runHistory", table: "Interface", fallback: "运行记录")
+        }
+        /// 正在运行
+        ///
+        /// Resource: `Interface.AppHomeView.running`.
+        public static var running: LocalizedMessage {
+            .init(key: "AppHomeView.running", table: "Interface", fallback: "正在运行")
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.AppHomeView.showInFinder`.
+        public static var showInFinder: LocalizedMessage {
+            .init(key: "AppHomeView.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
+        }
+        /// 在实例库中显示
+        ///
+        /// Resource: `Interface.AppHomeView.showInLibrary`.
+        public static var showInLibrary: LocalizedMessage {
+            .init(key: "AppHomeView.showInLibrary", table: "Interface", fallback: "在实例库中显示")
+        }
+        /// 点按以在实例库中查看
+        ///
+        /// Resource: `Interface.AppHomeView.showInLibraryHint`.
+        public static var showInLibraryHint: LocalizedMessage {
+            .init(key: "AppHomeView.showInLibraryHint", table: "Interface", fallback: "点按以在实例库中查看")
+        }
+        /// mrpack、CurseForge、HMCL 等格式
+        ///
+        /// Resource: `Interface.AppHomeView.supportedPackFormats`.
+        public static var supportedPackFormats: LocalizedMessage {
+            .init(key: "AppHomeView.supportedPackFormats", table: "Interface", fallback: "mrpack、CurseForge、HMCL 等格式")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appHomeView.emptyStateText1": .init("还没有游戏实例", []),
-            "Interface:appHomeView.emptyStateText2": .init("新建一个实例，或导入整合包开始游戏。", []),
-            "Interface:appHomeView.emptyStateText3": .init("新建实例", []),
-            "Interface:appHomeView.emptyStateText4": .init("导入整合包…", []),
-            "Interface:appHomeView.addExistingGameFolder": .init("添加已有游戏文件夹…", []),
-            "Interface:appHomeView.existingGameFolderHint": .init("本机已有游戏，或用过其他启动器？", []),
-            "Interface:appHomeView.featuredSectionText1": .init("继续游戏", []),
-            "Interface:appHomeView.featuredSectionText2": .init("全部实例", []),
-            "Interface:appHomeView.featuredSectionText3": .init("更换图标或编辑实例设置", []),
-            "Interface:appHomeView.featuredSectionText4": .init("游玩时长", []),
-            "Interface:appHomeView.featuredSectionText5": .init("上次游玩", []),
-            "Interface:appHomeView.featuredSectionText6": .init("尚未游玩", []),
-            "Interface:appHomeView.featuredSectionText7": .init("游戏版本", []),
-            "Interface:appHomeView.featuredSectionText8": .init("内存", []),
-            "Interface:appHomeView.featuredSectionText9": .init("请先添加账号再启动游戏。", []),
-            "Interface:appHomeView.featuredSectionText10": .init("添加账号", []),
-            "Interface:appHomeView.statusLineText1": .init("就绪", []),
-            "Interface:appHomeView.statusLineText2": .init("未完成安装", []),
-            "Interface:appHomeView.runningSectionText1": .init("正在运行", []),
-            "Interface:appHomeView.instanceText1": .init("运行记录", []),
-            "Interface:appHomeView.instanceText2": .init("返回游戏", []),
-            "Interface:appHomeView.activitySectionText1": .init("正在进行", []),
-            "Interface:appHomeView.activitySectionText2": .init("全部任务", []),
-            "Interface:appHomeView.recentSectionText1": .init("最近游玩", []),
-            "Interface:appHomeView.recentRowText1": .init("点按以在实例库中查看", []),
-            "Interface:appHomeView.recentRowText2": .init("在实例库中显示", []),
-            "Interface:appHomeView.pinnedSectionText1": .init("已固定", []),
-            "Interface:appHomeView.recentRowText3": .init("实例设置", []),
-            "Interface:appHomeView.recentRowText4": .init("在 Finder 中显示", []),
-            "Interface:appHomeView.quickActionsText1": .init("快捷操作", []),
-            "Interface:appHomeView.quickActionsText2": .init("选择游戏版本和加载器", []),
-            "Interface:appHomeView.quickActionsText3": .init("导入整合包", []),
-            "Interface:appHomeView.quickActionsText4": .init("mrpack、CurseForge、HMCL 等格式", []),
-            "Interface:appHomeView.quickActionsText5": .init("发现内容", []),
-            "Interface:appHomeView.quickActionsText6": .init("浏览 Modrinth 与 CurseForge", []),
-            "Interface:appHomeView.quickActionsText7": .init("启动游戏前需要一个账号", []),
-            "Interface:appHomeView.quickActionsText8": .init("Java 运行时", []),
-            "Interface:appHomeView.quickActionsText9": .init("检测本机 Java 或下载官方运行时", []),
+            "Interface:AppHomeView.accountRequired": .init("启动游戏前需要一个账号", []),
+            "Interface:AppHomeView.addAccount": .init("添加账号", []),
+            "Interface:AppHomeView.addExistingGameFolder": .init("添加已有游戏文件夹…", []),
+            "Interface:AppHomeView.allInstances": .init("全部实例", []),
+            "Interface:AppHomeView.allTasks": .init("全部任务", []),
+            "Interface:AppHomeView.browseContentSources": .init("浏览 Modrinth 与 CurseForge", []),
+            "Interface:AppHomeView.chooseVersionAndLoader": .init("选择游戏版本和加载器", []),
+            "Interface:AppHomeView.continuePlaying": .init("继续游戏", []),
+            "Interface:AppHomeView.createInstance": .init("新建实例", []),
+            "Interface:AppHomeView.detectOrDownloadJava": .init("检测本机 Java 或下载官方运行时", []),
+            "Interface:AppHomeView.discoverContent": .init("发现内容", []),
+            "Interface:AppHomeView.editInstance": .init("更换图标或编辑实例设置", []),
+            "Interface:AppHomeView.emptyStateDescription": .init("新建一个实例，或导入整合包开始游戏。", []),
+            "Interface:AppHomeView.existingGameFolderHint": .init("本机已有游戏，或用过其他启动器？", []),
+            "Interface:AppHomeView.gameVersion": .init("游戏版本", []),
+            "Interface:AppHomeView.importPack": .init("导入整合包…", []),
+            "Interface:AppHomeView.importPackAction": .init("导入整合包", []),
+            "Interface:AppHomeView.inProgress": .init("正在进行", []),
+            "Interface:AppHomeView.installationIncomplete": .init("未完成安装", []),
+            "Interface:AppHomeView.instanceSettings": .init("实例设置", []),
+            "Interface:AppHomeView.javaRuntime": .init("Java 运行时", []),
+            "Interface:AppHomeView.lastPlayed": .init("上次游玩", []),
+            "Interface:AppHomeView.memory": .init("内存", []),
+            "Interface:AppHomeView.neverPlayed": .init("尚未游玩", []),
+            "Interface:AppHomeView.noAccountNotice": .init("请先添加账号再启动游戏。", []),
+            "Interface:AppHomeView.noInstances": .init("还没有游戏实例", []),
+            "Interface:AppHomeView.pinned": .init("已固定", []),
+            "Interface:AppHomeView.playTime": .init("游玩时长", []),
+            "Interface:AppHomeView.quickActions": .init("快捷操作", []),
+            "Interface:AppHomeView.ready": .init("就绪", []),
+            "Interface:AppHomeView.recentlyPlayed": .init("最近游玩", []),
+            "Interface:AppHomeView.returnToGame": .init("返回游戏", []),
+            "Interface:AppHomeView.runHistory": .init("运行记录", []),
+            "Interface:AppHomeView.running": .init("正在运行", []),
+            "Interface:AppHomeView.showInFinder": .init("在 Finder 中显示", []),
+            "Interface:AppHomeView.showInLibrary": .init("在实例库中显示", []),
+            "Interface:AppHomeView.showInLibraryHint": .init("点按以在实例库中查看", []),
+            "Interface:AppHomeView.supportedPackFormats": .init("mrpack、CurseForge、HMCL 等格式", []),
         ]
     }
 }

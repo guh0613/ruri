@@ -5,19 +5,19 @@ extension Messages {
     public enum CoreRepositoryPreparation {
         /// 本地依赖库位于游戏文件夹之外。
         ///
-        /// Resource: `Errors.coreRepositoryPreparation.prefixText1`.
+        /// Resource: `Errors.CoreRepositoryPreparation.dependencyOutsideGameFolder`.
         public static var dependencyOutsideGameFolder: LocalizedMessage {
-            .init(key: "coreRepositoryPreparation.prefixText1", table: "Errors", fallback: "本地依赖库位于游戏文件夹之外。")
+            .init(key: "CoreRepositoryPreparation.dependencyOutsideGameFolder", table: "Errors", fallback: "本地依赖库位于游戏文件夹之外。")
         }
         /// 原生依赖库缺失，请修复此版本：%1$@
         ///
-        /// Resource: `Errors.coreRepositoryPreparation.fileText1`.
+        /// Resource: `Errors.CoreRepositoryPreparation.missingNativeDependency`.
         public static func missingNativeDependency(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryPreparation.fileText1", table: "Errors", fallback: "原生依赖库缺失，请修复此版本：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreRepositoryPreparation.missingNativeDependency", table: "Errors", fallback: "原生依赖库缺失，请修复此版本：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreRepositoryPreparation.prefixText1": .init("本地依赖库位于游戏文件夹之外。", []),
-            "Errors:coreRepositoryPreparation.fileText1": .init("原生依赖库缺失，请修复此版本：%1$@", [.text]),
+            "Errors:CoreRepositoryPreparation.dependencyOutsideGameFolder": .init("本地依赖库位于游戏文件夹之外。", []),
+            "Errors:CoreRepositoryPreparation.missingNativeDependency": .init("原生依赖库缺失，请修复此版本：%1$@", [.text]),
         ]
     }
 }

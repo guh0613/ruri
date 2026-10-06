@@ -20,11 +20,11 @@ extension CLIApplication {
                 "suggestedLocation": .text(item.suggestedLocationID), "warnings": .array(item.warnings.map(Value.string))]) })
         case "add":
             let url = URL(fileURLWithPath: try request.operand()), name = try request.required("name"), minecraft = request.string("layout") != "managed"
-            guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t5efd67648f0d.localized) }
+            guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.emptyDirectoryName.localized) }
             if request.dryRun {
                 if minecraft { _ = try await MinecraftDirectoryReader().scan(url) }
                 else {
-                    guard try FileManager.default.contentsOfDirectory(atPath: url.path).allSatisfy({ $0 == ".DS_Store" }) else { throw OperationFailure("DIRECTORY_NOT_EMPTY", Messages.CLIInterface.t8ba03aeb3548.localized) }
+                    guard try FileManager.default.contentsOfDirectory(atPath: url.path).allSatisfy({ $0 == ".DS_Store" }) else { throw OperationFailure("DIRECTORY_NOT_EMPTY", Messages.CLIInterface.managedDirectoryMustBeEmpty.localized) }
                 }
                 return .object(["dryRun": .bool(true), "path": .string(url.path), "name": .string(name), "layout": .string(minecraft ? "minecraft" : "managed")])
             }
@@ -38,7 +38,7 @@ extension CLIApplication {
                 if !request.dryRun { _ = try await service.apply(preview) }
                 return .object(["dryRun": .bool(request.dryRun), "source": .string(preview.source.path), "target": .string(preview.target.path), "instances": .array(preview.instances.map { .string($0.id.uuidString) })])
             }
-            guard let mode = GameRunDirectory(rawValue: try request.operand(1)), mode == .custom || request.string("path") == nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tdc5f6e9debdb.localized) }
+            guard let mode = GameRunDirectory(rawValue: try request.operand(1)), mode == .custom || request.string("path") == nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidRunDirectoryModeOrPath.localized) }
             let service = GameRunDirectoryChange(paths: paths), preview: GameRunDirectoryChangePreview
             if request.dryRun { preview = try await service.inspect(instanceID: id, target: mode, customPath: request.string("path").map { URL(fileURLWithPath: $0) }) }
             else {
@@ -53,7 +53,7 @@ extension CLIApplication {
         default: break
         }
         let id = try directoryID(request.operand())
-        guard id == GameDirectory.defaultID || (state.gameDirectories ?? []).contains(where: { $0.id == id }) || (action == "restore" && state.detachedMinecraftFolders?.contains(where: { $0.id == id }) == true) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t70a45a4240d8.localized) }
+        guard id == GameDirectory.defaultID || (state.gameDirectories ?? []).contains(where: { $0.id == id }) || (action == "restore" && state.detachedMinecraftFolders?.contains(where: { $0.id == id }) == true) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.directoryNotFound.localized) }
         if request.dryRun { return .object(["dryRun": .bool(true), "id": .string(id.uuidString), "action": .string(action), "instances": .array(state.instances.filter { ($0.directoryID ?? GameDirectory.defaultID) == id }.map { .string($0.id.uuidString) })]) }
         let saved: PersistentState
         switch action {
@@ -63,7 +63,7 @@ extension CLIApplication {
         case "relocate": saved = try GameDirectoryStore.relocate(id, to: URL(fileURLWithPath: request.operand(1)), paths: paths)
         case "remove": saved = try GameDirectoryStore.remove(id, paths: paths)
         case "restore": saved = try MinecraftFolderStore.restore(id, from: URL(fileURLWithPath: request.operand(1)), paths: paths)
-        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t9a582e74d089.localized)
+        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownDirectoryAction.localized)
         }
         return .object(["id": .string(id.uuidString), "directories": .array(entries(saved))])
     }

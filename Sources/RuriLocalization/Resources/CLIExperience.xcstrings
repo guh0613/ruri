@@ -1,0 +1,537 @@
+{
+  "sourceLanguage" : "zh-Hans",
+  "strings" : {
+    "CLIExperience.completed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已完成"
+          }
+        }
+      }
+    },
+    "CLIExperience.configFields" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuration fields (? allows null; an empty string is different from null):"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置字段（? 表示允许 null；空字符串与 null 不同）："
+          }
+        }
+      }
+    },
+    "CLIExperience.configPreview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview: configuration changes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "预览：将更新配置"
+          }
+        }
+      }
+    },
+    "CLIExperience.configRules" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scopes: app, defaults, instance:<uuid>. set accepts a JSON literal (retain double quotes around strings); apply --file - reads a patch from stdin. inherit restores group inheritance; --if-revision guards concurrent changes."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置作用域：app、defaults、instance:<uuid>。set 的值使用 JSON 字面量（字符串需保留双引号）；apply --file - 从 stdin 读取补丁。inherit 按组恢复继承，--if-revision 防止覆盖并发修改。"
+          }
+        }
+      }
+    },
+    "CLIExperience.configUnchanged" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuration unchanged"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置未变化"
+          }
+        }
+      }
+    },
+    "CLIExperience.configUpdated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuration updated"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置已更新"
+          }
+        }
+      }
+    },
+    "CLIExperience.discovery" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discovery: ruri help <resource> shows a whole command group; ruri help --all shows the complete cheat sheet."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发现命令：ruri help <资源> 查看整组用法；ruri help --all 查看完整速查表。"
+          }
+        }
+      }
+    },
+    "CLIExperience.empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No matching results."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有匹配的结果。"
+          }
+        }
+      }
+    },
+    "CLIExperience.formats" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default: concise text. --json: stable structured result. --output ndjson: event stream. --data-dir <path>: data directory. --language en|zh-Hans: message language (default: en). --quiet: hide progress."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language <语言>；--quiet 隐藏进度。"
+          }
+        }
+      }
+    },
+    "CLIExperience.fullDetails" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use --json for all fields."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 --json 查看完整字段。"
+          }
+        }
+      }
+    },
+    "CLIExperience.fullSchema" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expand every matching command's full schema; output may be large."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "展开目录中所有命令的完整结构，输出可能很长"
+          }
+        }
+      }
+    },
+    "CLIExperience.helpAll" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show a concise index of every command."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "列出全部命令的精简用法"
+          }
+        }
+      }
+    },
+    "CLIExperience.hiddenChanges" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changes are hidden by redaction."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脱敏后无可显示的差异。"
+          }
+        }
+      }
+    },
+    "CLIExperience.inputSchema" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Return only the command input schema, including the patch schema for config apply."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只返回命令输入结构；config apply 同时包含补丁结构"
+          }
+        }
+      }
+    },
+    "CLIExperience.listRules" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lists return up to 50 items by default. Paginate with --limit <1…1000> / --offset <count>, or use --all."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "列表默认最多 50 项，--limit <1…1000> / --offset <数量> 分页，--all 返回全部。"
+          }
+        }
+      }
+    },
+    "CLIExperience.more" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More results: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还有更多：%@"
+          }
+        }
+      }
+    },
+    "CLIExperience.nextAction" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一步：%@"
+          }
+        }
+      }
+    },
+    "CLIExperience.outputSchema" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Return only the command result schema."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只返回命令结果结构"
+          }
+        }
+      }
+    },
+    "CLIExperience.page" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Showing %1$#@count1@, offset %2$lld."
+          },
+          "substitutions" : {
+            "count1" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%lld item"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%lld items"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示 %1$#@count1@ 项；起始位置 %2$lld。"
+          },
+          "substitutions" : {
+            "count1" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%lld"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "CLIExperience.preview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview (not executed)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "预览（未执行）"
+          }
+        }
+      }
+    },
+    "CLIExperience.retryable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This operation can be retried."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此操作可以重试。"
+          }
+        }
+      }
+    },
+    "CLIExperience.rules" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use complete IDs from list results. Mutations require explicit targets; selected reads the current selection. Use --dry-run where supported. Deletion requires --yes; replacement also requires --replace."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目标使用 list 返回的完整 ID；修改需明确目标，selected 查询当前选择。支持 --dry-run 的命令可预览；删除等操作需 --yes，覆盖另需 --replace。"
+          }
+        }
+      }
+    },
+    "CLIExperience.schemaHint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strict schemas: ruri schema <resource> <action> --input or --output-schema; configuration supports --scope app|defaults|instance."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "严格结构：ruri schema <资源> <动作> --input 或 --output-schema；配置可加 --scope app|defaults|instance。"
+          }
+        }
+      }
+    },
+    "CLIExperience.schemaScope" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limit configuration fields to app, defaults, or instance."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只查询指定配置作用域的字段：app、defaults 或 instance"
+          }
+        }
+      }
+    },
+    "CLIExperience.schemaSelection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "--input, --output-schema, and --scope require an exact command. --scope applies only to configuration inputs."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "--input、--output-schema 和 --scope 需要指定完整命令；--scope 仅适用于配置命令的输入。"
+          }
+        }
+      }
+    },
+    "CLIExperience.total" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %lld."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共 %lld 项。"
+          }
+        }
+      }
+    },
+    "CLIExperience.unchanged" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unchanged"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未变化"
+          }
+        }
+      }
+    },
+    "CLIExperience.unknownHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown command: %@. Run ruri help --all to list commands."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找不到命令：%@。使用 ruri help --all 查看命令目录。"
+          }
+        }
+      }
+    },
+    "CLIExperience.warning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "警告：%@"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

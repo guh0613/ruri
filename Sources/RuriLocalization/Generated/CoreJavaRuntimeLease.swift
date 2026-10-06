@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum CoreJavaRuntimeLease {
-        /// Java 运行时名称无效。
-        ///
-        /// Resource: `Errors.coreJavaRuntimeLease.acquireText1`.
-        public static var invalidJavaRuntimeName: LocalizedMessage {
-            .init(key: "coreJavaRuntimeLease.acquireText1", table: "Errors", fallback: "Java 运行时名称无效。")
-        }
-        /// 无法锁定 Java 运行时。
-        ///
-        /// Resource: `Errors.coreJavaRuntimeLease.fdText1`.
-        public static var javaRuntimeLockFailed: LocalizedMessage {
-            .init(key: "coreJavaRuntimeLease.fdText1", table: "Errors", fallback: "无法锁定 Java 运行时。")
-        }
         /// Java 运行时锁文件无效。
         ///
-        /// Resource: `Errors.coreJavaRuntimeLease.infoText1`.
+        /// Resource: `Errors.CoreJavaRuntimeLease.invalidJavaRuntimeLock`.
         public static var invalidJavaRuntimeLock: LocalizedMessage {
-            .init(key: "coreJavaRuntimeLease.infoText1", table: "Errors", fallback: "Java 运行时锁文件无效。")
+            .init(key: "CoreJavaRuntimeLease.invalidJavaRuntimeLock", table: "Errors", fallback: "Java 运行时锁文件无效。")
+        }
+        /// Java 运行时名称无效。
+        ///
+        /// Resource: `Errors.CoreJavaRuntimeLease.invalidJavaRuntimeName`.
+        public static var invalidJavaRuntimeName: LocalizedMessage {
+            .init(key: "CoreJavaRuntimeLease.invalidJavaRuntimeName", table: "Errors", fallback: "Java 运行时名称无效。")
         }
         /// 此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。
         ///
-        /// Resource: `Errors.coreJavaRuntimeLease.valueText1`.
+        /// Resource: `Errors.CoreJavaRuntimeLease.javaRuntimeInUse`.
         public static var javaRuntimeInUse: LocalizedMessage {
-            .init(key: "coreJavaRuntimeLease.valueText1", table: "Errors", fallback: "此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。")
+            .init(key: "CoreJavaRuntimeLease.javaRuntimeInUse", table: "Errors", fallback: "此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。")
+        }
+        /// 无法锁定 Java 运行时。
+        ///
+        /// Resource: `Errors.CoreJavaRuntimeLease.javaRuntimeLockFailed`.
+        public static var javaRuntimeLockFailed: LocalizedMessage {
+            .init(key: "CoreJavaRuntimeLease.javaRuntimeLockFailed", table: "Errors", fallback: "无法锁定 Java 运行时。")
         }
         /// 此 Java 正被进程 %1$@ 使用，请先结束对应游戏或安装程序。
         ///
-        /// Resource: `Errors.coreJavaRuntimeLease.executableText1`.
+        /// Resource: `Errors.CoreJavaRuntimeLease.javaRuntimeUsedByProcess`.
         public static func javaRuntimeUsedByProcess(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreJavaRuntimeLease.executableText1", table: "Errors", fallback: "此 Java 正被进程 %1$@ 使用，请先结束对应游戏或安装程序。", arguments: [.text(value0)])
+            .init(key: "CoreJavaRuntimeLease.javaRuntimeUsedByProcess", table: "Errors", fallback: "此 Java 正被进程 %1$@ 使用，请先结束对应游戏或安装程序。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreJavaRuntimeLease.acquireText1": .init("Java 运行时名称无效。", []),
-            "Errors:coreJavaRuntimeLease.fdText1": .init("无法锁定 Java 运行时。", []),
-            "Errors:coreJavaRuntimeLease.infoText1": .init("Java 运行时锁文件无效。", []),
-            "Errors:coreJavaRuntimeLease.valueText1": .init("此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。", []),
-            "Errors:coreJavaRuntimeLease.executableText1": .init("此 Java 正被进程 %1$@ 使用，请先结束对应游戏或安装程序。", [.text]),
+            "Errors:CoreJavaRuntimeLease.invalidJavaRuntimeLock": .init("Java 运行时锁文件无效。", []),
+            "Errors:CoreJavaRuntimeLease.invalidJavaRuntimeName": .init("Java 运行时名称无效。", []),
+            "Errors:CoreJavaRuntimeLease.javaRuntimeInUse": .init("此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。", []),
+            "Errors:CoreJavaRuntimeLease.javaRuntimeLockFailed": .init("无法锁定 Java 运行时。", []),
+            "Errors:CoreJavaRuntimeLease.javaRuntimeUsedByProcess": .init("此 Java 正被进程 %1$@ 使用，请先结束对应游戏或安装程序。", [.text]),
         ]
     }
 }

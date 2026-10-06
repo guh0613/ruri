@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum CoreFileTreeDirectory {
-        /// 无法读取目录：%1$@
+        /// 读取目录时发生错误。
         ///
-        /// Resource: `Errors.coreFileTreeDirectory.fdText1`.
-        public static func directoryReadFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreFileTreeDirectory.fdText1", table: "Errors", fallback: "无法读取目录：%1$@", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreFileTreeDirectory.directoryEntryReadFailed`.
+        public static var directoryEntryReadFailed: LocalizedMessage {
+            .init(key: "CoreFileTreeDirectory.directoryEntryReadFailed", table: "Errors", fallback: "读取目录时发生错误。")
         }
         /// 无法枚举目录：%1$@
         ///
-        /// Resource: `Errors.coreFileTreeDirectory.streamText1`.
+        /// Resource: `Errors.CoreFileTreeDirectory.directoryEnumerationFailed`.
         public static func directoryEnumerationFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreFileTreeDirectory.streamText1", table: "Errors", fallback: "无法枚举目录：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreFileTreeDirectory.directoryEnumerationFailed", table: "Errors", fallback: "无法枚举目录：%1$@", arguments: [.text(value0)])
         }
-        /// 读取目录时发生错误。
+        /// 无法读取目录：%1$@
         ///
-        /// Resource: `Errors.coreFileTreeDirectory.entryText1`.
-        public static var directoryEntryReadFailed: LocalizedMessage {
-            .init(key: "coreFileTreeDirectory.entryText1", table: "Errors", fallback: "读取目录时发生错误。")
-        }
-        /// 目录包含无法表示的文件名，原文件已保留。
-        ///
-        /// Resource: `Errors.coreFileTreeDirectory.nameText1`.
-        public static var unrepresentableFilename: LocalizedMessage {
-            .init(key: "coreFileTreeDirectory.nameText1", table: "Errors", fallback: "目录包含无法表示的文件名，原文件已保留。")
+        /// Resource: `Errors.CoreFileTreeDirectory.directoryReadFailed`.
+        public static func directoryReadFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreFileTreeDirectory.directoryReadFailed", table: "Errors", fallback: "无法读取目录：%1$@", arguments: [.text(value0)])
         }
         /// 目录文件数量超过限制。
         ///
-        /// Resource: `Errors.coreFileTreeDirectory.nameText2`.
+        /// Resource: `Errors.CoreFileTreeDirectory.tooManyDirectoryFiles`.
         public static var tooManyDirectoryFiles: LocalizedMessage {
-            .init(key: "coreFileTreeDirectory.nameText2", table: "Errors", fallback: "目录文件数量超过限制。")
+            .init(key: "CoreFileTreeDirectory.tooManyDirectoryFiles", table: "Errors", fallback: "目录文件数量超过限制。")
+        }
+        /// 目录包含无法表示的文件名，原文件已保留。
+        ///
+        /// Resource: `Errors.CoreFileTreeDirectory.unrepresentableFilename`.
+        public static var unrepresentableFilename: LocalizedMessage {
+            .init(key: "CoreFileTreeDirectory.unrepresentableFilename", table: "Errors", fallback: "目录包含无法表示的文件名，原文件已保留。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreFileTreeDirectory.fdText1": .init("无法读取目录：%1$@", [.text]),
-            "Errors:coreFileTreeDirectory.streamText1": .init("无法枚举目录：%1$@", [.text]),
-            "Errors:coreFileTreeDirectory.entryText1": .init("读取目录时发生错误。", []),
-            "Errors:coreFileTreeDirectory.nameText1": .init("目录包含无法表示的文件名，原文件已保留。", []),
-            "Errors:coreFileTreeDirectory.nameText2": .init("目录文件数量超过限制。", []),
+            "Errors:CoreFileTreeDirectory.directoryEntryReadFailed": .init("读取目录时发生错误。", []),
+            "Errors:CoreFileTreeDirectory.directoryEnumerationFailed": .init("无法枚举目录：%1$@", [.text]),
+            "Errors:CoreFileTreeDirectory.directoryReadFailed": .init("无法读取目录：%1$@", [.text]),
+            "Errors:CoreFileTreeDirectory.tooManyDirectoryFiles": .init("目录文件数量超过限制。", []),
+            "Errors:CoreFileTreeDirectory.unrepresentableFilename": .init("目录包含无法表示的文件名，原文件已保留。", []),
         ]
     }
 }

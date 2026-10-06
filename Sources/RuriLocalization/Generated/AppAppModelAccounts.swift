@@ -3,63 +3,63 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelAccounts {
-        /// 这个离线账号已存在。
-        ///
-        /// Resource: `Errors.appAppModelAccounts.accountText1`.
-        public static var offlineAccountExists: LocalizedMessage {
-            .init(key: "appAppModelAccounts.accountText1", table: "Errors", fallback: "这个离线账号已存在。")
-        }
-        /// 当前窗口已暂停写入，请重新打开 Ruri。
-        ///
-        /// Resource: `Errors.appAppModelAccounts.addMicrosoftText1`.
-        public static var accountWritePaused: LocalizedMessage {
-            .init(key: "appAppModelAccounts.addMicrosoftText1", table: "Errors", fallback: "当前窗口已暂停写入，请重新打开 Ruri。")
-        }
         /// 此账号已被移除或发生变化。
         ///
-        /// Resource: `Errors.appAppModelAccounts.addMicrosoftText2`.
+        /// Resource: `Errors.AppAppModelAccounts.accountChanged`.
         public static var accountChanged: LocalizedMessage {
-            .init(key: "appAppModelAccounts.addMicrosoftText2", table: "Errors", fallback: "此账号已被移除或发生变化。")
+            .init(key: "AppAppModelAccounts.accountChanged", table: "Errors", fallback: "此账号已被移除或发生变化。")
         }
         /// 账号信息未能保存，请重新打开 Ruri。
         ///
-        /// Resource: `Errors.appAppModelAccounts.existingText1`.
+        /// Resource: `Errors.AppAppModelAccounts.accountSaveFailed`.
         public static var accountSaveFailed: LocalizedMessage {
-            .init(key: "appAppModelAccounts.existingText1", table: "Errors", fallback: "账号信息未能保存，请重新打开 Ruri。")
+            .init(key: "AppAppModelAccounts.accountSaveFailed", table: "Errors", fallback: "账号信息未能保存，请重新打开 Ruri。")
         }
-        /// 此账号已被移除。
+        /// 当前窗口已暂停写入，请重新打开 Ruri。
         ///
-        /// Resource: `Errors.appAppModelAccounts.addExternalText1`.
-        public static var externalAccountRemoved: LocalizedMessage {
-            .init(key: "appAppModelAccounts.addExternalText1", table: "Errors", fallback: "此账号已被移除。")
+        /// Resource: `Errors.AppAppModelAccounts.accountWritePaused`.
+        public static var accountWritePaused: LocalizedMessage {
+            .init(key: "AppAppModelAccounts.accountWritePaused", table: "Errors", fallback: "当前窗口已暂停写入，请重新打开 Ruri。")
         }
         /// 账号已变化，请重新打开外观管理。
         ///
-        /// Resource: `Errors.appAppModelAccounts.accountText2`.
+        /// Resource: `Errors.AppAppModelAccounts.appearanceAccountChanged`.
         public static var appearanceAccountChanged: LocalizedMessage {
-            .init(key: "appAppModelAccounts.accountText2", table: "Errors", fallback: "账号已变化，请重新打开外观管理。")
+            .init(key: "AppAppModelAccounts.appearanceAccountChanged", table: "Errors", fallback: "账号已变化，请重新打开外观管理。")
+        }
+        /// 此账号已被移除。
+        ///
+        /// Resource: `Errors.AppAppModelAccounts.externalAccountRemoved`.
+        public static var externalAccountRemoved: LocalizedMessage {
+            .init(key: "AppAppModelAccounts.externalAccountRemoved", table: "Errors", fallback: "此账号已被移除。")
+        }
+        /// 这个离线账号已存在。
+        ///
+        /// Resource: `Errors.AppAppModelAccounts.offlineAccountExists`.
+        public static var offlineAccountExists: LocalizedMessage {
+            .init(key: "AppAppModelAccounts.offlineAccountExists", table: "Errors", fallback: "这个离线账号已存在。")
         }
         /// 离线账号没有在线外观资料。
         ///
-        /// Resource: `Errors.appAppModelAccounts.accountText3`.
+        /// Resource: `Errors.AppAppModelAccounts.offlineAppearanceUnavailable`.
         public static var offlineAppearanceUnavailable: LocalizedMessage {
-            .init(key: "appAppModelAccounts.accountText3", table: "Errors", fallback: "离线账号没有在线外观资料。")
+            .init(key: "AppAppModelAccounts.offlineAppearanceUnavailable", table: "Errors", fallback: "离线账号没有在线外观资料。")
         }
         /// 已刷新 %1$@ 的登录状态。
         ///
-        /// Resource: `Interface.appAppModelAccounts.credentialsText1`.
+        /// Resource: `Interface.AppAppModelAccounts.credentialsRefreshed`.
         public static func credentialsRefreshed(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelAccounts.credentialsText1", table: "Interface", fallback: "已刷新 %1$@ 的登录状态。", arguments: [.text(value0)])
+            .init(key: "AppAppModelAccounts.credentialsRefreshed", table: "Interface", fallback: "已刷新 %1$@ 的登录状态。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:appAppModelAccounts.accountText1": .init("这个离线账号已存在。", []),
-            "Errors:appAppModelAccounts.addMicrosoftText1": .init("当前窗口已暂停写入，请重新打开 Ruri。", []),
-            "Errors:appAppModelAccounts.addMicrosoftText2": .init("此账号已被移除或发生变化。", []),
-            "Errors:appAppModelAccounts.existingText1": .init("账号信息未能保存，请重新打开 Ruri。", []),
-            "Errors:appAppModelAccounts.addExternalText1": .init("此账号已被移除。", []),
-            "Errors:appAppModelAccounts.accountText2": .init("账号已变化，请重新打开外观管理。", []),
-            "Errors:appAppModelAccounts.accountText3": .init("离线账号没有在线外观资料。", []),
-            "Interface:appAppModelAccounts.credentialsText1": .init("已刷新 %1$@ 的登录状态。", [.text]),
+            "Errors:AppAppModelAccounts.accountChanged": .init("此账号已被移除或发生变化。", []),
+            "Errors:AppAppModelAccounts.accountSaveFailed": .init("账号信息未能保存，请重新打开 Ruri。", []),
+            "Errors:AppAppModelAccounts.accountWritePaused": .init("当前窗口已暂停写入，请重新打开 Ruri。", []),
+            "Errors:AppAppModelAccounts.appearanceAccountChanged": .init("账号已变化，请重新打开外观管理。", []),
+            "Errors:AppAppModelAccounts.externalAccountRemoved": .init("此账号已被移除。", []),
+            "Errors:AppAppModelAccounts.offlineAccountExists": .init("这个离线账号已存在。", []),
+            "Errors:AppAppModelAccounts.offlineAppearanceUnavailable": .init("离线账号没有在线外观资料。", []),
+            "Interface:AppAppModelAccounts.credentialsRefreshed": .init("已刷新 %1$@ 的登录状态。", [.text]),
         ]
     }
 }

@@ -3,239 +3,239 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceCopier {
-        /// 实例已复制，部分临时文件保留，可在 Finder 中查看。
-        ///
-        /// Resource: `Core.coreInstanceCopier.remainderText1`.
-        public static var copyCompletedWithTemporaryFiles: LocalizedMessage {
-            .init(key: "coreInstanceCopier.remainderText1", table: "Core", fallback: "实例已复制，部分临时文件保留，可在 Finder 中查看。")
-        }
-        /// 无法确认实例复制是否已提交，请通过恢复入口检查。%1$@
-        ///
-        /// Resource: `Core.coreInstanceCopier.latestText1`.
-        public static func copyCommitUncertain(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceCopier.latestText1", table: "Core", fallback: "无法确认实例复制是否已提交，请通过恢复入口检查。%1$@", arguments: [.text(value0)])
-        }
-        /// 实例已复制，工作记录尚未清理，请通过恢复入口完成清理。%1$@
-        ///
-        /// Resource: `Core.coreInstanceCopier.committedText1`.
-        public static func copyCommittedCleanupPending(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceCopier.committedText1", table: "Core", fallback: "实例已复制，工作记录尚未清理，请通过恢复入口完成清理。%1$@", arguments: [.text(value0)])
-        }
         /// 实例复制已取消，原实例及其文件保留。
         ///
-        /// Resource: `Core.coreInstanceCopier.reasonText1`.
+        /// Resource: `Core.CoreInstanceCopier.copyCancelled`.
         public static var copyCancelled: LocalizedMessage {
-            .init(key: "coreInstanceCopier.reasonText1", table: "Core", fallback: "实例复制已取消，原实例及其文件保留。")
-        }
-        /// 实例复制未完成：%1$@
-        ///
-        /// Resource: `Core.coreInstanceCopier.reasonText2`.
-        public static func copyFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceCopier.reasonText2", table: "Core", fallback: "实例复制未完成：%1$@", arguments: [.text(value0)])
-        }
-        /// 复制尚未完成，工作文件已保留，可以重新复制。
-        ///
-        /// Resource: `Core.coreInstanceCopier.keptText1`.
-        public static var workFilesKept: LocalizedMessage {
-            .init(key: "coreInstanceCopier.keptText1", table: "Core", fallback: "复制尚未完成，工作文件已保留，可以重新复制。")
+            .init(key: "CoreInstanceCopier.copyCancelled", table: "Core", fallback: "实例复制已取消，原实例及其文件保留。")
         }
         /// 复制已完成，部分临时文件未删除，可在 Finder 中查看。
         ///
-        /// Resource: `Core.coreInstanceCopier.remainderText2`.
+        /// Resource: `Core.CoreInstanceCopier.copyCleanupIncomplete`.
         public static var copyCleanupIncomplete: LocalizedMessage {
-            .init(key: "coreInstanceCopier.remainderText2", table: "Core", fallback: "复制已完成，部分临时文件未删除，可在 Finder 中查看。")
+            .init(key: "CoreInstanceCopier.copyCleanupIncomplete", table: "Core", fallback: "复制已完成，部分临时文件未删除，可在 Finder 中查看。")
         }
-        /// 目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：%1$@
+        /// 无法确认实例复制是否已提交，请通过恢复入口检查。%1$@
         ///
-        /// Resource: `Core.coreInstanceCopier.infoText3`.
-        public static func unknownTargetFolder(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceCopier.infoText3", table: "Core", fallback: "目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：%1$@", arguments: [.text(value0)])
+        /// Resource: `Core.CoreInstanceCopier.copyCommitUncertain`.
+        public static func copyCommitUncertain(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceCopier.copyCommitUncertain", table: "Core", fallback: "无法确认实例复制是否已提交，请通过恢复入口检查。%1$@", arguments: [.text(value0)])
+        }
+        /// 实例已复制，工作记录尚未清理，请通过恢复入口完成清理。%1$@
+        ///
+        /// Resource: `Core.CoreInstanceCopier.copyCommittedCleanupPending`.
+        public static func copyCommittedCleanupPending(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceCopier.copyCommittedCleanupPending", table: "Core", fallback: "实例已复制，工作记录尚未清理，请通过恢复入口完成清理。%1$@", arguments: [.text(value0)])
+        }
+        /// 实例已复制，部分临时文件保留，可在 Finder 中查看。
+        ///
+        /// Resource: `Core.CoreInstanceCopier.copyCompletedWithTemporaryFiles`.
+        public static var copyCompletedWithTemporaryFiles: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.copyCompletedWithTemporaryFiles", table: "Core", fallback: "实例已复制，部分临时文件保留，可在 Finder 中查看。")
+        }
+        /// 实例复制未完成：%1$@
+        ///
+        /// Resource: `Core.CoreInstanceCopier.copyFailed`.
+        public static func copyFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceCopier.copyFailed", table: "Core", fallback: "实例复制未完成：%1$@", arguments: [.text(value0)])
         }
         /// %1$@
         /// 自动恢复尚未完成，请连接原磁盘并恢复实例复制。%2$@
         ///
-        /// Resource: `Core.coreInstanceCopier.recoveryFailure`.
+        /// Resource: `Core.CoreInstanceCopier.recoveryFailure`.
         public static func recoveryFailure(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreInstanceCopier.recoveryFailure", table: "Core", fallback: "%1$@\n自动恢复尚未完成，请连接原磁盘并恢复实例复制。%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreInstanceCopier.recoveryFailure", table: "Core", fallback: "%1$@\n自动恢复尚未完成，请连接原磁盘并恢复实例复制。%2$@", arguments: [.text(value0), .text(value1)])
         }
-        /// 副本名称需为 1–256 个字符。
+        /// 目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：%1$@
         ///
-        /// Resource: `Errors.coreInstanceCopier.nameText1`.
-        public static var copyNameInvalid: LocalizedMessage {
-            .init(key: "coreInstanceCopier.nameText1", table: "Errors", fallback: "副本名称需为 1–256 个字符。")
+        /// Resource: `Core.CoreInstanceCopier.unknownTargetFolder`.
+        public static func unknownTargetFolder(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceCopier.unknownTargetFolder", table: "Core", fallback: "目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：%1$@", arguments: [.text(value0)])
         }
-        /// 找不到目标实例文件夹。
+        /// 复制尚未完成，工作文件已保留，可以重新复制。
         ///
-        /// Resource: `Errors.coreInstanceCopier.collectionText1`.
-        public static var targetInstanceFolderMissing: LocalizedMessage {
-            .init(key: "coreInstanceCopier.collectionText1", table: "Errors", fallback: "找不到目标实例文件夹。")
-        }
-        /// 此版本需要保存到 Minecraft 文件夹，请选择或添加 Minecraft 文件夹作为复制目标。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.collectionText2`.
-        public static var minecraftFolderRequired: LocalizedMessage {
-            .init(key: "coreInstanceCopier.collectionText2", table: "Errors", fallback: "此版本需要保存到 Minecraft 文件夹，请选择或添加 Minecraft 文件夹作为复制目标。")
-        }
-        /// 源文件在预览期间改变，请重新预览。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.manifestText1`.
-        public static var sourceChangedDuringPreview: LocalizedMessage {
-            .init(key: "coreInstanceCopier.manifestText1", table: "Errors", fallback: "源文件在预览期间改变，请重新预览。")
-        }
-        /// 复制工作区已经存在或无法创建。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.targetLocationText1`.
-        public static var copyWorkspaceConflict: LocalizedMessage {
-            .init(key: "coreInstanceCopier.targetLocationText1", table: "Errors", fallback: "复制工作区已经存在或无法创建。")
-        }
-        /// 发布副本的文件身份改变，工作区已保留。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.publishedBytesText1`.
-        public static var publishedCopyChanged: LocalizedMessage {
-            .init(key: "coreInstanceCopier.publishedBytesText1", table: "Errors", fallback: "发布副本的文件身份改变，工作区已保留。")
-        }
-        /// 待恢复的实例复制已改变，请刷新后重试。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.journalText1`.
-        public static var pendingCopyChanged: LocalizedMessage {
-            .init(key: "coreInstanceCopier.journalText1", table: "Errors", fallback: "待恢复的实例复制已改变，请刷新后重试。")
-        }
-        /// 实例复制记录已改变。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.latestText2`.
-        public static var copyRecordChanged: LocalizedMessage {
-            .init(key: "coreInstanceCopier.latestText2", table: "Errors", fallback: "实例复制记录已改变。")
-        }
-        /// 副本登记与复制记录不一致，请先核对实例，文件已保留。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.copyText1`.
-        public static var copyRegistrationMismatch: LocalizedMessage {
-            .init(key: "coreInstanceCopier.copyText1", table: "Errors", fallback: "副本登记与复制记录不一致，请先核对实例，文件已保留。")
-        }
-        /// 源实例已被移除，请刷新后重试。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.valueText1`.
-        public static var sourceRemoved: LocalizedMessage {
-            .init(key: "coreInstanceCopier.valueText1", table: "Errors", fallback: "源实例已被移除，请刷新后重试。")
-        }
-        /// 源实例设置或副本登记在预览后改变，请刷新后重试。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.originalText1`.
-        public static var sourceSettingsChanged: LocalizedMessage {
-            .init(key: "coreInstanceCopier.originalText1", table: "Errors", fallback: "源实例设置或副本登记在预览后改变，请刷新后重试。")
-        }
-        /// 源文件内容在预览后改变，请重新预览再复制。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.snapshotText1`.
-        public static var sourceFilesChanged: LocalizedMessage {
-            .init(key: "coreInstanceCopier.snapshotText1", table: "Errors", fallback: "源文件内容在预览后改变，请重新预览再复制。")
-        }
-        /// 已安装实例缺少版本清单，请先修复再复制。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.fileText1`.
-        public static var installedManifestMissing: LocalizedMessage {
-            .init(key: "coreInstanceCopier.fileText1", table: "Errors", fallback: "已安装实例缺少版本清单，请先修复再复制。")
-        }
-        /// 本地游戏安装文件夹缺失，请恢复文件后再复制。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.fileText2`.
-        public static var installationFolderMissing: LocalizedMessage {
-            .init(key: "coreInstanceCopier.fileText2", table: "Errors", fallback: "本地游戏安装文件夹缺失，请恢复文件后再复制。")
-        }
-        /// 实例元数据包含不支持的文件：%1$@
-        ///
-        /// Resource: `Errors.coreInstanceCopier.valuesText1`.
-        public static func unsupportedMetadataFiles(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceCopier.valuesText1", table: "Errors", fallback: "实例元数据包含不支持的文件：%1$@", arguments: [.text(value0)])
-        }
-        /// 本地游戏安装位置不是文件夹，请检查实例文件。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.valuesText2`.
-        public static var installationPathInvalid: LocalizedMessage {
-            .init(key: "coreInstanceCopier.valuesText2", table: "Errors", fallback: "本地游戏安装位置不是文件夹，请检查实例文件。")
-        }
-        /// 实例版本清单无效。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.valuesText3`.
-        public static var invalidInstanceManifest: LocalizedMessage {
-            .init(key: "coreInstanceCopier.valuesText3", table: "Errors", fallback: "实例版本清单无效。")
-        }
-        /// 实例的启动清单尚未准备好，请先修复。
-        ///
-        /// Resource: `Errors.coreInstanceCopier.manifestText2`.
-        public static var launchManifestNotReady: LocalizedMessage {
-            .init(key: "coreInstanceCopier.manifestText2", table: "Errors", fallback: "实例的启动清单尚未准备好，请先修复。")
+        /// Resource: `Core.CoreInstanceCopier.workFilesKept`.
+        public static var workFilesKept: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.workFilesKept", table: "Core", fallback: "复制尚未完成，工作文件已保留，可以重新复制。")
         }
         /// 实例文件数量或大小超过当前复制限制。
         ///
-        /// Resource: `Errors.coreInstanceCopier.manifestText3`.
+        /// Resource: `Errors.CoreInstanceCopier.copyLimitExceeded`.
         public static var copyLimitExceeded: LocalizedMessage {
-            .init(key: "coreInstanceCopier.manifestText3", table: "Errors", fallback: "实例文件数量或大小超过当前复制限制。")
+            .init(key: "CoreInstanceCopier.copyLimitExceeded", table: "Errors", fallback: "实例文件数量或大小超过当前复制限制。")
+        }
+        /// 副本名称需为 1–256 个字符。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.copyNameInvalid`.
+        public static var copyNameInvalid: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.copyNameInvalid", table: "Errors", fallback: "副本名称需为 1–256 个字符。")
+        }
+        /// 实例复制记录已改变。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.copyRecordChanged`.
+        public static var copyRecordChanged: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.copyRecordChanged", table: "Errors", fallback: "实例复制记录已改变。")
+        }
+        /// 副本登记与复制记录不一致，请先核对实例，文件已保留。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.copyRegistrationMismatch`.
+        public static var copyRegistrationMismatch: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.copyRegistrationMismatch", table: "Errors", fallback: "副本登记与复制记录不一致，请先核对实例，文件已保留。")
+        }
+        /// 复制工作区已经存在或无法创建。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.copyWorkspaceConflict`.
+        public static var copyWorkspaceConflict: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.copyWorkspaceConflict", table: "Errors", fallback: "复制工作区已经存在或无法创建。")
         }
         /// 已登记副本的文件夹被移动、替换或无法确认，工作副本和复制记录已保留。请恢复副本原位置后再清理。
         ///
-        /// Resource: `Errors.coreInstanceCopier.destinationText1`.
+        /// Resource: `Errors.CoreInstanceCopier.destinationFolderUnavailable`.
         public static var destinationFolderUnavailable: LocalizedMessage {
-            .init(key: "coreInstanceCopier.destinationText1", table: "Errors", fallback: "已登记副本的文件夹被移动、替换或无法确认，工作副本和复制记录已保留。请恢复副本原位置后再清理。")
+            .init(key: "CoreInstanceCopier.destinationFolderUnavailable", table: "Errors", fallback: "已登记副本的文件夹被移动、替换或无法确认，工作副本和复制记录已保留。请恢复副本原位置后再清理。")
         }
-        /// 副本的操作锁包含意外内容，工作副本已保留。
+        /// 本地游戏安装文件夹缺失，请恢复文件后再复制。
         ///
-        /// Resource: `Errors.coreInstanceCopier.infoText1`.
-        public static var unexpectedOperationLock: LocalizedMessage {
-            .init(key: "coreInstanceCopier.infoText1", table: "Errors", fallback: "副本的操作锁包含意外内容，工作副本已保留。")
+        /// Resource: `Errors.CoreInstanceCopier.installationFolderMissing`.
+        public static var installationFolderMissing: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.installationFolderMissing", table: "Errors", fallback: "本地游戏安装文件夹缺失，请恢复文件后再复制。")
+        }
+        /// 本地游戏安装位置不是文件夹，请检查实例文件。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.installationPathInvalid`.
+        public static var installationPathInvalid: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.installationPathInvalid", table: "Errors", fallback: "本地游戏安装位置不是文件夹，请检查实例文件。")
+        }
+        /// 已安装实例缺少版本清单，请先修复再复制。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.installedManifestMissing`.
+        public static var installedManifestMissing: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.installedManifestMissing", table: "Errors", fallback: "已安装实例缺少版本清单，请先修复再复制。")
+        }
+        /// 实例版本清单无效。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.invalidInstanceManifest`.
+        public static var invalidInstanceManifest: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.invalidInstanceManifest", table: "Errors", fallback: "实例版本清单无效。")
+        }
+        /// 实例的启动清单尚未准备好，请先修复。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.launchManifestNotReady`.
+        public static var launchManifestNotReady: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.launchManifestNotReady", table: "Errors", fallback: "实例的启动清单尚未准备好，请先修复。")
         }
         /// 无法核对副本的操作锁，工作副本已保留。
         ///
-        /// Resource: `Errors.coreInstanceCopier.infoText2`.
+        /// Resource: `Errors.CoreInstanceCopier.lockUnavailable`.
         public static var lockUnavailable: LocalizedMessage {
-            .init(key: "coreInstanceCopier.infoText2", table: "Errors", fallback: "无法核对副本的操作锁，工作副本已保留。")
+            .init(key: "CoreInstanceCopier.lockUnavailable", table: "Errors", fallback: "无法核对副本的操作锁，工作副本已保留。")
         }
-        /// 无法确认目标文件夹状态，复制记录已保留。
+        /// 此版本需要保存到 Minecraft 文件夹，请选择或添加 Minecraft 文件夹作为复制目标。
         ///
-        /// Resource: `Errors.coreInstanceCopier.infoText4`.
-        public static var targetStateUnconfirmed: LocalizedMessage {
-            .init(key: "coreInstanceCopier.infoText4", table: "Errors", fallback: "无法确认目标文件夹状态，复制记录已保留。")
+        /// Resource: `Errors.CoreInstanceCopier.minecraftFolderRequired`.
+        public static var minecraftFolderRequired: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.minecraftFolderRequired", table: "Errors", fallback: "此版本需要保存到 Minecraft 文件夹，请选择或添加 Minecraft 文件夹作为复制目标。")
+        }
+        /// 待恢复的实例复制已改变，请刷新后重试。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.pendingCopyChanged`.
+        public static var pendingCopyChanged: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.pendingCopyChanged", table: "Errors", fallback: "待恢复的实例复制已改变，请刷新后重试。")
         }
         /// 实例还有未完成的文件操作，请先恢复后再复制。
         ///
-        /// Resource: `Errors.coreInstanceCopier.lockText1`.
+        /// Resource: `Errors.CoreInstanceCopier.pendingFileOperation`.
         public static var pendingFileOperation: LocalizedMessage {
-            .init(key: "coreInstanceCopier.lockText1", table: "Errors", fallback: "实例还有未完成的文件操作，请先恢复后再复制。")
+            .init(key: "CoreInstanceCopier.pendingFileOperation", table: "Errors", fallback: "实例还有未完成的文件操作，请先恢复后再复制。")
+        }
+        /// 发布副本的文件身份改变，工作区已保留。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.publishedCopyChanged`.
+        public static var publishedCopyChanged: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.publishedCopyChanged", table: "Errors", fallback: "发布副本的文件身份改变，工作区已保留。")
+        }
+        /// 源文件在预览期间改变，请重新预览。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.sourceChangedDuringPreview`.
+        public static var sourceChangedDuringPreview: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.sourceChangedDuringPreview", table: "Errors", fallback: "源文件在预览期间改变，请重新预览。")
+        }
+        /// 源文件内容在预览后改变，请重新预览再复制。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.sourceFilesChanged`.
+        public static var sourceFilesChanged: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.sourceFilesChanged", table: "Errors", fallback: "源文件内容在预览后改变，请重新预览再复制。")
+        }
+        /// 源实例已被移除，请刷新后重试。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.sourceRemoved`.
+        public static var sourceRemoved: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.sourceRemoved", table: "Errors", fallback: "源实例已被移除，请刷新后重试。")
+        }
+        /// 源实例设置或副本登记在预览后改变，请刷新后重试。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.sourceSettingsChanged`.
+        public static var sourceSettingsChanged: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.sourceSettingsChanged", table: "Errors", fallback: "源实例设置或副本登记在预览后改变，请刷新后重试。")
+        }
+        /// 找不到目标实例文件夹。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.targetInstanceFolderMissing`.
+        public static var targetInstanceFolderMissing: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.targetInstanceFolderMissing", table: "Errors", fallback: "找不到目标实例文件夹。")
+        }
+        /// 无法确认目标文件夹状态，复制记录已保留。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.targetStateUnconfirmed`.
+        public static var targetStateUnconfirmed: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.targetStateUnconfirmed", table: "Errors", fallback: "无法确认目标文件夹状态，复制记录已保留。")
+        }
+        /// 副本的操作锁包含意外内容，工作副本已保留。
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.unexpectedOperationLock`.
+        public static var unexpectedOperationLock: LocalizedMessage {
+            .init(key: "CoreInstanceCopier.unexpectedOperationLock", table: "Errors", fallback: "副本的操作锁包含意外内容，工作副本已保留。")
+        }
+        /// 实例元数据包含不支持的文件：%1$@
+        ///
+        /// Resource: `Errors.CoreInstanceCopier.unsupportedMetadataFiles`.
+        public static func unsupportedMetadataFiles(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceCopier.unsupportedMetadataFiles", table: "Errors", fallback: "实例元数据包含不支持的文件：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreInstanceCopier.remainderText1": .init("实例已复制，部分临时文件保留，可在 Finder 中查看。", []),
-            "Core:coreInstanceCopier.latestText1": .init("无法确认实例复制是否已提交，请通过恢复入口检查。%1$@", [.text]),
-            "Core:coreInstanceCopier.committedText1": .init("实例已复制，工作记录尚未清理，请通过恢复入口完成清理。%1$@", [.text]),
-            "Core:coreInstanceCopier.reasonText1": .init("实例复制已取消，原实例及其文件保留。", []),
-            "Core:coreInstanceCopier.reasonText2": .init("实例复制未完成：%1$@", [.text]),
-            "Core:coreInstanceCopier.keptText1": .init("复制尚未完成，工作文件已保留，可以重新复制。", []),
-            "Core:coreInstanceCopier.remainderText2": .init("复制已完成，部分临时文件未删除，可在 Finder 中查看。", []),
-            "Core:coreInstanceCopier.infoText3": .init("目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：%1$@", [.text]),
-            "Core:coreInstanceCopier.recoveryFailure": .init("%1$@\n自动恢复尚未完成，请连接原磁盘并恢复实例复制。%2$@", [.text, .text]),
-            "Errors:coreInstanceCopier.nameText1": .init("副本名称需为 1–256 个字符。", []),
-            "Errors:coreInstanceCopier.collectionText1": .init("找不到目标实例文件夹。", []),
-            "Errors:coreInstanceCopier.collectionText2": .init("此版本需要保存到 Minecraft 文件夹，请选择或添加 Minecraft 文件夹作为复制目标。", []),
-            "Errors:coreInstanceCopier.manifestText1": .init("源文件在预览期间改变，请重新预览。", []),
-            "Errors:coreInstanceCopier.targetLocationText1": .init("复制工作区已经存在或无法创建。", []),
-            "Errors:coreInstanceCopier.publishedBytesText1": .init("发布副本的文件身份改变，工作区已保留。", []),
-            "Errors:coreInstanceCopier.journalText1": .init("待恢复的实例复制已改变，请刷新后重试。", []),
-            "Errors:coreInstanceCopier.latestText2": .init("实例复制记录已改变。", []),
-            "Errors:coreInstanceCopier.copyText1": .init("副本登记与复制记录不一致，请先核对实例，文件已保留。", []),
-            "Errors:coreInstanceCopier.valueText1": .init("源实例已被移除，请刷新后重试。", []),
-            "Errors:coreInstanceCopier.originalText1": .init("源实例设置或副本登记在预览后改变，请刷新后重试。", []),
-            "Errors:coreInstanceCopier.snapshotText1": .init("源文件内容在预览后改变，请重新预览再复制。", []),
-            "Errors:coreInstanceCopier.fileText1": .init("已安装实例缺少版本清单，请先修复再复制。", []),
-            "Errors:coreInstanceCopier.fileText2": .init("本地游戏安装文件夹缺失，请恢复文件后再复制。", []),
-            "Errors:coreInstanceCopier.valuesText1": .init("实例元数据包含不支持的文件：%1$@", [.text]),
-            "Errors:coreInstanceCopier.valuesText2": .init("本地游戏安装位置不是文件夹，请检查实例文件。", []),
-            "Errors:coreInstanceCopier.valuesText3": .init("实例版本清单无效。", []),
-            "Errors:coreInstanceCopier.manifestText2": .init("实例的启动清单尚未准备好，请先修复。", []),
-            "Errors:coreInstanceCopier.manifestText3": .init("实例文件数量或大小超过当前复制限制。", []),
-            "Errors:coreInstanceCopier.destinationText1": .init("已登记副本的文件夹被移动、替换或无法确认，工作副本和复制记录已保留。请恢复副本原位置后再清理。", []),
-            "Errors:coreInstanceCopier.infoText1": .init("副本的操作锁包含意外内容，工作副本已保留。", []),
-            "Errors:coreInstanceCopier.infoText2": .init("无法核对副本的操作锁，工作副本已保留。", []),
-            "Errors:coreInstanceCopier.infoText4": .init("无法确认目标文件夹状态，复制记录已保留。", []),
-            "Errors:coreInstanceCopier.lockText1": .init("实例还有未完成的文件操作，请先恢复后再复制。", []),
+            "Core:CoreInstanceCopier.copyCancelled": .init("实例复制已取消，原实例及其文件保留。", []),
+            "Core:CoreInstanceCopier.copyCleanupIncomplete": .init("复制已完成，部分临时文件未删除，可在 Finder 中查看。", []),
+            "Core:CoreInstanceCopier.copyCommitUncertain": .init("无法确认实例复制是否已提交，请通过恢复入口检查。%1$@", [.text]),
+            "Core:CoreInstanceCopier.copyCommittedCleanupPending": .init("实例已复制，工作记录尚未清理，请通过恢复入口完成清理。%1$@", [.text]),
+            "Core:CoreInstanceCopier.copyCompletedWithTemporaryFiles": .init("实例已复制，部分临时文件保留，可在 Finder 中查看。", []),
+            "Core:CoreInstanceCopier.copyFailed": .init("实例复制未完成：%1$@", [.text]),
+            "Core:CoreInstanceCopier.recoveryFailure": .init("%1$@\n自动恢复尚未完成，请连接原磁盘并恢复实例复制。%2$@", [.text, .text]),
+            "Core:CoreInstanceCopier.unknownTargetFolder": .init("目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：%1$@", [.text]),
+            "Core:CoreInstanceCopier.workFilesKept": .init("复制尚未完成，工作文件已保留，可以重新复制。", []),
+            "Errors:CoreInstanceCopier.copyLimitExceeded": .init("实例文件数量或大小超过当前复制限制。", []),
+            "Errors:CoreInstanceCopier.copyNameInvalid": .init("副本名称需为 1–256 个字符。", []),
+            "Errors:CoreInstanceCopier.copyRecordChanged": .init("实例复制记录已改变。", []),
+            "Errors:CoreInstanceCopier.copyRegistrationMismatch": .init("副本登记与复制记录不一致，请先核对实例，文件已保留。", []),
+            "Errors:CoreInstanceCopier.copyWorkspaceConflict": .init("复制工作区已经存在或无法创建。", []),
+            "Errors:CoreInstanceCopier.destinationFolderUnavailable": .init("已登记副本的文件夹被移动、替换或无法确认，工作副本和复制记录已保留。请恢复副本原位置后再清理。", []),
+            "Errors:CoreInstanceCopier.installationFolderMissing": .init("本地游戏安装文件夹缺失，请恢复文件后再复制。", []),
+            "Errors:CoreInstanceCopier.installationPathInvalid": .init("本地游戏安装位置不是文件夹，请检查实例文件。", []),
+            "Errors:CoreInstanceCopier.installedManifestMissing": .init("已安装实例缺少版本清单，请先修复再复制。", []),
+            "Errors:CoreInstanceCopier.invalidInstanceManifest": .init("实例版本清单无效。", []),
+            "Errors:CoreInstanceCopier.launchManifestNotReady": .init("实例的启动清单尚未准备好，请先修复。", []),
+            "Errors:CoreInstanceCopier.lockUnavailable": .init("无法核对副本的操作锁，工作副本已保留。", []),
+            "Errors:CoreInstanceCopier.minecraftFolderRequired": .init("此版本需要保存到 Minecraft 文件夹，请选择或添加 Minecraft 文件夹作为复制目标。", []),
+            "Errors:CoreInstanceCopier.pendingCopyChanged": .init("待恢复的实例复制已改变，请刷新后重试。", []),
+            "Errors:CoreInstanceCopier.pendingFileOperation": .init("实例还有未完成的文件操作，请先恢复后再复制。", []),
+            "Errors:CoreInstanceCopier.publishedCopyChanged": .init("发布副本的文件身份改变，工作区已保留。", []),
+            "Errors:CoreInstanceCopier.sourceChangedDuringPreview": .init("源文件在预览期间改变，请重新预览。", []),
+            "Errors:CoreInstanceCopier.sourceFilesChanged": .init("源文件内容在预览后改变，请重新预览再复制。", []),
+            "Errors:CoreInstanceCopier.sourceRemoved": .init("源实例已被移除，请刷新后重试。", []),
+            "Errors:CoreInstanceCopier.sourceSettingsChanged": .init("源实例设置或副本登记在预览后改变，请刷新后重试。", []),
+            "Errors:CoreInstanceCopier.targetInstanceFolderMissing": .init("找不到目标实例文件夹。", []),
+            "Errors:CoreInstanceCopier.targetStateUnconfirmed": .init("无法确认目标文件夹状态，复制记录已保留。", []),
+            "Errors:CoreInstanceCopier.unexpectedOperationLock": .init("副本的操作锁包含意外内容，工作副本已保留。", []),
+            "Errors:CoreInstanceCopier.unsupportedMetadataFiles": .init("实例元数据包含不支持的文件：%1$@", [.text]),
         ]
     }
 }

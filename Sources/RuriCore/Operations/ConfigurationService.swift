@@ -18,7 +18,7 @@ public struct ConfigurationPatch: Decodable, Sendable {
     public init(set: [String: OperationValue] = [:], reset: [String] = [], inherit: [String] = []) { self.set = set; self.reset = reset; self.inherit = inherit }
     public init(from decoder: Decoder) throws {
         let c = try decoder.singleValueContainer().decode([String: OperationValue].self)
-        guard Set(c.keys).isSubset(of: ["set", "reset", "inherit"]) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t8568ceb9ae27.localized) }
+        guard Set(c.keys).isSubset(of: ["set", "reset", "inherit"]) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownConfigPatchOperation.localized) }
         set = try c["set"]?.decode([String: OperationValue].self) ?? [:]
         reset = try c["reset"]?.decode([String].self) ?? []
         inherit = try c["inherit"]?.decode([String].self) ?? []
@@ -57,15 +57,15 @@ public struct ConfigurationService: Sendable {
     public static func schema() throws -> OperationValue {
         .object(["scopes": .array(["app", "defaults", "instance:<uuid>"].map(OperationValue.string)),
                  "app": try .encode(appFields), "launch": try .encode(launchFields), "inheritanceGroups": .array(groups.map(OperationValue.string)),
-                 "patch": .object(["set": .string(Messages.CLIInterface.tba308ed7fb67.localized), "reset": .string(Messages.CLIInterface.tba6d0ed49ef6.localized), "inherit": .string(Messages.CLIInterface.t54e4e046502f.localized)])])
+                 "patch": .object(["set": .string(Messages.CLIInterface.configSetMappingHelp.localized), "reset": .string(Messages.CLIInterface.configFieldOrGroupNamesHelp.localized), "inherit": .string(Messages.CLIInterface.configInstanceGroupNamesHelp.localized)])])
     }
     private func instanceID(_ scope: String) throws -> UUID? {
         if scope == "app" || scope == "defaults" { return nil }
-        guard scope.hasPrefix("instance:"), let id = UUID(uuidString: String(scope.dropFirst(9))) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te2e236614526.localized) }
+        guard scope.hasPrefix("instance:"), let id = UUID(uuidString: String(scope.dropFirst(9))) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidConfigScope.localized) }
         return id
     }
     private func instance(_ id: UUID, state: PersistentState) throws -> GameInstance {
-        guard let value = state.instances.first(where: { $0.id == id }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t491b2168687b.localized) }; return value
+        guard let value = state.instances.first(where: { $0.id == id }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.instanceNotFound.localized) }; return value
     }
     public func read(scope: String, showSecrets: Bool = false) throws -> OperationValue { try report(scope: scope, state: StateStore.load(paths), showSecrets: showSecrets) }
     private func report(scope: String, state: PersistentState, showSecrets: Bool) throws -> OperationValue {
@@ -94,24 +94,24 @@ public struct ConfigurationService: Sendable {
         var flattened: [String: OperationValue] = [:]
         func expand(_ key: String, _ value: OperationValue) throws {
             if let object = value.object, !fields.contains(where: { $0.name == key }) {
-                guard !object.isEmpty, fields.contains(where: { $0.name.hasPrefix(key + ".") }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t41f1a159c375(String(describing: key)).localized) }
+                guard !object.isEmpty, fields.contains(where: { $0.name.hasPrefix(key + ".") }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownOrEmptyConfigGroup(String(describing: key)).localized) }
                 for (child, value) in object { try expand(key + "." + child, value) }
             } else {
-                guard flattened[key] == nil, let field = fields.first(where: { $0.name == key }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t0e5f6b9ca429(String(describing: key)).localized) }
+                guard flattened[key] == nil, let field = fields.first(where: { $0.name == key }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownOrDuplicateConfigField(String(describing: key)).localized) }
                 try Self.validate(value, field: field); flattened[key] = value
             }
         }
         for (key, value) in patch.set { try expand(key, value) }
-        guard patch.inherit.isEmpty || id != nil, patch.inherit.allSatisfy({ Self.groups.contains($0) }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t0199982aa94e.localized) }
+        guard patch.inherit.isEmpty || id != nil, patch.inherit.allSatisfy({ Self.groups.contains($0) }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.configInheritanceRequiresCompleteGroups.localized) }
         let operations = Array(flattened.keys) + patch.reset + patch.inherit
         for (index, key) in operations.enumerated() {
-            guard fields.contains(where: { $0.name == key || $0.name.hasPrefix(key + ".") }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tca2c20d623be(String(describing: key)).localized) }
-            guard !operations.dropFirst(index + 1).contains(where: { $0 == key || $0.hasPrefix(key + ".") || key.hasPrefix($0 + ".") }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.ta78e60d41732(String(describing: key)).localized) }
+            guard fields.contains(where: { $0.name == key || $0.name.hasPrefix(key + ".") }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownNamedConfigField(String(describing: key)).localized) }
+            guard !operations.dropFirst(index + 1).contains(where: { $0 == key || $0.hasPrefix(key + ".") || key.hasPrefix($0 + ".") }) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.conflictingConfigPatchOperations(String(describing: key)).localized) }
         }
         var before = try StateStore.load(paths), after = before
         func mutate(_ state: inout PersistentState) throws {
             before = state
-            if let expectedRevision, state.revision != expectedRevision { throw OperationFailure("STATE_CONFLICT", Messages.CLIInterface.te8a7227e2180.localized, retryable: true) }
+            if let expectedRevision, state.revision != expectedRevision { throw OperationFailure("STATE_CONFLICT", Messages.CLIInterface.stateChangedSinceRead.localized, retryable: true) }
             let baseline: OperationValue
             var overrides: InstanceLaunchOverrides?
             if scope == "app" { baseline = Self.appValues(state.settings) }
@@ -160,7 +160,7 @@ public struct ConfigurationService: Sendable {
         switch field.type { case "boolean": valid = value.bool != nil; case "integer": valid = value.int != nil; default: valid = value.string != nil }
         guard valid, field.values.isEmpty || field.values.contains(value.string ?? ""),
               field.minimum == nil || (value.int ?? Int.min) >= field.minimum!, field.maximum == nil || (value.int ?? Int.max) <= field.maximum! else {
-            throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t62fca6b0b13b(String(describing: field.name)).localized, details: try .encode(field))
+            throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidConfigFieldValue(String(describing: field.name)).localized, details: try .encode(field))
         }
     }
     private static func appValues(_ v: AppSettings) -> OperationValue {
@@ -170,7 +170,7 @@ public struct ConfigurationService: Sendable {
     private static func applyApp(_ v: OperationValue, to settings: inout AppSettings) throws {
         for field in appFields { try validate(v[field.name], field: field) }
         let client = v["microsoftClientID"].string!.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard client.isEmpty || UUID(uuidString: client) != nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t1f94c2f53310.localized) }
+        guard client.isEmpty || UUID(uuidString: client) != nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidMicrosoftClientId.localized) }
         settings.appearance = v["appearance"].string!; settings.concurrentDownloads = v["concurrentDownloads"].int!; settings.showSnapshots = v["showSnapshots"].bool!
         settings.microsoftClientID = client
         let source = DownloadSource(rawValue: v["downloadSource"].string!)!, policy = GameIsolationPolicy(rawValue: v["isolationPolicy"].string!)!
@@ -199,9 +199,9 @@ public struct ConfigurationService: Sendable {
         switch v["java"]["mode"].string {
         case "automatic": result.java = .automatic
         case "major":
-            guard let major = v["java"]["major"].int else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t9b199fcf9a1f.localized) }; result.java = .major(major)
+            guard let major = v["java"]["major"].int else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.javaMajorRequiredForMajorMode.localized) }; result.java = .major(major)
         default:
-            guard let path = v["java"]["path"].string else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t15b3dd14487d.localized) }; result.java = .path(path)
+            guard let path = v["java"]["path"].string else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.javaPathRequiredForPathMode.localized) }; result.java = .path(path)
         }
         result.jvmTuning = JVMTuningMode(rawValue: v["jvmTuning"].string!)!
         result.jvmArguments = v["jvmArguments"].string!; result.gameArguments = v["gameArguments"].string!; result.environment = v["environment"].string!

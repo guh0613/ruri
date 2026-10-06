@@ -3,133 +3,133 @@ import Foundation
 
 extension Messages {
     public enum CoreMRPack {
-        /// 无效文件哈希请求
+        /// mrpack 无法记录实例的附加启动参数、依赖库或 Java 约束。请使用 MCBBS 或 Ruri 格式完整保留。
         ///
-        /// Resource: `Errors.coreMRPack.versionsFromHashesText1`.
-        public static var invalidHashRequest: LocalizedMessage {
-            .init(key: "coreMRPack.versionsFromHashesText1", table: "Errors", fallback: "无效文件哈希请求")
-        }
-        /// 无效文件哈希
-        ///
-        /// Resource: `Errors.coreMRPack.lengthText1`.
-        public static var invalidFileHash: LocalizedMessage {
-            .init(key: "coreMRPack.lengthText1", table: "Errors", fallback: "无效文件哈希")
-        }
-        /// Modrinth 返回的文件与查询哈希不一致
-        ///
-        /// Resource: `Errors.coreMRPack.versionsText1`.
-        public static var hashResponseMismatch: LocalizedMessage {
-            .init(key: "coreMRPack.versionsText1", table: "Errors", fallback: "Modrinth 返回的文件与查询哈希不一致")
-        }
-        /// 不支持的 Modrinth 整合包清单
-        ///
-        /// Resource: `Errors.coreMRPack.gameVersionText1`.
-        public static var unsupportedManifest: LocalizedMessage {
-            .init(key: "coreMRPack.gameVersionText1", table: "Errors", fallback: "不支持的 Modrinth 整合包清单")
-        }
-        /// 整合包需要尚未接入的组件：%1$@
-        ///
-        /// Resource: `Errors.coreMRPack.unknownText1`.
-        public static func unknownComponent(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMRPack.unknownText1", table: "Errors", fallback: "整合包需要尚未接入的组件：%1$@", arguments: [.text(value0)])
-        }
-        /// 整合包同时声明多个加载器
-        ///
-        /// Resource: `Errors.coreMRPack.loadersText1`.
-        public static var multipleLoaders: LocalizedMessage {
-            .init(key: "coreMRPack.loadersText1", table: "Errors", fallback: "整合包同时声明多个加载器")
+        /// Resource: `Errors.CoreMRPack.exportMetadataUnsupported`.
+        public static var exportMetadataUnsupported: LocalizedMessage {
+            .init(key: "CoreMRPack.exportMetadataUnsupported", table: "Errors", fallback: "mrpack 无法记录实例的附加启动参数、依赖库或 Java 约束。请使用 MCBBS 或 Ruri 格式完整保留。")
         }
         /// 整合包文件数量超过限制
         ///
-        /// Resource: `Errors.coreMRPack.gameText1`.
+        /// Resource: `Errors.CoreMRPack.fileLimit`.
         public static var fileLimit: LocalizedMessage {
-            .init(key: "coreMRPack.gameText1", table: "Errors", fallback: "整合包文件数量超过限制")
+            .init(key: "CoreMRPack.fileLimit", table: "Errors", fallback: "整合包文件数量超过限制")
         }
-        /// mrpack 路径无效或重复：%1$@
+        /// Modrinth 返回的文件与查询哈希不一致
         ///
-        /// Resource: `Errors.coreMRPack.pathsText1`.
-        public static func invalidPath(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMRPack.pathsText1", table: "Errors", fallback: "mrpack 路径无效或重复：%1$@", arguments: [.text(value0)])
-        }
-        /// mrpack 文件缺少有效的 SHA-1、SHA-512 或大小：%1$@
-        ///
-        /// Resource: `Errors.coreMRPack.sha512Text1`.
-        public static func missingFileHashOrSize(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMRPack.sha512Text1", table: "Errors", fallback: "mrpack 文件缺少有效的 SHA-1、SHA-512 或大小：%1$@", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreMRPack.hashResponseMismatch`.
+        public static var hashResponseMismatch: LocalizedMessage {
+            .init(key: "CoreMRPack.hashResponseMismatch", table: "Errors", fallback: "Modrinth 返回的文件与查询哈希不一致")
         }
         /// mrpack 文件环境声明无效：%1$@
         ///
-        /// Resource: `Errors.coreMRPack.sha512Text2`.
+        /// Resource: `Errors.CoreMRPack.invalidEnvironment`.
         public static func invalidEnvironment(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMRPack.sha512Text2", table: "Errors", fallback: "mrpack 文件环境声明无效：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreMRPack.invalidEnvironment", table: "Errors", fallback: "mrpack 文件环境声明无效：%1$@", arguments: [.text(value0)])
         }
-        /// mrpack 文件没有有效的 HTTPS 下载地址：%1$@
+        /// 无效文件哈希
         ///
-        /// Resource: `Errors.coreMRPack.firstText1`.
-        public static func missingDownloadURL(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMRPack.firstText1", table: "Errors", fallback: "mrpack 文件没有有效的 HTTPS 下载地址：%1$@", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreMRPack.invalidFileHash`.
+        public static var invalidFileHash: LocalizedMessage {
+            .init(key: "CoreMRPack.invalidFileHash", table: "Errors", fallback: "无效文件哈希")
         }
-        /// mrpack 无法记录实例的附加启动参数、依赖库或 Java 约束。请使用 MCBBS 或 Ruri 格式完整保留。
+        /// 无效文件哈希请求
         ///
-        /// Resource: `Errors.coreMRPack.exportMRPackText1`.
-        public static var exportMetadataUnsupported: LocalizedMessage {
-            .init(key: "coreMRPack.exportMRPackText1", table: "Errors", fallback: "mrpack 无法记录实例的附加启动参数、依赖库或 Java 约束。请使用 MCBBS 或 Ruri 格式完整保留。")
+        /// Resource: `Errors.CoreMRPack.invalidHashRequest`.
+        public static var invalidHashRequest: LocalizedMessage {
+            .init(key: "CoreMRPack.invalidHashRequest", table: "Errors", fallback: "无效文件哈希请求")
         }
         /// 整合包版本或描述无效
         ///
-        /// Resource: `Errors.coreMRPack.exportMRPackText2`.
+        /// Resource: `Errors.CoreMRPack.invalidPackMetadata`.
         public static var invalidPackMetadata: LocalizedMessage {
-            .init(key: "coreMRPack.exportMRPackText2", table: "Errors", fallback: "整合包版本或描述无效")
+            .init(key: "CoreMRPack.invalidPackMetadata", table: "Errors", fallback: "整合包版本或描述无效")
+        }
+        /// mrpack 路径无效或重复：%1$@
+        ///
+        /// Resource: `Errors.CoreMRPack.invalidPath`.
+        public static func invalidPath(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMRPack.invalidPath", table: "Errors", fallback: "mrpack 路径无效或重复：%1$@", arguments: [.text(value0)])
+        }
+        /// mrpack 文件没有有效的 HTTPS 下载地址：%1$@
+        ///
+        /// Resource: `Errors.CoreMRPack.missingDownloadURL`.
+        public static func missingDownloadURL(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMRPack.missingDownloadURL", table: "Errors", fallback: "mrpack 文件没有有效的 HTTPS 下载地址：%1$@", arguments: [.text(value0)])
+        }
+        /// mrpack 文件缺少有效的 SHA-1、SHA-512 或大小：%1$@
+        ///
+        /// Resource: `Errors.CoreMRPack.missingFileHashOrSize`.
+        public static func missingFileHashOrSize(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMRPack.missingFileHashOrSize", table: "Errors", fallback: "mrpack 文件缺少有效的 SHA-1、SHA-512 或大小：%1$@", arguments: [.text(value0)])
+        }
+        /// 整合包同时声明多个加载器
+        ///
+        /// Resource: `Errors.CoreMRPack.multipleLoaders`.
+        public static var multipleLoaders: LocalizedMessage {
+            .init(key: "CoreMRPack.multipleLoaders", table: "Errors", fallback: "整合包同时声明多个加载器")
         }
         /// 请先完成加载器安装
         ///
-        /// Resource: `Errors.coreMRPack.versionText1`.
+        /// Resource: `Errors.CoreMRPack.requireLoaderInstallation`.
         public static var requireLoaderInstallation: LocalizedMessage {
-            .init(key: "coreMRPack.versionText1", table: "Errors", fallback: "请先完成加载器安装")
+            .init(key: "CoreMRPack.requireLoaderInstallation", table: "Errors", fallback: "请先完成加载器安装")
         }
-        /// 正在准备整合包
+        /// 整合包需要尚未接入的组件：%1$@
         ///
-        /// Resource: `Progress.coreMRPack.snapshotText1`.
-        public static var preparingPack: LocalizedMessage {
-            .init(key: "coreMRPack.snapshotText1", table: "Progress", fallback: "正在准备整合包")
+        /// Resource: `Errors.CoreMRPack.unknownComponent`.
+        public static func unknownComponent(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMRPack.unknownComponent", table: "Errors", fallback: "整合包需要尚未接入的组件：%1$@", arguments: [.text(value0)])
         }
-        /// 正在识别 Modrinth 文件来源
+        /// 不支持的 Modrinth 整合包清单
         ///
-        /// Resource: `Progress.coreMRPack.versionsText2`.
-        public static var identifyingFiles: LocalizedMessage {
-            .init(key: "coreMRPack.versionsText2", table: "Progress", fallback: "正在识别 Modrinth 文件来源")
-        }
-        /// 来源查询失败，文件将内附到整合包
-        ///
-        /// Resource: `Progress.coreMRPack.versionsText3`.
-        public static var sourceLookupFailed: LocalizedMessage {
-            .init(key: "coreMRPack.versionsText3", table: "Progress", fallback: "来源查询失败，文件将内附到整合包")
+        /// Resource: `Errors.CoreMRPack.unsupportedManifest`.
+        public static var unsupportedManifest: LocalizedMessage {
+            .init(key: "CoreMRPack.unsupportedManifest", table: "Errors", fallback: "不支持的 Modrinth 整合包清单")
         }
         /// 正在导出 mrpack
         ///
-        /// Resource: `Progress.coreMRPack.encoderText1`.
+        /// Resource: `Progress.CoreMRPack.exportingPack`.
         public static var exportingPack: LocalizedMessage {
-            .init(key: "coreMRPack.encoderText1", table: "Progress", fallback: "正在导出 mrpack")
+            .init(key: "CoreMRPack.exportingPack", table: "Progress", fallback: "正在导出 mrpack")
+        }
+        /// 正在识别 Modrinth 文件来源
+        ///
+        /// Resource: `Progress.CoreMRPack.identifyingFiles`.
+        public static var identifyingFiles: LocalizedMessage {
+            .init(key: "CoreMRPack.identifyingFiles", table: "Progress", fallback: "正在识别 Modrinth 文件来源")
+        }
+        /// 正在准备整合包
+        ///
+        /// Resource: `Progress.CoreMRPack.preparingPack`.
+        public static var preparingPack: LocalizedMessage {
+            .init(key: "CoreMRPack.preparingPack", table: "Progress", fallback: "正在准备整合包")
+        }
+        /// 来源查询失败，文件将内附到整合包
+        ///
+        /// Resource: `Progress.CoreMRPack.sourceLookupFailed`.
+        public static var sourceLookupFailed: LocalizedMessage {
+            .init(key: "CoreMRPack.sourceLookupFailed", table: "Progress", fallback: "来源查询失败，文件将内附到整合包")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreMRPack.versionsFromHashesText1": .init("无效文件哈希请求", []),
-            "Errors:coreMRPack.lengthText1": .init("无效文件哈希", []),
-            "Errors:coreMRPack.versionsText1": .init("Modrinth 返回的文件与查询哈希不一致", []),
-            "Errors:coreMRPack.gameVersionText1": .init("不支持的 Modrinth 整合包清单", []),
-            "Errors:coreMRPack.unknownText1": .init("整合包需要尚未接入的组件：%1$@", [.text]),
-            "Errors:coreMRPack.loadersText1": .init("整合包同时声明多个加载器", []),
-            "Errors:coreMRPack.gameText1": .init("整合包文件数量超过限制", []),
-            "Errors:coreMRPack.pathsText1": .init("mrpack 路径无效或重复：%1$@", [.text]),
-            "Errors:coreMRPack.sha512Text1": .init("mrpack 文件缺少有效的 SHA-1、SHA-512 或大小：%1$@", [.text]),
-            "Errors:coreMRPack.sha512Text2": .init("mrpack 文件环境声明无效：%1$@", [.text]),
-            "Errors:coreMRPack.firstText1": .init("mrpack 文件没有有效的 HTTPS 下载地址：%1$@", [.text]),
-            "Errors:coreMRPack.exportMRPackText1": .init("mrpack 无法记录实例的附加启动参数、依赖库或 Java 约束。请使用 MCBBS 或 Ruri 格式完整保留。", []),
-            "Errors:coreMRPack.exportMRPackText2": .init("整合包版本或描述无效", []),
-            "Errors:coreMRPack.versionText1": .init("请先完成加载器安装", []),
-            "Progress:coreMRPack.snapshotText1": .init("正在准备整合包", []),
-            "Progress:coreMRPack.versionsText2": .init("正在识别 Modrinth 文件来源", []),
-            "Progress:coreMRPack.versionsText3": .init("来源查询失败，文件将内附到整合包", []),
-            "Progress:coreMRPack.encoderText1": .init("正在导出 mrpack", []),
+            "Errors:CoreMRPack.exportMetadataUnsupported": .init("mrpack 无法记录实例的附加启动参数、依赖库或 Java 约束。请使用 MCBBS 或 Ruri 格式完整保留。", []),
+            "Errors:CoreMRPack.fileLimit": .init("整合包文件数量超过限制", []),
+            "Errors:CoreMRPack.hashResponseMismatch": .init("Modrinth 返回的文件与查询哈希不一致", []),
+            "Errors:CoreMRPack.invalidEnvironment": .init("mrpack 文件环境声明无效：%1$@", [.text]),
+            "Errors:CoreMRPack.invalidFileHash": .init("无效文件哈希", []),
+            "Errors:CoreMRPack.invalidHashRequest": .init("无效文件哈希请求", []),
+            "Errors:CoreMRPack.invalidPackMetadata": .init("整合包版本或描述无效", []),
+            "Errors:CoreMRPack.invalidPath": .init("mrpack 路径无效或重复：%1$@", [.text]),
+            "Errors:CoreMRPack.missingDownloadURL": .init("mrpack 文件没有有效的 HTTPS 下载地址：%1$@", [.text]),
+            "Errors:CoreMRPack.missingFileHashOrSize": .init("mrpack 文件缺少有效的 SHA-1、SHA-512 或大小：%1$@", [.text]),
+            "Errors:CoreMRPack.multipleLoaders": .init("整合包同时声明多个加载器", []),
+            "Errors:CoreMRPack.requireLoaderInstallation": .init("请先完成加载器安装", []),
+            "Errors:CoreMRPack.unknownComponent": .init("整合包需要尚未接入的组件：%1$@", [.text]),
+            "Errors:CoreMRPack.unsupportedManifest": .init("不支持的 Modrinth 整合包清单", []),
+            "Progress:CoreMRPack.exportingPack": .init("正在导出 mrpack", []),
+            "Progress:CoreMRPack.identifyingFiles": .init("正在识别 Modrinth 文件来源", []),
+            "Progress:CoreMRPack.preparingPack": .init("正在准备整合包", []),
+            "Progress:CoreMRPack.sourceLookupFailed": .init("来源查询失败，文件将内附到整合包", []),
         ]
     }
 }

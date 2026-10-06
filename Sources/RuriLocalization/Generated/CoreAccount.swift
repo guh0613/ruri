@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum CoreAccount {
-        /// 离线账号
-        ///
-        /// Resource: `Core.coreAccount.kindLabelText1`.
-        public static var offlineAccount: LocalizedMessage {
-            .init(key: "coreAccount.kindLabelText1", table: "Core", fallback: "离线账号")
-        }
-        /// Microsoft 账号
-        ///
-        /// Resource: `Core.coreAccount.kindLabelText2`.
-        public static var microsoftAccount: LocalizedMessage {
-            .init(key: "coreAccount.kindLabelText2", table: "Core", fallback: "Microsoft 账号")
-        }
         /// 认证服务器
         ///
-        /// Resource: `Core.coreAccount.kindLabelText4`.
+        /// Resource: `Core.CoreAccount.externalAuth`.
         public static var externalAuth: LocalizedMessage {
-            .init(key: "coreAccount.kindLabelText4", table: "Core", fallback: "认证服务器")
+            .init(key: "CoreAccount.externalAuth", table: "Core", fallback: "认证服务器")
         }
         /// 外置认证 · %1$@
         ///
-        /// Resource: `Core.coreAccount.externalServer`.
+        /// Resource: `Core.CoreAccount.externalServer`.
         public static func externalServer(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreAccount.externalServer", table: "Core", fallback: "外置认证 · %1$@", arguments: [.text(value0)])
+            .init(key: "CoreAccount.externalServer", table: "Core", fallback: "外置认证 · %1$@", arguments: [.text(value0)])
+        }
+        /// Microsoft 账号
+        ///
+        /// Resource: `Core.CoreAccount.microsoftAccount`.
+        public static var microsoftAccount: LocalizedMessage {
+            .init(key: "CoreAccount.microsoftAccount", table: "Core", fallback: "Microsoft 账号")
+        }
+        /// 离线账号
+        ///
+        /// Resource: `Core.CoreAccount.offlineAccount`.
+        public static var offlineAccount: LocalizedMessage {
+            .init(key: "CoreAccount.offlineAccount", table: "Core", fallback: "离线账号")
         }
         /// 玩家名需为 3–16 位英文字母、数字或下划线。
         ///
-        /// Resource: `Errors.coreAccount.kindLabelText5`.
+        /// Resource: `Errors.CoreAccount.playerNameRule`.
         public static var playerNameRule: LocalizedMessage {
-            .init(key: "coreAccount.kindLabelText5", table: "Errors", fallback: "玩家名需为 3–16 位英文字母、数字或下划线。")
+            .init(key: "CoreAccount.playerNameRule", table: "Errors", fallback: "玩家名需为 3–16 位英文字母、数字或下划线。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreAccount.kindLabelText1": .init("离线账号", []),
-            "Core:coreAccount.kindLabelText2": .init("Microsoft 账号", []),
-            "Core:coreAccount.kindLabelText4": .init("认证服务器", []),
-            "Core:coreAccount.externalServer": .init("外置认证 · %1$@", [.text]),
-            "Errors:coreAccount.kindLabelText5": .init("玩家名需为 3–16 位英文字母、数字或下划线。", []),
+            "Core:CoreAccount.externalAuth": .init("认证服务器", []),
+            "Core:CoreAccount.externalServer": .init("外置认证 · %1$@", [.text]),
+            "Core:CoreAccount.microsoftAccount": .init("Microsoft 账号", []),
+            "Core:CoreAccount.offlineAccount": .init("离线账号", []),
+            "Errors:CoreAccount.playerNameRule": .init("玩家名需为 3–16 位英文字母、数字或下划线。", []),
         ]
     }
 }

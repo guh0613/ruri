@@ -3,147 +3,147 @@ import Foundation
 
 extension Messages {
     public enum AppDiscoverView {
+        /// by %1$@
+        ///
+        /// Resource: `Interface.AppDiscoverView.authorBy`.
+        public static func authorBy(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppDiscoverView.authorBy", table: "Interface", fallback: "by %1$@", arguments: [.text(value0)])
+        }
         /// 社区作者
         ///
-        /// Resource: `Interface.appDiscoverView.pText1`.
+        /// Resource: `Interface.AppDiscoverView.communityAuthor`.
         public static var communityAuthor: LocalizedMessage {
-            .init(key: "appDiscoverView.pText1", table: "Interface", fallback: "社区作者")
+            .init(key: "AppDiscoverView.communityAuthor", table: "Interface", fallback: "社区作者")
         }
         /// 连接 CurseForge
         ///
-        /// Resource: `Interface.appDiscoverView.bodyText1`.
+        /// Resource: `Interface.AppDiscoverView.connectCurseForge`.
         public static var connectCurseForge: LocalizedMessage {
-            .init(key: "appDiscoverView.bodyText1", table: "Interface", fallback: "连接 CurseForge")
-        }
-        /// 请先在设置中配置 CurseForge API Key。
-        ///
-        /// Resource: `Interface.appDiscoverView.bodyText2`.
-        public static var curseforgeSetupDetails: LocalizedMessage {
-            .init(key: "appDiscoverView.bodyText2", table: "Interface", fallback: "请先在设置中配置 CurseForge API Key。")
-        }
-        /// 前往设置
-        ///
-        /// Resource: `Interface.appDiscoverView.bodyText3`.
-        public static var goToSettings: LocalizedMessage {
-            .init(key: "appDiscoverView.bodyText3", table: "Interface", fallback: "前往设置")
-        }
-        /// 正在发现内容…
-        ///
-        /// Resource: `Interface.appDiscoverView.bodyText4`.
-        public static var discoveringContent: LocalizedMessage {
-            .init(key: "appDiscoverView.bodyText4", table: "Interface", fallback: "正在发现内容…")
-        }
-        /// 重试
-        ///
-        /// Resource: `Interface.appDiscoverView.errorText1`.
-        public static var retry: LocalizedMessage {
-            .init(key: "appDiscoverView.errorText1", table: "Interface", fallback: "重试")
-        }
-        /// 没有找到匹配内容
-        ///
-        /// Resource: `Interface.appDiscoverView.errorText2`.
-        public static var noMatchingContent: LocalizedMessage {
-            .init(key: "appDiscoverView.errorText2", table: "Interface", fallback: "没有找到匹配内容")
-        }
-        /// 使用英文名称或更短的关键词搜索。
-        ///
-        /// Resource: `Interface.appDiscoverView.errorText3`.
-        public static var tryShorterSearch: LocalizedMessage {
-            .init(key: "appDiscoverView.errorText3", table: "Interface", fallback: "使用英文名称或更短的关键词搜索。")
-        }
-        /// 上一页
-        ///
-        /// Resource: `Interface.appDiscoverView.errorText4`.
-        public static var previousPage: LocalizedMessage {
-            .init(key: "appDiscoverView.errorText4", table: "Interface", fallback: "上一页")
-        }
-        /// 下一页
-        ///
-        /// Resource: `Interface.appDiscoverView.errorText5`.
-        public static var nextPage: LocalizedMessage {
-            .init(key: "appDiscoverView.errorText5", table: "Interface", fallback: "下一页")
-        }
-        /// 搜索模组、整合包、光影…
-        ///
-        /// Resource: `Interface.appDiscoverView.errorText6`.
-        public static var searchContent: LocalizedMessage {
-            .init(key: "appDiscoverView.errorText6", table: "Interface", fallback: "搜索模组、整合包、光影…")
-        }
-        /// 导入整合包
-        ///
-        /// Resource: `Interface.appDiscoverView.errorText7`.
-        public static var importModpack: LocalizedMessage {
-            .init(key: "appDiscoverView.errorText7", table: "Interface", fallback: "导入整合包")
-        }
-        /// 导入本地整合包…
-        ///
-        /// Resource: `Interface.appDiscoverView.errorText8`.
-        public static var importLocalModpack: LocalizedMessage {
-            .init(key: "appDiscoverView.errorText8", table: "Interface", fallback: "导入本地整合包…")
+            .init(key: "AppDiscoverView.connectCurseForge", table: "Interface", fallback: "连接 CurseForge")
         }
         /// 内容来源
         ///
-        /// Resource: `Interface.appDiscoverView.sourcePickerText1`.
+        /// Resource: `Interface.AppDiscoverView.contentSource`.
         public static var contentSource: LocalizedMessage {
-            .init(key: "appDiscoverView.sourcePickerText1", table: "Interface", fallback: "内容来源")
+            .init(key: "AppDiscoverView.contentSource", table: "Interface", fallback: "内容来源")
         }
         /// 内容类型
         ///
-        /// Resource: `Interface.appDiscoverView.contentPickerText1`.
+        /// Resource: `Interface.AppDiscoverView.contentType`.
         public static var contentType: LocalizedMessage {
-            .init(key: "appDiscoverView.contentPickerText1", table: "Interface", fallback: "内容类型")
+            .init(key: "AppDiscoverView.contentType", table: "Interface", fallback: "内容类型")
+        }
+        /// 请先在设置中配置 CurseForge API Key。
+        ///
+        /// Resource: `Interface.AppDiscoverView.curseforgeSetupDetails`.
+        public static var curseforgeSetupDetails: LocalizedMessage {
+            .init(key: "AppDiscoverView.curseforgeSetupDetails", table: "Interface", fallback: "请先在设置中配置 CurseForge API Key。")
+        }
+        /// 正在发现内容…
+        ///
+        /// Resource: `Interface.AppDiscoverView.discoveringContent`.
+        public static var discoveringContent: LocalizedMessage {
+            .init(key: "AppDiscoverView.discoveringContent", table: "Interface", fallback: "正在发现内容…")
+        }
+        /// 前往设置
+        ///
+        /// Resource: `Interface.AppDiscoverView.goToSettings`.
+        public static var goToSettings: LocalizedMessage {
+            .init(key: "AppDiscoverView.goToSettings", table: "Interface", fallback: "前往设置")
+        }
+        /// 导入本地整合包…
+        ///
+        /// Resource: `Interface.AppDiscoverView.importLocalModpack`.
+        public static var importLocalModpack: LocalizedMessage {
+            .init(key: "AppDiscoverView.importLocalModpack", table: "Interface", fallback: "导入本地整合包…")
+        }
+        /// 导入整合包
+        ///
+        /// Resource: `Interface.AppDiscoverView.importModpack`.
+        public static var importModpack: LocalizedMessage {
+            .init(key: "AppDiscoverView.importModpack", table: "Interface", fallback: "导入整合包")
         }
         /// 整合包
         ///
-        /// Resource: `Interface.appDiscoverView.contentPickerText2`.
+        /// Resource: `Interface.AppDiscoverView.modpacks`.
         public static var modpacks: LocalizedMessage {
-            .init(key: "appDiscoverView.contentPickerText2", table: "Interface", fallback: "整合包")
+            .init(key: "AppDiscoverView.modpacks", table: "Interface", fallback: "整合包")
         }
         /// 模组
         ///
-        /// Resource: `Interface.appDiscoverView.contentPickerText3`.
+        /// Resource: `Interface.AppDiscoverView.mods`.
         public static var mods: LocalizedMessage {
-            .init(key: "appDiscoverView.contentPickerText3", table: "Interface", fallback: "模组")
+            .init(key: "AppDiscoverView.mods", table: "Interface", fallback: "模组")
+        }
+        /// 下一页
+        ///
+        /// Resource: `Interface.AppDiscoverView.nextPage`.
+        public static var nextPage: LocalizedMessage {
+            .init(key: "AppDiscoverView.nextPage", table: "Interface", fallback: "下一页")
+        }
+        /// 没有找到匹配内容
+        ///
+        /// Resource: `Interface.AppDiscoverView.noMatchingContent`.
+        public static var noMatchingContent: LocalizedMessage {
+            .init(key: "AppDiscoverView.noMatchingContent", table: "Interface", fallback: "没有找到匹配内容")
+        }
+        /// 上一页
+        ///
+        /// Resource: `Interface.AppDiscoverView.previousPage`.
+        public static var previousPage: LocalizedMessage {
+            .init(key: "AppDiscoverView.previousPage", table: "Interface", fallback: "上一页")
         }
         /// 资源包
         ///
-        /// Resource: `Interface.appDiscoverView.contentPickerText4`.
+        /// Resource: `Interface.AppDiscoverView.resourcePacks`.
         public static var resourcePacks: LocalizedMessage {
-            .init(key: "appDiscoverView.contentPickerText4", table: "Interface", fallback: "资源包")
+            .init(key: "AppDiscoverView.resourcePacks", table: "Interface", fallback: "资源包")
+        }
+        /// 重试
+        ///
+        /// Resource: `Interface.AppDiscoverView.retry`.
+        public static var retry: LocalizedMessage {
+            .init(key: "AppDiscoverView.retry", table: "Interface", fallback: "重试")
+        }
+        /// 搜索模组、整合包、光影…
+        ///
+        /// Resource: `Interface.AppDiscoverView.searchContent`.
+        public static var searchContent: LocalizedMessage {
+            .init(key: "AppDiscoverView.searchContent", table: "Interface", fallback: "搜索模组、整合包、光影…")
         }
         /// 光影
         ///
-        /// Resource: `Interface.appDiscoverView.contentPickerText5`.
+        /// Resource: `Interface.AppDiscoverView.shaders`.
         public static var shaders: LocalizedMessage {
-            .init(key: "appDiscoverView.contentPickerText5", table: "Interface", fallback: "光影")
+            .init(key: "AppDiscoverView.shaders", table: "Interface", fallback: "光影")
         }
-        /// by %1$@
+        /// 使用英文名称或更短的关键词搜索。
         ///
-        /// Resource: `Interface.appDiscoverView.authorBy`.
-        public static func authorBy(_ value0: String) -> LocalizedMessage {
-            .init(key: "appDiscoverView.authorBy", table: "Interface", fallback: "by %1$@", arguments: [.text(value0)])
+        /// Resource: `Interface.AppDiscoverView.tryShorterSearch`.
+        public static var tryShorterSearch: LocalizedMessage {
+            .init(key: "AppDiscoverView.tryShorterSearch", table: "Interface", fallback: "使用英文名称或更短的关键词搜索。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appDiscoverView.pText1": .init("社区作者", []),
-            "Interface:appDiscoverView.bodyText1": .init("连接 CurseForge", []),
-            "Interface:appDiscoverView.bodyText2": .init("请先在设置中配置 CurseForge API Key。", []),
-            "Interface:appDiscoverView.bodyText3": .init("前往设置", []),
-            "Interface:appDiscoverView.bodyText4": .init("正在发现内容…", []),
-            "Interface:appDiscoverView.errorText1": .init("重试", []),
-            "Interface:appDiscoverView.errorText2": .init("没有找到匹配内容", []),
-            "Interface:appDiscoverView.errorText3": .init("使用英文名称或更短的关键词搜索。", []),
-            "Interface:appDiscoverView.errorText4": .init("上一页", []),
-            "Interface:appDiscoverView.errorText5": .init("下一页", []),
-            "Interface:appDiscoverView.errorText6": .init("搜索模组、整合包、光影…", []),
-            "Interface:appDiscoverView.errorText7": .init("导入整合包", []),
-            "Interface:appDiscoverView.errorText8": .init("导入本地整合包…", []),
-            "Interface:appDiscoverView.sourcePickerText1": .init("内容来源", []),
-            "Interface:appDiscoverView.contentPickerText1": .init("内容类型", []),
-            "Interface:appDiscoverView.contentPickerText2": .init("整合包", []),
-            "Interface:appDiscoverView.contentPickerText3": .init("模组", []),
-            "Interface:appDiscoverView.contentPickerText4": .init("资源包", []),
-            "Interface:appDiscoverView.contentPickerText5": .init("光影", []),
-            "Interface:appDiscoverView.authorBy": .init("by %1$@", [.text]),
+            "Interface:AppDiscoverView.authorBy": .init("by %1$@", [.text]),
+            "Interface:AppDiscoverView.communityAuthor": .init("社区作者", []),
+            "Interface:AppDiscoverView.connectCurseForge": .init("连接 CurseForge", []),
+            "Interface:AppDiscoverView.contentSource": .init("内容来源", []),
+            "Interface:AppDiscoverView.contentType": .init("内容类型", []),
+            "Interface:AppDiscoverView.curseforgeSetupDetails": .init("请先在设置中配置 CurseForge API Key。", []),
+            "Interface:AppDiscoverView.discoveringContent": .init("正在发现内容…", []),
+            "Interface:AppDiscoverView.goToSettings": .init("前往设置", []),
+            "Interface:AppDiscoverView.importLocalModpack": .init("导入本地整合包…", []),
+            "Interface:AppDiscoverView.importModpack": .init("导入整合包", []),
+            "Interface:AppDiscoverView.modpacks": .init("整合包", []),
+            "Interface:AppDiscoverView.mods": .init("模组", []),
+            "Interface:AppDiscoverView.nextPage": .init("下一页", []),
+            "Interface:AppDiscoverView.noMatchingContent": .init("没有找到匹配内容", []),
+            "Interface:AppDiscoverView.previousPage": .init("上一页", []),
+            "Interface:AppDiscoverView.resourcePacks": .init("资源包", []),
+            "Interface:AppDiscoverView.retry": .init("重试", []),
+            "Interface:AppDiscoverView.searchContent": .init("搜索模组、整合包、光影…", []),
+            "Interface:AppDiscoverView.shaders": .init("光影", []),
+            "Interface:AppDiscoverView.tryShorterSearch": .init("使用英文名称或更短的关键词搜索。", []),
         ]
     }
 }

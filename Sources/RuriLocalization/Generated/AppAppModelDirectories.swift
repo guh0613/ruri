@@ -3,84 +3,84 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelDirectories {
-        /// 切换游戏文件夹
+        /// 已清理完成的复制记录，目标内容保留。
         ///
-        /// Resource: `Interface.appAppModelDirectories.baseText1`.
-        public static var switchGameDirectory: LocalizedMessage {
-            .init(key: "appAppModelDirectories.baseText1", table: "Interface", fallback: "切换游戏文件夹")
-        }
-        /// 重新定位自定义游戏目录
-        ///
-        /// Resource: `Interface.appAppModelDirectories.relocateCustomDirectoryText1`.
-        public static var relocateCustomDirectory: LocalizedMessage {
-            .init(key: "appAppModelDirectories.relocateCustomDirectoryText1", table: "Interface", fallback: "重新定位自定义游戏目录")
-        }
-        /// 已更新 %1$lld 个实例的目录位置，游戏文件保留在所选文件夹。
-        ///
-        /// Resource: `Interface.appAppModelDirectories.relocateCustomDirectoryText2`.
-        public static func relocatedInstances(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appAppModelDirectories.relocateCustomDirectoryText2", table: "Interface", fallback: "已更新 %1$lld 个实例的目录位置，游戏文件保留在所选文件夹。", arguments: [.integer(value0)])
+        /// Resource: `Interface.AppAppModelDirectories.cleanedCopyRecord`.
+        public static var cleanedCopyRecord: LocalizedMessage {
+            .init(key: "AppAppModelDirectories.cleanedCopyRecord", table: "Interface", fallback: "已清理完成的复制记录，目标内容保留。")
         }
         /// 复制并切换
         ///
-        /// Resource: `Interface.appAppModelDirectories.changeGameRunDirectoryText1`.
+        /// Resource: `Interface.AppAppModelDirectories.copyAndSwitch`.
         public static var copyAndSwitch: LocalizedMessage {
-            .init(key: "appAppModelDirectories.changeGameRunDirectoryText1", table: "Interface", fallback: "复制并切换")
-        }
-        /// 切换
-        ///
-        /// Resource: `Interface.appAppModelDirectories.changeGameRunDirectoryText2`.
-        public static var switchDirectory: LocalizedMessage {
-            .init(key: "appAppModelDirectories.changeGameRunDirectoryText2", table: "Interface", fallback: "切换")
-        }
-        /// %1$@ %2$@ 的运行目录
-        ///
-        /// Resource: `Interface.appAppModelDirectories.changeGameRunDirectoryText3`.
-        public static func runDirectoryForInstance(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "appAppModelDirectories.changeGameRunDirectoryText3", table: "Interface", fallback: "%1$@ %2$@ 的运行目录", arguments: [.text(value0), .text(value1)])
-        }
-        /// 使用目标内容
-        ///
-        /// Resource: `Interface.appAppModelDirectories.resultText1`.
-        public static var useTargetContents: LocalizedMessage {
-            .init(key: "appAppModelDirectories.resultText1", table: "Interface", fallback: "使用目标内容")
+            .init(key: "AppAppModelDirectories.copyAndSwitch", table: "Interface", fallback: "复制并切换")
         }
         /// %1$@ 已%2$@；原目录及备份已保留。
         ///
-        /// Resource: `Interface.appAppModelDirectories.resultText2`.
+        /// Resource: `Interface.AppAppModelDirectories.directorySwitchCompleted`.
         public static func directorySwitchCompleted(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "appAppModelDirectories.resultText2", table: "Interface", fallback: "%1$@ 已%2$@；原目录及备份已保留。", arguments: [.text(value0), .text(value1)])
-        }
-        /// 恢复 %1$@ 的目录复制
-        ///
-        /// Resource: `Interface.appAppModelDirectories.recoverGameRunDirectoryText1`.
-        public static func recoverDirectoryCopy(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelDirectories.recoverGameRunDirectoryText1", table: "Interface", fallback: "恢复 %1$@ 的目录复制", arguments: [.text(value0)])
-        }
-        /// 已清理完成的复制记录，目标内容保留。
-        ///
-        /// Resource: `Interface.appAppModelDirectories.resultText3`.
-        public static var cleanedCopyRecord: LocalizedMessage {
-            .init(key: "appAppModelDirectories.resultText3", table: "Interface", fallback: "已清理完成的复制记录，目标内容保留。")
+            .init(key: "AppAppModelDirectories.directorySwitchCompleted", table: "Interface", fallback: "%1$@ 已%2$@；原目录及备份已保留。", arguments: [.text(value0), .text(value1)])
         }
         /// 已恢复到切换前的状态，复制工作区另行保留。
         ///
-        /// Resource: `Interface.appAppModelDirectories.resultText4`.
+        /// Resource: `Interface.AppAppModelDirectories.directorySwitchRecovered`.
         public static var directorySwitchRecovered: LocalizedMessage {
-            .init(key: "appAppModelDirectories.resultText4", table: "Interface", fallback: "已恢复到切换前的状态，复制工作区另行保留。")
+            .init(key: "AppAppModelDirectories.directorySwitchRecovered", table: "Interface", fallback: "已恢复到切换前的状态，复制工作区另行保留。")
+        }
+        /// 恢复 %1$@ 的目录复制
+        ///
+        /// Resource: `Interface.AppAppModelDirectories.recoverDirectoryCopy`.
+        public static func recoverDirectoryCopy(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelDirectories.recoverDirectoryCopy", table: "Interface", fallback: "恢复 %1$@ 的目录复制", arguments: [.text(value0)])
+        }
+        /// 重新定位自定义游戏目录
+        ///
+        /// Resource: `Interface.AppAppModelDirectories.relocateCustomDirectory`.
+        public static var relocateCustomDirectory: LocalizedMessage {
+            .init(key: "AppAppModelDirectories.relocateCustomDirectory", table: "Interface", fallback: "重新定位自定义游戏目录")
+        }
+        /// 已更新 %1$lld 个实例的目录位置，游戏文件保留在所选文件夹。
+        ///
+        /// Resource: `Interface.AppAppModelDirectories.relocatedInstances`.
+        public static func relocatedInstances(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppAppModelDirectories.relocatedInstances", table: "Interface", fallback: "已更新 %1$lld 个实例的目录位置，游戏文件保留在所选文件夹。", arguments: [.integer(value0)])
+        }
+        /// %1$@ %2$@ 的运行目录
+        ///
+        /// Resource: `Interface.AppAppModelDirectories.runDirectoryForInstance`.
+        public static func runDirectoryForInstance(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "AppAppModelDirectories.runDirectoryForInstance", table: "Interface", fallback: "%1$@ %2$@ 的运行目录", arguments: [.text(value0), .text(value1)])
+        }
+        /// 切换
+        ///
+        /// Resource: `Interface.AppAppModelDirectories.switchDirectory`.
+        public static var switchDirectory: LocalizedMessage {
+            .init(key: "AppAppModelDirectories.switchDirectory", table: "Interface", fallback: "切换")
+        }
+        /// 切换游戏文件夹
+        ///
+        /// Resource: `Interface.AppAppModelDirectories.switchGameDirectory`.
+        public static var switchGameDirectory: LocalizedMessage {
+            .init(key: "AppAppModelDirectories.switchGameDirectory", table: "Interface", fallback: "切换游戏文件夹")
+        }
+        /// 使用目标内容
+        ///
+        /// Resource: `Interface.AppAppModelDirectories.useTargetContents`.
+        public static var useTargetContents: LocalizedMessage {
+            .init(key: "AppAppModelDirectories.useTargetContents", table: "Interface", fallback: "使用目标内容")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAppModelDirectories.baseText1": .init("切换游戏文件夹", []),
-            "Interface:appAppModelDirectories.relocateCustomDirectoryText1": .init("重新定位自定义游戏目录", []),
-            "Interface:appAppModelDirectories.relocateCustomDirectoryText2": .init("已更新 %1$lld 个实例的目录位置，游戏文件保留在所选文件夹。", [.integer]),
-            "Interface:appAppModelDirectories.changeGameRunDirectoryText1": .init("复制并切换", []),
-            "Interface:appAppModelDirectories.changeGameRunDirectoryText2": .init("切换", []),
-            "Interface:appAppModelDirectories.changeGameRunDirectoryText3": .init("%1$@ %2$@ 的运行目录", [.text, .text]),
-            "Interface:appAppModelDirectories.resultText1": .init("使用目标内容", []),
-            "Interface:appAppModelDirectories.resultText2": .init("%1$@ 已%2$@；原目录及备份已保留。", [.text, .text]),
-            "Interface:appAppModelDirectories.recoverGameRunDirectoryText1": .init("恢复 %1$@ 的目录复制", [.text]),
-            "Interface:appAppModelDirectories.resultText3": .init("已清理完成的复制记录，目标内容保留。", []),
-            "Interface:appAppModelDirectories.resultText4": .init("已恢复到切换前的状态，复制工作区另行保留。", []),
+            "Interface:AppAppModelDirectories.cleanedCopyRecord": .init("已清理完成的复制记录，目标内容保留。", []),
+            "Interface:AppAppModelDirectories.copyAndSwitch": .init("复制并切换", []),
+            "Interface:AppAppModelDirectories.directorySwitchCompleted": .init("%1$@ 已%2$@；原目录及备份已保留。", [.text, .text]),
+            "Interface:AppAppModelDirectories.directorySwitchRecovered": .init("已恢复到切换前的状态，复制工作区另行保留。", []),
+            "Interface:AppAppModelDirectories.recoverDirectoryCopy": .init("恢复 %1$@ 的目录复制", [.text]),
+            "Interface:AppAppModelDirectories.relocateCustomDirectory": .init("重新定位自定义游戏目录", []),
+            "Interface:AppAppModelDirectories.relocatedInstances": .init("已更新 %1$lld 个实例的目录位置，游戏文件保留在所选文件夹。", [.integer]),
+            "Interface:AppAppModelDirectories.runDirectoryForInstance": .init("%1$@ %2$@ 的运行目录", [.text, .text]),
+            "Interface:AppAppModelDirectories.switchDirectory": .init("切换", []),
+            "Interface:AppAppModelDirectories.switchGameDirectory": .init("切换游戏文件夹", []),
+            "Interface:AppAppModelDirectories.useTargetContents": .init("使用目标内容", []),
         ]
     }
 }

@@ -9,7 +9,7 @@ extension CLIApplication {
         let importing = action == "import" || action == "install"
         if importing {
             let directory = try directoryID(request.required("directory"))
-            guard directory == GameDirectory.defaultID || state.gameDirectories?.contains(where: { $0.id == directory }) == true else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t4c0ebc2810f1.localized) }
+            guard directory == GameDirectory.defaultID || state.gameDirectories?.contains(where: { $0.id == directory }) == true else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.modpackTargetDirectoryNotFound.localized) }
             state.selectedDirectoryID = directory
             paths = basePaths(request).configured(with: state)
         }
@@ -17,11 +17,11 @@ extension CLIApplication {
         var instance: GameInstance?, pack: InstalledModpack?
         if !importing {
             let id = try uuid(request.operand()); instance = try InstanceService(paths: paths).resolve(id: id)
-            guard let saved = try ModpackRegistry.load(paths: paths, instanceID: id) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.te28b99d2f4f4.localized) }; pack = saved
+            guard let saved = try ModpackRegistry.load(paths: paths, instanceID: id) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.modpackMetadataNotFound.localized) }; pack = saved
             if action == "show" { return packValue(saved, instanceID: id) }
             if action == "rollback" {
                 let available = ModpackUpdateStore.hasBackup(paths: paths, instanceID: id)
-                guard available else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.tf47c36a30379.localized) }
+                guard available else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.modpackUpdateBackupNotFound.localized) }
                 if request.dryRun { return .object(["dryRun": .bool(true), "instanceID": .string(id.uuidString), "available": .bool(true)]) }
                 let result = try await ModpackUpdater(paths: paths, downloader: downloader).rollback(instance!)
                 return .object(["instanceID": .string(id.uuidString), "preservedFiles": .integer(result.preservedFiles)])
@@ -40,11 +40,11 @@ extension CLIApplication {
                 return .object(["current": packValue(saved, instanceID: id), "releases": .array((request.flag("all") ? items : Array(items.prefix(limit))).map(releaseValue)), "offset": .integer(start), "hasMore": .bool(more || (!request.flag("all") && items.count > limit))])
             }
         }
-        if request.flag("replace") && !request.dryRun && !request.flag("yes") { throw OperationFailure("CONFIRMATION_REQUIRED", Messages.CLIInterface.tc94ca55edbe4.localized) }
+        if request.flag("replace") && !request.dryRun && !request.flag("yes") { throw OperationFailure("CONFIRMATION_REQUIRED", Messages.CLIInterface.localModificationsReplacementRequiresConfirmation.localized) }
         let prepared: PreparedInstanceImport
         if action == "import" { prepared = try await transfer.prepare(URL(fileURLWithPath: request.operand())) }
         else if let file = request.string("file") {
-            guard request.string("version") == nil, request.string("archive") == nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t886cba0bd15a.localized) }
+            guard request.string("version") == nil, request.string("archive") == nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.modpackUpdateSourceRequired.localized) }
             prepared = try await transfer.prepare(URL(fileURLWithPath: file))
         } else {
             let release: ModpackRelease
@@ -61,9 +61,9 @@ extension CLIApplication {
                     selected = response.items.first { $0.id == version }
                     guard selected == nil, let next = response.nextOffset else { break }; offset = next
                 } while true
-                guard let selected else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t092095eba967.localized) }; release = selected
+                guard let selected else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.modpackReleaseNotFound.localized) }; release = selected
             }
-            if release.requiresManualDownload && request.string("archive") == nil { throw OperationFailure("MANUAL_DOWNLOAD_REQUIRED", Messages.CLIInterface.t75d07f6960ff.localized, details: releaseValue(release)) }
+            if release.requiresManualDownload && request.string("archive") == nil { throw OperationFailure("MANUAL_DOWNLOAD_REQUIRED", Messages.CLIInterface.manualModpackDownloadRequired.localized, details: releaseValue(release)) }
             prepared = try await releases.prepare(release, manualFile: request.string("archive").map { URL(fileURLWithPath: $0) }, paths: paths, downloader: downloader, progress: { output.progress($0) })
         }
         var update: PreparedModpackUpdate?
@@ -121,10 +121,10 @@ extension CLIApplication {
     @MainActor static func fetch(_ request: CommandRequest, output: CommandOutput) async throws -> Value {
         let (_, _, downloader) = try await context(request)
         guard let url = URL(string: try request.operand()), ["https", "http"].contains(url.scheme?.lowercased() ?? ""), url.host != nil,
-              let size = request.integer("size"), size >= 0, let sha1 = request.string("sha1"), sha1.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tca976a5cf5f9.localized) }
+              let size = request.integer("size"), size >= 0, let sha1 = request.string("sha1"), sha1.range(of: "^[a-fA-F0-9]{40}$", options: .regularExpression) != nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidDownloadUrlSizeOrChecksum.localized) }
         let file = URL(fileURLWithPath: try request.operand(1)), item = DownloadItem(url: url, destination: file, sha1: sha1, size: Int64(size))
         if !request.dryRun {
-            if FileManager.default.fileExists(atPath: file.path), !DownloadManager.valid(file, item: item) { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.tb634c8d3959d.localized) }
+            if FileManager.default.fileExists(atPath: file.path), !DownloadManager.valid(file, item: item) { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.downloadTargetContentConflict.localized) }
             try await downloader.fetch(item) { output.event("progress", .object(["receivedBytes": .integer($0.receivedBytes), "totalBytes": .integer($0.totalBytes ?? Int64(size))])) }
         }
         return .object(["file": .string(file.path), "dryRun": .bool(request.dryRun), "verified": .bool(!request.dryRun)])

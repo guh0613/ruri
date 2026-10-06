@@ -3,140 +3,140 @@ import Foundation
 
 extension Messages {
     public enum AppExportInstanceView {
-        /// 导出 %1$@
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText1`.
-        public static func exportInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText1", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
-        }
-        /// 导出游戏安装文件、模组和配置，保留本地修改。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText2`.
-        public static var fullExportDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText2", table: "Interface", fallback: "导出游戏安装文件、模组和配置，保留本地修改。")
-        }
-        /// 导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText3`.
-        public static var lightExportDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText3", table: "Interface", fallback: "导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。")
-        }
-        /// 导出格式
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText4`.
-        public static var exportFormat: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText4", table: "Interface", fallback: "导出格式")
-        }
-        /// 版本
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText5`.
-        public static var version: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText5", table: "Interface", fallback: "版本")
-        }
-        /// 整合包版本
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText6`.
-        public static var packVersion: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText6", table: "Interface", fallback: "整合包版本")
-        }
         /// 作者
         ///
-        /// Resource: `Interface.appExportInstanceView.bodyText7`.
+        /// Resource: `Interface.AppExportInstanceView.author`.
         public static var author: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText7", table: "Interface", fallback: "作者")
-        }
-        /// 描述
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText8`.
-        public static var description: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText8", table: "Interface", fallback: "描述")
-        }
-        /// 从 Modrinth 引用可下载文件
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText9`.
-        public static var modrinthFiles: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText9", table: "Interface", fallback: "从 Modrinth 引用可下载文件")
-        }
-        /// 包含存档
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText10`.
-        public static var includeWorlds: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText10", table: "Interface", fallback: "包含存档")
-        }
-        /// 启动命令会包含在导出文件中，导入后保持停用。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText11`.
-        public static var commandsDisabled: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText11", table: "Interface", fallback: "启动命令会包含在导出文件中，导入后保持停用。")
-        }
-        /// 本机环境变量不包含在导出文件中。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText12`.
-        public static var excludeEnvironment: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText12", table: "Interface", fallback: "本机环境变量不包含在导出文件中。")
-        }
-        /// 指定的 Java 主版本仅在 Ruri 格式中保留。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText13`.
-        public static var javaMajorVersion: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText13", table: "Interface", fallback: "指定的 Java 主版本仅在 Ruri 格式中保留。")
-        }
-        /// 适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText14`.
-        public static var fullBackupDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText14", table: "Interface", fallback: "适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。")
-        }
-        /// 保留模组来源和版本记录，支持后续检查更新。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText15`.
-        public static var ruriFormatDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText15", table: "Interface", fallback: "保留模组来源和版本记录，支持后续检查更新。")
-        }
-        /// 可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText16`.
-        public static var hmclFormatDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText16", table: "Interface", fallback: "可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。")
-        }
-        /// 已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText17`.
-        public static var mrpackFormatDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText17", table: "Interface", fallback: "已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。")
-        }
-        /// 可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。
-        ///
-        /// Resource: `Interface.appExportInstanceView.bodyText18`.
-        public static var prismFormatDescription: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText18", table: "Interface", fallback: "可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。")
+            .init(key: "AppExportInstanceView.author", table: "Interface", fallback: "作者")
         }
         /// 选择保存位置…
         ///
-        /// Resource: `Interface.appExportInstanceView.bodyText19`.
+        /// Resource: `Interface.AppExportInstanceView.chooseSaveLocation`.
         public static var chooseSaveLocation: LocalizedMessage {
-            .init(key: "appExportInstanceView.bodyText19", table: "Interface", fallback: "选择保存位置…")
+            .init(key: "AppExportInstanceView.chooseSaveLocation", table: "Interface", fallback: "选择保存位置…")
+        }
+        /// 启动命令会包含在导出文件中，导入后保持停用。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.commandsDisabled`.
+        public static var commandsDisabled: LocalizedMessage {
+            .init(key: "AppExportInstanceView.commandsDisabled", table: "Interface", fallback: "启动命令会包含在导出文件中，导入后保持停用。")
+        }
+        /// 描述
+        ///
+        /// Resource: `Interface.AppExportInstanceView.description`.
+        public static var description: LocalizedMessage {
+            .init(key: "AppExportInstanceView.description", table: "Interface", fallback: "描述")
+        }
+        /// 本机环境变量不包含在导出文件中。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.excludeEnvironment`.
+        public static var excludeEnvironment: LocalizedMessage {
+            .init(key: "AppExportInstanceView.excludeEnvironment", table: "Interface", fallback: "本机环境变量不包含在导出文件中。")
+        }
+        /// 导出格式
+        ///
+        /// Resource: `Interface.AppExportInstanceView.exportFormat`.
+        public static var exportFormat: LocalizedMessage {
+            .init(key: "AppExportInstanceView.exportFormat", table: "Interface", fallback: "导出格式")
+        }
+        /// 导出 %1$@
+        ///
+        /// Resource: `Interface.AppExportInstanceView.exportInstance`.
+        public static func exportInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppExportInstanceView.exportInstance", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
+        }
+        /// 适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.fullBackupDescription`.
+        public static var fullBackupDescription: LocalizedMessage {
+            .init(key: "AppExportInstanceView.fullBackupDescription", table: "Interface", fallback: "适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。")
+        }
+        /// 导出游戏安装文件、模组和配置，保留本地修改。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.fullExportDescription`.
+        public static var fullExportDescription: LocalizedMessage {
+            .init(key: "AppExportInstanceView.fullExportDescription", table: "Interface", fallback: "导出游戏安装文件、模组和配置，保留本地修改。")
+        }
+        /// 可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.hmclFormatDescription`.
+        public static var hmclFormatDescription: LocalizedMessage {
+            .init(key: "AppExportInstanceView.hmclFormatDescription", table: "Interface", fallback: "可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。")
+        }
+        /// 包含存档
+        ///
+        /// Resource: `Interface.AppExportInstanceView.includeWorlds`.
+        public static var includeWorlds: LocalizedMessage {
+            .init(key: "AppExportInstanceView.includeWorlds", table: "Interface", fallback: "包含存档")
+        }
+        /// 指定的 Java 主版本仅在 Ruri 格式中保留。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.javaMajorVersion`.
+        public static var javaMajorVersion: LocalizedMessage {
+            .init(key: "AppExportInstanceView.javaMajorVersion", table: "Interface", fallback: "指定的 Java 主版本仅在 Ruri 格式中保留。")
+        }
+        /// 导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.lightExportDescription`.
+        public static var lightExportDescription: LocalizedMessage {
+            .init(key: "AppExportInstanceView.lightExportDescription", table: "Interface", fallback: "导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。")
+        }
+        /// 从 Modrinth 引用可下载文件
+        ///
+        /// Resource: `Interface.AppExportInstanceView.modrinthFiles`.
+        public static var modrinthFiles: LocalizedMessage {
+            .init(key: "AppExportInstanceView.modrinthFiles", table: "Interface", fallback: "从 Modrinth 引用可下载文件")
+        }
+        /// 已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.mrpackFormatDescription`.
+        public static var mrpackFormatDescription: LocalizedMessage {
+            .init(key: "AppExportInstanceView.mrpackFormatDescription", table: "Interface", fallback: "已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。")
+        }
+        /// 整合包版本
+        ///
+        /// Resource: `Interface.AppExportInstanceView.packVersion`.
+        public static var packVersion: LocalizedMessage {
+            .init(key: "AppExportInstanceView.packVersion", table: "Interface", fallback: "整合包版本")
+        }
+        /// 可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.prismFormatDescription`.
+        public static var prismFormatDescription: LocalizedMessage {
+            .init(key: "AppExportInstanceView.prismFormatDescription", table: "Interface", fallback: "可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。")
+        }
+        /// 保留模组来源和版本记录，支持后续检查更新。
+        ///
+        /// Resource: `Interface.AppExportInstanceView.ruriFormatDescription`.
+        public static var ruriFormatDescription: LocalizedMessage {
+            .init(key: "AppExportInstanceView.ruriFormatDescription", table: "Interface", fallback: "保留模组来源和版本记录，支持后续检查更新。")
+        }
+        /// 版本
+        ///
+        /// Resource: `Interface.AppExportInstanceView.version`.
+        public static var version: LocalizedMessage {
+            .init(key: "AppExportInstanceView.version", table: "Interface", fallback: "版本")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appExportInstanceView.bodyText1": .init("导出 %1$@", [.text]),
-            "Interface:appExportInstanceView.bodyText2": .init("导出游戏安装文件、模组和配置，保留本地修改。", []),
-            "Interface:appExportInstanceView.bodyText3": .init("导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。", []),
-            "Interface:appExportInstanceView.bodyText4": .init("导出格式", []),
-            "Interface:appExportInstanceView.bodyText5": .init("版本", []),
-            "Interface:appExportInstanceView.bodyText6": .init("整合包版本", []),
-            "Interface:appExportInstanceView.bodyText7": .init("作者", []),
-            "Interface:appExportInstanceView.bodyText8": .init("描述", []),
-            "Interface:appExportInstanceView.bodyText9": .init("从 Modrinth 引用可下载文件", []),
-            "Interface:appExportInstanceView.bodyText10": .init("包含存档", []),
-            "Interface:appExportInstanceView.bodyText11": .init("启动命令会包含在导出文件中，导入后保持停用。", []),
-            "Interface:appExportInstanceView.bodyText12": .init("本机环境变量不包含在导出文件中。", []),
-            "Interface:appExportInstanceView.bodyText13": .init("指定的 Java 主版本仅在 Ruri 格式中保留。", []),
-            "Interface:appExportInstanceView.bodyText14": .init("适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。", []),
-            "Interface:appExportInstanceView.bodyText15": .init("保留模组来源和版本记录，支持后续检查更新。", []),
-            "Interface:appExportInstanceView.bodyText16": .init("可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。", []),
-            "Interface:appExportInstanceView.bodyText17": .init("已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。", []),
-            "Interface:appExportInstanceView.bodyText18": .init("可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。", []),
-            "Interface:appExportInstanceView.bodyText19": .init("选择保存位置…", []),
+            "Interface:AppExportInstanceView.author": .init("作者", []),
+            "Interface:AppExportInstanceView.chooseSaveLocation": .init("选择保存位置…", []),
+            "Interface:AppExportInstanceView.commandsDisabled": .init("启动命令会包含在导出文件中，导入后保持停用。", []),
+            "Interface:AppExportInstanceView.description": .init("描述", []),
+            "Interface:AppExportInstanceView.excludeEnvironment": .init("本机环境变量不包含在导出文件中。", []),
+            "Interface:AppExportInstanceView.exportFormat": .init("导出格式", []),
+            "Interface:AppExportInstanceView.exportInstance": .init("导出 %1$@", [.text]),
+            "Interface:AppExportInstanceView.fullBackupDescription": .init("适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。", []),
+            "Interface:AppExportInstanceView.fullExportDescription": .init("导出游戏安装文件、模组和配置，保留本地修改。", []),
+            "Interface:AppExportInstanceView.hmclFormatDescription": .init("可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。", []),
+            "Interface:AppExportInstanceView.includeWorlds": .init("包含存档", []),
+            "Interface:AppExportInstanceView.javaMajorVersion": .init("指定的 Java 主版本仅在 Ruri 格式中保留。", []),
+            "Interface:AppExportInstanceView.lightExportDescription": .init("导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。", []),
+            "Interface:AppExportInstanceView.modrinthFiles": .init("从 Modrinth 引用可下载文件", []),
+            "Interface:AppExportInstanceView.mrpackFormatDescription": .init("已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。", []),
+            "Interface:AppExportInstanceView.packVersion": .init("整合包版本", []),
+            "Interface:AppExportInstanceView.prismFormatDescription": .init("可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。", []),
+            "Interface:AppExportInstanceView.ruriFormatDescription": .init("保留模组来源和版本记录，支持后续检查更新。", []),
+            "Interface:AppExportInstanceView.version": .init("版本", []),
         ]
     }
 }

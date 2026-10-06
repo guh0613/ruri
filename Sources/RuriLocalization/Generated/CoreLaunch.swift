@@ -5,124 +5,124 @@ extension Messages {
     public enum CoreLaunch {
         /// [Ruri] 单行日志过长，已省略
         ///
-        /// Resource: `Core.coreLaunch.newlineText1`.
+        /// Resource: `Core.CoreLaunch.longLogLineOmitted`.
         public static var longLogLineOmitted: LocalizedMessage {
-            .init(key: "coreLaunch.newlineText1", table: "Core", fallback: "[Ruri] 单行日志过长，已省略")
-        }
-        /// 启动参数中的引号或反斜杠未闭合。
-        ///
-        /// Resource: `Errors.coreLaunch.qText1`.
-        public static var unclosedLaunchQuoting: LocalizedMessage {
-            .init(key: "coreLaunch.qText1", table: "Errors", fallback: "启动参数中的引号或反斜杠未闭合。")
+            .init(key: "CoreLaunch.longLogLineOmitted", table: "Core", fallback: "[Ruri] 单行日志过长，已省略")
         }
         /// 请先完成外置认证并准备认证组件。
         ///
-        /// Resource: `Errors.coreLaunch.buildText1`.
+        /// Resource: `Errors.CoreLaunch.externalAuthRequired`.
         public static var externalAuthRequired: LocalizedMessage {
-            .init(key: "coreLaunch.buildText1", table: "Errors", fallback: "请先完成外置认证并准备认证组件。")
-        }
-        /// 整合包尚未完成导入，请先完成导入后再启动。
-        ///
-        /// Resource: `Errors.coreLaunch.buildText2`.
-        public static var packImportIncomplete: LocalizedMessage {
-            .init(key: "coreLaunch.buildText2", table: "Errors", fallback: "整合包尚未完成导入，请先完成导入后再启动。")
-        }
-        /// 启动清单没有主类
-        ///
-        /// Resource: `Errors.coreLaunch.mainClassText1`.
-        public static var mainClassMissing: LocalizedMessage {
-            .init(key: "coreLaunch.mainClassText1", table: "Errors", fallback: "启动清单没有主类")
-        }
-        /// 启动清单尚未合并父版本
-        ///
-        /// Resource: `Errors.coreLaunch.mainClassText2`.
-        public static var parentManifestUnmerged: LocalizedMessage {
-            .init(key: "coreLaunch.mainClassText2", table: "Errors", fallback: "启动清单尚未合并父版本")
-        }
-        /// 内存或窗口大小设置无效
-        ///
-        /// Resource: `Errors.coreLaunch.mainClassText3`.
-        public static var invalidMemoryOrWindow: LocalizedMessage {
-            .init(key: "coreLaunch.mainClassText3", table: "Errors", fallback: "内存或窗口大小设置无效")
-        }
-        /// 此版本的兼容规则不支持当前 macOS 环境。
-        ///
-        /// Resource: `Errors.coreLaunch.architectureText1`.
-        public static var unsupportedArchitecture: LocalizedMessage {
-            .init(key: "coreLaunch.architectureText1", table: "Errors", fallback: "此版本的兼容规则不支持当前 macOS 环境。")
-        }
-        /// Java 与游戏原生库的架构不匹配。需要 %1$@。
-        ///
-        /// Resource: `Errors.coreLaunch.architectureText2`.
-        public static func nativeArchitectureMismatch(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunch.architectureText2", table: "Errors", fallback: "Java 与游戏原生库的架构不匹配。需要 %1$@。", arguments: [.text(value0)])
-        }
-        /// 所选 Java 不符合游戏或整合包的版本要求。
-        ///
-        /// Resource: `Errors.coreLaunch.architectureText3`.
-        public static var javaVersionIncompatible: LocalizedMessage {
-            .init(key: "coreLaunch.architectureText3", table: "Errors", fallback: "所选 Java 不符合游戏或整合包的版本要求。")
-        }
-        /// 所选运行时不是实例指定的 Java 主版本。
-        ///
-        /// Resource: `Errors.coreLaunch.architectureText4`.
-        public static var javaMajorVersionMismatch: LocalizedMessage {
-            .init(key: "coreLaunch.architectureText4", table: "Errors", fallback: "所选运行时不是实例指定的 Java 主版本。")
-        }
-        /// 加载器生成文件缺失，请先修复实例。
-        ///
-        /// Resource: `Errors.coreLaunch.seenText1`.
-        public static var generatedFilesMissing: LocalizedMessage {
-            .init(key: "coreLaunch.seenText1", table: "Errors", fallback: "加载器生成文件缺失，请先修复实例。")
-        }
-        /// 游戏文件缺失：%1$@。请先修复实例。
-        ///
-        /// Resource: `Errors.coreLaunch.seenText2`.
-        public static func gameFilesMissing(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunch.seenText2", table: "Errors", fallback: "游戏文件缺失：%1$@。请先修复实例。", arguments: [.text(value0)])
-        }
-        /// 启动清单包含未支持的变量：%1$@
-        ///
-        /// Resource: `Errors.coreLaunch.resultText1`.
-        public static func unsupportedManifestVariable(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunch.resultText1", table: "Errors", fallback: "启动清单包含未支持的变量：%1$@", arguments: [.text(value0)])
-        }
-        /// 附加 JVM 参数不能覆盖游戏主类或 classpath。
-        ///
-        /// Resource: `Errors.coreLaunch.extrasText1`.
-        public static var jvmArgumentsOverride: LocalizedMessage {
-            .init(key: "coreLaunch.extrasText1", table: "Errors", fallback: "附加 JVM 参数不能覆盖游戏主类或 classpath。")
-        }
-        /// 附加游戏参数不能覆盖账号身份、令牌或游戏目录。
-        ///
-        /// Resource: `Errors.coreLaunch.reservedText1`.
-        public static var gameArgumentsOverride: LocalizedMessage {
-            .init(key: "coreLaunch.reservedText1", table: "Errors", fallback: "附加游戏参数不能覆盖账号身份、令牌或游戏目录。")
+            .init(key: "CoreLaunch.externalAuthRequired", table: "Errors", fallback: "请先完成外置认证并准备认证组件。")
         }
         /// 游戏已在运行或正在结束
         ///
-        /// Resource: `Errors.coreLaunch.startText1`.
+        /// Resource: `Errors.CoreLaunch.gameAlreadyRunning`.
         public static var gameAlreadyRunning: LocalizedMessage {
-            .init(key: "coreLaunch.startText1", table: "Errors", fallback: "游戏已在运行或正在结束")
+            .init(key: "CoreLaunch.gameAlreadyRunning", table: "Errors", fallback: "游戏已在运行或正在结束")
+        }
+        /// 附加游戏参数不能覆盖账号身份、令牌或游戏目录。
+        ///
+        /// Resource: `Errors.CoreLaunch.gameArgumentsOverride`.
+        public static var gameArgumentsOverride: LocalizedMessage {
+            .init(key: "CoreLaunch.gameArgumentsOverride", table: "Errors", fallback: "附加游戏参数不能覆盖账号身份、令牌或游戏目录。")
+        }
+        /// 游戏文件缺失：%1$@。请先修复实例。
+        ///
+        /// Resource: `Errors.CoreLaunch.gameFilesMissing`.
+        public static func gameFilesMissing(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreLaunch.gameFilesMissing", table: "Errors", fallback: "游戏文件缺失：%1$@。请先修复实例。", arguments: [.text(value0)])
+        }
+        /// 加载器生成文件缺失，请先修复实例。
+        ///
+        /// Resource: `Errors.CoreLaunch.generatedFilesMissing`.
+        public static var generatedFilesMissing: LocalizedMessage {
+            .init(key: "CoreLaunch.generatedFilesMissing", table: "Errors", fallback: "加载器生成文件缺失，请先修复实例。")
+        }
+        /// 内存或窗口大小设置无效
+        ///
+        /// Resource: `Errors.CoreLaunch.invalidMemoryOrWindow`.
+        public static var invalidMemoryOrWindow: LocalizedMessage {
+            .init(key: "CoreLaunch.invalidMemoryOrWindow", table: "Errors", fallback: "内存或窗口大小设置无效")
+        }
+        /// 所选运行时不是实例指定的 Java 主版本。
+        ///
+        /// Resource: `Errors.CoreLaunch.javaMajorVersionMismatch`.
+        public static var javaMajorVersionMismatch: LocalizedMessage {
+            .init(key: "CoreLaunch.javaMajorVersionMismatch", table: "Errors", fallback: "所选运行时不是实例指定的 Java 主版本。")
+        }
+        /// 所选 Java 不符合游戏或整合包的版本要求。
+        ///
+        /// Resource: `Errors.CoreLaunch.javaVersionIncompatible`.
+        public static var javaVersionIncompatible: LocalizedMessage {
+            .init(key: "CoreLaunch.javaVersionIncompatible", table: "Errors", fallback: "所选 Java 不符合游戏或整合包的版本要求。")
+        }
+        /// 附加 JVM 参数不能覆盖游戏主类或 classpath。
+        ///
+        /// Resource: `Errors.CoreLaunch.jvmArgumentsOverride`.
+        public static var jvmArgumentsOverride: LocalizedMessage {
+            .init(key: "CoreLaunch.jvmArgumentsOverride", table: "Errors", fallback: "附加 JVM 参数不能覆盖游戏主类或 classpath。")
+        }
+        /// 启动清单没有主类
+        ///
+        /// Resource: `Errors.CoreLaunch.mainClassMissing`.
+        public static var mainClassMissing: LocalizedMessage {
+            .init(key: "CoreLaunch.mainClassMissing", table: "Errors", fallback: "启动清单没有主类")
+        }
+        /// Java 与游戏原生库的架构不匹配。需要 %1$@。
+        ///
+        /// Resource: `Errors.CoreLaunch.nativeArchitectureMismatch`.
+        public static func nativeArchitectureMismatch(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreLaunch.nativeArchitectureMismatch", table: "Errors", fallback: "Java 与游戏原生库的架构不匹配。需要 %1$@。", arguments: [.text(value0)])
+        }
+        /// 整合包尚未完成导入，请先完成导入后再启动。
+        ///
+        /// Resource: `Errors.CoreLaunch.packImportIncomplete`.
+        public static var packImportIncomplete: LocalizedMessage {
+            .init(key: "CoreLaunch.packImportIncomplete", table: "Errors", fallback: "整合包尚未完成导入，请先完成导入后再启动。")
+        }
+        /// 启动清单尚未合并父版本
+        ///
+        /// Resource: `Errors.CoreLaunch.parentManifestUnmerged`.
+        public static var parentManifestUnmerged: LocalizedMessage {
+            .init(key: "CoreLaunch.parentManifestUnmerged", table: "Errors", fallback: "启动清单尚未合并父版本")
+        }
+        /// 启动参数中的引号或反斜杠未闭合。
+        ///
+        /// Resource: `Errors.CoreLaunch.unclosedLaunchQuoting`.
+        public static var unclosedLaunchQuoting: LocalizedMessage {
+            .init(key: "CoreLaunch.unclosedLaunchQuoting", table: "Errors", fallback: "启动参数中的引号或反斜杠未闭合。")
+        }
+        /// 此版本的兼容规则不支持当前 macOS 环境。
+        ///
+        /// Resource: `Errors.CoreLaunch.unsupportedArchitecture`.
+        public static var unsupportedArchitecture: LocalizedMessage {
+            .init(key: "CoreLaunch.unsupportedArchitecture", table: "Errors", fallback: "此版本的兼容规则不支持当前 macOS 环境。")
+        }
+        /// 启动清单包含未支持的变量：%1$@
+        ///
+        /// Resource: `Errors.CoreLaunch.unsupportedManifestVariable`.
+        public static func unsupportedManifestVariable(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreLaunch.unsupportedManifestVariable", table: "Errors", fallback: "启动清单包含未支持的变量：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreLaunch.newlineText1": .init("[Ruri] 单行日志过长，已省略", []),
-            "Errors:coreLaunch.qText1": .init("启动参数中的引号或反斜杠未闭合。", []),
-            "Errors:coreLaunch.buildText1": .init("请先完成外置认证并准备认证组件。", []),
-            "Errors:coreLaunch.buildText2": .init("整合包尚未完成导入，请先完成导入后再启动。", []),
-            "Errors:coreLaunch.mainClassText1": .init("启动清单没有主类", []),
-            "Errors:coreLaunch.mainClassText2": .init("启动清单尚未合并父版本", []),
-            "Errors:coreLaunch.mainClassText3": .init("内存或窗口大小设置无效", []),
-            "Errors:coreLaunch.architectureText1": .init("此版本的兼容规则不支持当前 macOS 环境。", []),
-            "Errors:coreLaunch.architectureText2": .init("Java 与游戏原生库的架构不匹配。需要 %1$@。", [.text]),
-            "Errors:coreLaunch.architectureText3": .init("所选 Java 不符合游戏或整合包的版本要求。", []),
-            "Errors:coreLaunch.architectureText4": .init("所选运行时不是实例指定的 Java 主版本。", []),
-            "Errors:coreLaunch.seenText1": .init("加载器生成文件缺失，请先修复实例。", []),
-            "Errors:coreLaunch.seenText2": .init("游戏文件缺失：%1$@。请先修复实例。", [.text]),
-            "Errors:coreLaunch.resultText1": .init("启动清单包含未支持的变量：%1$@", [.text]),
-            "Errors:coreLaunch.extrasText1": .init("附加 JVM 参数不能覆盖游戏主类或 classpath。", []),
-            "Errors:coreLaunch.reservedText1": .init("附加游戏参数不能覆盖账号身份、令牌或游戏目录。", []),
-            "Errors:coreLaunch.startText1": .init("游戏已在运行或正在结束", []),
+            "Core:CoreLaunch.longLogLineOmitted": .init("[Ruri] 单行日志过长，已省略", []),
+            "Errors:CoreLaunch.externalAuthRequired": .init("请先完成外置认证并准备认证组件。", []),
+            "Errors:CoreLaunch.gameAlreadyRunning": .init("游戏已在运行或正在结束", []),
+            "Errors:CoreLaunch.gameArgumentsOverride": .init("附加游戏参数不能覆盖账号身份、令牌或游戏目录。", []),
+            "Errors:CoreLaunch.gameFilesMissing": .init("游戏文件缺失：%1$@。请先修复实例。", [.text]),
+            "Errors:CoreLaunch.generatedFilesMissing": .init("加载器生成文件缺失，请先修复实例。", []),
+            "Errors:CoreLaunch.invalidMemoryOrWindow": .init("内存或窗口大小设置无效", []),
+            "Errors:CoreLaunch.javaMajorVersionMismatch": .init("所选运行时不是实例指定的 Java 主版本。", []),
+            "Errors:CoreLaunch.javaVersionIncompatible": .init("所选 Java 不符合游戏或整合包的版本要求。", []),
+            "Errors:CoreLaunch.jvmArgumentsOverride": .init("附加 JVM 参数不能覆盖游戏主类或 classpath。", []),
+            "Errors:CoreLaunch.mainClassMissing": .init("启动清单没有主类", []),
+            "Errors:CoreLaunch.nativeArchitectureMismatch": .init("Java 与游戏原生库的架构不匹配。需要 %1$@。", [.text]),
+            "Errors:CoreLaunch.packImportIncomplete": .init("整合包尚未完成导入，请先完成导入后再启动。", []),
+            "Errors:CoreLaunch.parentManifestUnmerged": .init("启动清单尚未合并父版本", []),
+            "Errors:CoreLaunch.unclosedLaunchQuoting": .init("启动参数中的引号或反斜杠未闭合。", []),
+            "Errors:CoreLaunch.unsupportedArchitecture": .init("此版本的兼容规则不支持当前 macOS 环境。", []),
+            "Errors:CoreLaunch.unsupportedManifestVariable": .init("启动清单包含未支持的变量：%1$@", [.text]),
         ]
     }
 }

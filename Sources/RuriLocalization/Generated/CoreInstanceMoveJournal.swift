@@ -3,112 +3,112 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceMoveJournal {
-        /// 移动记录不属于所选实例。
+        /// 实例位置与移动记录不一致，文件已保留。
         ///
-        /// Resource: `Errors.coreInstanceMoveJournal.resultText1`.
-        public static var moveRecordWrongInstance: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.resultText1", table: "Errors", fallback: "移动记录不属于所选实例。")
-        }
-        /// 实例移动记录无效，原文件和工作副本已保留。
-        ///
-        /// Resource: `Errors.coreInstanceMoveJournal.expectedText1`.
-        public static var invalidMoveRecord: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.expectedText1", table: "Errors", fallback: "实例移动记录无效，原文件和工作副本已保留。")
-        }
-        /// 移动记录缺少目标校验信息。
-        ///
-        /// Resource: `Errors.coreInstanceMoveJournal.expectedText2`.
-        public static var missingDestinationVerification: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.expectedText2", table: "Errors", fallback: "移动记录缺少目标校验信息。")
-        }
-        /// 移动目标的校验摘要无效。
-        ///
-        /// Resource: `Errors.coreInstanceMoveJournal.destinationDigestText1`.
-        public static var invalidDestinationDigest: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.destinationDigestText1", table: "Errors", fallback: "移动目标的校验摘要无效。")
-        }
-        /// 移动记录缺少来源退役信息。
-        ///
-        /// Resource: `Errors.coreInstanceMoveJournal.destinationDigestText2`.
-        public static var missingSourceRetirement: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.destinationDigestText2", table: "Errors", fallback: "移动记录缺少来源退役信息。")
-        }
-        /// 移动记录中的实例文件夹无效。
-        ///
-        /// Resource: `Errors.coreInstanceMoveJournal.destinationDigestText3`.
-        public static var invalidInstanceDirectory: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.destinationDigestText3", table: "Errors", fallback: "移动记录中的实例文件夹无效。")
-        }
-        /// 移动记录中的文件身份无效。
-        ///
-        /// Resource: `Errors.coreInstanceMoveJournal.destinationDigestText4`.
-        public static var invalidFileIdentity: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.destinationDigestText4", table: "Errors", fallback: "移动记录中的文件身份无效。")
+        /// Resource: `Errors.CoreInstanceMoveJournal.changedInstanceLocation`.
+        public static var changedInstanceLocation: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.changedInstanceLocation", table: "Errors", fallback: "实例位置与移动记录不一致，文件已保留。")
         }
         /// 移动涉及的实例文件夹位置已改变，请恢复原位置后继续。
         ///
-        /// Resource: `Errors.coreInstanceMoveJournal.validateLocationsText1`.
+        /// Resource: `Errors.CoreInstanceMoveJournal.changedMoveLocations`.
         public static var changedMoveLocations: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.validateLocationsText1", table: "Errors", fallback: "移动涉及的实例文件夹位置已改变，请恢复原位置后继续。")
+            .init(key: "CoreInstanceMoveJournal.changedMoveLocations", table: "Errors", fallback: "移动涉及的实例文件夹位置已改变，请恢复原位置后继续。")
         }
-        /// 移动中的实例已被移除，文件已保留。
+        /// 移动目标的校验摘要无效。
         ///
-        /// Resource: `Errors.coreInstanceMoveJournal.instanceText1`.
-        public static var removedMovingInstance: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.instanceText1", table: "Errors", fallback: "移动中的实例已被移除，文件已保留。")
+        /// Resource: `Errors.CoreInstanceMoveJournal.invalidDestinationDigest`.
+        public static var invalidDestinationDigest: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.invalidDestinationDigest", table: "Errors", fallback: "移动目标的校验摘要无效。")
         }
-        /// 实例位置与移动记录不一致，文件已保留。
+        /// 移动记录中的文件身份无效。
         ///
-        /// Resource: `Errors.coreInstanceMoveJournal.instanceText2`.
-        public static var changedInstanceLocation: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.instanceText2", table: "Errors", fallback: "实例位置与移动记录不一致，文件已保留。")
+        /// Resource: `Errors.CoreInstanceMoveJournal.invalidFileIdentity`.
+        public static var invalidFileIdentity: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.invalidFileIdentity", table: "Errors", fallback: "移动记录中的文件身份无效。")
+        }
+        /// 移动记录中的实例文件夹无效。
+        ///
+        /// Resource: `Errors.CoreInstanceMoveJournal.invalidInstanceDirectory`.
+        public static var invalidInstanceDirectory: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.invalidInstanceDirectory", table: "Errors", fallback: "移动记录中的实例文件夹无效。")
+        }
+        /// 实例移动记录无效，原文件和工作副本已保留。
+        ///
+        /// Resource: `Errors.CoreInstanceMoveJournal.invalidMoveRecord`.
+        public static var invalidMoveRecord: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.invalidMoveRecord", table: "Errors", fallback: "实例移动记录无效，原文件和工作副本已保留。")
         }
         /// 实例的移动凭据与目录绑定不一致。
         ///
-        /// Resource: `Errors.coreInstanceMoveJournal.instanceText3`.
+        /// Resource: `Errors.CoreInstanceMoveJournal.mismatchedDirectoryBinding`.
         public static var mismatchedDirectoryBinding: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.instanceText3", table: "Errors", fallback: "实例的移动凭据与目录绑定不一致。")
+            .init(key: "CoreInstanceMoveJournal.mismatchedDirectoryBinding", table: "Errors", fallback: "实例的移动凭据与目录绑定不一致。")
+        }
+        /// 移动记录缺少目标校验信息。
+        ///
+        /// Resource: `Errors.CoreInstanceMoveJournal.missingDestinationVerification`.
+        public static var missingDestinationVerification: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.missingDestinationVerification", table: "Errors", fallback: "移动记录缺少目标校验信息。")
+        }
+        /// 移动记录缺少来源退役信息。
+        ///
+        /// Resource: `Errors.CoreInstanceMoveJournal.missingSourceRetirement`.
+        public static var missingSourceRetirement: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.missingSourceRetirement", table: "Errors", fallback: "移动记录缺少来源退役信息。")
         }
         /// 实例移动记录过大。
         ///
-        /// Resource: `Errors.coreInstanceMoveJournal.dataText1`.
+        /// Resource: `Errors.CoreInstanceMoveJournal.moveRecordTooLarge`.
         public static var moveRecordTooLarge: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.dataText1", table: "Errors", fallback: "实例移动记录过大。")
+            .init(key: "CoreInstanceMoveJournal.moveRecordTooLarge", table: "Errors", fallback: "实例移动记录过大。")
         }
-        /// 此实例有未完成的移动，请先恢复实例移动。
+        /// 移动记录不属于所选实例。
         ///
-        /// Resource: `Errors.coreInstanceMoveJournal.requireAvailableText1`.
-        public static var unfinishedMoveExists: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.requireAvailableText1", table: "Errors", fallback: "此实例有未完成的移动，请先恢复实例移动。")
+        /// Resource: `Errors.CoreInstanceMoveJournal.moveRecordWrongInstance`.
+        public static var moveRecordWrongInstance: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.moveRecordWrongInstance", table: "Errors", fallback: "移动记录不属于所选实例。")
+        }
+        /// 移动中的实例已被移除，文件已保留。
+        ///
+        /// Resource: `Errors.CoreInstanceMoveJournal.removedMovingInstance`.
+        public static var removedMovingInstance: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.removedMovingInstance", table: "Errors", fallback: "移动中的实例已被移除，文件已保留。")
         }
         /// 待处理的实例移动过多，请先恢复。
         ///
-        /// Resource: `Errors.coreInstanceMoveJournal.recordsText1`.
+        /// Resource: `Errors.CoreInstanceMoveJournal.tooManyPendingMoves`.
         public static var tooManyPendingMoves: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.recordsText1", table: "Errors", fallback: "待处理的实例移动过多，请先恢复。")
+            .init(key: "CoreInstanceMoveJournal.tooManyPendingMoves", table: "Errors", fallback: "待处理的实例移动过多，请先恢复。")
         }
         /// 此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。
         ///
-        /// Resource: `Errors.coreInstanceMoveJournal.journalText1`.
+        /// Resource: `Errors.CoreInstanceMoveJournal.unfinishedFolderMoves`.
         public static var unfinishedFolderMoves: LocalizedMessage {
-            .init(key: "coreInstanceMoveJournal.journalText1", table: "Errors", fallback: "此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。")
+            .init(key: "CoreInstanceMoveJournal.unfinishedFolderMoves", table: "Errors", fallback: "此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。")
+        }
+        /// 此实例有未完成的移动，请先恢复实例移动。
+        ///
+        /// Resource: `Errors.CoreInstanceMoveJournal.unfinishedMoveExists`.
+        public static var unfinishedMoveExists: LocalizedMessage {
+            .init(key: "CoreInstanceMoveJournal.unfinishedMoveExists", table: "Errors", fallback: "此实例有未完成的移动，请先恢复实例移动。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstanceMoveJournal.resultText1": .init("移动记录不属于所选实例。", []),
-            "Errors:coreInstanceMoveJournal.expectedText1": .init("实例移动记录无效，原文件和工作副本已保留。", []),
-            "Errors:coreInstanceMoveJournal.expectedText2": .init("移动记录缺少目标校验信息。", []),
-            "Errors:coreInstanceMoveJournal.destinationDigestText1": .init("移动目标的校验摘要无效。", []),
-            "Errors:coreInstanceMoveJournal.destinationDigestText2": .init("移动记录缺少来源退役信息。", []),
-            "Errors:coreInstanceMoveJournal.destinationDigestText3": .init("移动记录中的实例文件夹无效。", []),
-            "Errors:coreInstanceMoveJournal.destinationDigestText4": .init("移动记录中的文件身份无效。", []),
-            "Errors:coreInstanceMoveJournal.validateLocationsText1": .init("移动涉及的实例文件夹位置已改变，请恢复原位置后继续。", []),
-            "Errors:coreInstanceMoveJournal.instanceText1": .init("移动中的实例已被移除，文件已保留。", []),
-            "Errors:coreInstanceMoveJournal.instanceText2": .init("实例位置与移动记录不一致，文件已保留。", []),
-            "Errors:coreInstanceMoveJournal.instanceText3": .init("实例的移动凭据与目录绑定不一致。", []),
-            "Errors:coreInstanceMoveJournal.dataText1": .init("实例移动记录过大。", []),
-            "Errors:coreInstanceMoveJournal.requireAvailableText1": .init("此实例有未完成的移动，请先恢复实例移动。", []),
-            "Errors:coreInstanceMoveJournal.recordsText1": .init("待处理的实例移动过多，请先恢复。", []),
-            "Errors:coreInstanceMoveJournal.journalText1": .init("此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。", []),
+            "Errors:CoreInstanceMoveJournal.changedInstanceLocation": .init("实例位置与移动记录不一致，文件已保留。", []),
+            "Errors:CoreInstanceMoveJournal.changedMoveLocations": .init("移动涉及的实例文件夹位置已改变，请恢复原位置后继续。", []),
+            "Errors:CoreInstanceMoveJournal.invalidDestinationDigest": .init("移动目标的校验摘要无效。", []),
+            "Errors:CoreInstanceMoveJournal.invalidFileIdentity": .init("移动记录中的文件身份无效。", []),
+            "Errors:CoreInstanceMoveJournal.invalidInstanceDirectory": .init("移动记录中的实例文件夹无效。", []),
+            "Errors:CoreInstanceMoveJournal.invalidMoveRecord": .init("实例移动记录无效，原文件和工作副本已保留。", []),
+            "Errors:CoreInstanceMoveJournal.mismatchedDirectoryBinding": .init("实例的移动凭据与目录绑定不一致。", []),
+            "Errors:CoreInstanceMoveJournal.missingDestinationVerification": .init("移动记录缺少目标校验信息。", []),
+            "Errors:CoreInstanceMoveJournal.missingSourceRetirement": .init("移动记录缺少来源退役信息。", []),
+            "Errors:CoreInstanceMoveJournal.moveRecordTooLarge": .init("实例移动记录过大。", []),
+            "Errors:CoreInstanceMoveJournal.moveRecordWrongInstance": .init("移动记录不属于所选实例。", []),
+            "Errors:CoreInstanceMoveJournal.removedMovingInstance": .init("移动中的实例已被移除，文件已保留。", []),
+            "Errors:CoreInstanceMoveJournal.tooManyPendingMoves": .init("待处理的实例移动过多，请先恢复。", []),
+            "Errors:CoreInstanceMoveJournal.unfinishedFolderMoves": .init("此文件夹还有未完成的实例移动，请先恢复原位置并处理移动。", []),
+            "Errors:CoreInstanceMoveJournal.unfinishedMoveExists": .init("此实例有未完成的移动，请先恢复实例移动。", []),
         ]
     }
 }

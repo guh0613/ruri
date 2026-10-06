@@ -3,49 +3,49 @@ import Foundation
 
 extension Messages {
     public enum AppGameSessionRecoveryView {
+        /// 收尾记录并恢复启动
+        ///
+        /// Resource: `Interface.AppGameSessionRecoveryView.finalizeAndResume`.
+        public static var finalizeAndResume: LocalizedMessage {
+            .init(key: "AppGameSessionRecoveryView.finalizeAndResume", table: "Interface", fallback: "收尾记录并恢复启动")
+        }
         /// 已确认此实例的游戏已退出
         ///
-        /// Resource: `Interface.appGameSessionRecoveryView.bodyText1`.
+        /// Resource: `Interface.AppGameSessionRecoveryView.gameExitConfirmed`.
         public static var gameExitConfirmed: LocalizedMessage {
-            .init(key: "appGameSessionRecoveryView.bodyText1", table: "Interface", fallback: "已确认此实例的游戏已退出")
-        }
-        /// 恢复仅更新运行记录，不会结束进程或删除日志。
-        ///
-        /// Resource: `Interface.appGameSessionRecoveryView.bodyText2`.
-        public static var recoveryDetails: LocalizedMessage {
-            .init(key: "appGameSessionRecoveryView.bodyText2", table: "Interface", fallback: "恢复仅更新运行记录，不会结束进程或删除日志。")
+            .init(key: "AppGameSessionRecoveryView.gameExitConfirmed", table: "Interface", fallback: "已确认此实例的游戏已退出")
         }
         /// 此实例正被其他操作占用，请等待操作完成。
         ///
-        /// Resource: `Interface.appGameSessionRecoveryView.bodyText3`.
+        /// Resource: `Interface.AppGameSessionRecoveryView.instanceBusy`.
         public static var instanceBusy: LocalizedMessage {
-            .init(key: "appGameSessionRecoveryView.bodyText3", table: "Interface", fallback: "此实例正被其他操作占用，请等待操作完成。")
+            .init(key: "AppGameSessionRecoveryView.instanceBusy", table: "Interface", fallback: "此实例正被其他操作占用，请等待操作完成。")
+        }
+        /// 恢复仅更新运行记录，不会结束进程或删除日志。
+        ///
+        /// Resource: `Interface.AppGameSessionRecoveryView.recoveryDetails`.
+        public static var recoveryDetails: LocalizedMessage {
+            .init(key: "AppGameSessionRecoveryView.recoveryDetails", table: "Interface", fallback: "恢复仅更新运行记录，不会结束进程或删除日志。")
         }
         /// 刷新状态
         ///
-        /// Resource: `Interface.appGameSessionRecoveryView.messageText1`.
+        /// Resource: `Interface.AppGameSessionRecoveryView.refreshStatus`.
         public static var refreshStatus: LocalizedMessage {
-            .init(key: "appGameSessionRecoveryView.messageText1", table: "Interface", fallback: "刷新状态")
+            .init(key: "AppGameSessionRecoveryView.refreshStatus", table: "Interface", fallback: "刷新状态")
         }
         /// 返回游戏
         ///
-        /// Resource: `Interface.appGameSessionRecoveryView.messageText2`.
+        /// Resource: `Interface.AppGameSessionRecoveryView.returnToGame`.
         public static var returnToGame: LocalizedMessage {
-            .init(key: "appGameSessionRecoveryView.messageText2", table: "Interface", fallback: "返回游戏")
-        }
-        /// 收尾记录并恢复启动
-        ///
-        /// Resource: `Interface.appGameSessionRecoveryView.messageText3`.
-        public static var finalizeAndResume: LocalizedMessage {
-            .init(key: "appGameSessionRecoveryView.messageText3", table: "Interface", fallback: "收尾记录并恢复启动")
+            .init(key: "AppGameSessionRecoveryView.returnToGame", table: "Interface", fallback: "返回游戏")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appGameSessionRecoveryView.bodyText1": .init("已确认此实例的游戏已退出", []),
-            "Interface:appGameSessionRecoveryView.bodyText2": .init("恢复仅更新运行记录，不会结束进程或删除日志。", []),
-            "Interface:appGameSessionRecoveryView.bodyText3": .init("此实例正被其他操作占用，请等待操作完成。", []),
-            "Interface:appGameSessionRecoveryView.messageText1": .init("刷新状态", []),
-            "Interface:appGameSessionRecoveryView.messageText2": .init("返回游戏", []),
-            "Interface:appGameSessionRecoveryView.messageText3": .init("收尾记录并恢复启动", []),
+            "Interface:AppGameSessionRecoveryView.finalizeAndResume": .init("收尾记录并恢复启动", []),
+            "Interface:AppGameSessionRecoveryView.gameExitConfirmed": .init("已确认此实例的游戏已退出", []),
+            "Interface:AppGameSessionRecoveryView.instanceBusy": .init("此实例正被其他操作占用，请等待操作完成。", []),
+            "Interface:AppGameSessionRecoveryView.recoveryDetails": .init("恢复仅更新运行记录，不会结束进程或删除日志。", []),
+            "Interface:AppGameSessionRecoveryView.refreshStatus": .init("刷新状态", []),
+            "Interface:AppGameSessionRecoveryView.returnToGame": .init("返回游戏", []),
         ]
     }
 }

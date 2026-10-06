@@ -3,98 +3,98 @@ import Foundation
 
 extension Messages {
     public enum AppRootView {
-        /// 管理
-        ///
-        /// Resource: `Interface.appRootView.modelText1`.
-        public static var manage: LocalizedMessage {
-            .init(key: "appRootView.modelText1", table: "Interface", fallback: "管理")
-        }
-        /// 记录
-        ///
-        /// Resource: `Interface.appRootView.records`.
-        public static var records: LocalizedMessage {
-            .init(key: "appRootView.records", table: "Interface", fallback: "记录")
-        }
-        /// 游玩详情
-        ///
-        /// Resource: `Interface.appRootView.runningIDText1`.
-        public static var runHistory: LocalizedMessage {
-            .init(key: "appRootView.runningIDText1", table: "Interface", fallback: "游玩详情")
-        }
-        /// 查看正在运行的游戏 ⌘L
-        ///
-        /// Resource: `Interface.appRootView.runningIDText2`.
-        public static var viewRunningGameLogs: LocalizedMessage {
-            .init(key: "appRootView.runningIDText2", table: "Interface", fallback: "查看正在运行的游戏 ⌘L")
-        }
-        /// 操作未完成
-        ///
-        /// Resource: `Interface.appRootView.runningIDText3`.
-        public static var operationIncomplete: LocalizedMessage {
-            .init(key: "appRootView.runningIDText3", table: "Interface", fallback: "操作未完成")
-        }
-        /// 好
-        ///
-        /// Resource: `Interface.appRootView.runningIDText4`.
-        public static var ok: LocalizedMessage {
-            .init(key: "appRootView.runningIDText4", table: "Interface", fallback: "好")
-        }
         /// 添加账号…
         ///
-        /// Resource: `Interface.appRootView.bodyText1`.
+        /// Resource: `Interface.AppRootView.addAccount`.
         public static var addAccount: LocalizedMessage {
-            .init(key: "appRootView.bodyText1", table: "Interface", fallback: "添加账号…")
-        }
-        /// 管理账号…
-        ///
-        /// Resource: `Interface.appRootView.bodyText2`.
-        public static var manageAccounts: LocalizedMessage {
-            .init(key: "appRootView.bodyText2", table: "Interface", fallback: "管理账号…")
-        }
-        /// 未登录
-        ///
-        /// Resource: `Interface.appRootView.bodyText3`.
-        public static var notSignedIn: LocalizedMessage {
-            .init(key: "appRootView.bodyText3", table: "Interface", fallback: "未登录")
+            .init(key: "AppRootView.addAccount", table: "Interface", fallback: "添加账号…")
         }
         /// 添加账号后即可启动游戏
         ///
-        /// Resource: `Interface.appRootView.bodyText4`.
+        /// Resource: `Interface.AppRootView.addAccountToLaunch`.
         public static var addAccountToLaunch: LocalizedMessage {
-            .init(key: "appRootView.bodyText4", table: "Interface", fallback: "添加账号后即可启动游戏")
+            .init(key: "AppRootView.addAccountToLaunch", table: "Interface", fallback: "添加账号后即可启动游戏")
         }
         /// 添加账号
         ///
-        /// Resource: `Interface.appRootView.bodyText5`.
+        /// Resource: `Interface.AppRootView.addAnotherAccount`.
         public static var addAnotherAccount: LocalizedMessage {
-            .init(key: "appRootView.bodyText5", table: "Interface", fallback: "添加账号")
+            .init(key: "AppRootView.addAnotherAccount", table: "Interface", fallback: "添加账号")
         }
-        /// 切换账号
+        /// 管理
         ///
-        /// Resource: `Interface.appRootView.bodyText6`.
-        public static var switchAccount: LocalizedMessage {
-            .init(key: "appRootView.bodyText6", table: "Interface", fallback: "切换账号")
+        /// Resource: `Interface.AppRootView.manage`.
+        public static var manage: LocalizedMessage {
+            .init(key: "AppRootView.manage", table: "Interface", fallback: "管理")
+        }
+        /// 管理账号…
+        ///
+        /// Resource: `Interface.AppRootView.manageAccounts`.
+        public static var manageAccounts: LocalizedMessage {
+            .init(key: "AppRootView.manageAccounts", table: "Interface", fallback: "管理账号…")
+        }
+        /// 未登录
+        ///
+        /// Resource: `Interface.AppRootView.notSignedIn`.
+        public static var notSignedIn: LocalizedMessage {
+            .init(key: "AppRootView.notSignedIn", table: "Interface", fallback: "未登录")
+        }
+        /// 好
+        ///
+        /// Resource: `Interface.AppRootView.ok`.
+        public static var ok: LocalizedMessage {
+            .init(key: "AppRootView.ok", table: "Interface", fallback: "好")
+        }
+        /// 操作未完成
+        ///
+        /// Resource: `Interface.AppRootView.operationIncomplete`.
+        public static var operationIncomplete: LocalizedMessage {
+            .init(key: "AppRootView.operationIncomplete", table: "Interface", fallback: "操作未完成")
+        }
+        /// 记录
+        ///
+        /// Resource: `Interface.AppRootView.records`.
+        public static var records: LocalizedMessage {
+            .init(key: "AppRootView.records", table: "Interface", fallback: "记录")
+        }
+        /// 游玩详情
+        ///
+        /// Resource: `Interface.AppRootView.runHistory`.
+        public static var runHistory: LocalizedMessage {
+            .init(key: "AppRootView.runHistory", table: "Interface", fallback: "游玩详情")
         }
         /// 在 Finder 中显示
         ///
-        /// Resource: `Interface.appRootView.urlText1`.
+        /// Resource: `Interface.AppRootView.showInFinder`.
         public static var showInFinder: LocalizedMessage {
-            .init(key: "appRootView.urlText1", table: "Interface", fallback: "在 Finder 中显示")
+            .init(key: "AppRootView.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
+        }
+        /// 切换账号
+        ///
+        /// Resource: `Interface.AppRootView.switchAccount`.
+        public static var switchAccount: LocalizedMessage {
+            .init(key: "AppRootView.switchAccount", table: "Interface", fallback: "切换账号")
+        }
+        /// 查看正在运行的游戏 ⌘L
+        ///
+        /// Resource: `Interface.AppRootView.viewRunningGameLogs`.
+        public static var viewRunningGameLogs: LocalizedMessage {
+            .init(key: "AppRootView.viewRunningGameLogs", table: "Interface", fallback: "查看正在运行的游戏 ⌘L")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appRootView.modelText1": .init("管理", []),
-            "Interface:appRootView.records": .init("记录", []),
-            "Interface:appRootView.runningIDText1": .init("游玩详情", []),
-            "Interface:appRootView.runningIDText2": .init("查看正在运行的游戏 ⌘L", []),
-            "Interface:appRootView.runningIDText3": .init("操作未完成", []),
-            "Interface:appRootView.runningIDText4": .init("好", []),
-            "Interface:appRootView.bodyText1": .init("添加账号…", []),
-            "Interface:appRootView.bodyText2": .init("管理账号…", []),
-            "Interface:appRootView.bodyText3": .init("未登录", []),
-            "Interface:appRootView.bodyText4": .init("添加账号后即可启动游戏", []),
-            "Interface:appRootView.bodyText5": .init("添加账号", []),
-            "Interface:appRootView.bodyText6": .init("切换账号", []),
-            "Interface:appRootView.urlText1": .init("在 Finder 中显示", []),
+            "Interface:AppRootView.addAccount": .init("添加账号…", []),
+            "Interface:AppRootView.addAccountToLaunch": .init("添加账号后即可启动游戏", []),
+            "Interface:AppRootView.addAnotherAccount": .init("添加账号", []),
+            "Interface:AppRootView.manage": .init("管理", []),
+            "Interface:AppRootView.manageAccounts": .init("管理账号…", []),
+            "Interface:AppRootView.notSignedIn": .init("未登录", []),
+            "Interface:AppRootView.ok": .init("好", []),
+            "Interface:AppRootView.operationIncomplete": .init("操作未完成", []),
+            "Interface:AppRootView.records": .init("记录", []),
+            "Interface:AppRootView.runHistory": .init("游玩详情", []),
+            "Interface:AppRootView.showInFinder": .init("在 Finder 中显示", []),
+            "Interface:AppRootView.switchAccount": .init("切换账号", []),
+            "Interface:AppRootView.viewRunningGameLogs": .init("查看正在运行的游戏 ⌘L", []),
         ]
     }
 }

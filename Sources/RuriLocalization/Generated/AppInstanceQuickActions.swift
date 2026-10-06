@@ -5,26 +5,26 @@ extension Messages {
     public enum AppInstanceQuickActions {
         /// 实例设置
         ///
-        /// Resource: `Interface.appInstanceQuickActions.bodyText1`.
+        /// Resource: `Interface.AppInstanceQuickActions.instanceSettings`.
         public static var instanceSettings: LocalizedMessage {
-            .init(key: "appInstanceQuickActions.bodyText1", table: "Interface", fallback: "实例设置")
+            .init(key: "AppInstanceQuickActions.instanceSettings", table: "Interface", fallback: "实例设置")
         }
         /// 管理模组与资源包
         ///
-        /// Resource: `Interface.appInstanceQuickActions.bodyText2`.
+        /// Resource: `Interface.AppInstanceQuickActions.manageModsAndResourcePacks`.
         public static var manageModsAndResourcePacks: LocalizedMessage {
-            .init(key: "appInstanceQuickActions.bodyText2", table: "Interface", fallback: "管理模组与资源包")
+            .init(key: "AppInstanceQuickActions.manageModsAndResourcePacks", table: "Interface", fallback: "管理模组与资源包")
         }
         /// 管理存档与备份
         ///
-        /// Resource: `Interface.appInstanceQuickActions.bodyText3`.
+        /// Resource: `Interface.AppInstanceQuickActions.manageWorldsAndBackups`.
         public static var manageWorldsAndBackups: LocalizedMessage {
-            .init(key: "appInstanceQuickActions.bodyText3", table: "Interface", fallback: "管理存档与备份")
+            .init(key: "AppInstanceQuickActions.manageWorldsAndBackups", table: "Interface", fallback: "管理存档与备份")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appInstanceQuickActions.bodyText1": .init("实例设置", []),
-            "Interface:appInstanceQuickActions.bodyText2": .init("管理模组与资源包", []),
-            "Interface:appInstanceQuickActions.bodyText3": .init("管理存档与备份", []),
+            "Interface:AppInstanceQuickActions.instanceSettings": .init("实例设置", []),
+            "Interface:AppInstanceQuickActions.manageModsAndResourcePacks": .init("管理模组与资源包", []),
+            "Interface:AppInstanceQuickActions.manageWorldsAndBackups": .init("管理存档与备份", []),
         ]
     }
 }

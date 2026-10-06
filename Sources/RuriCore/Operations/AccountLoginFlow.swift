@@ -15,7 +15,7 @@ extension AccountService {
     }
     public func startMicrosoft(accountID: UUID? = nil) async throws -> OperationValue {
         try pruneFlows()
-        if let accountID { guard try account(accountID).kind == .microsoft else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t646f7af4624c.localized) } }
+        if let accountID { guard try account(accountID).kind == .microsoft else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.accountProviderMismatch.localized) } }
         let client = try StateStore.load(paths).settings.effectiveMicrosoftClientID
         let code = try await MicrosoftAuth(clientID: client, session: session).begin()
         let flow = LoginFlow(id: UUID(), expiresAt: Date().addingTimeInterval(TimeInterval(code.expires_in)), dataDirectory: paths.root.standardizedFileURL.path,
@@ -28,7 +28,7 @@ extension AccountService {
         let service = ExternalAuthentication(session: session), metadata = try await service.discover(address)
         if let accountID {
             let existing = try account(accountID)
-            guard existing.kind == .external, existing.externalLogin?.server.url == metadata.server.url, existing.externalLogin?.username == username else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.t3a1a6178fec9.localized) }
+            guard existing.kind == .external, existing.externalLogin?.server.url == metadata.server.url, existing.externalLogin?.username == username else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.loginServerOrIdentityChanged.localized) }
         }
         let result = try await service.login(server: metadata.server, username: username, password: password)
         let flow = LoginFlow(id: UUID(), expiresAt: Date().addingTimeInterval(600), dataDirectory: paths.root.standardizedFileURL.path,
@@ -41,8 +41,8 @@ extension AccountService {
         let flowLease = try OperationLease.acquire(directory: lockDirectory, name: "flow-\(id).lock")
         defer { withExtendedLifetime(flowLease) {} }
         let flow = try JSONDecoder().decode(LoginFlow.self, from: vault.loadFlow(id))
-        guard flow.dataDirectory == paths.root.standardizedFileURL.path else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t000e28c5735c.localized) }
-        guard flow.expiresAt > Date() else { try vault.removeFlow(id); throw OperationFailure("LOGIN_EXPIRED", Messages.CLIInterface.tf873deb7e49d.localized) }
+        guard flow.dataDirectory == paths.root.standardizedFileURL.path else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.loginDataDirectoryMismatch.localized) }
+        guard flow.expiresAt > Date() else { try vault.removeFlow(id); throw OperationFailure("LOGIN_EXPIRED", Messages.CLIInterface.loginFlowExpired.localized) }
         let account: Account
         if let code = flow.deviceCode, let client = flow.clientID {
             var (result, credentials) = try await MicrosoftAuth(clientID: client, session: session).finish(code, expiresAt: flow.expiresAt)
@@ -50,12 +50,12 @@ extension AccountService {
             account = try store(result, microsoft: credentials, activate: flow.accountID == nil, requireExisting: flow.accountID != nil)
         } else if var result = flow.externalSession, let server = flow.server, let username = flow.username {
             if result.selectedProfile == nil {
-                guard let profile, let selected = result.availableProfiles?.first(where: { $0.id == profile }) else { throw OperationFailure("PROFILE_REQUIRED", Messages.CLIInterface.ta4020b2f41c3.localized) }
+                guard let profile, let selected = result.availableProfiles?.first(where: { $0.id == profile }) else { throw OperationFailure("PROFILE_REQUIRED", Messages.CLIInterface.loginProfileSelectionRequired.localized) }
                 result = try await ExternalAuthentication(session: session).select(selected, from: result, server: server)
-            } else if let profile, result.selectedProfile?.id != profile { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t0ce4aa2e33ec.localized) }
+            } else if let profile, result.selectedProfile?.id != profile { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.loginProfileAlreadySelected.localized) }
             let existing = try flow.accountID.map(self.account)
             account = try store(result.account(server: server, username: username, replacing: existing), external: result.credentials, activate: existing == nil, requireExisting: existing != nil)
-        } else { throw OperationFailure("LOGIN_EXPIRED", Messages.CLIInterface.t6176d717fcb9.localized) }
+        } else { throw OperationFailure("LOGIN_EXPIRED", Messages.CLIInterface.invalidLoginFlow.localized) }
         try vault.removeFlow(id); return account
     }
     public func cancelLogin(_ id: UUID) throws {

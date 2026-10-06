@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftManifestResolution {
-        /// 合并后的版本清单没有游戏主类，请检查原安装。
-        ///
-        /// Resource: `Errors.coreMinecraftManifestResolution.mainText1`.
-        public static var mainClassMissing: LocalizedMessage {
-            .init(key: "coreMinecraftManifestResolution.mainText1", table: "Errors", fallback: "合并后的版本清单没有游戏主类，请检查原安装。")
-        }
         /// 合并后的版本清单缺少游戏 JAR 引用。
         ///
-        /// Resource: `Errors.coreMinecraftManifestResolution.jarIDText1`.
+        /// Resource: `Errors.CoreMinecraftManifestResolution.gameJarMissing`.
         public static var gameJarMissing: LocalizedMessage {
-            .init(key: "coreMinecraftManifestResolution.jarIDText1", table: "Errors", fallback: "合并后的版本清单缺少游戏 JAR 引用。")
+            .init(key: "CoreMinecraftManifestResolution.gameJarMissing", table: "Errors", fallback: "合并后的版本清单缺少游戏 JAR 引用。")
         }
         /// 依赖库清单包含无效声明。
         ///
-        /// Resource: `Errors.coreMinecraftManifestResolution.rawLibrariesText1`.
+        /// Resource: `Errors.CoreMinecraftManifestResolution.invalidLibraries`.
         public static var invalidLibraries: LocalizedMessage {
-            .init(key: "coreMinecraftManifestResolution.rawLibrariesText1", table: "Errors", fallback: "依赖库清单包含无效声明。")
-        }
-        /// 依赖库的位置提示无效：%1$@
-        ///
-        /// Resource: `Errors.coreMinecraftManifestResolution.hintText1`.
-        public static func invalidLibraryHint(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftManifestResolution.hintText1", table: "Errors", fallback: "依赖库的位置提示无效：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreMinecraftManifestResolution.invalidLibraries", table: "Errors", fallback: "依赖库清单包含无效声明。")
         }
         /// 本地依赖库的文件名无效：%1$@
         ///
-        /// Resource: `Errors.coreMinecraftManifestResolution.valueText1`.
+        /// Resource: `Errors.CoreMinecraftManifestResolution.invalidLibraryFilename`.
         public static func invalidLibraryFilename(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftManifestResolution.valueText1", table: "Errors", fallback: "本地依赖库的文件名无效：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreMinecraftManifestResolution.invalidLibraryFilename", table: "Errors", fallback: "本地依赖库的文件名无效：%1$@", arguments: [.text(value0)])
+        }
+        /// 依赖库的位置提示无效：%1$@
+        ///
+        /// Resource: `Errors.CoreMinecraftManifestResolution.invalidLibraryHint`.
+        public static func invalidLibraryHint(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMinecraftManifestResolution.invalidLibraryHint", table: "Errors", fallback: "依赖库的位置提示无效：%1$@", arguments: [.text(value0)])
+        }
+        /// 合并后的版本清单没有游戏主类，请检查原安装。
+        ///
+        /// Resource: `Errors.CoreMinecraftManifestResolution.mainClassMissing`.
+        public static var mainClassMissing: LocalizedMessage {
+            .init(key: "CoreMinecraftManifestResolution.mainClassMissing", table: "Errors", fallback: "合并后的版本清单没有游戏主类，请检查原安装。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreMinecraftManifestResolution.mainText1": .init("合并后的版本清单没有游戏主类，请检查原安装。", []),
-            "Errors:coreMinecraftManifestResolution.jarIDText1": .init("合并后的版本清单缺少游戏 JAR 引用。", []),
-            "Errors:coreMinecraftManifestResolution.rawLibrariesText1": .init("依赖库清单包含无效声明。", []),
-            "Errors:coreMinecraftManifestResolution.hintText1": .init("依赖库的位置提示无效：%1$@", [.text]),
-            "Errors:coreMinecraftManifestResolution.valueText1": .init("本地依赖库的文件名无效：%1$@", [.text]),
+            "Errors:CoreMinecraftManifestResolution.gameJarMissing": .init("合并后的版本清单缺少游戏 JAR 引用。", []),
+            "Errors:CoreMinecraftManifestResolution.invalidLibraries": .init("依赖库清单包含无效声明。", []),
+            "Errors:CoreMinecraftManifestResolution.invalidLibraryFilename": .init("本地依赖库的文件名无效：%1$@", [.text]),
+            "Errors:CoreMinecraftManifestResolution.invalidLibraryHint": .init("依赖库的位置提示无效：%1$@", [.text]),
+            "Errors:CoreMinecraftManifestResolution.mainClassMissing": .init("合并后的版本清单没有游戏主类，请检查原安装。", []),
         ]
     }
 }

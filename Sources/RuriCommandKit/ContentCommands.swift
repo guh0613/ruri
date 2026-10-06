@@ -39,7 +39,7 @@ extension CLIApplication {
         if action == "list" { return request.page(try await manager.scan(kind).map(contentValue)) }
         if action == "import" {
             let file = URL(fileURLWithPath: try request.operand(1))
-            guard FileManager.default.fileExists(atPath: file.path) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t68a342df34e2.localized) }
+            guard FileManager.default.fileExists(atPath: file.path) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.inputFileNotFound.localized) }
             if !request.dryRun {
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id); defer { withExtendedLifetime(lease) {} }
                 try await manager.importFiles([file], kind: kind)
@@ -61,9 +61,9 @@ extension CLIApplication {
         }
         let files = try await manager.scan(kind), names = Set(strings(request, "file"))
         let check = action == "update-check"
-        guard !(request.flag("all") && !names.isEmpty), check || request.flag("all") || !names.isEmpty else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t1474aa1131be.localized) }
+        guard !(request.flag("all") && !names.isEmpty), check || request.flag("all") || !names.isEmpty else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.contentFileSelectionRequired.localized) }
         let selected = names.isEmpty ? files : files.filter { names.contains($0.url.lastPathComponent) }
-        guard names.isEmpty || Set(selected.map { $0.url.lastPathComponent }) == names else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.tcf02f30209a6.localized) }
+        guard names.isEmpty || Set(selected.map { $0.url.lastPathComponent }) == names else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.selectedContentFilesNotFound.localized) }
         if check || action == "update" {
             let records = selected.compactMap(\.managed), hasCurse = records.contains { $0.provider == "curseforge" }
             let curse = CurseForgeService(apiKey: hasCurse ? try CurseForgeKeyStore.load() : "")
@@ -86,7 +86,7 @@ extension CLIApplication {
             case "enable": try await manager.setEnabled(true, files: selected)
             case "disable": try await manager.setEnabled(false, files: selected)
             case "remove": _ = try await manager.remove(selected)
-            default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t1fb9146947a6.localized)
+            default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownContentAction.localized)
             }
         }
         return .object(["dryRun": .bool(request.dryRun), "action": .string(action), "files": .array(selected.map(contentValue))])
@@ -113,25 +113,25 @@ extension CLIApplication {
         var result: [Int: URL] = [:]
         for raw in strings(request, "manual") {
             let parts = raw.split(separator: "=", maxSplits: 1).map(String.init)
-            guard parts.count == 2, let id = Int(parts[0]), id > 0, result[id] == nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tcf80472afe71.localized) }
+            guard parts.count == 2, let id = Int(parts[0]), id > 0, result[id] == nil else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidManualFileSpecification.localized) }
             result[id] = URL(fileURLWithPath: parts[1])
         }
         return result
     }
     static func requireManualFiles(_ files: [PlannedCurseFile]) throws {
-        guard files.isEmpty else { throw OperationFailure("MANUAL_DOWNLOAD_REQUIRED", Messages.CLIInterface.t22d3a8371f53.localized, details: .object(["files": .array(files.map(manualValue))])) }
+        guard files.isEmpty else { throw OperationFailure("MANUAL_DOWNLOAD_REQUIRED", Messages.CLIInterface.manualContentDownloadRequired.localized, details: .object(["files": .array(files.map(manualValue))])) }
     }
     static func selectedVersion(project: CatalogProject, versionID: String?, instance: GameInstance?, repository: CatalogRepository) async throws -> CatalogVersion {
         var offset = 0
         while true {
             let page = try await repository.versions(project, game: instance?.gameVersion ?? "", loader: instance?.loader.modrinthLoader ?? "", offset: offset)
             if let match = page.versions.first(where: { version in versionID.map { version.id == $0 } ?? (version.channel == "release") }) {
-                if let instance, !match.supports(instance, type: project.type) { throw OperationFailure("INCOMPATIBLE_VERSION", Messages.CLIInterface.t5c54141389e9.localized) }
+                if let instance, !match.supports(instance, type: project.type) { throw OperationFailure("INCOMPATIBLE_VERSION", Messages.CLIInterface.selectedVersionIncompatible.localized) }
                 return match
             }
             offset += page.versions.count
             if page.versions.isEmpty || offset >= page.total { break }
         }
-        throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t56f6acfec799.localized)
+        throw OperationFailure("NOT_FOUND", Messages.CLIInterface.compatibleVersionNotFound.localized)
     }
 }

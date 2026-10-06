@@ -3,177 +3,177 @@ import Foundation
 
 extension Messages {
     public enum CoreForgeInstaller {
-        /// 无法读取加载器版本列表
+        /// 已有加载器依赖与整合包所需文件不同，未覆盖：%1$@
+        /// 请先检查此文件，或选择另一个 Minecraft 文件夹。
         ///
-        /// Resource: `Errors.coreForgeInstaller.delegateText1`.
-        public static var loaderVersionsReadFailed: LocalizedMessage {
-            .init(key: "coreForgeInstaller.delegateText1", table: "Errors", fallback: "无法读取加载器版本列表")
+        /// Resource: `Errors.CoreForgeInstaller.dependencyConflict`.
+        public static func dependencyConflict(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreForgeInstaller.dependencyConflict", table: "Errors", fallback: "已有加载器依赖与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或选择另一个 Minecraft 文件夹。", arguments: [.text(value0)])
         }
-        /// 请选择加载器版本
+        /// 新组件需要替换正在使用的依赖文件，原安装已保留：%1$@
         ///
-        /// Resource: `Errors.coreForgeInstaller.versionText1`.
-        public static var loaderVersionRequired: LocalizedMessage {
-            .init(key: "coreForgeInstaller.versionText1", table: "Errors", fallback: "请选择加载器版本")
-        }
-        /// 加载器安装包没有有效的 SHA-1 校验值
-        ///
-        /// Resource: `Errors.coreForgeInstaller.checksumText1`.
-        public static var installerChecksumMissing: LocalizedMessage {
-            .init(key: "coreForgeInstaller.checksumText1", table: "Errors", fallback: "加载器安装包没有有效的 SHA-1 校验值")
-        }
-        /// 安装程序对应的 Minecraft 版本不匹配
-        ///
-        /// Resource: `Errors.coreForgeInstaller.profileText1`.
-        public static var minecraftVersionMismatch: LocalizedMessage {
-            .init(key: "coreForgeInstaller.profileText1", table: "Errors", fallback: "安装程序对应的 Minecraft 版本不匹配")
-        }
-        /// 加载器安装包缺少版本清单
-        ///
-        /// Resource: `Errors.coreForgeInstaller.jsonText1`.
-        public static var versionManifestMissing: LocalizedMessage {
-            .init(key: "coreForgeInstaller.jsonText1", table: "Errors", fallback: "加载器安装包缺少版本清单")
-        }
-        /// 加载器清单的父版本不匹配
-        ///
-        /// Resource: `Errors.coreForgeInstaller.childText1`.
-        public static var parentVersionMismatch: LocalizedMessage {
-            .init(key: "coreForgeInstaller.childText1", table: "Errors", fallback: "加载器清单的父版本不匹配")
-        }
-        /// 缺少原版客户端信息
-        ///
-        /// Resource: `Errors.coreForgeInstaller.clientText1`.
-        public static var vanillaClientMissing: LocalizedMessage {
-            .init(key: "coreForgeInstaller.clientText1", table: "Errors", fallback: "缺少原版客户端信息")
+        /// Resource: `Errors.CoreForgeInstaller.dependencyReplacementRequired`.
+        public static func dependencyReplacementRequired(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreForgeInstaller.dependencyReplacementRequired", table: "Errors", fallback: "新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", arguments: [.text(value0)])
         }
         /// 安装器内嵌文件校验失败：%1$@
         ///
-        /// Resource: `Errors.coreForgeInstaller.crcText1`.
+        /// Resource: `Errors.CoreForgeInstaller.embeddedFileChecksumFailed`.
         public static func embeddedFileChecksumFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.crcText1", table: "Errors", fallback: "安装器内嵌文件校验失败：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreForgeInstaller.embeddedFileChecksumFailed", table: "Errors", fallback: "安装器内嵌文件校验失败：%1$@", arguments: [.text(value0)])
         }
-        /// 安装加载器需要 Java %1$@
+        /// 安装包缺少有效的 %1$@
         ///
-        /// Resource: `Errors.coreForgeInstaller.runtimeText1`.
-        public static func javaRequired(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.runtimeText1", table: "Errors", fallback: "安装加载器需要 Java %1$@", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreForgeInstaller.embeddedFileMissing`.
+        public static func embeddedFileMissing(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreForgeInstaller.embeddedFileMissing", table: "Errors", fallback: "安装包缺少有效的 %1$@", arguments: [.text(value0)])
+        }
+        /// 加载器生成文件校验失败：%1$@
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.generatedFileChecksumFailed`.
+        public static func generatedFileChecksumFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreForgeInstaller.generatedFileChecksumFailed", table: "Errors", fallback: "加载器生成文件校验失败：%1$@", arguments: [.text(value0)])
+        }
+        /// 安装器生成的版本清单不一致
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.generatedManifestMismatch`.
+        public static var generatedManifestMismatch: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.generatedManifestMismatch", table: "Errors", fallback: "安装器生成的版本清单不一致")
+        }
+        /// 加载器安装包没有有效的 SHA-1 校验值
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.installerChecksumMissing`.
+        public static var installerChecksumMissing: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.installerChecksumMissing", table: "Errors", fallback: "加载器安装包没有有效的 SHA-1 校验值")
         }
         /// %1$@ 安装程序退出（%2$@）。日志：%3$@
         /// %4$@
         ///
-        /// Resource: `Errors.coreForgeInstaller.tailText1`.
+        /// Resource: `Errors.CoreForgeInstaller.installerExited`.
         public static func installerExited(_ value0: String, _ value1: String, _ value2: String, _ value3: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.tailText1", table: "Errors", fallback: "%1$@ 安装程序退出（%2$@）。日志：%3$@\n%4$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3)])
+            .init(key: "CoreForgeInstaller.installerExited", table: "Errors", fallback: "%1$@ 安装程序退出（%2$@）。日志：%3$@\n%4$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3)])
         }
-        /// 安装器生成的版本清单不一致
+        /// 安装加载器需要 Java %1$@
         ///
-        /// Resource: `Errors.coreForgeInstaller.installedText1`.
-        public static var generatedManifestMismatch: LocalizedMessage {
-            .init(key: "coreForgeInstaller.installedText1", table: "Errors", fallback: "安装器生成的版本清单不一致")
-        }
-        /// 加载器生成文件校验失败：%1$@
-        ///
-        /// Resource: `Errors.coreForgeInstaller.sourceText1`.
-        public static func generatedFileChecksumFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.sourceText1", table: "Errors", fallback: "加载器生成文件校验失败：%1$@", arguments: [.text(value0)])
-        }
-        /// 安装器生成了不支持的符号链接
-        ///
-        /// Resource: `Errors.coreForgeInstaller.valuesText1`.
-        public static var unsupportedSymlink: LocalizedMessage {
-            .init(key: "coreForgeInstaller.valuesText1", table: "Errors", fallback: "安装器生成了不支持的符号链接")
-        }
-        /// 安装包缺少有效的 %1$@
-        ///
-        /// Resource: `Errors.coreForgeInstaller.entryText1`.
-        public static func embeddedFileMissing(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.entryText1", table: "Errors", fallback: "安装包缺少有效的 %1$@", arguments: [.text(value0)])
-        }
-        /// 安装包清单校验失败
-        ///
-        /// Resource: `Errors.coreForgeInstaller.crcText3`.
-        public static var manifestChecksumFailed: LocalizedMessage {
-            .init(key: "coreForgeInstaller.crcText3", table: "Errors", fallback: "安装包清单校验失败")
+        /// Resource: `Errors.CoreForgeInstaller.javaRequired`.
+        public static func javaRequired(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreForgeInstaller.javaRequired", table: "Errors", fallback: "安装加载器需要 Java %1$@", arguments: [.text(value0)])
         }
         /// 旧版 Forge 安装包缺少内嵌客户端
         ///
-        /// Resource: `Errors.coreForgeInstaller.entryText2`.
+        /// Resource: `Errors.CoreForgeInstaller.legacyClientMissing`.
         public static var legacyClientMissing: LocalizedMessage {
-            .init(key: "coreForgeInstaller.entryText2", table: "Errors", fallback: "旧版 Forge 安装包缺少内嵌客户端")
+            .init(key: "CoreForgeInstaller.legacyClientMissing", table: "Errors", fallback: "旧版 Forge 安装包缺少内嵌客户端")
         }
         /// 旧版 Forge 文件校验失败
         ///
-        /// Resource: `Errors.coreForgeInstaller.crcText4`.
+        /// Resource: `Errors.CoreForgeInstaller.legacyFileChecksumFailed`.
         public static var legacyFileChecksumFailed: LocalizedMessage {
-            .init(key: "coreForgeInstaller.crcText4", table: "Errors", fallback: "旧版 Forge 文件校验失败")
-        }
-        /// 新组件需要替换正在使用的依赖文件，原安装已保留：%1$@
-        ///
-        /// Resource: `Errors.coreForgeInstaller.copyAtomicallyText1`.
-        public static func dependencyReplacementRequired(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.copyAtomicallyText1", table: "Errors", fallback: "新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", arguments: [.text(value0)])
-        }
-        /// 已有加载器依赖与整合包所需文件不同，未覆盖：%1$@
-        /// 请先检查此文件，或选择另一个 Minecraft 文件夹。
-        ///
-        /// Resource: `Errors.coreForgeInstaller.idText1`.
-        public static func dependencyConflict(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.idText1", table: "Errors", fallback: "已有加载器依赖与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或选择另一个 Minecraft 文件夹。", arguments: [.text(value0)])
+            .init(key: "CoreForgeInstaller.legacyFileChecksumFailed", table: "Errors", fallback: "旧版 Forge 文件校验失败")
         }
         /// 无法保存加载器文件：%1$@
         ///
-        /// Resource: `Errors.coreForgeInstaller.stagingText1`.
+        /// Resource: `Errors.CoreForgeInstaller.loaderFileSaveFailed`.
         public static func loaderFileSaveFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.stagingText1", table: "Errors", fallback: "无法保存加载器文件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreForgeInstaller.loaderFileSaveFailed", table: "Errors", fallback: "无法保存加载器文件：%1$@", arguments: [.text(value0)])
+        }
+        /// 请选择加载器版本
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.loaderVersionRequired`.
+        public static var loaderVersionRequired: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.loaderVersionRequired", table: "Errors", fallback: "请选择加载器版本")
+        }
+        /// 无法读取加载器版本列表
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.loaderVersionsReadFailed`.
+        public static var loaderVersionsReadFailed: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.loaderVersionsReadFailed", table: "Errors", fallback: "无法读取加载器版本列表")
+        }
+        /// 安装包清单校验失败
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.manifestChecksumFailed`.
+        public static var manifestChecksumFailed: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.manifestChecksumFailed", table: "Errors", fallback: "安装包清单校验失败")
+        }
+        /// 安装程序对应的 Minecraft 版本不匹配
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.minecraftVersionMismatch`.
+        public static var minecraftVersionMismatch: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.minecraftVersionMismatch", table: "Errors", fallback: "安装程序对应的 Minecraft 版本不匹配")
+        }
+        /// 加载器清单的父版本不匹配
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.parentVersionMismatch`.
+        public static var parentVersionMismatch: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.parentVersionMismatch", table: "Errors", fallback: "加载器清单的父版本不匹配")
+        }
+        /// 安装器生成了不支持的符号链接
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.unsupportedSymlink`.
+        public static var unsupportedSymlink: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.unsupportedSymlink", table: "Errors", fallback: "安装器生成了不支持的符号链接")
+        }
+        /// 缺少原版客户端信息
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.vanillaClientMissing`.
+        public static var vanillaClientMissing: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.vanillaClientMissing", table: "Errors", fallback: "缺少原版客户端信息")
+        }
+        /// 加载器安装包缺少版本清单
+        ///
+        /// Resource: `Errors.CoreForgeInstaller.versionManifestMissing`.
+        public static var versionManifestMissing: LocalizedMessage {
+            .init(key: "CoreForgeInstaller.versionManifestMissing", table: "Errors", fallback: "加载器安装包缺少版本清单")
         }
         /// 下载 %1$@ 安装程序
         ///
-        /// Resource: `Progress.coreForgeInstaller.jarText1`.
+        /// Resource: `Progress.CoreForgeInstaller.downloadInstaller`.
         public static func downloadInstaller(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.jarText1", table: "Progress", fallback: "下载 %1$@ 安装程序", arguments: [.text(value0)])
+            .init(key: "CoreForgeInstaller.downloadInstaller", table: "Progress", fallback: "下载 %1$@ 安装程序", arguments: [.text(value0)])
         }
         /// 准备加载器依赖
         ///
-        /// Resource: `Progress.coreForgeInstaller.crcText2`.
+        /// Resource: `Progress.CoreForgeInstaller.prepareDependencies`.
         public static var prepareDependencies: LocalizedMessage {
-            .init(key: "coreForgeInstaller.crcText2", table: "Progress", fallback: "准备加载器依赖")
+            .init(key: "CoreForgeInstaller.prepareDependencies", table: "Progress", fallback: "准备加载器依赖")
         }
         /// 运行 %1$@ 安装程序
         ///
-        /// Resource: `Progress.coreForgeInstaller.runtimeText2`.
+        /// Resource: `Progress.CoreForgeInstaller.runInstaller`.
         public static func runInstaller(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreForgeInstaller.runtimeText2", table: "Progress", fallback: "运行 %1$@ 安装程序", arguments: [.text(value0)])
+            .init(key: "CoreForgeInstaller.runInstaller", table: "Progress", fallback: "运行 %1$@ 安装程序", arguments: [.text(value0)])
         }
         /// 校验加载器生成文件
         ///
-        /// Resource: `Progress.coreForgeInstaller.targetText1`.
+        /// Resource: `Progress.CoreForgeInstaller.verifyGeneratedFiles`.
         public static var verifyGeneratedFiles: LocalizedMessage {
-            .init(key: "coreForgeInstaller.targetText1", table: "Progress", fallback: "校验加载器生成文件")
+            .init(key: "CoreForgeInstaller.verifyGeneratedFiles", table: "Progress", fallback: "校验加载器生成文件")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreForgeInstaller.delegateText1": .init("无法读取加载器版本列表", []),
-            "Errors:coreForgeInstaller.versionText1": .init("请选择加载器版本", []),
-            "Errors:coreForgeInstaller.checksumText1": .init("加载器安装包没有有效的 SHA-1 校验值", []),
-            "Errors:coreForgeInstaller.profileText1": .init("安装程序对应的 Minecraft 版本不匹配", []),
-            "Errors:coreForgeInstaller.jsonText1": .init("加载器安装包缺少版本清单", []),
-            "Errors:coreForgeInstaller.childText1": .init("加载器清单的父版本不匹配", []),
-            "Errors:coreForgeInstaller.clientText1": .init("缺少原版客户端信息", []),
-            "Errors:coreForgeInstaller.crcText1": .init("安装器内嵌文件校验失败：%1$@", [.text]),
-            "Errors:coreForgeInstaller.runtimeText1": .init("安装加载器需要 Java %1$@", [.text]),
-            "Errors:coreForgeInstaller.tailText1": .init("%1$@ 安装程序退出（%2$@）。日志：%3$@\n%4$@", [.text, .text, .text, .text]),
-            "Errors:coreForgeInstaller.installedText1": .init("安装器生成的版本清单不一致", []),
-            "Errors:coreForgeInstaller.sourceText1": .init("加载器生成文件校验失败：%1$@", [.text]),
-            "Errors:coreForgeInstaller.valuesText1": .init("安装器生成了不支持的符号链接", []),
-            "Errors:coreForgeInstaller.entryText1": .init("安装包缺少有效的 %1$@", [.text]),
-            "Errors:coreForgeInstaller.crcText3": .init("安装包清单校验失败", []),
-            "Errors:coreForgeInstaller.entryText2": .init("旧版 Forge 安装包缺少内嵌客户端", []),
-            "Errors:coreForgeInstaller.crcText4": .init("旧版 Forge 文件校验失败", []),
-            "Errors:coreForgeInstaller.copyAtomicallyText1": .init("新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", [.text]),
-            "Errors:coreForgeInstaller.idText1": .init("已有加载器依赖与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或选择另一个 Minecraft 文件夹。", [.text]),
-            "Errors:coreForgeInstaller.stagingText1": .init("无法保存加载器文件：%1$@", [.text]),
-            "Progress:coreForgeInstaller.jarText1": .init("下载 %1$@ 安装程序", [.text]),
-            "Progress:coreForgeInstaller.crcText2": .init("准备加载器依赖", []),
-            "Progress:coreForgeInstaller.runtimeText2": .init("运行 %1$@ 安装程序", [.text]),
-            "Progress:coreForgeInstaller.targetText1": .init("校验加载器生成文件", []),
+            "Errors:CoreForgeInstaller.dependencyConflict": .init("已有加载器依赖与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或选择另一个 Minecraft 文件夹。", [.text]),
+            "Errors:CoreForgeInstaller.dependencyReplacementRequired": .init("新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", [.text]),
+            "Errors:CoreForgeInstaller.embeddedFileChecksumFailed": .init("安装器内嵌文件校验失败：%1$@", [.text]),
+            "Errors:CoreForgeInstaller.embeddedFileMissing": .init("安装包缺少有效的 %1$@", [.text]),
+            "Errors:CoreForgeInstaller.generatedFileChecksumFailed": .init("加载器生成文件校验失败：%1$@", [.text]),
+            "Errors:CoreForgeInstaller.generatedManifestMismatch": .init("安装器生成的版本清单不一致", []),
+            "Errors:CoreForgeInstaller.installerChecksumMissing": .init("加载器安装包没有有效的 SHA-1 校验值", []),
+            "Errors:CoreForgeInstaller.installerExited": .init("%1$@ 安装程序退出（%2$@）。日志：%3$@\n%4$@", [.text, .text, .text, .text]),
+            "Errors:CoreForgeInstaller.javaRequired": .init("安装加载器需要 Java %1$@", [.text]),
+            "Errors:CoreForgeInstaller.legacyClientMissing": .init("旧版 Forge 安装包缺少内嵌客户端", []),
+            "Errors:CoreForgeInstaller.legacyFileChecksumFailed": .init("旧版 Forge 文件校验失败", []),
+            "Errors:CoreForgeInstaller.loaderFileSaveFailed": .init("无法保存加载器文件：%1$@", [.text]),
+            "Errors:CoreForgeInstaller.loaderVersionRequired": .init("请选择加载器版本", []),
+            "Errors:CoreForgeInstaller.loaderVersionsReadFailed": .init("无法读取加载器版本列表", []),
+            "Errors:CoreForgeInstaller.manifestChecksumFailed": .init("安装包清单校验失败", []),
+            "Errors:CoreForgeInstaller.minecraftVersionMismatch": .init("安装程序对应的 Minecraft 版本不匹配", []),
+            "Errors:CoreForgeInstaller.parentVersionMismatch": .init("加载器清单的父版本不匹配", []),
+            "Errors:CoreForgeInstaller.unsupportedSymlink": .init("安装器生成了不支持的符号链接", []),
+            "Errors:CoreForgeInstaller.vanillaClientMissing": .init("缺少原版客户端信息", []),
+            "Errors:CoreForgeInstaller.versionManifestMissing": .init("加载器安装包缺少版本清单", []),
+            "Progress:CoreForgeInstaller.downloadInstaller": .init("下载 %1$@ 安装程序", [.text]),
+            "Progress:CoreForgeInstaller.prepareDependencies": .init("准备加载器依赖", []),
+            "Progress:CoreForgeInstaller.runInstaller": .init("运行 %1$@ 安装程序", [.text]),
+            "Progress:CoreForgeInstaller.verifyGeneratedFiles": .init("校验加载器生成文件", []),
         ]
     }
 }

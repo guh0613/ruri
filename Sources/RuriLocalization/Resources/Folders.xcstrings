@@ -1,0 +1,534 @@
+{
+  "sourceLanguage" : "zh-Hans",
+  "strings" : {
+    "FolderExperience.activeFolders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已添加"
+          }
+        }
+      }
+    },
+    "FolderExperience.add" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加文件夹"
+          }
+        }
+      }
+    },
+    "FolderExperience.addTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加游戏文件夹"
+          }
+        }
+      }
+    },
+    "FolderExperience.adding" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在添加文件夹…"
+          }
+        }
+      }
+    },
+    "FolderExperience.alreadyAdded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已添加为“%@”"
+          }
+        }
+      }
+    },
+    "FolderExperience.available" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可用"
+          }
+        }
+      }
+    },
+    "FolderExperience.back" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "返回"
+          }
+        }
+      }
+    },
+    "FolderExperience.changeLocation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更换…"
+          }
+        }
+      }
+    },
+    "FolderExperience.checking" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在查找游戏文件夹…"
+          }
+        }
+      }
+    },
+    "FolderExperience.chooseCloserFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索范围过大。请选择游戏文件夹或其上一级目录。"
+          }
+        }
+      }
+    },
+    "FolderExperience.chooseFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择一个文件夹。"
+          }
+        }
+      }
+    },
+    "FolderExperience.chooseLocation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择文件夹…"
+          }
+        }
+      }
+    },
+    "FolderExperience.chooseResult" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择要添加的游戏文件夹"
+          }
+        }
+      }
+    },
+    "FolderExperience.commonLocations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检测到的游戏文件夹"
+          }
+        }
+      }
+    },
+    "FolderExperience.contents" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例数量"
+          }
+        }
+      }
+    },
+    "FolderExperience.currentFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前使用"
+          }
+        }
+      }
+    },
+    "FolderExperience.defaultHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由 Ruri 管理，用于存放新安装和导入的实例。"
+          }
+        }
+      }
+    },
+    "FolderExperience.detectedInside" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已自动定位到游戏文件夹"
+          }
+        }
+      }
+    },
+    "FolderExperience.duplicateName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此名称已被其他文件夹使用。"
+          }
+        }
+      }
+    },
+    "FolderExperience.emptyFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未包含游戏版本"
+          }
+        }
+      }
+    },
+    "FolderExperience.emptyFolderHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可用于安装游戏或导入整合包。"
+          }
+        }
+      }
+    },
+    "FolderExperience.folderLocation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件夹位置"
+          }
+        }
+      }
+    },
+    "FolderExperience.invalidName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入 1–100 个字符的名称，不要包含换行等控制字符。"
+          }
+        }
+      }
+    },
+    "FolderExperience.libraryName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示名称"
+          }
+        }
+      }
+    },
+    "FolderExperience.localMinecraft" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本机 Minecraft"
+          }
+        }
+      }
+    },
+    "FolderExperience.locationHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。"
+          }
+        }
+      }
+    },
+    "FolderExperience.managedRemoveHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此文件夹由 Ruri 管理。请先移走其中的实例，再从列表中移除。"
+          }
+        }
+      }
+    },
+    "FolderExperience.multipleResults" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此位置包含多个游戏文件夹。"
+          }
+        }
+      }
+    },
+    "FolderExperience.name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
+          }
+        }
+      }
+    },
+    "FolderExperience.nameHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅用于 Ruri 中的显示，不修改文件夹名称。"
+          }
+        }
+      }
+    },
+    "FolderExperience.namePlaceholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "例如：日常生存、HMCL 整合包"
+          }
+        }
+      }
+    },
+    "FolderExperience.newFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新游戏文件夹"
+          }
+        }
+      }
+    },
+    "FolderExperience.newFolderHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新游戏可使用空文件夹。"
+          }
+        }
+      }
+    },
+    "FolderExperience.noFolderFound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。"
+          }
+        }
+      }
+    },
+    "FolderExperience.noSelection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择一个文件夹以查看详情"
+          }
+        }
+      }
+    },
+    "FolderExperience.noSuggestions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未在自动查找范围内检测到游戏文件夹，请手动选择位置。"
+          }
+        }
+      }
+    },
+    "FolderExperience.openExisting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用此文件夹"
+          }
+        }
+      }
+    },
+    "FolderExperience.reconnectHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果文件夹已移动或位于外置磁盘，请连接磁盘，或重新定位原文件夹。"
+          }
+        }
+      }
+    },
+    "FolderExperience.refreshDiscovery" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新检测结果"
+          }
+        }
+      }
+    },
+    "FolderExperience.removeHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。"
+          }
+        }
+      }
+    },
+    "FolderExperience.removedFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已移除"
+          }
+        }
+      }
+    },
+    "FolderExperience.retainedFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已从实例库移除"
+          }
+        }
+      }
+    },
+    "FolderExperience.savedSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留的实例设置"
+          }
+        }
+      }
+    },
+    "FolderExperience.showLibrary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在实例库中查看"
+          }
+        }
+      }
+    },
+    "FolderExperience.status" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "状态"
+          }
+        }
+      }
+    },
+    "FolderExperience.unavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法访问"
+          }
+        }
+      }
+    },
+    "FolderExperience.versionsFound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找到 %lld 个游戏版本"
+          }
+        }
+      }
+    },
+    "FolderExperience.versionsNeedAttention" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其中 %lld 个版本需要检查，添加后可在实例库中查看详情。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -3,49 +3,49 @@ import Foundation
 
 extension Messages {
     public enum CoreCustomRunDirectoryRelocation {
-        /// 此实例没有保存过自定义运行目录。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectoryRelocation.originalText1`.
-        public static var noSavedCustomDirectory: LocalizedMessage {
-            .init(key: "coreCustomRunDirectoryRelocation.originalText1", table: "Errors", fallback: "此实例没有保存过自定义运行目录。")
-        }
-        /// 原目录仍可访问，所选位置可能是它的副本。重新定位用于找回已移动的原文件夹，请先在 Finder 中完成移动，再重新选取。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectoryRelocation.validateOriginalText1`.
-        public static var originalDirectoryStillAvailable: LocalizedMessage {
-            .init(key: "coreCustomRunDirectoryRelocation.validateOriginalText1", table: "Errors", fallback: "原目录仍可访问，所选位置可能是它的副本。重新定位用于找回已移动的原文件夹，请先在 Finder 中完成移动，再重新选取。")
-        }
-        /// 使用此目录的实例或其目录策略已经改变，请重新预览。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectoryRelocation.affectedText1`.
-        public static var directoryPolicyChanged: LocalizedMessage {
-            .init(key: "coreCustomRunDirectoryRelocation.affectedText1", table: "Errors", fallback: "使用此目录的实例或其目录策略已经改变，请重新预览。")
-        }
         /// 所选文件夹在预览后被替换或移动，请重新选取原目录。
         ///
-        /// Resource: `Errors.coreCustomRunDirectoryRelocation.affectedText2`.
+        /// Resource: `Errors.CoreCustomRunDirectoryRelocation.affectedFolderChanged`.
         public static var affectedFolderChanged: LocalizedMessage {
-            .init(key: "coreCustomRunDirectoryRelocation.affectedText2", table: "Errors", fallback: "所选文件夹在预览后被替换或移动，请重新选取原目录。")
-        }
-        /// 没有实例引用此目录。
-        ///
-        /// Resource: `Errors.coreCustomRunDirectoryRelocation.representativeText1`.
-        public static var noReferencingInstances: LocalizedMessage {
-            .init(key: "coreCustomRunDirectoryRelocation.representativeText1", table: "Errors", fallback: "没有实例引用此目录。")
+            .init(key: "CoreCustomRunDirectoryRelocation.affectedFolderChanged", table: "Errors", fallback: "所选文件夹在预览后被替换或移动，请重新选取原目录。")
         }
         /// 此目录仍有未完成的内容或存档操作，请恢复原路径并处理后再重新定位。
         ///
-        /// Resource: `Errors.coreCustomRunDirectoryRelocation.lockText1`.
+        /// Resource: `Errors.CoreCustomRunDirectoryRelocation.directoryOperationsPending`.
         public static var directoryOperationsPending: LocalizedMessage {
-            .init(key: "coreCustomRunDirectoryRelocation.lockText1", table: "Errors", fallback: "此目录仍有未完成的内容或存档操作，请恢复原路径并处理后再重新定位。")
+            .init(key: "CoreCustomRunDirectoryRelocation.directoryOperationsPending", table: "Errors", fallback: "此目录仍有未完成的内容或存档操作，请恢复原路径并处理后再重新定位。")
+        }
+        /// 使用此目录的实例或其目录策略已经改变，请重新预览。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectoryRelocation.directoryPolicyChanged`.
+        public static var directoryPolicyChanged: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectoryRelocation.directoryPolicyChanged", table: "Errors", fallback: "使用此目录的实例或其目录策略已经改变，请重新预览。")
+        }
+        /// 没有实例引用此目录。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectoryRelocation.noReferencingInstances`.
+        public static var noReferencingInstances: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectoryRelocation.noReferencingInstances", table: "Errors", fallback: "没有实例引用此目录。")
+        }
+        /// 此实例没有保存过自定义运行目录。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectoryRelocation.noSavedCustomDirectory`.
+        public static var noSavedCustomDirectory: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectoryRelocation.noSavedCustomDirectory", table: "Errors", fallback: "此实例没有保存过自定义运行目录。")
+        }
+        /// 原目录仍可访问，所选位置可能是它的副本。重新定位用于找回已移动的原文件夹，请先在 Finder 中完成移动，再重新选取。
+        ///
+        /// Resource: `Errors.CoreCustomRunDirectoryRelocation.originalDirectoryStillAvailable`.
+        public static var originalDirectoryStillAvailable: LocalizedMessage {
+            .init(key: "CoreCustomRunDirectoryRelocation.originalDirectoryStillAvailable", table: "Errors", fallback: "原目录仍可访问，所选位置可能是它的副本。重新定位用于找回已移动的原文件夹，请先在 Finder 中完成移动，再重新选取。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreCustomRunDirectoryRelocation.originalText1": .init("此实例没有保存过自定义运行目录。", []),
-            "Errors:coreCustomRunDirectoryRelocation.validateOriginalText1": .init("原目录仍可访问，所选位置可能是它的副本。重新定位用于找回已移动的原文件夹，请先在 Finder 中完成移动，再重新选取。", []),
-            "Errors:coreCustomRunDirectoryRelocation.affectedText1": .init("使用此目录的实例或其目录策略已经改变，请重新预览。", []),
-            "Errors:coreCustomRunDirectoryRelocation.affectedText2": .init("所选文件夹在预览后被替换或移动，请重新选取原目录。", []),
-            "Errors:coreCustomRunDirectoryRelocation.representativeText1": .init("没有实例引用此目录。", []),
-            "Errors:coreCustomRunDirectoryRelocation.lockText1": .init("此目录仍有未完成的内容或存档操作，请恢复原路径并处理后再重新定位。", []),
+            "Errors:CoreCustomRunDirectoryRelocation.affectedFolderChanged": .init("所选文件夹在预览后被替换或移动，请重新选取原目录。", []),
+            "Errors:CoreCustomRunDirectoryRelocation.directoryOperationsPending": .init("此目录仍有未完成的内容或存档操作，请恢复原路径并处理后再重新定位。", []),
+            "Errors:CoreCustomRunDirectoryRelocation.directoryPolicyChanged": .init("使用此目录的实例或其目录策略已经改变，请重新预览。", []),
+            "Errors:CoreCustomRunDirectoryRelocation.noReferencingInstances": .init("没有实例引用此目录。", []),
+            "Errors:CoreCustomRunDirectoryRelocation.noSavedCustomDirectory": .init("此实例没有保存过自定义运行目录。", []),
+            "Errors:CoreCustomRunDirectoryRelocation.originalDirectoryStillAvailable": .init("原目录仍可访问，所选位置可能是它的副本。重新定位用于找回已移动的原文件夹，请先在 Finder 中完成移动，再重新选取。", []),
         ]
     }
 }

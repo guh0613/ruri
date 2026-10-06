@@ -39,7 +39,7 @@ public enum StateStore {
         let fd = try acquire(paths); defer { close(fd) }
         let original = try load(paths)
         if let expectedRevision, original.revision != expectedRevision {
-            throw OperationFailure("STATE_CONFLICT", Messages.CLIInterface.te8a7227e2180.localized, retryable: true)
+            throw OperationFailure("STATE_CONFLICT", Messages.CLIInterface.stateChangedSinceRead.localized, retryable: true)
         }
         var state = original
         try mutation(&state)

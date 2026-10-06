@@ -3,385 +3,385 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceSettingsView {
-        /// 实例设置
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.bodyText1`.
-        public static var instanceSettings: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.bodyText1", table: "Interface", fallback: "实例设置")
-        }
-        /// 整合包支持的 Java
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.versionsText1`.
-        public static var supportedJava: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.versionsText1", table: "Interface", fallback: "整合包支持的 Java")
-        }
-        /// 恢复默认
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText1`.
-        public static var restoreDefaults: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.settingsIssueText1", table: "Interface", fallback: "恢复默认")
-        }
-        /// 全部使用默认设置
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText2`.
-        public static var restoreLaunchSettings: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.settingsIssueText2", table: "Interface", fallback: "全部使用默认设置")
-        }
-        /// 将全部启动选项恢复为全局默认值。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText3`.
-        public static var restoreInheritedSettings: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.settingsIssueText3", table: "Interface", fallback: "将全部启动选项恢复为全局默认值。")
-        }
-        /// 有未保存的更改
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText4`.
-        public static var unsavedChanges: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.settingsIssueText4", table: "Interface", fallback: "有未保存的更改")
-        }
         /// 设置用于下一次启动
         ///
-        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText5`.
+        /// Resource: `Interface.AppInstanceSettingsView.applyNextLaunch`.
         public static var applyNextLaunch: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.settingsIssueText5", table: "Interface", fallback: "设置用于下一次启动")
-        }
-        /// 保存
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.settingsIssueText6`.
-        public static var save: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.settingsIssueText6", table: "Interface", fallback: "保存")
-        }
-        /// 实例信息
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText1`.
-        public static var instanceInfo: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText1", table: "Interface", fallback: "实例信息")
-        }
-        /// 名称
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText2`.
-        public static var nameLabel: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText2", table: "Interface", fallback: "名称")
-        }
-        /// 实例名称
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText3`.
-        public static var instanceName: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText3", table: "Interface", fallback: "实例名称")
-        }
-        /// 输入实例名称
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText4`.
-        public static var enterInstanceName: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText4", table: "Interface", fallback: "输入实例名称")
-        }
-        /// 固定到主页
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText5`.
-        public static var favoriteInstance: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText5", table: "Interface", fallback: "固定到主页")
-        }
-        /// 实例图标
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText6`.
-        public static var instanceIcon: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText6", table: "Interface", fallback: "实例图标")
-        }
-        /// 可选用内置图标，或使用自定义图片（自动裁剪为正方形）。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText7`.
-        public static var iconCropNotice: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText7", table: "Interface", fallback: "可选用内置图标，或使用自定义图片（自动裁剪为正方形）。")
+            .init(key: "AppInstanceSettingsView.applyNextLaunch", table: "Interface", fallback: "设置用于下一次启动")
         }
         /// 更改图标
         ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText8`.
+        /// Resource: `Interface.AppInstanceSettingsView.changeIcon`.
         public static var changeIcon: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText8", table: "Interface", fallback: "更改图标")
-        }
-        /// 选择图片…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText9`.
-        public static var chooseImage: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText9", table: "Interface", fallback: "选择图片…")
-        }
-        /// 恢复默认图标
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText10`.
-        public static var restoreDefaultIcon: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText10", table: "Interface", fallback: "恢复默认图标")
-        }
-        /// 游戏组件
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText11`.
-        public static var gameComponents: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText11", table: "Interface", fallback: "游戏组件")
-        }
-        /// 加载器
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText12`.
-        public static var loader: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText12", table: "Interface", fallback: "加载器")
-        }
-        /// 管理…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText13`.
-        public static var manageComponents: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText13", table: "Interface", fallback: "管理…")
-        }
-        /// 整合包更新
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText14`.
-        public static var packUpdate: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText14", table: "Interface", fallback: "整合包更新")
-        }
-        /// 检查版本、安装更新或恢复上次配置。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText15`.
-        public static var packUpdateDescription: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText15", table: "Interface", fallback: "检查版本、安装更新或恢复上次配置。")
-        }
-        /// 查看…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.overviewText16`.
-        public static var viewPackUpdate: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.overviewText16", table: "Interface", fallback: "查看…")
-        }
-        /// 运行目录
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.filesText1`.
-        public static var runDirectory: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.filesText1", table: "Interface", fallback: "运行目录")
-        }
-        /// 保存方式
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.filesText2`.
-        public static var saveMethod: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.filesText2", table: "Interface", fallback: "保存方式")
-        }
-        /// 位置与隔离
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText1`.
-        public static var locationAndIsolation: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText1", table: "Interface", fallback: "位置与隔离")
-        }
-        /// 恢复目录复制…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText2`.
-        public static var recoverDirectoryCopy: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText2", table: "Interface", fallback: "恢复目录复制…")
-        }
-        /// 切换运行目录…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText3`.
-        public static var switchRunDirectory: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText3", table: "Interface", fallback: "切换运行目录…")
-        }
-        /// 重新定位原游戏目录…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText4`.
-        public static var relocateOriginalDirectory: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText4", table: "Interface", fallback: "重新定位原游戏目录…")
-        }
-        /// 重新定位已保存的自定义目录…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText5`.
-        public static var relocateCustomDirectory: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText5", table: "Interface", fallback: "重新定位已保存的自定义目录…")
-        }
-        /// 打开文件夹
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText6`.
-        public static var openFolder: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText6", table: "Interface", fallback: "打开文件夹")
-        }
-        /// 模组
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText7`.
-        public static var mods: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText7", table: "Interface", fallback: "模组")
-        }
-        /// 存档
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText8`.
-        public static var worlds: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText8", table: "Interface", fallback: "存档")
-        }
-        /// 未完成的实例复制
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText9`.
-        public static var incompleteCopy: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText9", table: "Interface", fallback: "未完成的实例复制")
-        }
-        /// 恢复未完成的复制，或完成副本校验。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText10`.
-        public static var incompleteCopyDescription: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText10", table: "Interface", fallback: "恢复未完成的复制，或完成副本校验。")
-        }
-        /// 恢复…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText11`.
-        public static var recover: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText11", table: "Interface", fallback: "恢复…")
-        }
-        /// 复制实例
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText12`.
-        public static var copyInstance: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText12", table: "Interface", fallback: "复制实例")
-        }
-        /// 保留原实例，创建一份独立副本。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText13`.
-        public static var copyDescription: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText13", table: "Interface", fallback: "保留原实例，创建一份独立副本。")
-        }
-        /// 复制…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText14`.
-        public static var copy: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText14", table: "Interface", fallback: "复制…")
-        }
-        /// 未完成的实例移动
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText15`.
-        public static var incompleteMove: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText15", table: "Interface", fallback: "未完成的实例移动")
-        }
-        /// 恢复未完成的移动，或完成原文件清理。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText16`.
-        public static var incompleteMoveDescription: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText16", table: "Interface", fallback: "恢复未完成的移动，或完成原文件清理。")
-        }
-        /// 移动实例
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText17`.
-        public static var moveInstance: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText17", table: "Interface", fallback: "移动实例")
-        }
-        /// 将实例转移到其他游戏文件夹。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText18`.
-        public static var moveDescription: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText18", table: "Interface", fallback: "将实例转移到其他游戏文件夹。")
-        }
-        /// 移动…
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText19`.
-        public static var move: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText19", table: "Interface", fallback: "移动…")
-        }
-        /// 复制与移动
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText20`.
-        public static var copyAndMove: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText20", table: "Interface", fallback: "复制与移动")
-        }
-        /// 文件操作单独生效，无需保存实例设置。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText21`.
-        public static var fileOperationNotice: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText21", table: "Interface", fallback: "文件操作单独生效，无需保存实例设置。")
-        }
-        /// 保留的工作文件
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText22`.
-        public static var retainedWorkFiles: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText22", table: "Interface", fallback: "保留的工作文件")
-        }
-        /// 副本 %1$@
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText23`.
-        public static func copyLabel(_ value0: String) -> LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText23", table: "Interface", fallback: "副本 %1$@", arguments: [.text(value0)])
-        }
-        /// 在 Finder 中查看
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.errorText24`.
-        public static var viewInFinder: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.errorText24", table: "Interface", fallback: "在 Finder 中查看")
-        }
-        /// 请填写实例名称。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.saveText1`.
-        public static var nameRequired: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.saveText1", table: "Interface", fallback: "请填写实例名称。")
-        }
-        /// 此实例已不在当前文件夹中，请关闭设置后刷新。
-        ///
-        /// Resource: `Interface.appInstanceSettingsView.issueText1`.
-        public static var instanceMissing: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.issueText1", table: "Interface", fallback: "此实例已不在当前文件夹中，请关闭设置后刷新。")
+            .init(key: "AppInstanceSettingsView.changeIcon", table: "Interface", fallback: "更改图标")
         }
         /// 选择图标
         ///
-        /// Resource: `Interface.appInstanceSettingsView.panelText1`.
+        /// Resource: `Interface.AppInstanceSettingsView.chooseIcon`.
         public static var chooseIcon: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.panelText1", table: "Interface", fallback: "选择图标")
+            .init(key: "AppInstanceSettingsView.chooseIcon", table: "Interface", fallback: "选择图标")
+        }
+        /// 选择图片…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.chooseImage`.
+        public static var chooseImage: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.chooseImage", table: "Interface", fallback: "选择图片…")
+        }
+        /// 复制…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.copy`.
+        public static var copy: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.copy", table: "Interface", fallback: "复制…")
+        }
+        /// 复制与移动
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.copyAndMove`.
+        public static var copyAndMove: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.copyAndMove", table: "Interface", fallback: "复制与移动")
+        }
+        /// 保留原实例，创建一份独立副本。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.copyDescription`.
+        public static var copyDescription: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.copyDescription", table: "Interface", fallback: "保留原实例，创建一份独立副本。")
+        }
+        /// 复制实例
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.copyInstance`.
+        public static var copyInstance: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.copyInstance", table: "Interface", fallback: "复制实例")
+        }
+        /// 副本 %1$@
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.copyLabel`.
+        public static func copyLabel(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.copyLabel", table: "Interface", fallback: "副本 %1$@", arguments: [.text(value0)])
         }
         /// 默认启动设置
         ///
-        /// Resource: `Interface.appInstanceSettingsView.defaultLaunchSettings`.
+        /// Resource: `Interface.AppInstanceSettingsView.defaultLaunchSettings`.
         public static var defaultLaunchSettings: LocalizedMessage {
-            .init(key: "appInstanceSettingsView.defaultLaunchSettings", table: "Interface", fallback: "默认启动设置")
+            .init(key: "AppInstanceSettingsView.defaultLaunchSettings", table: "Interface", fallback: "默认启动设置")
+        }
+        /// 输入实例名称
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.enterInstanceName`.
+        public static var enterInstanceName: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.enterInstanceName", table: "Interface", fallback: "输入实例名称")
+        }
+        /// 固定到主页
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.favoriteInstance`.
+        public static var favoriteInstance: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.favoriteInstance", table: "Interface", fallback: "固定到主页")
+        }
+        /// 文件操作单独生效，无需保存实例设置。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.fileOperationNotice`.
+        public static var fileOperationNotice: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.fileOperationNotice", table: "Interface", fallback: "文件操作单独生效，无需保存实例设置。")
+        }
+        /// 游戏组件
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.gameComponents`.
+        public static var gameComponents: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.gameComponents", table: "Interface", fallback: "游戏组件")
+        }
+        /// 可选用内置图标，或使用自定义图片（自动裁剪为正方形）。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.iconCropNotice`.
+        public static var iconCropNotice: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.iconCropNotice", table: "Interface", fallback: "可选用内置图标，或使用自定义图片（自动裁剪为正方形）。")
+        }
+        /// 未完成的实例复制
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.incompleteCopy`.
+        public static var incompleteCopy: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.incompleteCopy", table: "Interface", fallback: "未完成的实例复制")
+        }
+        /// 恢复未完成的复制，或完成副本校验。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.incompleteCopyDescription`.
+        public static var incompleteCopyDescription: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.incompleteCopyDescription", table: "Interface", fallback: "恢复未完成的复制，或完成副本校验。")
+        }
+        /// 未完成的实例移动
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.incompleteMove`.
+        public static var incompleteMove: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.incompleteMove", table: "Interface", fallback: "未完成的实例移动")
+        }
+        /// 恢复未完成的移动，或完成原文件清理。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.incompleteMoveDescription`.
+        public static var incompleteMoveDescription: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.incompleteMoveDescription", table: "Interface", fallback: "恢复未完成的移动，或完成原文件清理。")
+        }
+        /// 实例图标
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.instanceIcon`.
+        public static var instanceIcon: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.instanceIcon", table: "Interface", fallback: "实例图标")
+        }
+        /// 实例信息
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.instanceInfo`.
+        public static var instanceInfo: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.instanceInfo", table: "Interface", fallback: "实例信息")
+        }
+        /// 此实例已不在当前文件夹中，请关闭设置后刷新。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.instanceMissing`.
+        public static var instanceMissing: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.instanceMissing", table: "Interface", fallback: "此实例已不在当前文件夹中，请关闭设置后刷新。")
+        }
+        /// 实例名称
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.instanceName`.
+        public static var instanceName: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.instanceName", table: "Interface", fallback: "实例名称")
+        }
+        /// 实例设置
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.instanceSettings`.
+        public static var instanceSettings: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.instanceSettings", table: "Interface", fallback: "实例设置")
+        }
+        /// 加载器
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.loader`.
+        public static var loader: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.loader", table: "Interface", fallback: "加载器")
+        }
+        /// 位置与隔离
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.locationAndIsolation`.
+        public static var locationAndIsolation: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.locationAndIsolation", table: "Interface", fallback: "位置与隔离")
+        }
+        /// 管理…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.manageComponents`.
+        public static var manageComponents: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.manageComponents", table: "Interface", fallback: "管理…")
+        }
+        /// 模组
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.mods`.
+        public static var mods: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.mods", table: "Interface", fallback: "模组")
+        }
+        /// 移动…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.move`.
+        public static var move: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.move", table: "Interface", fallback: "移动…")
+        }
+        /// 将实例转移到其他游戏文件夹。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.moveDescription`.
+        public static var moveDescription: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.moveDescription", table: "Interface", fallback: "将实例转移到其他游戏文件夹。")
+        }
+        /// 移动实例
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.moveInstance`.
+        public static var moveInstance: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.moveInstance", table: "Interface", fallback: "移动实例")
+        }
+        /// 名称
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.nameLabel`.
+        public static var nameLabel: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.nameLabel", table: "Interface", fallback: "名称")
+        }
+        /// 请填写实例名称。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.nameRequired`.
+        public static var nameRequired: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.nameRequired", table: "Interface", fallback: "请填写实例名称。")
+        }
+        /// 打开文件夹
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.openFolder`.
+        public static var openFolder: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.openFolder", table: "Interface", fallback: "打开文件夹")
+        }
+        /// 整合包更新
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.packUpdate`.
+        public static var packUpdate: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.packUpdate", table: "Interface", fallback: "整合包更新")
+        }
+        /// 检查版本、安装更新或恢复上次配置。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.packUpdateDescription`.
+        public static var packUpdateDescription: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.packUpdateDescription", table: "Interface", fallback: "检查版本、安装更新或恢复上次配置。")
+        }
+        /// 恢复…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.recover`.
+        public static var recover: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.recover", table: "Interface", fallback: "恢复…")
+        }
+        /// 恢复目录复制…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.recoverDirectoryCopy`.
+        public static var recoverDirectoryCopy: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.recoverDirectoryCopy", table: "Interface", fallback: "恢复目录复制…")
+        }
+        /// 重新定位已保存的自定义目录…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.relocateCustomDirectory`.
+        public static var relocateCustomDirectory: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.relocateCustomDirectory", table: "Interface", fallback: "重新定位已保存的自定义目录…")
+        }
+        /// 重新定位原游戏目录…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.relocateOriginalDirectory`.
+        public static var relocateOriginalDirectory: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.relocateOriginalDirectory", table: "Interface", fallback: "重新定位原游戏目录…")
+        }
+        /// 恢复默认图标
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.restoreDefaultIcon`.
+        public static var restoreDefaultIcon: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.restoreDefaultIcon", table: "Interface", fallback: "恢复默认图标")
+        }
+        /// 恢复默认
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.restoreDefaults`.
+        public static var restoreDefaults: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.restoreDefaults", table: "Interface", fallback: "恢复默认")
+        }
+        /// 将全部启动选项恢复为全局默认值。
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.restoreInheritedSettings`.
+        public static var restoreInheritedSettings: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.restoreInheritedSettings", table: "Interface", fallback: "将全部启动选项恢复为全局默认值。")
+        }
+        /// 全部使用默认设置
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.restoreLaunchSettings`.
+        public static var restoreLaunchSettings: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.restoreLaunchSettings", table: "Interface", fallback: "全部使用默认设置")
+        }
+        /// 保留的工作文件
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.retainedWorkFiles`.
+        public static var retainedWorkFiles: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.retainedWorkFiles", table: "Interface", fallback: "保留的工作文件")
+        }
+        /// 运行目录
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.runDirectory`.
+        public static var runDirectory: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.runDirectory", table: "Interface", fallback: "运行目录")
+        }
+        /// 保存
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.save`.
+        public static var save: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.save", table: "Interface", fallback: "保存")
+        }
+        /// 保存方式
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.saveMethod`.
+        public static var saveMethod: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.saveMethod", table: "Interface", fallback: "保存方式")
+        }
+        /// 整合包支持的 Java
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.supportedJava`.
+        public static var supportedJava: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.supportedJava", table: "Interface", fallback: "整合包支持的 Java")
+        }
+        /// 切换运行目录…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.switchRunDirectory`.
+        public static var switchRunDirectory: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.switchRunDirectory", table: "Interface", fallback: "切换运行目录…")
+        }
+        /// 有未保存的更改
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.unsavedChanges`.
+        public static var unsavedChanges: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.unsavedChanges", table: "Interface", fallback: "有未保存的更改")
+        }
+        /// 在 Finder 中查看
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.viewInFinder`.
+        public static var viewInFinder: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.viewInFinder", table: "Interface", fallback: "在 Finder 中查看")
+        }
+        /// 查看…
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.viewPackUpdate`.
+        public static var viewPackUpdate: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.viewPackUpdate", table: "Interface", fallback: "查看…")
+        }
+        /// 存档
+        ///
+        /// Resource: `Interface.AppInstanceSettingsView.worlds`.
+        public static var worlds: LocalizedMessage {
+            .init(key: "AppInstanceSettingsView.worlds", table: "Interface", fallback: "存档")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appInstanceSettingsView.bodyText1": .init("实例设置", []),
-            "Interface:appInstanceSettingsView.versionsText1": .init("整合包支持的 Java", []),
-            "Interface:appInstanceSettingsView.settingsIssueText1": .init("恢复默认", []),
-            "Interface:appInstanceSettingsView.settingsIssueText2": .init("全部使用默认设置", []),
-            "Interface:appInstanceSettingsView.settingsIssueText3": .init("将全部启动选项恢复为全局默认值。", []),
-            "Interface:appInstanceSettingsView.settingsIssueText4": .init("有未保存的更改", []),
-            "Interface:appInstanceSettingsView.settingsIssueText5": .init("设置用于下一次启动", []),
-            "Interface:appInstanceSettingsView.settingsIssueText6": .init("保存", []),
-            "Interface:appInstanceSettingsView.overviewText1": .init("实例信息", []),
-            "Interface:appInstanceSettingsView.overviewText2": .init("名称", []),
-            "Interface:appInstanceSettingsView.overviewText3": .init("实例名称", []),
-            "Interface:appInstanceSettingsView.overviewText4": .init("输入实例名称", []),
-            "Interface:appInstanceSettingsView.overviewText5": .init("固定到主页", []),
-            "Interface:appInstanceSettingsView.overviewText6": .init("实例图标", []),
-            "Interface:appInstanceSettingsView.overviewText7": .init("可选用内置图标，或使用自定义图片（自动裁剪为正方形）。", []),
-            "Interface:appInstanceSettingsView.overviewText8": .init("更改图标", []),
-            "Interface:appInstanceSettingsView.overviewText9": .init("选择图片…", []),
-            "Interface:appInstanceSettingsView.overviewText10": .init("恢复默认图标", []),
-            "Interface:appInstanceSettingsView.overviewText11": .init("游戏组件", []),
-            "Interface:appInstanceSettingsView.overviewText12": .init("加载器", []),
-            "Interface:appInstanceSettingsView.overviewText13": .init("管理…", []),
-            "Interface:appInstanceSettingsView.overviewText14": .init("整合包更新", []),
-            "Interface:appInstanceSettingsView.overviewText15": .init("检查版本、安装更新或恢复上次配置。", []),
-            "Interface:appInstanceSettingsView.overviewText16": .init("查看…", []),
-            "Interface:appInstanceSettingsView.filesText1": .init("运行目录", []),
-            "Interface:appInstanceSettingsView.filesText2": .init("保存方式", []),
-            "Interface:appInstanceSettingsView.errorText1": .init("位置与隔离", []),
-            "Interface:appInstanceSettingsView.errorText2": .init("恢复目录复制…", []),
-            "Interface:appInstanceSettingsView.errorText3": .init("切换运行目录…", []),
-            "Interface:appInstanceSettingsView.errorText4": .init("重新定位原游戏目录…", []),
-            "Interface:appInstanceSettingsView.errorText5": .init("重新定位已保存的自定义目录…", []),
-            "Interface:appInstanceSettingsView.errorText6": .init("打开文件夹", []),
-            "Interface:appInstanceSettingsView.errorText7": .init("模组", []),
-            "Interface:appInstanceSettingsView.errorText8": .init("存档", []),
-            "Interface:appInstanceSettingsView.errorText9": .init("未完成的实例复制", []),
-            "Interface:appInstanceSettingsView.errorText10": .init("恢复未完成的复制，或完成副本校验。", []),
-            "Interface:appInstanceSettingsView.errorText11": .init("恢复…", []),
-            "Interface:appInstanceSettingsView.errorText12": .init("复制实例", []),
-            "Interface:appInstanceSettingsView.errorText13": .init("保留原实例，创建一份独立副本。", []),
-            "Interface:appInstanceSettingsView.errorText14": .init("复制…", []),
-            "Interface:appInstanceSettingsView.errorText15": .init("未完成的实例移动", []),
-            "Interface:appInstanceSettingsView.errorText16": .init("恢复未完成的移动，或完成原文件清理。", []),
-            "Interface:appInstanceSettingsView.errorText17": .init("移动实例", []),
-            "Interface:appInstanceSettingsView.errorText18": .init("将实例转移到其他游戏文件夹。", []),
-            "Interface:appInstanceSettingsView.errorText19": .init("移动…", []),
-            "Interface:appInstanceSettingsView.errorText20": .init("复制与移动", []),
-            "Interface:appInstanceSettingsView.errorText21": .init("文件操作单独生效，无需保存实例设置。", []),
-            "Interface:appInstanceSettingsView.errorText22": .init("保留的工作文件", []),
-            "Interface:appInstanceSettingsView.errorText23": .init("副本 %1$@", [.text]),
-            "Interface:appInstanceSettingsView.errorText24": .init("在 Finder 中查看", []),
-            "Interface:appInstanceSettingsView.saveText1": .init("请填写实例名称。", []),
-            "Interface:appInstanceSettingsView.issueText1": .init("此实例已不在当前文件夹中，请关闭设置后刷新。", []),
-            "Interface:appInstanceSettingsView.panelText1": .init("选择图标", []),
-            "Interface:appInstanceSettingsView.defaultLaunchSettings": .init("默认启动设置", []),
+            "Interface:AppInstanceSettingsView.applyNextLaunch": .init("设置用于下一次启动", []),
+            "Interface:AppInstanceSettingsView.changeIcon": .init("更改图标", []),
+            "Interface:AppInstanceSettingsView.chooseIcon": .init("选择图标", []),
+            "Interface:AppInstanceSettingsView.chooseImage": .init("选择图片…", []),
+            "Interface:AppInstanceSettingsView.copy": .init("复制…", []),
+            "Interface:AppInstanceSettingsView.copyAndMove": .init("复制与移动", []),
+            "Interface:AppInstanceSettingsView.copyDescription": .init("保留原实例，创建一份独立副本。", []),
+            "Interface:AppInstanceSettingsView.copyInstance": .init("复制实例", []),
+            "Interface:AppInstanceSettingsView.copyLabel": .init("副本 %1$@", [.text]),
+            "Interface:AppInstanceSettingsView.defaultLaunchSettings": .init("默认启动设置", []),
+            "Interface:AppInstanceSettingsView.enterInstanceName": .init("输入实例名称", []),
+            "Interface:AppInstanceSettingsView.favoriteInstance": .init("固定到主页", []),
+            "Interface:AppInstanceSettingsView.fileOperationNotice": .init("文件操作单独生效，无需保存实例设置。", []),
+            "Interface:AppInstanceSettingsView.gameComponents": .init("游戏组件", []),
+            "Interface:AppInstanceSettingsView.iconCropNotice": .init("可选用内置图标，或使用自定义图片（自动裁剪为正方形）。", []),
+            "Interface:AppInstanceSettingsView.incompleteCopy": .init("未完成的实例复制", []),
+            "Interface:AppInstanceSettingsView.incompleteCopyDescription": .init("恢复未完成的复制，或完成副本校验。", []),
+            "Interface:AppInstanceSettingsView.incompleteMove": .init("未完成的实例移动", []),
+            "Interface:AppInstanceSettingsView.incompleteMoveDescription": .init("恢复未完成的移动，或完成原文件清理。", []),
+            "Interface:AppInstanceSettingsView.instanceIcon": .init("实例图标", []),
+            "Interface:AppInstanceSettingsView.instanceInfo": .init("实例信息", []),
+            "Interface:AppInstanceSettingsView.instanceMissing": .init("此实例已不在当前文件夹中，请关闭设置后刷新。", []),
+            "Interface:AppInstanceSettingsView.instanceName": .init("实例名称", []),
+            "Interface:AppInstanceSettingsView.instanceSettings": .init("实例设置", []),
+            "Interface:AppInstanceSettingsView.loader": .init("加载器", []),
+            "Interface:AppInstanceSettingsView.locationAndIsolation": .init("位置与隔离", []),
+            "Interface:AppInstanceSettingsView.manageComponents": .init("管理…", []),
+            "Interface:AppInstanceSettingsView.mods": .init("模组", []),
+            "Interface:AppInstanceSettingsView.move": .init("移动…", []),
+            "Interface:AppInstanceSettingsView.moveDescription": .init("将实例转移到其他游戏文件夹。", []),
+            "Interface:AppInstanceSettingsView.moveInstance": .init("移动实例", []),
+            "Interface:AppInstanceSettingsView.nameLabel": .init("名称", []),
+            "Interface:AppInstanceSettingsView.nameRequired": .init("请填写实例名称。", []),
+            "Interface:AppInstanceSettingsView.openFolder": .init("打开文件夹", []),
+            "Interface:AppInstanceSettingsView.packUpdate": .init("整合包更新", []),
+            "Interface:AppInstanceSettingsView.packUpdateDescription": .init("检查版本、安装更新或恢复上次配置。", []),
+            "Interface:AppInstanceSettingsView.recover": .init("恢复…", []),
+            "Interface:AppInstanceSettingsView.recoverDirectoryCopy": .init("恢复目录复制…", []),
+            "Interface:AppInstanceSettingsView.relocateCustomDirectory": .init("重新定位已保存的自定义目录…", []),
+            "Interface:AppInstanceSettingsView.relocateOriginalDirectory": .init("重新定位原游戏目录…", []),
+            "Interface:AppInstanceSettingsView.restoreDefaultIcon": .init("恢复默认图标", []),
+            "Interface:AppInstanceSettingsView.restoreDefaults": .init("恢复默认", []),
+            "Interface:AppInstanceSettingsView.restoreInheritedSettings": .init("将全部启动选项恢复为全局默认值。", []),
+            "Interface:AppInstanceSettingsView.restoreLaunchSettings": .init("全部使用默认设置", []),
+            "Interface:AppInstanceSettingsView.retainedWorkFiles": .init("保留的工作文件", []),
+            "Interface:AppInstanceSettingsView.runDirectory": .init("运行目录", []),
+            "Interface:AppInstanceSettingsView.save": .init("保存", []),
+            "Interface:AppInstanceSettingsView.saveMethod": .init("保存方式", []),
+            "Interface:AppInstanceSettingsView.supportedJava": .init("整合包支持的 Java", []),
+            "Interface:AppInstanceSettingsView.switchRunDirectory": .init("切换运行目录…", []),
+            "Interface:AppInstanceSettingsView.unsavedChanges": .init("有未保存的更改", []),
+            "Interface:AppInstanceSettingsView.viewInFinder": .init("在 Finder 中查看", []),
+            "Interface:AppInstanceSettingsView.viewPackUpdate": .init("查看…", []),
+            "Interface:AppInstanceSettingsView.worlds": .init("存档", []),
         ]
     }
 }

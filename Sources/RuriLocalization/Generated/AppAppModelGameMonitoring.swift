@@ -3,154 +3,154 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelGameMonitoring {
-        /// 实例移动待恢复
+        /// 无法保存运行记录的已读状态：%1$@
         ///
-        /// Resource: `Interface.appAppModelGameMonitoring.runningLabelText1`.
-        public static var pendingMove: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.runningLabelText1", table: "Interface", fallback: "实例移动待恢复")
-        }
-        /// 实例复制待恢复
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.runningLabelText2`.
-        public static var pendingCopy: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.runningLabelText2", table: "Interface", fallback: "实例复制待恢复")
-        }
-        /// 目录复制待恢复
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.runningLabelText3`.
-        public static var pendingDirectoryCopy: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.runningLabelText3", table: "Interface", fallback: "目录复制待恢复")
-        }
-        /// 游戏目录无法访问
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText1`.
-        public static var inaccessibleGameDirectory: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText1", table: "Interface", fallback: "游戏目录无法访问")
-        }
-        /// 文件夹无法访问
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText2`.
-        public static var inaccessibleFolder: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText2", table: "Interface", fallback: "文件夹无法访问")
-        }
-        /// 监控已断开
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText3`.
-        public static var monitoringDisconnected: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText3", table: "Interface", fallback: "监控已断开")
-        }
-        /// 状态待确认
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText4`.
-        public static var statusNeedsConfirmation: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText4", table: "Interface", fallback: "状态待确认")
-        }
-        /// 正在保存记录
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText5`.
-        public static var savingRecord: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText5", table: "Interface", fallback: "正在保存记录")
-        }
-        /// 等待游戏退出
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText6`.
-        public static var waitingForExit: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText6", table: "Interface", fallback: "等待游戏退出")
-        }
-        /// 正在终止进程
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText7`.
-        public static var terminatingProcess: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText7", table: "Interface", fallback: "正在终止进程")
-        }
-        /// 正在启动
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText8`.
-        public static var launching: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText8", table: "Interface", fallback: "正在启动")
-        }
-        /// 运行中
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText9`.
-        public static var running: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText9", table: "Interface", fallback: "运行中")
+        /// Resource: `Interface.AppAppModelGameMonitoring.acknowledgeSessionFailure`.
+        public static func acknowledgeSessionFailure(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.acknowledgeSessionFailure", table: "Interface", fallback: "无法保存运行记录的已读状态：%1$@", arguments: [.text(value0)])
         }
         /// 暂时无法切回游戏窗口，请从 Dock 或应用切换器选择游戏。
         ///
-        /// Resource: `Interface.appAppModelGameMonitoring.applicationText1`.
+        /// Resource: `Interface.AppAppModelGameMonitoring.gameWindowUnavailable`.
         public static var gameWindowUnavailable: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.applicationText1", table: "Interface", fallback: "暂时无法切回游戏窗口，请从 Dock 或应用切换器选择游戏。")
+            .init(key: "AppAppModelGameMonitoring.gameWindowUnavailable", table: "Interface", fallback: "暂时无法切回游戏窗口，请从 Dock 或应用切换器选择游戏。")
         }
-        /// 已提交正常退出请求，等待游戏处理。
+        /// 文件夹无法访问
         ///
-        /// Resource: `Interface.appAppModelGameMonitoring.recordText10`.
-        public static var normalExitRequested: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.recordText10", table: "Interface", fallback: "已提交正常退出请求，等待游戏处理。")
+        /// Resource: `Interface.AppAppModelGameMonitoring.inaccessibleFolder`.
+        public static var inaccessibleFolder: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.inaccessibleFolder", table: "Interface", fallback: "文件夹无法访问")
         }
-        /// 终止“%1$@”的游戏进程？
+        /// 游戏目录无法访问
         ///
-        /// Resource: `Interface.appAppModelGameMonitoring.alertText1`.
-        public static func terminateGameProcess(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.alertText1", table: "Interface", fallback: "终止“%1$@”的游戏进程？", arguments: [.text(value0)])
+        /// Resource: `Interface.AppAppModelGameMonitoring.inaccessibleGameDirectory`.
+        public static var inaccessibleGameDirectory: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.inaccessibleGameDirectory", table: "Interface", fallback: "游戏目录无法访问")
         }
-        /// 这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。
+        /// 正在启动
         ///
-        /// Resource: `Interface.appAppModelGameMonitoring.alertText2`.
-        public static var terminateWarning: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.alertText2", table: "Interface", fallback: "这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。")
+        /// Resource: `Interface.AppAppModelGameMonitoring.launching`.
+        public static var launching: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.launching", table: "Interface", fallback: "正在启动")
         }
-        /// 终止进程
+        /// 监控已断开
         ///
-        /// Resource: `Interface.appAppModelGameMonitoring.alertText3`.
-        public static var terminateProcess: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.alertText3", table: "Interface", fallback: "终止进程")
-        }
-        /// 无法保存运行记录的已读状态：%1$@
-        ///
-        /// Resource: `Interface.appAppModelGameMonitoring.acknowledgeSessionText1`.
-        public static func acknowledgeSessionFailure(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.acknowledgeSessionText1", table: "Interface", fallback: "无法保存运行记录的已读状态：%1$@", arguments: [.text(value0)])
+        /// Resource: `Interface.AppAppModelGameMonitoring.monitoringDisconnected`.
+        public static var monitoringDisconnected: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.monitoringDisconnected", table: "Interface", fallback: "监控已断开")
         }
         /// 游戏或启动命令仍在运行，监控已中断
         ///
-        /// Resource: `Interface.appAppModelGameMonitoring.summaryText1`.
+        /// Resource: `Interface.AppAppModelGameMonitoring.monitoringStopped`.
         public static var monitoringStopped: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.summaryText1", table: "Interface", fallback: "游戏或启动命令仍在运行，监控已中断")
+            .init(key: "AppAppModelGameMonitoring.monitoringStopped", table: "Interface", fallback: "游戏或启动命令仍在运行，监控已中断")
+        }
+        /// 已提交正常退出请求，等待游戏处理。
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.normalExitRequested`.
+        public static var normalExitRequested: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.normalExitRequested", table: "Interface", fallback: "已提交正常退出请求，等待游戏处理。")
+        }
+        /// 实例复制待恢复
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.pendingCopy`.
+        public static var pendingCopy: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.pendingCopy", table: "Interface", fallback: "实例复制待恢复")
+        }
+        /// 目录复制待恢复
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.pendingDirectoryCopy`.
+        public static var pendingDirectoryCopy: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.pendingDirectoryCopy", table: "Interface", fallback: "目录复制待恢复")
+        }
+        /// 实例移动待恢复
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.pendingMove`.
+        public static var pendingMove: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.pendingMove", table: "Interface", fallback: "实例移动待恢复")
+        }
+        /// 运行中
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.running`.
+        public static var running: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.running", table: "Interface", fallback: "运行中")
+        }
+        /// 正在保存记录
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.savingRecord`.
+        public static var savingRecord: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.savingRecord", table: "Interface", fallback: "正在保存记录")
+        }
+        /// 状态待确认
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.statusNeedsConfirmation`.
+        public static var statusNeedsConfirmation: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.statusNeedsConfirmation", table: "Interface", fallback: "状态待确认")
         }
         /// 监控已中断，运行状态待确认
         ///
-        /// Resource: `Interface.appAppModelGameMonitoring.summaryText2`.
+        /// Resource: `Interface.AppAppModelGameMonitoring.statusUnconfirmed`.
         public static var statusUnconfirmed: LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.summaryText2", table: "Interface", fallback: "监控已中断，运行状态待确认")
+            .init(key: "AppAppModelGameMonitoring.statusUnconfirmed", table: "Interface", fallback: "监控已中断，运行状态待确认")
+        }
+        /// 终止“%1$@”的游戏进程？
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.terminateGameProcess`.
+        public static func terminateGameProcess(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.terminateGameProcess", table: "Interface", fallback: "终止“%1$@”的游戏进程？", arguments: [.text(value0)])
+        }
+        /// 终止进程
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.terminateProcess`.
+        public static var terminateProcess: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.terminateProcess", table: "Interface", fallback: "终止进程")
+        }
+        /// 这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.terminateWarning`.
+        public static var terminateWarning: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.terminateWarning", table: "Interface", fallback: "这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。")
+        }
+        /// 正在终止进程
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.terminatingProcess`.
+        public static var terminatingProcess: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.terminatingProcess", table: "Interface", fallback: "正在终止进程")
         }
         /// 无法读取 %1$@ 的运行日志：%2$@
         ///
-        /// Resource: `Interface.appAppModelGameMonitoring.changedText1`.
+        /// Resource: `Interface.AppAppModelGameMonitoring.unreadableLog`.
         public static func unreadableLog(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "appAppModelGameMonitoring.changedText1", table: "Interface", fallback: "无法读取 %1$@ 的运行日志：%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "AppAppModelGameMonitoring.unreadableLog", table: "Interface", fallback: "无法读取 %1$@ 的运行日志：%2$@", arguments: [.text(value0), .text(value1)])
+        }
+        /// 等待游戏退出
+        ///
+        /// Resource: `Interface.AppAppModelGameMonitoring.waitingForExit`.
+        public static var waitingForExit: LocalizedMessage {
+            .init(key: "AppAppModelGameMonitoring.waitingForExit", table: "Interface", fallback: "等待游戏退出")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAppModelGameMonitoring.runningLabelText1": .init("实例移动待恢复", []),
-            "Interface:appAppModelGameMonitoring.runningLabelText2": .init("实例复制待恢复", []),
-            "Interface:appAppModelGameMonitoring.runningLabelText3": .init("目录复制待恢复", []),
-            "Interface:appAppModelGameMonitoring.recordText1": .init("游戏目录无法访问", []),
-            "Interface:appAppModelGameMonitoring.recordText2": .init("文件夹无法访问", []),
-            "Interface:appAppModelGameMonitoring.recordText3": .init("监控已断开", []),
-            "Interface:appAppModelGameMonitoring.recordText4": .init("状态待确认", []),
-            "Interface:appAppModelGameMonitoring.recordText5": .init("正在保存记录", []),
-            "Interface:appAppModelGameMonitoring.recordText6": .init("等待游戏退出", []),
-            "Interface:appAppModelGameMonitoring.recordText7": .init("正在终止进程", []),
-            "Interface:appAppModelGameMonitoring.recordText8": .init("正在启动", []),
-            "Interface:appAppModelGameMonitoring.recordText9": .init("运行中", []),
-            "Interface:appAppModelGameMonitoring.applicationText1": .init("暂时无法切回游戏窗口，请从 Dock 或应用切换器选择游戏。", []),
-            "Interface:appAppModelGameMonitoring.recordText10": .init("已提交正常退出请求，等待游戏处理。", []),
-            "Interface:appAppModelGameMonitoring.alertText1": .init("终止“%1$@”的游戏进程？", [.text]),
-            "Interface:appAppModelGameMonitoring.alertText2": .init("这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。", []),
-            "Interface:appAppModelGameMonitoring.alertText3": .init("终止进程", []),
-            "Interface:appAppModelGameMonitoring.acknowledgeSessionText1": .init("无法保存运行记录的已读状态：%1$@", [.text]),
-            "Interface:appAppModelGameMonitoring.summaryText1": .init("游戏或启动命令仍在运行，监控已中断", []),
-            "Interface:appAppModelGameMonitoring.summaryText2": .init("监控已中断，运行状态待确认", []),
-            "Interface:appAppModelGameMonitoring.changedText1": .init("无法读取 %1$@ 的运行日志：%2$@", [.text, .text]),
+            "Interface:AppAppModelGameMonitoring.acknowledgeSessionFailure": .init("无法保存运行记录的已读状态：%1$@", [.text]),
+            "Interface:AppAppModelGameMonitoring.gameWindowUnavailable": .init("暂时无法切回游戏窗口，请从 Dock 或应用切换器选择游戏。", []),
+            "Interface:AppAppModelGameMonitoring.inaccessibleFolder": .init("文件夹无法访问", []),
+            "Interface:AppAppModelGameMonitoring.inaccessibleGameDirectory": .init("游戏目录无法访问", []),
+            "Interface:AppAppModelGameMonitoring.launching": .init("正在启动", []),
+            "Interface:AppAppModelGameMonitoring.monitoringDisconnected": .init("监控已断开", []),
+            "Interface:AppAppModelGameMonitoring.monitoringStopped": .init("游戏或启动命令仍在运行，监控已中断", []),
+            "Interface:AppAppModelGameMonitoring.normalExitRequested": .init("已提交正常退出请求，等待游戏处理。", []),
+            "Interface:AppAppModelGameMonitoring.pendingCopy": .init("实例复制待恢复", []),
+            "Interface:AppAppModelGameMonitoring.pendingDirectoryCopy": .init("目录复制待恢复", []),
+            "Interface:AppAppModelGameMonitoring.pendingMove": .init("实例移动待恢复", []),
+            "Interface:AppAppModelGameMonitoring.running": .init("运行中", []),
+            "Interface:AppAppModelGameMonitoring.savingRecord": .init("正在保存记录", []),
+            "Interface:AppAppModelGameMonitoring.statusNeedsConfirmation": .init("状态待确认", []),
+            "Interface:AppAppModelGameMonitoring.statusUnconfirmed": .init("监控已中断，运行状态待确认", []),
+            "Interface:AppAppModelGameMonitoring.terminateGameProcess": .init("终止“%1$@”的游戏进程？", [.text]),
+            "Interface:AppAppModelGameMonitoring.terminateProcess": .init("终止进程", []),
+            "Interface:AppAppModelGameMonitoring.terminateWarning": .init("这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。", []),
+            "Interface:AppAppModelGameMonitoring.terminatingProcess": .init("正在终止进程", []),
+            "Interface:AppAppModelGameMonitoring.unreadableLog": .init("无法读取 %1$@ 的运行日志：%2$@", [.text, .text]),
+            "Interface:AppAppModelGameMonitoring.waitingForExit": .init("等待游戏退出", []),
         ]
     }
 }

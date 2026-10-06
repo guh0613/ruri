@@ -3,161 +3,161 @@ import Foundation
 
 extension Messages {
     public enum AppWorldDataPackSearchView {
-        /// 查找数据包
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.bodyText1`.
-        public static var searchDataPacks: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.bodyText1", table: "Interface", fallback: "查找数据包")
-        }
-        /// 搜索数据包名称
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.bodyText2`.
-        public static var searchPlaceholder: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.bodyText2", table: "Interface", fallback: "搜索数据包名称")
-        }
-        /// 查找兼容数据包…
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.errorText1`.
-        public static var findCompatibleDataPacks: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText1", table: "Interface", fallback: "查找兼容数据包…")
-        }
-        /// 没有找到匹配的数据包
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.errorText2`.
-        public static var noMatchingDataPacks: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText2", table: "Interface", fallback: "没有找到匹配的数据包")
-        }
-        /// 使用英文名称或更短的关键词搜索。
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.errorText3`.
-        public static var searchHint: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText3", table: "Interface", fallback: "使用英文名称或更短的关键词搜索。")
-        }
-        /// %1$lld 个结果
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.errorText4`.
-        public static func resultCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText4", table: "Interface", fallback: "%1$lld 个结果", arguments: [.integer(value0)])
-        }
-        /// 上一页
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.errorText5`.
-        public static var previousPage: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText5", table: "Interface", fallback: "上一页")
-        }
-        /// 下一页
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.errorText6`.
-        public static var nextPage: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText6", table: "Interface", fallback: "下一页")
-        }
-        /// 安装到 “%1$@” · Minecraft %2$@
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.bodyText3`.
-        public static func installTarget(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.bodyText3", table: "Interface", fallback: "安装到 “%1$@” · Minecraft %2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 获取版本…
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.bodyText4`.
-        public static var loadingVersions: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.bodyText4", table: "Interface", fallback: "获取版本…")
-        }
-        /// 解析必需依赖…
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.bodyText5`.
-        public static var resolvingDependencies: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.bodyText5", table: "Interface", fallback: "解析必需依赖…")
-        }
         /// 共 %1$lld 个数据包 · %2$@
         ///
-        /// Resource: `Interface.appWorldDataPackSearchView.planText1`.
+        /// Resource: `Interface.AppWorldDataPackSearchView.dataPackCount`.
         public static func dataPackCount(_ value0: Int64, _ value1: String) -> LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.planText1", table: "Interface", fallback: "共 %1$lld 个数据包 · %2$@", arguments: [.integer(value0), .text(value1)])
-        }
-        ///  · 必需依赖
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.planText2`.
-        public static var requiredDependencies: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.planText2", table: "Interface", fallback: " · 必需依赖")
-        }
-        /// 安装后启用，下次进入世界时生效。同名文件不会被覆盖。
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.planText3`.
-        public static var installHelp: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.planText3", table: "Interface", fallback: "安装后启用，下次进入世界时生效。同名文件不会被覆盖。")
-        }
-        /// 显示 Beta / Alpha 版本
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.planText4`.
-        public static var showPrereleases: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.planText4", table: "Interface", fallback: "显示 Beta / Alpha 版本")
-        }
-        /// 没有兼容版本。
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.planText5`.
-        public static var noCompatibleVersions: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.planText5", table: "Interface", fallback: "没有兼容版本。")
-        }
-        /// 版本
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.planText6`.
-        public static var version: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.planText6", table: "Interface", fallback: "版本")
-        }
-        /// 在 Modrinth 查看
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.errorText7`.
-        public static var viewOnModrinth: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText7", table: "Interface", fallback: "在 Modrinth 查看")
-        }
-        /// 查看安装清单
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.errorText8`.
-        public static var viewInstallManifest: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText8", table: "Interface", fallback: "查看安装清单")
-        }
-        /// 安装
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.errorText9`.
-        public static var installDataPack: LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.errorText9", table: "Interface", fallback: "安装")
-        }
-        /// 安装数据包 %1$@
-        ///
-        /// Resource: `Interface.appWorldDataPackSearchView.planText7`.
-        public static func installDataPackFormat(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.planText7", table: "Interface", fallback: "安装数据包 %1$@", arguments: [.text(value0)])
+            .init(key: "AppWorldDataPackSearchView.dataPackCount", table: "Interface", fallback: "共 %1$lld 个数据包 · %2$@", arguments: [.integer(value0), .text(value1)])
         }
         /// 数据包已安装到 “%1$@”
         ///
-        /// Resource: `Interface.appWorldDataPackSearchView.planText8`.
+        /// Resource: `Interface.AppWorldDataPackSearchView.dataPackInstalled`.
         public static func dataPackInstalled(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldDataPackSearchView.planText8", table: "Interface", fallback: "数据包已安装到 “%1$@”", arguments: [.text(value0)])
+            .init(key: "AppWorldDataPackSearchView.dataPackInstalled", table: "Interface", fallback: "数据包已安装到 “%1$@”", arguments: [.text(value0)])
+        }
+        /// 查找兼容数据包…
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.findCompatibleDataPacks`.
+        public static var findCompatibleDataPacks: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.findCompatibleDataPacks", table: "Interface", fallback: "查找兼容数据包…")
+        }
+        /// 安装
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.installDataPack`.
+        public static var installDataPack: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.installDataPack", table: "Interface", fallback: "安装")
+        }
+        /// 安装数据包 %1$@
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.installDataPackFormat`.
+        public static func installDataPackFormat(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.installDataPackFormat", table: "Interface", fallback: "安装数据包 %1$@", arguments: [.text(value0)])
+        }
+        /// 安装后启用，下次进入世界时生效。同名文件不会被覆盖。
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.installHelp`.
+        public static var installHelp: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.installHelp", table: "Interface", fallback: "安装后启用，下次进入世界时生效。同名文件不会被覆盖。")
+        }
+        /// 安装到 “%1$@” · Minecraft %2$@
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.installTarget`.
+        public static func installTarget(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.installTarget", table: "Interface", fallback: "安装到 “%1$@” · Minecraft %2$@", arguments: [.text(value0), .text(value1)])
+        }
+        /// 获取版本…
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.loadingVersions`.
+        public static var loadingVersions: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.loadingVersions", table: "Interface", fallback: "获取版本…")
+        }
+        /// 下一页
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.nextPage`.
+        public static var nextPage: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.nextPage", table: "Interface", fallback: "下一页")
+        }
+        /// 没有兼容版本。
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.noCompatibleVersions`.
+        public static var noCompatibleVersions: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.noCompatibleVersions", table: "Interface", fallback: "没有兼容版本。")
+        }
+        /// 没有找到匹配的数据包
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.noMatchingDataPacks`.
+        public static var noMatchingDataPacks: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.noMatchingDataPacks", table: "Interface", fallback: "没有找到匹配的数据包")
+        }
+        /// 上一页
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.previousPage`.
+        public static var previousPage: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.previousPage", table: "Interface", fallback: "上一页")
+        }
+        ///  · 必需依赖
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.requiredDependencies`.
+        public static var requiredDependencies: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.requiredDependencies", table: "Interface", fallback: " · 必需依赖")
+        }
+        /// 解析必需依赖…
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.resolvingDependencies`.
+        public static var resolvingDependencies: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.resolvingDependencies", table: "Interface", fallback: "解析必需依赖…")
+        }
+        /// %1$lld 个结果
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.resultCount`.
+        public static func resultCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.resultCount", table: "Interface", fallback: "%1$lld 个结果", arguments: [.integer(value0)])
+        }
+        /// 查找数据包
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.searchDataPacks`.
+        public static var searchDataPacks: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.searchDataPacks", table: "Interface", fallback: "查找数据包")
+        }
+        /// 使用英文名称或更短的关键词搜索。
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.searchHint`.
+        public static var searchHint: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.searchHint", table: "Interface", fallback: "使用英文名称或更短的关键词搜索。")
+        }
+        /// 搜索数据包名称
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.searchPlaceholder`.
+        public static var searchPlaceholder: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.searchPlaceholder", table: "Interface", fallback: "搜索数据包名称")
+        }
+        /// 显示 Beta / Alpha 版本
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.showPrereleases`.
+        public static var showPrereleases: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.showPrereleases", table: "Interface", fallback: "显示 Beta / Alpha 版本")
+        }
+        /// 版本
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.version`.
+        public static var version: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.version", table: "Interface", fallback: "版本")
+        }
+        /// 查看安装清单
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.viewInstallManifest`.
+        public static var viewInstallManifest: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.viewInstallManifest", table: "Interface", fallback: "查看安装清单")
+        }
+        /// 在 Modrinth 查看
+        ///
+        /// Resource: `Interface.AppWorldDataPackSearchView.viewOnModrinth`.
+        public static var viewOnModrinth: LocalizedMessage {
+            .init(key: "AppWorldDataPackSearchView.viewOnModrinth", table: "Interface", fallback: "在 Modrinth 查看")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appWorldDataPackSearchView.bodyText1": .init("查找数据包", []),
-            "Interface:appWorldDataPackSearchView.bodyText2": .init("搜索数据包名称", []),
-            "Interface:appWorldDataPackSearchView.errorText1": .init("查找兼容数据包…", []),
-            "Interface:appWorldDataPackSearchView.errorText2": .init("没有找到匹配的数据包", []),
-            "Interface:appWorldDataPackSearchView.errorText3": .init("使用英文名称或更短的关键词搜索。", []),
-            "Interface:appWorldDataPackSearchView.errorText4": .init("%1$lld 个结果", [.integer]),
-            "Interface:appWorldDataPackSearchView.errorText5": .init("上一页", []),
-            "Interface:appWorldDataPackSearchView.errorText6": .init("下一页", []),
-            "Interface:appWorldDataPackSearchView.bodyText3": .init("安装到 “%1$@” · Minecraft %2$@", [.text, .text]),
-            "Interface:appWorldDataPackSearchView.bodyText4": .init("获取版本…", []),
-            "Interface:appWorldDataPackSearchView.bodyText5": .init("解析必需依赖…", []),
-            "Interface:appWorldDataPackSearchView.planText1": .init("共 %1$lld 个数据包 · %2$@", [.integer, .text]),
-            "Interface:appWorldDataPackSearchView.planText2": .init(" · 必需依赖", []),
-            "Interface:appWorldDataPackSearchView.planText3": .init("安装后启用，下次进入世界时生效。同名文件不会被覆盖。", []),
-            "Interface:appWorldDataPackSearchView.planText4": .init("显示 Beta / Alpha 版本", []),
-            "Interface:appWorldDataPackSearchView.planText5": .init("没有兼容版本。", []),
-            "Interface:appWorldDataPackSearchView.planText6": .init("版本", []),
-            "Interface:appWorldDataPackSearchView.errorText7": .init("在 Modrinth 查看", []),
-            "Interface:appWorldDataPackSearchView.errorText8": .init("查看安装清单", []),
-            "Interface:appWorldDataPackSearchView.errorText9": .init("安装", []),
-            "Interface:appWorldDataPackSearchView.planText7": .init("安装数据包 %1$@", [.text]),
-            "Interface:appWorldDataPackSearchView.planText8": .init("数据包已安装到 “%1$@”", [.text]),
+            "Interface:AppWorldDataPackSearchView.dataPackCount": .init("共 %1$lld 个数据包 · %2$@", [.integer, .text]),
+            "Interface:AppWorldDataPackSearchView.dataPackInstalled": .init("数据包已安装到 “%1$@”", [.text]),
+            "Interface:AppWorldDataPackSearchView.findCompatibleDataPacks": .init("查找兼容数据包…", []),
+            "Interface:AppWorldDataPackSearchView.installDataPack": .init("安装", []),
+            "Interface:AppWorldDataPackSearchView.installDataPackFormat": .init("安装数据包 %1$@", [.text]),
+            "Interface:AppWorldDataPackSearchView.installHelp": .init("安装后启用，下次进入世界时生效。同名文件不会被覆盖。", []),
+            "Interface:AppWorldDataPackSearchView.installTarget": .init("安装到 “%1$@” · Minecraft %2$@", [.text, .text]),
+            "Interface:AppWorldDataPackSearchView.loadingVersions": .init("获取版本…", []),
+            "Interface:AppWorldDataPackSearchView.nextPage": .init("下一页", []),
+            "Interface:AppWorldDataPackSearchView.noCompatibleVersions": .init("没有兼容版本。", []),
+            "Interface:AppWorldDataPackSearchView.noMatchingDataPacks": .init("没有找到匹配的数据包", []),
+            "Interface:AppWorldDataPackSearchView.previousPage": .init("上一页", []),
+            "Interface:AppWorldDataPackSearchView.requiredDependencies": .init(" · 必需依赖", []),
+            "Interface:AppWorldDataPackSearchView.resolvingDependencies": .init("解析必需依赖…", []),
+            "Interface:AppWorldDataPackSearchView.resultCount": .init("%1$lld 个结果", [.integer]),
+            "Interface:AppWorldDataPackSearchView.searchDataPacks": .init("查找数据包", []),
+            "Interface:AppWorldDataPackSearchView.searchHint": .init("使用英文名称或更短的关键词搜索。", []),
+            "Interface:AppWorldDataPackSearchView.searchPlaceholder": .init("搜索数据包名称", []),
+            "Interface:AppWorldDataPackSearchView.showPrereleases": .init("显示 Beta / Alpha 版本", []),
+            "Interface:AppWorldDataPackSearchView.version": .init("版本", []),
+            "Interface:AppWorldDataPackSearchView.viewInstallManifest": .init("查看安装清单", []),
+            "Interface:AppWorldDataPackSearchView.viewOnModrinth": .init("在 Modrinth 查看", []),
         ]
     }
 }

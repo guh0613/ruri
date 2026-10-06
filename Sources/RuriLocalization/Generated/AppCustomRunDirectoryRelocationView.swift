@@ -3,112 +3,112 @@ import Foundation
 
 extension Messages {
     public enum AppCustomRunDirectoryRelocationView {
-        /// 找回原游戏目录
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText1`.
-        public static var recoverDirectory: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.bodyText1", table: "Interface", fallback: "找回原游戏目录")
-        }
-        /// 选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText3`.
-        public static var relocationInstructions: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.bodyText3", table: "Interface", fallback: "选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。")
-        }
-        /// 原位置
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText4`.
-        public static var originalLocation: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.bodyText4", table: "Interface", fallback: "原位置")
-        }
-        /// 未登记自定义目录
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText5`.
-        public static var unregisteredDirectory: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.bodyText5", table: "Interface", fallback: "未登记自定义目录")
-        }
-        /// 尚未选择新位置
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText6`.
-        public static var newLocationNotSelected: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.bodyText6", table: "Interface", fallback: "尚未选择新位置")
-        }
-        /// 选择原文件夹…
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText7`.
-        public static var chooseOriginalFolder: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.bodyText7", table: "Interface", fallback: "选择原文件夹…")
-        }
         /// 正在核对目录身份与运行状态…
         ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.bodyText8`.
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.checkingDirectory`.
         public static var checkingDirectory: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.bodyText8", table: "Interface", fallback: "正在核对目录身份与运行状态…")
-        }
-        /// 将更新 %1$lld 个实例
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText1`.
-        public static func previewInstanceCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.previewText1", table: "Interface", fallback: "将更新 %1$lld 个实例", arguments: [.integer(value0)])
-        }
-        /// 使用此目录
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText2`.
-        public static var useDirectory: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.previewText2", table: "Interface", fallback: "使用此目录")
-        }
-        /// 已保存，未使用
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText3`.
-        public static var rememberLocation: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.previewText3", table: "Interface", fallback: "已保存，未使用")
-        }
-        /// 仅更新路径，不移动游戏文件或运行记录。
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.previewText4`.
-        public static var locationHelp: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.previewText4", table: "Interface", fallback: "仅更新路径，不移动游戏文件或运行记录。")
-        }
-        /// 重新检查
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.issueText1`.
-        public static var recheck: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.issueText1", table: "Interface", fallback: "重新检查")
-        }
-        /// 关闭
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.issueText2`.
-        public static var close: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.issueText2", table: "Interface", fallback: "关闭")
-        }
-        /// 更新目录位置
-        ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.issueText3`.
-        public static var updateDirectory: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.issueText3", table: "Interface", fallback: "更新目录位置")
+            .init(key: "AppCustomRunDirectoryRelocationView.checkingDirectory", table: "Interface", fallback: "正在核对目录身份与运行状态…")
         }
         /// 选择原自定义游戏文件夹的新位置。
         ///
-        /// Resource: `Interface.appCustomRunDirectoryRelocationView.panelText1`.
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.chooseOriginalDirectory`.
         public static var chooseOriginalDirectory: LocalizedMessage {
-            .init(key: "appCustomRunDirectoryRelocationView.panelText1", table: "Interface", fallback: "选择原自定义游戏文件夹的新位置。")
+            .init(key: "AppCustomRunDirectoryRelocationView.chooseOriginalDirectory", table: "Interface", fallback: "选择原自定义游戏文件夹的新位置。")
+        }
+        /// 选择原文件夹…
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.chooseOriginalFolder`.
+        public static var chooseOriginalFolder: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.chooseOriginalFolder", table: "Interface", fallback: "选择原文件夹…")
+        }
+        /// 关闭
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.close`.
+        public static var close: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.close", table: "Interface", fallback: "关闭")
+        }
+        /// 仅更新路径，不移动游戏文件或运行记录。
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.locationHelp`.
+        public static var locationHelp: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.locationHelp", table: "Interface", fallback: "仅更新路径，不移动游戏文件或运行记录。")
+        }
+        /// 尚未选择新位置
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.newLocationNotSelected`.
+        public static var newLocationNotSelected: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.newLocationNotSelected", table: "Interface", fallback: "尚未选择新位置")
+        }
+        /// 原位置
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.originalLocation`.
+        public static var originalLocation: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.originalLocation", table: "Interface", fallback: "原位置")
+        }
+        /// 将更新 %1$lld 个实例
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.previewInstanceCount`.
+        public static func previewInstanceCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.previewInstanceCount", table: "Interface", fallback: "将更新 %1$lld 个实例", arguments: [.integer(value0)])
+        }
+        /// 重新检查
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.recheck`.
+        public static var recheck: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.recheck", table: "Interface", fallback: "重新检查")
+        }
+        /// 找回原游戏目录
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.recoverDirectory`.
+        public static var recoverDirectory: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.recoverDirectory", table: "Interface", fallback: "找回原游戏目录")
+        }
+        /// 选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.relocationInstructions`.
+        public static var relocationInstructions: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.relocationInstructions", table: "Interface", fallback: "选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。")
+        }
+        /// 已保存，未使用
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.rememberLocation`.
+        public static var rememberLocation: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.rememberLocation", table: "Interface", fallback: "已保存，未使用")
+        }
+        /// 未登记自定义目录
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.unregisteredDirectory`.
+        public static var unregisteredDirectory: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.unregisteredDirectory", table: "Interface", fallback: "未登记自定义目录")
+        }
+        /// 更新目录位置
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.updateDirectory`.
+        public static var updateDirectory: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.updateDirectory", table: "Interface", fallback: "更新目录位置")
+        }
+        /// 使用此目录
+        ///
+        /// Resource: `Interface.AppCustomRunDirectoryRelocationView.useDirectory`.
+        public static var useDirectory: LocalizedMessage {
+            .init(key: "AppCustomRunDirectoryRelocationView.useDirectory", table: "Interface", fallback: "使用此目录")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appCustomRunDirectoryRelocationView.bodyText1": .init("找回原游戏目录", []),
-            "Interface:appCustomRunDirectoryRelocationView.bodyText3": .init("选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。", []),
-            "Interface:appCustomRunDirectoryRelocationView.bodyText4": .init("原位置", []),
-            "Interface:appCustomRunDirectoryRelocationView.bodyText5": .init("未登记自定义目录", []),
-            "Interface:appCustomRunDirectoryRelocationView.bodyText6": .init("尚未选择新位置", []),
-            "Interface:appCustomRunDirectoryRelocationView.bodyText7": .init("选择原文件夹…", []),
-            "Interface:appCustomRunDirectoryRelocationView.bodyText8": .init("正在核对目录身份与运行状态…", []),
-            "Interface:appCustomRunDirectoryRelocationView.previewText1": .init("将更新 %1$lld 个实例", [.integer]),
-            "Interface:appCustomRunDirectoryRelocationView.previewText2": .init("使用此目录", []),
-            "Interface:appCustomRunDirectoryRelocationView.previewText3": .init("已保存，未使用", []),
-            "Interface:appCustomRunDirectoryRelocationView.previewText4": .init("仅更新路径，不移动游戏文件或运行记录。", []),
-            "Interface:appCustomRunDirectoryRelocationView.issueText1": .init("重新检查", []),
-            "Interface:appCustomRunDirectoryRelocationView.issueText2": .init("关闭", []),
-            "Interface:appCustomRunDirectoryRelocationView.issueText3": .init("更新目录位置", []),
-            "Interface:appCustomRunDirectoryRelocationView.panelText1": .init("选择原自定义游戏文件夹的新位置。", []),
+            "Interface:AppCustomRunDirectoryRelocationView.checkingDirectory": .init("正在核对目录身份与运行状态…", []),
+            "Interface:AppCustomRunDirectoryRelocationView.chooseOriginalDirectory": .init("选择原自定义游戏文件夹的新位置。", []),
+            "Interface:AppCustomRunDirectoryRelocationView.chooseOriginalFolder": .init("选择原文件夹…", []),
+            "Interface:AppCustomRunDirectoryRelocationView.close": .init("关闭", []),
+            "Interface:AppCustomRunDirectoryRelocationView.locationHelp": .init("仅更新路径，不移动游戏文件或运行记录。", []),
+            "Interface:AppCustomRunDirectoryRelocationView.newLocationNotSelected": .init("尚未选择新位置", []),
+            "Interface:AppCustomRunDirectoryRelocationView.originalLocation": .init("原位置", []),
+            "Interface:AppCustomRunDirectoryRelocationView.previewInstanceCount": .init("将更新 %1$lld 个实例", [.integer]),
+            "Interface:AppCustomRunDirectoryRelocationView.recheck": .init("重新检查", []),
+            "Interface:AppCustomRunDirectoryRelocationView.recoverDirectory": .init("找回原游戏目录", []),
+            "Interface:AppCustomRunDirectoryRelocationView.relocationInstructions": .init("选择原文件夹的新位置。所有关联实例的路径会一起更新，包括当前使用其他运行目录的实例。", []),
+            "Interface:AppCustomRunDirectoryRelocationView.rememberLocation": .init("已保存，未使用", []),
+            "Interface:AppCustomRunDirectoryRelocationView.unregisteredDirectory": .init("未登记自定义目录", []),
+            "Interface:AppCustomRunDirectoryRelocationView.updateDirectory": .init("更新目录位置", []),
+            "Interface:AppCustomRunDirectoryRelocationView.useDirectory": .init("使用此目录", []),
         ]
     }
 }

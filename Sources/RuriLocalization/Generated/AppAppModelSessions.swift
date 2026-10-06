@@ -5,12 +5,12 @@ extension Messages {
     public enum AppAppModelSessions {
         /// 部分运行记录暂时无法读取：%1$@
         ///
-        /// Resource: `Interface.appAppModelSessions.messageText1`.
+        /// Resource: `Interface.AppAppModelSessions.historyReadWarning`.
         public static func historyReadWarning(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelSessions.messageText1", table: "Interface", fallback: "部分运行记录暂时无法读取：%1$@", arguments: [.text(value0)])
+            .init(key: "AppAppModelSessions.historyReadWarning", table: "Interface", fallback: "部分运行记录暂时无法读取：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAppModelSessions.messageText1": .init("部分运行记录暂时无法读取：%1$@", [.text]),
+            "Interface:AppAppModelSessions.historyReadWarning": .init("部分运行记录暂时无法读取：%1$@", [.text]),
         ]
     }
 }

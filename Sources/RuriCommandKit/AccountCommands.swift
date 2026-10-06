@@ -17,10 +17,10 @@ extension CLIApplication {
             let provider = try request.required("provider"), id = try request.string("account").map(uuid)
             if request.dryRun { return .object(["dryRun": .bool(true), "provider": .string(provider), "userParticipation": .bool(true)]) }
             if provider == "microsoft" {
-                guard request.string("server") == nil, request.string("username") == nil, !request.flag("password-stdin") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tc6b87186027e.localized) }
+                guard request.string("server") == nil, request.string("username") == nil, !request.flag("password-stdin") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.microsoftLoginUsesBrowser.localized) }
                 return try await service.startMicrosoft(accountID: id)
             }
-            guard request.flag("password-stdin") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tb34236db1721.localized) }
+            guard request.flag("password-stdin") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.externalLoginPasswordStdinRequired.localized) }
             let password = String(decoding: try readInput("-", maximumBytes: 65536), as: UTF8.self).trimmingCharacters(in: .newlines)
             output.addSecrets([password])
             return try await service.startExternal(server: request.required("server"), username: request.required("username"), password: password, accountID: id)
@@ -31,7 +31,7 @@ extension CLIApplication {
             return accountValue(try await service.completeLogin(id, profile: request.string("profile")))
         case "service-key status": return .object(["provider": .string("curseforge"), "custom": .bool(CurseForgeKeyStore.hasCustomKey()), "bundled": .bool(CurseForgeKeyStore.hasBundledKey)])
         case "service-key set":
-            guard request.flag("stdin") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t05b618061083.localized) }
+            guard request.flag("stdin") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.apiKeyStdinRequired.localized) }
             if !request.dryRun {
                 let key = String(decoding: try readInput("-", maximumBytes: 65536), as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
                 output.addSecrets([key]); try CurseForgeKeyStore.save(key)
@@ -56,7 +56,7 @@ extension CLIApplication {
             output.addSecrets(authenticated.secrets)
             return accountValue(authenticated.account)
         case "logout": _ = try await service.logout(id)
-        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tfffe65605bf6.localized)
+        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownAccountAction.localized)
         }
         return .object(["id": .string(id.uuidString), "action": .string(action)])
     }

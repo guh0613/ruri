@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreMinecraftInstallationFiles {
         /// 安装文件内容不一致，未覆盖现有文件：%1$@
         ///
-        /// Resource: `Errors.coreMinecraftInstallationFiles.requireResourceText1`.
+        /// Resource: `Errors.CoreMinecraftInstallationFiles.installationContentsMismatch`.
         public static func installationContentsMismatch(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftInstallationFiles.requireResourceText1", table: "Errors", fallback: "安装文件内容不一致，未覆盖现有文件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreMinecraftInstallationFiles.installationContentsMismatch", table: "Errors", fallback: "安装文件内容不一致，未覆盖现有文件：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreMinecraftInstallationFiles.requireResourceText1": .init("安装文件内容不一致，未覆盖现有文件：%1$@", [.text]),
+            "Errors:CoreMinecraftInstallationFiles.installationContentsMismatch": .init("安装文件内容不一致，未覆盖现有文件：%1$@", [.text]),
         ]
     }
 }

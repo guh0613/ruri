@@ -3,126 +3,126 @@ import Foundation
 
 extension Messages {
     public enum CoreAuthentication {
-        /// 钥匙串访问失败（%1$@），请重新登录或检查系统授权。
+        /// 认证服务
         ///
-        /// Resource: `Core.coreAuthentication.failureText1`.
-        public static func keychainAccessFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreAuthentication.failureText1", table: "Core", fallback: "钥匙串访问失败（%1$@），请重新登录或检查系统授权。", arguments: [.text(value0)])
-        }
-        /// 登录已取消。
-        ///
-        /// Resource: `Core.coreAuthentication.refreshText1`.
-        public static var loginCancelled: LocalizedMessage {
-            .init(key: "coreAuthentication.refreshText1", table: "Core", fallback: "登录已取消。")
-        }
-        /// Microsoft 登录已过期或失败，请重试。
-        ///
-        /// Resource: `Core.coreAuthentication.refreshText2`.
-        public static var microsoftLoginExpiredOrFailed: LocalizedMessage {
-            .init(key: "coreAuthentication.refreshText2", table: "Core", fallback: "Microsoft 登录已过期或失败，请重试。")
-        }
-        /// 此账号尚未建立 Xbox 资料，请先登录 xbox.com 完成设置。
-        ///
-        /// Resource: `Core.coreAuthentication.explanationText1`.
-        public static var xboxProfileMissing: LocalizedMessage {
-            .init(key: "coreAuthentication.explanationText1", table: "Core", fallback: "此账号尚未建立 Xbox 资料，请先登录 xbox.com 完成设置。")
-        }
-        /// Xbox Live 在此账号所在地区不可用。
-        ///
-        /// Resource: `Core.coreAuthentication.explanationText2`.
-        public static var xboxLiveUnavailableInRegion: LocalizedMessage {
-            .init(key: "coreAuthentication.explanationText2", table: "Core", fallback: "Xbox Live 在此账号所在地区不可用。")
-        }
-        /// 此账号需要在 Xbox 完成年龄验证。
-        ///
-        /// Resource: `Core.coreAuthentication.explanationText3`.
-        public static var xboxAgeVerificationRequired: LocalizedMessage {
-            .init(key: "coreAuthentication.explanationText3", table: "Core", fallback: "此账号需要在 Xbox 完成年龄验证。")
+        /// Resource: `Core.CoreAuthentication.authenticationService`.
+        public static var authenticationService: LocalizedMessage {
+            .init(key: "CoreAuthentication.authenticationService", table: "Core", fallback: "认证服务")
         }
         /// 此儿童账号需要加入 Microsoft 家庭并由家长授权。
         ///
-        /// Resource: `Core.coreAuthentication.explanationText4`.
+        /// Resource: `Core.CoreAuthentication.childAccountFamilyApprovalRequired`.
         public static var childAccountFamilyApprovalRequired: LocalizedMessage {
-            .init(key: "coreAuthentication.explanationText4", table: "Core", fallback: "此儿童账号需要加入 Microsoft 家庭并由家长授权。")
+            .init(key: "CoreAuthentication.childAccountFamilyApprovalRequired", table: "Core", fallback: "此儿童账号需要加入 Microsoft 家庭并由家长授权。")
+        }
+        /// 钥匙串访问失败（%1$@），请重新登录或检查系统授权。
+        ///
+        /// Resource: `Core.CoreAuthentication.keychainAccessFailed`.
+        public static func keychainAccessFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreAuthentication.keychainAccessFailed", table: "Core", fallback: "钥匙串访问失败（%1$@），请重新登录或检查系统授权。", arguments: [.text(value0)])
+        }
+        /// 登录已取消。
+        ///
+        /// Resource: `Core.CoreAuthentication.loginCancelled`.
+        public static var loginCancelled: LocalizedMessage {
+            .init(key: "CoreAuthentication.loginCancelled", table: "Core", fallback: "登录已取消。")
+        }
+        /// Microsoft 登录已过期或失败，请重试。
+        ///
+        /// Resource: `Core.CoreAuthentication.microsoftLoginExpiredOrFailed`.
+        public static var microsoftLoginExpiredOrFailed: LocalizedMessage {
+            .init(key: "CoreAuthentication.microsoftLoginExpiredOrFailed", table: "Core", fallback: "Microsoft 登录已过期或失败，请重试。")
+        }
+        /// 此账号需要在 Xbox 完成年龄验证。
+        ///
+        /// Resource: `Core.CoreAuthentication.xboxAgeVerificationRequired`.
+        public static var xboxAgeVerificationRequired: LocalizedMessage {
+            .init(key: "CoreAuthentication.xboxAgeVerificationRequired", table: "Core", fallback: "此账号需要在 Xbox 完成年龄验证。")
+        }
+        /// Xbox Live 在此账号所在地区不可用。
+        ///
+        /// Resource: `Core.CoreAuthentication.xboxLiveUnavailableInRegion`.
+        public static var xboxLiveUnavailableInRegion: LocalizedMessage {
+            .init(key: "CoreAuthentication.xboxLiveUnavailableInRegion", table: "Core", fallback: "Xbox Live 在此账号所在地区不可用。")
         }
         /// Xbox 登录失败（%1$@）。
         ///
-        /// Resource: `Core.coreAuthentication.explanationText5`.
+        /// Resource: `Core.CoreAuthentication.xboxLoginFailed`.
         public static func xboxLoginFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreAuthentication.explanationText5", table: "Core", fallback: "Xbox 登录失败（%1$@）。", arguments: [.text(value0)])
+            .init(key: "CoreAuthentication.xboxLoginFailed", table: "Core", fallback: "Xbox 登录失败（%1$@）。", arguments: [.text(value0)])
         }
-        /// 认证服务
+        /// 此账号尚未建立 Xbox 资料，请先登录 xbox.com 完成设置。
         ///
-        /// Resource: `Core.coreAuthentication.explanationText6`.
-        public static var authenticationService: LocalizedMessage {
-            .init(key: "coreAuthentication.explanationText6", table: "Core", fallback: "认证服务")
-        }
-        /// 请先在设置 → 账号中填写 Ruri 的 Microsoft 应用 Client ID。
-        ///
-        /// Resource: `Errors.coreAuthentication.beginText1`.
-        public static var microsoftClientIDRequired: LocalizedMessage {
-            .init(key: "coreAuthentication.beginText1", table: "Errors", fallback: "请先在设置 → 账号中填写 Ruri 的 Microsoft 应用 Client ID。")
-        }
-        /// Microsoft 拒绝了设备登录请求（HTTP %1$@）。请检查 Client ID 和公共客户端设置。
-        ///
-        /// Resource: `Errors.coreAuthentication.beginText2`.
-        public static func microsoftDeviceLoginRejected(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreAuthentication.beginText2", table: "Errors", fallback: "Microsoft 拒绝了设备登录请求（HTTP %1$@）。请检查 Client ID 和公共客户端设置。", arguments: [.text(value0)])
+        /// Resource: `Core.CoreAuthentication.xboxProfileMissing`.
+        public static var xboxProfileMissing: LocalizedMessage {
+            .init(key: "CoreAuthentication.xboxProfileMissing", table: "Core", fallback: "此账号尚未建立 Xbox 资料，请先登录 xbox.com 完成设置。")
         }
         /// 设备登录代码已过期，请重新登录。
         ///
-        /// Resource: `Errors.coreAuthentication.refreshText3`.
+        /// Resource: `Errors.CoreAuthentication.deviceLoginCodeExpired`.
         public static var deviceLoginCodeExpired: LocalizedMessage {
-            .init(key: "coreAuthentication.refreshText3", table: "Errors", fallback: "设备登录代码已过期，请重新登录。")
+            .init(key: "CoreAuthentication.deviceLoginCodeExpired", table: "Errors", fallback: "设备登录代码已过期，请重新登录。")
+        }
+        /// 请先在设置 → 账号中填写 Ruri 的 Microsoft 应用 Client ID。
+        ///
+        /// Resource: `Errors.CoreAuthentication.microsoftClientIDRequired`.
+        public static var microsoftClientIDRequired: LocalizedMessage {
+            .init(key: "CoreAuthentication.microsoftClientIDRequired", table: "Errors", fallback: "请先在设置 → 账号中填写 Ruri 的 Microsoft 应用 Client ID。")
+        }
+        /// Microsoft 拒绝了设备登录请求（HTTP %1$@）。请检查 Client ID 和公共客户端设置。
+        ///
+        /// Resource: `Errors.CoreAuthentication.microsoftDeviceLoginRejected`.
+        public static func microsoftDeviceLoginRejected(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreAuthentication.microsoftDeviceLoginRejected", table: "Errors", fallback: "Microsoft 拒绝了设备登录请求（HTTP %1$@）。请检查 Client ID 和公共客户端设置。", arguments: [.text(value0)])
         }
         /// Microsoft 登录已失效，请重新添加账号。
         ///
-        /// Resource: `Errors.coreAuthentication.accessText1`.
+        /// Resource: `Errors.CoreAuthentication.microsoftLoginInvalid`.
         public static var microsoftLoginInvalid: LocalizedMessage {
-            .init(key: "coreAuthentication.accessText1", table: "Errors", fallback: "Microsoft 登录已失效，请重新添加账号。")
-        }
-        /// %1$@ 登录失败（HTTP %2$@）。请检查应用是否已获 Minecraft API 访问权限。
-        ///
-        /// Resource: `Errors.coreAuthentication.explanationText7`.
-        public static func minecraftServiceLoginFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreAuthentication.explanationText7", table: "Errors", fallback: "%1$@ 登录失败（HTTP %2$@）。请检查应用是否已获 Minecraft API 访问权限。", arguments: [.text(value0), .text(value1)])
-        }
-        /// Xbox 账号身份校验失败。
-        ///
-        /// Resource: `Errors.coreAuthentication.uhsText1`.
-        public static var xboxIdentityValidationFailed: LocalizedMessage {
-            .init(key: "coreAuthentication.uhsText1", table: "Errors", fallback: "Xbox 账号身份校验失败。")
+            .init(key: "CoreAuthentication.microsoftLoginInvalid", table: "Errors", fallback: "Microsoft 登录已失效，请重新添加账号。")
         }
         /// 此 Microsoft 账号未拥有 Minecraft Java 版。
         ///
-        /// Resource: `Errors.coreAuthentication.entitlementsText1`.
+        /// Resource: `Errors.CoreAuthentication.minecraftJavaEntitlementMissing`.
         public static var minecraftJavaEntitlementMissing: LocalizedMessage {
-            .init(key: "coreAuthentication.entitlementsText1", table: "Errors", fallback: "此 Microsoft 账号未拥有 Minecraft Java 版。")
+            .init(key: "CoreAuthentication.minecraftJavaEntitlementMissing", table: "Errors", fallback: "此 Microsoft 账号未拥有 Minecraft Java 版。")
         }
         /// 此账号已拥有 Minecraft Java 版，但尚未创建游戏角色。请先在 minecraft.net 或官方启动器中设置 Java 版玩家名称，再回来登录。
         ///
-        /// Resource: `Errors.coreAuthentication.minecraftJavaProfileMissing`.
+        /// Resource: `Errors.CoreAuthentication.minecraftJavaProfileMissing`.
         public static var minecraftJavaProfileMissing: LocalizedMessage {
-            .init(key: "coreAuthentication.minecraftJavaProfileMissing", table: "Errors", fallback: "此账号已拥有 Minecraft Java 版，但尚未创建游戏角色。请先在 minecraft.net 或官方启动器中设置 Java 版玩家名称，再回来登录。")
+            .init(key: "CoreAuthentication.minecraftJavaProfileMissing", table: "Errors", fallback: "此账号已拥有 Minecraft Java 版，但尚未创建游戏角色。请先在 minecraft.net 或官方启动器中设置 Java 版玩家名称，再回来登录。")
+        }
+        /// %1$@ 登录失败（HTTP %2$@）。请检查应用是否已获 Minecraft API 访问权限。
+        ///
+        /// Resource: `Errors.CoreAuthentication.minecraftServiceLoginFailed`.
+        public static func minecraftServiceLoginFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreAuthentication.minecraftServiceLoginFailed", table: "Errors", fallback: "%1$@ 登录失败（HTTP %2$@）。请检查应用是否已获 Minecraft API 访问权限。", arguments: [.text(value0), .text(value1)])
+        }
+        /// Xbox 账号身份校验失败。
+        ///
+        /// Resource: `Errors.CoreAuthentication.xboxIdentityValidationFailed`.
+        public static var xboxIdentityValidationFailed: LocalizedMessage {
+            .init(key: "CoreAuthentication.xboxIdentityValidationFailed", table: "Errors", fallback: "Xbox 账号身份校验失败。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreAuthentication.failureText1": .init("钥匙串访问失败（%1$@），请重新登录或检查系统授权。", [.text]),
-            "Core:coreAuthentication.refreshText1": .init("登录已取消。", []),
-            "Core:coreAuthentication.refreshText2": .init("Microsoft 登录已过期或失败，请重试。", []),
-            "Core:coreAuthentication.explanationText1": .init("此账号尚未建立 Xbox 资料，请先登录 xbox.com 完成设置。", []),
-            "Core:coreAuthentication.explanationText2": .init("Xbox Live 在此账号所在地区不可用。", []),
-            "Core:coreAuthentication.explanationText3": .init("此账号需要在 Xbox 完成年龄验证。", []),
-            "Core:coreAuthentication.explanationText4": .init("此儿童账号需要加入 Microsoft 家庭并由家长授权。", []),
-            "Core:coreAuthentication.explanationText5": .init("Xbox 登录失败（%1$@）。", [.text]),
-            "Core:coreAuthentication.explanationText6": .init("认证服务", []),
-            "Errors:coreAuthentication.beginText1": .init("请先在设置 → 账号中填写 Ruri 的 Microsoft 应用 Client ID。", []),
-            "Errors:coreAuthentication.beginText2": .init("Microsoft 拒绝了设备登录请求（HTTP %1$@）。请检查 Client ID 和公共客户端设置。", [.text]),
-            "Errors:coreAuthentication.refreshText3": .init("设备登录代码已过期，请重新登录。", []),
-            "Errors:coreAuthentication.accessText1": .init("Microsoft 登录已失效，请重新添加账号。", []),
-            "Errors:coreAuthentication.explanationText7": .init("%1$@ 登录失败（HTTP %2$@）。请检查应用是否已获 Minecraft API 访问权限。", [.text, .text]),
-            "Errors:coreAuthentication.uhsText1": .init("Xbox 账号身份校验失败。", []),
-            "Errors:coreAuthentication.entitlementsText1": .init("此 Microsoft 账号未拥有 Minecraft Java 版。", []),
-            "Errors:coreAuthentication.minecraftJavaProfileMissing": .init("此账号已拥有 Minecraft Java 版，但尚未创建游戏角色。请先在 minecraft.net 或官方启动器中设置 Java 版玩家名称，再回来登录。", []),
+            "Core:CoreAuthentication.authenticationService": .init("认证服务", []),
+            "Core:CoreAuthentication.childAccountFamilyApprovalRequired": .init("此儿童账号需要加入 Microsoft 家庭并由家长授权。", []),
+            "Core:CoreAuthentication.keychainAccessFailed": .init("钥匙串访问失败（%1$@），请重新登录或检查系统授权。", [.text]),
+            "Core:CoreAuthentication.loginCancelled": .init("登录已取消。", []),
+            "Core:CoreAuthentication.microsoftLoginExpiredOrFailed": .init("Microsoft 登录已过期或失败，请重试。", []),
+            "Core:CoreAuthentication.xboxAgeVerificationRequired": .init("此账号需要在 Xbox 完成年龄验证。", []),
+            "Core:CoreAuthentication.xboxLiveUnavailableInRegion": .init("Xbox Live 在此账号所在地区不可用。", []),
+            "Core:CoreAuthentication.xboxLoginFailed": .init("Xbox 登录失败（%1$@）。", [.text]),
+            "Core:CoreAuthentication.xboxProfileMissing": .init("此账号尚未建立 Xbox 资料，请先登录 xbox.com 完成设置。", []),
+            "Errors:CoreAuthentication.deviceLoginCodeExpired": .init("设备登录代码已过期，请重新登录。", []),
+            "Errors:CoreAuthentication.microsoftClientIDRequired": .init("请先在设置 → 账号中填写 Ruri 的 Microsoft 应用 Client ID。", []),
+            "Errors:CoreAuthentication.microsoftDeviceLoginRejected": .init("Microsoft 拒绝了设备登录请求（HTTP %1$@）。请检查 Client ID 和公共客户端设置。", [.text]),
+            "Errors:CoreAuthentication.microsoftLoginInvalid": .init("Microsoft 登录已失效，请重新添加账号。", []),
+            "Errors:CoreAuthentication.minecraftJavaEntitlementMissing": .init("此 Microsoft 账号未拥有 Minecraft Java 版。", []),
+            "Errors:CoreAuthentication.minecraftJavaProfileMissing": .init("此账号已拥有 Minecraft Java 版，但尚未创建游戏角色。请先在 minecraft.net 或官方启动器中设置 Java 版玩家名称，再回来登录。", []),
+            "Errors:CoreAuthentication.minecraftServiceLoginFailed": .init("%1$@ 登录失败（HTTP %2$@）。请检查应用是否已获 Minecraft API 访问权限。", [.text, .text]),
+            "Errors:CoreAuthentication.xboxIdentityValidationFailed": .init("Xbox 账号身份校验失败。", []),
         ]
     }
 }

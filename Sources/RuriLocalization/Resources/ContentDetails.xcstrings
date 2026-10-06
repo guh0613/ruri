@@ -1,0 +1,556 @@
+{
+  "sourceLanguage" : "zh-Hans",
+  "strings" : {
+    "ContentDetails.authors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作者"
+          }
+        }
+      }
+    },
+    "ContentDetails.compatibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "兼容性"
+          }
+        }
+      }
+    },
+    "ContentDetails.compatible" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "格式兼容"
+          }
+        }
+      }
+    },
+    "ContentDetails.curseforgeUnavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置 CurseForge API Key 后可同时识别该平台。"
+          }
+        }
+      }
+    },
+    "ContentDetails.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "简介"
+          }
+        }
+      }
+    },
+    "ContentDetails.details" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源详情"
+          }
+        }
+      }
+    },
+    "ContentDetails.download" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "获取资源"
+          }
+        }
+      }
+    },
+    "ContentDetails.duplicateProjects" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以下文件对应重复项目，暂未纳入更新：%1$@"
+          }
+        }
+      }
+    },
+    "ContentDetails.encyclopedia" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MC 百科"
+          }
+        }
+      }
+    },
+    "ContentDetails.fileChanged" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件已发生变化，请刷新后重试：%1$@"
+          }
+        }
+      }
+    },
+    "ContentDetails.filename" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件名"
+          }
+        }
+      }
+    },
+    "ContentDetails.folder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件夹"
+          }
+        }
+      }
+    },
+    "ContentDetails.folderOnlineInfo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。"
+          }
+        }
+      }
+    },
+    "ContentDetails.gameFormat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前游戏格式"
+          }
+        }
+      }
+    },
+    "ContentDetails.gameVersions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏版本"
+          }
+        }
+      }
+    },
+    "ContentDetails.homepage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "官方网站"
+          }
+        }
+      }
+    },
+    "ContentDetails.identifyingUpdates" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在识别资源并检查更新…"
+          }
+        }
+      }
+    },
+    "ContentDetails.includesFolders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含文件夹"
+          }
+        }
+      }
+    },
+    "ContentDetails.invalidPackFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择包含 pack.mcmeta 的资源包文件夹，或包含 shaders 的光影包文件夹。"
+          }
+        }
+      }
+    },
+    "ContentDetails.invalidPackMetadata" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源包信息无效"
+          }
+        }
+      }
+    },
+    "ContentDetails.irisFeatures" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iris 功能要求"
+          }
+        }
+      }
+    },
+    "ContentDetails.loadingMetadata" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在读取资源信息…"
+          }
+        }
+      }
+    },
+    "ContentDetails.localFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地导入"
+          }
+        }
+      }
+    },
+    "ContentDetails.lookingUp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在识别在线项目…"
+          }
+        }
+      }
+    },
+    "ContentDetails.metadataAttribution" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中文名称与百科关联来自 MC 百科，由 HMCL 整理。"
+          }
+        }
+      }
+    },
+    "ContentDetails.missingPackMetadata" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缺少资源包信息"
+          }
+        }
+      }
+    },
+    "ContentDetails.missingShaders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到光影文件"
+          }
+        }
+      }
+    },
+    "ContentDetails.modID" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模组 ID"
+          }
+        }
+      }
+    },
+    "ContentDetails.noDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这个文件没有提供简介。"
+          }
+        }
+      }
+    },
+    "ContentDetails.noIdentifiedUpdates" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已识别的资源暂无更新"
+          }
+        }
+      }
+    },
+    "ContentDetails.noMatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到与此文件匹配的在线项目。"
+          }
+        }
+      }
+    },
+    "ContentDetails.onlineProjects" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在线项目"
+          }
+        }
+      }
+    },
+    "ContentDetails.openFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开文件夹"
+          }
+        }
+      }
+    },
+    "ContentDetails.packFormat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源格式"
+          }
+        }
+      }
+    },
+    "ContentDetails.packTooNew" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要较新的游戏版本"
+          }
+        }
+      }
+    },
+    "ContentDetails.packTooOld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "适用于较早的游戏版本"
+          }
+        }
+      }
+    },
+    "ContentDetails.projectUnavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂时无法读取匹配项目的信息，请稍后重试。"
+          }
+        }
+      }
+    },
+    "ContentDetails.refresh" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新列表"
+          }
+        }
+      }
+    },
+    "ContentDetails.resultCount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld 项结果"
+          }
+        }
+      }
+    },
+    "ContentDetails.retry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新识别"
+          }
+        }
+      }
+    },
+    "ContentDetails.searchEncyclopedia" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 MC 百科搜索"
+          }
+        }
+      }
+    },
+    "ContentDetails.serviceFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@：%2$@"
+          }
+        }
+      }
+    },
+    "ContentDetails.size" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "大小"
+          }
+        }
+      }
+    },
+    "ContentDetails.source" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安装来源"
+          }
+        }
+      }
+    },
+    "ContentDetails.unknownCompatibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂时无法判断"
+          }
+        }
+      }
+    },
+    "ContentDetails.unmatchedCount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld 项资源尚未关联在线项目"
+          }
+        }
+      }
+    },
+    "ContentDetails.updateFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@：%2$@"
+          }
+        }
+      }
+    },
+    "ContentDetails.updateFailuresRemaining" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "另外 %1$lld 项未能完成更新检查。"
+          }
+        }
+      }
+    },
+    "ContentDetails.updateProgress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在检查更新，已处理 %1$lld/%2$lld 项"
+          }
+        }
+      }
+    },
+    "ContentDetails.version" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

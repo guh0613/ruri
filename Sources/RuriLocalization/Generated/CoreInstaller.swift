@@ -3,162 +3,162 @@ import Foundation
 
 extension Messages {
     public enum CoreInstaller {
-        /// 此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。
-        ///
-        /// Resource: `Errors.coreInstaller.installText1`.
-        public static var localVersionManifestRequiresRepair: LocalizedMessage {
-            .init(key: "coreInstaller.installText1", table: "Errors", fallback: "此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。")
-        }
-        /// 此版本已存在，请使用修复功能。
-        ///
-        /// Resource: `Errors.coreInstaller.installText2`.
-        public static var versionAlreadyInstalled: LocalizedMessage {
-            .init(key: "coreInstaller.installText2", table: "Errors", fallback: "此版本已存在，请使用修复功能。")
-        }
-        /// 找不到 Minecraft %1$@
-        ///
-        /// Resource: `Errors.coreInstaller.versionText1`.
-        public static func minecraftVersionNotFound(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstaller.versionText1", table: "Errors", fallback: "找不到 Minecraft %1$@", arguments: [.text(value0)])
-        }
-        /// 此版本没有可用的 %1$@ 加载器。
-        ///
-        /// Resource: `Errors.coreInstaller.loaderVersionText1`.
-        public static func loaderVersionUnavailable(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstaller.loaderVersionText1", table: "Errors", fallback: "此版本没有可用的 %1$@ 加载器。", arguments: [.text(value0)])
-        }
-        /// 整合包依赖库数量超过限制
-        ///
-        /// Resource: `Errors.coreInstaller.applyingPackLibrariesText1`.
-        public static var modpackDependencyCountExceeded: LocalizedMessage {
-            .init(key: "coreInstaller.applyingPackLibrariesText1", table: "Errors", fallback: "整合包依赖库数量超过限制")
-        }
-        /// 整合包依赖不能指定已有游戏文件的位置。
-        ///
-        /// Resource: `Errors.coreInstaller.applyingPackLibrariesText2`.
-        public static var dependencyTargetsExistingGameFile: LocalizedMessage {
-            .init(key: "coreInstaller.applyingPackLibrariesText2", table: "Errors", fallback: "整合包依赖不能指定已有游戏文件的位置。")
-        }
-        /// 整合包依赖库的下载地址无效
-        ///
-        /// Resource: `Errors.coreInstaller.urlText1`.
-        public static var invalidDependencyDownloadURL: LocalizedMessage {
-            .init(key: "coreInstaller.urlText1", table: "Errors", fallback: "整合包依赖库的下载地址无效")
-        }
-        /// 此版本已从游戏文件夹移除，请刷新实例列表。
-        ///
-        /// Resource: `Errors.coreInstaller.versionText2`.
-        public static var versionRemovedFromGameFolder: LocalizedMessage {
-            .init(key: "coreInstaller.versionText2", table: "Errors", fallback: "此版本已从游戏文件夹移除，请刷新实例列表。")
-        }
-        /// 游戏资源索引缺失，请先修复实例。
-        ///
-        /// Resource: `Errors.coreInstaller.fileText1`.
-        public static var gameResourceIndexMissing: LocalizedMessage {
-            .init(key: "coreInstaller.fileText1", table: "Errors", fallback: "游戏资源索引缺失，请先修复实例。")
-        }
-        /// 资源索引包含无效哈希
-        ///
-        /// Resource: `Errors.coreInstaller.rootText1`.
-        public static var invalidResourceIndexHash: LocalizedMessage {
-            .init(key: "coreInstaller.rootText1", table: "Errors", fallback: "资源索引包含无效哈希")
-        }
         /// 缓存资源缺失或已损坏，请先修复实例：%1$@
         ///
-        /// Resource: `Errors.coreInstaller.sourceText1`.
+        /// Resource: `Errors.CoreInstaller.cachedResourceMissingOrCorrupt`.
         public static func cachedResourceMissingOrCorrupt(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstaller.sourceText1", table: "Errors", fallback: "缓存资源缺失或已损坏，请先修复实例：%1$@", arguments: [.text(value0)])
-        }
-        /// 此版本的兼容规则不支持当前 macOS 环境。
-        ///
-        /// Resource: `Errors.coreInstaller.archText1`.
-        public static var unsupportedMacOSCompatibility: LocalizedMessage {
-            .init(key: "coreInstaller.archText1", table: "Errors", fallback: "此版本的兼容规则不支持当前 macOS 环境。")
-        }
-        /// 生成依赖缺少路径
-        ///
-        /// Resource: `Errors.coreInstaller.pathText1`.
-        public static var generatedDependencyPathMissing: LocalizedMessage {
-            .init(key: "coreInstaller.pathText1", table: "Errors", fallback: "生成依赖缺少路径")
-        }
-        /// 原生库缺少文件路径
-        ///
-        /// Resource: `Errors.coreInstaller.nativePathText1`.
-        public static var nativeLibraryPathMissing: LocalizedMessage {
-            .init(key: "coreInstaller.nativePathText1", table: "Errors", fallback: "原生库缺少文件路径")
+            .init(key: "CoreInstaller.cachedResourceMissingOrCorrupt", table: "Errors", fallback: "缓存资源缺失或已损坏，请先修复实例：%1$@", arguments: [.text(value0)])
         }
         /// 新组件需要替换正在使用的依赖文件，原安装已保留：%1$@
         ///
-        /// Resource: `Errors.coreInstaller.workspaceText1`.
+        /// Resource: `Errors.CoreInstaller.componentDependencyReplacementRequired`.
         public static func componentDependencyReplacementRequired(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstaller.workspaceText1", table: "Errors", fallback: "新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreInstaller.componentDependencyReplacementRequired", table: "Errors", fallback: "新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", arguments: [.text(value0)])
+        }
+        /// 整合包依赖不能指定已有游戏文件的位置。
+        ///
+        /// Resource: `Errors.CoreInstaller.dependencyTargetsExistingGameFile`.
+        public static var dependencyTargetsExistingGameFile: LocalizedMessage {
+            .init(key: "CoreInstaller.dependencyTargetsExistingGameFile", table: "Errors", fallback: "整合包依赖不能指定已有游戏文件的位置。")
         }
         /// 已有游戏文件与整合包所需文件不同，未覆盖：%1$@
         /// 请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。
         ///
-        /// Resource: `Errors.coreInstaller.workspaceText2`.
+        /// Resource: `Errors.CoreInstaller.existingGameFileConflictsWithModpack`.
         public static func existingGameFileConflictsWithModpack(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstaller.workspaceText2", table: "Errors", fallback: "已有游戏文件与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。", arguments: [.text(value0)])
+            .init(key: "CoreInstaller.existingGameFileConflictsWithModpack", table: "Errors", fallback: "已有游戏文件与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。", arguments: [.text(value0)])
         }
-        /// 正在获取版本清单
+        /// 游戏资源索引缺失，请先修复实例。
         ///
-        /// Resource: `Progress.coreInstaller.locationText1`.
-        public static var fetchingVersionManifest: LocalizedMessage {
-            .init(key: "coreInstaller.locationText1", table: "Progress", fallback: "正在获取版本清单")
+        /// Resource: `Errors.CoreInstaller.gameResourceIndexMissing`.
+        public static var gameResourceIndexMissing: LocalizedMessage {
+            .init(key: "CoreInstaller.gameResourceIndexMissing", table: "Errors", fallback: "游戏资源索引缺失，请先修复实例。")
         }
-        /// 正在安装 %1$@
+        /// 生成依赖缺少路径
         ///
-        /// Resource: `Progress.coreInstaller.instanceText1`.
-        public static func installingInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstaller.instanceText1", table: "Progress", fallback: "正在安装 %1$@", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreInstaller.generatedDependencyPathMissing`.
+        public static var generatedDependencyPathMissing: LocalizedMessage {
+            .init(key: "CoreInstaller.generatedDependencyPathMissing", table: "Errors", fallback: "生成依赖缺少路径")
         }
-        /// 安装完成
+        /// 整合包依赖库的下载地址无效
         ///
-        /// Resource: `Progress.coreInstaller.encoderText1`.
-        public static var installationCompleted: LocalizedMessage {
-            .init(key: "coreInstaller.encoderText1", table: "Progress", fallback: "安装完成")
+        /// Resource: `Errors.CoreInstaller.invalidDependencyDownloadURL`.
+        public static var invalidDependencyDownloadURL: LocalizedMessage {
+            .init(key: "CoreInstaller.invalidDependencyDownloadURL", table: "Errors", fallback: "整合包依赖库的下载地址无效")
+        }
+        /// 资源索引包含无效哈希
+        ///
+        /// Resource: `Errors.CoreInstaller.invalidResourceIndexHash`.
+        public static var invalidResourceIndexHash: LocalizedMessage {
+            .init(key: "CoreInstaller.invalidResourceIndexHash", table: "Errors", fallback: "资源索引包含无效哈希")
+        }
+        /// 此版本没有可用的 %1$@ 加载器。
+        ///
+        /// Resource: `Errors.CoreInstaller.loaderVersionUnavailable`.
+        public static func loaderVersionUnavailable(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstaller.loaderVersionUnavailable", table: "Errors", fallback: "此版本没有可用的 %1$@ 加载器。", arguments: [.text(value0)])
+        }
+        /// 此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。
+        ///
+        /// Resource: `Errors.CoreInstaller.localVersionManifestRequiresRepair`.
+        public static var localVersionManifestRequiresRepair: LocalizedMessage {
+            .init(key: "CoreInstaller.localVersionManifestRequiresRepair", table: "Errors", fallback: "此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。")
+        }
+        /// 找不到 Minecraft %1$@
+        ///
+        /// Resource: `Errors.CoreInstaller.minecraftVersionNotFound`.
+        public static func minecraftVersionNotFound(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstaller.minecraftVersionNotFound", table: "Errors", fallback: "找不到 Minecraft %1$@", arguments: [.text(value0)])
+        }
+        /// 整合包依赖库数量超过限制
+        ///
+        /// Resource: `Errors.CoreInstaller.modpackDependencyCountExceeded`.
+        public static var modpackDependencyCountExceeded: LocalizedMessage {
+            .init(key: "CoreInstaller.modpackDependencyCountExceeded", table: "Errors", fallback: "整合包依赖库数量超过限制")
+        }
+        /// 原生库缺少文件路径
+        ///
+        /// Resource: `Errors.CoreInstaller.nativeLibraryPathMissing`.
+        public static var nativeLibraryPathMissing: LocalizedMessage {
+            .init(key: "CoreInstaller.nativeLibraryPathMissing", table: "Errors", fallback: "原生库缺少文件路径")
+        }
+        /// 此版本的兼容规则不支持当前 macOS 环境。
+        ///
+        /// Resource: `Errors.CoreInstaller.unsupportedMacOSCompatibility`.
+        public static var unsupportedMacOSCompatibility: LocalizedMessage {
+            .init(key: "CoreInstaller.unsupportedMacOSCompatibility", table: "Errors", fallback: "此版本的兼容规则不支持当前 macOS 环境。")
+        }
+        /// 此版本已存在，请使用修复功能。
+        ///
+        /// Resource: `Errors.CoreInstaller.versionAlreadyInstalled`.
+        public static var versionAlreadyInstalled: LocalizedMessage {
+            .init(key: "CoreInstaller.versionAlreadyInstalled", table: "Errors", fallback: "此版本已存在，请使用修复功能。")
+        }
+        /// 此版本已从游戏文件夹移除，请刷新实例列表。
+        ///
+        /// Resource: `Errors.CoreInstaller.versionRemovedFromGameFolder`.
+        public static var versionRemovedFromGameFolder: LocalizedMessage {
+            .init(key: "CoreInstaller.versionRemovedFromGameFolder", table: "Errors", fallback: "此版本已从游戏文件夹移除，请刷新实例列表。")
         }
         /// 正在下载游戏与依赖库
         ///
-        /// Resource: `Progress.coreInstaller.targetText1`.
+        /// Resource: `Progress.CoreInstaller.downloadingGameAndDependencies`.
         public static var downloadingGameAndDependencies: LocalizedMessage {
-            .init(key: "coreInstaller.targetText1", table: "Progress", fallback: "正在下载游戏与依赖库")
+            .init(key: "CoreInstaller.downloadingGameAndDependencies", table: "Progress", fallback: "正在下载游戏与依赖库")
         }
         /// 正在下载游戏资源
         ///
-        /// Resource: `Progress.coreInstaller.subpathText1`.
+        /// Resource: `Progress.CoreInstaller.downloadingGameResources`.
         public static var downloadingGameResources: LocalizedMessage {
-            .init(key: "coreInstaller.subpathText1", table: "Progress", fallback: "正在下载游戏资源")
+            .init(key: "CoreInstaller.downloadingGameResources", table: "Progress", fallback: "正在下载游戏资源")
+        }
+        /// 正在获取版本清单
+        ///
+        /// Resource: `Progress.CoreInstaller.fetchingVersionManifest`.
+        public static var fetchingVersionManifest: LocalizedMessage {
+            .init(key: "CoreInstaller.fetchingVersionManifest", table: "Progress", fallback: "正在获取版本清单")
+        }
+        /// 安装完成
+        ///
+        /// Resource: `Progress.CoreInstaller.installationCompleted`.
+        public static var installationCompleted: LocalizedMessage {
+            .init(key: "CoreInstaller.installationCompleted", table: "Progress", fallback: "安装完成")
+        }
+        /// 正在安装 %1$@
+        ///
+        /// Resource: `Progress.CoreInstaller.installingInstance`.
+        public static func installingInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstaller.installingInstance", table: "Progress", fallback: "正在安装 %1$@", arguments: [.text(value0)])
         }
         /// 正在准备 macOS 原生库
         ///
-        /// Resource: `Progress.coreInstaller.subpathText2`.
+        /// Resource: `Progress.CoreInstaller.preparingMacOSNativeLibraries`.
         public static var preparingMacOSNativeLibraries: LocalizedMessage {
-            .init(key: "coreInstaller.subpathText2", table: "Progress", fallback: "正在准备 macOS 原生库")
+            .init(key: "CoreInstaller.preparingMacOSNativeLibraries", table: "Progress", fallback: "正在准备 macOS 原生库")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstaller.installText1": .init("此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。", []),
-            "Errors:coreInstaller.installText2": .init("此版本已存在，请使用修复功能。", []),
-            "Errors:coreInstaller.versionText1": .init("找不到 Minecraft %1$@", [.text]),
-            "Errors:coreInstaller.loaderVersionText1": .init("此版本没有可用的 %1$@ 加载器。", [.text]),
-            "Errors:coreInstaller.applyingPackLibrariesText1": .init("整合包依赖库数量超过限制", []),
-            "Errors:coreInstaller.applyingPackLibrariesText2": .init("整合包依赖不能指定已有游戏文件的位置。", []),
-            "Errors:coreInstaller.urlText1": .init("整合包依赖库的下载地址无效", []),
-            "Errors:coreInstaller.versionText2": .init("此版本已从游戏文件夹移除，请刷新实例列表。", []),
-            "Errors:coreInstaller.fileText1": .init("游戏资源索引缺失，请先修复实例。", []),
-            "Errors:coreInstaller.rootText1": .init("资源索引包含无效哈希", []),
-            "Errors:coreInstaller.sourceText1": .init("缓存资源缺失或已损坏，请先修复实例：%1$@", [.text]),
-            "Errors:coreInstaller.archText1": .init("此版本的兼容规则不支持当前 macOS 环境。", []),
-            "Errors:coreInstaller.pathText1": .init("生成依赖缺少路径", []),
-            "Errors:coreInstaller.nativePathText1": .init("原生库缺少文件路径", []),
-            "Errors:coreInstaller.workspaceText1": .init("新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", [.text]),
-            "Errors:coreInstaller.workspaceText2": .init("已有游戏文件与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。", [.text]),
-            "Progress:coreInstaller.locationText1": .init("正在获取版本清单", []),
-            "Progress:coreInstaller.instanceText1": .init("正在安装 %1$@", [.text]),
-            "Progress:coreInstaller.encoderText1": .init("安装完成", []),
-            "Progress:coreInstaller.targetText1": .init("正在下载游戏与依赖库", []),
-            "Progress:coreInstaller.subpathText1": .init("正在下载游戏资源", []),
-            "Progress:coreInstaller.subpathText2": .init("正在准备 macOS 原生库", []),
+            "Errors:CoreInstaller.cachedResourceMissingOrCorrupt": .init("缓存资源缺失或已损坏，请先修复实例：%1$@", [.text]),
+            "Errors:CoreInstaller.componentDependencyReplacementRequired": .init("新组件需要替换正在使用的依赖文件，原安装已保留：%1$@", [.text]),
+            "Errors:CoreInstaller.dependencyTargetsExistingGameFile": .init("整合包依赖不能指定已有游戏文件的位置。", []),
+            "Errors:CoreInstaller.existingGameFileConflictsWithModpack": .init("已有游戏文件与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。", [.text]),
+            "Errors:CoreInstaller.gameResourceIndexMissing": .init("游戏资源索引缺失，请先修复实例。", []),
+            "Errors:CoreInstaller.generatedDependencyPathMissing": .init("生成依赖缺少路径", []),
+            "Errors:CoreInstaller.invalidDependencyDownloadURL": .init("整合包依赖库的下载地址无效", []),
+            "Errors:CoreInstaller.invalidResourceIndexHash": .init("资源索引包含无效哈希", []),
+            "Errors:CoreInstaller.loaderVersionUnavailable": .init("此版本没有可用的 %1$@ 加载器。", [.text]),
+            "Errors:CoreInstaller.localVersionManifestRequiresRepair": .init("此实例保留了本地版本清单，请使用修复功能保留其游戏文件和组件。", []),
+            "Errors:CoreInstaller.minecraftVersionNotFound": .init("找不到 Minecraft %1$@", [.text]),
+            "Errors:CoreInstaller.modpackDependencyCountExceeded": .init("整合包依赖库数量超过限制", []),
+            "Errors:CoreInstaller.nativeLibraryPathMissing": .init("原生库缺少文件路径", []),
+            "Errors:CoreInstaller.unsupportedMacOSCompatibility": .init("此版本的兼容规则不支持当前 macOS 环境。", []),
+            "Errors:CoreInstaller.versionAlreadyInstalled": .init("此版本已存在，请使用修复功能。", []),
+            "Errors:CoreInstaller.versionRemovedFromGameFolder": .init("此版本已从游戏文件夹移除，请刷新实例列表。", []),
+            "Progress:CoreInstaller.downloadingGameAndDependencies": .init("正在下载游戏与依赖库", []),
+            "Progress:CoreInstaller.downloadingGameResources": .init("正在下载游戏资源", []),
+            "Progress:CoreInstaller.fetchingVersionManifest": .init("正在获取版本清单", []),
+            "Progress:CoreInstaller.installationCompleted": .init("安装完成", []),
+            "Progress:CoreInstaller.installingInstance": .init("正在安装 %1$@", [.text]),
+            "Progress:CoreInstaller.preparingMacOSNativeLibraries": .init("正在准备 macOS 原生库", []),
         ]
     }
 }

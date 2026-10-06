@@ -5,124 +5,124 @@ extension Messages {
     public enum CoreMCBBSPack {
         /// 缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。
         ///
-        /// Resource: `Core.coreMCBBSPack.authorText3`.
+        /// Resource: `Core.CoreMCBBSPack.packMissingFilesNotice`.
         public static var packMissingFilesNotice: LocalizedMessage {
-            .init(key: "coreMCBBSPack.authorText3", table: "Core", fallback: "缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。")
-        }
-        /// MCBBS 整合包清单无效或缺少游戏版本
-        ///
-        /// Resource: `Errors.coreMCBBSPack.gameVersionText1`.
-        public static var invalidPackGameVersion: LocalizedMessage {
-            .init(key: "coreMCBBSPack.gameVersionText1", table: "Errors", fallback: "MCBBS 整合包清单无效或缺少游戏版本")
-        }
-        /// MCBBS 整合包包含尚未接入的组件：%1$@
-        ///
-        /// Resource: `Errors.coreMCBBSPack.unknownText1`.
-        public static func unsupportedPackComponents(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMCBBSPack.unknownText1", table: "Errors", fallback: "MCBBS 整合包包含尚未接入的组件：%1$@", arguments: [.text(value0)])
-        }
-        /// MCBBS 整合包同时声明多个加载器，暂时无法安装。
-        ///
-        /// Resource: `Errors.coreMCBBSPack.loadersText1`.
-        public static var multiplePackLoaders: LocalizedMessage {
-            .init(key: "coreMCBBSPack.loadersText1", table: "Errors", fallback: "MCBBS 整合包同时声明多个加载器，暂时无法安装。")
-        }
-        /// 整合包内存要求无效
-        ///
-        /// Resource: `Errors.coreMCBBSPack.minimumText1`.
-        public static var invalidPackMemoryRequirement: LocalizedMessage {
-            .init(key: "coreMCBBSPack.minimumText1", table: "Errors", fallback: "整合包内存要求无效")
-        }
-        /// MCBBS overrides 必须是实际目录
-        ///
-        /// Resource: `Errors.coreMCBBSPack.infoText1`.
-        public static var invalidOverridesDirectory: LocalizedMessage {
-            .init(key: "coreMCBBSPack.infoText1", table: "Errors", fallback: "MCBBS overrides 必须是实际目录")
-        }
-        /// 整合包文件数量超过限制
-        ///
-        /// Resource: `Errors.coreMCBBSPack.infoText2`.
-        public static var packFileCountExceeded: LocalizedMessage {
-            .init(key: "coreMCBBSPack.infoText2", table: "Errors", fallback: "整合包文件数量超过限制")
-        }
-        /// MCBBS 文件缺少路径或有效的 SHA-1
-        ///
-        /// Resource: `Errors.coreMCBBSPack.hashText1`.
-        public static var missingFileHash: LocalizedMessage {
-            .init(key: "coreMCBBSPack.hashText1", table: "Errors", fallback: "MCBBS 文件缺少路径或有效的 SHA-1")
-        }
-        /// MCBBS 文件路径无效：%1$@
-        ///
-        /// Resource: `Errors.coreMCBBSPack.hashText2`.
-        public static func invalidPackFilePath(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMCBBSPack.hashText2", table: "Errors", fallback: "MCBBS 文件路径无效：%1$@", arguments: [.text(value0)])
-        }
-        /// MCBBS fileApi 下载源无效
-        ///
-        /// Resource: `Errors.coreMCBBSPack.baseText1`.
-        public static var invalidFileApiSource: LocalizedMessage {
-            .init(key: "coreMCBBSPack.baseText1", table: "Errors", fallback: "MCBBS fileApi 下载源无效")
-        }
-        /// MCBBS CurseForge 文件标识无效
-        ///
-        /// Resource: `Errors.coreMCBBSPack.idText1`.
-        public static var invalidCurseForgeFileID: LocalizedMessage {
-            .init(key: "coreMCBBSPack.idText1", table: "Errors", fallback: "MCBBS CurseForge 文件标识无效")
-        }
-        /// 不支持的 MCBBS 文件类型：%1$@
-        ///
-        /// Resource: `Errors.coreMCBBSPack.idText2`.
-        public static func unsupportedPackFileType(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMCBBSPack.idText2", table: "Errors", fallback: "不支持的 MCBBS 文件类型：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreMCBBSPack.packMissingFilesNotice", table: "Core", fallback: "缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。")
         }
         /// MCBBS 清单存在重复路径或项目
         ///
-        /// Resource: `Errors.coreMCBBSPack.idText3`.
+        /// Resource: `Errors.CoreMCBBSPack.duplicatePackPathOrProject`.
         public static var duplicatePackPathOrProject: LocalizedMessage {
-            .init(key: "coreMCBBSPack.idText3", table: "Errors", fallback: "MCBBS 清单存在重复路径或项目")
+            .init(key: "CoreMCBBSPack.duplicatePackPathOrProject", table: "Errors", fallback: "MCBBS 清单存在重复路径或项目")
+        }
+        /// MCBBS CurseForge 文件标识无效
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.invalidCurseForgeFileID`.
+        public static var invalidCurseForgeFileID: LocalizedMessage {
+            .init(key: "CoreMCBBSPack.invalidCurseForgeFileID", table: "Errors", fallback: "MCBBS CurseForge 文件标识无效")
+        }
+        /// MCBBS fileApi 下载源无效
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.invalidFileApiSource`.
+        public static var invalidFileApiSource: LocalizedMessage {
+            .init(key: "CoreMCBBSPack.invalidFileApiSource", table: "Errors", fallback: "MCBBS fileApi 下载源无效")
+        }
+        /// MCBBS overrides 必须是实际目录
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.invalidOverridesDirectory`.
+        public static var invalidOverridesDirectory: LocalizedMessage {
+            .init(key: "CoreMCBBSPack.invalidOverridesDirectory", table: "Errors", fallback: "MCBBS overrides 必须是实际目录")
+        }
+        /// MCBBS 文件路径无效：%1$@
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.invalidPackFilePath`.
+        public static func invalidPackFilePath(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMCBBSPack.invalidPackFilePath", table: "Errors", fallback: "MCBBS 文件路径无效：%1$@", arguments: [.text(value0)])
+        }
+        /// MCBBS 整合包清单无效或缺少游戏版本
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.invalidPackGameVersion`.
+        public static var invalidPackGameVersion: LocalizedMessage {
+            .init(key: "CoreMCBBSPack.invalidPackGameVersion", table: "Errors", fallback: "MCBBS 整合包清单无效或缺少游戏版本")
+        }
+        /// 整合包内存要求无效
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.invalidPackMemoryRequirement`.
+        public static var invalidPackMemoryRequirement: LocalizedMessage {
+            .init(key: "CoreMCBBSPack.invalidPackMemoryRequirement", table: "Errors", fallback: "整合包内存要求无效")
         }
         /// 整合包版本、作者或描述无效
         ///
-        /// Resource: `Errors.coreMCBBSPack.exportMCBBSText1`.
+        /// Resource: `Errors.CoreMCBBSPack.invalidPackMetadata`.
         public static var invalidPackMetadata: LocalizedMessage {
-            .init(key: "coreMCBBSPack.exportMCBBSText1", table: "Errors", fallback: "整合包版本、作者或描述无效")
+            .init(key: "CoreMCBBSPack.invalidPackMetadata", table: "Errors", fallback: "整合包版本、作者或描述无效")
         }
         /// 请完成加载器安装后再导出整合包
         ///
-        /// Resource: `Errors.coreMCBBSPack.versionText1`.
+        /// Resource: `Errors.CoreMCBBSPack.loaderInstallRequiredForExport`.
         public static var loaderInstallRequiredForExport: LocalizedMessage {
-            .init(key: "coreMCBBSPack.versionText1", table: "Errors", fallback: "请完成加载器安装后再导出整合包")
+            .init(key: "CoreMCBBSPack.loaderInstallRequiredForExport", table: "Errors", fallback: "请完成加载器安装后再导出整合包")
         }
-        /// 正在准备整合包
+        /// MCBBS 文件缺少路径或有效的 SHA-1
         ///
-        /// Resource: `Progress.coreMCBBSPack.snapshotText1`.
-        public static var preparingPack: LocalizedMessage {
-            .init(key: "coreMCBBSPack.snapshotText1", table: "Progress", fallback: "正在准备整合包")
+        /// Resource: `Errors.CoreMCBBSPack.missingFileHash`.
+        public static var missingFileHash: LocalizedMessage {
+            .init(key: "CoreMCBBSPack.missingFileHash", table: "Errors", fallback: "MCBBS 文件缺少路径或有效的 SHA-1")
+        }
+        /// MCBBS 整合包同时声明多个加载器，暂时无法安装。
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.multiplePackLoaders`.
+        public static var multiplePackLoaders: LocalizedMessage {
+            .init(key: "CoreMCBBSPack.multiplePackLoaders", table: "Errors", fallback: "MCBBS 整合包同时声明多个加载器，暂时无法安装。")
+        }
+        /// 整合包文件数量超过限制
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.packFileCountExceeded`.
+        public static var packFileCountExceeded: LocalizedMessage {
+            .init(key: "CoreMCBBSPack.packFileCountExceeded", table: "Errors", fallback: "整合包文件数量超过限制")
+        }
+        /// MCBBS 整合包包含尚未接入的组件：%1$@
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.unsupportedPackComponents`.
+        public static func unsupportedPackComponents(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMCBBSPack.unsupportedPackComponents", table: "Errors", fallback: "MCBBS 整合包包含尚未接入的组件：%1$@", arguments: [.text(value0)])
+        }
+        /// 不支持的 MCBBS 文件类型：%1$@
+        ///
+        /// Resource: `Errors.CoreMCBBSPack.unsupportedPackFileType`.
+        public static func unsupportedPackFileType(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMCBBSPack.unsupportedPackFileType", table: "Errors", fallback: "不支持的 MCBBS 文件类型：%1$@", arguments: [.text(value0)])
         }
         /// 正在导出 MCBBS 整合包
         ///
-        /// Resource: `Progress.coreMCBBSPack.extrasText1`.
+        /// Resource: `Progress.CoreMCBBSPack.exportingMCBBSPack`.
         public static var exportingMCBBSPack: LocalizedMessage {
-            .init(key: "coreMCBBSPack.extrasText1", table: "Progress", fallback: "正在导出 MCBBS 整合包")
+            .init(key: "CoreMCBBSPack.exportingMCBBSPack", table: "Progress", fallback: "正在导出 MCBBS 整合包")
+        }
+        /// 正在准备整合包
+        ///
+        /// Resource: `Progress.CoreMCBBSPack.preparingPack`.
+        public static var preparingPack: LocalizedMessage {
+            .init(key: "CoreMCBBSPack.preparingPack", table: "Progress", fallback: "正在准备整合包")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreMCBBSPack.authorText3": .init("缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。", []),
-            "Errors:coreMCBBSPack.gameVersionText1": .init("MCBBS 整合包清单无效或缺少游戏版本", []),
-            "Errors:coreMCBBSPack.unknownText1": .init("MCBBS 整合包包含尚未接入的组件：%1$@", [.text]),
-            "Errors:coreMCBBSPack.loadersText1": .init("MCBBS 整合包同时声明多个加载器，暂时无法安装。", []),
-            "Errors:coreMCBBSPack.minimumText1": .init("整合包内存要求无效", []),
-            "Errors:coreMCBBSPack.infoText1": .init("MCBBS overrides 必须是实际目录", []),
-            "Errors:coreMCBBSPack.infoText2": .init("整合包文件数量超过限制", []),
-            "Errors:coreMCBBSPack.hashText1": .init("MCBBS 文件缺少路径或有效的 SHA-1", []),
-            "Errors:coreMCBBSPack.hashText2": .init("MCBBS 文件路径无效：%1$@", [.text]),
-            "Errors:coreMCBBSPack.baseText1": .init("MCBBS fileApi 下载源无效", []),
-            "Errors:coreMCBBSPack.idText1": .init("MCBBS CurseForge 文件标识无效", []),
-            "Errors:coreMCBBSPack.idText2": .init("不支持的 MCBBS 文件类型：%1$@", [.text]),
-            "Errors:coreMCBBSPack.idText3": .init("MCBBS 清单存在重复路径或项目", []),
-            "Errors:coreMCBBSPack.exportMCBBSText1": .init("整合包版本、作者或描述无效", []),
-            "Errors:coreMCBBSPack.versionText1": .init("请完成加载器安装后再导出整合包", []),
-            "Progress:coreMCBBSPack.snapshotText1": .init("正在准备整合包", []),
-            "Progress:coreMCBBSPack.extrasText1": .init("正在导出 MCBBS 整合包", []),
+            "Core:CoreMCBBSPack.packMissingFilesNotice": .init("缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。", []),
+            "Errors:CoreMCBBSPack.duplicatePackPathOrProject": .init("MCBBS 清单存在重复路径或项目", []),
+            "Errors:CoreMCBBSPack.invalidCurseForgeFileID": .init("MCBBS CurseForge 文件标识无效", []),
+            "Errors:CoreMCBBSPack.invalidFileApiSource": .init("MCBBS fileApi 下载源无效", []),
+            "Errors:CoreMCBBSPack.invalidOverridesDirectory": .init("MCBBS overrides 必须是实际目录", []),
+            "Errors:CoreMCBBSPack.invalidPackFilePath": .init("MCBBS 文件路径无效：%1$@", [.text]),
+            "Errors:CoreMCBBSPack.invalidPackGameVersion": .init("MCBBS 整合包清单无效或缺少游戏版本", []),
+            "Errors:CoreMCBBSPack.invalidPackMemoryRequirement": .init("整合包内存要求无效", []),
+            "Errors:CoreMCBBSPack.invalidPackMetadata": .init("整合包版本、作者或描述无效", []),
+            "Errors:CoreMCBBSPack.loaderInstallRequiredForExport": .init("请完成加载器安装后再导出整合包", []),
+            "Errors:CoreMCBBSPack.missingFileHash": .init("MCBBS 文件缺少路径或有效的 SHA-1", []),
+            "Errors:CoreMCBBSPack.multiplePackLoaders": .init("MCBBS 整合包同时声明多个加载器，暂时无法安装。", []),
+            "Errors:CoreMCBBSPack.packFileCountExceeded": .init("整合包文件数量超过限制", []),
+            "Errors:CoreMCBBSPack.unsupportedPackComponents": .init("MCBBS 整合包包含尚未接入的组件：%1$@", [.text]),
+            "Errors:CoreMCBBSPack.unsupportedPackFileType": .init("不支持的 MCBBS 文件类型：%1$@", [.text]),
+            "Progress:CoreMCBBSPack.exportingMCBBSPack": .init("正在导出 MCBBS 整合包", []),
+            "Progress:CoreMCBBSPack.preparingPack": .init("正在准备整合包", []),
         ]
     }
 }

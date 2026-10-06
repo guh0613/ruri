@@ -5,47 +5,47 @@ extension Messages {
     public enum AppAppModelContent {
         /// 该版本没有整合包文件
         ///
-        /// Resource: `Errors.appAppModelContent.fileText1`.
+        /// Resource: `Errors.AppAppModelContent.noModpackFile`.
         public static var noModpackFile: LocalizedMessage {
-            .init(key: "appAppModelContent.fileText1", table: "Errors", fallback: "该版本没有整合包文件")
+            .init(key: "AppAppModelContent.noModpackFile", table: "Errors", fallback: "该版本没有整合包文件")
         }
         /// 请选择游戏实例
         ///
-        /// Resource: `Errors.appAppModelContent.instanceText1`.
+        /// Resource: `Errors.AppAppModelContent.selectGameInstance`.
         public static var selectGameInstance: LocalizedMessage {
-            .init(key: "appAppModelContent.instanceText1", table: "Errors", fallback: "请选择游戏实例")
+            .init(key: "AppAppModelContent.selectGameInstance", table: "Errors", fallback: "请选择游戏实例")
         }
         /// 安装 %1$@
         ///
-        /// Resource: `Interface.appAppModelContent.installContentText1`.
+        /// Resource: `Interface.AppAppModelContent.installContent`.
         public static func installContent(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelContent.installContentText1", table: "Interface", fallback: "安装 %1$@", arguments: [.text(value0)])
-        }
-        /// 整合包清单已读取
-        ///
-        /// Resource: `Interface.appAppModelContent.archiveText2`.
-        public static var manifestRead: LocalizedMessage {
-            .init(key: "appAppModelContent.archiveText2", table: "Interface", fallback: "整合包清单已读取")
+            .init(key: "AppAppModelContent.installContent", table: "Interface", fallback: "安装 %1$@", arguments: [.text(value0)])
         }
         /// %1$@ 已安装
         ///
-        /// Resource: `Interface.appAppModelContent.instanceText2`.
+        /// Resource: `Interface.AppAppModelContent.installed`.
         public static func installed(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelContent.instanceText2", table: "Interface", fallback: "%1$@ 已安装", arguments: [.text(value0)])
+            .init(key: "AppAppModelContent.installed", table: "Interface", fallback: "%1$@ 已安装", arguments: [.text(value0)])
+        }
+        /// 整合包清单已读取
+        ///
+        /// Resource: `Interface.AppAppModelContent.manifestRead`.
+        public static var manifestRead: LocalizedMessage {
+            .init(key: "AppAppModelContent.manifestRead", table: "Interface", fallback: "整合包清单已读取")
         }
         /// 下载整合包清单
         ///
-        /// Resource: `Progress.appAppModelContent.archiveText1`.
+        /// Resource: `Progress.AppAppModelContent.downloadManifest`.
         public static var downloadManifest: LocalizedMessage {
-            .init(key: "appAppModelContent.archiveText1", table: "Progress", fallback: "下载整合包清单")
+            .init(key: "AppAppModelContent.downloadManifest", table: "Progress", fallback: "下载整合包清单")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:appAppModelContent.fileText1": .init("该版本没有整合包文件", []),
-            "Errors:appAppModelContent.instanceText1": .init("请选择游戏实例", []),
-            "Interface:appAppModelContent.installContentText1": .init("安装 %1$@", [.text]),
-            "Interface:appAppModelContent.archiveText2": .init("整合包清单已读取", []),
-            "Interface:appAppModelContent.instanceText2": .init("%1$@ 已安装", [.text]),
-            "Progress:appAppModelContent.archiveText1": .init("下载整合包清单", []),
+            "Errors:AppAppModelContent.noModpackFile": .init("该版本没有整合包文件", []),
+            "Errors:AppAppModelContent.selectGameInstance": .init("请选择游戏实例", []),
+            "Interface:AppAppModelContent.installContent": .init("安装 %1$@", [.text]),
+            "Interface:AppAppModelContent.installed": .init("%1$@ 已安装", [.text]),
+            "Interface:AppAppModelContent.manifestRead": .init("整合包清单已读取", []),
+            "Progress:AppAppModelContent.downloadManifest": .init("下载整合包清单", []),
         ]
     }
 }

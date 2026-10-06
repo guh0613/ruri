@@ -3,161 +3,161 @@ import Foundation
 
 extension Messages {
     public enum AppWorldDataPacksView {
-        /// 数据包
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.bodyText1`.
-        public static var dataPacks: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.bodyText1", table: "Interface", fallback: "数据包")
-        }
-        /// 查找…
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.bodyText2`.
-        public static var find: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.bodyText2", table: "Interface", fallback: "查找…")
-        }
-        /// 导入…
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.bodyText3`.
-        public static var importDataPackAction: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.bodyText3", table: "Interface", fallback: "导入…")
-        }
-        /// 适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.bodyText4`.
-        public static var dataPackAvailability: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.bodyText4", table: "Interface", fallback: "适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。")
-        }
-        /// 请退出游戏后再修改数据包。
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.bodyText5`.
-        public static var exitGameBeforeEditing: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.bodyText5", table: "Interface", fallback: "请退出游戏后再修改数据包。")
-        }
-        /// 暂无本地数据包
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.statusText1`.
-        public static var noLocalDataPacks: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.statusText1", table: "Interface", fallback: "暂无本地数据包")
-        }
-        /// 导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.statusText2`.
-        public static var dataPackImportInstructions: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.statusText2", table: "Interface", fallback: "导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。")
-        }
-        /// 声明格式：%1$@
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.formatText1`.
-        public static func declaredFormat(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldDataPacksView.formatText1", table: "Interface", fallback: "声明格式：%1$@", arguments: [.text(value0)])
-        }
-        /// 启用
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.errorText1`.
-        public static var enable: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.errorText1", table: "Interface", fallback: "启用")
-        }
-        /// 启用数据包
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.errorText2`.
-        public static var enableDataPack: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.errorText2", table: "Interface", fallback: "启用数据包")
-        }
-        /// 停用数据包
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.errorText3`.
-        public static var disableDataPack: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.errorText3", table: "Interface", fallback: "停用数据包")
-        }
-        /// 在 Finder 中显示
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.errorText4`.
-        public static var showInFinder: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.errorText4", table: "Interface", fallback: "在 Finder 中显示")
-        }
-        /// 移到废纸篓…
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.errorText5`.
-        public static var moveToTrash: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.errorText5", table: "Interface", fallback: "移到废纸篓…")
-        }
         /// 调整优先级…
         ///
-        /// Resource: `Interface.appWorldDataPacksView.errorText6`.
+        /// Resource: `Interface.AppWorldDataPacksView.adjustPriority`.
         public static var adjustPriority: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.errorText6", table: "Interface", fallback: "调整优先级…")
+            .init(key: "AppWorldDataPacksView.adjustPriority", table: "Interface", fallback: "调整优先级…")
         }
         /// 修改前会保留上一份世界配置备份。
         ///
-        /// Resource: `Interface.appWorldDataPacksView.errorText7`.
+        /// Resource: `Interface.AppWorldDataPacksView.backupBeforeEditing`.
         public static var backupBeforeEditing: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.errorText7", table: "Interface", fallback: "修改前会保留上一份世界配置备份。")
-        }
-        /// 显示配置备份
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.backupText1`.
-        public static var showConfigBackup: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.backupText1", table: "Interface", fallback: "显示配置备份")
-        }
-        /// 刷新
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.backupText2`.
-        public static var refresh: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.backupText2", table: "Interface", fallback: "刷新")
-        }
-        /// 导入数据包
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.urlsText1`.
-        public static var importDataPack: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.urlsText1", table: "Interface", fallback: "导入数据包")
-        }
-        /// 移除数据包？
-        ///
-        /// Resource: `Interface.appWorldDataPacksView.scopedText1`.
-        public static var removeDataPackConfirmation: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.scopedText1", table: "Interface", fallback: "移除数据包？")
+            .init(key: "AppWorldDataPacksView.backupBeforeEditing", table: "Interface", fallback: "修改前会保留上一份世界配置备份。")
         }
         /// 移到废纸篓
         ///
-        /// Resource: `Interface.appWorldDataPacksView.scopedText2`.
+        /// Resource: `Interface.AppWorldDataPacksView.confirmMoveToTrash`.
         public static var confirmMoveToTrash: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.scopedText2", table: "Interface", fallback: "移到废纸篓")
+            .init(key: "AppWorldDataPacksView.confirmMoveToTrash", table: "Interface", fallback: "移到废纸篓")
         }
-        /// 移除数据包
+        /// 适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。
         ///
-        /// Resource: `Interface.appWorldDataPacksView.packText1`.
-        public static var removeDataPack: LocalizedMessage {
-            .init(key: "appWorldDataPacksView.packText1", table: "Interface", fallback: "移除数据包")
+        /// Resource: `Interface.AppWorldDataPacksView.dataPackAvailability`.
+        public static var dataPackAvailability: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.dataPackAvailability", table: "Interface", fallback: "适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。")
+        }
+        /// 导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.dataPackImportInstructions`.
+        public static var dataPackImportInstructions: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.dataPackImportInstructions", table: "Interface", fallback: "导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。")
         }
         /// %1$@完成，下次进入世界时生效。
         ///
-        /// Resource: `Interface.appWorldDataPacksView.mutateText1`.
+        /// Resource: `Interface.AppWorldDataPacksView.dataPackOperationCompleted`.
         public static func dataPackOperationCompleted(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldDataPacksView.mutateText1", table: "Interface", fallback: "%1$@完成，下次进入世界时生效。", arguments: [.text(value0)])
+            .init(key: "AppWorldDataPacksView.dataPackOperationCompleted", table: "Interface", fallback: "%1$@完成，下次进入世界时生效。", arguments: [.text(value0)])
+        }
+        /// 数据包
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.dataPacks`.
+        public static var dataPacks: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.dataPacks", table: "Interface", fallback: "数据包")
+        }
+        /// 声明格式：%1$@
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.declaredFormat`.
+        public static func declaredFormat(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.declaredFormat", table: "Interface", fallback: "声明格式：%1$@", arguments: [.text(value0)])
+        }
+        /// 停用数据包
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.disableDataPack`.
+        public static var disableDataPack: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.disableDataPack", table: "Interface", fallback: "停用数据包")
+        }
+        /// 启用
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.enable`.
+        public static var enable: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.enable", table: "Interface", fallback: "启用")
+        }
+        /// 启用数据包
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.enableDataPack`.
+        public static var enableDataPack: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.enableDataPack", table: "Interface", fallback: "启用数据包")
+        }
+        /// 请退出游戏后再修改数据包。
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.exitGameBeforeEditing`.
+        public static var exitGameBeforeEditing: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.exitGameBeforeEditing", table: "Interface", fallback: "请退出游戏后再修改数据包。")
+        }
+        /// 查找…
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.find`.
+        public static var find: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.find", table: "Interface", fallback: "查找…")
+        }
+        /// 导入数据包
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.importDataPack`.
+        public static var importDataPack: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.importDataPack", table: "Interface", fallback: "导入数据包")
+        }
+        /// 导入…
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.importDataPackAction`.
+        public static var importDataPackAction: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.importDataPackAction", table: "Interface", fallback: "导入…")
+        }
+        /// 移到废纸篓…
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.moveToTrash`.
+        public static var moveToTrash: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.moveToTrash", table: "Interface", fallback: "移到废纸篓…")
+        }
+        /// 暂无本地数据包
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.noLocalDataPacks`.
+        public static var noLocalDataPacks: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.noLocalDataPacks", table: "Interface", fallback: "暂无本地数据包")
+        }
+        /// 刷新
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.refresh`.
+        public static var refresh: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.refresh", table: "Interface", fallback: "刷新")
+        }
+        /// 移除数据包
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.removeDataPack`.
+        public static var removeDataPack: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.removeDataPack", table: "Interface", fallback: "移除数据包")
+        }
+        /// 移除数据包？
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.removeDataPackConfirmation`.
+        public static var removeDataPackConfirmation: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.removeDataPackConfirmation", table: "Interface", fallback: "移除数据包？")
+        }
+        /// 显示配置备份
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.showConfigBackup`.
+        public static var showConfigBackup: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.showConfigBackup", table: "Interface", fallback: "显示配置备份")
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.AppWorldDataPacksView.showInFinder`.
+        public static var showInFinder: LocalizedMessage {
+            .init(key: "AppWorldDataPacksView.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appWorldDataPacksView.bodyText1": .init("数据包", []),
-            "Interface:appWorldDataPacksView.bodyText2": .init("查找…", []),
-            "Interface:appWorldDataPacksView.bodyText3": .init("导入…", []),
-            "Interface:appWorldDataPacksView.bodyText4": .init("适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。", []),
-            "Interface:appWorldDataPacksView.bodyText5": .init("请退出游戏后再修改数据包。", []),
-            "Interface:appWorldDataPacksView.statusText1": .init("暂无本地数据包", []),
-            "Interface:appWorldDataPacksView.statusText2": .init("导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。", []),
-            "Interface:appWorldDataPacksView.formatText1": .init("声明格式：%1$@", [.text]),
-            "Interface:appWorldDataPacksView.errorText1": .init("启用", []),
-            "Interface:appWorldDataPacksView.errorText2": .init("启用数据包", []),
-            "Interface:appWorldDataPacksView.errorText3": .init("停用数据包", []),
-            "Interface:appWorldDataPacksView.errorText4": .init("在 Finder 中显示", []),
-            "Interface:appWorldDataPacksView.errorText5": .init("移到废纸篓…", []),
-            "Interface:appWorldDataPacksView.errorText6": .init("调整优先级…", []),
-            "Interface:appWorldDataPacksView.errorText7": .init("修改前会保留上一份世界配置备份。", []),
-            "Interface:appWorldDataPacksView.backupText1": .init("显示配置备份", []),
-            "Interface:appWorldDataPacksView.backupText2": .init("刷新", []),
-            "Interface:appWorldDataPacksView.urlsText1": .init("导入数据包", []),
-            "Interface:appWorldDataPacksView.scopedText1": .init("移除数据包？", []),
-            "Interface:appWorldDataPacksView.scopedText2": .init("移到废纸篓", []),
-            "Interface:appWorldDataPacksView.packText1": .init("移除数据包", []),
-            "Interface:appWorldDataPacksView.mutateText1": .init("%1$@完成，下次进入世界时生效。", [.text]),
+            "Interface:AppWorldDataPacksView.adjustPriority": .init("调整优先级…", []),
+            "Interface:AppWorldDataPacksView.backupBeforeEditing": .init("修改前会保留上一份世界配置备份。", []),
+            "Interface:AppWorldDataPacksView.confirmMoveToTrash": .init("移到废纸篓", []),
+            "Interface:AppWorldDataPacksView.dataPackAvailability": .init("适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。", []),
+            "Interface:AppWorldDataPacksView.dataPackImportInstructions": .init("导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。", []),
+            "Interface:AppWorldDataPacksView.dataPackOperationCompleted": .init("%1$@完成，下次进入世界时生效。", [.text]),
+            "Interface:AppWorldDataPacksView.dataPacks": .init("数据包", []),
+            "Interface:AppWorldDataPacksView.declaredFormat": .init("声明格式：%1$@", [.text]),
+            "Interface:AppWorldDataPacksView.disableDataPack": .init("停用数据包", []),
+            "Interface:AppWorldDataPacksView.enable": .init("启用", []),
+            "Interface:AppWorldDataPacksView.enableDataPack": .init("启用数据包", []),
+            "Interface:AppWorldDataPacksView.exitGameBeforeEditing": .init("请退出游戏后再修改数据包。", []),
+            "Interface:AppWorldDataPacksView.find": .init("查找…", []),
+            "Interface:AppWorldDataPacksView.importDataPack": .init("导入数据包", []),
+            "Interface:AppWorldDataPacksView.importDataPackAction": .init("导入…", []),
+            "Interface:AppWorldDataPacksView.moveToTrash": .init("移到废纸篓…", []),
+            "Interface:AppWorldDataPacksView.noLocalDataPacks": .init("暂无本地数据包", []),
+            "Interface:AppWorldDataPacksView.refresh": .init("刷新", []),
+            "Interface:AppWorldDataPacksView.removeDataPack": .init("移除数据包", []),
+            "Interface:AppWorldDataPacksView.removeDataPackConfirmation": .init("移除数据包？", []),
+            "Interface:AppWorldDataPacksView.showConfigBackup": .init("显示配置备份", []),
+            "Interface:AppWorldDataPacksView.showInFinder": .init("在 Finder 中显示", []),
         ]
     }
 }

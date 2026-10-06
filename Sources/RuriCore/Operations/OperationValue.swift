@@ -47,7 +47,7 @@ public enum OperationReadPolicy {
     @TaskLocal public static var protectedDataRoot: URL?
     static func requireRecoveryPermission(paths: LauncherPaths, kind: String, instanceID: UUID) throws {
         if protectedDataRoot?.standardizedFileURL == paths.root.standardizedFileURL {
-            throw OperationFailure("RECOVERY_REQUIRED", Messages.CLIInterface.tff19ae82a321.localized,
+            throw OperationFailure("RECOVERY_REQUIRED", Messages.CLIInterface.unfinishedOperationRecoveryRequired.localized,
                 nextActions: [.init(["recovery", "apply", kind, instanceID.uuidString, "--yes"])])
         }
     }

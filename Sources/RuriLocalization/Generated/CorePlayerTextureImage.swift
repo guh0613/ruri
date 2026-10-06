@@ -3,70 +3,70 @@ import Foundation
 
 extension Messages {
     public enum CorePlayerTextureImage {
-        /// 皮肤
-        ///
-        /// Resource: `Core.corePlayerTextureImage.titleText1`.
-        public static var skinTitle: LocalizedMessage {
-            .init(key: "corePlayerTextureImage.titleText1", table: "Core", fallback: "皮肤")
-        }
         /// 披风
         ///
-        /// Resource: `Core.corePlayerTextureImage.titleText2`.
+        /// Resource: `Core.CorePlayerTextureImage.capeTitle`.
         public static var capeTitle: LocalizedMessage {
-            .init(key: "corePlayerTextureImage.titleText2", table: "Core", fallback: "披风")
+            .init(key: "CorePlayerTextureImage.capeTitle", table: "Core", fallback: "披风")
         }
         /// 经典（宽手臂）
         ///
-        /// Resource: `Core.corePlayerTextureImage.titleText3`.
+        /// Resource: `Core.CorePlayerTextureImage.classicArmsTitle`.
         public static var classicArmsTitle: LocalizedMessage {
-            .init(key: "corePlayerTextureImage.titleText3", table: "Core", fallback: "经典（宽手臂）")
-        }
-        /// 纤细（窄手臂）
-        ///
-        /// Resource: `Core.corePlayerTextureImage.titleText4`.
-        public static var slimArmsTitle: LocalizedMessage {
-            .init(key: "corePlayerTextureImage.titleText4", table: "Core", fallback: "纤细（窄手臂）")
+            .init(key: "CorePlayerTextureImage.classicArmsTitle", table: "Core", fallback: "经典（宽手臂）")
         }
         /// Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。
         ///
-        /// Resource: `Core.corePlayerTextureImage.validText1`.
+        /// Resource: `Core.CorePlayerTextureImage.invalidMicrosoftSkinSize`.
         public static var invalidMicrosoftSkinSize: LocalizedMessage {
-            .init(key: "corePlayerTextureImage.validText1", table: "Core", fallback: "Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。")
+            .init(key: "CorePlayerTextureImage.invalidMicrosoftSkinSize", table: "Core", fallback: "Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。")
         }
         /// 皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。
         ///
-        /// Resource: `Core.corePlayerTextureImage.validText2`.
+        /// Resource: `Core.CorePlayerTextureImage.invalidSkinDimensions`.
         public static var invalidSkinDimensions: LocalizedMessage {
-            .init(key: "corePlayerTextureImage.validText2", table: "Core", fallback: "皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。")
+            .init(key: "CorePlayerTextureImage.invalidSkinDimensions", table: "Core", fallback: "皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。")
         }
         /// 请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。
         ///
-        /// Resource: `Core.corePlayerTextureImage.invalidText1`.
+        /// Resource: `Core.CorePlayerTextureImage.invalidSkinImage`.
         public static var invalidSkinImage: LocalizedMessage {
-            .init(key: "corePlayerTextureImage.invalidText1", table: "Core", fallback: "请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。")
+            .init(key: "CorePlayerTextureImage.invalidSkinImage", table: "Core", fallback: "请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。")
         }
-        /// 旧版长方形皮肤只支持经典手臂，请使用 64 × 64 格式设置纤细手臂。
+        /// 皮肤
         ///
-        /// Resource: `Errors.corePlayerTextureImage.validText3`.
-        public static var legacySkinArmsRestriction: LocalizedMessage {
-            .init(key: "corePlayerTextureImage.validText3", table: "Errors", fallback: "旧版长方形皮肤只支持经典手臂，请使用 64 × 64 格式设置纤细手臂。")
+        /// Resource: `Core.CorePlayerTextureImage.skinTitle`.
+        public static var skinTitle: LocalizedMessage {
+            .init(key: "CorePlayerTextureImage.skinTitle", table: "Core", fallback: "皮肤")
+        }
+        /// 纤细（窄手臂）
+        ///
+        /// Resource: `Core.CorePlayerTextureImage.slimArmsTitle`.
+        public static var slimArmsTitle: LocalizedMessage {
+            .init(key: "CorePlayerTextureImage.slimArmsTitle", table: "Core", fallback: "纤细（窄手臂）")
         }
         /// 披风尺寸需要是 64 × 32 或 22 × 17 的整数倍。
         ///
-        /// Resource: `Errors.corePlayerTextureImage.validText4`.
+        /// Resource: `Errors.CorePlayerTextureImage.invalidCapeDimensions`.
         public static var invalidCapeDimensions: LocalizedMessage {
-            .init(key: "corePlayerTextureImage.validText4", table: "Errors", fallback: "披风尺寸需要是 64 × 32 或 22 × 17 的整数倍。")
+            .init(key: "CorePlayerTextureImage.invalidCapeDimensions", table: "Errors", fallback: "披风尺寸需要是 64 × 32 或 22 × 17 的整数倍。")
+        }
+        /// 旧版长方形皮肤只支持经典手臂，请使用 64 × 64 格式设置纤细手臂。
+        ///
+        /// Resource: `Errors.CorePlayerTextureImage.legacySkinArmsRestriction`.
+        public static var legacySkinArmsRestriction: LocalizedMessage {
+            .init(key: "CorePlayerTextureImage.legacySkinArmsRestriction", table: "Errors", fallback: "旧版长方形皮肤只支持经典手臂，请使用 64 × 64 格式设置纤细手臂。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:corePlayerTextureImage.titleText1": .init("皮肤", []),
-            "Core:corePlayerTextureImage.titleText2": .init("披风", []),
-            "Core:corePlayerTextureImage.titleText3": .init("经典（宽手臂）", []),
-            "Core:corePlayerTextureImage.titleText4": .init("纤细（窄手臂）", []),
-            "Core:corePlayerTextureImage.validText1": .init("Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。", []),
-            "Core:corePlayerTextureImage.validText2": .init("皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。", []),
-            "Core:corePlayerTextureImage.invalidText1": .init("请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。", []),
-            "Errors:corePlayerTextureImage.validText3": .init("旧版长方形皮肤只支持经典手臂，请使用 64 × 64 格式设置纤细手臂。", []),
-            "Errors:corePlayerTextureImage.validText4": .init("披风尺寸需要是 64 × 32 或 22 × 17 的整数倍。", []),
+            "Core:CorePlayerTextureImage.capeTitle": .init("披风", []),
+            "Core:CorePlayerTextureImage.classicArmsTitle": .init("经典（宽手臂）", []),
+            "Core:CorePlayerTextureImage.invalidMicrosoftSkinSize": .init("Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。", []),
+            "Core:CorePlayerTextureImage.invalidSkinDimensions": .init("皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。", []),
+            "Core:CorePlayerTextureImage.invalidSkinImage": .init("请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。", []),
+            "Core:CorePlayerTextureImage.skinTitle": .init("皮肤", []),
+            "Core:CorePlayerTextureImage.slimArmsTitle": .init("纤细（窄手臂）", []),
+            "Errors:CorePlayerTextureImage.invalidCapeDimensions": .init("披风尺寸需要是 64 × 32 或 22 × 17 的整数倍。", []),
+            "Errors:CorePlayerTextureImage.legacySkinArmsRestriction": .init("旧版长方形皮肤只支持经典手臂，请使用 64 × 64 格式设置纤细手臂。", []),
         ]
     }
 }

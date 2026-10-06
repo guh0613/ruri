@@ -3,77 +3,77 @@ import Foundation
 
 extension Messages {
     public enum CoreRepositoryMoveSnapshot {
-        /// 请先安装实例，再移动到 Minecraft 文件夹。
+        /// 源文件在预览后改变，请刷新移动预览。
         ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.repositoryPreviewText1`.
-        public static var instanceNotInstalled: LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.repositoryPreviewText1", table: "Errors", fallback: "请先安装实例，再移动到 Minecraft 文件夹。")
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.changedSourceFiles`.
+        public static var changedSourceFiles: LocalizedMessage {
+            .init(key: "CoreRepositoryMoveSnapshot.changedSourceFiles", table: "Errors", fallback: "源文件在预览后改变，请刷新移动预览。")
         }
         /// 实例已位于所选文件夹中。
         ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.repositoryPreviewText2`.
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.instanceAlreadyInTargetFolder`.
         public static var instanceAlreadyInTargetFolder: LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.repositoryPreviewText2", table: "Errors", fallback: "实例已位于所选文件夹中。")
+            .init(key: "CoreRepositoryMoveSnapshot.instanceAlreadyInTargetFolder", table: "Errors", fallback: "实例已位于所选文件夹中。")
+        }
+        /// 请先安装实例，再移动到 Minecraft 文件夹。
+        ///
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.instanceNotInstalled`.
+        public static var instanceNotInstalled: LocalizedMessage {
+            .init(key: "CoreRepositoryMoveSnapshot.instanceNotInstalled", table: "Errors", fallback: "请先安装实例，再移动到 Minecraft 文件夹。")
         }
         /// 找不到目标文件夹。
         ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.repositoryPreviewText3`.
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.missingTargetFolder`.
         public static var missingTargetFolder: LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.repositoryPreviewText3", table: "Errors", fallback: "找不到目标文件夹。")
-        }
-        /// 目标文件夹不能位于源实例或运行目录里面。
-        ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.rootText1`.
-        public static var targetFolderNestedInSource: LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.rootText1", table: "Errors", fallback: "目标文件夹不能位于源实例或运行目录里面。")
+            .init(key: "CoreRepositoryMoveSnapshot.missingTargetFolder", table: "Errors", fallback: "找不到目标文件夹。")
         }
         /// 源实例目录身份改变，请重新预览。
         ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.repositoryText1`.
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.sourceDirectoryChanged`.
         public static var sourceDirectoryChanged: LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.repositoryText1", table: "Errors", fallback: "源实例目录身份改变，请重新预览。")
+            .init(key: "CoreRepositoryMoveSnapshot.sourceDirectoryChanged", table: "Errors", fallback: "源实例目录身份改变，请重新预览。")
         }
         /// 源版本文件夹已被替换，请重新预览。
         ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.identityText1`.
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.sourceVersionReplaced`.
         public static var sourceVersionReplaced: LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.identityText1", table: "Errors", fallback: "源版本文件夹已被替换，请重新预览。")
-        }
-        /// 源文件在预览后改变，请刷新移动预览。
-        ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.identityText2`.
-        public static var changedSourceFiles: LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.identityText2", table: "Errors", fallback: "源文件在预览后改变，请刷新移动预览。")
-        }
-        /// “%1$@”仍将此版本目录用作运行目录，请先调整它的运行目录。
-        ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.stateText1`.
-        public static func stillUsesRunDirectory(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.stateText1", table: "Errors", fallback: "“%1$@”仍将此版本目录用作运行目录，请先调整它的运行目录。", arguments: [.text(value0)])
+            .init(key: "CoreRepositoryMoveSnapshot.sourceVersionReplaced", table: "Errors", fallback: "源版本文件夹已被替换，请重新预览。")
         }
         /// “%1$@”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。
         ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.fileText1`.
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.stillHasDependentFiles`.
         public static func stillHasDependentFiles(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.fileText1", table: "Errors", fallback: "“%1$@”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。", arguments: [.text(value0)])
+            .init(key: "CoreRepositoryMoveSnapshot.stillHasDependentFiles", table: "Errors", fallback: "“%1$@”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。", arguments: [.text(value0)])
         }
         /// “%1$@”仍引用此版本，请先处理该版本。
         ///
-        /// Resource: `Errors.coreRepositoryMoveSnapshot.rawText1`.
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.stillReferencedVersion`.
         public static func stillReferencedVersion(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryMoveSnapshot.rawText1", table: "Errors", fallback: "“%1$@”仍引用此版本，请先处理该版本。", arguments: [.text(value0)])
+            .init(key: "CoreRepositoryMoveSnapshot.stillReferencedVersion", table: "Errors", fallback: "“%1$@”仍引用此版本，请先处理该版本。", arguments: [.text(value0)])
+        }
+        /// “%1$@”仍将此版本目录用作运行目录，请先调整它的运行目录。
+        ///
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.stillUsesRunDirectory`.
+        public static func stillUsesRunDirectory(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreRepositoryMoveSnapshot.stillUsesRunDirectory", table: "Errors", fallback: "“%1$@”仍将此版本目录用作运行目录，请先调整它的运行目录。", arguments: [.text(value0)])
+        }
+        /// 目标文件夹不能位于源实例或运行目录里面。
+        ///
+        /// Resource: `Errors.CoreRepositoryMoveSnapshot.targetFolderNestedInSource`.
+        public static var targetFolderNestedInSource: LocalizedMessage {
+            .init(key: "CoreRepositoryMoveSnapshot.targetFolderNestedInSource", table: "Errors", fallback: "目标文件夹不能位于源实例或运行目录里面。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreRepositoryMoveSnapshot.repositoryPreviewText1": .init("请先安装实例，再移动到 Minecraft 文件夹。", []),
-            "Errors:coreRepositoryMoveSnapshot.repositoryPreviewText2": .init("实例已位于所选文件夹中。", []),
-            "Errors:coreRepositoryMoveSnapshot.repositoryPreviewText3": .init("找不到目标文件夹。", []),
-            "Errors:coreRepositoryMoveSnapshot.rootText1": .init("目标文件夹不能位于源实例或运行目录里面。", []),
-            "Errors:coreRepositoryMoveSnapshot.repositoryText1": .init("源实例目录身份改变，请重新预览。", []),
-            "Errors:coreRepositoryMoveSnapshot.identityText1": .init("源版本文件夹已被替换，请重新预览。", []),
-            "Errors:coreRepositoryMoveSnapshot.identityText2": .init("源文件在预览后改变，请刷新移动预览。", []),
-            "Errors:coreRepositoryMoveSnapshot.stateText1": .init("“%1$@”仍将此版本目录用作运行目录，请先调整它的运行目录。", [.text]),
-            "Errors:coreRepositoryMoveSnapshot.fileText1": .init("“%1$@”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。", [.text]),
-            "Errors:coreRepositoryMoveSnapshot.rawText1": .init("“%1$@”仍引用此版本，请先处理该版本。", [.text]),
+            "Errors:CoreRepositoryMoveSnapshot.changedSourceFiles": .init("源文件在预览后改变，请刷新移动预览。", []),
+            "Errors:CoreRepositoryMoveSnapshot.instanceAlreadyInTargetFolder": .init("实例已位于所选文件夹中。", []),
+            "Errors:CoreRepositoryMoveSnapshot.instanceNotInstalled": .init("请先安装实例，再移动到 Minecraft 文件夹。", []),
+            "Errors:CoreRepositoryMoveSnapshot.missingTargetFolder": .init("找不到目标文件夹。", []),
+            "Errors:CoreRepositoryMoveSnapshot.sourceDirectoryChanged": .init("源实例目录身份改变，请重新预览。", []),
+            "Errors:CoreRepositoryMoveSnapshot.sourceVersionReplaced": .init("源版本文件夹已被替换，请重新预览。", []),
+            "Errors:CoreRepositoryMoveSnapshot.stillHasDependentFiles": .init("“%1$@”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。", [.text]),
+            "Errors:CoreRepositoryMoveSnapshot.stillReferencedVersion": .init("“%1$@”仍引用此版本，请先处理该版本。", [.text]),
+            "Errors:CoreRepositoryMoveSnapshot.stillUsesRunDirectory": .init("“%1$@”仍将此版本目录用作运行目录，请先调整它的运行目录。", [.text]),
+            "Errors:CoreRepositoryMoveSnapshot.targetFolderNestedInSource": .init("目标文件夹不能位于源实例或运行目录里面。", []),
         ]
     }
 }

@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreImportedMinecraftInstallation {
         /// 本地游戏安装记录无效，请检查实例元数据。
         ///
-        /// Resource: `Errors.coreImportedMinecraftInstallation.validLabelText1`.
+        /// Resource: `Errors.CoreImportedMinecraftInstallation.invalidInstallationMetadata`.
         public static var invalidInstallationMetadata: LocalizedMessage {
-            .init(key: "coreImportedMinecraftInstallation.validLabelText1", table: "Errors", fallback: "本地游戏安装记录无效，请检查实例元数据。")
+            .init(key: "CoreImportedMinecraftInstallation.invalidInstallationMetadata", table: "Errors", fallback: "本地游戏安装记录无效，请检查实例元数据。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreImportedMinecraftInstallation.validLabelText1": .init("本地游戏安装记录无效，请检查实例元数据。", []),
+            "Errors:CoreImportedMinecraftInstallation.invalidInstallationMetadata": .init("本地游戏安装记录无效，请检查实例元数据。", []),
         ]
     }
 }

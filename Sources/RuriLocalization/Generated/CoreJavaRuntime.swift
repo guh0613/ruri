@@ -3,77 +3,77 @@ import Foundation
 
 extension Messages {
     public enum CoreJavaRuntime {
-        /// Java 检测超时，请检查所选程序是否为可用的 Java。
+        /// Java 架构与游戏原生库不匹配，需要 %1$@。
         ///
-        /// Resource: `Errors.coreJavaRuntime.environmentText1`.
-        public static var javaProbeTimedOut: LocalizedMessage {
-            .init(key: "coreJavaRuntime.environmentText1", table: "Errors", fallback: "Java 检测超时，请检查所选程序是否为可用的 Java。")
+        /// Resource: `Errors.CoreJavaRuntime.architectureMismatch`.
+        public static func architectureMismatch(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreJavaRuntime.architectureMismatch", table: "Errors", fallback: "Java 架构与游戏原生库不匹配，需要 %1$@。", arguments: [.text(value0)])
         }
         /// 请选择 java 可执行文件、JDK 包或 Java Home 文件夹。
         ///
-        /// Resource: `Errors.coreJavaRuntime.executableText1`.
+        /// Resource: `Errors.CoreJavaRuntime.executableSelectionRequired`.
         public static var executableSelectionRequired: LocalizedMessage {
-            .init(key: "coreJavaRuntime.executableText1", table: "Errors", fallback: "请选择 java 可执行文件、JDK 包或 Java Home 文件夹。")
-        }
-        /// Java 不可执行：%1$@
-        ///
-        /// Resource: `Errors.coreJavaRuntime.inspectText1`.
-        public static func javaNotExecutable(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreJavaRuntime.inspectText1", table: "Errors", fallback: "Java 不可执行：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreJavaRuntime.executableSelectionRequired", table: "Errors", fallback: "请选择 java 可执行文件、JDK 包或 Java Home 文件夹。")
         }
         /// 无法运行 Java：%1$@
         ///
-        /// Resource: `Errors.coreJavaRuntime.inspectText2`.
+        /// Resource: `Errors.CoreJavaRuntime.javaLaunchFailed`.
         public static func javaLaunchFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreJavaRuntime.inspectText2", table: "Errors", fallback: "无法运行 Java：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreJavaRuntime.javaLaunchFailed", table: "Errors", fallback: "无法运行 Java：%1$@", arguments: [.text(value0)])
         }
-        /// 无法识别 Java 版本
+        /// Java 不可执行：%1$@
         ///
-        /// Resource: `Errors.coreJavaRuntime.archText1`.
-        public static var javaVersionUnreadable: LocalizedMessage {
-            .init(key: "coreJavaRuntime.archText1", table: "Errors", fallback: "无法识别 Java 版本")
+        /// Resource: `Errors.CoreJavaRuntime.javaNotExecutable`.
+        public static func javaNotExecutable(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreJavaRuntime.javaNotExecutable", table: "Errors", fallback: "Java 不可执行：%1$@", arguments: [.text(value0)])
         }
-        /// 无法识别 Java 主版本：%1$@
+        /// Java 检测超时，请检查所选程序是否为可用的 Java。
         ///
-        /// Resource: `Errors.coreJavaRuntime.majorText1`.
-        public static func majorVersionUnreadable(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreJavaRuntime.majorText1", table: "Errors", fallback: "无法识别 Java 主版本：%1$@", arguments: [.text(value0)])
-        }
-        /// 指定的 Java 不可用，请在实例设置中重新选择。
-        ///
-        /// Resource: `Errors.coreJavaRuntime.selectedText1`.
-        public static var selectedJavaUnavailable: LocalizedMessage {
-            .init(key: "coreJavaRuntime.selectedText1", table: "Errors", fallback: "指定的 Java 不可用，请在实例设置中重新选择。")
-        }
-        /// 此游戏需要 Java %1$@，当前指定 Java %2$@。
-        ///
-        /// Resource: `Errors.coreJavaRuntime.selectedText2`.
-        public static func requiredJavaMismatch(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreJavaRuntime.selectedText2", table: "Errors", fallback: "此游戏需要 Java %1$@，当前指定 Java %2$@。", arguments: [.text(value0), .text(value1)])
-        }
-        /// Java 架构与游戏原生库不匹配，需要 %1$@。
-        ///
-        /// Resource: `Errors.coreJavaRuntime.architectureText1`.
-        public static func architectureMismatch(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreJavaRuntime.architectureText1", table: "Errors", fallback: "Java 架构与游戏原生库不匹配，需要 %1$@。", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreJavaRuntime.javaProbeTimedOut`.
+        public static var javaProbeTimedOut: LocalizedMessage {
+            .init(key: "CoreJavaRuntime.javaProbeTimedOut", table: "Errors", fallback: "Java 检测超时，请检查所选程序是否为可用的 Java。")
         }
         /// 需要 Java %1$@%2$@。请到设置 → Java 安装或选择该版本。
         ///
-        /// Resource: `Errors.coreJavaRuntime.orderText1`.
+        /// Resource: `Errors.CoreJavaRuntime.javaVersionRequired`.
         public static func javaVersionRequired(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreJavaRuntime.orderText1", table: "Errors", fallback: "需要 Java %1$@%2$@。请到设置 → Java 安装或选择该版本。", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreJavaRuntime.javaVersionRequired", table: "Errors", fallback: "需要 Java %1$@%2$@。请到设置 → Java 安装或选择该版本。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 无法识别 Java 版本
+        ///
+        /// Resource: `Errors.CoreJavaRuntime.javaVersionUnreadable`.
+        public static var javaVersionUnreadable: LocalizedMessage {
+            .init(key: "CoreJavaRuntime.javaVersionUnreadable", table: "Errors", fallback: "无法识别 Java 版本")
+        }
+        /// 无法识别 Java 主版本：%1$@
+        ///
+        /// Resource: `Errors.CoreJavaRuntime.majorVersionUnreadable`.
+        public static func majorVersionUnreadable(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreJavaRuntime.majorVersionUnreadable", table: "Errors", fallback: "无法识别 Java 主版本：%1$@", arguments: [.text(value0)])
+        }
+        /// 此游戏需要 Java %1$@，当前指定 Java %2$@。
+        ///
+        /// Resource: `Errors.CoreJavaRuntime.requiredJavaMismatch`.
+        public static func requiredJavaMismatch(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreJavaRuntime.requiredJavaMismatch", table: "Errors", fallback: "此游戏需要 Java %1$@，当前指定 Java %2$@。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 指定的 Java 不可用，请在实例设置中重新选择。
+        ///
+        /// Resource: `Errors.CoreJavaRuntime.selectedJavaUnavailable`.
+        public static var selectedJavaUnavailable: LocalizedMessage {
+            .init(key: "CoreJavaRuntime.selectedJavaUnavailable", table: "Errors", fallback: "指定的 Java 不可用，请在实例设置中重新选择。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreJavaRuntime.environmentText1": .init("Java 检测超时，请检查所选程序是否为可用的 Java。", []),
-            "Errors:coreJavaRuntime.executableText1": .init("请选择 java 可执行文件、JDK 包或 Java Home 文件夹。", []),
-            "Errors:coreJavaRuntime.inspectText1": .init("Java 不可执行：%1$@", [.text]),
-            "Errors:coreJavaRuntime.inspectText2": .init("无法运行 Java：%1$@", [.text]),
-            "Errors:coreJavaRuntime.archText1": .init("无法识别 Java 版本", []),
-            "Errors:coreJavaRuntime.majorText1": .init("无法识别 Java 主版本：%1$@", [.text]),
-            "Errors:coreJavaRuntime.selectedText1": .init("指定的 Java 不可用，请在实例设置中重新选择。", []),
-            "Errors:coreJavaRuntime.selectedText2": .init("此游戏需要 Java %1$@，当前指定 Java %2$@。", [.text, .text]),
-            "Errors:coreJavaRuntime.architectureText1": .init("Java 架构与游戏原生库不匹配，需要 %1$@。", [.text]),
-            "Errors:coreJavaRuntime.orderText1": .init("需要 Java %1$@%2$@。请到设置 → Java 安装或选择该版本。", [.text, .text]),
+            "Errors:CoreJavaRuntime.architectureMismatch": .init("Java 架构与游戏原生库不匹配，需要 %1$@。", [.text]),
+            "Errors:CoreJavaRuntime.executableSelectionRequired": .init("请选择 java 可执行文件、JDK 包或 Java Home 文件夹。", []),
+            "Errors:CoreJavaRuntime.javaLaunchFailed": .init("无法运行 Java：%1$@", [.text]),
+            "Errors:CoreJavaRuntime.javaNotExecutable": .init("Java 不可执行：%1$@", [.text]),
+            "Errors:CoreJavaRuntime.javaProbeTimedOut": .init("Java 检测超时，请检查所选程序是否为可用的 Java。", []),
+            "Errors:CoreJavaRuntime.javaVersionRequired": .init("需要 Java %1$@%2$@。请到设置 → Java 安装或选择该版本。", [.text, .text]),
+            "Errors:CoreJavaRuntime.javaVersionUnreadable": .init("无法识别 Java 版本", []),
+            "Errors:CoreJavaRuntime.majorVersionUnreadable": .init("无法识别 Java 主版本：%1$@", [.text]),
+            "Errors:CoreJavaRuntime.requiredJavaMismatch": .init("此游戏需要 Java %1$@，当前指定 Java %2$@。", [.text, .text]),
+            "Errors:CoreJavaRuntime.selectedJavaUnavailable": .init("指定的 Java 不可用，请在实例设置中重新选择。", []),
         ]
     }
 }

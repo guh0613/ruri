@@ -3,126 +3,126 @@ import Foundation
 
 extension Messages {
     public enum CoreRunDirectoryCopyJournal {
-        /// 无法确认复制项目的文件身份：%1$@
+        /// 共享目录的占用记录已经改变，未清除其他操作的记录。
         ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.valueText1`.
-        public static func sourceIdentityUnknown(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.valueText1", table: "Errors", fallback: "无法确认复制项目的文件身份：%1$@", arguments: [.text(value0)])
-        }
-        /// 运行目录复制记录无效，工作副本已保留。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.targetText1`.
-        public static var invalidRecord: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.targetText1", table: "Errors", fallback: "运行目录复制记录无效，工作副本已保留。")
-        }
-        /// 复制记录缺少自定义目标目录。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.customText1`.
-        public static var missingCustomTarget: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.customText1", table: "Errors", fallback: "复制记录缺少自定义目标目录。")
-        }
-        /// 复制工作区位置无效。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.customText2`.
-        public static var invalidWorkspace: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.customText2", table: "Errors", fallback: "复制工作区位置无效。")
-        }
-        /// 运行目录复制项目记录无效。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.keysText1`.
-        public static var invalidKeys: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.keysText1", table: "Errors", fallback: "运行目录复制项目记录无效。")
-        }
-        /// 发布副本的文件身份记录无效。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.publishedText1`.
-        public static var invalidPublishedIdentity: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.publishedText1", table: "Errors", fallback: "发布副本的文件身份记录无效。")
-        }
-        /// 运行目录复制记录包含目标安装文件，未移动这些文件。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.publishedText2`.
-        public static var installedFilesPreserved: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.publishedText2", table: "Errors", fallback: "运行目录复制记录包含目标安装文件，未移动这些文件。")
-        }
-        /// 运行目录复制记录包含无效的备份路径。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.publishedText3`.
-        public static var invalidBackupPath: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.publishedText3", table: "Errors", fallback: "运行目录复制记录包含无效的备份路径。")
-        }
-        /// 运行目录复制记录包含保留路径。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.publishedText4`.
-        public static var retainedPath: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.publishedText4", table: "Errors", fallback: "运行目录复制记录包含保留路径。")
-        }
-        /// 运行目录复制记录包含目标安装目录。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.firstText1`.
-        public static var targetDirectoryPresent: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.firstText1", table: "Errors", fallback: "运行目录复制记录包含目标安装目录。")
-        }
-        /// 运行目录复制记录超过大小限制。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.dataText1`.
-        public static var sizeLimit: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.dataText1", table: "Errors", fallback: "运行目录复制记录超过大小限制。")
-        }
-        /// 此实例有未完成的运行目录复制，请在实例设置中恢复后继续。
-        ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.idText1`.
-        public static var unfinishedCopy: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.idText1", table: "Errors", fallback: "此实例有未完成的运行目录复制，请在实例设置中恢复后继续。")
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.changedSharedCopyLock`.
+        public static var changedSharedCopyLock: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.changedSharedCopyLock", table: "Errors", fallback: "共享目录的占用记录已经改变，未清除其他操作的记录。")
         }
         /// “%1$@”正在调整此共享目录，或上次复制尚未恢复。请先在该实例的设置中处理。
         ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.markerText1`.
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.copyInProgress`.
         public static func copyInProgress(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.markerText1", table: "Errors", fallback: "“%1$@”正在调整此共享目录，或上次复制尚未恢复。请先在该实例的设置中处理。", arguments: [.text(value0)])
+            .init(key: "CoreRunDirectoryCopyJournal.copyInProgress", table: "Errors", fallback: "“%1$@”正在调整此共享目录，或上次复制尚未恢复。请先在该实例的设置中处理。", arguments: [.text(value0)])
         }
-        /// 共享目录的复制占用记录无效。
+        /// 运行目录复制记录包含目标安装文件，未移动这些文件。
         ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.markerText2`.
-        public static var invalidSharedCopyLock: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.markerText2", table: "Errors", fallback: "共享目录的复制占用记录无效。")
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.installedFilesPreserved`.
+        public static var installedFilesPreserved: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.installedFilesPreserved", table: "Errors", fallback: "运行目录复制记录包含目标安装文件，未移动这些文件。")
         }
-        /// 共享目录的占用记录已经改变，未清除其他操作的记录。
+        /// 运行目录复制记录包含无效的备份路径。
         ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.markerText3`.
-        public static var changedSharedCopyLock: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.markerText3", table: "Errors", fallback: "共享目录的占用记录已经改变，未清除其他操作的记录。")
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.invalidBackupPath`.
+        public static var invalidBackupPath: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.invalidBackupPath", table: "Errors", fallback: "运行目录复制记录包含无效的备份路径。")
         }
-        /// 无法读取运行目录复制记录，请检查 %1$@。
+        /// 运行目录复制项目记录无效。
         ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.fdText1`.
-        public static func recordReadFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.fdText1", table: "Errors", fallback: "无法读取运行目录复制记录，请检查 %1$@。", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.invalidKeys`.
+        public static var invalidKeys: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.invalidKeys", table: "Errors", fallback: "运行目录复制项目记录无效。")
+        }
+        /// 发布副本的文件身份记录无效。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.invalidPublishedIdentity`.
+        public static var invalidPublishedIdentity: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.invalidPublishedIdentity", table: "Errors", fallback: "发布副本的文件身份记录无效。")
+        }
+        /// 运行目录复制记录无效，工作副本已保留。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.invalidRecord`.
+        public static var invalidRecord: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.invalidRecord", table: "Errors", fallback: "运行目录复制记录无效，工作副本已保留。")
         }
         /// 运行目录复制记录不是有效文件或超过大小限制。
         ///
-        /// Resource: `Errors.coreRunDirectoryCopyJournal.infoText1`.
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.invalidRecordFile`.
         public static var invalidRecordFile: LocalizedMessage {
-            .init(key: "coreRunDirectoryCopyJournal.infoText1", table: "Errors", fallback: "运行目录复制记录不是有效文件或超过大小限制。")
+            .init(key: "CoreRunDirectoryCopyJournal.invalidRecordFile", table: "Errors", fallback: "运行目录复制记录不是有效文件或超过大小限制。")
+        }
+        /// 共享目录的复制占用记录无效。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.invalidSharedCopyLock`.
+        public static var invalidSharedCopyLock: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.invalidSharedCopyLock", table: "Errors", fallback: "共享目录的复制占用记录无效。")
+        }
+        /// 复制工作区位置无效。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.invalidWorkspace`.
+        public static var invalidWorkspace: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.invalidWorkspace", table: "Errors", fallback: "复制工作区位置无效。")
+        }
+        /// 复制记录缺少自定义目标目录。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.missingCustomTarget`.
+        public static var missingCustomTarget: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.missingCustomTarget", table: "Errors", fallback: "复制记录缺少自定义目标目录。")
+        }
+        /// 无法读取运行目录复制记录，请检查 %1$@。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.recordReadFailed`.
+        public static func recordReadFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.recordReadFailed", table: "Errors", fallback: "无法读取运行目录复制记录，请检查 %1$@。", arguments: [.text(value0)])
+        }
+        /// 运行目录复制记录包含保留路径。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.retainedPath`.
+        public static var retainedPath: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.retainedPath", table: "Errors", fallback: "运行目录复制记录包含保留路径。")
+        }
+        /// 运行目录复制记录超过大小限制。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.sizeLimit`.
+        public static var sizeLimit: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.sizeLimit", table: "Errors", fallback: "运行目录复制记录超过大小限制。")
+        }
+        /// 无法确认复制项目的文件身份：%1$@
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.sourceIdentityUnknown`.
+        public static func sourceIdentityUnknown(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.sourceIdentityUnknown", table: "Errors", fallback: "无法确认复制项目的文件身份：%1$@", arguments: [.text(value0)])
+        }
+        /// 运行目录复制记录包含目标安装目录。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.targetDirectoryPresent`.
+        public static var targetDirectoryPresent: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.targetDirectoryPresent", table: "Errors", fallback: "运行目录复制记录包含目标安装目录。")
+        }
+        /// 此实例有未完成的运行目录复制，请在实例设置中恢复后继续。
+        ///
+        /// Resource: `Errors.CoreRunDirectoryCopyJournal.unfinishedCopy`.
+        public static var unfinishedCopy: LocalizedMessage {
+            .init(key: "CoreRunDirectoryCopyJournal.unfinishedCopy", table: "Errors", fallback: "此实例有未完成的运行目录复制，请在实例设置中恢复后继续。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreRunDirectoryCopyJournal.valueText1": .init("无法确认复制项目的文件身份：%1$@", [.text]),
-            "Errors:coreRunDirectoryCopyJournal.targetText1": .init("运行目录复制记录无效，工作副本已保留。", []),
-            "Errors:coreRunDirectoryCopyJournal.customText1": .init("复制记录缺少自定义目标目录。", []),
-            "Errors:coreRunDirectoryCopyJournal.customText2": .init("复制工作区位置无效。", []),
-            "Errors:coreRunDirectoryCopyJournal.keysText1": .init("运行目录复制项目记录无效。", []),
-            "Errors:coreRunDirectoryCopyJournal.publishedText1": .init("发布副本的文件身份记录无效。", []),
-            "Errors:coreRunDirectoryCopyJournal.publishedText2": .init("运行目录复制记录包含目标安装文件，未移动这些文件。", []),
-            "Errors:coreRunDirectoryCopyJournal.publishedText3": .init("运行目录复制记录包含无效的备份路径。", []),
-            "Errors:coreRunDirectoryCopyJournal.publishedText4": .init("运行目录复制记录包含保留路径。", []),
-            "Errors:coreRunDirectoryCopyJournal.firstText1": .init("运行目录复制记录包含目标安装目录。", []),
-            "Errors:coreRunDirectoryCopyJournal.dataText1": .init("运行目录复制记录超过大小限制。", []),
-            "Errors:coreRunDirectoryCopyJournal.idText1": .init("此实例有未完成的运行目录复制，请在实例设置中恢复后继续。", []),
-            "Errors:coreRunDirectoryCopyJournal.markerText1": .init("“%1$@”正在调整此共享目录，或上次复制尚未恢复。请先在该实例的设置中处理。", [.text]),
-            "Errors:coreRunDirectoryCopyJournal.markerText2": .init("共享目录的复制占用记录无效。", []),
-            "Errors:coreRunDirectoryCopyJournal.markerText3": .init("共享目录的占用记录已经改变，未清除其他操作的记录。", []),
-            "Errors:coreRunDirectoryCopyJournal.fdText1": .init("无法读取运行目录复制记录，请检查 %1$@。", [.text]),
-            "Errors:coreRunDirectoryCopyJournal.infoText1": .init("运行目录复制记录不是有效文件或超过大小限制。", []),
+            "Errors:CoreRunDirectoryCopyJournal.changedSharedCopyLock": .init("共享目录的占用记录已经改变，未清除其他操作的记录。", []),
+            "Errors:CoreRunDirectoryCopyJournal.copyInProgress": .init("“%1$@”正在调整此共享目录，或上次复制尚未恢复。请先在该实例的设置中处理。", [.text]),
+            "Errors:CoreRunDirectoryCopyJournal.installedFilesPreserved": .init("运行目录复制记录包含目标安装文件，未移动这些文件。", []),
+            "Errors:CoreRunDirectoryCopyJournal.invalidBackupPath": .init("运行目录复制记录包含无效的备份路径。", []),
+            "Errors:CoreRunDirectoryCopyJournal.invalidKeys": .init("运行目录复制项目记录无效。", []),
+            "Errors:CoreRunDirectoryCopyJournal.invalidPublishedIdentity": .init("发布副本的文件身份记录无效。", []),
+            "Errors:CoreRunDirectoryCopyJournal.invalidRecord": .init("运行目录复制记录无效，工作副本已保留。", []),
+            "Errors:CoreRunDirectoryCopyJournal.invalidRecordFile": .init("运行目录复制记录不是有效文件或超过大小限制。", []),
+            "Errors:CoreRunDirectoryCopyJournal.invalidSharedCopyLock": .init("共享目录的复制占用记录无效。", []),
+            "Errors:CoreRunDirectoryCopyJournal.invalidWorkspace": .init("复制工作区位置无效。", []),
+            "Errors:CoreRunDirectoryCopyJournal.missingCustomTarget": .init("复制记录缺少自定义目标目录。", []),
+            "Errors:CoreRunDirectoryCopyJournal.recordReadFailed": .init("无法读取运行目录复制记录，请检查 %1$@。", [.text]),
+            "Errors:CoreRunDirectoryCopyJournal.retainedPath": .init("运行目录复制记录包含保留路径。", []),
+            "Errors:CoreRunDirectoryCopyJournal.sizeLimit": .init("运行目录复制记录超过大小限制。", []),
+            "Errors:CoreRunDirectoryCopyJournal.sourceIdentityUnknown": .init("无法确认复制项目的文件身份：%1$@", [.text]),
+            "Errors:CoreRunDirectoryCopyJournal.targetDirectoryPresent": .init("运行目录复制记录包含目标安装目录。", []),
+            "Errors:CoreRunDirectoryCopyJournal.unfinishedCopy": .init("此实例有未完成的运行目录复制，请在实例设置中恢复后继续。", []),
         ]
     }
 }

@@ -3,126 +3,126 @@ import Foundation
 
 extension Messages {
     public enum CoreGameExit {
-        /// 游戏已按要求结束
-        ///
-        /// Resource: `Core.coreGameExit.summaryText1`.
-        public static var requestedExit: LocalizedMessage {
-            .init(key: "coreGameExit.summaryText1", table: "Core", fallback: "游戏已按要求结束")
-        }
-        /// 游戏已正常退出
-        ///
-        /// Resource: `Core.coreGameExit.summaryText2`.
-        public static var normalExit: LocalizedMessage {
-            .init(key: "coreGameExit.summaryText2", table: "Core", fallback: "游戏已正常退出")
-        }
-        /// 游戏进程因 %1$@ 退出
-        ///
-        /// Resource: `Core.coreGameExit.summaryText3`.
-        public static func processExitReason(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameExit.summaryText3", table: "Core", fallback: "游戏进程因 %1$@ 退出", arguments: [.text(value0)])
-        }
         /// 游戏异常退出（退出码 %1$@）
         ///
-        /// Resource: `Core.coreGameExit.summaryText4`.
+        /// Resource: `Core.CoreGameExit.crashExit`.
         public static func crashExit(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameExit.summaryText4", table: "Core", fallback: "游戏异常退出（退出码 %1$@）", arguments: [.text(value0)])
-        }
-        /// Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。
-        ///
-        /// Resource: `Core.coreGameExit.explanationText1`.
-        public static var ruriRequestedExit: LocalizedMessage {
-            .init(key: "coreGameExit.explanationText1", table: "Core", fallback: "Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。")
-        }
-        /// Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。
-        ///
-        /// Resource: `Core.coreGameExit.explanationText2`.
-        public static var normalExitSucceeded: LocalizedMessage {
-            .init(key: "coreGameExit.explanationText2", table: "Core", fallback: "Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。")
-        }
-        /// 游戏进程返回成功状态。
-        ///
-        /// Resource: `Core.coreGameExit.explanationText3`.
-        public static var processExitedSuccessfully: LocalizedMessage {
-            .init(key: "coreGameExit.explanationText3", table: "Core", fallback: "游戏进程返回成功状态。")
-        }
-        /// 进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。
-        ///
-        /// Resource: `Core.coreGameExit.explanationText4`.
-        public static var terminationSignalReceived: LocalizedMessage {
-            .init(key: "coreGameExit.explanationText4", table: "Core", fallback: "进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。")
-        }
-        /// Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。
-        ///
-        /// Resource: `Core.coreGameExit.explanationText5`.
-        public static var javaTerminationSignal: LocalizedMessage {
-            .init(key: "coreGameExit.explanationText5", table: "Core", fallback: "Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。")
-        }
-        /// 退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。
-        ///
-        /// Resource: `Core.coreGameExit.explanationText6`.
-        public static var exitStatusNeedsLogs: LocalizedMessage {
-            .init(key: "coreGameExit.explanationText6", table: "Core", fallback: "退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。")
-        }
-        /// 信号
-        ///
-        /// Resource: `Core.coreGameExit.logDescriptionText1`.
-        public static var signalLabel: LocalizedMessage {
-            .init(key: "coreGameExit.logDescriptionText1", table: "Core", fallback: "信号")
+            .init(key: "CoreGameExit.crashExit", table: "Core", fallback: "游戏异常退出（退出码 %1$@）", arguments: [.text(value0)])
         }
         /// 退出码
         ///
-        /// Resource: `Core.coreGameExit.logDescriptionText2`.
+        /// Resource: `Core.CoreGameExit.exitCodeLabel`.
         public static var exitCodeLabel: LocalizedMessage {
-            .init(key: "coreGameExit.logDescriptionText2", table: "Core", fallback: "退出码")
-        }
-        /// 是
-        ///
-        /// Resource: `Core.coreGameExit.logDescriptionText3`.
-        public static var yesLabel: LocalizedMessage {
-            .init(key: "coreGameExit.logDescriptionText3", table: "Core", fallback: "是")
-        }
-        /// 否
-        ///
-        /// Resource: `Core.coreGameExit.logDescriptionText4`.
-        public static var noLabel: LocalizedMessage {
-            .init(key: "coreGameExit.logDescriptionText4", table: "Core", fallback: "否")
+            .init(key: "CoreGameExit.exitCodeLabel", table: "Core", fallback: "退出码")
         }
         /// [Ruri] %1$@；PID %2$@；%3$@ %4$@；Ruri 结束请求：%5$@；正常退出请求：%6$@；开始 %7$@；结束 %8$@
         ///
-        /// Resource: `Core.coreGameExit.logDescriptionText5`.
+        /// Resource: `Core.CoreGameExit.exitLogLine`.
         public static func exitLogLine(_ value0: String, _ value1: String, _ value2: String, _ value3: String, _ value4: String, _ value5: String, _ value6: String, _ value7: String) -> LocalizedMessage {
-            .init(key: "coreGameExit.logDescriptionText5", table: "Core", fallback: "[Ruri] %1$@；PID %2$@；%3$@ %4$@；Ruri 结束请求：%5$@；正常退出请求：%6$@；开始 %7$@；结束 %8$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3), .text(value4), .text(value5), .text(value6), .text(value7)])
+            .init(key: "CoreGameExit.exitLogLine", table: "Core", fallback: "[Ruri] %1$@；PID %2$@；%3$@ %4$@；Ruri 结束请求：%5$@；正常退出请求：%6$@；开始 %7$@；结束 %8$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3), .text(value4), .text(value5), .text(value6), .text(value7)])
         }
-        /// 信号 %1$@
+        /// 退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。
         ///
-        /// Resource: `Core.coreGameExit.signalNameText1`.
-        public static func signalValue(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameExit.signalNameText1", table: "Core", fallback: "信号 %1$@", arguments: [.text(value0)])
+        /// Resource: `Core.CoreGameExit.exitStatusNeedsLogs`.
+        public static var exitStatusNeedsLogs: LocalizedMessage {
+            .init(key: "CoreGameExit.exitStatusNeedsLogs", table: "Core", fallback: "退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。")
+        }
+        /// Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。
+        ///
+        /// Resource: `Core.CoreGameExit.javaTerminationSignal`.
+        public static var javaTerminationSignal: LocalizedMessage {
+            .init(key: "CoreGameExit.javaTerminationSignal", table: "Core", fallback: "Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。")
         }
         /// Java 虚拟机
         ///
-        /// Resource: `Core.coreGameExit.titleText1`.
+        /// Resource: `Core.CoreGameExit.javaVirtualMachine`.
         public static var javaVirtualMachine: LocalizedMessage {
-            .init(key: "coreGameExit.titleText1", table: "Core", fallback: "Java 虚拟机")
+            .init(key: "CoreGameExit.javaVirtualMachine", table: "Core", fallback: "Java 虚拟机")
+        }
+        /// 否
+        ///
+        /// Resource: `Core.CoreGameExit.noLabel`.
+        public static var noLabel: LocalizedMessage {
+            .init(key: "CoreGameExit.noLabel", table: "Core", fallback: "否")
+        }
+        /// 游戏已正常退出
+        ///
+        /// Resource: `Core.CoreGameExit.normalExit`.
+        public static var normalExit: LocalizedMessage {
+            .init(key: "CoreGameExit.normalExit", table: "Core", fallback: "游戏已正常退出")
+        }
+        /// Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。
+        ///
+        /// Resource: `Core.CoreGameExit.normalExitSucceeded`.
+        public static var normalExitSucceeded: LocalizedMessage {
+            .init(key: "CoreGameExit.normalExitSucceeded", table: "Core", fallback: "Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。")
+        }
+        /// 游戏进程因 %1$@ 退出
+        ///
+        /// Resource: `Core.CoreGameExit.processExitReason`.
+        public static func processExitReason(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameExit.processExitReason", table: "Core", fallback: "游戏进程因 %1$@ 退出", arguments: [.text(value0)])
+        }
+        /// 游戏进程返回成功状态。
+        ///
+        /// Resource: `Core.CoreGameExit.processExitedSuccessfully`.
+        public static var processExitedSuccessfully: LocalizedMessage {
+            .init(key: "CoreGameExit.processExitedSuccessfully", table: "Core", fallback: "游戏进程返回成功状态。")
+        }
+        /// 游戏已按要求结束
+        ///
+        /// Resource: `Core.CoreGameExit.requestedExit`.
+        public static var requestedExit: LocalizedMessage {
+            .init(key: "CoreGameExit.requestedExit", table: "Core", fallback: "游戏已按要求结束")
+        }
+        /// Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。
+        ///
+        /// Resource: `Core.CoreGameExit.ruriRequestedExit`.
+        public static var ruriRequestedExit: LocalizedMessage {
+            .init(key: "CoreGameExit.ruriRequestedExit", table: "Core", fallback: "Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。")
+        }
+        /// 信号
+        ///
+        /// Resource: `Core.CoreGameExit.signalLabel`.
+        public static var signalLabel: LocalizedMessage {
+            .init(key: "CoreGameExit.signalLabel", table: "Core", fallback: "信号")
+        }
+        /// 信号 %1$@
+        ///
+        /// Resource: `Core.CoreGameExit.signalValue`.
+        public static func signalValue(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameExit.signalValue", table: "Core", fallback: "信号 %1$@", arguments: [.text(value0)])
+        }
+        /// 进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。
+        ///
+        /// Resource: `Core.CoreGameExit.terminationSignalReceived`.
+        public static var terminationSignalReceived: LocalizedMessage {
+            .init(key: "CoreGameExit.terminationSignalReceived", table: "Core", fallback: "进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。")
+        }
+        /// 是
+        ///
+        /// Resource: `Core.CoreGameExit.yesLabel`.
+        public static var yesLabel: LocalizedMessage {
+            .init(key: "CoreGameExit.yesLabel", table: "Core", fallback: "是")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreGameExit.summaryText1": .init("游戏已按要求结束", []),
-            "Core:coreGameExit.summaryText2": .init("游戏已正常退出", []),
-            "Core:coreGameExit.summaryText3": .init("游戏进程因 %1$@ 退出", [.text]),
-            "Core:coreGameExit.summaryText4": .init("游戏异常退出（退出码 %1$@）", [.text]),
-            "Core:coreGameExit.explanationText1": .init("Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。", []),
-            "Core:coreGameExit.explanationText2": .init("Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。", []),
-            "Core:coreGameExit.explanationText3": .init("游戏进程返回成功状态。", []),
-            "Core:coreGameExit.explanationText4": .init("进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。", []),
-            "Core:coreGameExit.explanationText5": .init("Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。", []),
-            "Core:coreGameExit.explanationText6": .init("退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。", []),
-            "Core:coreGameExit.logDescriptionText1": .init("信号", []),
-            "Core:coreGameExit.logDescriptionText2": .init("退出码", []),
-            "Core:coreGameExit.logDescriptionText3": .init("是", []),
-            "Core:coreGameExit.logDescriptionText4": .init("否", []),
-            "Core:coreGameExit.logDescriptionText5": .init("[Ruri] %1$@；PID %2$@；%3$@ %4$@；Ruri 结束请求：%5$@；正常退出请求：%6$@；开始 %7$@；结束 %8$@", [.text, .text, .text, .text, .text, .text, .text, .text]),
-            "Core:coreGameExit.signalNameText1": .init("信号 %1$@", [.text]),
-            "Core:coreGameExit.titleText1": .init("Java 虚拟机", []),
+            "Core:CoreGameExit.crashExit": .init("游戏异常退出（退出码 %1$@）", [.text]),
+            "Core:CoreGameExit.exitCodeLabel": .init("退出码", []),
+            "Core:CoreGameExit.exitLogLine": .init("[Ruri] %1$@；PID %2$@；%3$@ %4$@；Ruri 结束请求：%5$@；正常退出请求：%6$@；开始 %7$@；结束 %8$@", [.text, .text, .text, .text, .text, .text, .text, .text]),
+            "Core:CoreGameExit.exitStatusNeedsLogs": .init("退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。", []),
+            "Core:CoreGameExit.javaTerminationSignal": .init("Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。", []),
+            "Core:CoreGameExit.javaVirtualMachine": .init("Java 虚拟机", []),
+            "Core:CoreGameExit.noLabel": .init("否", []),
+            "Core:CoreGameExit.normalExit": .init("游戏已正常退出", []),
+            "Core:CoreGameExit.normalExitSucceeded": .init("Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。", []),
+            "Core:CoreGameExit.processExitReason": .init("游戏进程因 %1$@ 退出", [.text]),
+            "Core:CoreGameExit.processExitedSuccessfully": .init("游戏进程返回成功状态。", []),
+            "Core:CoreGameExit.requestedExit": .init("游戏已按要求结束", []),
+            "Core:CoreGameExit.ruriRequestedExit": .init("Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。", []),
+            "Core:CoreGameExit.signalLabel": .init("信号", []),
+            "Core:CoreGameExit.signalValue": .init("信号 %1$@", [.text]),
+            "Core:CoreGameExit.terminationSignalReceived": .init("进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。", []),
+            "Core:CoreGameExit.yesLabel": .init("是", []),
         ]
     }
 }

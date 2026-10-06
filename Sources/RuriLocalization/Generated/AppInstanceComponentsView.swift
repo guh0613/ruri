@@ -3,126 +3,126 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceComponentsView {
-        /// 管理加载器
+        /// 应用加载器
         ///
-        /// Resource: `Interface.appInstanceComponentsView.bodyText1`.
-        public static var manageLoader: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.bodyText1", table: "Interface", fallback: "管理加载器")
-        }
-        /// 当前
-        ///
-        /// Resource: `Interface.appInstanceComponentsView.bodyText2`.
-        public static var current: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.bodyText2", table: "Interface", fallback: "当前")
-        }
-        /// 加载器
-        ///
-        /// Resource: `Interface.appInstanceComponentsView.reasonText1`.
-        public static var loader: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.reasonText1", table: "Interface", fallback: "加载器")
-        }
-        /// OptiFine 版本与安装包由 BMCLAPI 提供。
-        ///
-        /// Resource: `Interface.appInstanceComponentsView.reasonText2`.
-        public static var optifineSource: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.reasonText2", table: "Interface", fallback: "OptiFine 版本与安装包由 BMCLAPI 提供。")
-        }
-        /// 正在查找兼容版本…
-        ///
-        /// Resource: `Interface.appInstanceComponentsView.reasonText3`.
-        public static var findingCompatibleVersions: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.reasonText3", table: "Interface", fallback: "正在查找兼容版本…")
-        }
-        /// 重试
-        ///
-        /// Resource: `Interface.appInstanceComponentsView.errorText1`.
-        public static var retry: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.errorText1", table: "Interface", fallback: "重试")
-        }
-        /// 版本
-        ///
-        /// Resource: `Interface.appInstanceComponentsView.errorText2`.
-        public static var version: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.errorText2", table: "Interface", fallback: "版本")
-        }
-        /// （当前）
-        ///
-        /// Resource: `Interface.appInstanceComponentsView.errorText3`.
-        public static var currentVersion: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.errorText3", table: "Interface", fallback: "（当前）")
-        }
-        /// 移除加载器后按原版启动，模组文件仍会保留。
-        ///
-        /// Resource: `Interface.appInstanceComponentsView.errorText4`.
-        public static var removeLoaderDetails: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.errorText4", table: "Interface", fallback: "移除加载器后按原版启动，模组文件仍会保留。")
-        }
-        /// 现有模组需与所选加载器兼容。
-        ///
-        /// Resource: `Interface.appInstanceComponentsView.errorText5`.
-        public static var changeLoaderDetails: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.errorText5", table: "Interface", fallback: "现有模组需与所选加载器兼容。")
+        /// Resource: `Interface.AppInstanceComponentsView.applyLoader`.
+        public static var applyLoader: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.applyLoader", table: "Interface", fallback: "应用加载器")
         }
         /// 更改加载器不会影响实例的存档和模组文件。
         ///
-        /// Resource: `Interface.appInstanceComponentsView.errorText6`.
+        /// Resource: `Interface.AppInstanceComponentsView.applyLoaderDetails`.
         public static var applyLoaderDetails: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.errorText6", table: "Interface", fallback: "更改加载器不会影响实例的存档和模组文件。")
+            .init(key: "AppInstanceComponentsView.applyLoaderDetails", table: "Interface", fallback: "更改加载器不会影响实例的存档和模组文件。")
         }
-        /// 恢复上次配置
+        /// 现有模组需与所选加载器兼容。
         ///
-        /// Resource: `Interface.appInstanceComponentsView.backupText2`.
-        public static var restorePreviousConfiguration: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.backupText2", table: "Interface", fallback: "恢复上次配置")
+        /// Resource: `Interface.AppInstanceComponentsView.changeLoaderDetails`.
+        public static var changeLoaderDetails: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.changeLoaderDetails", table: "Interface", fallback: "现有模组需与所选加载器兼容。")
         }
         /// 关闭
         ///
-        /// Resource: `Interface.appInstanceComponentsView.backupText3`.
+        /// Resource: `Interface.AppInstanceComponentsView.close`.
         public static var close: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.backupText3", table: "Interface", fallback: "关闭")
+            .init(key: "AppInstanceComponentsView.close", table: "Interface", fallback: "关闭")
         }
-        /// 移除加载器
+        /// 当前
         ///
-        /// Resource: `Interface.appInstanceComponentsView.backupText4`.
-        public static var removeLoader: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.backupText4", table: "Interface", fallback: "移除加载器")
+        /// Resource: `Interface.AppInstanceComponentsView.current`.
+        public static var current: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.current", table: "Interface", fallback: "当前")
         }
-        /// 应用加载器
+        /// （当前）
         ///
-        /// Resource: `Interface.appInstanceComponentsView.backupText5`.
-        public static var applyLoader: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.backupText5", table: "Interface", fallback: "应用加载器")
+        /// Resource: `Interface.AppInstanceComponentsView.currentVersion`.
+        public static var currentVersion: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.currentVersion", table: "Interface", fallback: "（当前）")
+        }
+        /// 正在查找兼容版本…
+        ///
+        /// Resource: `Interface.AppInstanceComponentsView.findingCompatibleVersions`.
+        public static var findingCompatibleVersions: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.findingCompatibleVersions", table: "Interface", fallback: "正在查找兼容版本…")
+        }
+        /// 加载器
+        ///
+        /// Resource: `Interface.AppInstanceComponentsView.loader`.
+        public static var loader: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.loader", table: "Interface", fallback: "加载器")
+        }
+        /// 管理加载器
+        ///
+        /// Resource: `Interface.AppInstanceComponentsView.manageLoader`.
+        public static var manageLoader: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.manageLoader", table: "Interface", fallback: "管理加载器")
         }
         /// 未找到兼容版本
         ///
-        /// Resource: `Interface.appInstanceComponentsView.currentText1`.
+        /// Resource: `Interface.AppInstanceComponentsView.noCompatibleLoader`.
         public static var noCompatibleLoader: LocalizedMessage {
-            .init(key: "appInstanceComponentsView.currentText1", table: "Interface", fallback: "未找到兼容版本")
+            .init(key: "AppInstanceComponentsView.noCompatibleLoader", table: "Interface", fallback: "未找到兼容版本")
+        }
+        /// OptiFine 版本与安装包由 BMCLAPI 提供。
+        ///
+        /// Resource: `Interface.AppInstanceComponentsView.optifineSource`.
+        public static var optifineSource: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.optifineSource", table: "Interface", fallback: "OptiFine 版本与安装包由 BMCLAPI 提供。")
         }
         /// 上次配置：%1$@
         ///
-        /// Resource: `Interface.appInstanceComponentsView.previousComponents`.
+        /// Resource: `Interface.AppInstanceComponentsView.previousComponents`.
         public static func previousComponents(_ value0: String) -> LocalizedMessage {
-            .init(key: "appInstanceComponentsView.previousComponents", table: "Interface", fallback: "上次配置：%1$@", arguments: [.text(value0)])
+            .init(key: "AppInstanceComponentsView.previousComponents", table: "Interface", fallback: "上次配置：%1$@", arguments: [.text(value0)])
+        }
+        /// 移除加载器
+        ///
+        /// Resource: `Interface.AppInstanceComponentsView.removeLoader`.
+        public static var removeLoader: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.removeLoader", table: "Interface", fallback: "移除加载器")
+        }
+        /// 移除加载器后按原版启动，模组文件仍会保留。
+        ///
+        /// Resource: `Interface.AppInstanceComponentsView.removeLoaderDetails`.
+        public static var removeLoaderDetails: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.removeLoaderDetails", table: "Interface", fallback: "移除加载器后按原版启动，模组文件仍会保留。")
+        }
+        /// 恢复上次配置
+        ///
+        /// Resource: `Interface.AppInstanceComponentsView.restorePreviousConfiguration`.
+        public static var restorePreviousConfiguration: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.restorePreviousConfiguration", table: "Interface", fallback: "恢复上次配置")
+        }
+        /// 重试
+        ///
+        /// Resource: `Interface.AppInstanceComponentsView.retry`.
+        public static var retry: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.retry", table: "Interface", fallback: "重试")
+        }
+        /// 版本
+        ///
+        /// Resource: `Interface.AppInstanceComponentsView.version`.
+        public static var version: LocalizedMessage {
+            .init(key: "AppInstanceComponentsView.version", table: "Interface", fallback: "版本")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appInstanceComponentsView.bodyText1": .init("管理加载器", []),
-            "Interface:appInstanceComponentsView.bodyText2": .init("当前", []),
-            "Interface:appInstanceComponentsView.reasonText1": .init("加载器", []),
-            "Interface:appInstanceComponentsView.reasonText2": .init("OptiFine 版本与安装包由 BMCLAPI 提供。", []),
-            "Interface:appInstanceComponentsView.reasonText3": .init("正在查找兼容版本…", []),
-            "Interface:appInstanceComponentsView.errorText1": .init("重试", []),
-            "Interface:appInstanceComponentsView.errorText2": .init("版本", []),
-            "Interface:appInstanceComponentsView.errorText3": .init("（当前）", []),
-            "Interface:appInstanceComponentsView.errorText4": .init("移除加载器后按原版启动，模组文件仍会保留。", []),
-            "Interface:appInstanceComponentsView.errorText5": .init("现有模组需与所选加载器兼容。", []),
-            "Interface:appInstanceComponentsView.errorText6": .init("更改加载器不会影响实例的存档和模组文件。", []),
-            "Interface:appInstanceComponentsView.backupText2": .init("恢复上次配置", []),
-            "Interface:appInstanceComponentsView.backupText3": .init("关闭", []),
-            "Interface:appInstanceComponentsView.backupText4": .init("移除加载器", []),
-            "Interface:appInstanceComponentsView.backupText5": .init("应用加载器", []),
-            "Interface:appInstanceComponentsView.currentText1": .init("未找到兼容版本", []),
-            "Interface:appInstanceComponentsView.previousComponents": .init("上次配置：%1$@", [.text]),
+            "Interface:AppInstanceComponentsView.applyLoader": .init("应用加载器", []),
+            "Interface:AppInstanceComponentsView.applyLoaderDetails": .init("更改加载器不会影响实例的存档和模组文件。", []),
+            "Interface:AppInstanceComponentsView.changeLoaderDetails": .init("现有模组需与所选加载器兼容。", []),
+            "Interface:AppInstanceComponentsView.close": .init("关闭", []),
+            "Interface:AppInstanceComponentsView.current": .init("当前", []),
+            "Interface:AppInstanceComponentsView.currentVersion": .init("（当前）", []),
+            "Interface:AppInstanceComponentsView.findingCompatibleVersions": .init("正在查找兼容版本…", []),
+            "Interface:AppInstanceComponentsView.loader": .init("加载器", []),
+            "Interface:AppInstanceComponentsView.manageLoader": .init("管理加载器", []),
+            "Interface:AppInstanceComponentsView.noCompatibleLoader": .init("未找到兼容版本", []),
+            "Interface:AppInstanceComponentsView.optifineSource": .init("OptiFine 版本与安装包由 BMCLAPI 提供。", []),
+            "Interface:AppInstanceComponentsView.previousComponents": .init("上次配置：%1$@", [.text]),
+            "Interface:AppInstanceComponentsView.removeLoader": .init("移除加载器", []),
+            "Interface:AppInstanceComponentsView.removeLoaderDetails": .init("移除加载器后按原版启动，模组文件仍会保留。", []),
+            "Interface:AppInstanceComponentsView.restorePreviousConfiguration": .init("恢复上次配置", []),
+            "Interface:AppInstanceComponentsView.retry": .init("重试", []),
+            "Interface:AppInstanceComponentsView.version": .init("版本", []),
         ]
     }
 }

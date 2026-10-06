@@ -46,8 +46,8 @@ extension CLIApplication {
             var result = request.page(items).object!; result["issues"] = .array(issues); return .object(result)
         }
         let kind = try request.operand(), id = try uuid(request.operand(1)), transaction = try request.string("transaction").map(uuid)
-        guard ["instance-copy", "instance-move", "run-directory", "pack-update", "repository-import", "session", "content", "world"].contains(kind) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t1e2f741698a1.localized) }
-        if ["instance-copy", "instance-move", "run-directory", "repository-import", "session"].contains(kind), transaction == nil { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t7f8c861b7d62.localized) }
+        guard ["instance-copy", "instance-move", "run-directory", "pack-update", "repository-import", "session", "content", "world"].contains(kind) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownRecoveryKind.localized) }
+        if ["instance-copy", "instance-move", "run-directory", "repository-import", "session"].contains(kind), transaction == nil { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.recoveryTransactionRequired.localized) }
         if kind == "repository-import" { _ = try request.required("mode") }
         if request.dryRun { return .object(["dryRun": .bool(true), "kind": .string(kind), "target": .string(id.uuidString), "transaction": .text(transaction?.uuidString)]) }
         var result: [String: Value] = ["kind": .string(kind), "target": .string(id.uuidString)]
@@ -104,7 +104,7 @@ extension CLIApplication {
             } catch { check("instance", false, .object(["id": .string(stored.id.uuidString), "message": .string(error.localizedDescription)])) }
         }
         let healthy = checks.allSatisfy { $0["ok"].bool == true }, report: Value = .object(["healthy": .bool(healthy), "checks": .array(checks)])
-        guard healthy else { throw OperationFailure("CHECKS_FAILED", Messages.CLIInterface.tf19d497be38f.localized, details: report) }
+        guard healthy else { throw OperationFailure("CHECKS_FAILED", Messages.CLIInterface.doctorChecksFailed.localized, details: report) }
         return report
     }
 }

@@ -5,138 +5,138 @@ extension Messages {
     public enum AppExternalAccountForm {
         /// 原来的角色已不可用，请重新添加账号。
         ///
-        /// Resource: `Errors.appExternalAccountForm.profileText1`.
+        /// Resource: `Errors.AppExternalAccountForm.profileUnavailable`.
         public static var profileUnavailable: LocalizedMessage {
-            .init(key: "appExternalAccountForm.profileText1", table: "Errors", fallback: "原来的角色已不可用，请重新添加账号。")
-        }
-        /// 更换服务器
-        ///
-        /// Resource: `Interface.appExternalAccountForm.serverText1`.
-        public static var changeServer: LocalizedMessage {
-            .init(key: "appExternalAccountForm.serverText1", table: "Interface", fallback: "更换服务器")
-        }
-        /// 选择本次添加的游戏角色
-        ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText1`.
-        public static var chooseRole: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText1", table: "Interface", fallback: "选择本次添加的游戏角色")
-        }
-        /// 游戏角色
-        ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText2`.
-        public static var roleLabel: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText2", table: "Interface", fallback: "游戏角色")
-        }
-        /// 添加所选角色
-        ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText3`.
-        public static var addRole: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText3", table: "Interface", fallback: "添加所选角色")
-        }
-        /// 认证站账号
-        ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText4`.
-        public static var authServer: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText4", table: "Interface", fallback: "认证站账号")
+            .init(key: "AppExternalAccountForm.profileUnavailable", table: "Errors", fallback: "原来的角色已不可用，请重新添加账号。")
         }
         /// 邮箱或账号名
         ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText5`.
+        /// Resource: `Interface.AppExternalAccountForm.accountName`.
         public static var accountName: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText5", table: "Interface", fallback: "邮箱或账号名")
+            .init(key: "AppExternalAccountForm.accountName", table: "Interface", fallback: "邮箱或账号名")
         }
-        /// 密码
+        /// 添加所选角色
         ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText6`.
-        public static var password: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText6", table: "Interface", fallback: "密码")
+        /// Resource: `Interface.AppExternalAccountForm.addRole`.
+        public static var addRole: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.addRole", table: "Interface", fallback: "添加所选角色")
         }
         /// 认证站密码
         ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText7`.
+        /// Resource: `Interface.AppExternalAccountForm.authPassword`.
         public static var authPassword: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText7", table: "Interface", fallback: "认证站密码")
+            .init(key: "AppExternalAccountForm.authPassword", table: "Interface", fallback: "认证站密码")
         }
-        /// 使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。
+        /// 认证站账号
         ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText8`.
-        public static var credentialsHelp: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText8", table: "Interface", fallback: "使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。")
+        /// Resource: `Interface.AppExternalAccountForm.authServer`.
+        public static var authServer: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.authServer", table: "Interface", fallback: "认证站账号")
         }
-        /// 登录
+        /// 更换服务器
         ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText9`.
-        public static var login: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText9", table: "Interface", fallback: "登录")
+        /// Resource: `Interface.AppExternalAccountForm.changeServer`.
+        public static var changeServer: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.changeServer", table: "Interface", fallback: "更换服务器")
         }
-        /// 重新登录
+        /// 选择本次添加的游戏角色
         ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText10`.
-        public static var relogin: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText10", table: "Interface", fallback: "重新登录")
-        }
-        /// 服务器地址
-        ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText11`.
-        public static var serverAddress: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText11", table: "Interface", fallback: "服务器地址")
-        }
-        /// 填写认证站提供的地址，或粘贴 authlib-injector 添加链接。Ruri 会先识别服务器，再显示登录表单。
-        ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText12`.
-        public static var serverAddressHelp: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText12", table: "Interface", fallback: "填写认证站提供的地址，或粘贴 authlib-injector 添加链接。Ruri 会先识别服务器，再显示登录表单。")
-        }
-        /// 使用已有服务器
-        ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText13`.
-        public static var useExistingServer: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText13", table: "Interface", fallback: "使用已有服务器")
-        }
-        /// 识别服务器
-        ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText14`.
-        public static var identifyServer: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText14", table: "Interface", fallback: "识别服务器")
+        /// Resource: `Interface.AppExternalAccountForm.chooseRole`.
+        public static var chooseRole: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.chooseRole", table: "Interface", fallback: "选择本次添加的游戏角色")
         }
         /// 正在连接认证服务器…
         ///
-        /// Resource: `Interface.appExternalAccountForm.pendingText15`.
+        /// Resource: `Interface.AppExternalAccountForm.connectingServer`.
         public static var connectingServer: LocalizedMessage {
-            .init(key: "appExternalAccountForm.pendingText15", table: "Interface", fallback: "正在连接认证服务器…")
+            .init(key: "AppExternalAccountForm.connectingServer", table: "Interface", fallback: "正在连接认证服务器…")
+        }
+        /// 使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。
+        ///
+        /// Resource: `Interface.AppExternalAccountForm.credentialsHelp`.
+        public static var credentialsHelp: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.credentialsHelp", table: "Interface", fallback: "使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。")
+        }
+        /// 识别服务器
+        ///
+        /// Resource: `Interface.AppExternalAccountForm.identifyServer`.
+        public static var identifyServer: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.identifyServer", table: "Interface", fallback: "识别服务器")
+        }
+        /// 登录
+        ///
+        /// Resource: `Interface.AppExternalAccountForm.login`.
+        public static var login: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.login", table: "Interface", fallback: "登录")
+        }
+        /// 密码
+        ///
+        /// Resource: `Interface.AppExternalAccountForm.password`.
+        public static var password: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.password", table: "Interface", fallback: "密码")
+        }
+        /// 重新登录
+        ///
+        /// Resource: `Interface.AppExternalAccountForm.relogin`.
+        public static var relogin: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.relogin", table: "Interface", fallback: "重新登录")
         }
         /// 重新登录 %1$@
         ///
-        /// Resource: `Interface.appExternalAccountForm.bodyText1`.
+        /// Resource: `Interface.AppExternalAccountForm.reloginAccount`.
         public static func reloginAccount(_ value0: String) -> LocalizedMessage {
-            .init(key: "appExternalAccountForm.bodyText1", table: "Interface", fallback: "重新登录 %1$@", arguments: [.text(value0)])
+            .init(key: "AppExternalAccountForm.reloginAccount", table: "Interface", fallback: "重新登录 %1$@", arguments: [.text(value0)])
         }
         /// 保留原来的游戏角色和账号选择。
         ///
-        /// Resource: `Interface.appExternalAccountForm.bodyText2`.
+        /// Resource: `Interface.AppExternalAccountForm.reloginHelp`.
         public static var reloginHelp: LocalizedMessage {
-            .init(key: "appExternalAccountForm.bodyText2", table: "Interface", fallback: "保留原来的游戏角色和账号选择。")
+            .init(key: "AppExternalAccountForm.reloginHelp", table: "Interface", fallback: "保留原来的游戏角色和账号选择。")
+        }
+        /// 游戏角色
+        ///
+        /// Resource: `Interface.AppExternalAccountForm.roleLabel`.
+        public static var roleLabel: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.roleLabel", table: "Interface", fallback: "游戏角色")
+        }
+        /// 服务器地址
+        ///
+        /// Resource: `Interface.AppExternalAccountForm.serverAddress`.
+        public static var serverAddress: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.serverAddress", table: "Interface", fallback: "服务器地址")
+        }
+        /// 填写认证站提供的地址，或粘贴 authlib-injector 添加链接。Ruri 会先识别服务器，再显示登录表单。
+        ///
+        /// Resource: `Interface.AppExternalAccountForm.serverAddressHelp`.
+        public static var serverAddressHelp: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.serverAddressHelp", table: "Interface", fallback: "填写认证站提供的地址，或粘贴 authlib-injector 添加链接。Ruri 会先识别服务器，再显示登录表单。")
+        }
+        /// 使用已有服务器
+        ///
+        /// Resource: `Interface.AppExternalAccountForm.useExistingServer`.
+        public static var useExistingServer: LocalizedMessage {
+            .init(key: "AppExternalAccountForm.useExistingServer", table: "Interface", fallback: "使用已有服务器")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:appExternalAccountForm.profileText1": .init("原来的角色已不可用，请重新添加账号。", []),
-            "Interface:appExternalAccountForm.serverText1": .init("更换服务器", []),
-            "Interface:appExternalAccountForm.pendingText1": .init("选择本次添加的游戏角色", []),
-            "Interface:appExternalAccountForm.pendingText2": .init("游戏角色", []),
-            "Interface:appExternalAccountForm.pendingText3": .init("添加所选角色", []),
-            "Interface:appExternalAccountForm.pendingText4": .init("认证站账号", []),
-            "Interface:appExternalAccountForm.pendingText5": .init("邮箱或账号名", []),
-            "Interface:appExternalAccountForm.pendingText6": .init("密码", []),
-            "Interface:appExternalAccountForm.pendingText7": .init("认证站密码", []),
-            "Interface:appExternalAccountForm.pendingText8": .init("使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。", []),
-            "Interface:appExternalAccountForm.pendingText9": .init("登录", []),
-            "Interface:appExternalAccountForm.pendingText10": .init("重新登录", []),
-            "Interface:appExternalAccountForm.pendingText11": .init("服务器地址", []),
-            "Interface:appExternalAccountForm.pendingText12": .init("填写认证站提供的地址，或粘贴 authlib-injector 添加链接。Ruri 会先识别服务器，再显示登录表单。", []),
-            "Interface:appExternalAccountForm.pendingText13": .init("使用已有服务器", []),
-            "Interface:appExternalAccountForm.pendingText14": .init("识别服务器", []),
-            "Interface:appExternalAccountForm.pendingText15": .init("正在连接认证服务器…", []),
-            "Interface:appExternalAccountForm.bodyText1": .init("重新登录 %1$@", [.text]),
-            "Interface:appExternalAccountForm.bodyText2": .init("保留原来的游戏角色和账号选择。", []),
+            "Errors:AppExternalAccountForm.profileUnavailable": .init("原来的角色已不可用，请重新添加账号。", []),
+            "Interface:AppExternalAccountForm.accountName": .init("邮箱或账号名", []),
+            "Interface:AppExternalAccountForm.addRole": .init("添加所选角色", []),
+            "Interface:AppExternalAccountForm.authPassword": .init("认证站密码", []),
+            "Interface:AppExternalAccountForm.authServer": .init("认证站账号", []),
+            "Interface:AppExternalAccountForm.changeServer": .init("更换服务器", []),
+            "Interface:AppExternalAccountForm.chooseRole": .init("选择本次添加的游戏角色", []),
+            "Interface:AppExternalAccountForm.connectingServer": .init("正在连接认证服务器…", []),
+            "Interface:AppExternalAccountForm.credentialsHelp": .init("使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。", []),
+            "Interface:AppExternalAccountForm.identifyServer": .init("识别服务器", []),
+            "Interface:AppExternalAccountForm.login": .init("登录", []),
+            "Interface:AppExternalAccountForm.password": .init("密码", []),
+            "Interface:AppExternalAccountForm.relogin": .init("重新登录", []),
+            "Interface:AppExternalAccountForm.reloginAccount": .init("重新登录 %1$@", [.text]),
+            "Interface:AppExternalAccountForm.reloginHelp": .init("保留原来的游戏角色和账号选择。", []),
+            "Interface:AppExternalAccountForm.roleLabel": .init("游戏角色", []),
+            "Interface:AppExternalAccountForm.serverAddress": .init("服务器地址", []),
+            "Interface:AppExternalAccountForm.serverAddressHelp": .init("填写认证站提供的地址，或粘贴 authlib-injector 添加链接。Ruri 会先识别服务器，再显示登录表单。", []),
+            "Interface:AppExternalAccountForm.useExistingServer": .init("使用已有服务器", []),
         ]
     }
 }

@@ -3,301 +3,301 @@ import Foundation
 
 extension Messages {
     public enum AppLibraryView {
-        /// 实例文件夹无法访问
+        /// 添加游戏文件夹…
         ///
-        /// Resource: `Interface.appLibraryView.issueText1`.
-        public static var instanceFolderUnavailable: LocalizedMessage {
-            .init(key: "appLibraryView.issueText1", table: "Interface", fallback: "实例文件夹无法访问")
-        }
-        /// 重新检查
-        ///
-        /// Resource: `Interface.appLibraryView.issueText2`.
-        public static var recheck: LocalizedMessage {
-            .init(key: "appLibraryView.issueText2", table: "Interface", fallback: "重新检查")
-        }
-        /// 管理文件夹…
-        ///
-        /// Resource: `Interface.appLibraryView.issueText3`.
-        public static var manageFolders: LocalizedMessage {
-            .init(key: "appLibraryView.issueText3", table: "Interface", fallback: "管理文件夹…")
-        }
-        /// 没有匹配的实例
-        ///
-        /// Resource: `Interface.appLibraryView.issueText4`.
-        public static var noMatchingInstances: LocalizedMessage {
-            .init(key: "appLibraryView.issueText4", table: "Interface", fallback: "没有匹配的实例")
-        }
-        /// 使用其他名称或版本号搜索。
-        ///
-        /// Resource: `Interface.appLibraryView.issueText5`.
-        public static var tryAnotherNameOrVersion: LocalizedMessage {
-            .init(key: "appLibraryView.issueText5", table: "Interface", fallback: "使用其他名称或版本号搜索。")
-        }
-        /// 搜索实例或版本
-        ///
-        /// Resource: `Interface.appLibraryView.issueText6`.
-        public static var searchInstancesOrVersions: LocalizedMessage {
-            .init(key: "appLibraryView.issueText6", table: "Interface", fallback: "搜索实例或版本")
-        }
-        /// 存档
-        ///
-        /// Resource: `Interface.appLibraryView.detailText3`.
-        public static var worlds: LocalizedMessage {
-            .init(key: "appLibraryView.detailText3", table: "Interface", fallback: "存档")
-        }
-        /// 还没有存档
-        ///
-        /// Resource: `Interface.appLibraryView.detailText9`.
-        public static var noWorlds: LocalizedMessage {
-            .init(key: "appLibraryView.detailText9", table: "Interface", fallback: "还没有存档")
-        }
-        /// 管理
-        ///
-        /// Resource: `Interface.appLibraryView.detailText10`.
-        public static var manage: LocalizedMessage {
-            .init(key: "appLibraryView.detailText10", table: "Interface", fallback: "管理")
-        }
-        /// 游玩记录
-        ///
-        /// Resource: `Interface.appLibraryView.detailText11`.
-        public static var playHistory: LocalizedMessage {
-            .init(key: "appLibraryView.detailText11", table: "Interface", fallback: "游玩记录")
-        }
-        /// 近 14 天
-        ///
-        /// Resource: `Interface.appLibraryView.detailText12`.
-        public static var lastTwoWeeks: LocalizedMessage {
-            .init(key: "appLibraryView.detailText12", table: "Interface", fallback: "近 14 天")
-        }
-        /// 近 14 天没有游玩
-        ///
-        /// Resource: `Interface.appLibraryView.detailText13`.
-        public static var noRecentPlay: LocalizedMessage {
-            .init(key: "appLibraryView.detailText13", table: "Interface", fallback: "近 14 天没有游玩")
-        }
-        /// 日期
-        ///
-        /// Resource: `Interface.appLibraryView.detailText14`.
-        public static var date: LocalizedMessage {
-            .init(key: "appLibraryView.detailText14", table: "Interface", fallback: "日期")
-        }
-        /// %1$lld 次运行
-        ///
-        /// Resource: `Interface.appLibraryView.detailText15`.
-        public static func runCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appLibraryView.detailText15", table: "Interface", fallback: "%1$lld 次运行", arguments: [.integer(value0)])
+        /// Resource: `Interface.AppLibraryView.addGameFolder`.
+        public static var addGameFolder: LocalizedMessage {
+            .init(key: "AppLibraryView.addGameFolder", table: "Interface", fallback: "添加游戏文件夹…")
         }
         /// 全部记录
         ///
-        /// Resource: `Interface.appLibraryView.detailText5`.
+        /// Resource: `Interface.AppLibraryView.allRuns`.
         public static var allRuns: LocalizedMessage {
-            .init(key: "appLibraryView.detailText5", table: "Interface", fallback: "全部记录")
-        }
-        /// 还没有运行记录
-        ///
-        /// Resource: `Interface.appLibraryView.detailText6`.
-        public static var noRuns: LocalizedMessage {
-            .init(key: "appLibraryView.detailText6", table: "Interface", fallback: "还没有运行记录")
-        }
-        /// %1$lld 个已停用
-        ///
-        /// Resource: `Interface.appLibraryView.detailText7`.
-        public static func disabledCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appLibraryView.detailText7", table: "Interface", fallback: "%1$lld 个已停用", arguments: [.integer(value0)])
+            .init(key: "AppLibraryView.allRuns", table: "Interface", fallback: "全部记录")
         }
         /// %1$lld 个备份
         ///
-        /// Resource: `Interface.appLibraryView.detailText8`.
+        /// Resource: `Interface.AppLibraryView.backupCount`.
         public static func backupCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appLibraryView.detailText8", table: "Interface", fallback: "%1$lld 个备份", arguments: [.integer(value0)])
-        }
-        /// 导入实例或整合包…
-        ///
-        /// Resource: `Interface.appLibraryView.issueText11`.
-        public static var importInstanceOrModpack: LocalizedMessage {
-            .init(key: "appLibraryView.issueText11", table: "Interface", fallback: "导入实例或整合包…")
-        }
-        /// 添加游戏文件夹…
-        ///
-        /// Resource: `Interface.appLibraryView.issueText12`.
-        public static var addGameFolder: LocalizedMessage {
-            .init(key: "appLibraryView.issueText12", table: "Interface", fallback: "添加游戏文件夹…")
-        }
-        /// 导入
-        ///
-        /// Resource: `Interface.appLibraryView.issueText13`.
-        public static var importContentAction: LocalizedMessage {
-            .init(key: "appLibraryView.issueText13", table: "Interface", fallback: "导入")
-        }
-        /// 导入实例、整合包或游戏文件夹
-        ///
-        /// Resource: `Interface.appLibraryView.issueText14`.
-        public static var importInstanceModpackOrGameFolder: LocalizedMessage {
-            .init(key: "appLibraryView.issueText14", table: "Interface", fallback: "导入实例、整合包或游戏文件夹")
-        }
-        /// 新建实例
-        ///
-        /// Resource: `Interface.appLibraryView.issueText15`.
-        public static var newInstance: LocalizedMessage {
-            .init(key: "appLibraryView.issueText15", table: "Interface", fallback: "新建实例")
-        }
-        /// 新建实例 ⌘N
-        ///
-        /// Resource: `Interface.appLibraryView.issueText16`.
-        public static var newInstanceShortcut: LocalizedMessage {
-            .init(key: "appLibraryView.issueText16", table: "Interface", fallback: "新建实例 ⌘N")
-        }
-        /// 将实例移到废纸篓？
-        ///
-        /// Resource: `Interface.appLibraryView.issueText17`.
-        public static var moveInstanceToTrashConfirmation: LocalizedMessage {
-            .init(key: "appLibraryView.issueText17", table: "Interface", fallback: "将实例移到废纸篓？")
-        }
-        /// 移到废纸篓
-        ///
-        /// Resource: `Interface.appLibraryView.issueText18`.
-        public static var moveToTrash: LocalizedMessage {
-            .init(key: "appLibraryView.issueText18", table: "Interface", fallback: "移到废纸篓")
-        }
-        /// 此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。
-        ///
-        /// Resource: `Interface.appLibraryView.targetText1`.
-        public static var managedVersionFolderTrashDetails: LocalizedMessage {
-            .init(key: "appLibraryView.targetText1", table: "Interface", fallback: "此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。")
-        }
-        /// 此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。
-        ///
-        /// Resource: `Interface.appLibraryView.targetText2`.
-        public static var instanceTrashDetails: LocalizedMessage {
-            .init(key: "appLibraryView.targetText2", table: "Interface", fallback: "此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。")
-        }
-        /// 实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。
-        ///
-        /// Resource: `Interface.appLibraryView.targetText3`.
-        public static var instanceAndSharedFilesTrashDetails: LocalizedMessage {
-            .init(key: "appLibraryView.targetText3", table: "Interface", fallback: "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。")
-        }
-        /// %1$lld 个实例
-        ///
-        /// Resource: `Interface.appLibraryView.totalText1`.
-        public static func instanceCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appLibraryView.totalText1", table: "Interface", fallback: "%1$lld 个实例", arguments: [.integer(value0)])
-        }
-        /// %1$lld / %2$lld 个实例
-        ///
-        /// Resource: `Interface.appLibraryView.totalText2`.
-        public static func filteredInstanceCount(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
-            .init(key: "appLibraryView.totalText2", table: "Interface", fallback: "%1$lld / %2$lld 个实例", arguments: [.integer(value0), .integer(value1)])
-        }
-        /// 此文件夹中暂无实例
-        ///
-        /// Resource: `Interface.appLibraryView.emptyFolderText1`.
-        public static var folderHasNoInstances: LocalizedMessage {
-            .init(key: "appLibraryView.emptyFolderText1", table: "Interface", fallback: "此文件夹中暂无实例")
-        }
-        /// 新建一个实例，或导入整合包。
-        ///
-        /// Resource: `Interface.appLibraryView.emptyFolderText2`.
-        public static var createOrImportInstance: LocalizedMessage {
-            .init(key: "appLibraryView.emptyFolderText2", table: "Interface", fallback: "新建一个实例，或导入整合包。")
-        }
-        /// 导入整合包…
-        ///
-        /// Resource: `Interface.appLibraryView.emptyFolderText3`.
-        public static var importModpack: LocalizedMessage {
-            .init(key: "appLibraryView.emptyFolderText3", table: "Interface", fallback: "导入整合包…")
-        }
-        /// 或从工具栏导入整合包
-        ///
-        /// Resource: `Interface.appLibraryView.gridText1`.
-        public static var importModpackFromToolbar: LocalizedMessage {
-            .init(key: "appLibraryView.gridText1", table: "Interface", fallback: "或从工具栏导入整合包")
+            .init(key: "AppLibraryView.backupCount", table: "Interface", fallback: "%1$lld 个备份", arguments: [.integer(value0)])
         }
         /// 更换图标或编辑实例设置
         ///
-        /// Resource: `Interface.appLibraryView.iconButtonText1`.
+        /// Resource: `Interface.AppLibraryView.changeIconOrEditSettings`.
         public static var changeIconOrEditSettings: LocalizedMessage {
-            .init(key: "appLibraryView.iconButtonText1", table: "Interface", fallback: "更换图标或编辑实例设置")
+            .init(key: "AppLibraryView.changeIconOrEditSettings", table: "Interface", fallback: "更换图标或编辑实例设置")
+        }
+        /// 新建一个实例，或导入整合包。
+        ///
+        /// Resource: `Interface.AppLibraryView.createOrImportInstance`.
+        public static var createOrImportInstance: LocalizedMessage {
+            .init(key: "AppLibraryView.createOrImportInstance", table: "Interface", fallback: "新建一个实例，或导入整合包。")
+        }
+        /// 日期
+        ///
+        /// Resource: `Interface.AppLibraryView.date`.
+        public static var date: LocalizedMessage {
+            .init(key: "AppLibraryView.date", table: "Interface", fallback: "日期")
+        }
+        /// %1$lld 个已停用
+        ///
+        /// Resource: `Interface.AppLibraryView.disabledCount`.
+        public static func disabledCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppLibraryView.disabledCount", table: "Interface", fallback: "%1$lld 个已停用", arguments: [.integer(value0)])
         }
         /// 编辑 %1$@ 的图标和设置
         ///
-        /// Resource: `Interface.appLibraryView.iconButtonText2`.
+        /// Resource: `Interface.AppLibraryView.editIconAndSettings`.
         public static func editIconAndSettings(_ value0: String) -> LocalizedMessage {
-            .init(key: "appLibraryView.iconButtonText2", table: "Interface", fallback: "编辑 %1$@ 的图标和设置", arguments: [.text(value0)])
-        }
-        /// 实例设置
-        ///
-        /// Resource: `Interface.appLibraryView.contextActionsText2`.
-        public static var instanceSettings: LocalizedMessage {
-            .init(key: "appLibraryView.contextActionsText2", table: "Interface", fallback: "实例设置")
-        }
-        /// 管理模组与资源包
-        ///
-        /// Resource: `Interface.appLibraryView.contextActionsText3`.
-        public static var manageModsAndResourcePacks: LocalizedMessage {
-            .init(key: "appLibraryView.contextActionsText3", table: "Interface", fallback: "管理模组与资源包")
-        }
-        /// 在 Finder 中显示
-        ///
-        /// Resource: `Interface.appLibraryView.contextActionsText4`.
-        public static var showInFinder: LocalizedMessage {
-            .init(key: "appLibraryView.contextActionsText4", table: "Interface", fallback: "在 Finder 中显示")
+            .init(key: "AppLibraryView.editIconAndSettings", table: "Interface", fallback: "编辑 %1$@ 的图标和设置", arguments: [.text(value0)])
         }
         /// 已固定
         ///
-        /// Resource: `Interface.appLibraryView.sectionText1`.
+        /// Resource: `Interface.AppLibraryView.favorites`.
         public static var favorites: LocalizedMessage {
-            .init(key: "appLibraryView.sectionText1", table: "Interface", fallback: "已固定")
+            .init(key: "AppLibraryView.favorites", table: "Interface", fallback: "已固定")
+        }
+        /// %1$lld / %2$lld 个实例
+        ///
+        /// Resource: `Interface.AppLibraryView.filteredInstanceCount`.
+        public static func filteredInstanceCount(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
+            .init(key: "AppLibraryView.filteredInstanceCount", table: "Interface", fallback: "%1$lld / %2$lld 个实例", arguments: [.integer(value0), .integer(value1)])
+        }
+        /// 此文件夹中暂无实例
+        ///
+        /// Resource: `Interface.AppLibraryView.folderHasNoInstances`.
+        public static var folderHasNoInstances: LocalizedMessage {
+            .init(key: "AppLibraryView.folderHasNoInstances", table: "Interface", fallback: "此文件夹中暂无实例")
+        }
+        /// 导入
+        ///
+        /// Resource: `Interface.AppLibraryView.importContentAction`.
+        public static var importContentAction: LocalizedMessage {
+            .init(key: "AppLibraryView.importContentAction", table: "Interface", fallback: "导入")
+        }
+        /// 导入实例、整合包或游戏文件夹
+        ///
+        /// Resource: `Interface.AppLibraryView.importInstanceModpackOrGameFolder`.
+        public static var importInstanceModpackOrGameFolder: LocalizedMessage {
+            .init(key: "AppLibraryView.importInstanceModpackOrGameFolder", table: "Interface", fallback: "导入实例、整合包或游戏文件夹")
+        }
+        /// 导入实例或整合包…
+        ///
+        /// Resource: `Interface.AppLibraryView.importInstanceOrModpack`.
+        public static var importInstanceOrModpack: LocalizedMessage {
+            .init(key: "AppLibraryView.importInstanceOrModpack", table: "Interface", fallback: "导入实例或整合包…")
+        }
+        /// 导入整合包…
+        ///
+        /// Resource: `Interface.AppLibraryView.importModpack`.
+        public static var importModpack: LocalizedMessage {
+            .init(key: "AppLibraryView.importModpack", table: "Interface", fallback: "导入整合包…")
+        }
+        /// 或从工具栏导入整合包
+        ///
+        /// Resource: `Interface.AppLibraryView.importModpackFromToolbar`.
+        public static var importModpackFromToolbar: LocalizedMessage {
+            .init(key: "AppLibraryView.importModpackFromToolbar", table: "Interface", fallback: "或从工具栏导入整合包")
+        }
+        /// 实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。
+        ///
+        /// Resource: `Interface.AppLibraryView.instanceAndSharedFilesTrashDetails`.
+        public static var instanceAndSharedFilesTrashDetails: LocalizedMessage {
+            .init(key: "AppLibraryView.instanceAndSharedFilesTrashDetails", table: "Interface", fallback: "实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。")
+        }
+        /// %1$lld 个实例
+        ///
+        /// Resource: `Interface.AppLibraryView.instanceCount`.
+        public static func instanceCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppLibraryView.instanceCount", table: "Interface", fallback: "%1$lld 个实例", arguments: [.integer(value0)])
+        }
+        /// 实例文件夹无法访问
+        ///
+        /// Resource: `Interface.AppLibraryView.instanceFolderUnavailable`.
+        public static var instanceFolderUnavailable: LocalizedMessage {
+            .init(key: "AppLibraryView.instanceFolderUnavailable", table: "Interface", fallback: "实例文件夹无法访问")
+        }
+        /// 实例设置
+        ///
+        /// Resource: `Interface.AppLibraryView.instanceSettings`.
+        public static var instanceSettings: LocalizedMessage {
+            .init(key: "AppLibraryView.instanceSettings", table: "Interface", fallback: "实例设置")
+        }
+        /// 此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。
+        ///
+        /// Resource: `Interface.AppLibraryView.instanceTrashDetails`.
+        public static var instanceTrashDetails: LocalizedMessage {
+            .init(key: "AppLibraryView.instanceTrashDetails", table: "Interface", fallback: "此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。")
+        }
+        /// 近 14 天
+        ///
+        /// Resource: `Interface.AppLibraryView.lastTwoWeeks`.
+        public static var lastTwoWeeks: LocalizedMessage {
+            .init(key: "AppLibraryView.lastTwoWeeks", table: "Interface", fallback: "近 14 天")
+        }
+        /// 管理
+        ///
+        /// Resource: `Interface.AppLibraryView.manage`.
+        public static var manage: LocalizedMessage {
+            .init(key: "AppLibraryView.manage", table: "Interface", fallback: "管理")
+        }
+        /// 管理文件夹…
+        ///
+        /// Resource: `Interface.AppLibraryView.manageFolders`.
+        public static var manageFolders: LocalizedMessage {
+            .init(key: "AppLibraryView.manageFolders", table: "Interface", fallback: "管理文件夹…")
+        }
+        /// 管理模组与资源包
+        ///
+        /// Resource: `Interface.AppLibraryView.manageModsAndResourcePacks`.
+        public static var manageModsAndResourcePacks: LocalizedMessage {
+            .init(key: "AppLibraryView.manageModsAndResourcePacks", table: "Interface", fallback: "管理模组与资源包")
+        }
+        /// 此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。
+        ///
+        /// Resource: `Interface.AppLibraryView.managedVersionFolderTrashDetails`.
+        public static var managedVersionFolderTrashDetails: LocalizedMessage {
+            .init(key: "AppLibraryView.managedVersionFolderTrashDetails", table: "Interface", fallback: "此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。")
+        }
+        /// 将实例移到废纸篓？
+        ///
+        /// Resource: `Interface.AppLibraryView.moveInstanceToTrashConfirmation`.
+        public static var moveInstanceToTrashConfirmation: LocalizedMessage {
+            .init(key: "AppLibraryView.moveInstanceToTrashConfirmation", table: "Interface", fallback: "将实例移到废纸篓？")
+        }
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.AppLibraryView.moveToTrash`.
+        public static var moveToTrash: LocalizedMessage {
+            .init(key: "AppLibraryView.moveToTrash", table: "Interface", fallback: "移到废纸篓")
+        }
+        /// 新建实例
+        ///
+        /// Resource: `Interface.AppLibraryView.newInstance`.
+        public static var newInstance: LocalizedMessage {
+            .init(key: "AppLibraryView.newInstance", table: "Interface", fallback: "新建实例")
+        }
+        /// 新建实例 ⌘N
+        ///
+        /// Resource: `Interface.AppLibraryView.newInstanceShortcut`.
+        public static var newInstanceShortcut: LocalizedMessage {
+            .init(key: "AppLibraryView.newInstanceShortcut", table: "Interface", fallback: "新建实例 ⌘N")
+        }
+        /// 没有匹配的实例
+        ///
+        /// Resource: `Interface.AppLibraryView.noMatchingInstances`.
+        public static var noMatchingInstances: LocalizedMessage {
+            .init(key: "AppLibraryView.noMatchingInstances", table: "Interface", fallback: "没有匹配的实例")
+        }
+        /// 近 14 天没有游玩
+        ///
+        /// Resource: `Interface.AppLibraryView.noRecentPlay`.
+        public static var noRecentPlay: LocalizedMessage {
+            .init(key: "AppLibraryView.noRecentPlay", table: "Interface", fallback: "近 14 天没有游玩")
+        }
+        /// 还没有运行记录
+        ///
+        /// Resource: `Interface.AppLibraryView.noRuns`.
+        public static var noRuns: LocalizedMessage {
+            .init(key: "AppLibraryView.noRuns", table: "Interface", fallback: "还没有运行记录")
+        }
+        /// 还没有存档
+        ///
+        /// Resource: `Interface.AppLibraryView.noWorlds`.
+        public static var noWorlds: LocalizedMessage {
+            .init(key: "AppLibraryView.noWorlds", table: "Interface", fallback: "还没有存档")
         }
         /// 其他实例
         ///
-        /// Resource: `Interface.appLibraryView.sectionText2`.
+        /// Resource: `Interface.AppLibraryView.otherInstances`.
         public static var otherInstances: LocalizedMessage {
-            .init(key: "appLibraryView.sectionText2", table: "Interface", fallback: "其他实例")
+            .init(key: "AppLibraryView.otherInstances", table: "Interface", fallback: "其他实例")
+        }
+        /// 游玩记录
+        ///
+        /// Resource: `Interface.AppLibraryView.playHistory`.
+        public static var playHistory: LocalizedMessage {
+            .init(key: "AppLibraryView.playHistory", table: "Interface", fallback: "游玩记录")
+        }
+        /// 重新检查
+        ///
+        /// Resource: `Interface.AppLibraryView.recheck`.
+        public static var recheck: LocalizedMessage {
+            .init(key: "AppLibraryView.recheck", table: "Interface", fallback: "重新检查")
+        }
+        /// %1$lld 次运行
+        ///
+        /// Resource: `Interface.AppLibraryView.runCount`.
+        public static func runCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppLibraryView.runCount", table: "Interface", fallback: "%1$lld 次运行", arguments: [.integer(value0)])
+        }
+        /// 搜索实例或版本
+        ///
+        /// Resource: `Interface.AppLibraryView.searchInstancesOrVersions`.
+        public static var searchInstancesOrVersions: LocalizedMessage {
+            .init(key: "AppLibraryView.searchInstancesOrVersions", table: "Interface", fallback: "搜索实例或版本")
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.AppLibraryView.showInFinder`.
+        public static var showInFinder: LocalizedMessage {
+            .init(key: "AppLibraryView.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
+        }
+        /// 使用其他名称或版本号搜索。
+        ///
+        /// Resource: `Interface.AppLibraryView.tryAnotherNameOrVersion`.
+        public static var tryAnotherNameOrVersion: LocalizedMessage {
+            .init(key: "AppLibraryView.tryAnotherNameOrVersion", table: "Interface", fallback: "使用其他名称或版本号搜索。")
+        }
+        /// 存档
+        ///
+        /// Resource: `Interface.AppLibraryView.worlds`.
+        public static var worlds: LocalizedMessage {
+            .init(key: "AppLibraryView.worlds", table: "Interface", fallback: "存档")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appLibraryView.issueText1": .init("实例文件夹无法访问", []),
-            "Interface:appLibraryView.issueText2": .init("重新检查", []),
-            "Interface:appLibraryView.issueText3": .init("管理文件夹…", []),
-            "Interface:appLibraryView.issueText4": .init("没有匹配的实例", []),
-            "Interface:appLibraryView.issueText5": .init("使用其他名称或版本号搜索。", []),
-            "Interface:appLibraryView.issueText6": .init("搜索实例或版本", []),
-            "Interface:appLibraryView.detailText3": .init("存档", []),
-            "Interface:appLibraryView.detailText9": .init("还没有存档", []),
-            "Interface:appLibraryView.detailText10": .init("管理", []),
-            "Interface:appLibraryView.detailText11": .init("游玩记录", []),
-            "Interface:appLibraryView.detailText12": .init("近 14 天", []),
-            "Interface:appLibraryView.detailText13": .init("近 14 天没有游玩", []),
-            "Interface:appLibraryView.detailText14": .init("日期", []),
-            "Interface:appLibraryView.detailText15": .init("%1$lld 次运行", [.integer]),
-            "Interface:appLibraryView.detailText5": .init("全部记录", []),
-            "Interface:appLibraryView.detailText6": .init("还没有运行记录", []),
-            "Interface:appLibraryView.detailText7": .init("%1$lld 个已停用", [.integer]),
-            "Interface:appLibraryView.detailText8": .init("%1$lld 个备份", [.integer]),
-            "Interface:appLibraryView.issueText11": .init("导入实例或整合包…", []),
-            "Interface:appLibraryView.issueText12": .init("添加游戏文件夹…", []),
-            "Interface:appLibraryView.issueText13": .init("导入", []),
-            "Interface:appLibraryView.issueText14": .init("导入实例、整合包或游戏文件夹", []),
-            "Interface:appLibraryView.issueText15": .init("新建实例", []),
-            "Interface:appLibraryView.issueText16": .init("新建实例 ⌘N", []),
-            "Interface:appLibraryView.issueText17": .init("将实例移到废纸篓？", []),
-            "Interface:appLibraryView.issueText18": .init("移到废纸篓", []),
-            "Interface:appLibraryView.targetText1": .init("此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。", []),
-            "Interface:appLibraryView.targetText2": .init("此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。", []),
-            "Interface:appLibraryView.targetText3": .init("实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。", []),
-            "Interface:appLibraryView.totalText1": .init("%1$lld 个实例", [.integer]),
-            "Interface:appLibraryView.totalText2": .init("%1$lld / %2$lld 个实例", [.integer, .integer]),
-            "Interface:appLibraryView.emptyFolderText1": .init("此文件夹中暂无实例", []),
-            "Interface:appLibraryView.emptyFolderText2": .init("新建一个实例，或导入整合包。", []),
-            "Interface:appLibraryView.emptyFolderText3": .init("导入整合包…", []),
-            "Interface:appLibraryView.gridText1": .init("或从工具栏导入整合包", []),
-            "Interface:appLibraryView.iconButtonText1": .init("更换图标或编辑实例设置", []),
-            "Interface:appLibraryView.iconButtonText2": .init("编辑 %1$@ 的图标和设置", [.text]),
-            "Interface:appLibraryView.contextActionsText2": .init("实例设置", []),
-            "Interface:appLibraryView.contextActionsText3": .init("管理模组与资源包", []),
-            "Interface:appLibraryView.contextActionsText4": .init("在 Finder 中显示", []),
-            "Interface:appLibraryView.sectionText1": .init("已固定", []),
-            "Interface:appLibraryView.sectionText2": .init("其他实例", []),
+            "Interface:AppLibraryView.addGameFolder": .init("添加游戏文件夹…", []),
+            "Interface:AppLibraryView.allRuns": .init("全部记录", []),
+            "Interface:AppLibraryView.backupCount": .init("%1$lld 个备份", [.integer]),
+            "Interface:AppLibraryView.changeIconOrEditSettings": .init("更换图标或编辑实例设置", []),
+            "Interface:AppLibraryView.createOrImportInstance": .init("新建一个实例，或导入整合包。", []),
+            "Interface:AppLibraryView.date": .init("日期", []),
+            "Interface:AppLibraryView.disabledCount": .init("%1$lld 个已停用", [.integer]),
+            "Interface:AppLibraryView.editIconAndSettings": .init("编辑 %1$@ 的图标和设置", [.text]),
+            "Interface:AppLibraryView.favorites": .init("已固定", []),
+            "Interface:AppLibraryView.filteredInstanceCount": .init("%1$lld / %2$lld 个实例", [.integer, .integer]),
+            "Interface:AppLibraryView.folderHasNoInstances": .init("此文件夹中暂无实例", []),
+            "Interface:AppLibraryView.importContentAction": .init("导入", []),
+            "Interface:AppLibraryView.importInstanceModpackOrGameFolder": .init("导入实例、整合包或游戏文件夹", []),
+            "Interface:AppLibraryView.importInstanceOrModpack": .init("导入实例或整合包…", []),
+            "Interface:AppLibraryView.importModpack": .init("导入整合包…", []),
+            "Interface:AppLibraryView.importModpackFromToolbar": .init("或从工具栏导入整合包", []),
+            "Interface:AppLibraryView.instanceAndSharedFilesTrashDetails": .init("实例的存档和模组会一起移入废纸篓。共享游戏文件会保留。", []),
+            "Interface:AppLibraryView.instanceCount": .init("%1$lld 个实例", [.integer]),
+            "Interface:AppLibraryView.instanceFolderUnavailable": .init("实例文件夹无法访问", []),
+            "Interface:AppLibraryView.instanceSettings": .init("实例设置", []),
+            "Interface:AppLibraryView.instanceTrashDetails": .init("此实例的版本清单和运行记录会移入废纸篓。所选运行目录中的存档、模组、备份和游戏设置会保留。", []),
+            "Interface:AppLibraryView.lastTwoWeeks": .init("近 14 天", []),
+            "Interface:AppLibraryView.manage": .init("管理", []),
+            "Interface:AppLibraryView.manageFolders": .init("管理文件夹…", []),
+            "Interface:AppLibraryView.manageModsAndResourcePacks": .init("管理模组与资源包", []),
+            "Interface:AppLibraryView.managedVersionFolderTrashDetails": .init("此版本文件夹及其中的独立存档和模组会移入废纸篓。共享和自定义游戏目录会保留，运行记录仍保存在 Ruri 中。", []),
+            "Interface:AppLibraryView.moveInstanceToTrashConfirmation": .init("将实例移到废纸篓？", []),
+            "Interface:AppLibraryView.moveToTrash": .init("移到废纸篓", []),
+            "Interface:AppLibraryView.newInstance": .init("新建实例", []),
+            "Interface:AppLibraryView.newInstanceShortcut": .init("新建实例 ⌘N", []),
+            "Interface:AppLibraryView.noMatchingInstances": .init("没有匹配的实例", []),
+            "Interface:AppLibraryView.noRecentPlay": .init("近 14 天没有游玩", []),
+            "Interface:AppLibraryView.noRuns": .init("还没有运行记录", []),
+            "Interface:AppLibraryView.noWorlds": .init("还没有存档", []),
+            "Interface:AppLibraryView.otherInstances": .init("其他实例", []),
+            "Interface:AppLibraryView.playHistory": .init("游玩记录", []),
+            "Interface:AppLibraryView.recheck": .init("重新检查", []),
+            "Interface:AppLibraryView.runCount": .init("%1$lld 次运行", [.integer]),
+            "Interface:AppLibraryView.searchInstancesOrVersions": .init("搜索实例或版本", []),
+            "Interface:AppLibraryView.showInFinder": .init("在 Finder 中显示", []),
+            "Interface:AppLibraryView.tryAnotherNameOrVersion": .init("使用其他名称或版本号搜索。", []),
+            "Interface:AppLibraryView.worlds": .init("存档", []),
         ]
     }
 }

@@ -3,105 +3,105 @@ import Foundation
 
 extension Messages {
     public enum AppRuriApp {
-        /// 显示主窗口
-        ///
-        /// Resource: `Interface.appRuriApp.bodyText1`.
-        public static var showMainWindow: LocalizedMessage {
-            .init(key: "appRuriApp.bodyText1", table: "Interface", fallback: "显示主窗口")
-        }
-        /// 新建游戏实例
-        ///
-        /// Resource: `Interface.appRuriApp.bodyText2`.
-        public static var newInstance: LocalizedMessage {
-            .init(key: "appRuriApp.bodyText2", table: "Interface", fallback: "新建游戏实例")
-        }
-        /// 导入实例或整合包…
-        ///
-        /// Resource: `Interface.appRuriApp.bodyText3`.
-        public static var importInstance: LocalizedMessage {
-            .init(key: "appRuriApp.bodyText3", table: "Interface", fallback: "导入实例或整合包…")
-        }
         /// 添加游戏文件夹…
         ///
-        /// Resource: `Interface.appRuriApp.bodyText4`.
+        /// Resource: `Interface.AppRuriApp.addGameFolder`.
         public static var addGameFolder: LocalizedMessage {
-            .init(key: "appRuriApp.bodyText4", table: "Interface", fallback: "添加游戏文件夹…")
-        }
-        /// 设置…
-        ///
-        /// Resource: `Interface.appRuriApp.bodyText5`.
-        public static var settings: LocalizedMessage {
-            .init(key: "appRuriApp.bodyText5", table: "Interface", fallback: "设置…")
-        }
-        /// 游戏
-        ///
-        /// Resource: `Interface.appRuriApp.bodyText6`.
-        public static var gameMenu: LocalizedMessage {
-            .init(key: "appRuriApp.bodyText6", table: "Interface", fallback: "游戏")
-        }
-        /// 启动选中实例
-        ///
-        /// Resource: `Interface.appRuriApp.bodyText7`.
-        public static var launchSelectedInstance: LocalizedMessage {
-            .init(key: "appRuriApp.bodyText7", table: "Interface", fallback: "启动选中实例")
-        }
-        /// 返回 %1$@
-        ///
-        /// Resource: `Interface.appRuriApp.instanceText1`.
-        public static func returnToInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appRuriApp.instanceText1", table: "Interface", fallback: "返回 %1$@", arguments: [.text(value0)])
-        }
-        /// 请求退出 %1$@
-        ///
-        /// Resource: `Interface.appRuriApp.instanceText2`.
-        public static func requestExit(_ value0: String) -> LocalizedMessage {
-            .init(key: "appRuriApp.instanceText2", table: "Interface", fallback: "请求退出 %1$@", arguments: [.text(value0)])
-        }
-        /// 终止 %1$@ 的进程…
-        ///
-        /// Resource: `Interface.appRuriApp.instanceText3`.
-        public static func terminateInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appRuriApp.instanceText3", table: "Interface", fallback: "终止 %1$@ 的进程…", arguments: [.text(value0)])
-        }
-        /// 运行记录与日志
-        ///
-        /// Resource: `Interface.appRuriApp.instanceText4`.
-        public static var processLogs: LocalizedMessage {
-            .init(key: "appRuriApp.instanceText4", table: "Interface", fallback: "运行记录与日志")
-        }
-        /// 在 Finder 中显示实例
-        ///
-        /// Resource: `Interface.appRuriApp.instanceText5`.
-        public static var revealInstance: LocalizedMessage {
-            .init(key: "appRuriApp.instanceText5", table: "Interface", fallback: "在 Finder 中显示实例")
-        }
-        /// 显示 Ruri
-        ///
-        /// Resource: `Interface.appRuriApp.showText1`.
-        public static var showRuri: LocalizedMessage {
-            .init(key: "appRuriApp.showText1", table: "Interface", fallback: "显示 Ruri")
+            .init(key: "AppRuriApp.addGameFolder", table: "Interface", fallback: "添加游戏文件夹…")
         }
         /// 检查更新…
         ///
-        /// Resource: `Interface.appRuriApp.checkForUpdates`.
+        /// Resource: `Interface.AppRuriApp.checkForUpdates`.
         public static var checkForUpdates: LocalizedMessage {
-            .init(key: "appRuriApp.checkForUpdates", table: "Interface", fallback: "检查更新…")
+            .init(key: "AppRuriApp.checkForUpdates", table: "Interface", fallback: "检查更新…")
+        }
+        /// 游戏
+        ///
+        /// Resource: `Interface.AppRuriApp.gameMenu`.
+        public static var gameMenu: LocalizedMessage {
+            .init(key: "AppRuriApp.gameMenu", table: "Interface", fallback: "游戏")
+        }
+        /// 导入实例或整合包…
+        ///
+        /// Resource: `Interface.AppRuriApp.importInstance`.
+        public static var importInstance: LocalizedMessage {
+            .init(key: "AppRuriApp.importInstance", table: "Interface", fallback: "导入实例或整合包…")
+        }
+        /// 启动选中实例
+        ///
+        /// Resource: `Interface.AppRuriApp.launchSelectedInstance`.
+        public static var launchSelectedInstance: LocalizedMessage {
+            .init(key: "AppRuriApp.launchSelectedInstance", table: "Interface", fallback: "启动选中实例")
+        }
+        /// 新建游戏实例
+        ///
+        /// Resource: `Interface.AppRuriApp.newInstance`.
+        public static var newInstance: LocalizedMessage {
+            .init(key: "AppRuriApp.newInstance", table: "Interface", fallback: "新建游戏实例")
+        }
+        /// 运行记录与日志
+        ///
+        /// Resource: `Interface.AppRuriApp.processLogs`.
+        public static var processLogs: LocalizedMessage {
+            .init(key: "AppRuriApp.processLogs", table: "Interface", fallback: "运行记录与日志")
+        }
+        /// 请求退出 %1$@
+        ///
+        /// Resource: `Interface.AppRuriApp.requestExit`.
+        public static func requestExit(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppRuriApp.requestExit", table: "Interface", fallback: "请求退出 %1$@", arguments: [.text(value0)])
+        }
+        /// 返回 %1$@
+        ///
+        /// Resource: `Interface.AppRuriApp.returnToInstance`.
+        public static func returnToInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppRuriApp.returnToInstance", table: "Interface", fallback: "返回 %1$@", arguments: [.text(value0)])
+        }
+        /// 在 Finder 中显示实例
+        ///
+        /// Resource: `Interface.AppRuriApp.revealInstance`.
+        public static var revealInstance: LocalizedMessage {
+            .init(key: "AppRuriApp.revealInstance", table: "Interface", fallback: "在 Finder 中显示实例")
+        }
+        /// 设置…
+        ///
+        /// Resource: `Interface.AppRuriApp.settings`.
+        public static var settings: LocalizedMessage {
+            .init(key: "AppRuriApp.settings", table: "Interface", fallback: "设置…")
+        }
+        /// 显示主窗口
+        ///
+        /// Resource: `Interface.AppRuriApp.showMainWindow`.
+        public static var showMainWindow: LocalizedMessage {
+            .init(key: "AppRuriApp.showMainWindow", table: "Interface", fallback: "显示主窗口")
+        }
+        /// 显示 Ruri
+        ///
+        /// Resource: `Interface.AppRuriApp.showRuri`.
+        public static var showRuri: LocalizedMessage {
+            .init(key: "AppRuriApp.showRuri", table: "Interface", fallback: "显示 Ruri")
+        }
+        /// 终止 %1$@ 的进程…
+        ///
+        /// Resource: `Interface.AppRuriApp.terminateInstance`.
+        public static func terminateInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppRuriApp.terminateInstance", table: "Interface", fallback: "终止 %1$@ 的进程…", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appRuriApp.bodyText1": .init("显示主窗口", []),
-            "Interface:appRuriApp.bodyText2": .init("新建游戏实例", []),
-            "Interface:appRuriApp.bodyText3": .init("导入实例或整合包…", []),
-            "Interface:appRuriApp.bodyText4": .init("添加游戏文件夹…", []),
-            "Interface:appRuriApp.bodyText5": .init("设置…", []),
-            "Interface:appRuriApp.bodyText6": .init("游戏", []),
-            "Interface:appRuriApp.bodyText7": .init("启动选中实例", []),
-            "Interface:appRuriApp.instanceText1": .init("返回 %1$@", [.text]),
-            "Interface:appRuriApp.instanceText2": .init("请求退出 %1$@", [.text]),
-            "Interface:appRuriApp.instanceText3": .init("终止 %1$@ 的进程…", [.text]),
-            "Interface:appRuriApp.instanceText4": .init("运行记录与日志", []),
-            "Interface:appRuriApp.instanceText5": .init("在 Finder 中显示实例", []),
-            "Interface:appRuriApp.showText1": .init("显示 Ruri", []),
-            "Interface:appRuriApp.checkForUpdates": .init("检查更新…", []),
+            "Interface:AppRuriApp.addGameFolder": .init("添加游戏文件夹…", []),
+            "Interface:AppRuriApp.checkForUpdates": .init("检查更新…", []),
+            "Interface:AppRuriApp.gameMenu": .init("游戏", []),
+            "Interface:AppRuriApp.importInstance": .init("导入实例或整合包…", []),
+            "Interface:AppRuriApp.launchSelectedInstance": .init("启动选中实例", []),
+            "Interface:AppRuriApp.newInstance": .init("新建游戏实例", []),
+            "Interface:AppRuriApp.processLogs": .init("运行记录与日志", []),
+            "Interface:AppRuriApp.requestExit": .init("请求退出 %1$@", [.text]),
+            "Interface:AppRuriApp.returnToInstance": .init("返回 %1$@", [.text]),
+            "Interface:AppRuriApp.revealInstance": .init("在 Finder 中显示实例", []),
+            "Interface:AppRuriApp.settings": .init("设置…", []),
+            "Interface:AppRuriApp.showMainWindow": .init("显示主窗口", []),
+            "Interface:AppRuriApp.showRuri": .init("显示 Ruri", []),
+            "Interface:AppRuriApp.terminateInstance": .init("终止 %1$@ 的进程…", [.text]),
         ]
     }
 }

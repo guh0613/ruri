@@ -3,84 +3,84 @@ import Foundation
 
 extension Messages {
     public enum CoreWorldDataPackDownloads {
-        /// 数据包依赖数量超过限制。
+        /// 找不到兼容的数据包依赖：%1$@。
         ///
-        /// Resource: `Errors.coreWorldDataPackDownloads.itemText1`.
-        public static var tooManyDataPackDependencies: LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.itemText1", table: "Errors", fallback: "数据包依赖数量超过限制。")
-        }
-        /// %1$@ 没有适用于 Minecraft %2$@ 的数据包版本。
-        ///
-        /// Resource: `Errors.coreWorldDataPackDownloads.itemText2`.
-        public static func noDataPackVersionForGame(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.itemText2", table: "Errors", fallback: "%1$@ 没有适用于 Minecraft %2$@ 的数据包版本。", arguments: [.text(value0), .text(value1)])
+        /// Resource: `Errors.CoreWorldDataPackDownloads.compatibleDataPackMissing`.
+        public static func compatibleDataPackMissing(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreWorldDataPackDownloads.compatibleDataPackMissing", table: "Errors", fallback: "找不到兼容的数据包依赖：%1$@。", arguments: [.text(value0)])
         }
         /// 必需依赖要求同一数据包的不同版本，请选择其他版本。
         ///
-        /// Resource: `Errors.coreWorldDataPackDownloads.itemText3`.
+        /// Resource: `Errors.CoreWorldDataPackDownloads.conflictingDataPackVersions`.
         public static var conflictingDataPackVersions: LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.itemText3", table: "Errors", fallback: "必需依赖要求同一数据包的不同版本，请选择其他版本。")
-        }
-        /// 找不到兼容的数据包依赖：%1$@。
-        ///
-        /// Resource: `Errors.coreWorldDataPackDownloads.matchText1`.
-        public static func compatibleDataPackMissing(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.matchText1", table: "Errors", fallback: "找不到兼容的数据包依赖：%1$@。", arguments: [.text(value0)])
-        }
-        /// 数据包的必需依赖缺少项目或版本标识。
-        ///
-        /// Resource: `Errors.coreWorldDataPackDownloads.matchText2`.
-        public static var incompleteRequiredDependency: LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.matchText2", table: "Errors", fallback: "数据包的必需依赖缺少项目或版本标识。")
-        }
-        /// %1$@ 与必需依赖不兼容，无法一起安装。
-        ///
-        /// Resource: `Errors.coreWorldDataPackDownloads.matchText3`.
-        public static func incompatibleRequiredDependency(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.matchText3", table: "Errors", fallback: "%1$@ 与必需依赖不兼容，无法一起安装。", arguments: [.text(value0)])
-        }
-        /// %1$@ 缺少可校验的 ZIP 数据包文件，或文件超过 512 MB。
-        ///
-        /// Resource: `Errors.coreWorldDataPackDownloads.fileText1`.
-        public static func missingDataPackArchive(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.fileText1", table: "Errors", fallback: "%1$@ 缺少可校验的 ZIP 数据包文件，或文件超过 512 MB。", arguments: [.text(value0)])
+            .init(key: "CoreWorldDataPackDownloads.conflictingDataPackVersions", table: "Errors", fallback: "必需依赖要求同一数据包的不同版本，请选择其他版本。")
         }
         /// 多个数据包使用相同的文件名，无法一起安装。
         ///
-        /// Resource: `Errors.coreWorldDataPackDownloads.fileText2`.
+        /// Resource: `Errors.CoreWorldDataPackDownloads.duplicateDataPackFilename`.
         public static var duplicateDataPackFilename: LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.fileText2", table: "Errors", fallback: "多个数据包使用相同的文件名，无法一起安装。")
+            .init(key: "CoreWorldDataPackDownloads.duplicateDataPackFilename", table: "Errors", fallback: "多个数据包使用相同的文件名，无法一起安装。")
         }
         /// 实例的游戏版本已改变，请重新选择数据包。
         ///
-        /// Resource: `Errors.coreWorldDataPackDownloads.currentText1`.
+        /// Resource: `Errors.CoreWorldDataPackDownloads.gameVersionChanged`.
         public static var gameVersionChanged: LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.currentText1", table: "Errors", fallback: "实例的游戏版本已改变，请重新选择数据包。")
+            .init(key: "CoreWorldDataPackDownloads.gameVersionChanged", table: "Errors", fallback: "实例的游戏版本已改变，请重新选择数据包。")
+        }
+        /// %1$@ 与必需依赖不兼容，无法一起安装。
+        ///
+        /// Resource: `Errors.CoreWorldDataPackDownloads.incompatibleRequiredDependency`.
+        public static func incompatibleRequiredDependency(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreWorldDataPackDownloads.incompatibleRequiredDependency", table: "Errors", fallback: "%1$@ 与必需依赖不兼容，无法一起安装。", arguments: [.text(value0)])
+        }
+        /// 数据包的必需依赖缺少项目或版本标识。
+        ///
+        /// Resource: `Errors.CoreWorldDataPackDownloads.incompleteRequiredDependency`.
+        public static var incompleteRequiredDependency: LocalizedMessage {
+            .init(key: "CoreWorldDataPackDownloads.incompleteRequiredDependency", table: "Errors", fallback: "数据包的必需依赖缺少项目或版本标识。")
+        }
+        /// %1$@ 缺少可校验的 ZIP 数据包文件，或文件超过 512 MB。
+        ///
+        /// Resource: `Errors.CoreWorldDataPackDownloads.missingDataPackArchive`.
+        public static func missingDataPackArchive(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreWorldDataPackDownloads.missingDataPackArchive", table: "Errors", fallback: "%1$@ 缺少可校验的 ZIP 数据包文件，或文件超过 512 MB。", arguments: [.text(value0)])
+        }
+        /// %1$@ 没有适用于 Minecraft %2$@ 的数据包版本。
+        ///
+        /// Resource: `Errors.CoreWorldDataPackDownloads.noDataPackVersionForGame`.
+        public static func noDataPackVersionForGame(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreWorldDataPackDownloads.noDataPackVersionForGame", table: "Errors", fallback: "%1$@ 没有适用于 Minecraft %2$@ 的数据包版本。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 数据包依赖数量超过限制。
+        ///
+        /// Resource: `Errors.CoreWorldDataPackDownloads.tooManyDataPackDependencies`.
+        public static var tooManyDataPackDependencies: LocalizedMessage {
+            .init(key: "CoreWorldDataPackDownloads.tooManyDataPackDependencies", table: "Errors", fallback: "数据包依赖数量超过限制。")
         }
         /// 下载 %1$@
         ///
-        /// Resource: `Progress.coreWorldDataPackDownloads.destinationText1`.
+        /// Resource: `Progress.CoreWorldDataPackDownloads.downloadDataPack`.
         public static func downloadDataPack(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.destinationText1", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
+            .init(key: "CoreWorldDataPackDownloads.downloadDataPack", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
         }
         /// 正在导入数据包
         ///
-        /// Resource: `Progress.coreWorldDataPackDownloads.destinationText2`.
+        /// Resource: `Progress.CoreWorldDataPackDownloads.importingDataPack`.
         public static var importingDataPack: LocalizedMessage {
-            .init(key: "coreWorldDataPackDownloads.destinationText2", table: "Progress", fallback: "正在导入数据包")
+            .init(key: "CoreWorldDataPackDownloads.importingDataPack", table: "Progress", fallback: "正在导入数据包")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreWorldDataPackDownloads.itemText1": .init("数据包依赖数量超过限制。", []),
-            "Errors:coreWorldDataPackDownloads.itemText2": .init("%1$@ 没有适用于 Minecraft %2$@ 的数据包版本。", [.text, .text]),
-            "Errors:coreWorldDataPackDownloads.itemText3": .init("必需依赖要求同一数据包的不同版本，请选择其他版本。", []),
-            "Errors:coreWorldDataPackDownloads.matchText1": .init("找不到兼容的数据包依赖：%1$@。", [.text]),
-            "Errors:coreWorldDataPackDownloads.matchText2": .init("数据包的必需依赖缺少项目或版本标识。", []),
-            "Errors:coreWorldDataPackDownloads.matchText3": .init("%1$@ 与必需依赖不兼容，无法一起安装。", [.text]),
-            "Errors:coreWorldDataPackDownloads.fileText1": .init("%1$@ 缺少可校验的 ZIP 数据包文件，或文件超过 512 MB。", [.text]),
-            "Errors:coreWorldDataPackDownloads.fileText2": .init("多个数据包使用相同的文件名，无法一起安装。", []),
-            "Errors:coreWorldDataPackDownloads.currentText1": .init("实例的游戏版本已改变，请重新选择数据包。", []),
-            "Progress:coreWorldDataPackDownloads.destinationText1": .init("下载 %1$@", [.text]),
-            "Progress:coreWorldDataPackDownloads.destinationText2": .init("正在导入数据包", []),
+            "Errors:CoreWorldDataPackDownloads.compatibleDataPackMissing": .init("找不到兼容的数据包依赖：%1$@。", [.text]),
+            "Errors:CoreWorldDataPackDownloads.conflictingDataPackVersions": .init("必需依赖要求同一数据包的不同版本，请选择其他版本。", []),
+            "Errors:CoreWorldDataPackDownloads.duplicateDataPackFilename": .init("多个数据包使用相同的文件名，无法一起安装。", []),
+            "Errors:CoreWorldDataPackDownloads.gameVersionChanged": .init("实例的游戏版本已改变，请重新选择数据包。", []),
+            "Errors:CoreWorldDataPackDownloads.incompatibleRequiredDependency": .init("%1$@ 与必需依赖不兼容，无法一起安装。", [.text]),
+            "Errors:CoreWorldDataPackDownloads.incompleteRequiredDependency": .init("数据包的必需依赖缺少项目或版本标识。", []),
+            "Errors:CoreWorldDataPackDownloads.missingDataPackArchive": .init("%1$@ 缺少可校验的 ZIP 数据包文件，或文件超过 512 MB。", [.text]),
+            "Errors:CoreWorldDataPackDownloads.noDataPackVersionForGame": .init("%1$@ 没有适用于 Minecraft %2$@ 的数据包版本。", [.text, .text]),
+            "Errors:CoreWorldDataPackDownloads.tooManyDataPackDependencies": .init("数据包依赖数量超过限制。", []),
+            "Progress:CoreWorldDataPackDownloads.downloadDataPack": .init("下载 %1$@", [.text]),
+            "Progress:CoreWorldDataPackDownloads.importingDataPack": .init("正在导入数据包", []),
         ]
     }
 }

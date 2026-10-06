@@ -3,91 +3,91 @@ import Foundation
 
 extension Messages {
     public enum CoreDownloadStream {
-        /// 服务器返回了无效的下载范围
+        /// 下载提前结束，可以继续重试
         ///
-        /// Resource: `Core.coreDownloadStream.piecesText1`.
-        public static var invalidDownloadRange: LocalizedMessage {
-            .init(key: "coreDownloadStream.piecesText1", table: "Core", fallback: "服务器返回了无效的下载范围")
-        }
-        /// 下载服务重定向到了非 HTTPS 地址
-        ///
-        /// Resource: `Core.coreDownloadStream.urlSessionText1`.
-        public static var insecureDownloadRedirect: LocalizedMessage {
-            .init(key: "coreDownloadStream.urlSessionText1", table: "Core", fallback: "下载服务重定向到了非 HTTPS 地址")
-        }
-        /// 下载服务响应无效
-        ///
-        /// Resource: `Core.coreDownloadStream.httpText1`.
-        public static var invalidDownloadResponse: LocalizedMessage {
-            .init(key: "coreDownloadStream.httpText1", table: "Core", fallback: "下载服务响应无效")
-        }
-        /// 下载服务返回 HTTP %1$@
-        ///
-        /// Resource: `Core.coreDownloadStream.httpText2`.
-        public static func downloadHTTPError(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreDownloadStream.httpText2", table: "Core", fallback: "下载服务返回 HTTP %1$@", arguments: [.text(value0)])
-        }
-        /// 下载服务未提供可校验的原始文件
-        ///
-        /// Resource: `Core.coreDownloadStream.encodingText1`.
-        public static var missingDownloadHash: LocalizedMessage {
-            .init(key: "coreDownloadStream.encodingText1", table: "Core", fallback: "下载服务未提供可校验的原始文件")
-        }
-        /// 服务器续传范围与本地文件不一致
-        ///
-        /// Resource: `Core.coreDownloadStream.rangeText1`.
-        public static var resumeRangeMismatch: LocalizedMessage {
-            .init(key: "coreDownloadStream.rangeText1", table: "Core", fallback: "服务器续传范围与本地文件不一致")
-        }
-        /// 服务器文件大小与清单不一致
-        ///
-        /// Resource: `Core.coreDownloadStream.expectedEndText1`.
-        public static var downloadSizeMismatch: LocalizedMessage {
-            .init(key: "coreDownloadStream.expectedEndText1", table: "Core", fallback: "服务器文件大小与清单不一致")
-        }
-        /// 无法保存下载文件
-        ///
-        /// Resource: `Core.coreDownloadStream.expectedEndText2`.
-        public static var downloadSaveFailed: LocalizedMessage {
-            .init(key: "coreDownloadStream.expectedEndText2", table: "Core", fallback: "无法保存下载文件")
-        }
-        /// 本地续传文件在下载期间发生变化
-        ///
-        /// Resource: `Core.coreDownloadStream.lengthText1`.
-        public static var resumeFileChanged: LocalizedMessage {
-            .init(key: "coreDownloadStream.lengthText1", table: "Core", fallback: "本地续传文件在下载期间发生变化")
+        /// Resource: `Core.CoreDownloadStream.downloadEndedEarly`.
+        public static var downloadEndedEarly: LocalizedMessage {
+            .init(key: "CoreDownloadStream.downloadEndedEarly", table: "Core", fallback: "下载提前结束，可以继续重试")
         }
         /// 下载数据超过清单大小
         ///
-        /// Resource: `Core.coreDownloadStream.totalText1`.
+        /// Resource: `Core.CoreDownloadStream.downloadExceedsExpectedSize`.
         public static var downloadExceedsExpectedSize: LocalizedMessage {
-            .init(key: "coreDownloadStream.totalText1", table: "Core", fallback: "下载数据超过清单大小")
+            .init(key: "CoreDownloadStream.downloadExceedsExpectedSize", table: "Core", fallback: "下载数据超过清单大小")
+        }
+        /// 下载服务返回 HTTP %1$@
+        ///
+        /// Resource: `Core.CoreDownloadStream.downloadHTTPError`.
+        public static func downloadHTTPError(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreDownloadStream.downloadHTTPError", table: "Core", fallback: "下载服务返回 HTTP %1$@", arguments: [.text(value0)])
+        }
+        /// 无法保存下载文件
+        ///
+        /// Resource: `Core.CoreDownloadStream.downloadSaveFailed`.
+        public static var downloadSaveFailed: LocalizedMessage {
+            .init(key: "CoreDownloadStream.downloadSaveFailed", table: "Core", fallback: "无法保存下载文件")
+        }
+        /// 服务器文件大小与清单不一致
+        ///
+        /// Resource: `Core.CoreDownloadStream.downloadSizeMismatch`.
+        public static var downloadSizeMismatch: LocalizedMessage {
+            .init(key: "CoreDownloadStream.downloadSizeMismatch", table: "Core", fallback: "服务器文件大小与清单不一致")
+        }
+        /// 下载服务重定向到了非 HTTPS 地址
+        ///
+        /// Resource: `Core.CoreDownloadStream.insecureDownloadRedirect`.
+        public static var insecureDownloadRedirect: LocalizedMessage {
+            .init(key: "CoreDownloadStream.insecureDownloadRedirect", table: "Core", fallback: "下载服务重定向到了非 HTTPS 地址")
+        }
+        /// 服务器返回了无效的下载范围
+        ///
+        /// Resource: `Core.CoreDownloadStream.invalidDownloadRange`.
+        public static var invalidDownloadRange: LocalizedMessage {
+            .init(key: "CoreDownloadStream.invalidDownloadRange", table: "Core", fallback: "服务器返回了无效的下载范围")
+        }
+        /// 下载服务响应无效
+        ///
+        /// Resource: `Core.CoreDownloadStream.invalidDownloadResponse`.
+        public static var invalidDownloadResponse: LocalizedMessage {
+            .init(key: "CoreDownloadStream.invalidDownloadResponse", table: "Core", fallback: "下载服务响应无效")
+        }
+        /// 下载服务未提供可校验的原始文件
+        ///
+        /// Resource: `Core.CoreDownloadStream.missingDownloadHash`.
+        public static var missingDownloadHash: LocalizedMessage {
+            .init(key: "CoreDownloadStream.missingDownloadHash", table: "Core", fallback: "下载服务未提供可校验的原始文件")
         }
         /// 下载数据缺少有效响应
         ///
-        /// Resource: `Core.coreDownloadStream.handleText1`.
+        /// Resource: `Core.CoreDownloadStream.missingDownloadResponse`.
         public static var missingDownloadResponse: LocalizedMessage {
-            .init(key: "coreDownloadStream.handleText1", table: "Core", fallback: "下载数据缺少有效响应")
+            .init(key: "CoreDownloadStream.missingDownloadResponse", table: "Core", fallback: "下载数据缺少有效响应")
         }
-        /// 下载提前结束，可以继续重试
+        /// 本地续传文件在下载期间发生变化
         ///
-        /// Resource: `Core.coreDownloadStream.expectedEndText3`.
-        public static var downloadEndedEarly: LocalizedMessage {
-            .init(key: "coreDownloadStream.expectedEndText3", table: "Core", fallback: "下载提前结束，可以继续重试")
+        /// Resource: `Core.CoreDownloadStream.resumeFileChanged`.
+        public static var resumeFileChanged: LocalizedMessage {
+            .init(key: "CoreDownloadStream.resumeFileChanged", table: "Core", fallback: "本地续传文件在下载期间发生变化")
+        }
+        /// 服务器续传范围与本地文件不一致
+        ///
+        /// Resource: `Core.CoreDownloadStream.resumeRangeMismatch`.
+        public static var resumeRangeMismatch: LocalizedMessage {
+            .init(key: "CoreDownloadStream.resumeRangeMismatch", table: "Core", fallback: "服务器续传范围与本地文件不一致")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreDownloadStream.piecesText1": .init("服务器返回了无效的下载范围", []),
-            "Core:coreDownloadStream.urlSessionText1": .init("下载服务重定向到了非 HTTPS 地址", []),
-            "Core:coreDownloadStream.httpText1": .init("下载服务响应无效", []),
-            "Core:coreDownloadStream.httpText2": .init("下载服务返回 HTTP %1$@", [.text]),
-            "Core:coreDownloadStream.encodingText1": .init("下载服务未提供可校验的原始文件", []),
-            "Core:coreDownloadStream.rangeText1": .init("服务器续传范围与本地文件不一致", []),
-            "Core:coreDownloadStream.expectedEndText1": .init("服务器文件大小与清单不一致", []),
-            "Core:coreDownloadStream.expectedEndText2": .init("无法保存下载文件", []),
-            "Core:coreDownloadStream.lengthText1": .init("本地续传文件在下载期间发生变化", []),
-            "Core:coreDownloadStream.totalText1": .init("下载数据超过清单大小", []),
-            "Core:coreDownloadStream.handleText1": .init("下载数据缺少有效响应", []),
-            "Core:coreDownloadStream.expectedEndText3": .init("下载提前结束，可以继续重试", []),
+            "Core:CoreDownloadStream.downloadEndedEarly": .init("下载提前结束，可以继续重试", []),
+            "Core:CoreDownloadStream.downloadExceedsExpectedSize": .init("下载数据超过清单大小", []),
+            "Core:CoreDownloadStream.downloadHTTPError": .init("下载服务返回 HTTP %1$@", [.text]),
+            "Core:CoreDownloadStream.downloadSaveFailed": .init("无法保存下载文件", []),
+            "Core:CoreDownloadStream.downloadSizeMismatch": .init("服务器文件大小与清单不一致", []),
+            "Core:CoreDownloadStream.insecureDownloadRedirect": .init("下载服务重定向到了非 HTTPS 地址", []),
+            "Core:CoreDownloadStream.invalidDownloadRange": .init("服务器返回了无效的下载范围", []),
+            "Core:CoreDownloadStream.invalidDownloadResponse": .init("下载服务响应无效", []),
+            "Core:CoreDownloadStream.missingDownloadHash": .init("下载服务未提供可校验的原始文件", []),
+            "Core:CoreDownloadStream.missingDownloadResponse": .init("下载数据缺少有效响应", []),
+            "Core:CoreDownloadStream.resumeFileChanged": .init("本地续传文件在下载期间发生变化", []),
+            "Core:CoreDownloadStream.resumeRangeMismatch": .init("服务器续传范围与本地文件不一致", []),
         ]
     }
 }

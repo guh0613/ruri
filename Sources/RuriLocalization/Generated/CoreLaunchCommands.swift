@@ -3,84 +3,84 @@ import Foundation
 
 extension Messages {
     public enum CoreLaunchCommands {
-        /// 启动前命令
-        ///
-        /// Resource: `Core.coreLaunchCommands.titleText1`.
-        public static var beforeLaunchCommand: LocalizedMessage {
-            .init(key: "coreLaunchCommands.titleText1", table: "Core", fallback: "启动前命令")
-        }
         /// 退出后命令
         ///
-        /// Resource: `Core.coreLaunchCommands.titleText2`.
+        /// Resource: `Core.CoreLaunchCommands.afterExitCommand`.
         public static var afterExitCommand: LocalizedMessage {
-            .init(key: "coreLaunchCommands.titleText2", table: "Core", fallback: "退出后命令")
+            .init(key: "CoreLaunchCommands.afterExitCommand", table: "Core", fallback: "退出后命令")
         }
-        /// 未知
+        /// 启动前命令
         ///
-        /// Resource: `Core.coreLaunchCommands.summaryText5`.
-        public static var unknownResult: LocalizedMessage {
-            .init(key: "coreLaunchCommands.summaryText5", table: "Core", fallback: "未知")
-        }
-        /// %1$@超时
-        ///
-        /// Resource: `Core.coreLaunchCommands.commandTimedOut`.
-        public static func commandTimedOut(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunchCommands.commandTimedOut", table: "Core", fallback: "%1$@超时", arguments: [.text(value0)])
+        /// Resource: `Core.CoreLaunchCommands.beforeLaunchCommand`.
+        public static var beforeLaunchCommand: LocalizedMessage {
+            .init(key: "CoreLaunchCommands.beforeLaunchCommand", table: "Core", fallback: "启动前命令")
         }
         /// %1$@已取消
         ///
-        /// Resource: `Core.coreLaunchCommands.commandCancelled`.
+        /// Resource: `Core.CoreLaunchCommands.commandCancelled`.
         public static func commandCancelled(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunchCommands.commandCancelled", table: "Core", fallback: "%1$@已取消", arguments: [.text(value0)])
-        }
-        /// %1$@失败：%2$@
-        ///
-        /// Resource: `Core.coreLaunchCommands.commandFailed`.
-        public static func commandFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreLaunchCommands.commandFailed", table: "Core", fallback: "%1$@失败：%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreLaunchCommands.commandCancelled", table: "Core", fallback: "%1$@已取消", arguments: [.text(value0)])
         }
         /// %1$@已完成
         ///
-        /// Resource: `Core.coreLaunchCommands.commandCompleted`.
+        /// Resource: `Core.CoreLaunchCommands.commandCompleted`.
         public static func commandCompleted(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunchCommands.commandCompleted", table: "Core", fallback: "%1$@已完成", arguments: [.text(value0)])
+            .init(key: "CoreLaunchCommands.commandCompleted", table: "Core", fallback: "%1$@已完成", arguments: [.text(value0)])
         }
         /// %1$@失败，退出码 %2$@
         ///
-        /// Resource: `Core.coreLaunchCommands.commandExitStatus`.
+        /// Resource: `Core.CoreLaunchCommands.commandExitStatus`.
         public static func commandExitStatus(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreLaunchCommands.commandExitStatus", table: "Core", fallback: "%1$@失败，退出码 %2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreLaunchCommands.commandExitStatus", table: "Core", fallback: "%1$@失败，退出码 %2$@", arguments: [.text(value0), .text(value1)])
         }
-        /// 启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。
+        /// %1$@失败：%2$@
         ///
-        /// Resource: `Errors.coreLaunchCommands.validateText1`.
-        public static var invalidCommand: LocalizedMessage {
-            .init(key: "coreLaunchCommands.validateText1", table: "Errors", fallback: "启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。")
+        /// Resource: `Core.CoreLaunchCommands.commandFailed`.
+        public static func commandFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreLaunchCommands.commandFailed", table: "Core", fallback: "%1$@失败：%2$@", arguments: [.text(value0), .text(value1)])
         }
-        /// 包装命令包含未支持的变量：%1$@
+        /// %1$@超时
         ///
-        /// Resource: `Errors.coreLaunchCommands.valueText1`.
-        public static func unsupportedVariable(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunchCommands.valueText1", table: "Errors", fallback: "包装命令包含未支持的变量：%1$@", arguments: [.text(value0)])
+        /// Resource: `Core.CoreLaunchCommands.commandTimedOut`.
+        public static func commandTimedOut(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreLaunchCommands.commandTimedOut", table: "Core", fallback: "%1$@超时", arguments: [.text(value0)])
+        }
+        /// 未知
+        ///
+        /// Resource: `Core.CoreLaunchCommands.unknownResult`.
+        public static var unknownResult: LocalizedMessage {
+            .init(key: "CoreLaunchCommands.unknownResult", table: "Core", fallback: "未知")
         }
         /// 找不到包装命令的可执行文件：%1$@
         ///
-        /// Resource: `Errors.coreLaunchCommands.executableText1`.
+        /// Resource: `Errors.CoreLaunchCommands.executableMissing`.
         public static func executableMissing(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunchCommands.executableText1", table: "Errors", fallback: "找不到包装命令的可执行文件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreLaunchCommands.executableMissing", table: "Errors", fallback: "找不到包装命令的可执行文件：%1$@", arguments: [.text(value0)])
+        }
+        /// 启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。
+        ///
+        /// Resource: `Errors.CoreLaunchCommands.invalidCommand`.
+        public static var invalidCommand: LocalizedMessage {
+            .init(key: "CoreLaunchCommands.invalidCommand", table: "Errors", fallback: "启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。")
+        }
+        /// 包装命令包含未支持的变量：%1$@
+        ///
+        /// Resource: `Errors.CoreLaunchCommands.unsupportedVariable`.
+        public static func unsupportedVariable(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreLaunchCommands.unsupportedVariable", table: "Errors", fallback: "包装命令包含未支持的变量：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreLaunchCommands.titleText1": .init("启动前命令", []),
-            "Core:coreLaunchCommands.titleText2": .init("退出后命令", []),
-            "Core:coreLaunchCommands.summaryText5": .init("未知", []),
-            "Core:coreLaunchCommands.commandTimedOut": .init("%1$@超时", [.text]),
-            "Core:coreLaunchCommands.commandCancelled": .init("%1$@已取消", [.text]),
-            "Core:coreLaunchCommands.commandFailed": .init("%1$@失败：%2$@", [.text, .text]),
-            "Core:coreLaunchCommands.commandCompleted": .init("%1$@已完成", [.text]),
-            "Core:coreLaunchCommands.commandExitStatus": .init("%1$@失败，退出码 %2$@", [.text, .text]),
-            "Errors:coreLaunchCommands.validateText1": .init("启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。", []),
-            "Errors:coreLaunchCommands.valueText1": .init("包装命令包含未支持的变量：%1$@", [.text]),
-            "Errors:coreLaunchCommands.executableText1": .init("找不到包装命令的可执行文件：%1$@", [.text]),
+            "Core:CoreLaunchCommands.afterExitCommand": .init("退出后命令", []),
+            "Core:CoreLaunchCommands.beforeLaunchCommand": .init("启动前命令", []),
+            "Core:CoreLaunchCommands.commandCancelled": .init("%1$@已取消", [.text]),
+            "Core:CoreLaunchCommands.commandCompleted": .init("%1$@已完成", [.text]),
+            "Core:CoreLaunchCommands.commandExitStatus": .init("%1$@失败，退出码 %2$@", [.text, .text]),
+            "Core:CoreLaunchCommands.commandFailed": .init("%1$@失败：%2$@", [.text, .text]),
+            "Core:CoreLaunchCommands.commandTimedOut": .init("%1$@超时", [.text]),
+            "Core:CoreLaunchCommands.unknownResult": .init("未知", []),
+            "Errors:CoreLaunchCommands.executableMissing": .init("找不到包装命令的可执行文件：%1$@", [.text]),
+            "Errors:CoreLaunchCommands.invalidCommand": .init("启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。", []),
+            "Errors:CoreLaunchCommands.unsupportedVariable": .init("包装命令包含未支持的变量：%1$@", [.text]),
         ]
     }
 }

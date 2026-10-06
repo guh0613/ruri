@@ -3,49 +3,49 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceMoveProgress {
-        /// 正在校验实例文件…
+        /// 正在清理已核验的原文件…
         ///
-        /// Resource: `Core.coreInstanceMoveProgress.progressText1`.
-        public static var validatingInstanceFiles: LocalizedMessage {
-            .init(key: "coreInstanceMoveProgress.progressText1", table: "Core", fallback: "正在校验实例文件…")
+        /// Resource: `Core.CoreInstanceMoveProgress.cleaningVerifiedOriginalFiles`.
+        public static var cleaningVerifiedOriginalFiles: LocalizedMessage {
+            .init(key: "CoreInstanceMoveProgress.cleaningVerifiedOriginalFiles", table: "Core", fallback: "正在清理已核验的原文件…")
         }
         /// 正在复制实例文件…
         ///
-        /// Resource: `Core.coreInstanceMoveProgress.progressText2`.
+        /// Resource: `Core.CoreInstanceMoveProgress.copyingInstanceFiles`.
         public static var copyingInstanceFiles: LocalizedMessage {
-            .init(key: "coreInstanceMoveProgress.progressText2", table: "Core", fallback: "正在复制实例文件…")
-        }
-        /// 正在写入目标文件夹…
-        ///
-        /// Resource: `Core.coreInstanceMoveProgress.progressText3`.
-        public static var writingDestinationFolder: LocalizedMessage {
-            .init(key: "coreInstanceMoveProgress.progressText3", table: "Core", fallback: "正在写入目标文件夹…")
-        }
-        /// 实例已移动，正在核对原文件…
-        ///
-        /// Resource: `Core.coreInstanceMoveProgress.progressText4`.
-        public static var verifyingMovedInstance: LocalizedMessage {
-            .init(key: "coreInstanceMoveProgress.progressText4", table: "Core", fallback: "实例已移动，正在核对原文件…")
+            .init(key: "CoreInstanceMoveProgress.copyingInstanceFiles", table: "Core", fallback: "正在复制实例文件…")
         }
         /// 正在整理原实例文件…
         ///
-        /// Resource: `Core.coreInstanceMoveProgress.progressText5`.
+        /// Resource: `Core.CoreInstanceMoveProgress.organizingOriginalFiles`.
         public static var organizingOriginalFiles: LocalizedMessage {
-            .init(key: "coreInstanceMoveProgress.progressText5", table: "Core", fallback: "正在整理原实例文件…")
+            .init(key: "CoreInstanceMoveProgress.organizingOriginalFiles", table: "Core", fallback: "正在整理原实例文件…")
         }
-        /// 正在清理已核验的原文件…
+        /// 正在校验实例文件…
         ///
-        /// Resource: `Core.coreInstanceMoveProgress.progressText6`.
-        public static var cleaningVerifiedOriginalFiles: LocalizedMessage {
-            .init(key: "coreInstanceMoveProgress.progressText6", table: "Core", fallback: "正在清理已核验的原文件…")
+        /// Resource: `Core.CoreInstanceMoveProgress.validatingInstanceFiles`.
+        public static var validatingInstanceFiles: LocalizedMessage {
+            .init(key: "CoreInstanceMoveProgress.validatingInstanceFiles", table: "Core", fallback: "正在校验实例文件…")
+        }
+        /// 实例已移动，正在核对原文件…
+        ///
+        /// Resource: `Core.CoreInstanceMoveProgress.verifyingMovedInstance`.
+        public static var verifyingMovedInstance: LocalizedMessage {
+            .init(key: "CoreInstanceMoveProgress.verifyingMovedInstance", table: "Core", fallback: "实例已移动，正在核对原文件…")
+        }
+        /// 正在写入目标文件夹…
+        ///
+        /// Resource: `Core.CoreInstanceMoveProgress.writingDestinationFolder`.
+        public static var writingDestinationFolder: LocalizedMessage {
+            .init(key: "CoreInstanceMoveProgress.writingDestinationFolder", table: "Core", fallback: "正在写入目标文件夹…")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreInstanceMoveProgress.progressText1": .init("正在校验实例文件…", []),
-            "Core:coreInstanceMoveProgress.progressText2": .init("正在复制实例文件…", []),
-            "Core:coreInstanceMoveProgress.progressText3": .init("正在写入目标文件夹…", []),
-            "Core:coreInstanceMoveProgress.progressText4": .init("实例已移动，正在核对原文件…", []),
-            "Core:coreInstanceMoveProgress.progressText5": .init("正在整理原实例文件…", []),
-            "Core:coreInstanceMoveProgress.progressText6": .init("正在清理已核验的原文件…", []),
+            "Core:CoreInstanceMoveProgress.cleaningVerifiedOriginalFiles": .init("正在清理已核验的原文件…", []),
+            "Core:CoreInstanceMoveProgress.copyingInstanceFiles": .init("正在复制实例文件…", []),
+            "Core:CoreInstanceMoveProgress.organizingOriginalFiles": .init("正在整理原实例文件…", []),
+            "Core:CoreInstanceMoveProgress.validatingInstanceFiles": .init("正在校验实例文件…", []),
+            "Core:CoreInstanceMoveProgress.verifyingMovedInstance": .init("实例已移动，正在核对原文件…", []),
+            "Core:CoreInstanceMoveProgress.writingDestinationFolder": .init("正在写入目标文件夹…", []),
         ]
     }
 }

@@ -3,140 +3,140 @@ import Foundation
 
 extension Messages {
     public enum AppLogsView {
-        /// 诊断与处理
+        /// 自动滚动
         ///
-        /// Resource: `Interface.appLogsView.titleText1`.
-        public static var diagnosticsAndHandling: LocalizedMessage {
-            .init(key: "appLogsView.titleText1", table: "Interface", fallback: "诊断与处理")
-        }
-        /// 运行日志
-        ///
-        /// Resource: `Interface.appLogsView.titleText2`.
-        public static var runLogs: LocalizedMessage {
-            .init(key: "appLogsView.titleText2", table: "Interface", fallback: "运行日志")
+        /// Resource: `Interface.AppLogsView.autoScroll`.
+        public static var autoScroll: LocalizedMessage {
+            .init(key: "AppLogsView.autoScroll", table: "Interface", fallback: "自动滚动")
         }
         /// 收集报告
         ///
-        /// Resource: `Interface.appLogsView.titleText3`.
+        /// Resource: `Interface.AppLogsView.collectReport`.
         public static var collectReport: LocalizedMessage {
-            .init(key: "appLogsView.titleText3", table: "Interface", fallback: "收集报告")
+            .init(key: "AppLogsView.collectReport", table: "Interface", fallback: "收集报告")
         }
-        /// 运行记录
+        /// 诊断与处理
         ///
-        /// Resource: `Interface.appLogsView.bodyText1`.
-        public static var runHistory: LocalizedMessage {
-            .init(key: "appLogsView.bodyText1", table: "Interface", fallback: "运行记录")
-        }
-        /// 运行中
-        ///
-        /// Resource: `Interface.appLogsView.sessionText1`.
-        public static var running: LocalizedMessage {
-            .init(key: "appLogsView.sessionText1", table: "Interface", fallback: "运行中")
-        }
-        /// 暂无运行记录
-        ///
-        /// Resource: `Interface.appLogsView.sessionText2`.
-        public static var noRunHistory: LocalizedMessage {
-            .init(key: "appLogsView.sessionText2", table: "Interface", fallback: "暂无运行记录")
-        }
-        /// 启动游戏后可在此查看运行日志。
-        ///
-        /// Resource: `Interface.appLogsView.sessionText3`.
-        public static var runHistoryDetails: LocalizedMessage {
-            .init(key: "appLogsView.sessionText3", table: "Interface", fallback: "启动游戏后可在此查看运行日志。")
-        }
-        /// 选择记录
-        ///
-        /// Resource: `Interface.appLogsView.sessionText4`.
-        public static var selectRecord: LocalizedMessage {
-            .init(key: "appLogsView.sessionText4", table: "Interface", fallback: "选择记录")
-        }
-        /// 查看内容
-        ///
-        /// Resource: `Interface.appLogsView.sessionText5`.
-        public static var viewContent: LocalizedMessage {
-            .init(key: "appLogsView.sessionText5", table: "Interface", fallback: "查看内容")
-        }
-        /// 筛选日志
-        ///
-        /// Resource: `Interface.appLogsView.sessionText6`.
-        public static var filterLogs: LocalizedMessage {
-            .init(key: "appLogsView.sessionText6", table: "Interface", fallback: "筛选日志")
-        }
-        /// 自动滚动
-        ///
-        /// Resource: `Interface.appLogsView.sessionText7`.
-        public static var autoScroll: LocalizedMessage {
-            .init(key: "appLogsView.sessionText7", table: "Interface", fallback: "自动滚动")
+        /// Resource: `Interface.AppLogsView.diagnosticsAndHandling`.
+        public static var diagnosticsAndHandling: LocalizedMessage {
+            .init(key: "AppLogsView.diagnosticsAndHandling", table: "Interface", fallback: "诊断与处理")
         }
         /// 导出日志…
         ///
-        /// Resource: `Interface.appLogsView.sessionText8`.
+        /// Resource: `Interface.AppLogsView.exportFullLog`.
         public static var exportFullLog: LocalizedMessage {
-            .init(key: "appLogsView.sessionText8", table: "Interface", fallback: "导出日志…")
+            .init(key: "AppLogsView.exportFullLog", table: "Interface", fallback: "导出日志…")
         }
-        /// 仅在此窗口打开时刷新近期日志。
+        /// 筛选日志
         ///
-        /// Resource: `Interface.appLogsView.sessionText9`.
-        public static var recentLogPreview: LocalizedMessage {
-            .init(key: "appLogsView.sessionText9", table: "Interface", fallback: "仅在此窗口打开时刷新近期日志。")
-        }
-        /// 最后记录阶段：%1$@
-        ///
-        /// Resource: `Interface.appLogsView.summaryText1`.
-        public static func lastRecordedStage(_ value0: String) -> LocalizedMessage {
-            .init(key: "appLogsView.summaryText1", table: "Interface", fallback: "最后记录阶段：%1$@", arguments: [.text(value0)])
-        }
-        /// 阶段、环境与报告
-        ///
-        /// Resource: `Interface.appLogsView.failureText1`.
-        public static var stageEnvironmentAndReport: LocalizedMessage {
-            .init(key: "appLogsView.failureText1", table: "Interface", fallback: "阶段、环境与报告")
-        }
-        /// 记录的内存上限：%1$@ MB
-        ///
-        /// Resource: `Interface.appLogsView.failureText2`.
-        public static func recordedMemoryLimit(_ value0: String) -> LocalizedMessage {
-            .init(key: "appLogsView.failureText2", table: "Interface", fallback: "记录的内存上限：%1$@ MB", arguments: [.text(value0)])
+        /// Resource: `Interface.AppLogsView.filterLogs`.
+        public static var filterLogs: LocalizedMessage {
+            .init(key: "AppLogsView.filterLogs", table: "Interface", fallback: "筛选日志")
         }
         /// 尚未选择 Java
         ///
-        /// Resource: `Interface.appLogsView.failureText3`.
+        /// Resource: `Interface.AppLogsView.javaNotSelected`.
         public static var javaNotSelected: LocalizedMessage {
-            .init(key: "appLogsView.failureText3", table: "Interface", fallback: "尚未选择 Java")
+            .init(key: "AppLogsView.javaNotSelected", table: "Interface", fallback: "尚未选择 Java")
         }
-        /// （截断副本）
+        /// 最后记录阶段：%1$@
         ///
-        /// Resource: `Interface.appLogsView.failureText4`.
-        public static var truncatedCopy: LocalizedMessage {
-            .init(key: "appLogsView.failureText4", table: "Interface", fallback: "（截断副本）")
+        /// Resource: `Interface.AppLogsView.lastRecordedStage`.
+        public static func lastRecordedStage(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppLogsView.lastRecordedStage", table: "Interface", fallback: "最后记录阶段：%1$@", arguments: [.text(value0)])
+        }
+        /// 暂无运行记录
+        ///
+        /// Resource: `Interface.AppLogsView.noRunHistory`.
+        public static var noRunHistory: LocalizedMessage {
+            .init(key: "AppLogsView.noRunHistory", table: "Interface", fallback: "暂无运行记录")
+        }
+        /// 仅在此窗口打开时刷新近期日志。
+        ///
+        /// Resource: `Interface.AppLogsView.recentLogPreview`.
+        public static var recentLogPreview: LocalizedMessage {
+            .init(key: "AppLogsView.recentLogPreview", table: "Interface", fallback: "仅在此窗口打开时刷新近期日志。")
+        }
+        /// 记录的内存上限：%1$@ MB
+        ///
+        /// Resource: `Interface.AppLogsView.recordedMemoryLimit`.
+        public static func recordedMemoryLimit(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppLogsView.recordedMemoryLimit", table: "Interface", fallback: "记录的内存上限：%1$@ MB", arguments: [.text(value0)])
+        }
+        /// 运行记录
+        ///
+        /// Resource: `Interface.AppLogsView.runHistory`.
+        public static var runHistory: LocalizedMessage {
+            .init(key: "AppLogsView.runHistory", table: "Interface", fallback: "运行记录")
+        }
+        /// 启动游戏后可在此查看运行日志。
+        ///
+        /// Resource: `Interface.AppLogsView.runHistoryDetails`.
+        public static var runHistoryDetails: LocalizedMessage {
+            .init(key: "AppLogsView.runHistoryDetails", table: "Interface", fallback: "启动游戏后可在此查看运行日志。")
+        }
+        /// 运行日志
+        ///
+        /// Resource: `Interface.AppLogsView.runLogs`.
+        public static var runLogs: LocalizedMessage {
+            .init(key: "AppLogsView.runLogs", table: "Interface", fallback: "运行日志")
+        }
+        /// 运行中
+        ///
+        /// Resource: `Interface.AppLogsView.running`.
+        public static var running: LocalizedMessage {
+            .init(key: "AppLogsView.running", table: "Interface", fallback: "运行中")
+        }
+        /// 选择记录
+        ///
+        /// Resource: `Interface.AppLogsView.selectRecord`.
+        public static var selectRecord: LocalizedMessage {
+            .init(key: "AppLogsView.selectRecord", table: "Interface", fallback: "选择记录")
         }
         /// 在 Finder 中显示本次运行记录
         ///
-        /// Resource: `Interface.appLogsView.failureText5`.
+        /// Resource: `Interface.AppLogsView.showRunRecordInFinder`.
         public static var showRunRecordInFinder: LocalizedMessage {
-            .init(key: "appLogsView.failureText5", table: "Interface", fallback: "在 Finder 中显示本次运行记录")
+            .init(key: "AppLogsView.showRunRecordInFinder", table: "Interface", fallback: "在 Finder 中显示本次运行记录")
+        }
+        /// 阶段、环境与报告
+        ///
+        /// Resource: `Interface.AppLogsView.stageEnvironmentAndReport`.
+        public static var stageEnvironmentAndReport: LocalizedMessage {
+            .init(key: "AppLogsView.stageEnvironmentAndReport", table: "Interface", fallback: "阶段、环境与报告")
+        }
+        /// （截断副本）
+        ///
+        /// Resource: `Interface.AppLogsView.truncatedCopy`.
+        public static var truncatedCopy: LocalizedMessage {
+            .init(key: "AppLogsView.truncatedCopy", table: "Interface", fallback: "（截断副本）")
+        }
+        /// 查看内容
+        ///
+        /// Resource: `Interface.AppLogsView.viewContent`.
+        public static var viewContent: LocalizedMessage {
+            .init(key: "AppLogsView.viewContent", table: "Interface", fallback: "查看内容")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appLogsView.titleText1": .init("诊断与处理", []),
-            "Interface:appLogsView.titleText2": .init("运行日志", []),
-            "Interface:appLogsView.titleText3": .init("收集报告", []),
-            "Interface:appLogsView.bodyText1": .init("运行记录", []),
-            "Interface:appLogsView.sessionText1": .init("运行中", []),
-            "Interface:appLogsView.sessionText2": .init("暂无运行记录", []),
-            "Interface:appLogsView.sessionText3": .init("启动游戏后可在此查看运行日志。", []),
-            "Interface:appLogsView.sessionText4": .init("选择记录", []),
-            "Interface:appLogsView.sessionText5": .init("查看内容", []),
-            "Interface:appLogsView.sessionText6": .init("筛选日志", []),
-            "Interface:appLogsView.sessionText7": .init("自动滚动", []),
-            "Interface:appLogsView.sessionText8": .init("导出日志…", []),
-            "Interface:appLogsView.sessionText9": .init("仅在此窗口打开时刷新近期日志。", []),
-            "Interface:appLogsView.summaryText1": .init("最后记录阶段：%1$@", [.text]),
-            "Interface:appLogsView.failureText1": .init("阶段、环境与报告", []),
-            "Interface:appLogsView.failureText2": .init("记录的内存上限：%1$@ MB", [.text]),
-            "Interface:appLogsView.failureText3": .init("尚未选择 Java", []),
-            "Interface:appLogsView.failureText4": .init("（截断副本）", []),
-            "Interface:appLogsView.failureText5": .init("在 Finder 中显示本次运行记录", []),
+            "Interface:AppLogsView.autoScroll": .init("自动滚动", []),
+            "Interface:AppLogsView.collectReport": .init("收集报告", []),
+            "Interface:AppLogsView.diagnosticsAndHandling": .init("诊断与处理", []),
+            "Interface:AppLogsView.exportFullLog": .init("导出日志…", []),
+            "Interface:AppLogsView.filterLogs": .init("筛选日志", []),
+            "Interface:AppLogsView.javaNotSelected": .init("尚未选择 Java", []),
+            "Interface:AppLogsView.lastRecordedStage": .init("最后记录阶段：%1$@", [.text]),
+            "Interface:AppLogsView.noRunHistory": .init("暂无运行记录", []),
+            "Interface:AppLogsView.recentLogPreview": .init("仅在此窗口打开时刷新近期日志。", []),
+            "Interface:AppLogsView.recordedMemoryLimit": .init("记录的内存上限：%1$@ MB", [.text]),
+            "Interface:AppLogsView.runHistory": .init("运行记录", []),
+            "Interface:AppLogsView.runHistoryDetails": .init("启动游戏后可在此查看运行日志。", []),
+            "Interface:AppLogsView.runLogs": .init("运行日志", []),
+            "Interface:AppLogsView.running": .init("运行中", []),
+            "Interface:AppLogsView.selectRecord": .init("选择记录", []),
+            "Interface:AppLogsView.showRunRecordInFinder": .init("在 Finder 中显示本次运行记录", []),
+            "Interface:AppLogsView.stageEnvironmentAndReport": .init("阶段、环境与报告", []),
+            "Interface:AppLogsView.truncatedCopy": .init("（截断副本）", []),
+            "Interface:AppLogsView.viewContent": .init("查看内容", []),
         ]
     }
 }

@@ -5,26 +5,26 @@ extension Messages {
     public enum CoreEndpointURL {
         /// 服务地址包含无效的路径参数。
         ///
-        /// Resource: `Errors.coreEndpointURL.resultText1`.
+        /// Resource: `Errors.CoreEndpointURL.invalidPathParameter`.
         public static var invalidPathParameter: LocalizedMessage {
-            .init(key: "coreEndpointURL.resultText1", table: "Errors", fallback: "服务地址包含无效的路径参数。")
-        }
-        /// 无法构造服务地址。
-        ///
-        /// Resource: `Errors.coreEndpointURL.partsText1`.
-        public static var serviceURLConstructionFailed: LocalizedMessage {
-            .init(key: "coreEndpointURL.partsText1", table: "Errors", fallback: "无法构造服务地址。")
+            .init(key: "CoreEndpointURL.invalidPathParameter", table: "Errors", fallback: "服务地址包含无效的路径参数。")
         }
         /// 无法编码服务查询参数。
         ///
-        /// Resource: `Errors.coreEndpointURL.urlText1`.
+        /// Resource: `Errors.CoreEndpointURL.queryEncodingFailed`.
         public static var queryEncodingFailed: LocalizedMessage {
-            .init(key: "coreEndpointURL.urlText1", table: "Errors", fallback: "无法编码服务查询参数。")
+            .init(key: "CoreEndpointURL.queryEncodingFailed", table: "Errors", fallback: "无法编码服务查询参数。")
+        }
+        /// 无法构造服务地址。
+        ///
+        /// Resource: `Errors.CoreEndpointURL.serviceURLConstructionFailed`.
+        public static var serviceURLConstructionFailed: LocalizedMessage {
+            .init(key: "CoreEndpointURL.serviceURLConstructionFailed", table: "Errors", fallback: "无法构造服务地址。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreEndpointURL.resultText1": .init("服务地址包含无效的路径参数。", []),
-            "Errors:coreEndpointURL.partsText1": .init("无法构造服务地址。", []),
-            "Errors:coreEndpointURL.urlText1": .init("无法编码服务查询参数。", []),
+            "Errors:CoreEndpointURL.invalidPathParameter": .init("服务地址包含无效的路径参数。", []),
+            "Errors:CoreEndpointURL.queryEncodingFailed": .init("无法编码服务查询参数。", []),
+            "Errors:CoreEndpointURL.serviceURLConstructionFailed": .init("无法构造服务地址。", []),
         ]
     }
 }

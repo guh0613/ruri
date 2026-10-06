@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelInstanceCopies {
-        /// 复制 %1$@
+        /// 副本已完成，复制记录已清理。
         ///
-        /// Resource: `Interface.appAppModelInstanceCopies.copyInstanceText1`.
-        public static func copyInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceCopies.copyInstanceText1", table: "Interface", fallback: "复制 %1$@", arguments: [.text(value0)])
+        /// Resource: `Interface.AppAppModelInstanceCopies.copyCompleted`.
+        public static var copyCompleted: LocalizedMessage {
+            .init(key: "AppAppModelInstanceCopies.copyCompleted", table: "Interface", fallback: "副本已完成，复制记录已清理。")
         }
         /// 已创建副本“%1$@”。
         ///
-        /// Resource: `Interface.appAppModelInstanceCopies.resultText1`.
+        /// Resource: `Interface.AppAppModelInstanceCopies.copyCreated`.
         public static func copyCreated(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceCopies.resultText1", table: "Interface", fallback: "已创建副本“%1$@”。", arguments: [.text(value0)])
+            .init(key: "AppAppModelInstanceCopies.copyCreated", table: "Interface", fallback: "已创建副本“%1$@”。", arguments: [.text(value0)])
         }
-        /// 恢复 %1$@ 的实例复制
+        /// 复制 %1$@
         ///
-        /// Resource: `Interface.appAppModelInstanceCopies.recoverInstanceCopyText1`.
-        public static func recoverInstanceCopy(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceCopies.recoverInstanceCopyText1", table: "Interface", fallback: "恢复 %1$@ 的实例复制", arguments: [.text(value0)])
-        }
-        /// 副本已完成，复制记录已清理。
-        ///
-        /// Resource: `Interface.appAppModelInstanceCopies.resultText2`.
-        public static var copyCompleted: LocalizedMessage {
-            .init(key: "appAppModelInstanceCopies.resultText2", table: "Interface", fallback: "副本已完成，复制记录已清理。")
+        /// Resource: `Interface.AppAppModelInstanceCopies.copyInstance`.
+        public static func copyInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstanceCopies.copyInstance", table: "Interface", fallback: "复制 %1$@", arguments: [.text(value0)])
         }
         /// 未完成的副本已另行保留，原实例可继续使用。
         ///
-        /// Resource: `Interface.appAppModelInstanceCopies.resultText3`.
+        /// Resource: `Interface.AppAppModelInstanceCopies.copyKept`.
         public static var copyKept: LocalizedMessage {
-            .init(key: "appAppModelInstanceCopies.resultText3", table: "Interface", fallback: "未完成的副本已另行保留，原实例可继续使用。")
+            .init(key: "AppAppModelInstanceCopies.copyKept", table: "Interface", fallback: "未完成的副本已另行保留，原实例可继续使用。")
+        }
+        /// 恢复 %1$@ 的实例复制
+        ///
+        /// Resource: `Interface.AppAppModelInstanceCopies.recoverInstanceCopy`.
+        public static func recoverInstanceCopy(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstanceCopies.recoverInstanceCopy", table: "Interface", fallback: "恢复 %1$@ 的实例复制", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAppModelInstanceCopies.copyInstanceText1": .init("复制 %1$@", [.text]),
-            "Interface:appAppModelInstanceCopies.resultText1": .init("已创建副本“%1$@”。", [.text]),
-            "Interface:appAppModelInstanceCopies.recoverInstanceCopyText1": .init("恢复 %1$@ 的实例复制", [.text]),
-            "Interface:appAppModelInstanceCopies.resultText2": .init("副本已完成，复制记录已清理。", []),
-            "Interface:appAppModelInstanceCopies.resultText3": .init("未完成的副本已另行保留，原实例可继续使用。", []),
+            "Interface:AppAppModelInstanceCopies.copyCompleted": .init("副本已完成，复制记录已清理。", []),
+            "Interface:AppAppModelInstanceCopies.copyCreated": .init("已创建副本“%1$@”。", [.text]),
+            "Interface:AppAppModelInstanceCopies.copyInstance": .init("复制 %1$@", [.text]),
+            "Interface:AppAppModelInstanceCopies.copyKept": .init("未完成的副本已另行保留，原实例可继续使用。", []),
+            "Interface:AppAppModelInstanceCopies.recoverInstanceCopy": .init("恢复 %1$@ 的实例复制", [.text]),
         ]
     }
 }

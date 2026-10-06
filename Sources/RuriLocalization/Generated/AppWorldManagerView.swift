@@ -3,301 +3,301 @@ import Foundation
 
 extension Messages {
     public enum AppWorldManagerView {
-        /// 存档与备份
+        /// 自动备份并恢复
         ///
-        /// Resource: `Interface.appWorldManagerView.bodyText1`.
-        public static var worldsAndBackups: LocalizedMessage {
-            .init(key: "appWorldManagerView.bodyText1", table: "Interface", fallback: "存档与备份")
-        }
-        /// 内容
-        ///
-        /// Resource: `Interface.appWorldManagerView.bodyText2`.
-        public static var content: LocalizedMessage {
-            .init(key: "appWorldManagerView.bodyText2", table: "Interface", fallback: "内容")
-        }
-        /// 存档 %1$lld
-        ///
-        /// Resource: `Interface.appWorldManagerView.bodyText3`.
-        public static func worldCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appWorldManagerView.bodyText3", table: "Interface", fallback: "存档 %1$lld", arguments: [.integer(value0)])
+        /// Resource: `Interface.AppWorldManagerView.backupAndRestore`.
+        public static var backupAndRestore: LocalizedMessage {
+            .init(key: "AppWorldManagerView.backupAndRestore", table: "Interface", fallback: "自动备份并恢复")
         }
         /// 备份 %1$lld
         ///
-        /// Resource: `Interface.appWorldManagerView.bodyText4`.
+        /// Resource: `Interface.AppWorldManagerView.backupCount`.
         public static func backupCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appWorldManagerView.bodyText4", table: "Interface", fallback: "备份 %1$lld", arguments: [.integer(value0)])
-        }
-        /// 导入存档…
-        ///
-        /// Resource: `Interface.appWorldManagerView.bodyText5`.
-        public static var importWorld: LocalizedMessage {
-            .init(key: "appWorldManagerView.bodyText5", table: "Interface", fallback: "导入存档…")
-        }
-        /// 打开存档文件夹
-        ///
-        /// Resource: `Interface.appWorldManagerView.bodyText6`.
-        public static var openWorldFolder: LocalizedMessage {
-            .init(key: "appWorldManagerView.bodyText6", table: "Interface", fallback: "打开存档文件夹")
-        }
-        /// 请先结束游戏，再修改或备份存档。
-        ///
-        /// Resource: `Interface.appWorldManagerView.bodyText7`.
-        public static var worldEditNotice: LocalizedMessage {
-            .init(key: "appWorldManagerView.bodyText7", table: "Interface", fallback: "请先结束游戏，再修改或备份存档。")
-        }
-        /// 此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。
-        ///
-        /// Resource: `Interface.appWorldManagerView.bodyText8`.
-        public static var directWorldLaunchUnsupported: LocalizedMessage {
-            .init(key: "appWorldManagerView.bodyText8", table: "Interface", fallback: "此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。")
-        }
-        /// 暂无存档
-        ///
-        /// Resource: `Interface.appWorldManagerView.statusText1`.
-        public static var noWorlds: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText1", table: "Interface", fallback: "暂无存档")
-        }
-        /// 在游戏中创建世界，或导入存档文件夹、ZIP 文件。
-        ///
-        /// Resource: `Interface.appWorldManagerView.statusText2`.
-        public static var worldDescription: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText2", table: "Interface", fallback: "在游戏中创建世界，或导入存档文件夹、ZIP 文件。")
-        }
-        /// 暂无备份
-        ///
-        /// Resource: `Interface.appWorldManagerView.statusText3`.
-        public static var noBackups: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText3", table: "Interface", fallback: "暂无备份")
+            .init(key: "AppWorldManagerView.backupCount", table: "Interface", fallback: "备份 %1$lld", arguments: [.integer(value0)])
         }
         /// 在存档列表中选择“备份”。
         ///
-        /// Resource: `Interface.appWorldManagerView.statusText4`.
+        /// Resource: `Interface.AppWorldManagerView.backupDescription`.
         public static var backupDescription: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText4", table: "Interface", fallback: "在存档列表中选择“备份”。")
-        }
-        /// 取消任务
-        ///
-        /// Resource: `Interface.appWorldManagerView.statusText6`.
-        public static var cancelTask: LocalizedMessage {
-            .init(key: "appWorldManagerView.statusText6", table: "Interface", fallback: "取消任务")
-        }
-        /// 导入存档
-        ///
-        /// Resource: `Interface.appWorldManagerView.urlText1`.
-        public static var importWorldTitle: LocalizedMessage {
-            .init(key: "appWorldManagerView.urlText1", table: "Interface", fallback: "导入存档")
-        }
-        /// 已导入到 %1$@
-        ///
-        /// Resource: `Interface.appWorldManagerView.folderText1`.
-        public static func worldImported(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldManagerView.folderText1", table: "Interface", fallback: "已导入到 %1$@", arguments: [.text(value0)])
-        }
-        /// 替换原存档？
-        ///
-        /// Resource: `Interface.appWorldManagerView.folderText2`.
-        public static var replaceWorldPrompt: LocalizedMessage {
-            .init(key: "appWorldManagerView.folderText2", table: "Interface", fallback: "替换原存档？")
-        }
-        /// 自动备份并恢复
-        ///
-        /// Resource: `Interface.appWorldManagerView.folderText3`.
-        public static var backupAndRestore: LocalizedMessage {
-            .init(key: "appWorldManagerView.folderText3", table: "Interface", fallback: "自动备份并恢复")
-        }
-        /// 将恢复到“%1$@”。现有存档会先创建一份自动备份。
-        ///
-        /// Resource: `Interface.appWorldManagerView.backupText1`.
-        public static func restoreBackupNotice(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldManagerView.backupText1", table: "Interface", fallback: "将恢复到“%1$@”。现有存档会先创建一份自动备份。", arguments: [.text(value0)])
-        }
-        /// 移到废纸篓？
-        ///
-        /// Resource: `Interface.appWorldManagerView.backupText2`.
-        public static var trashWorldPrompt: LocalizedMessage {
-            .init(key: "appWorldManagerView.backupText2", table: "Interface", fallback: "移到废纸篓？")
-        }
-        /// 移到废纸篓
-        ///
-        /// Resource: `Interface.appWorldManagerView.backupText3`.
-        public static var moveToTrash: LocalizedMessage {
-            .init(key: "appWorldManagerView.backupText3", table: "Interface", fallback: "移到废纸篓")
-        }
-        /// 移除存档
-        ///
-        /// Resource: `Interface.appWorldManagerView.worldText1`.
-        public static var removeWorld: LocalizedMessage {
-            .init(key: "appWorldManagerView.worldText1", table: "Interface", fallback: "移除存档")
-        }
-        /// 移除备份
-        ///
-        /// Resource: `Interface.appWorldManagerView.backupText4`.
-        public static var removeBackup: LocalizedMessage {
-            .init(key: "appWorldManagerView.backupText4", table: "Interface", fallback: "移除备份")
-        }
-        /// 进入存档
-        ///
-        /// Resource: `Interface.appWorldManagerView.errorText1`.
-        public static var enterWorld: LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText1", table: "Interface", fallback: "进入存档")
-        }
-        /// 启动游戏并进入此存档
-        ///
-        /// Resource: `Interface.appWorldManagerView.errorText2`.
-        public static var launchWorldNotice: LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText2", table: "Interface", fallback: "启动游戏并进入此存档")
-        }
-        /// 此版本不支持直接进入存档
-        ///
-        /// Resource: `Interface.appWorldManagerView.errorText3`.
-        public static var worldLaunchUnsupported: LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText3", table: "Interface", fallback: "此版本不支持直接进入存档")
-        }
-        /// 备份
-        ///
-        /// Resource: `Interface.appWorldManagerView.errorText4`.
-        public static var createBackup: LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText4", table: "Interface", fallback: "备份")
-        }
-        /// 备份 %1$@
-        ///
-        /// Resource: `Interface.appWorldManagerView.errorText5`.
-        public static func backupWorld(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText5", table: "Interface", fallback: "备份 %1$@", arguments: [.text(value0)])
-        }
-        /// %1$@ 已备份
-        ///
-        /// Resource: `Interface.appWorldManagerView.errorText6`.
-        public static func worldBackedUp(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText6", table: "Interface", fallback: "%1$@ 已备份", arguments: [.text(value0)])
-        }
-        /// 管理数据包…
-        ///
-        /// Resource: `Interface.appWorldManagerView.errorText7`.
-        public static var manageDatapacks: LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText7", table: "Interface", fallback: "管理数据包…")
-        }
-        /// 导出 ZIP…
-        ///
-        /// Resource: `Interface.appWorldManagerView.errorText8`.
-        public static var exportZip: LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText8", table: "Interface", fallback: "导出 ZIP…")
-        }
-        /// 在 Finder 中显示
-        ///
-        /// Resource: `Interface.appWorldManagerView.errorText9`.
-        public static var showInFinder: LocalizedMessage {
-            .init(key: "appWorldManagerView.errorText9", table: "Interface", fallback: "在 Finder 中显示")
+            .init(key: "AppWorldManagerView.backupDescription", table: "Interface", fallback: "在存档列表中选择“备份”。")
         }
         /// 无法读取备份信息
         ///
-        /// Resource: `Interface.appWorldManagerView.backupRowText1`.
+        /// Resource: `Interface.AppWorldManagerView.backupInfoUnavailable`.
         public static var backupInfoUnavailable: LocalizedMessage {
-            .init(key: "appWorldManagerView.backupRowText1", table: "Interface", fallback: "无法读取备份信息")
+            .init(key: "AppWorldManagerView.backupInfoUnavailable", table: "Interface", fallback: "无法读取备份信息")
         }
-        /// 恢复为副本
+        /// 备份 %1$@
         ///
-        /// Resource: `Interface.appWorldManagerView.backupRowText2`.
-        public static var restoreAsCopy: LocalizedMessage {
-            .init(key: "appWorldManagerView.backupRowText2", table: "Interface", fallback: "恢复为副本")
-        }
-        /// 替换原存档…
-        ///
-        /// Resource: `Interface.appWorldManagerView.backupRowText3`.
-        public static var replaceOriginal: LocalizedMessage {
-            .init(key: "appWorldManagerView.backupRowText3", table: "Interface", fallback: "替换原存档…")
-        }
-        /// 恢复 %1$@
-        ///
-        /// Resource: `Interface.appWorldManagerView.restoreText1`.
-        public static func restoreWorld(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldManagerView.restoreText1", table: "Interface", fallback: "恢复 %1$@", arguments: [.text(value0)])
-        }
-        /// 已恢复到 %1$@
-        ///
-        /// Resource: `Interface.appWorldManagerView.folderText4`.
-        public static func worldRestored(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldManagerView.folderText4", table: "Interface", fallback: "已恢复到 %1$@", arguments: [.text(value0)])
-        }
-        /// 导出 %1$@
-        ///
-        /// Resource: `Interface.appWorldManagerView.urlText2`.
-        public static func exportWorld(_ value0: String) -> LocalizedMessage {
-            .init(key: "appWorldManagerView.urlText2", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
-        }
-        /// 已导出存档 ZIP
-        ///
-        /// Resource: `Interface.appWorldManagerView.urlText3`.
-        public static var worldZipExported: LocalizedMessage {
-            .init(key: "appWorldManagerView.urlText3", table: "Interface", fallback: "已导出存档 ZIP")
-        }
-        /// 存档
-        ///
-        /// Resource: `Interface.appWorldManagerView.worldsTab`.
-        public static var worldsTab: LocalizedMessage {
-            .init(key: "appWorldManagerView.worldsTab", table: "Interface", fallback: "存档")
+        /// Resource: `Interface.AppWorldManagerView.backupWorld`.
+        public static func backupWorld(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppWorldManagerView.backupWorld", table: "Interface", fallback: "备份 %1$@", arguments: [.text(value0)])
         }
         /// 备份
         ///
-        /// Resource: `Interface.appWorldManagerView.backupsTab`.
+        /// Resource: `Interface.AppWorldManagerView.backupsTab`.
         public static var backupsTab: LocalizedMessage {
-            .init(key: "appWorldManagerView.backupsTab", table: "Interface", fallback: "备份")
+            .init(key: "AppWorldManagerView.backupsTab", table: "Interface", fallback: "备份")
+        }
+        /// 取消任务
+        ///
+        /// Resource: `Interface.AppWorldManagerView.cancelTask`.
+        public static var cancelTask: LocalizedMessage {
+            .init(key: "AppWorldManagerView.cancelTask", table: "Interface", fallback: "取消任务")
+        }
+        /// 内容
+        ///
+        /// Resource: `Interface.AppWorldManagerView.content`.
+        public static var content: LocalizedMessage {
+            .init(key: "AppWorldManagerView.content", table: "Interface", fallback: "内容")
+        }
+        /// 备份
+        ///
+        /// Resource: `Interface.AppWorldManagerView.createBackup`.
+        public static var createBackup: LocalizedMessage {
+            .init(key: "AppWorldManagerView.createBackup", table: "Interface", fallback: "备份")
+        }
+        /// 此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。
+        ///
+        /// Resource: `Interface.AppWorldManagerView.directWorldLaunchUnsupported`.
+        public static var directWorldLaunchUnsupported: LocalizedMessage {
+            .init(key: "AppWorldManagerView.directWorldLaunchUnsupported", table: "Interface", fallback: "此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。")
+        }
+        /// 进入存档
+        ///
+        /// Resource: `Interface.AppWorldManagerView.enterWorld`.
+        public static var enterWorld: LocalizedMessage {
+            .init(key: "AppWorldManagerView.enterWorld", table: "Interface", fallback: "进入存档")
+        }
+        /// 导出 %1$@
+        ///
+        /// Resource: `Interface.AppWorldManagerView.exportWorld`.
+        public static func exportWorld(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppWorldManagerView.exportWorld", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
+        }
+        /// 导出 ZIP…
+        ///
+        /// Resource: `Interface.AppWorldManagerView.exportZip`.
+        public static var exportZip: LocalizedMessage {
+            .init(key: "AppWorldManagerView.exportZip", table: "Interface", fallback: "导出 ZIP…")
+        }
+        /// 导入存档…
+        ///
+        /// Resource: `Interface.AppWorldManagerView.importWorld`.
+        public static var importWorld: LocalizedMessage {
+            .init(key: "AppWorldManagerView.importWorld", table: "Interface", fallback: "导入存档…")
+        }
+        /// 导入存档
+        ///
+        /// Resource: `Interface.AppWorldManagerView.importWorldTitle`.
+        public static var importWorldTitle: LocalizedMessage {
+            .init(key: "AppWorldManagerView.importWorldTitle", table: "Interface", fallback: "导入存档")
+        }
+        /// 启动游戏并进入此存档
+        ///
+        /// Resource: `Interface.AppWorldManagerView.launchWorldNotice`.
+        public static var launchWorldNotice: LocalizedMessage {
+            .init(key: "AppWorldManagerView.launchWorldNotice", table: "Interface", fallback: "启动游戏并进入此存档")
+        }
+        /// 管理数据包…
+        ///
+        /// Resource: `Interface.AppWorldManagerView.manageDatapacks`.
+        public static var manageDatapacks: LocalizedMessage {
+            .init(key: "AppWorldManagerView.manageDatapacks", table: "Interface", fallback: "管理数据包…")
         }
         /// 更多操作
         ///
-        /// Resource: `Interface.appWorldManagerView.moreActions`.
+        /// Resource: `Interface.AppWorldManagerView.moreActions`.
         public static var moreActions: LocalizedMessage {
-            .init(key: "appWorldManagerView.moreActions", table: "Interface", fallback: "更多操作")
+            .init(key: "AppWorldManagerView.moreActions", table: "Interface", fallback: "更多操作")
+        }
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.AppWorldManagerView.moveToTrash`.
+        public static var moveToTrash: LocalizedMessage {
+            .init(key: "AppWorldManagerView.moveToTrash", table: "Interface", fallback: "移到废纸篓")
+        }
+        /// 暂无备份
+        ///
+        /// Resource: `Interface.AppWorldManagerView.noBackups`.
+        public static var noBackups: LocalizedMessage {
+            .init(key: "AppWorldManagerView.noBackups", table: "Interface", fallback: "暂无备份")
+        }
+        /// 暂无存档
+        ///
+        /// Resource: `Interface.AppWorldManagerView.noWorlds`.
+        public static var noWorlds: LocalizedMessage {
+            .init(key: "AppWorldManagerView.noWorlds", table: "Interface", fallback: "暂无存档")
+        }
+        /// 打开存档文件夹
+        ///
+        /// Resource: `Interface.AppWorldManagerView.openWorldFolder`.
+        public static var openWorldFolder: LocalizedMessage {
+            .init(key: "AppWorldManagerView.openWorldFolder", table: "Interface", fallback: "打开存档文件夹")
+        }
+        /// 移除备份
+        ///
+        /// Resource: `Interface.AppWorldManagerView.removeBackup`.
+        public static var removeBackup: LocalizedMessage {
+            .init(key: "AppWorldManagerView.removeBackup", table: "Interface", fallback: "移除备份")
+        }
+        /// 移除存档
+        ///
+        /// Resource: `Interface.AppWorldManagerView.removeWorld`.
+        public static var removeWorld: LocalizedMessage {
+            .init(key: "AppWorldManagerView.removeWorld", table: "Interface", fallback: "移除存档")
+        }
+        /// 替换原存档…
+        ///
+        /// Resource: `Interface.AppWorldManagerView.replaceOriginal`.
+        public static var replaceOriginal: LocalizedMessage {
+            .init(key: "AppWorldManagerView.replaceOriginal", table: "Interface", fallback: "替换原存档…")
+        }
+        /// 替换原存档？
+        ///
+        /// Resource: `Interface.AppWorldManagerView.replaceWorldPrompt`.
+        public static var replaceWorldPrompt: LocalizedMessage {
+            .init(key: "AppWorldManagerView.replaceWorldPrompt", table: "Interface", fallback: "替换原存档？")
+        }
+        /// 恢复为副本
+        ///
+        /// Resource: `Interface.AppWorldManagerView.restoreAsCopy`.
+        public static var restoreAsCopy: LocalizedMessage {
+            .init(key: "AppWorldManagerView.restoreAsCopy", table: "Interface", fallback: "恢复为副本")
+        }
+        /// 将恢复到“%1$@”。现有存档会先创建一份自动备份。
+        ///
+        /// Resource: `Interface.AppWorldManagerView.restoreBackupNotice`.
+        public static func restoreBackupNotice(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppWorldManagerView.restoreBackupNotice", table: "Interface", fallback: "将恢复到“%1$@”。现有存档会先创建一份自动备份。", arguments: [.text(value0)])
+        }
+        /// 恢复 %1$@
+        ///
+        /// Resource: `Interface.AppWorldManagerView.restoreWorld`.
+        public static func restoreWorld(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppWorldManagerView.restoreWorld", table: "Interface", fallback: "恢复 %1$@", arguments: [.text(value0)])
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.AppWorldManagerView.showInFinder`.
+        public static var showInFinder: LocalizedMessage {
+            .init(key: "AppWorldManagerView.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
+        }
+        /// 移到废纸篓？
+        ///
+        /// Resource: `Interface.AppWorldManagerView.trashWorldPrompt`.
+        public static var trashWorldPrompt: LocalizedMessage {
+            .init(key: "AppWorldManagerView.trashWorldPrompt", table: "Interface", fallback: "移到废纸篓？")
+        }
+        /// %1$@ 已备份
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldBackedUp`.
+        public static func worldBackedUp(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldBackedUp", table: "Interface", fallback: "%1$@ 已备份", arguments: [.text(value0)])
+        }
+        /// 存档 %1$lld
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldCount`.
+        public static func worldCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldCount", table: "Interface", fallback: "存档 %1$lld", arguments: [.integer(value0)])
+        }
+        /// 在游戏中创建世界，或导入存档文件夹、ZIP 文件。
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldDescription`.
+        public static var worldDescription: LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldDescription", table: "Interface", fallback: "在游戏中创建世界，或导入存档文件夹、ZIP 文件。")
+        }
+        /// 请先结束游戏，再修改或备份存档。
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldEditNotice`.
+        public static var worldEditNotice: LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldEditNotice", table: "Interface", fallback: "请先结束游戏，再修改或备份存档。")
+        }
+        /// 已导入到 %1$@
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldImported`.
+        public static func worldImported(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldImported", table: "Interface", fallback: "已导入到 %1$@", arguments: [.text(value0)])
+        }
+        /// 此版本不支持直接进入存档
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldLaunchUnsupported`.
+        public static var worldLaunchUnsupported: LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldLaunchUnsupported", table: "Interface", fallback: "此版本不支持直接进入存档")
+        }
+        /// 已恢复到 %1$@
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldRestored`.
+        public static func worldRestored(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldRestored", table: "Interface", fallback: "已恢复到 %1$@", arguments: [.text(value0)])
+        }
+        /// 已导出存档 ZIP
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldZipExported`.
+        public static var worldZipExported: LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldZipExported", table: "Interface", fallback: "已导出存档 ZIP")
+        }
+        /// 存档与备份
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldsAndBackups`.
+        public static var worldsAndBackups: LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldsAndBackups", table: "Interface", fallback: "存档与备份")
+        }
+        /// 存档
+        ///
+        /// Resource: `Interface.AppWorldManagerView.worldsTab`.
+        public static var worldsTab: LocalizedMessage {
+            .init(key: "AppWorldManagerView.worldsTab", table: "Interface", fallback: "存档")
         }
         /// 处理存档文件
         ///
-        /// Resource: `Progress.appWorldManagerView.progressText1`.
+        /// Resource: `Progress.AppWorldManagerView.processingWorldFiles`.
         public static var processingWorldFiles: LocalizedMessage {
-            .init(key: "appWorldManagerView.progressText1", table: "Progress", fallback: "处理存档文件")
+            .init(key: "AppWorldManagerView.processingWorldFiles", table: "Progress", fallback: "处理存档文件")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appWorldManagerView.bodyText1": .init("存档与备份", []),
-            "Interface:appWorldManagerView.bodyText2": .init("内容", []),
-            "Interface:appWorldManagerView.bodyText3": .init("存档 %1$lld", [.integer]),
-            "Interface:appWorldManagerView.bodyText4": .init("备份 %1$lld", [.integer]),
-            "Interface:appWorldManagerView.bodyText5": .init("导入存档…", []),
-            "Interface:appWorldManagerView.bodyText6": .init("打开存档文件夹", []),
-            "Interface:appWorldManagerView.bodyText7": .init("请先结束游戏，再修改或备份存档。", []),
-            "Interface:appWorldManagerView.bodyText8": .init("此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。", []),
-            "Interface:appWorldManagerView.statusText1": .init("暂无存档", []),
-            "Interface:appWorldManagerView.statusText2": .init("在游戏中创建世界，或导入存档文件夹、ZIP 文件。", []),
-            "Interface:appWorldManagerView.statusText3": .init("暂无备份", []),
-            "Interface:appWorldManagerView.statusText4": .init("在存档列表中选择“备份”。", []),
-            "Interface:appWorldManagerView.statusText6": .init("取消任务", []),
-            "Interface:appWorldManagerView.urlText1": .init("导入存档", []),
-            "Interface:appWorldManagerView.folderText1": .init("已导入到 %1$@", [.text]),
-            "Interface:appWorldManagerView.folderText2": .init("替换原存档？", []),
-            "Interface:appWorldManagerView.folderText3": .init("自动备份并恢复", []),
-            "Interface:appWorldManagerView.backupText1": .init("将恢复到“%1$@”。现有存档会先创建一份自动备份。", [.text]),
-            "Interface:appWorldManagerView.backupText2": .init("移到废纸篓？", []),
-            "Interface:appWorldManagerView.backupText3": .init("移到废纸篓", []),
-            "Interface:appWorldManagerView.worldText1": .init("移除存档", []),
-            "Interface:appWorldManagerView.backupText4": .init("移除备份", []),
-            "Interface:appWorldManagerView.errorText1": .init("进入存档", []),
-            "Interface:appWorldManagerView.errorText2": .init("启动游戏并进入此存档", []),
-            "Interface:appWorldManagerView.errorText3": .init("此版本不支持直接进入存档", []),
-            "Interface:appWorldManagerView.errorText4": .init("备份", []),
-            "Interface:appWorldManagerView.errorText5": .init("备份 %1$@", [.text]),
-            "Interface:appWorldManagerView.errorText6": .init("%1$@ 已备份", [.text]),
-            "Interface:appWorldManagerView.errorText7": .init("管理数据包…", []),
-            "Interface:appWorldManagerView.errorText8": .init("导出 ZIP…", []),
-            "Interface:appWorldManagerView.errorText9": .init("在 Finder 中显示", []),
-            "Interface:appWorldManagerView.backupRowText1": .init("无法读取备份信息", []),
-            "Interface:appWorldManagerView.backupRowText2": .init("恢复为副本", []),
-            "Interface:appWorldManagerView.backupRowText3": .init("替换原存档…", []),
-            "Interface:appWorldManagerView.restoreText1": .init("恢复 %1$@", [.text]),
-            "Interface:appWorldManagerView.folderText4": .init("已恢复到 %1$@", [.text]),
-            "Interface:appWorldManagerView.urlText2": .init("导出 %1$@", [.text]),
-            "Interface:appWorldManagerView.urlText3": .init("已导出存档 ZIP", []),
-            "Interface:appWorldManagerView.worldsTab": .init("存档", []),
-            "Interface:appWorldManagerView.backupsTab": .init("备份", []),
-            "Interface:appWorldManagerView.moreActions": .init("更多操作", []),
-            "Progress:appWorldManagerView.progressText1": .init("处理存档文件", []),
+            "Interface:AppWorldManagerView.backupAndRestore": .init("自动备份并恢复", []),
+            "Interface:AppWorldManagerView.backupCount": .init("备份 %1$lld", [.integer]),
+            "Interface:AppWorldManagerView.backupDescription": .init("在存档列表中选择“备份”。", []),
+            "Interface:AppWorldManagerView.backupInfoUnavailable": .init("无法读取备份信息", []),
+            "Interface:AppWorldManagerView.backupWorld": .init("备份 %1$@", [.text]),
+            "Interface:AppWorldManagerView.backupsTab": .init("备份", []),
+            "Interface:AppWorldManagerView.cancelTask": .init("取消任务", []),
+            "Interface:AppWorldManagerView.content": .init("内容", []),
+            "Interface:AppWorldManagerView.createBackup": .init("备份", []),
+            "Interface:AppWorldManagerView.directWorldLaunchUnsupported": .init("此版本暂不支持直接进入存档，可启动游戏后从单人游戏菜单选择。", []),
+            "Interface:AppWorldManagerView.enterWorld": .init("进入存档", []),
+            "Interface:AppWorldManagerView.exportWorld": .init("导出 %1$@", [.text]),
+            "Interface:AppWorldManagerView.exportZip": .init("导出 ZIP…", []),
+            "Interface:AppWorldManagerView.importWorld": .init("导入存档…", []),
+            "Interface:AppWorldManagerView.importWorldTitle": .init("导入存档", []),
+            "Interface:AppWorldManagerView.launchWorldNotice": .init("启动游戏并进入此存档", []),
+            "Interface:AppWorldManagerView.manageDatapacks": .init("管理数据包…", []),
+            "Interface:AppWorldManagerView.moreActions": .init("更多操作", []),
+            "Interface:AppWorldManagerView.moveToTrash": .init("移到废纸篓", []),
+            "Interface:AppWorldManagerView.noBackups": .init("暂无备份", []),
+            "Interface:AppWorldManagerView.noWorlds": .init("暂无存档", []),
+            "Interface:AppWorldManagerView.openWorldFolder": .init("打开存档文件夹", []),
+            "Interface:AppWorldManagerView.removeBackup": .init("移除备份", []),
+            "Interface:AppWorldManagerView.removeWorld": .init("移除存档", []),
+            "Interface:AppWorldManagerView.replaceOriginal": .init("替换原存档…", []),
+            "Interface:AppWorldManagerView.replaceWorldPrompt": .init("替换原存档？", []),
+            "Interface:AppWorldManagerView.restoreAsCopy": .init("恢复为副本", []),
+            "Interface:AppWorldManagerView.restoreBackupNotice": .init("将恢复到“%1$@”。现有存档会先创建一份自动备份。", [.text]),
+            "Interface:AppWorldManagerView.restoreWorld": .init("恢复 %1$@", [.text]),
+            "Interface:AppWorldManagerView.showInFinder": .init("在 Finder 中显示", []),
+            "Interface:AppWorldManagerView.trashWorldPrompt": .init("移到废纸篓？", []),
+            "Interface:AppWorldManagerView.worldBackedUp": .init("%1$@ 已备份", [.text]),
+            "Interface:AppWorldManagerView.worldCount": .init("存档 %1$lld", [.integer]),
+            "Interface:AppWorldManagerView.worldDescription": .init("在游戏中创建世界，或导入存档文件夹、ZIP 文件。", []),
+            "Interface:AppWorldManagerView.worldEditNotice": .init("请先结束游戏，再修改或备份存档。", []),
+            "Interface:AppWorldManagerView.worldImported": .init("已导入到 %1$@", [.text]),
+            "Interface:AppWorldManagerView.worldLaunchUnsupported": .init("此版本不支持直接进入存档", []),
+            "Interface:AppWorldManagerView.worldRestored": .init("已恢复到 %1$@", [.text]),
+            "Interface:AppWorldManagerView.worldZipExported": .init("已导出存档 ZIP", []),
+            "Interface:AppWorldManagerView.worldsAndBackups": .init("存档与备份", []),
+            "Interface:AppWorldManagerView.worldsTab": .init("存档", []),
+            "Progress:AppWorldManagerView.processingWorldFiles": .init("处理存档文件", []),
         ]
     }
 }

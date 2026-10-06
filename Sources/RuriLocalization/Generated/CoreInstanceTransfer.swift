@@ -3,241 +3,241 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceTransfer {
-        /// Ruri 实例
-        ///
-        /// Resource: `Core.coreInstanceTransfer.titleText1`.
-        public static var ruriInstance: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.titleText1", table: "Core", fallback: "Ruri 实例")
-        }
-        /// Ruri 完整副本
-        ///
-        /// Resource: `Core.coreInstanceTransfer.titleText2`.
-        public static var ruriFullCopy: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.titleText2", table: "Core", fallback: "Ruri 完整副本")
-        }
-        /// 操作已取消。
-        ///
-        /// Resource: `Core.coreInstanceTransfer.reasonText1`.
-        public static var operationCancelled: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.reasonText1", table: "Core", fallback: "操作已取消。")
-        }
-        /// 整合包导入未完成，工作文件已保留，可重新导入。
-        /// %1$@
-        ///
-        /// Resource: `Core.coreInstanceTransfer.keptText1`.
-        public static func packImportIncomplete(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceTransfer.keptText1", table: "Core", fallback: "整合包导入未完成，工作文件已保留，可重新导入。\n%1$@", arguments: [.text(value0)])
-        }
         /// 整合包导入需要恢复，请在实例库处理未完成的导入。
         /// %1$@
         /// %2$@
         ///
-        /// Resource: `Core.coreInstanceTransfer.failureText3`.
+        /// Resource: `Core.CoreInstanceTransfer.importNeedsRecovery`.
         public static func importNeedsRecovery(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreInstanceTransfer.failureText3", table: "Core", fallback: "整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。
-        ///
-        /// Resource: `Core.coreInstanceTransfer.infoText1`.
-        public static var unsupportedManifest: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.infoText1", table: "Core", fallback: "未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。")
+            .init(key: "CoreInstanceTransfer.importNeedsRecovery", table: "Core", fallback: "整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@", arguments: [.text(value0), .text(value1)])
         }
         /// 目录包含多个实例，请选择其中一个实例目录。
         ///
-        /// Resource: `Core.coreInstanceTransfer.infoText2`.
+        /// Resource: `Core.CoreInstanceTransfer.multipleInstanceDirectories`.
         public static var multipleInstanceDirectories: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.infoText2", table: "Core", fallback: "目录包含多个实例，请选择其中一个实例目录。")
+            .init(key: "CoreInstanceTransfer.multipleInstanceDirectories", table: "Core", fallback: "目录包含多个实例，请选择其中一个实例目录。")
+        }
+        /// 操作已取消。
+        ///
+        /// Resource: `Core.CoreInstanceTransfer.operationCancelled`.
+        public static var operationCancelled: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.operationCancelled", table: "Core", fallback: "操作已取消。")
+        }
+        /// 整合包导入未完成，工作文件已保留，可重新导入。
+        /// %1$@
+        ///
+        /// Resource: `Core.CoreInstanceTransfer.packImportIncomplete`.
+        public static func packImportIncomplete(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.packImportIncomplete", table: "Core", fallback: "整合包导入未完成，工作文件已保留，可重新导入。\n%1$@", arguments: [.text(value0)])
         }
         /// 已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。
         ///
-        /// Resource: `Core.coreInstanceTransfer.commandsText1`.
+        /// Resource: `Core.CoreInstanceTransfer.retainedCommands`.
         public static var retainedCommands: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.commandsText1", table: "Core", fallback: "已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。")
+            .init(key: "CoreInstanceTransfer.retainedCommands", table: "Core", fallback: "已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。")
         }
-        /// 此实例包需要更新版本的 Ruri，或缺少安装文件信息。
+        /// Ruri 完整副本
         ///
-        /// Resource: `Errors.coreInstanceTransfer.instanceText1`.
-        public static var unsupportedInstanceVersion: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.instanceText1", table: "Errors", fallback: "此实例包需要更新版本的 Ruri，或缺少安装文件信息。")
+        /// Resource: `Core.CoreInstanceTransfer.ruriFullCopy`.
+        public static var ruriFullCopy: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.ruriFullCopy", table: "Core", fallback: "Ruri 完整副本")
+        }
+        /// Ruri 实例
+        ///
+        /// Resource: `Core.CoreInstanceTransfer.ruriInstance`.
+        public static var ruriInstance: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.ruriInstance", table: "Core", fallback: "Ruri 实例")
+        }
+        /// 未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。
+        ///
+        /// Resource: `Core.CoreInstanceTransfer.unsupportedManifest`.
+        public static var unsupportedManifest: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.unsupportedManifest", table: "Core", fallback: "未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。")
         }
         /// 请选择实际实例目录或压缩包。
         ///
-        /// Resource: `Errors.coreInstanceTransfer.isDirectoryText1`.
+        /// Resource: `Errors.CoreInstanceTransfer.actualDirectoryRequired`.
         public static var actualDirectoryRequired: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.isDirectoryText1", table: "Errors", fallback: "请选择实际实例目录或压缩包。")
+            .init(key: "CoreInstanceTransfer.actualDirectoryRequired", table: "Errors", fallback: "请选择实际实例目录或压缩包。")
         }
         /// 整合包内附文件校验失败：%1$@
         ///
-        /// Resource: `Errors.coreInstanceTransfer.itemText1`.
+        /// Resource: `Errors.CoreInstanceTransfer.bundledFileChecksumFailed`.
         public static func bundledFileChecksumFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceTransfer.itemText1", table: "Errors", fallback: "整合包内附文件校验失败：%1$@", arguments: [.text(value0)])
-        }
-        /// 整合包缺少文件且未提供下载源：%1$@
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.itemText2`.
-        public static func missingBundledFileDownloadSource(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceTransfer.itemText2", table: "Errors", fallback: "整合包缺少文件且未提供下载源：%1$@", arguments: [.text(value0)])
-        }
-        /// 文件缺少可用下载源
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.failureText1`.
-        public static var missingDownloadSource: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.failureText1", table: "Errors", fallback: "文件缺少可用下载源")
-        }
-        /// 整合包文件缺失或已修改：%1$@
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.itemText3`.
-        public static func modifiedBundledFile(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceTransfer.itemText3", table: "Errors", fallback: "整合包文件缺失或已修改：%1$@", arguments: [.text(value0)])
-        }
-        /// 此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.completeText1`.
-        public static var localFilesRequireFullCopy: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.completeText1", table: "Errors", fallback: "此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。")
-        }
-        /// 此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.completeText2`.
-        public static var legacyFabricUnsupported: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.completeText2", table: "Errors", fallback: "此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。")
-        }
-        /// 此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.completeText3`.
-        public static var liteLoaderUnsupported: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.completeText3", table: "Errors", fallback: "此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。")
-        }
-        /// 此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.completeText4`.
-        public static var optifineUnsupported: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.completeText4", table: "Errors", fallback: "此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。")
-        }
-        /// 此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.instanceText2`.
-        public static var disabledCommandsUnsupported: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.instanceText2", table: "Errors", fallback: "此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。")
-        }
-        /// 此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.locksText1`.
-        public static var extraLaunchSettings: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.locksText1", table: "Errors", fallback: "此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。")
-        }
-        /// 实例清单不是有效文件：%1$@
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.infoText3`.
-        public static func invalidInstanceManifest(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceTransfer.infoText3", table: "Errors", fallback: "实例清单不是有效文件：%1$@", arguments: [.text(value0)])
-        }
-        /// MultiMC 实例清单无效或缺少 Minecraft 版本。
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.gameText1`.
-        public static var invalidMultiMCManifest: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.gameText1", table: "Errors", fallback: "MultiMC 实例清单无效或缺少 Minecraft 版本。")
-        }
-        /// 此实例包含尚未支持的组件：%1$@
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.unknownText1`.
-        public static func unsupportedComponents(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceTransfer.unknownText1", table: "Errors", fallback: "此实例包含尚未支持的组件：%1$@", arguments: [.text(value0)])
-        }
-        /// 实例同时声明了多个加载器，暂时无法迁移。
-        ///
-        /// Resource: `Errors.coreInstanceTransfer.loadersText1`.
-        public static var multipleLoadersUnsupported: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.loadersText1", table: "Errors", fallback: "实例同时声明了多个加载器，暂时无法迁移。")
+            .init(key: "CoreInstanceTransfer.bundledFileChecksumFailed", table: "Errors", fallback: "整合包内附文件校验失败：%1$@", arguments: [.text(value0)])
         }
         /// 实例包含自定义 %1$@，需要先处理这些补丁后再迁移。
         ///
-        /// Resource: `Errors.coreInstanceTransfer.urlText1`.
+        /// Resource: `Errors.CoreInstanceTransfer.customPatchRequiresHandling`.
         public static func customPatchRequiresHandling(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceTransfer.urlText1", table: "Errors", fallback: "实例包含自定义 %1$@，需要先处理这些补丁后再迁移。", arguments: [.text(value0)])
+            .init(key: "CoreInstanceTransfer.customPatchRequiresHandling", table: "Errors", fallback: "实例包含自定义 %1$@，需要先处理这些补丁后再迁移。", arguments: [.text(value0)])
         }
-        /// 实例需要唯一的 minecraft 或 .minecraft 游戏目录。
+        /// 此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。
         ///
-        /// Resource: `Errors.coreInstanceTransfer.gamesText1`.
-        public static var uniqueGameDirectory: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.gamesText1", table: "Errors", fallback: "实例需要唯一的 minecraft 或 .minecraft 游戏目录。")
+        /// Resource: `Errors.CoreInstanceTransfer.disabledCommandsUnsupported`.
+        public static var disabledCommandsUnsupported: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.disabledCommandsUnsupported", table: "Errors", fallback: "此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。")
+        }
+        /// 此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.extraLaunchSettings`.
+        public static var extraLaunchSettings: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.extraLaunchSettings", table: "Errors", fallback: "此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。")
         }
         /// 实例版本、内存或窗口设置无效。
         ///
-        /// Resource: `Errors.coreInstanceTransfer.iconText1`.
+        /// Resource: `Errors.CoreInstanceTransfer.invalidIconSettings`.
         public static var invalidIconSettings: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.iconText1", table: "Errors", fallback: "实例版本、内存或窗口设置无效。")
+            .init(key: "CoreInstanceTransfer.invalidIconSettings", table: "Errors", fallback: "实例版本、内存或窗口设置无效。")
         }
-        /// 存档目录不能是符号链接。
+        /// 实例清单不是有效文件：%1$@
         ///
-        /// Resource: `Errors.coreInstanceTransfer.savesText1`.
-        public static var symlinkSaves: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.savesText1", table: "Errors", fallback: "存档目录不能是符号链接。")
+        /// Resource: `Errors.CoreInstanceTransfer.invalidInstanceManifest`.
+        public static func invalidInstanceManifest(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.invalidInstanceManifest", table: "Errors", fallback: "实例清单不是有效文件：%1$@", arguments: [.text(value0)])
+        }
+        /// MultiMC 实例清单无效或缺少 Minecraft 版本。
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.invalidMultiMCManifest`.
+        public static var invalidMultiMCManifest: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.invalidMultiMCManifest", table: "Errors", fallback: "MultiMC 实例清单无效或缺少 Minecraft 版本。")
+        }
+        /// 此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.legacyFabricUnsupported`.
+        public static var legacyFabricUnsupported: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.legacyFabricUnsupported", table: "Errors", fallback: "此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。")
+        }
+        /// 此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.liteLoaderUnsupported`.
+        public static var liteLoaderUnsupported: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.liteLoaderUnsupported", table: "Errors", fallback: "此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。")
+        }
+        /// 此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.localFilesRequireFullCopy`.
+        public static var localFilesRequireFullCopy: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.localFilesRequireFullCopy", table: "Errors", fallback: "此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。")
+        }
+        /// 整合包缺少文件且未提供下载源：%1$@
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.missingBundledFileDownloadSource`.
+        public static func missingBundledFileDownloadSource(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.missingBundledFileDownloadSource", table: "Errors", fallback: "整合包缺少文件且未提供下载源：%1$@", arguments: [.text(value0)])
+        }
+        /// 文件缺少可用下载源
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.missingDownloadSource`.
+        public static var missingDownloadSource: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.missingDownloadSource", table: "Errors", fallback: "文件缺少可用下载源")
+        }
+        /// 整合包文件缺失或已修改：%1$@
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.modifiedBundledFile`.
+        public static func modifiedBundledFile(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.modifiedBundledFile", table: "Errors", fallback: "整合包文件缺失或已修改：%1$@", arguments: [.text(value0)])
+        }
+        /// 实例同时声明了多个加载器，暂时无法迁移。
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.multipleLoadersUnsupported`.
+        public static var multipleLoadersUnsupported: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.multipleLoadersUnsupported", table: "Errors", fallback: "实例同时声明了多个加载器，暂时无法迁移。")
+        }
+        /// 此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.optifineUnsupported`.
+        public static var optifineUnsupported: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.optifineUnsupported", table: "Errors", fallback: "此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。")
         }
         /// 存档包含符号链接。
         ///
-        /// Resource: `Errors.coreInstanceTransfer.infoText4`.
+        /// Resource: `Errors.CoreInstanceTransfer.symlinkInSaves`.
         public static var symlinkInSaves: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.infoText4", table: "Errors", fallback: "存档包含符号链接。")
+            .init(key: "CoreInstanceTransfer.symlinkInSaves", table: "Errors", fallback: "存档包含符号链接。")
         }
-        /// 正在识别实例
+        /// 存档目录不能是符号链接。
         ///
-        /// Resource: `Progress.coreInstanceTransfer.workspaceText1`.
-        public static var identifyingInstance: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.workspaceText1", table: "Progress", fallback: "正在识别实例")
+        /// Resource: `Errors.CoreInstanceTransfer.symlinkSaves`.
+        public static var symlinkSaves: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.symlinkSaves", table: "Errors", fallback: "存档目录不能是符号链接。")
         }
-        /// 正在复制实例内容
+        /// 实例需要唯一的 minecraft 或 .minecraft 游戏目录。
         ///
-        /// Resource: `Progress.coreInstanceTransfer.excludedText1`.
-        public static var copyingInstanceContents: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.excludedText1", table: "Progress", fallback: "正在复制实例内容")
+        /// Resource: `Errors.CoreInstanceTransfer.uniqueGameDirectory`.
+        public static var uniqueGameDirectory: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.uniqueGameDirectory", table: "Errors", fallback: "实例需要唯一的 minecraft 或 .minecraft 游戏目录。")
+        }
+        /// 此实例包含尚未支持的组件：%1$@
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.unsupportedComponents`.
+        public static func unsupportedComponents(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.unsupportedComponents", table: "Errors", fallback: "此实例包含尚未支持的组件：%1$@", arguments: [.text(value0)])
+        }
+        /// 此实例包需要更新版本的 Ruri，或缺少安装文件信息。
+        ///
+        /// Resource: `Errors.CoreInstanceTransfer.unsupportedInstanceVersion`.
+        public static var unsupportedInstanceVersion: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.unsupportedInstanceVersion", table: "Errors", fallback: "此实例包需要更新版本的 Ruri，或缺少安装文件信息。")
         }
         /// 补齐整合包文件
         ///
-        /// Resource: `Progress.coreInstanceTransfer.failureText2`.
+        /// Resource: `Progress.CoreInstanceTransfer.completingPackFiles`.
         public static var completingPackFiles: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.failureText2", table: "Progress", fallback: "补齐整合包文件")
+            .init(key: "CoreInstanceTransfer.completingPackFiles", table: "Progress", fallback: "补齐整合包文件")
+        }
+        /// 正在复制实例内容
+        ///
+        /// Resource: `Progress.CoreInstanceTransfer.copyingInstanceContents`.
+        public static var copyingInstanceContents: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.copyingInstanceContents", table: "Progress", fallback: "正在复制实例内容")
         }
         /// 正在导出实例
         ///
-        /// Resource: `Progress.coreInstanceTransfer.cfgText1`.
+        /// Resource: `Progress.CoreInstanceTransfer.exportingInstance`.
         public static var exportingInstance: LocalizedMessage {
-            .init(key: "coreInstanceTransfer.cfgText1", table: "Progress", fallback: "正在导出实例")
+            .init(key: "CoreInstanceTransfer.exportingInstance", table: "Progress", fallback: "正在导出实例")
+        }
+        /// 正在识别实例
+        ///
+        /// Resource: `Progress.CoreInstanceTransfer.identifyingInstance`.
+        public static var identifyingInstance: LocalizedMessage {
+            .init(key: "CoreInstanceTransfer.identifyingInstance", table: "Progress", fallback: "正在识别实例")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreInstanceTransfer.titleText1": .init("Ruri 实例", []),
-            "Core:coreInstanceTransfer.titleText2": .init("Ruri 完整副本", []),
-            "Core:coreInstanceTransfer.reasonText1": .init("操作已取消。", []),
-            "Core:coreInstanceTransfer.keptText1": .init("整合包导入未完成，工作文件已保留，可重新导入。\n%1$@", [.text]),
-            "Core:coreInstanceTransfer.failureText3": .init("整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@", [.text, .text]),
-            "Core:coreInstanceTransfer.infoText1": .init("未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。", []),
-            "Core:coreInstanceTransfer.infoText2": .init("目录包含多个实例，请选择其中一个实例目录。", []),
-            "Core:coreInstanceTransfer.commandsText1": .init("已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。", []),
-            "Errors:coreInstanceTransfer.instanceText1": .init("此实例包需要更新版本的 Ruri，或缺少安装文件信息。", []),
-            "Errors:coreInstanceTransfer.isDirectoryText1": .init("请选择实际实例目录或压缩包。", []),
-            "Errors:coreInstanceTransfer.itemText1": .init("整合包内附文件校验失败：%1$@", [.text]),
-            "Errors:coreInstanceTransfer.itemText2": .init("整合包缺少文件且未提供下载源：%1$@", [.text]),
-            "Errors:coreInstanceTransfer.failureText1": .init("文件缺少可用下载源", []),
-            "Errors:coreInstanceTransfer.itemText3": .init("整合包文件缺失或已修改：%1$@", [.text]),
-            "Errors:coreInstanceTransfer.completeText1": .init("此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。", []),
-            "Errors:coreInstanceTransfer.completeText2": .init("此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。", []),
-            "Errors:coreInstanceTransfer.completeText3": .init("此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。", []),
-            "Errors:coreInstanceTransfer.completeText4": .init("此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。", []),
-            "Errors:coreInstanceTransfer.instanceText2": .init("此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。", []),
-            "Errors:coreInstanceTransfer.locksText1": .init("此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。", []),
-            "Errors:coreInstanceTransfer.infoText3": .init("实例清单不是有效文件：%1$@", [.text]),
-            "Errors:coreInstanceTransfer.gameText1": .init("MultiMC 实例清单无效或缺少 Minecraft 版本。", []),
-            "Errors:coreInstanceTransfer.unknownText1": .init("此实例包含尚未支持的组件：%1$@", [.text]),
-            "Errors:coreInstanceTransfer.loadersText1": .init("实例同时声明了多个加载器，暂时无法迁移。", []),
-            "Errors:coreInstanceTransfer.urlText1": .init("实例包含自定义 %1$@，需要先处理这些补丁后再迁移。", [.text]),
-            "Errors:coreInstanceTransfer.gamesText1": .init("实例需要唯一的 minecraft 或 .minecraft 游戏目录。", []),
-            "Errors:coreInstanceTransfer.iconText1": .init("实例版本、内存或窗口设置无效。", []),
-            "Errors:coreInstanceTransfer.savesText1": .init("存档目录不能是符号链接。", []),
-            "Errors:coreInstanceTransfer.infoText4": .init("存档包含符号链接。", []),
-            "Progress:coreInstanceTransfer.workspaceText1": .init("正在识别实例", []),
-            "Progress:coreInstanceTransfer.excludedText1": .init("正在复制实例内容", []),
-            "Progress:coreInstanceTransfer.failureText2": .init("补齐整合包文件", []),
-            "Progress:coreInstanceTransfer.cfgText1": .init("正在导出实例", []),
+            "Core:CoreInstanceTransfer.importNeedsRecovery": .init("整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@", [.text, .text]),
+            "Core:CoreInstanceTransfer.multipleInstanceDirectories": .init("目录包含多个实例，请选择其中一个实例目录。", []),
+            "Core:CoreInstanceTransfer.operationCancelled": .init("操作已取消。", []),
+            "Core:CoreInstanceTransfer.packImportIncomplete": .init("整合包导入未完成，工作文件已保留，可重新导入。\n%1$@", [.text]),
+            "Core:CoreInstanceTransfer.retainedCommands": .init("已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。", []),
+            "Core:CoreInstanceTransfer.ruriFullCopy": .init("Ruri 完整副本", []),
+            "Core:CoreInstanceTransfer.ruriInstance": .init("Ruri 实例", []),
+            "Core:CoreInstanceTransfer.unsupportedManifest": .init("未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。", []),
+            "Errors:CoreInstanceTransfer.actualDirectoryRequired": .init("请选择实际实例目录或压缩包。", []),
+            "Errors:CoreInstanceTransfer.bundledFileChecksumFailed": .init("整合包内附文件校验失败：%1$@", [.text]),
+            "Errors:CoreInstanceTransfer.customPatchRequiresHandling": .init("实例包含自定义 %1$@，需要先处理这些补丁后再迁移。", [.text]),
+            "Errors:CoreInstanceTransfer.disabledCommandsUnsupported": .init("此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。", []),
+            "Errors:CoreInstanceTransfer.extraLaunchSettings": .init("此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。", []),
+            "Errors:CoreInstanceTransfer.invalidIconSettings": .init("实例版本、内存或窗口设置无效。", []),
+            "Errors:CoreInstanceTransfer.invalidInstanceManifest": .init("实例清单不是有效文件：%1$@", [.text]),
+            "Errors:CoreInstanceTransfer.invalidMultiMCManifest": .init("MultiMC 实例清单无效或缺少 Minecraft 版本。", []),
+            "Errors:CoreInstanceTransfer.legacyFabricUnsupported": .init("此导出格式尚不能保留 Legacy Fabric，请选择 Ruri 或 MCBBS 格式。", []),
+            "Errors:CoreInstanceTransfer.liteLoaderUnsupported": .init("此导出格式尚不能保留当前 LiteLoader 版本，请选择 Ruri 或 MCBBS 格式。", []),
+            "Errors:CoreInstanceTransfer.localFilesRequireFullCopy": .init("此实例含有本地游戏文件，请选择 Ruri 完整副本以保留当前安装。", []),
+            "Errors:CoreInstanceTransfer.missingBundledFileDownloadSource": .init("整合包缺少文件且未提供下载源：%1$@", [.text]),
+            "Errors:CoreInstanceTransfer.missingDownloadSource": .init("文件缺少可用下载源", []),
+            "Errors:CoreInstanceTransfer.modifiedBundledFile": .init("整合包文件缺失或已修改：%1$@", [.text]),
+            "Errors:CoreInstanceTransfer.multipleLoadersUnsupported": .init("实例同时声明了多个加载器，暂时无法迁移。", []),
+            "Errors:CoreInstanceTransfer.optifineUnsupported": .init("此导出格式尚不能保留 OptiFine，请选择 Ruri 或 MCBBS 格式。", []),
+            "Errors:CoreInstanceTransfer.symlinkInSaves": .init("存档包含符号链接。", []),
+            "Errors:CoreInstanceTransfer.symlinkSaves": .init("存档目录不能是符号链接。", []),
+            "Errors:CoreInstanceTransfer.uniqueGameDirectory": .init("实例需要唯一的 minecraft 或 .minecraft 游戏目录。", []),
+            "Errors:CoreInstanceTransfer.unsupportedComponents": .init("此实例包含尚未支持的组件：%1$@", [.text]),
+            "Errors:CoreInstanceTransfer.unsupportedInstanceVersion": .init("此实例包需要更新版本的 Ruri，或缺少安装文件信息。", []),
+            "Progress:CoreInstanceTransfer.completingPackFiles": .init("补齐整合包文件", []),
+            "Progress:CoreInstanceTransfer.copyingInstanceContents": .init("正在复制实例内容", []),
+            "Progress:CoreInstanceTransfer.exportingInstance": .init("正在导出实例", []),
+            "Progress:CoreInstanceTransfer.identifyingInstance": .init("正在识别实例", []),
         ]
     }
 }

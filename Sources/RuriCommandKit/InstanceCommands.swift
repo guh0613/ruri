@@ -26,7 +26,7 @@ extension CLIApplication {
         }
         let instance: GameInstance
         if action == "show" {
-            guard (request.operands.isEmpty ? 0 : 1) + (request.string("name") == nil ? 0 : 1) == 1 else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t79f4a3aa9493.localized) }
+            guard (request.operands.isEmpty ? 0 : 1) + (request.string("name") == nil ? 0 : 1) == 1 else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.instanceIdOrNameRequired.localized) }
             instance = try service.resolve(id: request.operands.first.map(uuid), name: request.string("name"))
         } else { instance = try service.resolve(id: uuid(request.operand())) }
         let id = instance.id
@@ -37,14 +37,14 @@ extension CLIApplication {
             return .object(["id": .string(id.uuidString), "dryRun": .bool(request.dryRun)])
         case "rename": return instanceValue(try service.edit(id, name: request.operand(1), dryRun: request.dryRun), paths: paths)
         case "favorite":
-            guard let enabled = Bool(try request.operand(1)) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t188ae1e6f458.localized) }
+            guard let enabled = Bool(try request.operand(1)) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.booleanValueRequired.localized) }
             return instanceValue(try service.edit(id, favorite: enabled, dryRun: request.dryRun), paths: paths)
         case "icon":
-            guard [request.string("file") != nil, request.string("glyph") != nil, request.flag("reset")].filter({ $0 }).count == 1 else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tf996e1aeec0d.localized) }
+            guard [request.string("file") != nil, request.string("glyph") != nil, request.flag("reset")].filter({ $0 }).count == 1 else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.instanceIconSelectionRequired.localized) }
             let icon: InstanceIconChange
             if let file = request.string("file") { icon = .image(try readInput(file, maximumBytes: 8 * 1024 * 1024)) }
             else if let name = request.string("glyph") {
-                guard let glyph = InstanceIconGlyph(rawValue: name), let tint = InstanceIconTint(rawValue: request.string("tint") ?? "slate") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te8f93a97f4a5.localized) }
+                guard let glyph = InstanceIconGlyph(rawValue: name), let tint = InstanceIconTint(rawValue: request.string("tint") ?? "slate") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownIconGlyphOrTint.localized) }
                 icon = .style(.init(glyph: glyph, tint: tint))
             } else { icon = .reset }
             return instanceValue(try service.edit(id, icon: icon, dryRun: request.dryRun), paths: paths)
@@ -58,7 +58,7 @@ extension CLIApplication {
             let backup = try await InstanceComponents(paths: paths).backup(for: id)
             return .object(["components": .array(instance.loaderSelections.map { .object(["loader": .string($0.loader.rawValue), "version": .string($0.version)]) }), "backup": .text(backup?.title), "unavailableReason": .text(InstanceComponents.unavailableReason(instance))])
         case "component versions":
-            guard let loader = LoaderKind(rawValue: try request.operand(1)) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tecaf531d009c.localized) }
+            guard let loader = LoaderKind(rawValue: try request.operand(1)) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownLoader.localized) }
             return request.page(try await GameInstaller(paths: paths).loaderVersions(loader, game: instance.gameVersion).map(Value.string))
         case "component set", "component restore":
             let service = InstanceComponents(paths: paths, downloader: downloader), selected = try selections(request)
@@ -91,7 +91,7 @@ extension CLIApplication {
                 try await InstanceTransfer(paths: paths).export(instance, to: destination, format: InstanceExportFormat(rawValue: request.string("format") ?? "ruri")!, includeWorlds: !request.flag("without-worlds"), progress: { output.progress($0) })
             }
             return .object(["file": .string(destination.path), "dryRun": .bool(request.dryRun)])
-        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.td578c368dab6.localized)
+        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownInstanceAction.localized)
         }
     }
     static func instanceValue(_ item: GameInstance, paths: LauncherPaths) -> Value {
@@ -105,10 +105,10 @@ extension CLIApplication {
         guard case .array(let values) = request.options["component"] else { return [] }
         let result = try values.map { value -> LoaderSelection in
             let parts = (value.string ?? "").split(separator: "=", maxSplits: 1).map(String.init)
-            guard parts.count == 2, let loader = LoaderKind(rawValue: parts[0]), loader != .vanilla, !parts[1].isEmpty else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tc7720bf2a0d4.localized) }
+            guard parts.count == 2, let loader = LoaderKind(rawValue: parts[0]), loader != .vanilla, !parts[1].isEmpty else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidComponentSpecification.localized) }
             return .init(loader: loader, version: parts[1])
         }
-        guard Set(result.map(\.loader)).count == result.count else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t46989dde4470.localized) }; return result
+        guard Set(result.map(\.loader)).count == result.count else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.duplicateLoaderSelection.localized) }; return result
     }
     static func directoryID(_ input: String) throws -> UUID { input == "default" ? GameDirectory.defaultID : try uuid(input) }
     @MainActor static func context(_ request: CommandRequest) async throws -> (PersistentState, LauncherPaths, DownloadManager) {
@@ -116,13 +116,13 @@ extension CLIApplication {
         let downloader = DownloadManager()
         var source = state.settings.downloadSource ?? .automatic
         if let override = ProcessInfo.processInfo.environment["RURI_DOWNLOAD_SOURCE"] {
-            guard let selected = DownloadSource(rawValue: override) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t733e25583e8d.localized) }; source = selected
+            guard let selected = DownloadSource(rawValue: override) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidDownloadSourceEnvironment.localized) }; source = selected
         }
         await NetworkRouting.shared.configure(source)
         await downloader.configure(concurrency: state.settings.concurrentDownloads, cache: DownloadCache(paths: base))
         return (state, paths, downloader)
     }
     static func requireNewFile(_ file: URL) throws {
-        guard !FileManager.default.fileExists(atPath: file.path), (try? FileManager.default.destinationOfSymbolicLink(atPath: file.path)) == nil else { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.t121c67f22040.localized) }
+        guard !FileManager.default.fileExists(atPath: file.path), (try? FileManager.default.destinationOfSymbolicLink(atPath: file.path)) == nil else { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.outputFileAlreadyExists.localized) }
     }
 }

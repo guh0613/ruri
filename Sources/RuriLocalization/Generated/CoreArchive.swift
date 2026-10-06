@@ -3,63 +3,63 @@ import Foundation
 
 extension Messages {
     public enum CoreArchive {
-        /// 压缩包超出校验大小限制
-        ///
-        /// Resource: `Errors.coreArchive.countText1`.
-        public static var archiveVerificationLimitExceeded: LocalizedMessage {
-            .init(key: "coreArchive.countText1", table: "Errors", fallback: "压缩包超出校验大小限制")
-        }
         /// 文件 CRC 校验失败：%1$@/%2$@
         ///
-        /// Resource: `Errors.coreArchive.crcText1`.
+        /// Resource: `Errors.CoreArchive.archiveChecksumFailed`.
         public static func archiveChecksumFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreArchive.crcText1", table: "Errors", fallback: "文件 CRC 校验失败：%1$@/%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreArchive.archiveChecksumFailed", table: "Errors", fallback: "文件 CRC 校验失败：%1$@/%2$@", arguments: [.text(value0), .text(value1)])
         }
         /// 压缩包文件数量超出限制
         ///
-        /// Resource: `Errors.coreArchive.countText2`.
+        /// Resource: `Errors.CoreArchive.archiveEntryLimitExceeded`.
         public static var archiveEntryLimitExceeded: LocalizedMessage {
-            .init(key: "coreArchive.countText2", table: "Errors", fallback: "压缩包文件数量超出限制")
-        }
-        /// 压缩包不允许符号链接：%1$@
-        ///
-        /// Resource: `Errors.coreArchive.targetText1`.
-        public static func archiveSymlinkNotAllowed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreArchive.targetText1", table: "Errors", fallback: "压缩包不允许符号链接：%1$@", arguments: [.text(value0)])
-        }
-        /// 压缩包解压大小超出限制
-        ///
-        /// Resource: `Errors.coreArchive.sizeText1`.
-        public static var archiveExtractionLimitExceeded: LocalizedMessage {
-            .init(key: "coreArchive.sizeText1", table: "Errors", fallback: "压缩包解压大小超出限制")
+            .init(key: "CoreArchive.archiveEntryLimitExceeded", table: "Errors", fallback: "压缩包文件数量超出限制")
         }
         /// 无法解压文件：%1$@
         ///
-        /// Resource: `Errors.coreArchive.tempText1`.
+        /// Resource: `Errors.CoreArchive.archiveExtractionFailed`.
         public static func archiveExtractionFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreArchive.tempText1", table: "Errors", fallback: "无法解压文件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreArchive.archiveExtractionFailed", table: "Errors", fallback: "无法解压文件：%1$@", arguments: [.text(value0)])
+        }
+        /// 压缩包解压大小超出限制
+        ///
+        /// Resource: `Errors.CoreArchive.archiveExtractionLimitExceeded`.
+        public static var archiveExtractionLimitExceeded: LocalizedMessage {
+            .init(key: "CoreArchive.archiveExtractionLimitExceeded", table: "Errors", fallback: "压缩包解压大小超出限制")
         }
         /// 压缩包文件校验失败：%1$@
         ///
-        /// Resource: `Errors.coreArchive.checksumText1`.
+        /// Resource: `Errors.CoreArchive.archiveFileChecksumFailed`.
         public static func archiveFileChecksumFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreArchive.checksumText1", table: "Errors", fallback: "压缩包文件校验失败：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreArchive.archiveFileChecksumFailed", table: "Errors", fallback: "压缩包文件校验失败：%1$@", arguments: [.text(value0)])
         }
         /// 无法保存解压文件：%1$@
         ///
-        /// Resource: `Errors.coreArchive.checksumText2`.
+        /// Resource: `Errors.CoreArchive.archiveFileSaveFailed`.
         public static func archiveFileSaveFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreArchive.checksumText2", table: "Errors", fallback: "无法保存解压文件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreArchive.archiveFileSaveFailed", table: "Errors", fallback: "无法保存解压文件：%1$@", arguments: [.text(value0)])
+        }
+        /// 压缩包不允许符号链接：%1$@
+        ///
+        /// Resource: `Errors.CoreArchive.archiveSymlinkNotAllowed`.
+        public static func archiveSymlinkNotAllowed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreArchive.archiveSymlinkNotAllowed", table: "Errors", fallback: "压缩包不允许符号链接：%1$@", arguments: [.text(value0)])
+        }
+        /// 压缩包超出校验大小限制
+        ///
+        /// Resource: `Errors.CoreArchive.archiveVerificationLimitExceeded`.
+        public static var archiveVerificationLimitExceeded: LocalizedMessage {
+            .init(key: "CoreArchive.archiveVerificationLimitExceeded", table: "Errors", fallback: "压缩包超出校验大小限制")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreArchive.countText1": .init("压缩包超出校验大小限制", []),
-            "Errors:coreArchive.crcText1": .init("文件 CRC 校验失败：%1$@/%2$@", [.text, .text]),
-            "Errors:coreArchive.countText2": .init("压缩包文件数量超出限制", []),
-            "Errors:coreArchive.targetText1": .init("压缩包不允许符号链接：%1$@", [.text]),
-            "Errors:coreArchive.sizeText1": .init("压缩包解压大小超出限制", []),
-            "Errors:coreArchive.tempText1": .init("无法解压文件：%1$@", [.text]),
-            "Errors:coreArchive.checksumText1": .init("压缩包文件校验失败：%1$@", [.text]),
-            "Errors:coreArchive.checksumText2": .init("无法保存解压文件：%1$@", [.text]),
+            "Errors:CoreArchive.archiveChecksumFailed": .init("文件 CRC 校验失败：%1$@/%2$@", [.text, .text]),
+            "Errors:CoreArchive.archiveEntryLimitExceeded": .init("压缩包文件数量超出限制", []),
+            "Errors:CoreArchive.archiveExtractionFailed": .init("无法解压文件：%1$@", [.text]),
+            "Errors:CoreArchive.archiveExtractionLimitExceeded": .init("压缩包解压大小超出限制", []),
+            "Errors:CoreArchive.archiveFileChecksumFailed": .init("压缩包文件校验失败：%1$@", [.text]),
+            "Errors:CoreArchive.archiveFileSaveFailed": .init("无法保存解压文件：%1$@", [.text]),
+            "Errors:CoreArchive.archiveSymlinkNotAllowed": .init("压缩包不允许符号链接：%1$@", [.text]),
+            "Errors:CoreArchive.archiveVerificationLimitExceeded": .init("压缩包超出校验大小限制", []),
         ]
     }
 }

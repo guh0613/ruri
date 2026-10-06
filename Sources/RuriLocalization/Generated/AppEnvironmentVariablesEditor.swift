@@ -3,133 +3,133 @@ import Foundation
 
 extension Messages {
     public enum AppEnvironmentVariablesEditor {
-        /// 没有自定义环境变量
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText1`.
-        public static var noCustomVariables: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText1", table: "Interface", fallback: "没有自定义环境变量")
-        }
-        /// 按模组或工具的要求添加。
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText2`.
-        public static var variableHint: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText2", table: "Interface", fallback: "按模组或工具的要求添加。")
-        }
-        /// 变量名称
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText3`.
-        public static var variableName: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText3", table: "Interface", fallback: "变量名称")
-        }
-        /// 值
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText4`.
-        public static var valueColumn: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText4", table: "Interface", fallback: "值")
-        }
         /// 操作
         ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText5`.
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.actions`.
         public static var actions: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText5", table: "Interface", fallback: "操作")
-        }
-        /// 名称
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText6`.
-        public static var name: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText6", table: "Interface", fallback: "名称")
-        }
-        /// 变量值
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText7`.
-        public static var variableValue: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText7", table: "Interface", fallback: "变量值")
-        }
-        /// 移除继承值
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText8`.
-        public static var removeInheritedValue: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText8", table: "Interface", fallback: "移除继承值")
-        }
-        /// 输入值，可留空
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText9`.
-        public static var enterValue: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText9", table: "Interface", fallback: "输入值，可留空")
-        }
-        /// 设置
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText10`.
-        public static var setVariable: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText10", table: "Interface", fallback: "设置")
-        }
-        /// 移除
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText11`.
-        public static var removeVariable: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText11", table: "Interface", fallback: "移除")
-        }
-        /// 环境变量操作
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText12`.
-        public static var variableActions: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText12", table: "Interface", fallback: "环境变量操作")
-        }
-        /// 删除此项配置
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText13`.
-        public static var deleteConfiguration: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText13", table: "Interface", fallback: "删除此项配置")
-        }
-        /// 删除环境变量
-        ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText14`.
-        public static var deleteVariable: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText14", table: "Interface", fallback: "删除环境变量")
+            .init(key: "AppEnvironmentVariablesEditor.actions", table: "Interface", fallback: "操作")
         }
         /// 添加变量
         ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.bodyText15`.
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.addVariable`.
         public static var addVariable: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.bodyText15", table: "Interface", fallback: "添加变量")
+            .init(key: "AppEnvironmentVariablesEditor.addVariable", table: "Interface", fallback: "添加变量")
         }
-        /// 值无需引号。“移除”表示不向游戏传递该系统变量。
+        /// 删除此项配置
         ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.errorText1`.
-        public static var valuePassthroughNotice: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.errorText1", table: "Interface", fallback: "值无需引号。“移除”表示不向游戏传递该系统变量。")
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.deleteConfiguration`.
+        public static var deleteConfiguration: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.deleteConfiguration", table: "Interface", fallback: "删除此项配置")
         }
-        /// 使用说明
+        /// 删除环境变量
         ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.errorText2`.
-        public static var usageGuide: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.errorText2", table: "Interface", fallback: "使用说明")
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.deleteVariable`.
+        public static var deleteVariable: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.deleteVariable", table: "Interface", fallback: "删除环境变量")
+        }
+        /// 输入值，可留空
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.enterValue`.
+        public static var enterValue: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.enterValue", table: "Interface", fallback: "输入值，可留空")
+        }
+        /// 名称
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.name`.
+        public static var name: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.name", table: "Interface", fallback: "名称")
         }
         /// 名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。
         ///
-        /// Resource: `Interface.appEnvironmentVariablesEditor.errorText3`.
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.nameValidation`.
         public static var nameValidation: LocalizedMessage {
-            .init(key: "appEnvironmentVariablesEditor.errorText3", table: "Interface", fallback: "名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。")
+            .init(key: "AppEnvironmentVariablesEditor.nameValidation", table: "Interface", fallback: "名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。")
+        }
+        /// 没有自定义环境变量
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.noCustomVariables`.
+        public static var noCustomVariables: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.noCustomVariables", table: "Interface", fallback: "没有自定义环境变量")
+        }
+        /// 移除继承值
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.removeInheritedValue`.
+        public static var removeInheritedValue: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.removeInheritedValue", table: "Interface", fallback: "移除继承值")
+        }
+        /// 移除
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.removeVariable`.
+        public static var removeVariable: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.removeVariable", table: "Interface", fallback: "移除")
+        }
+        /// 设置
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.setVariable`.
+        public static var setVariable: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.setVariable", table: "Interface", fallback: "设置")
+        }
+        /// 使用说明
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.usageGuide`.
+        public static var usageGuide: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.usageGuide", table: "Interface", fallback: "使用说明")
+        }
+        /// 值
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.valueColumn`.
+        public static var valueColumn: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.valueColumn", table: "Interface", fallback: "值")
+        }
+        /// 值无需引号。“移除”表示不向游戏传递该系统变量。
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.valuePassthroughNotice`.
+        public static var valuePassthroughNotice: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.valuePassthroughNotice", table: "Interface", fallback: "值无需引号。“移除”表示不向游戏传递该系统变量。")
+        }
+        /// 环境变量操作
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.variableActions`.
+        public static var variableActions: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.variableActions", table: "Interface", fallback: "环境变量操作")
+        }
+        /// 按模组或工具的要求添加。
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.variableHint`.
+        public static var variableHint: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.variableHint", table: "Interface", fallback: "按模组或工具的要求添加。")
+        }
+        /// 变量名称
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.variableName`.
+        public static var variableName: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.variableName", table: "Interface", fallback: "变量名称")
+        }
+        /// 变量值
+        ///
+        /// Resource: `Interface.AppEnvironmentVariablesEditor.variableValue`.
+        public static var variableValue: LocalizedMessage {
+            .init(key: "AppEnvironmentVariablesEditor.variableValue", table: "Interface", fallback: "变量值")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appEnvironmentVariablesEditor.bodyText1": .init("没有自定义环境变量", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText2": .init("按模组或工具的要求添加。", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText3": .init("变量名称", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText4": .init("值", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText5": .init("操作", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText6": .init("名称", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText7": .init("变量值", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText8": .init("移除继承值", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText9": .init("输入值，可留空", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText10": .init("设置", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText11": .init("移除", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText12": .init("环境变量操作", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText13": .init("删除此项配置", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText14": .init("删除环境变量", []),
-            "Interface:appEnvironmentVariablesEditor.bodyText15": .init("添加变量", []),
-            "Interface:appEnvironmentVariablesEditor.errorText1": .init("值无需引号。“移除”表示不向游戏传递该系统变量。", []),
-            "Interface:appEnvironmentVariablesEditor.errorText2": .init("使用说明", []),
-            "Interface:appEnvironmentVariablesEditor.errorText3": .init("名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。", []),
+            "Interface:AppEnvironmentVariablesEditor.actions": .init("操作", []),
+            "Interface:AppEnvironmentVariablesEditor.addVariable": .init("添加变量", []),
+            "Interface:AppEnvironmentVariablesEditor.deleteConfiguration": .init("删除此项配置", []),
+            "Interface:AppEnvironmentVariablesEditor.deleteVariable": .init("删除环境变量", []),
+            "Interface:AppEnvironmentVariablesEditor.enterValue": .init("输入值，可留空", []),
+            "Interface:AppEnvironmentVariablesEditor.name": .init("名称", []),
+            "Interface:AppEnvironmentVariablesEditor.nameValidation": .init("名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。", []),
+            "Interface:AppEnvironmentVariablesEditor.noCustomVariables": .init("没有自定义环境变量", []),
+            "Interface:AppEnvironmentVariablesEditor.removeInheritedValue": .init("移除继承值", []),
+            "Interface:AppEnvironmentVariablesEditor.removeVariable": .init("移除", []),
+            "Interface:AppEnvironmentVariablesEditor.setVariable": .init("设置", []),
+            "Interface:AppEnvironmentVariablesEditor.usageGuide": .init("使用说明", []),
+            "Interface:AppEnvironmentVariablesEditor.valueColumn": .init("值", []),
+            "Interface:AppEnvironmentVariablesEditor.valuePassthroughNotice": .init("值无需引号。“移除”表示不向游戏传递该系统变量。", []),
+            "Interface:AppEnvironmentVariablesEditor.variableActions": .init("环境变量操作", []),
+            "Interface:AppEnvironmentVariablesEditor.variableHint": .init("按模组或工具的要求添加。", []),
+            "Interface:AppEnvironmentVariablesEditor.variableName": .init("变量名称", []),
+            "Interface:AppEnvironmentVariablesEditor.variableValue": .init("变量值", []),
         ]
     }
 }

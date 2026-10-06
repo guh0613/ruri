@@ -3,105 +3,105 @@ import Foundation
 
 extension Messages {
     public enum AppCreateInstanceView {
+        /// 创建并安装
+        ///
+        /// Resource: `Interface.AppCreateInstanceView.createAndInstall`.
+        public static var createAndInstall: LocalizedMessage {
+            .init(key: "AppCreateInstanceView.createAndInstall", table: "Interface", fallback: "创建并安装")
+        }
         /// 新建实例
         ///
-        /// Resource: `Interface.appCreateInstanceView.bodyText1`.
+        /// Resource: `Interface.AppCreateInstanceView.createInstance`.
         public static var createInstance: LocalizedMessage {
-            .init(key: "appCreateInstanceView.bodyText1", table: "Interface", fallback: "新建实例")
-        }
-        /// 实例名称（可选）
-        ///
-        /// Resource: `Interface.appCreateInstanceView.bodyText3`.
-        public static var instanceNameOptional: LocalizedMessage {
-            .init(key: "appCreateInstanceView.bodyText3", table: "Interface", fallback: "实例名称（可选）")
-        }
-        /// 保存到：%1$@
-        ///
-        /// Resource: `Interface.appCreateInstanceView.bodyText4`.
-        public static func saveLocation(_ value0: String) -> LocalizedMessage {
-            .init(key: "appCreateInstanceView.bodyText4", table: "Interface", fallback: "保存到：%1$@", arguments: [.text(value0)])
-        }
-        /// 搜索 Minecraft 版本
-        ///
-        /// Resource: `Interface.appCreateInstanceView.bodyText5`.
-        public static var searchVersions: LocalizedMessage {
-            .init(key: "appCreateInstanceView.bodyText5", table: "Interface", fallback: "搜索 Minecraft 版本")
-        }
-        /// 快照与旧版
-        ///
-        /// Resource: `Interface.appCreateInstanceView.bodyText6`.
-        public static var snapshotsAndOldVersions: LocalizedMessage {
-            .init(key: "appCreateInstanceView.bodyText6", table: "Interface", fallback: "快照与旧版")
+            .init(key: "AppCreateInstanceView.createInstance", table: "Interface", fallback: "新建实例")
         }
         /// 正在获取版本…
         ///
-        /// Resource: `Interface.appCreateInstanceView.bodyText7`.
+        /// Resource: `Interface.AppCreateInstanceView.fetchingVersions`.
         public static var fetchingVersions: LocalizedMessage {
-            .init(key: "appCreateInstanceView.bodyText7", table: "Interface", fallback: "正在获取版本…")
-        }
-        /// 重试
-        ///
-        /// Resource: `Interface.appCreateInstanceView.errorText1`.
-        public static var retry: LocalizedMessage {
-            .init(key: "appCreateInstanceView.errorText1", table: "Interface", fallback: "重试")
-        }
-        /// 最新正式版
-        ///
-        /// Resource: `Interface.appCreateInstanceView.errorText2`.
-        public static var latestRelease: LocalizedMessage {
-            .init(key: "appCreateInstanceView.errorText2", table: "Interface", fallback: "最新正式版")
-        }
-        /// 加载器
-        ///
-        /// Resource: `Interface.appCreateInstanceView.errorText3`.
-        public static var loader: LocalizedMessage {
-            .init(key: "appCreateInstanceView.errorText3", table: "Interface", fallback: "加载器")
-        }
-        /// OptiFine 版本与安装包由 BMCLAPI 提供。
-        ///
-        /// Resource: `Interface.appCreateInstanceView.errorText4`.
-        public static var optifineSource: LocalizedMessage {
-            .init(key: "appCreateInstanceView.errorText4", table: "Interface", fallback: "OptiFine 版本与安装包由 BMCLAPI 提供。")
+            .init(key: "AppCreateInstanceView.fetchingVersions", table: "Interface", fallback: "正在获取版本…")
         }
         /// 查找兼容的加载器…
         ///
-        /// Resource: `Interface.appCreateInstanceView.errorText5`.
+        /// Resource: `Interface.AppCreateInstanceView.findCompatibleLoaders`.
         public static var findCompatibleLoaders: LocalizedMessage {
-            .init(key: "appCreateInstanceView.errorText5", table: "Interface", fallback: "查找兼容的加载器…")
+            .init(key: "AppCreateInstanceView.findCompatibleLoaders", table: "Interface", fallback: "查找兼容的加载器…")
+        }
+        /// 实例名称（可选）
+        ///
+        /// Resource: `Interface.AppCreateInstanceView.instanceNameOptional`.
+        public static var instanceNameOptional: LocalizedMessage {
+            .init(key: "AppCreateInstanceView.instanceNameOptional", table: "Interface", fallback: "实例名称（可选）")
+        }
+        /// 最新正式版
+        ///
+        /// Resource: `Interface.AppCreateInstanceView.latestRelease`.
+        public static var latestRelease: LocalizedMessage {
+            .init(key: "AppCreateInstanceView.latestRelease", table: "Interface", fallback: "最新正式版")
+        }
+        /// 加载器
+        ///
+        /// Resource: `Interface.AppCreateInstanceView.loader`.
+        public static var loader: LocalizedMessage {
+            .init(key: "AppCreateInstanceView.loader", table: "Interface", fallback: "加载器")
         }
         /// 加载器版本
         ///
-        /// Resource: `Interface.appCreateInstanceView.loaderErrorText1`.
+        /// Resource: `Interface.AppCreateInstanceView.loaderVersion`.
         public static var loaderVersion: LocalizedMessage {
-            .init(key: "appCreateInstanceView.loaderErrorText1", table: "Interface", fallback: "加载器版本")
-        }
-        /// 创建并安装
-        ///
-        /// Resource: `Interface.appCreateInstanceView.loaderErrorText2`.
-        public static var createAndInstall: LocalizedMessage {
-            .init(key: "appCreateInstanceView.loaderErrorText2", table: "Interface", fallback: "创建并安装")
+            .init(key: "AppCreateInstanceView.loaderVersion", table: "Interface", fallback: "加载器版本")
         }
         /// 此 Minecraft 版本暂无兼容加载器。
         ///
-        /// Resource: `Interface.appCreateInstanceView.resultText1`.
+        /// Resource: `Interface.AppCreateInstanceView.noCompatibleLoader`.
         public static var noCompatibleLoader: LocalizedMessage {
-            .init(key: "appCreateInstanceView.resultText1", table: "Interface", fallback: "此 Minecraft 版本暂无兼容加载器。")
+            .init(key: "AppCreateInstanceView.noCompatibleLoader", table: "Interface", fallback: "此 Minecraft 版本暂无兼容加载器。")
+        }
+        /// OptiFine 版本与安装包由 BMCLAPI 提供。
+        ///
+        /// Resource: `Interface.AppCreateInstanceView.optifineSource`.
+        public static var optifineSource: LocalizedMessage {
+            .init(key: "AppCreateInstanceView.optifineSource", table: "Interface", fallback: "OptiFine 版本与安装包由 BMCLAPI 提供。")
+        }
+        /// 重试
+        ///
+        /// Resource: `Interface.AppCreateInstanceView.retry`.
+        public static var retry: LocalizedMessage {
+            .init(key: "AppCreateInstanceView.retry", table: "Interface", fallback: "重试")
+        }
+        /// 保存到：%1$@
+        ///
+        /// Resource: `Interface.AppCreateInstanceView.saveLocation`.
+        public static func saveLocation(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppCreateInstanceView.saveLocation", table: "Interface", fallback: "保存到：%1$@", arguments: [.text(value0)])
+        }
+        /// 搜索 Minecraft 版本
+        ///
+        /// Resource: `Interface.AppCreateInstanceView.searchVersions`.
+        public static var searchVersions: LocalizedMessage {
+            .init(key: "AppCreateInstanceView.searchVersions", table: "Interface", fallback: "搜索 Minecraft 版本")
+        }
+        /// 快照与旧版
+        ///
+        /// Resource: `Interface.AppCreateInstanceView.snapshotsAndOldVersions`.
+        public static var snapshotsAndOldVersions: LocalizedMessage {
+            .init(key: "AppCreateInstanceView.snapshotsAndOldVersions", table: "Interface", fallback: "快照与旧版")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appCreateInstanceView.bodyText1": .init("新建实例", []),
-            "Interface:appCreateInstanceView.bodyText3": .init("实例名称（可选）", []),
-            "Interface:appCreateInstanceView.bodyText4": .init("保存到：%1$@", [.text]),
-            "Interface:appCreateInstanceView.bodyText5": .init("搜索 Minecraft 版本", []),
-            "Interface:appCreateInstanceView.bodyText6": .init("快照与旧版", []),
-            "Interface:appCreateInstanceView.bodyText7": .init("正在获取版本…", []),
-            "Interface:appCreateInstanceView.errorText1": .init("重试", []),
-            "Interface:appCreateInstanceView.errorText2": .init("最新正式版", []),
-            "Interface:appCreateInstanceView.errorText3": .init("加载器", []),
-            "Interface:appCreateInstanceView.errorText4": .init("OptiFine 版本与安装包由 BMCLAPI 提供。", []),
-            "Interface:appCreateInstanceView.errorText5": .init("查找兼容的加载器…", []),
-            "Interface:appCreateInstanceView.loaderErrorText1": .init("加载器版本", []),
-            "Interface:appCreateInstanceView.loaderErrorText2": .init("创建并安装", []),
-            "Interface:appCreateInstanceView.resultText1": .init("此 Minecraft 版本暂无兼容加载器。", []),
+            "Interface:AppCreateInstanceView.createAndInstall": .init("创建并安装", []),
+            "Interface:AppCreateInstanceView.createInstance": .init("新建实例", []),
+            "Interface:AppCreateInstanceView.fetchingVersions": .init("正在获取版本…", []),
+            "Interface:AppCreateInstanceView.findCompatibleLoaders": .init("查找兼容的加载器…", []),
+            "Interface:AppCreateInstanceView.instanceNameOptional": .init("实例名称（可选）", []),
+            "Interface:AppCreateInstanceView.latestRelease": .init("最新正式版", []),
+            "Interface:AppCreateInstanceView.loader": .init("加载器", []),
+            "Interface:AppCreateInstanceView.loaderVersion": .init("加载器版本", []),
+            "Interface:AppCreateInstanceView.noCompatibleLoader": .init("此 Minecraft 版本暂无兼容加载器。", []),
+            "Interface:AppCreateInstanceView.optifineSource": .init("OptiFine 版本与安装包由 BMCLAPI 提供。", []),
+            "Interface:AppCreateInstanceView.retry": .init("重试", []),
+            "Interface:AppCreateInstanceView.saveLocation": .init("保存到：%1$@", [.text]),
+            "Interface:AppCreateInstanceView.searchVersions": .init("搜索 Minecraft 版本", []),
+            "Interface:AppCreateInstanceView.snapshotsAndOldVersions": .init("快照与旧版", []),
         ]
     }
 }

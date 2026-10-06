@@ -3,343 +3,343 @@ import Foundation
 
 extension Messages {
     public enum FolderExperience {
-        /// 请选择一个文件夹。
+        /// 已添加
         ///
-        /// Resource: `Folders.folders.chooseFolder`.
-        public static var chooseFolder: LocalizedMessage {
-            .init(key: "folders.chooseFolder", table: "Folders", fallback: "请选择一个文件夹。")
-        }
-        /// 搜索范围过大。请选择游戏文件夹或其上一级目录。
-        ///
-        /// Resource: `Folders.folders.chooseCloserFolder`.
-        public static var chooseCloserFolder: LocalizedMessage {
-            .init(key: "folders.chooseCloserFolder", table: "Folders", fallback: "搜索范围过大。请选择游戏文件夹或其上一级目录。")
-        }
-        /// 没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。
-        ///
-        /// Resource: `Folders.folders.noFolderFound`.
-        public static var noFolderFound: LocalizedMessage {
-            .init(key: "folders.noFolderFound", table: "Folders", fallback: "没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。")
-        }
-        /// 本机 Minecraft
-        ///
-        /// Resource: `Folders.folders.localMinecraft`.
-        public static var localMinecraft: LocalizedMessage {
-            .init(key: "folders.localMinecraft", table: "Folders", fallback: "本机 Minecraft")
-        }
-        /// 新游戏文件夹
-        ///
-        /// Resource: `Folders.folders.newFolder`.
-        public static var newFolder: LocalizedMessage {
-            .init(key: "folders.newFolder", table: "Folders", fallback: "新游戏文件夹")
-        }
-        /// 添加游戏文件夹
-        ///
-        /// Resource: `Folders.folders.addTitle`.
-        public static var addTitle: LocalizedMessage {
-            .init(key: "folders.addTitle", table: "Folders", fallback: "添加游戏文件夹")
-        }
-        /// 选择文件夹…
-        ///
-        /// Resource: `Folders.folders.chooseLocation`.
-        public static var chooseLocation: LocalizedMessage {
-            .init(key: "folders.chooseLocation", table: "Folders", fallback: "选择文件夹…")
-        }
-        /// 选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。
-        ///
-        /// Resource: `Folders.folders.locationHelp`.
-        public static var locationHelp: LocalizedMessage {
-            .init(key: "folders.locationHelp", table: "Folders", fallback: "选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。")
-        }
-        /// 返回
-        ///
-        /// Resource: `Folders.folders.back`.
-        public static var back: LocalizedMessage {
-            .init(key: "folders.back", table: "Folders", fallback: "返回")
-        }
-        /// 检测到的游戏文件夹
-        ///
-        /// Resource: `Folders.folders.commonLocations`.
-        public static var commonLocations: LocalizedMessage {
-            .init(key: "folders.commonLocations", table: "Folders", fallback: "检测到的游戏文件夹")
-        }
-        /// 刷新检测结果
-        ///
-        /// Resource: `Folders.folders.refreshDiscovery`.
-        public static var refreshDiscovery: LocalizedMessage {
-            .init(key: "folders.refreshDiscovery", table: "Folders", fallback: "刷新检测结果")
-        }
-        /// 已移除
-        ///
-        /// Resource: `Folders.folders.removedFolder`.
-        public static var removedFolder: LocalizedMessage {
-            .init(key: "folders.removedFolder", table: "Folders", fallback: "已移除")
-        }
-        /// 未在自动查找范围内检测到游戏文件夹，请手动选择位置。
-        ///
-        /// Resource: `Folders.folders.noSuggestions`.
-        public static var noSuggestions: LocalizedMessage {
-            .init(key: "folders.noSuggestions", table: "Folders", fallback: "未在自动查找范围内检测到游戏文件夹，请手动选择位置。")
-        }
-        /// 正在查找游戏文件夹…
-        ///
-        /// Resource: `Folders.folders.checking`.
-        public static var checking: LocalizedMessage {
-            .init(key: "folders.checking", table: "Folders", fallback: "正在查找游戏文件夹…")
-        }
-        /// 选择要添加的游戏文件夹
-        ///
-        /// Resource: `Folders.folders.chooseResult`.
-        public static var chooseResult: LocalizedMessage {
-            .init(key: "folders.chooseResult", table: "Folders", fallback: "选择要添加的游戏文件夹")
-        }
-        /// 此位置包含多个游戏文件夹。
-        ///
-        /// Resource: `Folders.folders.multipleResults`.
-        public static var multipleResults: LocalizedMessage {
-            .init(key: "folders.multipleResults", table: "Folders", fallback: "此位置包含多个游戏文件夹。")
-        }
-        /// 文件夹位置
-        ///
-        /// Resource: `Folders.folders.folderLocation`.
-        public static var folderLocation: LocalizedMessage {
-            .init(key: "folders.folderLocation", table: "Folders", fallback: "文件夹位置")
-        }
-        /// 已自动定位到游戏文件夹
-        ///
-        /// Resource: `Folders.folders.detectedInside`.
-        public static var detectedInside: LocalizedMessage {
-            .init(key: "folders.detectedInside", table: "Folders", fallback: "已自动定位到游戏文件夹")
-        }
-        /// 更换…
-        ///
-        /// Resource: `Folders.folders.changeLocation`.
-        public static var changeLocation: LocalizedMessage {
-            .init(key: "folders.changeLocation", table: "Folders", fallback: "更换…")
-        }
-        /// 显示名称
-        ///
-        /// Resource: `Folders.folders.libraryName`.
-        public static var libraryName: LocalizedMessage {
-            .init(key: "folders.libraryName", table: "Folders", fallback: "显示名称")
-        }
-        /// 例如：日常生存、HMCL 整合包
-        ///
-        /// Resource: `Folders.folders.namePlaceholder`.
-        public static var namePlaceholder: LocalizedMessage {
-            .init(key: "folders.namePlaceholder", table: "Folders", fallback: "例如：日常生存、HMCL 整合包")
-        }
-        /// 仅用于 Ruri 中的显示，不修改文件夹名称。
-        ///
-        /// Resource: `Folders.folders.nameHelp`.
-        public static var nameHelp: LocalizedMessage {
-            .init(key: "folders.nameHelp", table: "Folders", fallback: "仅用于 Ruri 中的显示，不修改文件夹名称。")
-        }
-        /// 此名称已被其他文件夹使用。
-        ///
-        /// Resource: `Folders.folders.duplicateName`.
-        public static var duplicateName: LocalizedMessage {
-            .init(key: "folders.duplicateName", table: "Folders", fallback: "此名称已被其他文件夹使用。")
-        }
-        /// 请输入 1–100 个字符的名称，不要包含换行等控制字符。
-        ///
-        /// Resource: `Folders.folders.invalidName`.
-        public static var invalidName: LocalizedMessage {
-            .init(key: "folders.invalidName", table: "Folders", fallback: "请输入 1–100 个字符的名称，不要包含换行等控制字符。")
-        }
-        /// 找到 %lld 个游戏版本
-        ///
-        /// Resource: `Folders.folders.versionsFound`.
-        public static func versionsFound(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "folders.versionsFound", table: "Folders", fallback: "找到 %lld 个游戏版本", arguments: [.integer(value0)])
-        }
-        /// 其中 %lld 个版本需要检查，添加后可在实例库中查看详情。
-        ///
-        /// Resource: `Folders.folders.versionsNeedAttention`.
-        public static func versionsNeedAttention(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "folders.versionsNeedAttention", table: "Folders", fallback: "其中 %lld 个版本需要检查，添加后可在实例库中查看详情。", arguments: [.integer(value0)])
-        }
-        /// 未包含游戏版本
-        ///
-        /// Resource: `Folders.folders.emptyFolder`.
-        public static var emptyFolder: LocalizedMessage {
-            .init(key: "folders.emptyFolder", table: "Folders", fallback: "未包含游戏版本")
-        }
-        /// 可用于安装游戏或导入整合包。
-        ///
-        /// Resource: `Folders.folders.emptyFolderHelp`.
-        public static var emptyFolderHelp: LocalizedMessage {
-            .init(key: "folders.emptyFolderHelp", table: "Folders", fallback: "可用于安装游戏或导入整合包。")
-        }
-        /// 已添加为“%@”
-        ///
-        /// Resource: `Folders.folders.alreadyAdded`.
-        public static func alreadyAdded(_ value0: String) -> LocalizedMessage {
-            .init(key: "folders.alreadyAdded", table: "Folders", fallback: "已添加为“%@”", arguments: [.text(value0)])
-        }
-        /// 使用此文件夹
-        ///
-        /// Resource: `Folders.folders.openExisting`.
-        public static var openExisting: LocalizedMessage {
-            .init(key: "folders.openExisting", table: "Folders", fallback: "使用此文件夹")
+        /// Resource: `Folders.FolderExperience.activeFolders`.
+        public static var activeFolders: LocalizedMessage {
+            .init(key: "FolderExperience.activeFolders", table: "Folders", fallback: "已添加")
         }
         /// 添加文件夹
         ///
-        /// Resource: `Folders.folders.add`.
+        /// Resource: `Folders.FolderExperience.add`.
         public static var add: LocalizedMessage {
-            .init(key: "folders.add", table: "Folders", fallback: "添加文件夹")
+            .init(key: "FolderExperience.add", table: "Folders", fallback: "添加文件夹")
+        }
+        /// 添加游戏文件夹
+        ///
+        /// Resource: `Folders.FolderExperience.addTitle`.
+        public static var addTitle: LocalizedMessage {
+            .init(key: "FolderExperience.addTitle", table: "Folders", fallback: "添加游戏文件夹")
         }
         /// 正在添加文件夹…
         ///
-        /// Resource: `Folders.folders.adding`.
+        /// Resource: `Folders.FolderExperience.adding`.
         public static var adding: LocalizedMessage {
-            .init(key: "folders.adding", table: "Folders", fallback: "正在添加文件夹…")
+            .init(key: "FolderExperience.adding", table: "Folders", fallback: "正在添加文件夹…")
         }
-        /// 已添加
+        /// 已添加为“%@”
         ///
-        /// Resource: `Folders.folders.activeFolders`.
-        public static var activeFolders: LocalizedMessage {
-            .init(key: "folders.activeFolders", table: "Folders", fallback: "已添加")
-        }
-        /// 当前使用
-        ///
-        /// Resource: `Folders.folders.currentFolder`.
-        public static var currentFolder: LocalizedMessage {
-            .init(key: "folders.currentFolder", table: "Folders", fallback: "当前使用")
+        /// Resource: `Folders.FolderExperience.alreadyAdded`.
+        public static func alreadyAdded(_ value0: String) -> LocalizedMessage {
+            .init(key: "FolderExperience.alreadyAdded", table: "Folders", fallback: "已添加为“%@”", arguments: [.text(value0)])
         }
         /// 可用
         ///
-        /// Resource: `Folders.folders.available`.
+        /// Resource: `Folders.FolderExperience.available`.
         public static var available: LocalizedMessage {
-            .init(key: "folders.available", table: "Folders", fallback: "可用")
+            .init(key: "FolderExperience.available", table: "Folders", fallback: "可用")
         }
-        /// 无法访问
+        /// 返回
         ///
-        /// Resource: `Folders.folders.unavailable`.
-        public static var unavailable: LocalizedMessage {
-            .init(key: "folders.unavailable", table: "Folders", fallback: "无法访问")
+        /// Resource: `Folders.FolderExperience.back`.
+        public static var back: LocalizedMessage {
+            .init(key: "FolderExperience.back", table: "Folders", fallback: "返回")
         }
-        /// 名称
+        /// 更换…
         ///
-        /// Resource: `Folders.folders.name`.
-        public static var name: LocalizedMessage {
-            .init(key: "folders.name", table: "Folders", fallback: "名称")
+        /// Resource: `Folders.FolderExperience.changeLocation`.
+        public static var changeLocation: LocalizedMessage {
+            .init(key: "FolderExperience.changeLocation", table: "Folders", fallback: "更换…")
         }
-        /// 状态
+        /// 正在查找游戏文件夹…
         ///
-        /// Resource: `Folders.folders.status`.
-        public static var status: LocalizedMessage {
-            .init(key: "folders.status", table: "Folders", fallback: "状态")
+        /// Resource: `Folders.FolderExperience.checking`.
+        public static var checking: LocalizedMessage {
+            .init(key: "FolderExperience.checking", table: "Folders", fallback: "正在查找游戏文件夹…")
+        }
+        /// 搜索范围过大。请选择游戏文件夹或其上一级目录。
+        ///
+        /// Resource: `Folders.FolderExperience.chooseCloserFolder`.
+        public static var chooseCloserFolder: LocalizedMessage {
+            .init(key: "FolderExperience.chooseCloserFolder", table: "Folders", fallback: "搜索范围过大。请选择游戏文件夹或其上一级目录。")
+        }
+        /// 请选择一个文件夹。
+        ///
+        /// Resource: `Folders.FolderExperience.chooseFolder`.
+        public static var chooseFolder: LocalizedMessage {
+            .init(key: "FolderExperience.chooseFolder", table: "Folders", fallback: "请选择一个文件夹。")
+        }
+        /// 选择文件夹…
+        ///
+        /// Resource: `Folders.FolderExperience.chooseLocation`.
+        public static var chooseLocation: LocalizedMessage {
+            .init(key: "FolderExperience.chooseLocation", table: "Folders", fallback: "选择文件夹…")
+        }
+        /// 选择要添加的游戏文件夹
+        ///
+        /// Resource: `Folders.FolderExperience.chooseResult`.
+        public static var chooseResult: LocalizedMessage {
+            .init(key: "FolderExperience.chooseResult", table: "Folders", fallback: "选择要添加的游戏文件夹")
+        }
+        /// 检测到的游戏文件夹
+        ///
+        /// Resource: `Folders.FolderExperience.commonLocations`.
+        public static var commonLocations: LocalizedMessage {
+            .init(key: "FolderExperience.commonLocations", table: "Folders", fallback: "检测到的游戏文件夹")
         }
         /// 实例数量
         ///
-        /// Resource: `Folders.folders.contents`.
+        /// Resource: `Folders.FolderExperience.contents`.
         public static var contents: LocalizedMessage {
-            .init(key: "folders.contents", table: "Folders", fallback: "实例数量")
+            .init(key: "FolderExperience.contents", table: "Folders", fallback: "实例数量")
+        }
+        /// 当前使用
+        ///
+        /// Resource: `Folders.FolderExperience.currentFolder`.
+        public static var currentFolder: LocalizedMessage {
+            .init(key: "FolderExperience.currentFolder", table: "Folders", fallback: "当前使用")
         }
         /// 由 Ruri 管理，用于存放新安装和导入的实例。
         ///
-        /// Resource: `Folders.folders.defaultHelp`.
+        /// Resource: `Folders.FolderExperience.defaultHelp`.
         public static var defaultHelp: LocalizedMessage {
-            .init(key: "folders.defaultHelp", table: "Folders", fallback: "由 Ruri 管理，用于存放新安装和导入的实例。")
+            .init(key: "FolderExperience.defaultHelp", table: "Folders", fallback: "由 Ruri 管理，用于存放新安装和导入的实例。")
         }
-        /// 在实例库中查看
+        /// 已自动定位到游戏文件夹
         ///
-        /// Resource: `Folders.folders.showLibrary`.
-        public static var showLibrary: LocalizedMessage {
-            .init(key: "folders.showLibrary", table: "Folders", fallback: "在实例库中查看")
+        /// Resource: `Folders.FolderExperience.detectedInside`.
+        public static var detectedInside: LocalizedMessage {
+            .init(key: "FolderExperience.detectedInside", table: "Folders", fallback: "已自动定位到游戏文件夹")
         }
-        /// 从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。
+        /// 此名称已被其他文件夹使用。
         ///
-        /// Resource: `Folders.folders.removeHelp`.
-        public static var removeHelp: LocalizedMessage {
-            .init(key: "folders.removeHelp", table: "Folders", fallback: "从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。")
+        /// Resource: `Folders.FolderExperience.duplicateName`.
+        public static var duplicateName: LocalizedMessage {
+            .init(key: "FolderExperience.duplicateName", table: "Folders", fallback: "此名称已被其他文件夹使用。")
+        }
+        /// 未包含游戏版本
+        ///
+        /// Resource: `Folders.FolderExperience.emptyFolder`.
+        public static var emptyFolder: LocalizedMessage {
+            .init(key: "FolderExperience.emptyFolder", table: "Folders", fallback: "未包含游戏版本")
+        }
+        /// 可用于安装游戏或导入整合包。
+        ///
+        /// Resource: `Folders.FolderExperience.emptyFolderHelp`.
+        public static var emptyFolderHelp: LocalizedMessage {
+            .init(key: "FolderExperience.emptyFolderHelp", table: "Folders", fallback: "可用于安装游戏或导入整合包。")
+        }
+        /// 文件夹位置
+        ///
+        /// Resource: `Folders.FolderExperience.folderLocation`.
+        public static var folderLocation: LocalizedMessage {
+            .init(key: "FolderExperience.folderLocation", table: "Folders", fallback: "文件夹位置")
+        }
+        /// 请输入 1–100 个字符的名称，不要包含换行等控制字符。
+        ///
+        /// Resource: `Folders.FolderExperience.invalidName`.
+        public static var invalidName: LocalizedMessage {
+            .init(key: "FolderExperience.invalidName", table: "Folders", fallback: "请输入 1–100 个字符的名称，不要包含换行等控制字符。")
+        }
+        /// 显示名称
+        ///
+        /// Resource: `Folders.FolderExperience.libraryName`.
+        public static var libraryName: LocalizedMessage {
+            .init(key: "FolderExperience.libraryName", table: "Folders", fallback: "显示名称")
+        }
+        /// 本机 Minecraft
+        ///
+        /// Resource: `Folders.FolderExperience.localMinecraft`.
+        public static var localMinecraft: LocalizedMessage {
+            .init(key: "FolderExperience.localMinecraft", table: "Folders", fallback: "本机 Minecraft")
+        }
+        /// 选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。
+        ///
+        /// Resource: `Folders.FolderExperience.locationHelp`.
+        public static var locationHelp: LocalizedMessage {
+            .init(key: "FolderExperience.locationHelp", table: "Folders", fallback: "选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。")
         }
         /// 此文件夹由 Ruri 管理。请先移走其中的实例，再从列表中移除。
         ///
-        /// Resource: `Folders.folders.managedRemoveHelp`.
+        /// Resource: `Folders.FolderExperience.managedRemoveHelp`.
         public static var managedRemoveHelp: LocalizedMessage {
-            .init(key: "folders.managedRemoveHelp", table: "Folders", fallback: "此文件夹由 Ruri 管理。请先移走其中的实例，再从列表中移除。")
+            .init(key: "FolderExperience.managedRemoveHelp", table: "Folders", fallback: "此文件夹由 Ruri 管理。请先移走其中的实例，再从列表中移除。")
         }
-        /// 如果文件夹已移动或位于外置磁盘，请连接磁盘，或重新定位原文件夹。
+        /// 此位置包含多个游戏文件夹。
         ///
-        /// Resource: `Folders.folders.reconnectHelp`.
-        public static var reconnectHelp: LocalizedMessage {
-            .init(key: "folders.reconnectHelp", table: "Folders", fallback: "如果文件夹已移动或位于外置磁盘，请连接磁盘，或重新定位原文件夹。")
+        /// Resource: `Folders.FolderExperience.multipleResults`.
+        public static var multipleResults: LocalizedMessage {
+            .init(key: "FolderExperience.multipleResults", table: "Folders", fallback: "此位置包含多个游戏文件夹。")
         }
-        /// 已从实例库移除
+        /// 名称
         ///
-        /// Resource: `Folders.folders.retainedFolder`.
-        public static var retainedFolder: LocalizedMessage {
-            .init(key: "folders.retainedFolder", table: "Folders", fallback: "已从实例库移除")
+        /// Resource: `Folders.FolderExperience.name`.
+        public static var name: LocalizedMessage {
+            .init(key: "FolderExperience.name", table: "Folders", fallback: "名称")
         }
-        /// 保留的实例设置
+        /// 仅用于 Ruri 中的显示，不修改文件夹名称。
         ///
-        /// Resource: `Folders.folders.savedSettings`.
-        public static var savedSettings: LocalizedMessage {
-            .init(key: "folders.savedSettings", table: "Folders", fallback: "保留的实例设置")
+        /// Resource: `Folders.FolderExperience.nameHelp`.
+        public static var nameHelp: LocalizedMessage {
+            .init(key: "FolderExperience.nameHelp", table: "Folders", fallback: "仅用于 Ruri 中的显示，不修改文件夹名称。")
         }
-        /// 选择一个文件夹以查看详情
+        /// 例如：日常生存、HMCL 整合包
         ///
-        /// Resource: `Folders.folders.noSelection`.
-        public static var noSelection: LocalizedMessage {
-            .init(key: "folders.noSelection", table: "Folders", fallback: "选择一个文件夹以查看详情")
+        /// Resource: `Folders.FolderExperience.namePlaceholder`.
+        public static var namePlaceholder: LocalizedMessage {
+            .init(key: "FolderExperience.namePlaceholder", table: "Folders", fallback: "例如：日常生存、HMCL 整合包")
+        }
+        /// 新游戏文件夹
+        ///
+        /// Resource: `Folders.FolderExperience.newFolder`.
+        public static var newFolder: LocalizedMessage {
+            .init(key: "FolderExperience.newFolder", table: "Folders", fallback: "新游戏文件夹")
         }
         /// 新游戏可使用空文件夹。
         ///
-        /// Resource: `Folders.folders.newFolderHelp`.
+        /// Resource: `Folders.FolderExperience.newFolderHelp`.
         public static var newFolderHelp: LocalizedMessage {
-            .init(key: "folders.newFolderHelp", table: "Folders", fallback: "新游戏可使用空文件夹。")
+            .init(key: "FolderExperience.newFolderHelp", table: "Folders", fallback: "新游戏可使用空文件夹。")
+        }
+        /// 没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。
+        ///
+        /// Resource: `Folders.FolderExperience.noFolderFound`.
+        public static var noFolderFound: LocalizedMessage {
+            .init(key: "FolderExperience.noFolderFound", table: "Folders", fallback: "没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。")
+        }
+        /// 选择一个文件夹以查看详情
+        ///
+        /// Resource: `Folders.FolderExperience.noSelection`.
+        public static var noSelection: LocalizedMessage {
+            .init(key: "FolderExperience.noSelection", table: "Folders", fallback: "选择一个文件夹以查看详情")
+        }
+        /// 未在自动查找范围内检测到游戏文件夹，请手动选择位置。
+        ///
+        /// Resource: `Folders.FolderExperience.noSuggestions`.
+        public static var noSuggestions: LocalizedMessage {
+            .init(key: "FolderExperience.noSuggestions", table: "Folders", fallback: "未在自动查找范围内检测到游戏文件夹，请手动选择位置。")
+        }
+        /// 使用此文件夹
+        ///
+        /// Resource: `Folders.FolderExperience.openExisting`.
+        public static var openExisting: LocalizedMessage {
+            .init(key: "FolderExperience.openExisting", table: "Folders", fallback: "使用此文件夹")
+        }
+        /// 如果文件夹已移动或位于外置磁盘，请连接磁盘，或重新定位原文件夹。
+        ///
+        /// Resource: `Folders.FolderExperience.reconnectHelp`.
+        public static var reconnectHelp: LocalizedMessage {
+            .init(key: "FolderExperience.reconnectHelp", table: "Folders", fallback: "如果文件夹已移动或位于外置磁盘，请连接磁盘，或重新定位原文件夹。")
+        }
+        /// 刷新检测结果
+        ///
+        /// Resource: `Folders.FolderExperience.refreshDiscovery`.
+        public static var refreshDiscovery: LocalizedMessage {
+            .init(key: "FolderExperience.refreshDiscovery", table: "Folders", fallback: "刷新检测结果")
+        }
+        /// 从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。
+        ///
+        /// Resource: `Folders.FolderExperience.removeHelp`.
+        public static var removeHelp: LocalizedMessage {
+            .init(key: "FolderExperience.removeHelp", table: "Folders", fallback: "从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。")
+        }
+        /// 已移除
+        ///
+        /// Resource: `Folders.FolderExperience.removedFolder`.
+        public static var removedFolder: LocalizedMessage {
+            .init(key: "FolderExperience.removedFolder", table: "Folders", fallback: "已移除")
+        }
+        /// 已从实例库移除
+        ///
+        /// Resource: `Folders.FolderExperience.retainedFolder`.
+        public static var retainedFolder: LocalizedMessage {
+            .init(key: "FolderExperience.retainedFolder", table: "Folders", fallback: "已从实例库移除")
+        }
+        /// 保留的实例设置
+        ///
+        /// Resource: `Folders.FolderExperience.savedSettings`.
+        public static var savedSettings: LocalizedMessage {
+            .init(key: "FolderExperience.savedSettings", table: "Folders", fallback: "保留的实例设置")
+        }
+        /// 在实例库中查看
+        ///
+        /// Resource: `Folders.FolderExperience.showLibrary`.
+        public static var showLibrary: LocalizedMessage {
+            .init(key: "FolderExperience.showLibrary", table: "Folders", fallback: "在实例库中查看")
+        }
+        /// 状态
+        ///
+        /// Resource: `Folders.FolderExperience.status`.
+        public static var status: LocalizedMessage {
+            .init(key: "FolderExperience.status", table: "Folders", fallback: "状态")
+        }
+        /// 无法访问
+        ///
+        /// Resource: `Folders.FolderExperience.unavailable`.
+        public static var unavailable: LocalizedMessage {
+            .init(key: "FolderExperience.unavailable", table: "Folders", fallback: "无法访问")
+        }
+        /// 找到 %lld 个游戏版本
+        ///
+        /// Resource: `Folders.FolderExperience.versionsFound`.
+        public static func versionsFound(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "FolderExperience.versionsFound", table: "Folders", fallback: "找到 %lld 个游戏版本", arguments: [.integer(value0)])
+        }
+        /// 其中 %lld 个版本需要检查，添加后可在实例库中查看详情。
+        ///
+        /// Resource: `Folders.FolderExperience.versionsNeedAttention`.
+        public static func versionsNeedAttention(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "FolderExperience.versionsNeedAttention", table: "Folders", fallback: "其中 %lld 个版本需要检查，添加后可在实例库中查看详情。", arguments: [.integer(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Folders:folders.chooseFolder": .init("请选择一个文件夹。", []),
-            "Folders:folders.chooseCloserFolder": .init("搜索范围过大。请选择游戏文件夹或其上一级目录。", []),
-            "Folders:folders.noFolderFound": .init("没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。", []),
-            "Folders:folders.localMinecraft": .init("本机 Minecraft", []),
-            "Folders:folders.newFolder": .init("新游戏文件夹", []),
-            "Folders:folders.addTitle": .init("添加游戏文件夹", []),
-            "Folders:folders.chooseLocation": .init("选择文件夹…", []),
-            "Folders:folders.locationHelp": .init("选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。", []),
-            "Folders:folders.back": .init("返回", []),
-            "Folders:folders.commonLocations": .init("检测到的游戏文件夹", []),
-            "Folders:folders.refreshDiscovery": .init("刷新检测结果", []),
-            "Folders:folders.removedFolder": .init("已移除", []),
-            "Folders:folders.noSuggestions": .init("未在自动查找范围内检测到游戏文件夹，请手动选择位置。", []),
-            "Folders:folders.checking": .init("正在查找游戏文件夹…", []),
-            "Folders:folders.chooseResult": .init("选择要添加的游戏文件夹", []),
-            "Folders:folders.multipleResults": .init("此位置包含多个游戏文件夹。", []),
-            "Folders:folders.folderLocation": .init("文件夹位置", []),
-            "Folders:folders.detectedInside": .init("已自动定位到游戏文件夹", []),
-            "Folders:folders.changeLocation": .init("更换…", []),
-            "Folders:folders.libraryName": .init("显示名称", []),
-            "Folders:folders.namePlaceholder": .init("例如：日常生存、HMCL 整合包", []),
-            "Folders:folders.nameHelp": .init("仅用于 Ruri 中的显示，不修改文件夹名称。", []),
-            "Folders:folders.duplicateName": .init("此名称已被其他文件夹使用。", []),
-            "Folders:folders.invalidName": .init("请输入 1–100 个字符的名称，不要包含换行等控制字符。", []),
-            "Folders:folders.versionsFound": .init("找到 %lld 个游戏版本", [.integer]),
-            "Folders:folders.versionsNeedAttention": .init("其中 %lld 个版本需要检查，添加后可在实例库中查看详情。", [.integer]),
-            "Folders:folders.emptyFolder": .init("未包含游戏版本", []),
-            "Folders:folders.emptyFolderHelp": .init("可用于安装游戏或导入整合包。", []),
-            "Folders:folders.alreadyAdded": .init("已添加为“%@”", [.text]),
-            "Folders:folders.openExisting": .init("使用此文件夹", []),
-            "Folders:folders.add": .init("添加文件夹", []),
-            "Folders:folders.adding": .init("正在添加文件夹…", []),
-            "Folders:folders.activeFolders": .init("已添加", []),
-            "Folders:folders.currentFolder": .init("当前使用", []),
-            "Folders:folders.available": .init("可用", []),
-            "Folders:folders.unavailable": .init("无法访问", []),
-            "Folders:folders.name": .init("名称", []),
-            "Folders:folders.status": .init("状态", []),
-            "Folders:folders.contents": .init("实例数量", []),
-            "Folders:folders.defaultHelp": .init("由 Ruri 管理，用于存放新安装和导入的实例。", []),
-            "Folders:folders.showLibrary": .init("在实例库中查看", []),
-            "Folders:folders.removeHelp": .init("从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。", []),
-            "Folders:folders.managedRemoveHelp": .init("此文件夹由 Ruri 管理。请先移走其中的实例，再从列表中移除。", []),
-            "Folders:folders.reconnectHelp": .init("如果文件夹已移动或位于外置磁盘，请连接磁盘，或重新定位原文件夹。", []),
-            "Folders:folders.retainedFolder": .init("已从实例库移除", []),
-            "Folders:folders.savedSettings": .init("保留的实例设置", []),
-            "Folders:folders.noSelection": .init("选择一个文件夹以查看详情", []),
-            "Folders:folders.newFolderHelp": .init("新游戏可使用空文件夹。", []),
+            "Folders:FolderExperience.activeFolders": .init("已添加", []),
+            "Folders:FolderExperience.add": .init("添加文件夹", []),
+            "Folders:FolderExperience.addTitle": .init("添加游戏文件夹", []),
+            "Folders:FolderExperience.adding": .init("正在添加文件夹…", []),
+            "Folders:FolderExperience.alreadyAdded": .init("已添加为“%@”", [.text]),
+            "Folders:FolderExperience.available": .init("可用", []),
+            "Folders:FolderExperience.back": .init("返回", []),
+            "Folders:FolderExperience.changeLocation": .init("更换…", []),
+            "Folders:FolderExperience.checking": .init("正在查找游戏文件夹…", []),
+            "Folders:FolderExperience.chooseCloserFolder": .init("搜索范围过大。请选择游戏文件夹或其上一级目录。", []),
+            "Folders:FolderExperience.chooseFolder": .init("请选择一个文件夹。", []),
+            "Folders:FolderExperience.chooseLocation": .init("选择文件夹…", []),
+            "Folders:FolderExperience.chooseResult": .init("选择要添加的游戏文件夹", []),
+            "Folders:FolderExperience.commonLocations": .init("检测到的游戏文件夹", []),
+            "Folders:FolderExperience.contents": .init("实例数量", []),
+            "Folders:FolderExperience.currentFolder": .init("当前使用", []),
+            "Folders:FolderExperience.defaultHelp": .init("由 Ruri 管理，用于存放新安装和导入的实例。", []),
+            "Folders:FolderExperience.detectedInside": .init("已自动定位到游戏文件夹", []),
+            "Folders:FolderExperience.duplicateName": .init("此名称已被其他文件夹使用。", []),
+            "Folders:FolderExperience.emptyFolder": .init("未包含游戏版本", []),
+            "Folders:FolderExperience.emptyFolderHelp": .init("可用于安装游戏或导入整合包。", []),
+            "Folders:FolderExperience.folderLocation": .init("文件夹位置", []),
+            "Folders:FolderExperience.invalidName": .init("请输入 1–100 个字符的名称，不要包含换行等控制字符。", []),
+            "Folders:FolderExperience.libraryName": .init("显示名称", []),
+            "Folders:FolderExperience.localMinecraft": .init("本机 Minecraft", []),
+            "Folders:FolderExperience.locationHelp": .init("选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。", []),
+            "Folders:FolderExperience.managedRemoveHelp": .init("此文件夹由 Ruri 管理。请先移走其中的实例，再从列表中移除。", []),
+            "Folders:FolderExperience.multipleResults": .init("此位置包含多个游戏文件夹。", []),
+            "Folders:FolderExperience.name": .init("名称", []),
+            "Folders:FolderExperience.nameHelp": .init("仅用于 Ruri 中的显示，不修改文件夹名称。", []),
+            "Folders:FolderExperience.namePlaceholder": .init("例如：日常生存、HMCL 整合包", []),
+            "Folders:FolderExperience.newFolder": .init("新游戏文件夹", []),
+            "Folders:FolderExperience.newFolderHelp": .init("新游戏可使用空文件夹。", []),
+            "Folders:FolderExperience.noFolderFound": .init("没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。", []),
+            "Folders:FolderExperience.noSelection": .init("选择一个文件夹以查看详情", []),
+            "Folders:FolderExperience.noSuggestions": .init("未在自动查找范围内检测到游戏文件夹，请手动选择位置。", []),
+            "Folders:FolderExperience.openExisting": .init("使用此文件夹", []),
+            "Folders:FolderExperience.reconnectHelp": .init("如果文件夹已移动或位于外置磁盘，请连接磁盘，或重新定位原文件夹。", []),
+            "Folders:FolderExperience.refreshDiscovery": .init("刷新检测结果", []),
+            "Folders:FolderExperience.removeHelp": .init("从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。", []),
+            "Folders:FolderExperience.removedFolder": .init("已移除", []),
+            "Folders:FolderExperience.retainedFolder": .init("已从实例库移除", []),
+            "Folders:FolderExperience.savedSettings": .init("保留的实例设置", []),
+            "Folders:FolderExperience.showLibrary": .init("在实例库中查看", []),
+            "Folders:FolderExperience.status": .init("状态", []),
+            "Folders:FolderExperience.unavailable": .init("无法访问", []),
+            "Folders:FolderExperience.versionsFound": .init("找到 %lld 个游戏版本", [.integer]),
+            "Folders:FolderExperience.versionsNeedAttention": .init("其中 %lld 个版本需要检查，添加后可在实例库中查看详情。", [.integer]),
         ]
     }
 }

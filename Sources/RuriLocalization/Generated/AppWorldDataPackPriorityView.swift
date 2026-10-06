@@ -3,70 +3,70 @@ import Foundation
 
 extension Messages {
     public enum AppWorldDataPackPriorityView {
+        /// 调整数据包优先级
+        ///
+        /// Resource: `Interface.AppWorldDataPackPriorityView.adjustDataPackPriority`.
+        public static var adjustDataPackPriority: LocalizedMessage {
+            .init(key: "AppWorldDataPackPriorityView.adjustDataPackPriority", table: "Interface", fallback: "调整数据包优先级")
+        }
         /// 数据包优先级
         ///
-        /// Resource: `Interface.appWorldDataPackPriorityView.bodyText1`.
+        /// Resource: `Interface.AppWorldDataPackPriorityView.dataPackPriority`.
         public static var dataPackPriority: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.bodyText1", table: "Interface", fallback: "数据包优先级")
-        }
-        /// 优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。
-        ///
-        /// Resource: `Interface.appWorldDataPackPriorityView.bodyText2`.
-        public static var priorityDetails: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.bodyText2", table: "Interface", fallback: "优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。")
-        }
-        /// 原版
-        ///
-        /// Resource: `Interface.appWorldDataPackPriorityView.snapshotText1`.
-        public static var vanilla: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.snapshotText1", table: "Interface", fallback: "原版")
-        }
-        /// 本地文件缺失或未启用，保留原记录
-        ///
-        /// Resource: `Interface.appWorldDataPackPriorityView.snapshotText2`.
-        public static var missingOrDisabled: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.snapshotText2", table: "Interface", fallback: "本地文件缺失或未启用，保留原记录")
-        }
-        /// 游戏或模组提供
-        ///
-        /// Resource: `Interface.appWorldDataPackPriorityView.snapshotText3`.
-        public static var providedByGameOrMod: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.snapshotText3", table: "Interface", fallback: "游戏或模组提供")
-        }
-        /// 提高优先级
-        ///
-        /// Resource: `Interface.appWorldDataPackPriorityView.indexText1`.
-        public static var increasePriority: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.indexText1", table: "Interface", fallback: "提高优先级")
+            .init(key: "AppWorldDataPackPriorityView.dataPackPriority", table: "Interface", fallback: "数据包优先级")
         }
         /// 降低优先级
         ///
-        /// Resource: `Interface.appWorldDataPackPriorityView.indexText2`.
+        /// Resource: `Interface.AppWorldDataPackPriorityView.decreasePriority`.
         public static var decreasePriority: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.indexText2", table: "Interface", fallback: "降低优先级")
+            .init(key: "AppWorldDataPackPriorityView.decreasePriority", table: "Interface", fallback: "降低优先级")
+        }
+        /// 提高优先级
+        ///
+        /// Resource: `Interface.AppWorldDataPackPriorityView.increasePriority`.
+        public static var increasePriority: LocalizedMessage {
+            .init(key: "AppWorldDataPackPriorityView.increasePriority", table: "Interface", fallback: "提高优先级")
+        }
+        /// 本地文件缺失或未启用，保留原记录
+        ///
+        /// Resource: `Interface.AppWorldDataPackPriorityView.missingOrDisabled`.
+        public static var missingOrDisabled: LocalizedMessage {
+            .init(key: "AppWorldDataPackPriorityView.missingOrDisabled", table: "Interface", fallback: "本地文件缺失或未启用，保留原记录")
+        }
+        /// 优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。
+        ///
+        /// Resource: `Interface.AppWorldDataPackPriorityView.priorityDetails`.
+        public static var priorityDetails: LocalizedMessage {
+            .init(key: "AppWorldDataPackPriorityView.priorityDetails", table: "Interface", fallback: "优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。")
+        }
+        /// 游戏或模组提供
+        ///
+        /// Resource: `Interface.AppWorldDataPackPriorityView.providedByGameOrMod`.
+        public static var providedByGameOrMod: LocalizedMessage {
+            .init(key: "AppWorldDataPackPriorityView.providedByGameOrMod", table: "Interface", fallback: "游戏或模组提供")
         }
         /// 保存顺序
         ///
-        /// Resource: `Interface.appWorldDataPackPriorityView.errorText1`.
+        /// Resource: `Interface.AppWorldDataPackPriorityView.saveOrder`.
         public static var saveOrder: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.errorText1", table: "Interface", fallback: "保存顺序")
+            .init(key: "AppWorldDataPackPriorityView.saveOrder", table: "Interface", fallback: "保存顺序")
         }
-        /// 调整数据包优先级
+        /// 原版
         ///
-        /// Resource: `Interface.appWorldDataPackPriorityView.snapshotText4`.
-        public static var adjustDataPackPriority: LocalizedMessage {
-            .init(key: "appWorldDataPackPriorityView.snapshotText4", table: "Interface", fallback: "调整数据包优先级")
+        /// Resource: `Interface.AppWorldDataPackPriorityView.vanilla`.
+        public static var vanilla: LocalizedMessage {
+            .init(key: "AppWorldDataPackPriorityView.vanilla", table: "Interface", fallback: "原版")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appWorldDataPackPriorityView.bodyText1": .init("数据包优先级", []),
-            "Interface:appWorldDataPackPriorityView.bodyText2": .init("优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。", []),
-            "Interface:appWorldDataPackPriorityView.snapshotText1": .init("原版", []),
-            "Interface:appWorldDataPackPriorityView.snapshotText2": .init("本地文件缺失或未启用，保留原记录", []),
-            "Interface:appWorldDataPackPriorityView.snapshotText3": .init("游戏或模组提供", []),
-            "Interface:appWorldDataPackPriorityView.indexText1": .init("提高优先级", []),
-            "Interface:appWorldDataPackPriorityView.indexText2": .init("降低优先级", []),
-            "Interface:appWorldDataPackPriorityView.errorText1": .init("保存顺序", []),
-            "Interface:appWorldDataPackPriorityView.snapshotText4": .init("调整数据包优先级", []),
+            "Interface:AppWorldDataPackPriorityView.adjustDataPackPriority": .init("调整数据包优先级", []),
+            "Interface:AppWorldDataPackPriorityView.dataPackPriority": .init("数据包优先级", []),
+            "Interface:AppWorldDataPackPriorityView.decreasePriority": .init("降低优先级", []),
+            "Interface:AppWorldDataPackPriorityView.increasePriority": .init("提高优先级", []),
+            "Interface:AppWorldDataPackPriorityView.missingOrDisabled": .init("本地文件缺失或未启用，保留原记录", []),
+            "Interface:AppWorldDataPackPriorityView.priorityDetails": .init("优先级从上到下递减，同名内容以上方数据包为准。拖动或使用箭头调整，下次进入世界时生效。", []),
+            "Interface:AppWorldDataPackPriorityView.providedByGameOrMod": .init("游戏或模组提供", []),
+            "Interface:AppWorldDataPackPriorityView.saveOrder": .init("保存顺序", []),
+            "Interface:AppWorldDataPackPriorityView.vanilla": .init("原版", []),
         ]
     }
 }

@@ -11,7 +11,7 @@ extension CLIApplication {
         if action == "backup list" { return request.page(try await manager.backups().map(backupValue)) }
         if action == "import" {
             let file = URL(fileURLWithPath: try request.operand(1))
-            guard FileManager.default.fileExists(atPath: file.path) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t68a342df34e2.localized) }
+            guard FileManager.default.fileExists(atPath: file.path) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.inputFileNotFound.localized) }
             if request.dryRun { return .object(["dryRun": .bool(true), "file": .string(file.path)]) }
             let lease = try GameRunLease.acquire(paths: paths, instanceID: id); defer { withExtendedLifetime(lease) {} }
             let folder = try await manager.importWorld(from: file) { output.event("progress", .object(["completed": .integer($0), "total": .integer($1)])) }
@@ -19,7 +19,7 @@ extension CLIApplication {
         }
         if action == "backup restore" || action == "backup remove" {
             let name = try request.operand(1)
-            guard let backup = try await manager.backups().first(where: { $0.id == name }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t813a5dd4816c.localized) }
+            guard let backup = try await manager.backups().first(where: { $0.id == name }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.worldBackupNotFound.localized) }
             if request.dryRun { return .object(["dryRun": .bool(true), "backup": backupValue(backup), "replace": .bool(request.flag("replace"))]) }
             let lease = try GameRunLease.acquire(paths: paths, instanceID: id); defer { withExtendedLifetime(lease) {} }
             if action == "backup remove" { try await manager.removeBackup(backup); return .object(["removed": .string(backup.id)]) }
@@ -27,7 +27,7 @@ extension CLIApplication {
             return .object(["folder": .string(folder)])
         }
         let folder = try request.operand(1)
-        guard let world = try await manager.worlds().first(where: { $0.folder == folder }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t90c2d3c97aae.localized) }
+        guard let world = try await manager.worlds().first(where: { $0.folder == folder }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.worldNotFound.localized) }
         if action == "show" { return worldValue(world) }
         let file = action == "export" ? try URL(fileURLWithPath: request.operand(2)) : nil
         if let file { try requireNewFile(file) }
@@ -37,7 +37,7 @@ extension CLIApplication {
         case "remove": try await manager.removeWorld(folder: folder)
         case "export": try await manager.exportWorld(folder: folder, to: file!) { output.event("progress", .object(["completed": .integer($0), "total": .integer($1)])) }
         case "backup create": return backupValue(try await manager.backup(folder: folder, reason: request.string("reason")) { output.event("progress", .object(["completed": .integer($0), "total": .integer($1)])) })
-        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.ta7cd75ee2906.localized)
+        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownWorldAction.localized)
         }
         return .object(["folder": .string(folder), "action": .string(action), "file": .text(file?.path)])
     }
@@ -69,7 +69,7 @@ extension CLIApplication {
             let priority = try await manager.dataPackPriority(folder: target)
             let keys = action == "order set" ? strings(request, "key") : priority.keys
             if action == "order set" {
-                guard keys.count == priority.keys.count, Set(keys) == Set(priority.keys), Set(keys).count == keys.count else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tcaf18c90c73d.localized) }
+                guard keys.count == priority.keys.count, Set(keys) == Set(priority.keys), Set(keys).count == keys.count else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.completeUniqueDataPackOrderRequired.localized) }
                 if !request.dryRun {
                     let lease = try GameRunLease.acquire(paths: paths, instanceID: id); defer { withExtendedLifetime(lease) {} }
                     try await manager.setDataPackPriority(keys, folder: target, expecting: priority)
@@ -79,7 +79,7 @@ extension CLIApplication {
         }
         if action == "install" {
             let versions = try await downloads.versions(project: request.operand(2), game: instance.gameVersion)
-            guard let version = versions.first(where: { version in request.string("version").map { $0 == version.id } ?? (version.version_type == nil || version.version_type == "release") }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.tdd5661a06a84.localized) }
+            guard let version = versions.first(where: { version in request.string("version").map { $0 == version.id } ?? (version.version_type == nil || version.version_type == "release") }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.compatibleDataPackVersionNotFound.localized) }
             let plan = try await downloads.prepare(version, game: instance.gameVersion)
             if !request.dryRun {
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id); defer { withExtendedLifetime(lease) {} }
@@ -89,15 +89,15 @@ extension CLIApplication {
         }
         let name = try request.operand(2)
         if action != "import" {
-            guard try await manager.dataPacks(folder: target).contains(where: { $0.id == name }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t921d4db04b98.localized) }
-        } else if !FileManager.default.fileExists(atPath: name) { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t68a342df34e2.localized) }
+            guard try await manager.dataPacks(folder: target).contains(where: { $0.id == name }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.dataPackNotFound.localized) }
+        } else if !FileManager.default.fileExists(atPath: name) { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.inputFileNotFound.localized) }
         if !request.dryRun {
             let lease = try GameRunLease.acquire(paths: paths, instanceID: id); defer { withExtendedLifetime(lease) {} }
             switch action {
             case "import": try await manager.importDataPack(from: URL(fileURLWithPath: name), folder: target)
             case "enable", "disable": try await manager.setDataPackEnabled(action == "enable", name: name, folder: target)
             case "remove": _ = try await manager.removeDataPack(name: name, folder: target)
-            default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t31dc407e9871.localized)
+            default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownDataPackAction.localized)
             }
         }
         return .object(["dryRun": .bool(request.dryRun), "world": .string(target), "name": .string(name), "effectiveOnNextWorldLoad": .bool(true)])
@@ -109,7 +109,7 @@ extension CLIApplication {
         if action == "list" { return request.page(try await manager.list(directory: directory).map(schematicValue)) }
         let target = try request.operand(1)
         if action == "import" || action == "mkdir" {
-            if action == "import", !FileManager.default.fileExists(atPath: target) { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t68a342df34e2.localized) }
+            if action == "import", !FileManager.default.fileExists(atPath: target) { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.inputFileNotFound.localized) }
             _ = try await manager.list(directory: directory)
             if !request.dryRun {
                 let lease = try GameRunLease.acquire(paths: paths, instanceID: id); defer { withExtendedLifetime(lease) {} }
@@ -119,7 +119,7 @@ extension CLIApplication {
             return .object(["dryRun": .bool(request.dryRun), "target": .string(target), "directory": .string(directory)])
         }
         let parent = target.split(separator: "/", omittingEmptySubsequences: false).dropLast().joined(separator: "/")
-        guard let entry = try await manager.list(directory: parent).first(where: { $0.id == target }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t90e3b5019ad0.localized) }
+        guard let entry = try await manager.list(directory: parent).first(where: { $0.id == target }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.schematicNotFound.localized) }
         if action == "info" {
             let info = try await manager.info(entry)
             return .object(["entry": schematicValue(entry), "name": .text(info.name), "author": .text(info.author), "description": .text(info.description),

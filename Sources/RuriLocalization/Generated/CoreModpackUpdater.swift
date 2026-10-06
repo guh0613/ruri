@@ -3,91 +3,91 @@ import Foundation
 
 extension Messages {
     public enum CoreModpackUpdater {
-        /// 实例已从列表移除。
+        /// “%1$@”依赖此版本，请先创建独立副本再更新整合包。
         ///
-        /// Resource: `Errors.coreModpackUpdater.instanceText1`.
-        public static var instanceRemoved: LocalizedMessage {
-            .init(key: "coreModpackUpdater.instanceText1", table: "Errors", fallback: "实例已从列表移除。")
-        }
-        /// 此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。
-        ///
-        /// Resource: `Errors.coreModpackUpdater.packText1`.
-        public static var missingPackSource: LocalizedMessage {
-            .init(key: "coreModpackUpdater.packText1", table: "Errors", fallback: "此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。")
-        }
-        /// 请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。
-        ///
-        /// Resource: `Errors.coreModpackUpdater.packText2`.
-        public static var invalidPackSelection: LocalizedMessage {
-            .init(key: "coreModpackUpdater.packText2", table: "Errors", fallback: "请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。")
-        }
-        /// 所选文件属于另一个整合包项目。
-        ///
-        /// Resource: `Errors.coreModpackUpdater.incomingText1`.
-        public static var wrongPackProject: LocalizedMessage {
-            .init(key: "coreModpackUpdater.incomingText1", table: "Errors", fallback: "所选文件属于另一个整合包项目。")
-        }
-        /// 新版整合包没有有效的文件清单。
-        ///
-        /// Resource: `Errors.coreModpackUpdater.incomingText2`.
-        public static var missingFileManifest: LocalizedMessage {
-            .init(key: "coreModpackUpdater.incomingText2", table: "Errors", fallback: "新版整合包没有有效的文件清单。")
-        }
-        /// 新版安装包含无法迁移的临时路径，原实例已保留。
-        ///
-        /// Resource: `Errors.coreModpackUpdater.resultText1`.
-        public static var unmigratableTemporaryPath: LocalizedMessage {
-            .init(key: "coreModpackUpdater.resultText1", table: "Errors", fallback: "新版安装包含无法迁移的临时路径，原实例已保留。")
-        }
-        /// 实例已移除。
-        ///
-        /// Resource: `Errors.coreModpackUpdater.latestText1`.
-        public static var instanceRemovedAfterPreview: LocalizedMessage {
-            .init(key: "coreModpackUpdater.latestText1", table: "Errors", fallback: "实例已移除。")
-        }
-        /// 更新文件在预览后改变：%1$@
-        ///
-        /// Resource: `Errors.coreModpackUpdater.sourceText1`.
-        public static func updateFilesChangedAfterPreview(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModpackUpdater.sourceText1", table: "Errors", fallback: "更新文件在预览后改变：%1$@", arguments: [.text(value0)])
-        }
-        /// 整合包版本或启动配置在预览后改变，请重新准备更新。
-        ///
-        /// Resource: `Errors.coreModpackUpdater.validateText1`.
-        public static var previewConfigurationChanged: LocalizedMessage {
-            .init(key: "coreModpackUpdater.validateText1", table: "Errors", fallback: "整合包版本或启动配置在预览后改变，请重新准备更新。")
+        /// Resource: `Errors.CoreModpackUpdater.dependencyConflict`.
+        public static func dependencyConflict(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreModpackUpdater.dependencyConflict", table: "Errors", fallback: "“%1$@”依赖此版本，请先创建独立副本再更新整合包。", arguments: [.text(value0)])
         }
         /// 预览后文件又有修改，请重新生成差异：%1$@
         ///
-        /// Resource: `Errors.coreModpackUpdater.validateText2`.
+        /// Resource: `Errors.CoreModpackUpdater.filesChangedAfterPreview`.
         public static func filesChangedAfterPreview(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModpackUpdater.validateText2", table: "Errors", fallback: "预览后文件又有修改，请重新生成差异：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreModpackUpdater.filesChangedAfterPreview", table: "Errors", fallback: "预览后文件又有修改，请重新生成差异：%1$@", arguments: [.text(value0)])
         }
-        /// “%1$@”依赖此版本，请先创建独立副本再更新整合包。
+        /// 实例已从列表移除。
         ///
-        /// Resource: `Errors.coreModpackUpdater.resolutionText1`.
-        public static func dependencyConflict(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModpackUpdater.resolutionText1", table: "Errors", fallback: "“%1$@”依赖此版本，请先创建独立副本再更新整合包。", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreModpackUpdater.instanceRemoved`.
+        public static var instanceRemoved: LocalizedMessage {
+            .init(key: "CoreModpackUpdater.instanceRemoved", table: "Errors", fallback: "实例已从列表移除。")
+        }
+        /// 实例已移除。
+        ///
+        /// Resource: `Errors.CoreModpackUpdater.instanceRemovedAfterPreview`.
+        public static var instanceRemovedAfterPreview: LocalizedMessage {
+            .init(key: "CoreModpackUpdater.instanceRemovedAfterPreview", table: "Errors", fallback: "实例已移除。")
+        }
+        /// 请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。
+        ///
+        /// Resource: `Errors.CoreModpackUpdater.invalidPackSelection`.
+        public static var invalidPackSelection: LocalizedMessage {
+            .init(key: "CoreModpackUpdater.invalidPackSelection", table: "Errors", fallback: "请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。")
+        }
+        /// 新版整合包没有有效的文件清单。
+        ///
+        /// Resource: `Errors.CoreModpackUpdater.missingFileManifest`.
+        public static var missingFileManifest: LocalizedMessage {
+            .init(key: "CoreModpackUpdater.missingFileManifest", table: "Errors", fallback: "新版整合包没有有效的文件清单。")
+        }
+        /// 此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。
+        ///
+        /// Resource: `Errors.CoreModpackUpdater.missingPackSource`.
+        public static var missingPackSource: LocalizedMessage {
+            .init(key: "CoreModpackUpdater.missingPackSource", table: "Errors", fallback: "此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。")
+        }
+        /// 整合包版本或启动配置在预览后改变，请重新准备更新。
+        ///
+        /// Resource: `Errors.CoreModpackUpdater.previewConfigurationChanged`.
+        public static var previewConfigurationChanged: LocalizedMessage {
+            .init(key: "CoreModpackUpdater.previewConfigurationChanged", table: "Errors", fallback: "整合包版本或启动配置在预览后改变，请重新准备更新。")
+        }
+        /// 新版安装包含无法迁移的临时路径，原实例已保留。
+        ///
+        /// Resource: `Errors.CoreModpackUpdater.unmigratableTemporaryPath`.
+        public static var unmigratableTemporaryPath: LocalizedMessage {
+            .init(key: "CoreModpackUpdater.unmigratableTemporaryPath", table: "Errors", fallback: "新版安装包含无法迁移的临时路径，原实例已保留。")
+        }
+        /// 更新文件在预览后改变：%1$@
+        ///
+        /// Resource: `Errors.CoreModpackUpdater.updateFilesChangedAfterPreview`.
+        public static func updateFilesChangedAfterPreview(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreModpackUpdater.updateFilesChangedAfterPreview", table: "Errors", fallback: "更新文件在预览后改变：%1$@", arguments: [.text(value0)])
+        }
+        /// 所选文件属于另一个整合包项目。
+        ///
+        /// Resource: `Errors.CoreModpackUpdater.wrongPackProject`.
+        public static var wrongPackProject: LocalizedMessage {
+            .init(key: "CoreModpackUpdater.wrongPackProject", table: "Errors", fallback: "所选文件属于另一个整合包项目。")
         }
         /// 正在应用整合包更新
         ///
-        /// Resource: `Progress.coreModpackUpdater.sourceMetadataText1`.
+        /// Resource: `Progress.CoreModpackUpdater.applyingUpdate`.
         public static var applyingUpdate: LocalizedMessage {
-            .init(key: "coreModpackUpdater.sourceMetadataText1", table: "Progress", fallback: "正在应用整合包更新")
+            .init(key: "CoreModpackUpdater.applyingUpdate", table: "Progress", fallback: "正在应用整合包更新")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreModpackUpdater.instanceText1": .init("实例已从列表移除。", []),
-            "Errors:coreModpackUpdater.packText1": .init("此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。", []),
-            "Errors:coreModpackUpdater.packText2": .init("请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。", []),
-            "Errors:coreModpackUpdater.incomingText1": .init("所选文件属于另一个整合包项目。", []),
-            "Errors:coreModpackUpdater.incomingText2": .init("新版整合包没有有效的文件清单。", []),
-            "Errors:coreModpackUpdater.resultText1": .init("新版安装包含无法迁移的临时路径，原实例已保留。", []),
-            "Errors:coreModpackUpdater.latestText1": .init("实例已移除。", []),
-            "Errors:coreModpackUpdater.sourceText1": .init("更新文件在预览后改变：%1$@", [.text]),
-            "Errors:coreModpackUpdater.validateText1": .init("整合包版本或启动配置在预览后改变，请重新准备更新。", []),
-            "Errors:coreModpackUpdater.validateText2": .init("预览后文件又有修改，请重新生成差异：%1$@", [.text]),
-            "Errors:coreModpackUpdater.resolutionText1": .init("“%1$@”依赖此版本，请先创建独立副本再更新整合包。", [.text]),
-            "Progress:coreModpackUpdater.sourceMetadataText1": .init("正在应用整合包更新", []),
+            "Errors:CoreModpackUpdater.dependencyConflict": .init("“%1$@”依赖此版本，请先创建独立副本再更新整合包。", [.text]),
+            "Errors:CoreModpackUpdater.filesChangedAfterPreview": .init("预览后文件又有修改，请重新生成差异：%1$@", [.text]),
+            "Errors:CoreModpackUpdater.instanceRemoved": .init("实例已从列表移除。", []),
+            "Errors:CoreModpackUpdater.instanceRemovedAfterPreview": .init("实例已移除。", []),
+            "Errors:CoreModpackUpdater.invalidPackSelection": .init("请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。", []),
+            "Errors:CoreModpackUpdater.missingFileManifest": .init("新版整合包没有有效的文件清单。", []),
+            "Errors:CoreModpackUpdater.missingPackSource": .init("此实例没有整合包原始文件记录，不能确定哪些文件属于整合包。", []),
+            "Errors:CoreModpackUpdater.previewConfigurationChanged": .init("整合包版本或启动配置在预览后改变，请重新准备更新。", []),
+            "Errors:CoreModpackUpdater.unmigratableTemporaryPath": .init("新版安装包含无法迁移的临时路径，原实例已保留。", []),
+            "Errors:CoreModpackUpdater.updateFilesChangedAfterPreview": .init("更新文件在预览后改变：%1$@", [.text]),
+            "Errors:CoreModpackUpdater.wrongPackProject": .init("所选文件属于另一个整合包项目。", []),
+            "Progress:CoreModpackUpdater.applyingUpdate": .init("正在应用整合包更新", []),
         ]
     }
 }

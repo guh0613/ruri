@@ -39,9 +39,9 @@ extension CLIApplication {
             }
             return .object(["sessionID": .string(id.uuidString), "requested": .string(action), "dryRun": .bool(request.dryRun)])
         case "logs":
-            guard !request.flag("follow") || (!request.common.json && request.common.output != "json") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t28723ddb22d1.localized) }
+            guard !request.flag("follow") || (!request.common.json && request.common.output != "json") else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.logFollowOutputFormatRequired.localized) }
             let limit = request.integer("lines") ?? 200
-            guard (1...10000).contains(limit) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tafd6142d30ec.localized) }
+            guard (1...10000).contains(limit) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.logLineLimitOutOfRange.localized) }
             let source: GameSessionStore.LogSource = switch request.string("source") { case "preparation": .launcher; case "latest": .console; case "debug": .nativeDebug; default: .fallback }
             let redactor = GameShareRedactor()
             var previous = "", current = record
@@ -57,7 +57,7 @@ extension CLIApplication {
                     previous = text
                 }
                 if current.state.isFinished { break }
-                guard GameMonitorClient.activity(current) == .monitoring else { throw OperationFailure("SESSION_RECOVERY_REQUIRED", Messages.CLIInterface.t043b9f54ca4c.localized, nextActions: [.init(["recovery", "list", "--json"])]) }
+                guard GameMonitorClient.activity(current) == .monitoring else { throw OperationFailure("SESSION_RECOVERY_REQUIRED", Messages.CLIInterface.sessionMonitorUnavailable.localized, nextActions: [.init(["recovery", "list", "--json"])]) }
                 try await Task.sleep(for: .seconds(1))
             } while true
             return sessionValue(current)
@@ -72,7 +72,7 @@ extension CLIApplication {
             let bundle = try GameDiagnosticBundle.collect(paths: paths, session: record)
             if !request.dryRun { try bundle.export(selectedIDs: Set(bundle.files.map(\.id)), to: file, paths: paths) }
             return .object(["file": .string(file.path), "dryRun": .bool(request.dryRun), "files": .array(bundle.files.map { .object(["path": .string($0.path), "bytes": .integer($0.byteCount), "redacted": .bool($0.changedByRedaction)]) })])
-        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te5e3bed93ff1.localized)
+        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownSessionAction.localized)
         }
     }
     static func sessionValue(_ record: GameSession) -> Value {

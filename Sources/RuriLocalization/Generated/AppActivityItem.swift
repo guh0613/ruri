@@ -5,12 +5,12 @@ extension Messages {
     public enum AppActivityItem {
         /// 准备中
         ///
-        /// Resource: `Progress.appActivityItem.progressText1`.
+        /// Resource: `Progress.AppActivityItem.preparing`.
         public static var preparing: LocalizedMessage {
-            .init(key: "appActivityItem.progressText1", table: "Progress", fallback: "准备中")
+            .init(key: "AppActivityItem.preparing", table: "Progress", fallback: "准备中")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Progress:appActivityItem.progressText1": .init("准备中", []),
+            "Progress:AppActivityItem.preparing": .init("准备中", []),
         ]
     }
 }

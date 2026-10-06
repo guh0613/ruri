@@ -3,343 +3,343 @@ import Foundation
 
 extension Messages {
     public enum AppPreferencesView {
-        /// 外观
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText1`.
-        public static var appearance: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText1", table: "Interface", fallback: "外观")
-        }
-        /// 主题
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText2`.
-        public static var theme: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText2", table: "Interface", fallback: "主题")
-        }
-        /// 浅色
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText3`.
-        public static var light: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText3", table: "Interface", fallback: "浅色")
-        }
-        /// 深色
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText4`.
-        public static var dark: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText4", table: "Interface", fallback: "深色")
-        }
-        /// 游戏默认设置
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText5`.
-        public static var systemDefault: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText5", table: "Interface", fallback: "游戏默认设置")
-        }
-        /// 默认内存分配
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText6`.
-        public static var defaultMemory: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText6", table: "Interface", fallback: "默认内存分配")
-        }
-        /// 自动估算
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText7`.
-        public static var automaticEstimate: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText7", table: "Interface", fallback: "自动估算")
-        }
-        /// 编辑全局游戏设置…
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText8`.
-        public static var editDefaultLaunchSettings: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText8", table: "Interface", fallback: "编辑全局游戏设置…")
-        }
-        /// 未单独设置的实例将使用这些选项；保存后用于下一次启动。
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText9`.
-        public static var inheritedLaunchSettingsDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText9", table: "Interface", fallback: "未单独设置的实例将使用这些选项；保存后用于下一次启动。")
-        }
-        /// 新实例隔离规则
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText10`.
-        public static var newInstanceIsolation: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText10", table: "Interface", fallback: "新实例隔离规则")
-        }
-        /// 仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText11`.
-        public static var newInstanceIsolationDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText11", table: "Interface", fallback: "仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。")
-        }
-        /// 下载与网络
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText12`.
-        public static var downloadsAndNetwork: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText12", table: "Interface", fallback: "下载与网络")
-        }
-        /// 下载源
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText13`.
-        public static var downloadSource: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText13", table: "Interface", fallback: "下载源")
-        }
-        /// 并行下载：%1$@
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText14`.
-        public static func parallelDownloads(_ value0: String) -> LocalizedMessage {
-            .init(key: "appPreferencesView.modelText14", table: "Interface", fallback: "并行下载：%1$@", arguments: [.text(value0)])
-        }
-        /// “自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText15`.
-        public static var automaticMirrorDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText15", table: "Interface", fallback: "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。")
-        }
-        /// BMCLAPI 镜像服务
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText16`.
-        public static var bmclapiMirror: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText16", table: "Interface", fallback: "BMCLAPI 镜像服务")
-        }
-        /// Microsoft 登录
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText17`.
-        public static var microsoftLogin: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText17", table: "Interface", fallback: "Microsoft 登录")
-        }
-        /// 留空使用内置登录配置。
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText18`.
-        public static var microsoftLoginDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText18", table: "Interface", fallback: "留空使用内置登录配置。")
-        }
-        /// 自定义应用 Client ID
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText19`.
-        public static var customClientID: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText19", table: "Interface", fallback: "自定义应用 Client ID")
-        }
-        /// 自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText20`.
-        public static var customClientIDDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText20", table: "Interface", fallback: "自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。")
-        }
-        /// Microsoft 应用注册文档
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText21`.
-        public static var microsoftRegistrationDocs: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText21", table: "Interface", fallback: "Microsoft 应用注册文档")
-        }
-        /// 数据
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText22`.
-        public static var data: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText22", table: "Interface", fallback: "数据")
-        }
-        /// 管理实例文件夹…
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText23`.
-        public static var manageInstanceFolders: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText23", table: "Interface", fallback: "管理实例文件夹…")
-        }
-        /// 数据目录
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText24`.
-        public static var dataDirectory: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText24", table: "Interface", fallback: "数据目录")
-        }
-        /// 在 Finder 中打开数据目录
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText25`.
-        public static var openDataDirectory: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText25", table: "Interface", fallback: "在 Finder 中打开数据目录")
-        }
         /// 关于 Ruri
         ///
-        /// Resource: `Interface.appPreferencesView.modelText26`.
+        /// Resource: `Interface.AppPreferencesView.aboutRuri`.
         public static var aboutRuri: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText26", table: "Interface", fallback: "关于 Ruri")
-        }
-        /// 版本
-        ///
-        /// Resource: `Interface.appPreferencesView.modelText27`.
-        public static var version: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText27", table: "Interface", fallback: "版本")
+            .init(key: "AppPreferencesView.aboutRuri", table: "Interface", fallback: "关于 Ruri")
         }
         /// Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。
         ///
-        /// Resource: `Interface.appPreferencesView.modelText28`.
+        /// Resource: `Interface.AppPreferencesView.aboutRuriDescription`.
         public static var aboutRuriDescription: LocalizedMessage {
-            .init(key: "appPreferencesView.modelText28", table: "Interface", fallback: "Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。")
+            .init(key: "AppPreferencesView.aboutRuriDescription", table: "Interface", fallback: "Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。")
         }
-        /// 通用
+        /// 外观
         ///
-        /// Resource: `Interface.appPreferencesView.general`.
-        public static var general: LocalizedMessage {
-            .init(key: "appPreferencesView.general", table: "Interface", fallback: "通用")
+        /// Resource: `Interface.AppPreferencesView.appearance`.
+        public static var appearance: LocalizedMessage {
+            .init(key: "AppPreferencesView.appearance", table: "Interface", fallback: "外观")
         }
-        /// 网络与服务
+        /// 自动估算
         ///
-        /// Resource: `Interface.appPreferencesView.networkAndServices`.
-        public static var networkAndServices: LocalizedMessage {
-            .init(key: "appPreferencesView.networkAndServices", table: "Interface", fallback: "网络与服务")
+        /// Resource: `Interface.AppPreferencesView.automaticEstimate`.
+        public static var automaticEstimate: LocalizedMessage {
+            .init(key: "AppPreferencesView.automaticEstimate", table: "Interface", fallback: "自动估算")
         }
-        /// 新建实例
+        /// “自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。
         ///
-        /// Resource: `Interface.appPreferencesView.newInstances`.
-        public static var newInstances: LocalizedMessage {
-            .init(key: "appPreferencesView.newInstances", table: "Interface", fallback: "新建实例")
-        }
-        /// 实例文件夹
-        ///
-        /// Resource: `Interface.appPreferencesView.instanceFolders`.
-        public static var instanceFolders: LocalizedMessage {
-            .init(key: "appPreferencesView.instanceFolders", table: "Interface", fallback: "实例文件夹")
-        }
-        /// 在 Finder 中显示
-        ///
-        /// Resource: `Interface.appPreferencesView.showInFinder`.
-        public static var showInFinder: LocalizedMessage {
-            .init(key: "appPreferencesView.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
-        }
-        /// 并行下载
-        ///
-        /// Resource: `Interface.appPreferencesView.parallelDownloadsLabel`.
-        public static var parallelDownloadsLabel: LocalizedMessage {
-            .init(key: "appPreferencesView.parallelDownloadsLabel", table: "Interface", fallback: "并行下载")
-        }
-        /// 输入应用 Client ID
-        ///
-        /// Resource: `Interface.appPreferencesView.enterClientID`.
-        public static var enterClientID: LocalizedMessage {
-            .init(key: "appPreferencesView.enterClientID", table: "Interface", fallback: "输入应用 Client ID")
-        }
-        /// 留空使用内置配置
-        ///
-        /// Resource: `Interface.appPreferencesView.useBuiltInClientID`.
-        public static var useBuiltInClientID: LocalizedMessage {
-            .init(key: "appPreferencesView.useBuiltInClientID", table: "Interface", fallback: "留空使用内置配置")
-        }
-        /// 全局游戏设置有未保存的更改
-        ///
-        /// Resource: `Interface.appPreferencesView.unsavedGameSettings`.
-        public static var unsavedGameSettings: LocalizedMessage {
-            .init(key: "appPreferencesView.unsavedGameSettings", table: "Interface", fallback: "全局游戏设置有未保存的更改")
-        }
-        /// 还原更改
-        ///
-        /// Resource: `Interface.appPreferencesView.discardGameChanges`.
-        public static var discardGameChanges: LocalizedMessage {
-            .init(key: "appPreferencesView.discardGameChanges", table: "Interface", fallback: "还原更改")
-        }
-        /// 全局游戏设置
-        ///
-        /// Resource: `Interface.appPreferencesView.globalGameSettings`.
-        public static var globalGameSettings: LocalizedMessage {
-            .init(key: "appPreferencesView.globalGameSettings", table: "Interface", fallback: "全局游戏设置")
-        }
-        /// 设置 Java、内存、窗口和启动参数的默认值。
-        ///
-        /// Resource: `Interface.appPreferencesView.globalGameSettingsDescription`.
-        public static var globalGameSettingsDescription: LocalizedMessage {
-            .init(key: "appPreferencesView.globalGameSettingsDescription", table: "Interface", fallback: "设置 Java、内存、窗口和启动参数的默认值。")
-        }
-        /// 软件更新
-        ///
-        /// Resource: `Interface.appPreferencesView.softwareUpdate`.
-        public static var softwareUpdate: LocalizedMessage {
-            .init(key: "appPreferencesView.softwareUpdate", table: "Interface", fallback: "软件更新")
+        /// Resource: `Interface.AppPreferencesView.automaticMirrorDetails`.
+        public static var automaticMirrorDetails: LocalizedMessage {
+            .init(key: "AppPreferencesView.automaticMirrorDetails", table: "Interface", fallback: "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。")
         }
         /// 自动检查更新
         ///
-        /// Resource: `Interface.appPreferencesView.automaticallyCheckForUpdates`.
+        /// Resource: `Interface.AppPreferencesView.automaticallyCheckForUpdates`.
         public static var automaticallyCheckForUpdates: LocalizedMessage {
-            .init(key: "appPreferencesView.automaticallyCheckForUpdates", table: "Interface", fallback: "自动检查更新")
+            .init(key: "AppPreferencesView.automaticallyCheckForUpdates", table: "Interface", fallback: "自动检查更新")
         }
         /// 自动下载并安装更新
         ///
-        /// Resource: `Interface.appPreferencesView.automaticallyInstallUpdates`.
+        /// Resource: `Interface.AppPreferencesView.automaticallyInstallUpdates`.
         public static var automaticallyInstallUpdates: LocalizedMessage {
-            .init(key: "appPreferencesView.automaticallyInstallUpdates", table: "Interface", fallback: "自动下载并安装更新")
+            .init(key: "AppPreferencesView.automaticallyInstallUpdates", table: "Interface", fallback: "自动下载并安装更新")
         }
-        /// 接收预览版更新
+        /// BMCLAPI 镜像服务
         ///
-        /// Resource: `Interface.appPreferencesView.receivePrereleaseUpdates`.
-        public static var receivePrereleaseUpdates: LocalizedMessage {
-            .init(key: "appPreferencesView.receivePrereleaseUpdates", table: "Interface", fallback: "接收预览版更新")
+        /// Resource: `Interface.AppPreferencesView.bmclapiMirror`.
+        public static var bmclapiMirror: LocalizedMessage {
+            .init(key: "AppPreferencesView.bmclapiMirror", table: "Interface", fallback: "BMCLAPI 镜像服务")
         }
         /// 检查更新
         ///
-        /// Resource: `Interface.appPreferencesView.checkForUpdates`.
+        /// Resource: `Interface.AppPreferencesView.checkForUpdates`.
         public static var checkForUpdates: LocalizedMessage {
-            .init(key: "appPreferencesView.checkForUpdates", table: "Interface", fallback: "检查更新")
+            .init(key: "AppPreferencesView.checkForUpdates", table: "Interface", fallback: "检查更新")
+        }
+        /// 自定义应用 Client ID
+        ///
+        /// Resource: `Interface.AppPreferencesView.customClientID`.
+        public static var customClientID: LocalizedMessage {
+            .init(key: "AppPreferencesView.customClientID", table: "Interface", fallback: "自定义应用 Client ID")
+        }
+        /// 自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。
+        ///
+        /// Resource: `Interface.AppPreferencesView.customClientIDDetails`.
+        public static var customClientIDDetails: LocalizedMessage {
+            .init(key: "AppPreferencesView.customClientIDDetails", table: "Interface", fallback: "自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。")
+        }
+        /// 深色
+        ///
+        /// Resource: `Interface.AppPreferencesView.dark`.
+        public static var dark: LocalizedMessage {
+            .init(key: "AppPreferencesView.dark", table: "Interface", fallback: "深色")
+        }
+        /// 数据
+        ///
+        /// Resource: `Interface.AppPreferencesView.data`.
+        public static var data: LocalizedMessage {
+            .init(key: "AppPreferencesView.data", table: "Interface", fallback: "数据")
+        }
+        /// 数据目录
+        ///
+        /// Resource: `Interface.AppPreferencesView.dataDirectory`.
+        public static var dataDirectory: LocalizedMessage {
+            .init(key: "AppPreferencesView.dataDirectory", table: "Interface", fallback: "数据目录")
+        }
+        /// 默认内存分配
+        ///
+        /// Resource: `Interface.AppPreferencesView.defaultMemory`.
+        public static var defaultMemory: LocalizedMessage {
+            .init(key: "AppPreferencesView.defaultMemory", table: "Interface", fallback: "默认内存分配")
+        }
+        /// 还原更改
+        ///
+        /// Resource: `Interface.AppPreferencesView.discardGameChanges`.
+        public static var discardGameChanges: LocalizedMessage {
+            .init(key: "AppPreferencesView.discardGameChanges", table: "Interface", fallback: "还原更改")
+        }
+        /// 下载源
+        ///
+        /// Resource: `Interface.AppPreferencesView.downloadSource`.
+        public static var downloadSource: LocalizedMessage {
+            .init(key: "AppPreferencesView.downloadSource", table: "Interface", fallback: "下载源")
+        }
+        /// 下载与网络
+        ///
+        /// Resource: `Interface.AppPreferencesView.downloadsAndNetwork`.
+        public static var downloadsAndNetwork: LocalizedMessage {
+            .init(key: "AppPreferencesView.downloadsAndNetwork", table: "Interface", fallback: "下载与网络")
+        }
+        /// 编辑全局游戏设置…
+        ///
+        /// Resource: `Interface.AppPreferencesView.editDefaultLaunchSettings`.
+        public static var editDefaultLaunchSettings: LocalizedMessage {
+            .init(key: "AppPreferencesView.editDefaultLaunchSettings", table: "Interface", fallback: "编辑全局游戏设置…")
+        }
+        /// 输入应用 Client ID
+        ///
+        /// Resource: `Interface.AppPreferencesView.enterClientID`.
+        public static var enterClientID: LocalizedMessage {
+            .init(key: "AppPreferencesView.enterClientID", table: "Interface", fallback: "输入应用 Client ID")
+        }
+        /// 通用
+        ///
+        /// Resource: `Interface.AppPreferencesView.general`.
+        public static var general: LocalizedMessage {
+            .init(key: "AppPreferencesView.general", table: "Interface", fallback: "通用")
+        }
+        /// 全局游戏设置
+        ///
+        /// Resource: `Interface.AppPreferencesView.globalGameSettings`.
+        public static var globalGameSettings: LocalizedMessage {
+            .init(key: "AppPreferencesView.globalGameSettings", table: "Interface", fallback: "全局游戏设置")
+        }
+        /// 设置 Java、内存、窗口和启动参数的默认值。
+        ///
+        /// Resource: `Interface.AppPreferencesView.globalGameSettingsDescription`.
+        public static var globalGameSettingsDescription: LocalizedMessage {
+            .init(key: "AppPreferencesView.globalGameSettingsDescription", table: "Interface", fallback: "设置 Java、内存、窗口和启动参数的默认值。")
+        }
+        /// 未单独设置的实例将使用这些选项；保存后用于下一次启动。
+        ///
+        /// Resource: `Interface.AppPreferencesView.inheritedLaunchSettingsDetails`.
+        public static var inheritedLaunchSettingsDetails: LocalizedMessage {
+            .init(key: "AppPreferencesView.inheritedLaunchSettingsDetails", table: "Interface", fallback: "未单独设置的实例将使用这些选项；保存后用于下一次启动。")
+        }
+        /// 实例文件夹
+        ///
+        /// Resource: `Interface.AppPreferencesView.instanceFolders`.
+        public static var instanceFolders: LocalizedMessage {
+            .init(key: "AppPreferencesView.instanceFolders", table: "Interface", fallback: "实例文件夹")
         }
         /// 上次检查：%1$@
         ///
-        /// Resource: `Interface.appPreferencesView.lastUpdateCheck`.
+        /// Resource: `Interface.AppPreferencesView.lastUpdateCheck`.
         public static func lastUpdateCheck(_ value0: String) -> LocalizedMessage {
-            .init(key: "appPreferencesView.lastUpdateCheck", table: "Interface", fallback: "上次检查：%1$@", arguments: [.text(value0)])
+            .init(key: "AppPreferencesView.lastUpdateCheck", table: "Interface", fallback: "上次检查：%1$@", arguments: [.text(value0)])
+        }
+        /// 浅色
+        ///
+        /// Resource: `Interface.AppPreferencesView.light`.
+        public static var light: LocalizedMessage {
+            .init(key: "AppPreferencesView.light", table: "Interface", fallback: "浅色")
+        }
+        /// 管理实例文件夹…
+        ///
+        /// Resource: `Interface.AppPreferencesView.manageInstanceFolders`.
+        public static var manageInstanceFolders: LocalizedMessage {
+            .init(key: "AppPreferencesView.manageInstanceFolders", table: "Interface", fallback: "管理实例文件夹…")
+        }
+        /// Microsoft 登录
+        ///
+        /// Resource: `Interface.AppPreferencesView.microsoftLogin`.
+        public static var microsoftLogin: LocalizedMessage {
+            .init(key: "AppPreferencesView.microsoftLogin", table: "Interface", fallback: "Microsoft 登录")
+        }
+        /// 留空使用内置登录配置。
+        ///
+        /// Resource: `Interface.AppPreferencesView.microsoftLoginDetails`.
+        public static var microsoftLoginDetails: LocalizedMessage {
+            .init(key: "AppPreferencesView.microsoftLoginDetails", table: "Interface", fallback: "留空使用内置登录配置。")
+        }
+        /// Microsoft 应用注册文档
+        ///
+        /// Resource: `Interface.AppPreferencesView.microsoftRegistrationDocs`.
+        public static var microsoftRegistrationDocs: LocalizedMessage {
+            .init(key: "AppPreferencesView.microsoftRegistrationDocs", table: "Interface", fallback: "Microsoft 应用注册文档")
+        }
+        /// 网络与服务
+        ///
+        /// Resource: `Interface.AppPreferencesView.networkAndServices`.
+        public static var networkAndServices: LocalizedMessage {
+            .init(key: "AppPreferencesView.networkAndServices", table: "Interface", fallback: "网络与服务")
         }
         /// 尚未检查
         ///
-        /// Resource: `Interface.appPreferencesView.neverCheckedForUpdates`.
+        /// Resource: `Interface.AppPreferencesView.neverCheckedForUpdates`.
         public static var neverCheckedForUpdates: LocalizedMessage {
-            .init(key: "appPreferencesView.neverCheckedForUpdates", table: "Interface", fallback: "尚未检查")
+            .init(key: "AppPreferencesView.neverCheckedForUpdates", table: "Interface", fallback: "尚未检查")
+        }
+        /// 新实例隔离规则
+        ///
+        /// Resource: `Interface.AppPreferencesView.newInstanceIsolation`.
+        public static var newInstanceIsolation: LocalizedMessage {
+            .init(key: "AppPreferencesView.newInstanceIsolation", table: "Interface", fallback: "新实例隔离规则")
+        }
+        /// 仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。
+        ///
+        /// Resource: `Interface.AppPreferencesView.newInstanceIsolationDetails`.
+        public static var newInstanceIsolationDetails: LocalizedMessage {
+            .init(key: "AppPreferencesView.newInstanceIsolationDetails", table: "Interface", fallback: "仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。")
+        }
+        /// 新建实例
+        ///
+        /// Resource: `Interface.AppPreferencesView.newInstances`.
+        public static var newInstances: LocalizedMessage {
+            .init(key: "AppPreferencesView.newInstances", table: "Interface", fallback: "新建实例")
+        }
+        /// 在 Finder 中打开数据目录
+        ///
+        /// Resource: `Interface.AppPreferencesView.openDataDirectory`.
+        public static var openDataDirectory: LocalizedMessage {
+            .init(key: "AppPreferencesView.openDataDirectory", table: "Interface", fallback: "在 Finder 中打开数据目录")
+        }
+        /// 并行下载：%1$@
+        ///
+        /// Resource: `Interface.AppPreferencesView.parallelDownloads`.
+        public static func parallelDownloads(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppPreferencesView.parallelDownloads", table: "Interface", fallback: "并行下载：%1$@", arguments: [.text(value0)])
+        }
+        /// 并行下载
+        ///
+        /// Resource: `Interface.AppPreferencesView.parallelDownloadsLabel`.
+        public static var parallelDownloadsLabel: LocalizedMessage {
+            .init(key: "AppPreferencesView.parallelDownloadsLabel", table: "Interface", fallback: "并行下载")
+        }
+        /// 接收预览版更新
+        ///
+        /// Resource: `Interface.AppPreferencesView.receivePrereleaseUpdates`.
+        public static var receivePrereleaseUpdates: LocalizedMessage {
+            .init(key: "AppPreferencesView.receivePrereleaseUpdates", table: "Interface", fallback: "接收预览版更新")
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.AppPreferencesView.showInFinder`.
+        public static var showInFinder: LocalizedMessage {
+            .init(key: "AppPreferencesView.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
+        }
+        /// 软件更新
+        ///
+        /// Resource: `Interface.AppPreferencesView.softwareUpdate`.
+        public static var softwareUpdate: LocalizedMessage {
+            .init(key: "AppPreferencesView.softwareUpdate", table: "Interface", fallback: "软件更新")
         }
         /// 更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。
         ///
-        /// Resource: `Interface.appPreferencesView.softwareUpdateDetails`.
+        /// Resource: `Interface.AppPreferencesView.softwareUpdateDetails`.
         public static var softwareUpdateDetails: LocalizedMessage {
-            .init(key: "appPreferencesView.softwareUpdateDetails", table: "Interface", fallback: "更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。")
+            .init(key: "AppPreferencesView.softwareUpdateDetails", table: "Interface", fallback: "更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。")
+        }
+        /// 游戏默认设置
+        ///
+        /// Resource: `Interface.AppPreferencesView.systemDefault`.
+        public static var systemDefault: LocalizedMessage {
+            .init(key: "AppPreferencesView.systemDefault", table: "Interface", fallback: "游戏默认设置")
+        }
+        /// 主题
+        ///
+        /// Resource: `Interface.AppPreferencesView.theme`.
+        public static var theme: LocalizedMessage {
+            .init(key: "AppPreferencesView.theme", table: "Interface", fallback: "主题")
+        }
+        /// 全局游戏设置有未保存的更改
+        ///
+        /// Resource: `Interface.AppPreferencesView.unsavedGameSettings`.
+        public static var unsavedGameSettings: LocalizedMessage {
+            .init(key: "AppPreferencesView.unsavedGameSettings", table: "Interface", fallback: "全局游戏设置有未保存的更改")
+        }
+        /// 留空使用内置配置
+        ///
+        /// Resource: `Interface.AppPreferencesView.useBuiltInClientID`.
+        public static var useBuiltInClientID: LocalizedMessage {
+            .init(key: "AppPreferencesView.useBuiltInClientID", table: "Interface", fallback: "留空使用内置配置")
+        }
+        /// 版本
+        ///
+        /// Resource: `Interface.AppPreferencesView.version`.
+        public static var version: LocalizedMessage {
+            .init(key: "AppPreferencesView.version", table: "Interface", fallback: "版本")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appPreferencesView.modelText1": .init("外观", []),
-            "Interface:appPreferencesView.modelText2": .init("主题", []),
-            "Interface:appPreferencesView.modelText3": .init("浅色", []),
-            "Interface:appPreferencesView.modelText4": .init("深色", []),
-            "Interface:appPreferencesView.modelText5": .init("游戏默认设置", []),
-            "Interface:appPreferencesView.modelText6": .init("默认内存分配", []),
-            "Interface:appPreferencesView.modelText7": .init("自动估算", []),
-            "Interface:appPreferencesView.modelText8": .init("编辑全局游戏设置…", []),
-            "Interface:appPreferencesView.modelText9": .init("未单独设置的实例将使用这些选项；保存后用于下一次启动。", []),
-            "Interface:appPreferencesView.modelText10": .init("新实例隔离规则", []),
-            "Interface:appPreferencesView.modelText11": .init("仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。", []),
-            "Interface:appPreferencesView.modelText12": .init("下载与网络", []),
-            "Interface:appPreferencesView.modelText13": .init("下载源", []),
-            "Interface:appPreferencesView.modelText14": .init("并行下载：%1$@", [.text]),
-            "Interface:appPreferencesView.modelText15": .init("“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。", []),
-            "Interface:appPreferencesView.modelText16": .init("BMCLAPI 镜像服务", []),
-            "Interface:appPreferencesView.modelText17": .init("Microsoft 登录", []),
-            "Interface:appPreferencesView.modelText18": .init("留空使用内置登录配置。", []),
-            "Interface:appPreferencesView.modelText19": .init("自定义应用 Client ID", []),
-            "Interface:appPreferencesView.modelText20": .init("自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。", []),
-            "Interface:appPreferencesView.modelText21": .init("Microsoft 应用注册文档", []),
-            "Interface:appPreferencesView.modelText22": .init("数据", []),
-            "Interface:appPreferencesView.modelText23": .init("管理实例文件夹…", []),
-            "Interface:appPreferencesView.modelText24": .init("数据目录", []),
-            "Interface:appPreferencesView.modelText25": .init("在 Finder 中打开数据目录", []),
-            "Interface:appPreferencesView.modelText26": .init("关于 Ruri", []),
-            "Interface:appPreferencesView.modelText27": .init("版本", []),
-            "Interface:appPreferencesView.modelText28": .init("Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。", []),
-            "Interface:appPreferencesView.general": .init("通用", []),
-            "Interface:appPreferencesView.networkAndServices": .init("网络与服务", []),
-            "Interface:appPreferencesView.newInstances": .init("新建实例", []),
-            "Interface:appPreferencesView.instanceFolders": .init("实例文件夹", []),
-            "Interface:appPreferencesView.showInFinder": .init("在 Finder 中显示", []),
-            "Interface:appPreferencesView.parallelDownloadsLabel": .init("并行下载", []),
-            "Interface:appPreferencesView.enterClientID": .init("输入应用 Client ID", []),
-            "Interface:appPreferencesView.useBuiltInClientID": .init("留空使用内置配置", []),
-            "Interface:appPreferencesView.unsavedGameSettings": .init("全局游戏设置有未保存的更改", []),
-            "Interface:appPreferencesView.discardGameChanges": .init("还原更改", []),
-            "Interface:appPreferencesView.globalGameSettings": .init("全局游戏设置", []),
-            "Interface:appPreferencesView.globalGameSettingsDescription": .init("设置 Java、内存、窗口和启动参数的默认值。", []),
-            "Interface:appPreferencesView.softwareUpdate": .init("软件更新", []),
-            "Interface:appPreferencesView.automaticallyCheckForUpdates": .init("自动检查更新", []),
-            "Interface:appPreferencesView.automaticallyInstallUpdates": .init("自动下载并安装更新", []),
-            "Interface:appPreferencesView.receivePrereleaseUpdates": .init("接收预览版更新", []),
-            "Interface:appPreferencesView.checkForUpdates": .init("检查更新", []),
-            "Interface:appPreferencesView.lastUpdateCheck": .init("上次检查：%1$@", [.text]),
-            "Interface:appPreferencesView.neverCheckedForUpdates": .init("尚未检查", []),
-            "Interface:appPreferencesView.softwareUpdateDetails": .init("更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。", []),
+            "Interface:AppPreferencesView.aboutRuri": .init("关于 Ruri", []),
+            "Interface:AppPreferencesView.aboutRuriDescription": .init("Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。", []),
+            "Interface:AppPreferencesView.appearance": .init("外观", []),
+            "Interface:AppPreferencesView.automaticEstimate": .init("自动估算", []),
+            "Interface:AppPreferencesView.automaticMirrorDetails": .init("“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。", []),
+            "Interface:AppPreferencesView.automaticallyCheckForUpdates": .init("自动检查更新", []),
+            "Interface:AppPreferencesView.automaticallyInstallUpdates": .init("自动下载并安装更新", []),
+            "Interface:AppPreferencesView.bmclapiMirror": .init("BMCLAPI 镜像服务", []),
+            "Interface:AppPreferencesView.checkForUpdates": .init("检查更新", []),
+            "Interface:AppPreferencesView.customClientID": .init("自定义应用 Client ID", []),
+            "Interface:AppPreferencesView.customClientIDDetails": .init("自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。", []),
+            "Interface:AppPreferencesView.dark": .init("深色", []),
+            "Interface:AppPreferencesView.data": .init("数据", []),
+            "Interface:AppPreferencesView.dataDirectory": .init("数据目录", []),
+            "Interface:AppPreferencesView.defaultMemory": .init("默认内存分配", []),
+            "Interface:AppPreferencesView.discardGameChanges": .init("还原更改", []),
+            "Interface:AppPreferencesView.downloadSource": .init("下载源", []),
+            "Interface:AppPreferencesView.downloadsAndNetwork": .init("下载与网络", []),
+            "Interface:AppPreferencesView.editDefaultLaunchSettings": .init("编辑全局游戏设置…", []),
+            "Interface:AppPreferencesView.enterClientID": .init("输入应用 Client ID", []),
+            "Interface:AppPreferencesView.general": .init("通用", []),
+            "Interface:AppPreferencesView.globalGameSettings": .init("全局游戏设置", []),
+            "Interface:AppPreferencesView.globalGameSettingsDescription": .init("设置 Java、内存、窗口和启动参数的默认值。", []),
+            "Interface:AppPreferencesView.inheritedLaunchSettingsDetails": .init("未单独设置的实例将使用这些选项；保存后用于下一次启动。", []),
+            "Interface:AppPreferencesView.instanceFolders": .init("实例文件夹", []),
+            "Interface:AppPreferencesView.lastUpdateCheck": .init("上次检查：%1$@", [.text]),
+            "Interface:AppPreferencesView.light": .init("浅色", []),
+            "Interface:AppPreferencesView.manageInstanceFolders": .init("管理实例文件夹…", []),
+            "Interface:AppPreferencesView.microsoftLogin": .init("Microsoft 登录", []),
+            "Interface:AppPreferencesView.microsoftLoginDetails": .init("留空使用内置登录配置。", []),
+            "Interface:AppPreferencesView.microsoftRegistrationDocs": .init("Microsoft 应用注册文档", []),
+            "Interface:AppPreferencesView.networkAndServices": .init("网络与服务", []),
+            "Interface:AppPreferencesView.neverCheckedForUpdates": .init("尚未检查", []),
+            "Interface:AppPreferencesView.newInstanceIsolation": .init("新实例隔离规则", []),
+            "Interface:AppPreferencesView.newInstanceIsolationDetails": .init("仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。", []),
+            "Interface:AppPreferencesView.newInstances": .init("新建实例", []),
+            "Interface:AppPreferencesView.openDataDirectory": .init("在 Finder 中打开数据目录", []),
+            "Interface:AppPreferencesView.parallelDownloads": .init("并行下载：%1$@", [.text]),
+            "Interface:AppPreferencesView.parallelDownloadsLabel": .init("并行下载", []),
+            "Interface:AppPreferencesView.receivePrereleaseUpdates": .init("接收预览版更新", []),
+            "Interface:AppPreferencesView.showInFinder": .init("在 Finder 中显示", []),
+            "Interface:AppPreferencesView.softwareUpdate": .init("软件更新", []),
+            "Interface:AppPreferencesView.softwareUpdateDetails": .init("更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。", []),
+            "Interface:AppPreferencesView.systemDefault": .init("游戏默认设置", []),
+            "Interface:AppPreferencesView.theme": .init("主题", []),
+            "Interface:AppPreferencesView.unsavedGameSettings": .init("全局游戏设置有未保存的更改", []),
+            "Interface:AppPreferencesView.useBuiltInClientID": .init("留空使用内置配置", []),
+            "Interface:AppPreferencesView.version": .init("版本", []),
         ]
     }
 }

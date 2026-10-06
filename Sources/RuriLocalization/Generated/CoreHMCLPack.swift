@@ -5,82 +5,82 @@ extension Messages {
     public enum CoreHMCLPack {
         /// 游戏与加载器依赖会重新安装，以匹配当前 Mac。
         ///
-        /// Resource: `Core.coreHMCLPack.warningsText1`.
+        /// Resource: `Core.CoreHMCLPack.reinstallDependenciesForMac`.
         public static var reinstallDependenciesForMac: LocalizedMessage {
-            .init(key: "coreHMCLPack.warningsText1", table: "Core", fallback: "游戏与加载器依赖会重新安装，以匹配当前 Mac。")
-        }
-        /// HMCL 清单补丁数量超过限制
-        ///
-        /// Resource: `Errors.coreHMCLPack.indexText1`.
-        public static var tooManyManifestPatches: LocalizedMessage {
-            .init(key: "coreHMCLPack.indexText1", table: "Errors", fallback: "HMCL 清单补丁数量超过限制")
-        }
-        /// 无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。
-        ///
-        /// Resource: `Errors.coreHMCLPack.versionText1`.
-        public static var unknownPackGameVersion: LocalizedMessage {
-            .init(key: "coreHMCLPack.versionText1", table: "Errors", fallback: "无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。")
-        }
-        /// HMCL 整合包包含尚未支持的组件：%1$@
-        ///
-        /// Resource: `Errors.coreHMCLPack.unsupportedText1`.
-        public static func unsupportedPackComponents(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreHMCLPack.unsupportedText1", table: "Errors", fallback: "HMCL 整合包包含尚未支持的组件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreHMCLPack.reinstallDependenciesForMac", table: "Core", fallback: "游戏与加载器依赖会重新安装，以匹配当前 Mac。")
         }
         /// HMCL 清单包含无效依赖坐标
         ///
-        /// Resource: `Errors.coreHMCLPack.partsText1`.
+        /// Resource: `Errors.CoreHMCLPack.invalidDependencyCoordinates`.
         public static var invalidDependencyCoordinates: LocalizedMessage {
-            .init(key: "coreHMCLPack.partsText1", table: "Errors", fallback: "HMCL 清单包含无效依赖坐标")
-        }
-        /// HMCL 整合包需要尚未接入的组件：%1$@:%2$@
-        ///
-        /// Resource: `Errors.coreHMCLPack.partsText2`.
-        public static func unsupportedPackComponent(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreHMCLPack.partsText2", table: "Errors", fallback: "HMCL 整合包需要尚未接入的组件：%1$@:%2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 检测到 NeoForge，但无法确定其版本。
-        ///
-        /// Resource: `Errors.coreHMCLPack.valueText1`.
-        public static var neoforgeVersionUnknown: LocalizedMessage {
-            .init(key: "coreHMCLPack.valueText1", table: "Errors", fallback: "检测到 NeoForge，但无法确定其版本。")
+            .init(key: "CoreHMCLPack.invalidDependencyCoordinates", table: "Errors", fallback: "HMCL 清单包含无效依赖坐标")
         }
         /// HMCL 整合包同时声明多个加载器，暂时无法迁移。
         ///
-        /// Resource: `Errors.coreHMCLPack.valueText2`.
+        /// Resource: `Errors.CoreHMCLPack.multiplePackLoaders`.
         public static var multiplePackLoaders: LocalizedMessage {
-            .init(key: "coreHMCLPack.valueText2", table: "Errors", fallback: "HMCL 整合包同时声明多个加载器，暂时无法迁移。")
+            .init(key: "CoreHMCLPack.multiplePackLoaders", table: "Errors", fallback: "HMCL 整合包同时声明多个加载器，暂时无法迁移。")
         }
-        /// HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。
+        /// 检测到 NeoForge，但无法确定其版本。
         ///
-        /// Resource: `Errors.coreHMCLPack.loaderText1`.
-        public static var unsupportedLiteLoaderArguments: LocalizedMessage {
-            .init(key: "coreHMCLPack.loaderText1", table: "Errors", fallback: "HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。")
+        /// Resource: `Errors.CoreHMCLPack.neoforgeVersionUnknown`.
+        public static var neoforgeVersionUnknown: LocalizedMessage {
+            .init(key: "CoreHMCLPack.neoforgeVersionUnknown", table: "Errors", fallback: "检测到 NeoForge，但无法确定其版本。")
         }
-        /// HMCL 整合包需要未识别的 LaunchWrapper 组件。
+        /// HMCL 清单补丁数量超过限制
         ///
-        /// Resource: `Errors.coreHMCLPack.loaderText2`.
-        public static var unknownLaunchWrapper: LocalizedMessage {
-            .init(key: "coreHMCLPack.loaderText2", table: "Errors", fallback: "HMCL 整合包需要未识别的 LaunchWrapper 组件。")
+        /// Resource: `Errors.CoreHMCLPack.tooManyManifestPatches`.
+        public static var tooManyManifestPatches: LocalizedMessage {
+            .init(key: "CoreHMCLPack.tooManyManifestPatches", table: "Errors", fallback: "HMCL 清单补丁数量超过限制")
         }
         /// HMCL 整合包使用未识别的游戏启动方式：%1$@
         ///
-        /// Resource: `Errors.coreHMCLPack.mainText1`.
+        /// Resource: `Errors.CoreHMCLPack.unknownLaunchMethod`.
         public static func unknownLaunchMethod(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreHMCLPack.mainText1", table: "Errors", fallback: "HMCL 整合包使用未识别的游戏启动方式：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreHMCLPack.unknownLaunchMethod", table: "Errors", fallback: "HMCL 整合包使用未识别的游戏启动方式：%1$@", arguments: [.text(value0)])
+        }
+        /// HMCL 整合包需要未识别的 LaunchWrapper 组件。
+        ///
+        /// Resource: `Errors.CoreHMCLPack.unknownLaunchWrapper`.
+        public static var unknownLaunchWrapper: LocalizedMessage {
+            .init(key: "CoreHMCLPack.unknownLaunchWrapper", table: "Errors", fallback: "HMCL 整合包需要未识别的 LaunchWrapper 组件。")
+        }
+        /// 无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。
+        ///
+        /// Resource: `Errors.CoreHMCLPack.unknownPackGameVersion`.
+        public static var unknownPackGameVersion: LocalizedMessage {
+            .init(key: "CoreHMCLPack.unknownPackGameVersion", table: "Errors", fallback: "无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。")
+        }
+        /// HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。
+        ///
+        /// Resource: `Errors.CoreHMCLPack.unsupportedLiteLoaderArguments`.
+        public static var unsupportedLiteLoaderArguments: LocalizedMessage {
+            .init(key: "CoreHMCLPack.unsupportedLiteLoaderArguments", table: "Errors", fallback: "HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。")
+        }
+        /// HMCL 整合包需要尚未接入的组件：%1$@:%2$@
+        ///
+        /// Resource: `Errors.CoreHMCLPack.unsupportedPackComponent`.
+        public static func unsupportedPackComponent(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreHMCLPack.unsupportedPackComponent", table: "Errors", fallback: "HMCL 整合包需要尚未接入的组件：%1$@:%2$@", arguments: [.text(value0), .text(value1)])
+        }
+        /// HMCL 整合包包含尚未支持的组件：%1$@
+        ///
+        /// Resource: `Errors.CoreHMCLPack.unsupportedPackComponents`.
+        public static func unsupportedPackComponents(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreHMCLPack.unsupportedPackComponents", table: "Errors", fallback: "HMCL 整合包包含尚未支持的组件：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreHMCLPack.warningsText1": .init("游戏与加载器依赖会重新安装，以匹配当前 Mac。", []),
-            "Errors:coreHMCLPack.indexText1": .init("HMCL 清单补丁数量超过限制", []),
-            "Errors:coreHMCLPack.versionText1": .init("无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。", []),
-            "Errors:coreHMCLPack.unsupportedText1": .init("HMCL 整合包包含尚未支持的组件：%1$@", [.text]),
-            "Errors:coreHMCLPack.partsText1": .init("HMCL 清单包含无效依赖坐标", []),
-            "Errors:coreHMCLPack.partsText2": .init("HMCL 整合包需要尚未接入的组件：%1$@:%2$@", [.text, .text]),
-            "Errors:coreHMCLPack.valueText1": .init("检测到 NeoForge，但无法确定其版本。", []),
-            "Errors:coreHMCLPack.valueText2": .init("HMCL 整合包同时声明多个加载器，暂时无法迁移。", []),
-            "Errors:coreHMCLPack.loaderText1": .init("HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。", []),
-            "Errors:coreHMCLPack.loaderText2": .init("HMCL 整合包需要未识别的 LaunchWrapper 组件。", []),
-            "Errors:coreHMCLPack.mainText1": .init("HMCL 整合包使用未识别的游戏启动方式：%1$@", [.text]),
+            "Core:CoreHMCLPack.reinstallDependenciesForMac": .init("游戏与加载器依赖会重新安装，以匹配当前 Mac。", []),
+            "Errors:CoreHMCLPack.invalidDependencyCoordinates": .init("HMCL 清单包含无效依赖坐标", []),
+            "Errors:CoreHMCLPack.multiplePackLoaders": .init("HMCL 整合包同时声明多个加载器，暂时无法迁移。", []),
+            "Errors:CoreHMCLPack.neoforgeVersionUnknown": .init("检测到 NeoForge，但无法确定其版本。", []),
+            "Errors:CoreHMCLPack.tooManyManifestPatches": .init("HMCL 清单补丁数量超过限制", []),
+            "Errors:CoreHMCLPack.unknownLaunchMethod": .init("HMCL 整合包使用未识别的游戏启动方式：%1$@", [.text]),
+            "Errors:CoreHMCLPack.unknownLaunchWrapper": .init("HMCL 整合包需要未识别的 LaunchWrapper 组件。", []),
+            "Errors:CoreHMCLPack.unknownPackGameVersion": .init("无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。", []),
+            "Errors:CoreHMCLPack.unsupportedLiteLoaderArguments": .init("HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。", []),
+            "Errors:CoreHMCLPack.unsupportedPackComponent": .init("HMCL 整合包需要尚未接入的组件：%1$@:%2$@", [.text, .text]),
+            "Errors:CoreHMCLPack.unsupportedPackComponents": .init("HMCL 整合包包含尚未支持的组件：%1$@", [.text]),
         ]
     }
 }

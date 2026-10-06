@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreInstallerJavaRuntime {
         /// %1$@ 的安装处理程序需要 Java %2$@ 或更高版本。请先安装或添加本地 Java，然后重试。
         ///
-        /// Resource: `Errors.coreInstallerJavaRuntime.javaRequired`.
+        /// Resource: `Errors.CoreInstallerJavaRuntime.javaRequired`.
         public static func javaRequired(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreInstallerJavaRuntime.javaRequired", table: "Errors", fallback: "%1$@ 的安装处理程序需要 Java %2$@ 或更高版本。请先安装或添加本地 Java，然后重试。", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreInstallerJavaRuntime.javaRequired", table: "Errors", fallback: "%1$@ 的安装处理程序需要 Java %2$@ 或更高版本。请先安装或添加本地 Java，然后重试。", arguments: [.text(value0), .text(value1)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstallerJavaRuntime.javaRequired": .init("%1$@ 的安装处理程序需要 Java %2$@ 或更高版本。请先安装或添加本地 Java，然后重试。", [.text, .text]),
+            "Errors:CoreInstallerJavaRuntime.javaRequired": .init("%1$@ 的安装处理程序需要 Java %2$@ 或更高版本。请先安装或添加本地 Java，然后重试。", [.text, .text]),
         ]
     }
 }

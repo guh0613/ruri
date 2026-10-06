@@ -3,49 +3,49 @@ import Foundation
 
 extension Messages {
     public enum CoreLiteLoaderCatalog {
+        /// LiteLoader 依赖下载地址无效。
+        ///
+        /// Resource: `Errors.CoreLiteLoaderCatalog.invalidDependencyURL`.
+        public static var invalidDependencyURL: LocalizedMessage {
+            .init(key: "CoreLiteLoaderCatalog.invalidDependencyURL", table: "Errors", fallback: "LiteLoader 依赖下载地址无效。")
+        }
         /// LiteLoader 文件校验信息无效。
         ///
-        /// Resource: `Errors.coreLiteLoaderCatalog.valueText1`.
+        /// Resource: `Errors.CoreLiteLoaderCatalog.invalidFileChecksum`.
         public static var invalidFileChecksum: LocalizedMessage {
-            .init(key: "coreLiteLoaderCatalog.valueText1", table: "Errors", fallback: "LiteLoader 文件校验信息无效。")
-        }
-        /// LiteLoader 清单的启动入口无法识别。
-        ///
-        /// Resource: `Errors.coreLiteLoaderCatalog.argumentsText1`.
-        public static var unrecognizedLaunchEntry: LocalizedMessage {
-            .init(key: "coreLiteLoaderCatalog.argumentsText1", table: "Errors", fallback: "LiteLoader 清单的启动入口无法识别。")
-        }
-        /// 找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。
-        ///
-        /// Resource: `Errors.coreLiteLoaderCatalog.releaseText1`.
-        public static func loaderNotFound(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreLiteLoaderCatalog.releaseText1", table: "Errors", fallback: "找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreLiteLoaderCatalog.invalidFileChecksum", table: "Errors", fallback: "LiteLoader 文件校验信息无效。")
         }
         /// LiteLoader 快照缺少有效的 SHA-1 校验信息。
         ///
-        /// Resource: `Errors.coreLiteLoaderCatalog.valueText2`.
+        /// Resource: `Errors.CoreLiteLoaderCatalog.invalidSnapshotChecksum`.
         public static var invalidSnapshotChecksum: LocalizedMessage {
-            .init(key: "coreLiteLoaderCatalog.valueText2", table: "Errors", fallback: "LiteLoader 快照缺少有效的 SHA-1 校验信息。")
+            .init(key: "CoreLiteLoaderCatalog.invalidSnapshotChecksum", table: "Errors", fallback: "LiteLoader 快照缺少有效的 SHA-1 校验信息。")
         }
         /// LiteLoader 快照版本信息无效。
         ///
-        /// Resource: `Errors.coreLiteLoaderCatalog.numberText1`.
+        /// Resource: `Errors.CoreLiteLoaderCatalog.invalidSnapshotVersion`.
         public static var invalidSnapshotVersion: LocalizedMessage {
-            .init(key: "coreLiteLoaderCatalog.numberText1", table: "Errors", fallback: "LiteLoader 快照版本信息无效。")
+            .init(key: "CoreLiteLoaderCatalog.invalidSnapshotVersion", table: "Errors", fallback: "LiteLoader 快照版本信息无效。")
         }
-        /// LiteLoader 依赖下载地址无效。
+        /// 找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。
         ///
-        /// Resource: `Errors.coreLiteLoaderCatalog.componentsText1`.
-        public static var invalidDependencyURL: LocalizedMessage {
-            .init(key: "coreLiteLoaderCatalog.componentsText1", table: "Errors", fallback: "LiteLoader 依赖下载地址无效。")
+        /// Resource: `Errors.CoreLiteLoaderCatalog.loaderNotFound`.
+        public static func loaderNotFound(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreLiteLoaderCatalog.loaderNotFound", table: "Errors", fallback: "找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。", arguments: [.text(value0), .text(value1)])
+        }
+        /// LiteLoader 清单的启动入口无法识别。
+        ///
+        /// Resource: `Errors.CoreLiteLoaderCatalog.unrecognizedLaunchEntry`.
+        public static var unrecognizedLaunchEntry: LocalizedMessage {
+            .init(key: "CoreLiteLoaderCatalog.unrecognizedLaunchEntry", table: "Errors", fallback: "LiteLoader 清单的启动入口无法识别。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreLiteLoaderCatalog.valueText1": .init("LiteLoader 文件校验信息无效。", []),
-            "Errors:coreLiteLoaderCatalog.argumentsText1": .init("LiteLoader 清单的启动入口无法识别。", []),
-            "Errors:coreLiteLoaderCatalog.releaseText1": .init("找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。", [.text, .text]),
-            "Errors:coreLiteLoaderCatalog.valueText2": .init("LiteLoader 快照缺少有效的 SHA-1 校验信息。", []),
-            "Errors:coreLiteLoaderCatalog.numberText1": .init("LiteLoader 快照版本信息无效。", []),
-            "Errors:coreLiteLoaderCatalog.componentsText1": .init("LiteLoader 依赖下载地址无效。", []),
+            "Errors:CoreLiteLoaderCatalog.invalidDependencyURL": .init("LiteLoader 依赖下载地址无效。", []),
+            "Errors:CoreLiteLoaderCatalog.invalidFileChecksum": .init("LiteLoader 文件校验信息无效。", []),
+            "Errors:CoreLiteLoaderCatalog.invalidSnapshotChecksum": .init("LiteLoader 快照缺少有效的 SHA-1 校验信息。", []),
+            "Errors:CoreLiteLoaderCatalog.invalidSnapshotVersion": .init("LiteLoader 快照版本信息无效。", []),
+            "Errors:CoreLiteLoaderCatalog.loaderNotFound": .init("找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。", [.text, .text]),
+            "Errors:CoreLiteLoaderCatalog.unrecognizedLaunchEntry": .init("LiteLoader 清单的启动入口无法识别。", []),
         ]
     }
 }

@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum CoreLaunchEnvironment {
-        /// 环境变量包含空字符或超过 64 KB。
+        /// 环境变量重复：%1$@
         ///
-        /// Resource: `Errors.coreLaunchEnvironment.javaKeysText1`.
-        public static var javaEnvironmentTooLarge: LocalizedMessage {
-            .init(key: "coreLaunchEnvironment.javaKeysText1", table: "Errors", fallback: "环境变量包含空字符或超过 64 KB。")
+        /// Resource: `Errors.CoreLaunchEnvironment.duplicateEnvironmentVariable`.
+        public static func duplicateEnvironmentVariable(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreLaunchEnvironment.duplicateEnvironmentVariable", table: "Errors", fallback: "环境变量重复：%1$@", arguments: [.text(value0)])
         }
         /// 第 %1$@ 行的环境变量名称无效。请使用字母、数字和下划线，且不能以数字开头。
         ///
-        /// Resource: `Errors.coreLaunchEnvironment.nameText1`.
+        /// Resource: `Errors.CoreLaunchEnvironment.invalidEnvironmentName`.
         public static func invalidEnvironmentName(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunchEnvironment.nameText1", table: "Errors", fallback: "第 %1$@ 行的环境变量名称无效。请使用字母、数字和下划线，且不能以数字开头。", arguments: [.text(value0)])
+            .init(key: "CoreLaunchEnvironment.invalidEnvironmentName", table: "Errors", fallback: "第 %1$@ 行的环境变量名称无效。请使用字母、数字和下划线，且不能以数字开头。", arguments: [.text(value0)])
+        }
+        /// 环境变量包含空字符或超过 64 KB。
+        ///
+        /// Resource: `Errors.CoreLaunchEnvironment.javaEnvironmentTooLarge`.
+        public static var javaEnvironmentTooLarge: LocalizedMessage {
+            .init(key: "CoreLaunchEnvironment.javaEnvironmentTooLarge", table: "Errors", fallback: "环境变量包含空字符或超过 64 KB。")
         }
         /// %1$@ 由 Ruri 管理，请使用 Java 选择或附加 JVM 参数设置。
         ///
-        /// Resource: `Errors.coreLaunchEnvironment.nameText2`.
+        /// Resource: `Errors.CoreLaunchEnvironment.managedEnvironmentVariable`.
         public static func managedEnvironmentVariable(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunchEnvironment.nameText2", table: "Errors", fallback: "%1$@ 由 Ruri 管理，请使用 Java 选择或附加 JVM 参数设置。", arguments: [.text(value0)])
-        }
-        /// 环境变量重复：%1$@
-        ///
-        /// Resource: `Errors.coreLaunchEnvironment.nameText3`.
-        public static func duplicateEnvironmentVariable(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreLaunchEnvironment.nameText3", table: "Errors", fallback: "环境变量重复：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreLaunchEnvironment.managedEnvironmentVariable", table: "Errors", fallback: "%1$@ 由 Ruri 管理，请使用 Java 选择或附加 JVM 参数设置。", arguments: [.text(value0)])
         }
         /// 自定义环境变量不能超过 256 项。
         ///
-        /// Resource: `Errors.coreLaunchEnvironment.nameText4`.
+        /// Resource: `Errors.CoreLaunchEnvironment.tooManyEnvironmentVariables`.
         public static var tooManyEnvironmentVariables: LocalizedMessage {
-            .init(key: "coreLaunchEnvironment.nameText4", table: "Errors", fallback: "自定义环境变量不能超过 256 项。")
+            .init(key: "CoreLaunchEnvironment.tooManyEnvironmentVariables", table: "Errors", fallback: "自定义环境变量不能超过 256 项。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreLaunchEnvironment.javaKeysText1": .init("环境变量包含空字符或超过 64 KB。", []),
-            "Errors:coreLaunchEnvironment.nameText1": .init("第 %1$@ 行的环境变量名称无效。请使用字母、数字和下划线，且不能以数字开头。", [.text]),
-            "Errors:coreLaunchEnvironment.nameText2": .init("%1$@ 由 Ruri 管理，请使用 Java 选择或附加 JVM 参数设置。", [.text]),
-            "Errors:coreLaunchEnvironment.nameText3": .init("环境变量重复：%1$@", [.text]),
-            "Errors:coreLaunchEnvironment.nameText4": .init("自定义环境变量不能超过 256 项。", []),
+            "Errors:CoreLaunchEnvironment.duplicateEnvironmentVariable": .init("环境变量重复：%1$@", [.text]),
+            "Errors:CoreLaunchEnvironment.invalidEnvironmentName": .init("第 %1$@ 行的环境变量名称无效。请使用字母、数字和下划线，且不能以数字开头。", [.text]),
+            "Errors:CoreLaunchEnvironment.javaEnvironmentTooLarge": .init("环境变量包含空字符或超过 64 KB。", []),
+            "Errors:CoreLaunchEnvironment.managedEnvironmentVariable": .init("%1$@ 由 Ruri 管理，请使用 Java 选择或附加 JVM 参数设置。", [.text]),
+            "Errors:CoreLaunchEnvironment.tooManyEnvironmentVariables": .init("自定义环境变量不能超过 256 项。", []),
         ]
     }
 }

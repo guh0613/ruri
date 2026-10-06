@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreBuildConfiguration {
         /// 开发版本
         ///
-        /// Resource: `Core.coreBuildConfiguration.versionText1`.
+        /// Resource: `Core.CoreBuildConfiguration.developmentVersion`.
         public static var developmentVersion: LocalizedMessage {
-            .init(key: "coreBuildConfiguration.versionText1", table: "Core", fallback: "开发版本")
+            .init(key: "CoreBuildConfiguration.developmentVersion", table: "Core", fallback: "开发版本")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreBuildConfiguration.versionText1": .init("开发版本", []),
+            "Core:CoreBuildConfiguration.developmentVersion": .init("开发版本", []),
         ]
     }
 }

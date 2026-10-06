@@ -27,7 +27,7 @@ public enum LocalizationCommandLine {
         guard let bundle = LocalizationResources.bundle,
               let name = bundle.localizations.first(where: { $0.caseInsensitiveCompare(LocalizationContext.baseLanguage) == .orderedSame }),
               let path = bundle.path(forResource: name, ofType: "lproj"), let localized = Bundle(path: path),
-              localized.localizedString(forKey: "common.localizationCheck", value: "MISSING", table: "Common") != "MISSING" else { return 2 }
+              localized.localizedString(forKey: "Common.localizationCheck", value: "MISSING", table: "Common") != "MISSING" else { return 2 }
         let report: [String: Any] = ["bundle": bundle.bundleURL.path, "languages": bundle.localizations.sorted(),
                                      "message": Messages.Common.localizationCheck.localized]
         guard let data = try? JSONSerialization.data(withJSONObject: report, options: [.sortedKeys]),

@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum CoreDownloadActivity {
+        /// 已取消
+        ///
+        /// Resource: `Core.CoreDownloadActivity.cancelled`.
+        public static var cancelled: LocalizedMessage {
+            .init(key: "CoreDownloadActivity.cancelled", table: "Core", fallback: "已取消")
+        }
         /// 下载中
         ///
-        /// Resource: `Core.coreDownloadActivity.titleText1`.
+        /// Resource: `Core.CoreDownloadActivity.downloading`.
         public static var downloading: LocalizedMessage {
-            .init(key: "coreDownloadActivity.titleText1", table: "Core", fallback: "下载中")
-        }
-        /// 正在重试
-        ///
-        /// Resource: `Core.coreDownloadActivity.titleText2`.
-        public static var retrying: LocalizedMessage {
-            .init(key: "coreDownloadActivity.titleText2", table: "Core", fallback: "正在重试")
-        }
-        /// 已校验
-        ///
-        /// Resource: `Core.coreDownloadActivity.titleText3`.
-        public static var validated: LocalizedMessage {
-            .init(key: "coreDownloadActivity.titleText3", table: "Core", fallback: "已校验")
+            .init(key: "CoreDownloadActivity.downloading", table: "Core", fallback: "下载中")
         }
         /// 失败
         ///
-        /// Resource: `Core.coreDownloadActivity.titleText4`.
+        /// Resource: `Core.CoreDownloadActivity.failed`.
         public static var failed: LocalizedMessage {
-            .init(key: "coreDownloadActivity.titleText4", table: "Core", fallback: "失败")
+            .init(key: "CoreDownloadActivity.failed", table: "Core", fallback: "失败")
         }
-        /// 已取消
+        /// 正在重试
         ///
-        /// Resource: `Core.coreDownloadActivity.titleText5`.
-        public static var cancelled: LocalizedMessage {
-            .init(key: "coreDownloadActivity.titleText5", table: "Core", fallback: "已取消")
+        /// Resource: `Core.CoreDownloadActivity.retrying`.
+        public static var retrying: LocalizedMessage {
+            .init(key: "CoreDownloadActivity.retrying", table: "Core", fallback: "正在重试")
+        }
+        /// 已校验
+        ///
+        /// Resource: `Core.CoreDownloadActivity.validated`.
+        public static var validated: LocalizedMessage {
+            .init(key: "CoreDownloadActivity.validated", table: "Core", fallback: "已校验")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreDownloadActivity.titleText1": .init("下载中", []),
-            "Core:coreDownloadActivity.titleText2": .init("正在重试", []),
-            "Core:coreDownloadActivity.titleText3": .init("已校验", []),
-            "Core:coreDownloadActivity.titleText4": .init("失败", []),
-            "Core:coreDownloadActivity.titleText5": .init("已取消", []),
+            "Core:CoreDownloadActivity.cancelled": .init("已取消", []),
+            "Core:CoreDownloadActivity.downloading": .init("下载中", []),
+            "Core:CoreDownloadActivity.failed": .init("失败", []),
+            "Core:CoreDownloadActivity.retrying": .init("正在重试", []),
+            "Core:CoreDownloadActivity.validated": .init("已校验", []),
         ]
     }
 }

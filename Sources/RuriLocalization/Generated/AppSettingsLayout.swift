@@ -3,49 +3,49 @@ import Foundation
 
 extension Messages {
     public enum AppSettingsLayout {
-        /// 概览
-        ///
-        /// Resource: `Interface.appSettingsLayout.titleText1`.
-        public static var overview: LocalizedMessage {
-            .init(key: "appSettingsLayout.titleText1", table: "Interface", fallback: "概览")
-        }
-        /// Java 与内存
-        ///
-        /// Resource: `Interface.appSettingsLayout.titleText2`.
-        public static var javaAndMemory: LocalizedMessage {
-            .init(key: "appSettingsLayout.titleText2", table: "Interface", fallback: "Java 与内存")
-        }
-        /// 窗口与启动
-        ///
-        /// Resource: `Interface.appSettingsLayout.titleText3`.
-        public static var windowAndLaunch: LocalizedMessage {
-            .init(key: "appSettingsLayout.titleText3", table: "Interface", fallback: "窗口与启动")
-        }
         /// 参数与环境
         ///
-        /// Resource: `Interface.appSettingsLayout.titleText4`.
+        /// Resource: `Interface.AppSettingsLayout.argumentsAndEnvironment`.
         public static var argumentsAndEnvironment: LocalizedMessage {
-            .init(key: "appSettingsLayout.titleText4", table: "Interface", fallback: "参数与环境")
+            .init(key: "AppSettingsLayout.argumentsAndEnvironment", table: "Interface", fallback: "参数与环境")
         }
         /// 文件与目录
         ///
-        /// Resource: `Interface.appSettingsLayout.titleText5`.
+        /// Resource: `Interface.AppSettingsLayout.filesAndDirectories`.
         public static var filesAndDirectories: LocalizedMessage {
-            .init(key: "appSettingsLayout.titleText5", table: "Interface", fallback: "文件与目录")
+            .init(key: "AppSettingsLayout.filesAndDirectories", table: "Interface", fallback: "文件与目录")
+        }
+        /// Java 与内存
+        ///
+        /// Resource: `Interface.AppSettingsLayout.javaAndMemory`.
+        public static var javaAndMemory: LocalizedMessage {
+            .init(key: "AppSettingsLayout.javaAndMemory", table: "Interface", fallback: "Java 与内存")
+        }
+        /// 概览
+        ///
+        /// Resource: `Interface.AppSettingsLayout.overview`.
+        public static var overview: LocalizedMessage {
+            .init(key: "AppSettingsLayout.overview", table: "Interface", fallback: "概览")
         }
         /// 设置分类
         ///
-        /// Resource: `Interface.appSettingsLayout.bodyText1`.
+        /// Resource: `Interface.AppSettingsLayout.settingsCategory`.
         public static var settingsCategory: LocalizedMessage {
-            .init(key: "appSettingsLayout.bodyText1", table: "Interface", fallback: "设置分类")
+            .init(key: "AppSettingsLayout.settingsCategory", table: "Interface", fallback: "设置分类")
+        }
+        /// 窗口与启动
+        ///
+        /// Resource: `Interface.AppSettingsLayout.windowAndLaunch`.
+        public static var windowAndLaunch: LocalizedMessage {
+            .init(key: "AppSettingsLayout.windowAndLaunch", table: "Interface", fallback: "窗口与启动")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appSettingsLayout.titleText1": .init("概览", []),
-            "Interface:appSettingsLayout.titleText2": .init("Java 与内存", []),
-            "Interface:appSettingsLayout.titleText3": .init("窗口与启动", []),
-            "Interface:appSettingsLayout.titleText4": .init("参数与环境", []),
-            "Interface:appSettingsLayout.titleText5": .init("文件与目录", []),
-            "Interface:appSettingsLayout.bodyText1": .init("设置分类", []),
+            "Interface:AppSettingsLayout.argumentsAndEnvironment": .init("参数与环境", []),
+            "Interface:AppSettingsLayout.filesAndDirectories": .init("文件与目录", []),
+            "Interface:AppSettingsLayout.javaAndMemory": .init("Java 与内存", []),
+            "Interface:AppSettingsLayout.overview": .init("概览", []),
+            "Interface:AppSettingsLayout.settingsCategory": .init("设置分类", []),
+            "Interface:AppSettingsLayout.windowAndLaunch": .init("窗口与启动", []),
         ]
     }
 }

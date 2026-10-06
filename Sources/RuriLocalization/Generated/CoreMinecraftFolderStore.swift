@@ -5,96 +5,96 @@ extension Messages {
     public enum CoreMinecraftFolderStore {
         /// 导入或复制尚需完成，请处理实例库中的工作文件。
         ///
-        /// Resource: `Core.coreMinecraftFolderStore.currentText1`.
+        /// Resource: `Core.CoreMinecraftFolderStore.pendingWorkFiles`.
         public static var pendingWorkFiles: LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.currentText1", table: "Core", fallback: "导入或复制尚需完成，请处理实例库中的工作文件。")
+            .init(key: "CoreMinecraftFolderStore.pendingWorkFiles", table: "Core", fallback: "导入或复制尚需完成，请处理实例库中的工作文件。")
         }
         /// 版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。
         ///
-        /// Resource: `Core.coreMinecraftFolderStore.currentText2`.
+        /// Resource: `Core.CoreMinecraftFolderStore.versionDirectoryMissing`.
         public static var versionDirectoryMissing: LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.currentText2", table: "Core", fallback: "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。")
-        }
-        /// 文件夹列表已改变，请刷新后重试。
-        ///
-        /// Resource: `Errors.coreMinecraftFolderStore.retainedText1`.
-        public static var folderListChanged: LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.retainedText1", table: "Errors", fallback: "文件夹列表已改变，请刷新后重试。")
+            .init(key: "CoreMinecraftFolderStore.versionDirectoryMissing", table: "Core", fallback: "版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。")
         }
         /// 此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。
         ///
-        /// Resource: `Errors.coreMinecraftFolderStore.existingText1`.
+        /// Resource: `Errors.CoreMinecraftFolderStore.alreadyAddedFolder`.
         public static var alreadyAddedFolder: LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.existingText1", table: "Errors", fallback: "此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。")
-        }
-        /// 无法识别此文件夹的 Ruri 标记。
-        ///
-        /// Resource: `Errors.coreMinecraftFolderStore.infoText1`.
-        public static var invalidRuriMarker: LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.infoText1", table: "Errors", fallback: "无法识别此文件夹的 Ruri 标记。")
-        }
-        /// 此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。
-        ///
-        /// Resource: `Errors.coreMinecraftFolderStore.markerText1`.
-        public static var duplicateFolder: LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.markerText1", table: "Errors", fallback: "此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。")
-        }
-        /// 原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。
-        ///
-        /// Resource: `Errors.coreMinecraftFolderStore.locatedText1`.
-        public static var originalFolderAvailable: LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.locatedText1", table: "Errors", fallback: "原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。")
-        }
-        /// 文件夹位置已改变，请重新刷新。
-        ///
-        /// Resource: `Errors.coreMinecraftFolderStore.catalogText1`.
-        public static var locationChanged: LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.catalogText1", table: "Errors", fallback: "文件夹位置已改变，请重新刷新。")
+            .init(key: "CoreMinecraftFolderStore.alreadyAddedFolder", table: "Errors", fallback: "此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。")
         }
         /// 无法接入“%1$@”的自定义游戏目录：%2$@
         ///
-        /// Resource: `Errors.coreMinecraftFolderStore.targetText1`.
+        /// Resource: `Errors.CoreMinecraftFolderStore.customDirectoryUnavailable`.
         public static func customDirectoryUnavailable(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.targetText1", table: "Errors", fallback: "无法接入“%1$@”的自定义游戏目录：%2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 找不到本地版本。
-        ///
-        /// Resource: `Errors.coreMinecraftFolderStore.versionIDText1`.
-        public static var localVersionMissing: LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.versionIDText1", table: "Errors", fallback: "找不到本地版本。")
+            .init(key: "CoreMinecraftFolderStore.customDirectoryUnavailable", table: "Errors", fallback: "无法接入“%1$@”的自定义游戏目录：%2$@", arguments: [.text(value0), .text(value1)])
         }
         /// 请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。
         ///
-        /// Resource: `Errors.coreMinecraftFolderStore.catalogText2`.
+        /// Resource: `Errors.CoreMinecraftFolderStore.dependencyCheckRequired`.
         public static func dependencyCheckRequired(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.catalogText2", table: "Errors", fallback: "请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。", arguments: [.text(value0)])
+            .init(key: "CoreMinecraftFolderStore.dependencyCheckRequired", table: "Errors", fallback: "请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。", arguments: [.text(value0)])
         }
         /// “%1$@”依赖此版本，请先处理依赖它的版本。
         ///
-        /// Resource: `Errors.coreMinecraftFolderStore.resolvedText1`.
+        /// Resource: `Errors.CoreMinecraftFolderStore.dependencyExists`.
         public static func dependencyExists(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.resolvedText1", table: "Errors", fallback: "“%1$@”依赖此版本，请先处理依赖它的版本。", arguments: [.text(value0)])
+            .init(key: "CoreMinecraftFolderStore.dependencyExists", table: "Errors", fallback: "“%1$@”依赖此版本，请先处理依赖它的版本。", arguments: [.text(value0)])
+        }
+        /// 此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。
+        ///
+        /// Resource: `Errors.CoreMinecraftFolderStore.duplicateFolder`.
+        public static var duplicateFolder: LocalizedMessage {
+            .init(key: "CoreMinecraftFolderStore.duplicateFolder", table: "Errors", fallback: "此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。")
         }
         /// 此文件夹已有名为“%1$@”的版本，请为新实例选择其他名称。
         ///
-        /// Resource: `Errors.coreMinecraftFolderStore.stateText1`.
+        /// Resource: `Errors.CoreMinecraftFolderStore.duplicateVersion`.
         public static func duplicateVersion(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftFolderStore.stateText1", table: "Errors", fallback: "此文件夹已有名为“%1$@”的版本，请为新实例选择其他名称。", arguments: [.text(value0)])
+            .init(key: "CoreMinecraftFolderStore.duplicateVersion", table: "Errors", fallback: "此文件夹已有名为“%1$@”的版本，请为新实例选择其他名称。", arguments: [.text(value0)])
+        }
+        /// 文件夹列表已改变，请刷新后重试。
+        ///
+        /// Resource: `Errors.CoreMinecraftFolderStore.folderListChanged`.
+        public static var folderListChanged: LocalizedMessage {
+            .init(key: "CoreMinecraftFolderStore.folderListChanged", table: "Errors", fallback: "文件夹列表已改变，请刷新后重试。")
+        }
+        /// 无法识别此文件夹的 Ruri 标记。
+        ///
+        /// Resource: `Errors.CoreMinecraftFolderStore.invalidRuriMarker`.
+        public static var invalidRuriMarker: LocalizedMessage {
+            .init(key: "CoreMinecraftFolderStore.invalidRuriMarker", table: "Errors", fallback: "无法识别此文件夹的 Ruri 标记。")
+        }
+        /// 找不到本地版本。
+        ///
+        /// Resource: `Errors.CoreMinecraftFolderStore.localVersionMissing`.
+        public static var localVersionMissing: LocalizedMessage {
+            .init(key: "CoreMinecraftFolderStore.localVersionMissing", table: "Errors", fallback: "找不到本地版本。")
+        }
+        /// 文件夹位置已改变，请重新刷新。
+        ///
+        /// Resource: `Errors.CoreMinecraftFolderStore.locationChanged`.
+        public static var locationChanged: LocalizedMessage {
+            .init(key: "CoreMinecraftFolderStore.locationChanged", table: "Errors", fallback: "文件夹位置已改变，请重新刷新。")
+        }
+        /// 原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。
+        ///
+        /// Resource: `Errors.CoreMinecraftFolderStore.originalFolderAvailable`.
+        public static var originalFolderAvailable: LocalizedMessage {
+            .init(key: "CoreMinecraftFolderStore.originalFolderAvailable", table: "Errors", fallback: "原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreMinecraftFolderStore.currentText1": .init("导入或复制尚需完成，请处理实例库中的工作文件。", []),
-            "Core:coreMinecraftFolderStore.currentText2": .init("版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。", []),
-            "Errors:coreMinecraftFolderStore.retainedText1": .init("文件夹列表已改变，请刷新后重试。", []),
-            "Errors:coreMinecraftFolderStore.existingText1": .init("此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。", []),
-            "Errors:coreMinecraftFolderStore.infoText1": .init("无法识别此文件夹的 Ruri 标记。", []),
-            "Errors:coreMinecraftFolderStore.markerText1": .init("此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。", []),
-            "Errors:coreMinecraftFolderStore.locatedText1": .init("原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。", []),
-            "Errors:coreMinecraftFolderStore.catalogText1": .init("文件夹位置已改变，请重新刷新。", []),
-            "Errors:coreMinecraftFolderStore.targetText1": .init("无法接入“%1$@”的自定义游戏目录：%2$@", [.text, .text]),
-            "Errors:coreMinecraftFolderStore.versionIDText1": .init("找不到本地版本。", []),
-            "Errors:coreMinecraftFolderStore.catalogText2": .init("请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。", [.text]),
-            "Errors:coreMinecraftFolderStore.resolvedText1": .init("“%1$@”依赖此版本，请先处理依赖它的版本。", [.text]),
-            "Errors:coreMinecraftFolderStore.stateText1": .init("此文件夹已有名为“%1$@”的版本，请为新实例选择其他名称。", [.text]),
+            "Core:CoreMinecraftFolderStore.pendingWorkFiles": .init("导入或复制尚需完成，请处理实例库中的工作文件。", []),
+            "Core:CoreMinecraftFolderStore.versionDirectoryMissing": .init("版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。", []),
+            "Errors:CoreMinecraftFolderStore.alreadyAddedFolder": .init("此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。", []),
+            "Errors:CoreMinecraftFolderStore.customDirectoryUnavailable": .init("无法接入“%1$@”的自定义游戏目录：%2$@", [.text, .text]),
+            "Errors:CoreMinecraftFolderStore.dependencyCheckRequired": .init("请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。", [.text]),
+            "Errors:CoreMinecraftFolderStore.dependencyExists": .init("“%1$@”依赖此版本，请先处理依赖它的版本。", [.text]),
+            "Errors:CoreMinecraftFolderStore.duplicateFolder": .init("此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。", []),
+            "Errors:CoreMinecraftFolderStore.duplicateVersion": .init("此文件夹已有名为“%1$@”的版本，请为新实例选择其他名称。", [.text]),
+            "Errors:CoreMinecraftFolderStore.folderListChanged": .init("文件夹列表已改变，请刷新后重试。", []),
+            "Errors:CoreMinecraftFolderStore.invalidRuriMarker": .init("无法识别此文件夹的 Ruri 标记。", []),
+            "Errors:CoreMinecraftFolderStore.localVersionMissing": .init("找不到本地版本。", []),
+            "Errors:CoreMinecraftFolderStore.locationChanged": .init("文件夹位置已改变，请重新刷新。", []),
+            "Errors:CoreMinecraftFolderStore.originalFolderAvailable": .init("原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。", []),
         ]
     }
 }

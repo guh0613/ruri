@@ -5,75 +5,75 @@ extension Messages {
     public enum AppAppModelLaunching {
         /// 请重新添加外置认证账号。
         ///
-        /// Resource: `Errors.appAppModelLaunching.serverText1`.
+        /// Resource: `Errors.AppAppModelLaunching.externalAuthRequired`.
         public static var externalAuthRequired: LocalizedMessage {
-            .init(key: "appAppModelLaunching.serverText1", table: "Errors", fallback: "请重新添加外置认证账号。")
+            .init(key: "AppAppModelLaunching.externalAuthRequired", table: "Errors", fallback: "请重新添加外置认证账号。")
         }
         /// Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。
         ///
-        /// Resource: `Errors.appAppModelLaunching.runtimeText1`.
+        /// Resource: `Errors.AppAppModelLaunching.javaRuntimeUnavailable`.
         public static var javaRuntimeUnavailable: LocalizedMessage {
-            .init(key: "appAppModelLaunching.runtimeText1", table: "Errors", fallback: "Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。")
+            .init(key: "AppAppModelLaunching.javaRuntimeUnavailable", table: "Errors", fallback: "Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。")
         }
         /// 此实例或共享目录正在使用中，请查看运行记录或实例设置。
         ///
-        /// Resource: `Interface.appAppModelLaunching.storedText1`.
+        /// Resource: `Interface.AppAppModelLaunching.instanceInUse`.
         public static var instanceInUse: LocalizedMessage {
-            .init(key: "appAppModelLaunching.storedText1", table: "Interface", fallback: "此实例或共享目录正在使用中，请查看运行记录或实例设置。")
-        }
-        /// 启动 %1$@
-        ///
-        /// Resource: `Interface.appAppModelLaunching.presentationText1`.
-        public static func launchingInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelLaunching.presentationText1", table: "Interface", fallback: "启动 %1$@", arguments: [.text(value0)])
-        }
-        /// 运行记录未能完整写入：%1$@
-        ///
-        /// Resource: `Interface.appAppModelLaunching.messageText1`.
-        public static func runRecordIncomplete(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelLaunching.messageText1", table: "Interface", fallback: "运行记录未能完整写入：%1$@", arguments: [.text(value0)])
-        }
-        /// [Ruri] 进入存档：%1$@
-        ///
-        /// Resource: `Interface.appAppModelLaunching.worldLaunch`.
-        public static func worldLaunch(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelLaunching.worldLaunch", table: "Interface", fallback: "[Ruri] 进入存档：%1$@", arguments: [.text(value0)])
+            .init(key: "AppAppModelLaunching.instanceInUse", table: "Interface", fallback: "此实例或共享目录正在使用中，请查看运行记录或实例设置。")
         }
         /// %1$@，可在运行记录中查看详情。
         ///
-        /// Resource: `Interface.appAppModelLaunching.launchFailureNotice`.
+        /// Resource: `Interface.AppAppModelLaunching.launchFailureNotice`.
         public static func launchFailureNotice(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelLaunching.launchFailureNotice", table: "Interface", fallback: "%1$@，可在运行记录中查看详情。", arguments: [.text(value0)])
+            .init(key: "AppAppModelLaunching.launchFailureNotice", table: "Interface", fallback: "%1$@，可在运行记录中查看详情。", arguments: [.text(value0)])
+        }
+        /// 启动 %1$@
+        ///
+        /// Resource: `Interface.AppAppModelLaunching.launchingInstance`.
+        public static func launchingInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelLaunching.launchingInstance", table: "Interface", fallback: "启动 %1$@", arguments: [.text(value0)])
+        }
+        /// 运行记录未能完整写入：%1$@
+        ///
+        /// Resource: `Interface.AppAppModelLaunching.runRecordIncomplete`.
+        public static func runRecordIncomplete(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelLaunching.runRecordIncomplete", table: "Interface", fallback: "运行记录未能完整写入：%1$@", arguments: [.text(value0)])
+        }
+        /// [Ruri] 进入存档：%1$@
+        ///
+        /// Resource: `Interface.AppAppModelLaunching.worldLaunch`.
+        public static func worldLaunch(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelLaunching.worldLaunch", table: "Interface", fallback: "[Ruri] 进入存档：%1$@", arguments: [.text(value0)])
         }
         /// 正在检查账号和 Java
         ///
-        /// Resource: `Progress.appAppModelLaunching.installedText1`.
+        /// Resource: `Progress.AppAppModelLaunching.checkingAccountAndJava`.
         public static var checkingAccountAndJava: LocalizedMessage {
-            .init(key: "appAppModelLaunching.installedText1", table: "Progress", fallback: "正在检查账号和 Java")
+            .init(key: "AppAppModelLaunching.checkingAccountAndJava", table: "Progress", fallback: "正在检查账号和 Java")
         }
         /// 正在准备外置认证组件
         ///
-        /// Resource: `Progress.appAppModelLaunching.serverText2`.
+        /// Resource: `Progress.AppAppModelLaunching.preparingAuthComponent`.
         public static var preparingAuthComponent: LocalizedMessage {
-            .init(key: "appAppModelLaunching.serverText2", table: "Progress", fallback: "正在准备外置认证组件")
+            .init(key: "AppAppModelLaunching.preparingAuthComponent", table: "Progress", fallback: "正在准备外置认证组件")
         }
         /// 正在准备所需的 Java %1$@
         ///
-        /// Resource: `Progress.appAppModelLaunching.serviceText1`.
+        /// Resource: `Progress.AppAppModelLaunching.preparingJava`.
         public static func preparingJava(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelLaunching.serviceText1", table: "Progress", fallback: "正在准备所需的 Java %1$@", arguments: [.text(value0)])
+            .init(key: "AppAppModelLaunching.preparingJava", table: "Progress", fallback: "正在准备所需的 Java %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:appAppModelLaunching.serverText1": .init("请重新添加外置认证账号。", []),
-            "Errors:appAppModelLaunching.runtimeText1": .init("Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。", []),
-            "Interface:appAppModelLaunching.storedText1": .init("此实例或共享目录正在使用中，请查看运行记录或实例设置。", []),
-            "Interface:appAppModelLaunching.presentationText1": .init("启动 %1$@", [.text]),
-            "Interface:appAppModelLaunching.messageText1": .init("运行记录未能完整写入：%1$@", [.text]),
-            "Interface:appAppModelLaunching.worldLaunch": .init("[Ruri] 进入存档：%1$@", [.text]),
-            "Interface:appAppModelLaunching.launchFailureNotice": .init("%1$@，可在运行记录中查看详情。", [.text]),
-            "Progress:appAppModelLaunching.installedText1": .init("正在检查账号和 Java", []),
-            "Progress:appAppModelLaunching.serverText2": .init("正在准备外置认证组件", []),
-            "Progress:appAppModelLaunching.serviceText1": .init("正在准备所需的 Java %1$@", [.text]),
+            "Errors:AppAppModelLaunching.externalAuthRequired": .init("请重新添加外置认证账号。", []),
+            "Errors:AppAppModelLaunching.javaRuntimeUnavailable": .init("Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。", []),
+            "Interface:AppAppModelLaunching.instanceInUse": .init("此实例或共享目录正在使用中，请查看运行记录或实例设置。", []),
+            "Interface:AppAppModelLaunching.launchFailureNotice": .init("%1$@，可在运行记录中查看详情。", [.text]),
+            "Interface:AppAppModelLaunching.launchingInstance": .init("启动 %1$@", [.text]),
+            "Interface:AppAppModelLaunching.runRecordIncomplete": .init("运行记录未能完整写入：%1$@", [.text]),
+            "Interface:AppAppModelLaunching.worldLaunch": .init("[Ruri] 进入存档：%1$@", [.text]),
+            "Progress:AppAppModelLaunching.checkingAccountAndJava": .init("正在检查账号和 Java", []),
+            "Progress:AppAppModelLaunching.preparingAuthComponent": .init("正在准备外置认证组件", []),
+            "Progress:AppAppModelLaunching.preparingJava": .init("正在准备所需的 Java %1$@", [.text]),
         ]
     }
 }

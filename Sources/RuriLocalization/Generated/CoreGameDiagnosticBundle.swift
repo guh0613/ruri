@@ -3,11 +3,29 @@ import Foundation
 
 extension Messages {
     public enum CoreGameDiagnosticBundle {
-        /// 诊断与运行记录不匹配，请重新分析。
+        /// 正文从原文件第 1 行开始
         ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.previewText1`.
-        public static var diagnosticRunMismatch: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.previewText1", table: "Diagnostics", fallback: "诊断与运行记录不匹配，请重新分析。")
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.bodyLineNumberHeading`.
+        public static var bodyLineNumberHeading: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.bodyLineNumberHeading", table: "Diagnostics", fallback: "正文从原文件第 1 行开始")
+        }
+        /// 已读取的完整文件
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.completeFileHeading`.
+        public static var completeFileHeading: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.completeFileHeading", table: "Diagnostics", fallback: "已读取的完整文件")
+        }
+        /// 无法保存诊断包。
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.diagnosticBundleSaveFailed`.
+        public static var diagnosticBundleSaveFailed: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.diagnosticBundleSaveFailed", table: "Diagnostics", fallback: "无法保存诊断包。")
+        }
+        /// 诊断结论与处理步骤
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.diagnosticConclusionHeader`.
+        public static var diagnosticConclusionHeader: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.diagnosticConclusionHeader", table: "Diagnostics", fallback: "诊断结论与处理步骤")
         }
         /// Ruri 本地诊断报告
         /// 分析器版本：1
@@ -17,109 +35,21 @@ extension Messages {
         /// %3$@
         ///
         ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.summaryText1`.
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.diagnosticReportHeader`.
         public static func diagnosticReportHeader(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.summaryText1", table: "Diagnostics", fallback: "Ruri 本地诊断报告\n分析器版本：1\n运行时间：%1$@\n\n%2$@\n%3$@\n\n", arguments: [.text(value0), .text(value1), .text(value2)])
+            .init(key: "CoreGameDiagnosticBundle.diagnosticReportHeader", table: "Diagnostics", fallback: "Ruri 本地诊断报告\n分析器版本：1\n运行时间：%1$@\n\n%2$@\n%3$@\n\n", arguments: [.text(value0), .text(value1), .text(value2)])
         }
+        /// 诊断与运行记录不匹配，请重新分析。
         ///
-        /// 读取范围与缺失信息
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.summaryText2`.
-        public static var readScopeHeader: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.summaryText2", table: "Diagnostics", fallback: "\n读取范围与缺失信息\n")
-        }
-        /// 未发现读取截断或读取错误。
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.summaryText3`.
-        public static var noReadErrors: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.summaryText3", table: "Diagnostics", fallback: "未发现读取截断或读取错误。")
-        }
-        /// 诊断结论与处理步骤
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.summaryText4`.
-        public static var diagnosticConclusionHeader: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.summaryText4", table: "Diagnostics", fallback: "诊断结论与处理步骤")
-        }
-        /// 未记录
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.environmentText1`.
-        public static var environmentUnrecorded: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.environmentText1", table: "Diagnostics", fallback: "未记录")
-        }
-        /// 堆上限 %1$@ MB
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.environmentText2`.
-        public static func heapLimit(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.environmentText2", table: "Diagnostics", fallback: "堆上限 %1$@ MB", arguments: [.text(value0)])
-        }
-        /// 游戏、Java 与系统环境
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.interruptionText1`.
-        public static var gameJavaSystemEnvironment: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.interruptionText1", table: "Diagnostics", fallback: "游戏、Java 与系统环境")
-        }
-        /// 片段，可能缺少上下文
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.headingText1`.
-        public static var truncatedFileHeading: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.headingText1", table: "Diagnostics", fallback: "片段，可能缺少上下文")
-        }
-        /// 已读取的完整文件
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.headingText2`.
-        public static var completeFileHeading: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.headingText2", table: "Diagnostics", fallback: "已读取的完整文件")
-        }
-        /// 末段内从 1 开始，不是原文件行号
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.headingText3`.
-        public static var tailLineNumberHeading: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.headingText3", table: "Diagnostics", fallback: "末段内从 1 开始，不是原文件行号")
-        }
-        /// 正文从原文件第 1 行开始
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.headingText4`.
-        public static var bodyLineNumberHeading: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.headingText4", table: "Diagnostics", fallback: "正文从原文件第 1 行开始")
-        }
-        /// 来源：%1$@
-        /// 范围：%2$@
-        /// 行号：%3$@
-        ///
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.headingText5`.
-        public static func sourceRangeHeading(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.headingText5", table: "Diagnostics", fallback: "来源：%1$@\n范围：%2$@\n行号：%3$@\n\n", arguments: [.text(value0), .text(value1), .text(value2)])
-        }
-        ///  · 片段
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.headingText6`.
-        public static var excerptHeading: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.headingText6", table: "Diagnostics", fallback: " · 片段")
-        }
-        /// 请选择有效的报告内容。
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.selectedText1`.
-        public static var invalidReportSelection: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.selectedText1", table: "Diagnostics", fallback: "请选择有效的报告内容。")
-        }
-        /// 请选择 ZIP 文件保存位置。
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.selectedText2`.
-        public static var zipSaveLocationSelection: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.selectedText2", table: "Diagnostics", fallback: "请选择 ZIP 文件保存位置。")
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.diagnosticRunMismatch`.
+        public static var diagnosticRunMismatch: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.diagnosticRunMismatch", table: "Diagnostics", fallback: "诊断与运行记录不匹配，请重新分析。")
         }
         /// 请将诊断包保存在 Ruri 数据目录和实例文件夹之外。
         ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.rootText1`.
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.diagnosticSaveLocationInvalid`.
         public static var diagnosticSaveLocationInvalid: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.rootText1", table: "Diagnostics", fallback: "请将诊断包保存在 Ruri 数据目录和实例文件夹之外。")
-        }
-        /// 无法保存诊断包。
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.dataText1`.
-        public static var diagnosticBundleSaveFailed: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.dataText1", table: "Diagnostics", fallback: "无法保存诊断包。")
+            .init(key: "CoreGameDiagnosticBundle.diagnosticSaveLocationInvalid", table: "Diagnostics", fallback: "请将诊断包保存在 Ruri 数据目录和实例文件夹之外。")
         }
         /// Minecraft: %1$@
         /// Loader: %2$@ %3$@
@@ -136,61 +66,131 @@ extension Messages {
         /// Stop requested through Ruri: %14$@
         /// Normal quit request sent: %15$@
         ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.environment`.
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.environment`.
         public static func environment(_ value0: String, _ value1: String, _ value2: String, _ value3: String, _ value4: String, _ value5: String, _ value6: String, _ value7: String, _ value8: String, _ value9: String, _ value10: String, _ value11: String, _ value12: String, _ value13: String, _ value14: String) -> LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.environment", table: "Diagnostics", fallback: "Minecraft: %1$@\nLoader: %2$@ %3$@\nJava: %4$@\nMemory: %5$@\nSystem: %6$@\nHost architecture: %7$@\nAccount type: %8$@\nStarted: %9$@\nLast recorded stage: %10$@\nState: %11$@\nExit kind: %12$@\nExit status: %13$@\nStop requested through Ruri: %14$@\nNormal quit request sent: %15$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3), .text(value4), .text(value5), .text(value6), .text(value7), .text(value8), .text(value9), .text(value10), .text(value11), .text(value12), .text(value13), .text(value14)])
+            .init(key: "CoreGameDiagnosticBundle.environment", table: "Diagnostics", fallback: "Minecraft: %1$@\nLoader: %2$@ %3$@\nJava: %4$@\nMemory: %5$@\nSystem: %6$@\nHost architecture: %7$@\nAccount type: %8$@\nStarted: %9$@\nLast recorded stage: %10$@\nState: %11$@\nExit kind: %12$@\nExit status: %13$@\nStop requested through Ruri: %14$@\nNormal quit request sent: %15$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3), .text(value4), .text(value5), .text(value6), .text(value7), .text(value8), .text(value9), .text(value10), .text(value11), .text(value12), .text(value13), .text(value14)])
+        }
+        /// 未记录
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.environmentUnrecorded`.
+        public static var environmentUnrecorded: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.environmentUnrecorded", table: "Diagnostics", fallback: "未记录")
+        }
+        ///  · 片段
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.excerptHeading`.
+        public static var excerptHeading: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.excerptHeading", table: "Diagnostics", fallback: " · 片段")
+        }
+        /// yes (exit not recorded)
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.exitPending`.
+        public static var exitPending: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.exitPending", table: "Diagnostics", fallback: "yes (exit not recorded)")
+        }
+        /// 游戏、Java 与系统环境
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.gameJavaSystemEnvironment`.
+        public static var gameJavaSystemEnvironment: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.gameJavaSystemEnvironment", table: "Diagnostics", fallback: "游戏、Java 与系统环境")
+        }
+        /// 堆上限 %1$@ MB
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.heapLimit`.
+        public static func heapLimit(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.heapLimit", table: "Diagnostics", fallback: "堆上限 %1$@ MB", arguments: [.text(value0)])
+        }
+        /// 请选择有效的报告内容。
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.invalidReportSelection`.
+        public static var invalidReportSelection: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.invalidReportSelection", table: "Diagnostics", fallback: "请选择有效的报告内容。")
+        }
+        /// no
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.no`.
+        public static var no: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.no", table: "Diagnostics", fallback: "no")
+        }
+        /// 未发现读取截断或读取错误。
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.noReadErrors`.
+        public static var noReadErrors: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.noReadErrors", table: "Diagnostics", fallback: "未发现读取截断或读取错误。")
+        }
+        ///
+        /// 读取范围与缺失信息
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.readScopeHeader`.
+        public static var readScopeHeader: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.readScopeHeader", table: "Diagnostics", fallback: "\n读取范围与缺失信息\n")
         }
         ///
         /// Recovery observed at (not exit time): %1$@
         /// Recovery basis: %2$@
         /// %3$@
         ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.recoveryEnvironment`.
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.recoveryEnvironment`.
         public static func recoveryEnvironment(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.recoveryEnvironment", table: "Diagnostics", fallback: "\nRecovery observed at (not exit time): %1$@\nRecovery basis: %2$@\n%3$@", arguments: [.text(value0), .text(value1), .text(value2)])
+            .init(key: "CoreGameDiagnosticBundle.recoveryEnvironment", table: "Diagnostics", fallback: "\nRecovery observed at (not exit time): %1$@\nRecovery basis: %2$@\n%3$@", arguments: [.text(value0), .text(value1), .text(value2)])
+        }
+        /// 来源：%1$@
+        /// 范围：%2$@
+        /// 行号：%3$@
+        ///
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.sourceRangeHeading`.
+        public static func sourceRangeHeading(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.sourceRangeHeading", table: "Diagnostics", fallback: "来源：%1$@\n范围：%2$@\n行号：%3$@\n\n", arguments: [.text(value0), .text(value1), .text(value2)])
+        }
+        /// 末段内从 1 开始，不是原文件行号
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.tailLineNumberHeading`.
+        public static var tailLineNumberHeading: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.tailLineNumberHeading", table: "Diagnostics", fallback: "末段内从 1 开始，不是原文件行号")
+        }
+        /// 片段，可能缺少上下文
+        ///
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.truncatedFileHeading`.
+        public static var truncatedFileHeading: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.truncatedFileHeading", table: "Diagnostics", fallback: "片段，可能缺少上下文")
         }
         /// yes
         ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.yes`.
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.yes`.
         public static var yes: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.yes", table: "Diagnostics", fallback: "yes")
+            .init(key: "CoreGameDiagnosticBundle.yes", table: "Diagnostics", fallback: "yes")
         }
-        /// no
+        /// 请选择 ZIP 文件保存位置。
         ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.no`.
-        public static var no: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.no", table: "Diagnostics", fallback: "no")
-        }
-        /// yes (exit not recorded)
-        ///
-        /// Resource: `Diagnostics.coreGameDiagnosticBundle.exitPending`.
-        public static var exitPending: LocalizedMessage {
-            .init(key: "coreGameDiagnosticBundle.exitPending", table: "Diagnostics", fallback: "yes (exit not recorded)")
+        /// Resource: `Diagnostics.CoreGameDiagnosticBundle.zipSaveLocationSelection`.
+        public static var zipSaveLocationSelection: LocalizedMessage {
+            .init(key: "CoreGameDiagnosticBundle.zipSaveLocationSelection", table: "Diagnostics", fallback: "请选择 ZIP 文件保存位置。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Diagnostics:coreGameDiagnosticBundle.previewText1": .init("诊断与运行记录不匹配，请重新分析。", []),
-            "Diagnostics:coreGameDiagnosticBundle.summaryText1": .init("Ruri 本地诊断报告\n分析器版本：1\n运行时间：%1$@\n\n%2$@\n%3$@\n\n", [.text, .text, .text]),
-            "Diagnostics:coreGameDiagnosticBundle.summaryText2": .init("\n读取范围与缺失信息\n", []),
-            "Diagnostics:coreGameDiagnosticBundle.summaryText3": .init("未发现读取截断或读取错误。", []),
-            "Diagnostics:coreGameDiagnosticBundle.summaryText4": .init("诊断结论与处理步骤", []),
-            "Diagnostics:coreGameDiagnosticBundle.environmentText1": .init("未记录", []),
-            "Diagnostics:coreGameDiagnosticBundle.environmentText2": .init("堆上限 %1$@ MB", [.text]),
-            "Diagnostics:coreGameDiagnosticBundle.interruptionText1": .init("游戏、Java 与系统环境", []),
-            "Diagnostics:coreGameDiagnosticBundle.headingText1": .init("片段，可能缺少上下文", []),
-            "Diagnostics:coreGameDiagnosticBundle.headingText2": .init("已读取的完整文件", []),
-            "Diagnostics:coreGameDiagnosticBundle.headingText3": .init("末段内从 1 开始，不是原文件行号", []),
-            "Diagnostics:coreGameDiagnosticBundle.headingText4": .init("正文从原文件第 1 行开始", []),
-            "Diagnostics:coreGameDiagnosticBundle.headingText5": .init("来源：%1$@\n范围：%2$@\n行号：%3$@\n\n", [.text, .text, .text]),
-            "Diagnostics:coreGameDiagnosticBundle.headingText6": .init(" · 片段", []),
-            "Diagnostics:coreGameDiagnosticBundle.selectedText1": .init("请选择有效的报告内容。", []),
-            "Diagnostics:coreGameDiagnosticBundle.selectedText2": .init("请选择 ZIP 文件保存位置。", []),
-            "Diagnostics:coreGameDiagnosticBundle.rootText1": .init("请将诊断包保存在 Ruri 数据目录和实例文件夹之外。", []),
-            "Diagnostics:coreGameDiagnosticBundle.dataText1": .init("无法保存诊断包。", []),
-            "Diagnostics:coreGameDiagnosticBundle.environment": .init("Minecraft: %1$@\nLoader: %2$@ %3$@\nJava: %4$@\nMemory: %5$@\nSystem: %6$@\nHost architecture: %7$@\nAccount type: %8$@\nStarted: %9$@\nLast recorded stage: %10$@\nState: %11$@\nExit kind: %12$@\nExit status: %13$@\nStop requested through Ruri: %14$@\nNormal quit request sent: %15$@", [.text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text]),
-            "Diagnostics:coreGameDiagnosticBundle.recoveryEnvironment": .init("\nRecovery observed at (not exit time): %1$@\nRecovery basis: %2$@\n%3$@", [.text, .text, .text]),
-            "Diagnostics:coreGameDiagnosticBundle.yes": .init("yes", []),
-            "Diagnostics:coreGameDiagnosticBundle.no": .init("no", []),
-            "Diagnostics:coreGameDiagnosticBundle.exitPending": .init("yes (exit not recorded)", []),
+            "Diagnostics:CoreGameDiagnosticBundle.bodyLineNumberHeading": .init("正文从原文件第 1 行开始", []),
+            "Diagnostics:CoreGameDiagnosticBundle.completeFileHeading": .init("已读取的完整文件", []),
+            "Diagnostics:CoreGameDiagnosticBundle.diagnosticBundleSaveFailed": .init("无法保存诊断包。", []),
+            "Diagnostics:CoreGameDiagnosticBundle.diagnosticConclusionHeader": .init("诊断结论与处理步骤", []),
+            "Diagnostics:CoreGameDiagnosticBundle.diagnosticReportHeader": .init("Ruri 本地诊断报告\n分析器版本：1\n运行时间：%1$@\n\n%2$@\n%3$@\n\n", [.text, .text, .text]),
+            "Diagnostics:CoreGameDiagnosticBundle.diagnosticRunMismatch": .init("诊断与运行记录不匹配，请重新分析。", []),
+            "Diagnostics:CoreGameDiagnosticBundle.diagnosticSaveLocationInvalid": .init("请将诊断包保存在 Ruri 数据目录和实例文件夹之外。", []),
+            "Diagnostics:CoreGameDiagnosticBundle.environment": .init("Minecraft: %1$@\nLoader: %2$@ %3$@\nJava: %4$@\nMemory: %5$@\nSystem: %6$@\nHost architecture: %7$@\nAccount type: %8$@\nStarted: %9$@\nLast recorded stage: %10$@\nState: %11$@\nExit kind: %12$@\nExit status: %13$@\nStop requested through Ruri: %14$@\nNormal quit request sent: %15$@", [.text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text, .text]),
+            "Diagnostics:CoreGameDiagnosticBundle.environmentUnrecorded": .init("未记录", []),
+            "Diagnostics:CoreGameDiagnosticBundle.excerptHeading": .init(" · 片段", []),
+            "Diagnostics:CoreGameDiagnosticBundle.exitPending": .init("yes (exit not recorded)", []),
+            "Diagnostics:CoreGameDiagnosticBundle.gameJavaSystemEnvironment": .init("游戏、Java 与系统环境", []),
+            "Diagnostics:CoreGameDiagnosticBundle.heapLimit": .init("堆上限 %1$@ MB", [.text]),
+            "Diagnostics:CoreGameDiagnosticBundle.invalidReportSelection": .init("请选择有效的报告内容。", []),
+            "Diagnostics:CoreGameDiagnosticBundle.no": .init("no", []),
+            "Diagnostics:CoreGameDiagnosticBundle.noReadErrors": .init("未发现读取截断或读取错误。", []),
+            "Diagnostics:CoreGameDiagnosticBundle.readScopeHeader": .init("\n读取范围与缺失信息\n", []),
+            "Diagnostics:CoreGameDiagnosticBundle.recoveryEnvironment": .init("\nRecovery observed at (not exit time): %1$@\nRecovery basis: %2$@\n%3$@", [.text, .text, .text]),
+            "Diagnostics:CoreGameDiagnosticBundle.sourceRangeHeading": .init("来源：%1$@\n范围：%2$@\n行号：%3$@\n\n", [.text, .text, .text]),
+            "Diagnostics:CoreGameDiagnosticBundle.tailLineNumberHeading": .init("末段内从 1 开始，不是原文件行号", []),
+            "Diagnostics:CoreGameDiagnosticBundle.truncatedFileHeading": .init("片段，可能缺少上下文", []),
+            "Diagnostics:CoreGameDiagnosticBundle.yes": .init("yes", []),
+            "Diagnostics:CoreGameDiagnosticBundle.zipSaveLocationSelection": .init("请选择 ZIP 文件保存位置。", []),
         ]
     }
 }

@@ -3,252 +3,252 @@ import Foundation
 
 extension Messages {
     public enum AppSchematicManagerView {
-        /// 原理图
-        ///
-        /// Resource: `Interface.appSchematicManagerView.bodyText1`.
-        public static var schematics: LocalizedMessage {
-            .init(key: "appSchematicManagerView.bodyText1", table: "Interface", fallback: "原理图")
-        }
-        /// 新建文件夹
-        ///
-        /// Resource: `Interface.appSchematicManagerView.bodyText2`.
-        public static var newFolder: LocalizedMessage {
-            .init(key: "appSchematicManagerView.bodyText2", table: "Interface", fallback: "新建文件夹")
-        }
-        /// 导入…
-        ///
-        /// Resource: `Interface.appSchematicManagerView.bodyText3`.
-        public static var importSchematics: LocalizedMessage {
-            .init(key: "appSchematicManagerView.bodyText3", table: "Interface", fallback: "导入…")
-        }
-        /// 文件保存在当前运行目录的 schematics 文件夹，供 Litematica、WorldEdit 等模组使用。
-        ///
-        /// Resource: `Interface.appSchematicManagerView.bodyText4`.
-        public static var schematicHelp: LocalizedMessage {
-            .init(key: "appSchematicManagerView.bodyText4", table: "Interface", fallback: "文件保存在当前运行目录的 schematics 文件夹，供 Litematica、WorldEdit 等模组使用。")
-        }
-        /// 返回上一级
-        ///
-        /// Resource: `Interface.appSchematicManagerView.bodyText5`.
-        public static var goUp: LocalizedMessage {
-            .init(key: "appSchematicManagerView.bodyText5", table: "Interface", fallback: "返回上一级")
-        }
-        /// 搜索当前文件夹
-        ///
-        /// Resource: `Interface.appSchematicManagerView.bodyText6`.
-        public static var searchFolder: LocalizedMessage {
-            .init(key: "appSchematicManagerView.bodyText6", table: "Interface", fallback: "搜索当前文件夹")
-        }
-        /// 查看信息
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText1`.
-        public static var viewInfo: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText1", table: "Interface", fallback: "查看信息")
-        }
-        /// 导出…
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText2`.
-        public static var exportSchematics: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText2", table: "Interface", fallback: "导出…")
-        }
-        /// 在 Finder 中显示
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText3`.
-        public static var revealInFinder: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText3", table: "Interface", fallback: "在 Finder 中显示")
-        }
-        /// 移到废纸篓…
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText4`.
-        public static var trashSchematics: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText4", table: "Interface", fallback: "移到废纸篓…")
-        }
-        /// 将原理图拖到这里，或点击“导入”。
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText5`.
-        public static var dropSchematics: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText5", table: "Interface", fallback: "将原理图拖到这里，或点击“导入”。")
-        }
-        /// 刷新
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText6`.
-        public static var refresh: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText6", table: "Interface", fallback: "刷新")
-        }
-        /// 取消任务
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText7`.
-        public static var cancelTask: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText7", table: "Interface", fallback: "取消任务")
-        }
-        /// 文件夹名称
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText8`.
-        public static var folderName: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText8", table: "Interface", fallback: "文件夹名称")
-        }
-        /// 创建
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText9`.
-        public static var createFolder: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText9", table: "Interface", fallback: "创建")
-        }
-        /// 新建原理图文件夹
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText10`.
-        public static var newSchematicFolder: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText10", table: "Interface", fallback: "新建原理图文件夹")
-        }
-        /// 移到废纸篓？
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText11`.
-        public static var confirmTrash: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText11", table: "Interface", fallback: "移到废纸篓？")
-        }
-        /// 移到废纸篓
-        ///
-        /// Resource: `Interface.appSchematicManagerView.errorText12`.
-        public static var trash: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText12", table: "Interface", fallback: "移到废纸篓")
-        }
-        /// 移除原理图
-        ///
-        /// Resource: `Interface.appSchematicManagerView.entryText1`.
-        public static var entryRemoval: LocalizedMessage {
-            .init(key: "appSchematicManagerView.entryText1", table: "Interface", fallback: "移除原理图")
-        }
-        ///  及其中的全部文件
-        ///
-        /// Resource: `Interface.appSchematicManagerView.entryText2`.
-        public static var entryFiles: LocalizedMessage {
-            .init(key: "appSchematicManagerView.entryText2", table: "Interface", fallback: " 及其中的全部文件")
-        }
-        /// 导入原理图
-        ///
-        /// Resource: `Interface.appSchematicManagerView.importFilesText1`.
-        public static var importSchematicFiles: LocalizedMessage {
-            .init(key: "appSchematicManagerView.importFilesText1", table: "Interface", fallback: "导入原理图")
-        }
-        /// 导出原理图
-        ///
-        /// Resource: `Interface.appSchematicManagerView.destinationText1`.
-        public static var exportDestination: LocalizedMessage {
-            .init(key: "appSchematicManagerView.destinationText1", table: "Interface", fallback: "导出原理图")
-        }
-        /// 原理图已导出
-        ///
-        /// Resource: `Interface.appSchematicManagerView.destinationText2`.
-        public static var exportedSchematic: LocalizedMessage {
-            .init(key: "appSchematicManagerView.destinationText2", table: "Interface", fallback: "原理图已导出")
-        }
         /// 作者
         ///
-        /// Resource: `Interface.appSchematicManagerView.authorText1`.
+        /// Resource: `Interface.AppSchematicManagerView.author`.
         public static var author: LocalizedMessage {
-            .init(key: "appSchematicManagerView.authorText1", table: "Interface", fallback: "作者")
-        }
-        /// 尺寸
-        ///
-        /// Resource: `Interface.appSchematicManagerView.authorText2`.
-        public static var size: LocalizedMessage {
-            .init(key: "appSchematicManagerView.authorText2", table: "Interface", fallback: "尺寸")
+            .init(key: "AppSchematicManagerView.author", table: "Interface", fallback: "作者")
         }
         /// 方块数
         ///
-        /// Resource: `Interface.appSchematicManagerView.blocksText1`.
+        /// Resource: `Interface.AppSchematicManagerView.blocks`.
         public static var blocks: LocalizedMessage {
-            .init(key: "appSchematicManagerView.blocksText1", table: "Interface", fallback: "方块数")
+            .init(key: "AppSchematicManagerView.blocks", table: "Interface", fallback: "方块数")
         }
-        /// 总体积
+        /// 取消任务
         ///
-        /// Resource: `Interface.appSchematicManagerView.volumeText1`.
-        public static var volume: LocalizedMessage {
-            .init(key: "appSchematicManagerView.volumeText1", table: "Interface", fallback: "总体积")
+        /// Resource: `Interface.AppSchematicManagerView.cancelTask`.
+        public static var cancelTask: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.cancelTask", table: "Interface", fallback: "取消任务")
         }
-        /// 区域数
+        /// 移到废纸篓？
         ///
-        /// Resource: `Interface.appSchematicManagerView.regionsText1`.
-        public static var regions: LocalizedMessage {
-            .init(key: "appSchematicManagerView.regionsText1", table: "Interface", fallback: "区域数")
+        /// Resource: `Interface.AppSchematicManagerView.confirmTrash`.
+        public static var confirmTrash: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.confirmTrash", table: "Interface", fallback: "移到废纸篓？")
         }
-        /// 格式版本
+        /// 创建
         ///
-        /// Resource: `Interface.appSchematicManagerView.versionText1`.
-        public static var formatVersion: LocalizedMessage {
-            .init(key: "appSchematicManagerView.versionText1", table: "Interface", fallback: "格式版本")
-        }
-        /// 游戏数据版本
-        ///
-        /// Resource: `Interface.appSchematicManagerView.versionText2`.
-        public static var gameDataVersion: LocalizedMessage {
-            .init(key: "appSchematicManagerView.versionText2", table: "Interface", fallback: "游戏数据版本")
+        /// Resource: `Interface.AppSchematicManagerView.createFolder`.
+        public static var createFolder: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.createFolder", table: "Interface", fallback: "创建")
         }
         /// 创建时间
         ///
-        /// Resource: `Interface.appSchematicManagerView.dateText1`.
+        /// Resource: `Interface.AppSchematicManagerView.createdAt`.
         public static var createdAt: LocalizedMessage {
-            .init(key: "appSchematicManagerView.dateText1", table: "Interface", fallback: "创建时间")
+            .init(key: "AppSchematicManagerView.createdAt", table: "Interface", fallback: "创建时间")
         }
-        /// 修改时间
+        /// 将原理图拖到这里，或点击“导入”。
         ///
-        /// Resource: `Interface.appSchematicManagerView.dateText2`.
-        public static var modifiedAt: LocalizedMessage {
-            .init(key: "appSchematicManagerView.dateText2", table: "Interface", fallback: "修改时间")
+        /// Resource: `Interface.AppSchematicManagerView.dropSchematics`.
+        public static var dropSchematics: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.dropSchematics", table: "Interface", fallback: "将原理图拖到这里，或点击“导入”。")
+        }
+        ///  及其中的全部文件
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.entryFiles`.
+        public static var entryFiles: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.entryFiles", table: "Interface", fallback: " 及其中的全部文件")
+        }
+        /// 移除原理图
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.entryRemoval`.
+        public static var entryRemoval: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.entryRemoval", table: "Interface", fallback: "移除原理图")
+        }
+        /// 导出原理图
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.exportDestination`.
+        public static var exportDestination: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.exportDestination", table: "Interface", fallback: "导出原理图")
+        }
+        /// 导出…
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.exportSchematics`.
+        public static var exportSchematics: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.exportSchematics", table: "Interface", fallback: "导出…")
+        }
+        /// 原理图已导出
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.exportedSchematic`.
+        public static var exportedSchematic: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.exportedSchematic", table: "Interface", fallback: "原理图已导出")
         }
         /// 文件大小
         ///
-        /// Resource: `Interface.appSchematicManagerView.dateText3`.
+        /// Resource: `Interface.AppSchematicManagerView.fileSize`.
         public static var fileSize: LocalizedMessage {
-            .init(key: "appSchematicManagerView.dateText3", table: "Interface", fallback: "文件大小")
+            .init(key: "AppSchematicManagerView.fileSize", table: "Interface", fallback: "文件大小")
         }
-        /// 读取原理图信息…
+        /// 文件夹名称
         ///
-        /// Resource: `Interface.appSchematicManagerView.errorText14`.
-        public static var readingSchematic: LocalizedMessage {
-            .init(key: "appSchematicManagerView.errorText14", table: "Interface", fallback: "读取原理图信息…")
+        /// Resource: `Interface.AppSchematicManagerView.folderName`.
+        public static var folderName: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.folderName", table: "Interface", fallback: "文件夹名称")
+        }
+        /// 格式版本
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.formatVersion`.
+        public static var formatVersion: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.formatVersion", table: "Interface", fallback: "格式版本")
+        }
+        /// 游戏数据版本
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.gameDataVersion`.
+        public static var gameDataVersion: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.gameDataVersion", table: "Interface", fallback: "游戏数据版本")
+        }
+        /// 返回上一级
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.goUp`.
+        public static var goUp: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.goUp", table: "Interface", fallback: "返回上一级")
+        }
+        /// 导入原理图
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.importSchematicFiles`.
+        public static var importSchematicFiles: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.importSchematicFiles", table: "Interface", fallback: "导入原理图")
+        }
+        /// 导入…
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.importSchematics`.
+        public static var importSchematics: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.importSchematics", table: "Interface", fallback: "导入…")
+        }
+        /// 修改时间
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.modifiedAt`.
+        public static var modifiedAt: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.modifiedAt", table: "Interface", fallback: "修改时间")
+        }
+        /// 新建文件夹
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.newFolder`.
+        public static var newFolder: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.newFolder", table: "Interface", fallback: "新建文件夹")
+        }
+        /// 新建原理图文件夹
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.newSchematicFolder`.
+        public static var newSchematicFolder: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.newSchematicFolder", table: "Interface", fallback: "新建原理图文件夹")
         }
         /// 无法预览信息：%1$@
         ///
-        /// Resource: `Interface.appSchematicManagerView.previewError`.
+        /// Resource: `Interface.AppSchematicManagerView.previewError`.
         public static func previewError(_ value0: String) -> LocalizedMessage {
-            .init(key: "appSchematicManagerView.previewError", table: "Interface", fallback: "无法预览信息：%1$@", arguments: [.text(value0)])
+            .init(key: "AppSchematicManagerView.previewError", table: "Interface", fallback: "无法预览信息：%1$@", arguments: [.text(value0)])
+        }
+        /// 读取原理图信息…
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.readingSchematic`.
+        public static var readingSchematic: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.readingSchematic", table: "Interface", fallback: "读取原理图信息…")
+        }
+        /// 刷新
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.refresh`.
+        public static var refresh: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.refresh", table: "Interface", fallback: "刷新")
+        }
+        /// 区域数
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.regions`.
+        public static var regions: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.regions", table: "Interface", fallback: "区域数")
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.revealInFinder`.
+        public static var revealInFinder: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.revealInFinder", table: "Interface", fallback: "在 Finder 中显示")
+        }
+        /// 文件保存在当前运行目录的 schematics 文件夹，供 Litematica、WorldEdit 等模组使用。
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.schematicHelp`.
+        public static var schematicHelp: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.schematicHelp", table: "Interface", fallback: "文件保存在当前运行目录的 schematics 文件夹，供 Litematica、WorldEdit 等模组使用。")
+        }
+        /// 原理图
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.schematics`.
+        public static var schematics: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.schematics", table: "Interface", fallback: "原理图")
+        }
+        /// 搜索当前文件夹
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.searchFolder`.
+        public static var searchFolder: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.searchFolder", table: "Interface", fallback: "搜索当前文件夹")
+        }
+        /// 尺寸
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.size`.
+        public static var size: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.size", table: "Interface", fallback: "尺寸")
+        }
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.trash`.
+        public static var trash: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.trash", table: "Interface", fallback: "移到废纸篓")
+        }
+        /// 移到废纸篓…
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.trashSchematics`.
+        public static var trashSchematics: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.trashSchematics", table: "Interface", fallback: "移到废纸篓…")
+        }
+        /// 查看信息
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.viewInfo`.
+        public static var viewInfo: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.viewInfo", table: "Interface", fallback: "查看信息")
+        }
+        /// 总体积
+        ///
+        /// Resource: `Interface.AppSchematicManagerView.volume`.
+        public static var volume: LocalizedMessage {
+            .init(key: "AppSchematicManagerView.volume", table: "Interface", fallback: "总体积")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appSchematicManagerView.bodyText1": .init("原理图", []),
-            "Interface:appSchematicManagerView.bodyText2": .init("新建文件夹", []),
-            "Interface:appSchematicManagerView.bodyText3": .init("导入…", []),
-            "Interface:appSchematicManagerView.bodyText4": .init("文件保存在当前运行目录的 schematics 文件夹，供 Litematica、WorldEdit 等模组使用。", []),
-            "Interface:appSchematicManagerView.bodyText5": .init("返回上一级", []),
-            "Interface:appSchematicManagerView.bodyText6": .init("搜索当前文件夹", []),
-            "Interface:appSchematicManagerView.errorText1": .init("查看信息", []),
-            "Interface:appSchematicManagerView.errorText2": .init("导出…", []),
-            "Interface:appSchematicManagerView.errorText3": .init("在 Finder 中显示", []),
-            "Interface:appSchematicManagerView.errorText4": .init("移到废纸篓…", []),
-            "Interface:appSchematicManagerView.errorText5": .init("将原理图拖到这里，或点击“导入”。", []),
-            "Interface:appSchematicManagerView.errorText6": .init("刷新", []),
-            "Interface:appSchematicManagerView.errorText7": .init("取消任务", []),
-            "Interface:appSchematicManagerView.errorText8": .init("文件夹名称", []),
-            "Interface:appSchematicManagerView.errorText9": .init("创建", []),
-            "Interface:appSchematicManagerView.errorText10": .init("新建原理图文件夹", []),
-            "Interface:appSchematicManagerView.errorText11": .init("移到废纸篓？", []),
-            "Interface:appSchematicManagerView.errorText12": .init("移到废纸篓", []),
-            "Interface:appSchematicManagerView.entryText1": .init("移除原理图", []),
-            "Interface:appSchematicManagerView.entryText2": .init(" 及其中的全部文件", []),
-            "Interface:appSchematicManagerView.importFilesText1": .init("导入原理图", []),
-            "Interface:appSchematicManagerView.destinationText1": .init("导出原理图", []),
-            "Interface:appSchematicManagerView.destinationText2": .init("原理图已导出", []),
-            "Interface:appSchematicManagerView.authorText1": .init("作者", []),
-            "Interface:appSchematicManagerView.authorText2": .init("尺寸", []),
-            "Interface:appSchematicManagerView.blocksText1": .init("方块数", []),
-            "Interface:appSchematicManagerView.volumeText1": .init("总体积", []),
-            "Interface:appSchematicManagerView.regionsText1": .init("区域数", []),
-            "Interface:appSchematicManagerView.versionText1": .init("格式版本", []),
-            "Interface:appSchematicManagerView.versionText2": .init("游戏数据版本", []),
-            "Interface:appSchematicManagerView.dateText1": .init("创建时间", []),
-            "Interface:appSchematicManagerView.dateText2": .init("修改时间", []),
-            "Interface:appSchematicManagerView.dateText3": .init("文件大小", []),
-            "Interface:appSchematicManagerView.errorText14": .init("读取原理图信息…", []),
-            "Interface:appSchematicManagerView.previewError": .init("无法预览信息：%1$@", [.text]),
+            "Interface:AppSchematicManagerView.author": .init("作者", []),
+            "Interface:AppSchematicManagerView.blocks": .init("方块数", []),
+            "Interface:AppSchematicManagerView.cancelTask": .init("取消任务", []),
+            "Interface:AppSchematicManagerView.confirmTrash": .init("移到废纸篓？", []),
+            "Interface:AppSchematicManagerView.createFolder": .init("创建", []),
+            "Interface:AppSchematicManagerView.createdAt": .init("创建时间", []),
+            "Interface:AppSchematicManagerView.dropSchematics": .init("将原理图拖到这里，或点击“导入”。", []),
+            "Interface:AppSchematicManagerView.entryFiles": .init(" 及其中的全部文件", []),
+            "Interface:AppSchematicManagerView.entryRemoval": .init("移除原理图", []),
+            "Interface:AppSchematicManagerView.exportDestination": .init("导出原理图", []),
+            "Interface:AppSchematicManagerView.exportSchematics": .init("导出…", []),
+            "Interface:AppSchematicManagerView.exportedSchematic": .init("原理图已导出", []),
+            "Interface:AppSchematicManagerView.fileSize": .init("文件大小", []),
+            "Interface:AppSchematicManagerView.folderName": .init("文件夹名称", []),
+            "Interface:AppSchematicManagerView.formatVersion": .init("格式版本", []),
+            "Interface:AppSchematicManagerView.gameDataVersion": .init("游戏数据版本", []),
+            "Interface:AppSchematicManagerView.goUp": .init("返回上一级", []),
+            "Interface:AppSchematicManagerView.importSchematicFiles": .init("导入原理图", []),
+            "Interface:AppSchematicManagerView.importSchematics": .init("导入…", []),
+            "Interface:AppSchematicManagerView.modifiedAt": .init("修改时间", []),
+            "Interface:AppSchematicManagerView.newFolder": .init("新建文件夹", []),
+            "Interface:AppSchematicManagerView.newSchematicFolder": .init("新建原理图文件夹", []),
+            "Interface:AppSchematicManagerView.previewError": .init("无法预览信息：%1$@", [.text]),
+            "Interface:AppSchematicManagerView.readingSchematic": .init("读取原理图信息…", []),
+            "Interface:AppSchematicManagerView.refresh": .init("刷新", []),
+            "Interface:AppSchematicManagerView.regions": .init("区域数", []),
+            "Interface:AppSchematicManagerView.revealInFinder": .init("在 Finder 中显示", []),
+            "Interface:AppSchematicManagerView.schematicHelp": .init("文件保存在当前运行目录的 schematics 文件夹，供 Litematica、WorldEdit 等模组使用。", []),
+            "Interface:AppSchematicManagerView.schematics": .init("原理图", []),
+            "Interface:AppSchematicManagerView.searchFolder": .init("搜索当前文件夹", []),
+            "Interface:AppSchematicManagerView.size": .init("尺寸", []),
+            "Interface:AppSchematicManagerView.trash": .init("移到废纸篓", []),
+            "Interface:AppSchematicManagerView.trashSchematics": .init("移到废纸篓…", []),
+            "Interface:AppSchematicManagerView.viewInfo": .init("查看信息", []),
+            "Interface:AppSchematicManagerView.volume": .init("总体积", []),
         ]
     }
 }

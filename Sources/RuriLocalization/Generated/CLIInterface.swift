@@ -3,2702 +3,2702 @@ import Foundation
 
 extension Messages {
     public enum CLIInterface {
-        /// 操作已取消。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t386cf3b4f8ac`.
-        public static var t386cf3b4f8ac: LocalizedMessage {
-            .init(key: "cliInterface.t386cf3b4f8ac", table: "CLIInterface", fallback: "操作已取消。")
-        }
-        /// 未知命令路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t066f88703d3a`.
-        public static var t066f88703d3a: LocalizedMessage {
-            .init(key: "cliInterface.t066f88703d3a", table: "CLIInterface", fallback: "未知命令路径。")
-        }
-        /// 不支持此语言。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t55d7eb65faaa`.
-        public static var t55d7eb65faaa: LocalizedMessage {
-            .init(key: "cliInterface.t55d7eb65faaa", table: "CLIInterface", fallback: "不支持此语言。")
-        }
-        /// 未知命令。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t616e37d3d71a`.
-        public static var t616e37d3d71a: LocalizedMessage {
-            .init(key: "cliInterface.t616e37d3d71a", table: "CLIInterface", fallback: "未知命令。")
-        }
-        /// 在标准输出返回一个 JSON 结果。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0719f30a146c`.
-        public static var t0719f30a146c: LocalizedMessage {
-            .init(key: "cliInterface.t0719f30a146c", table: "CLIInterface", fallback: "在标准输出返回一个 JSON 结果。")
-        }
-        /// 输出格式：text、json 或 ndjson。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0232e54a0c07`.
-        public static var t0232e54a0c07: LocalizedMessage {
-            .init(key: "cliInterface.t0232e54a0c07", table: "CLIInterface", fallback: "输出格式：text、json 或 ndjson。")
-        }
-        /// 启动器数据目录，优先于 RURI_DATA_DIR。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tfeeb5f4ef393`.
-        public static var tfeeb5f4ef393: LocalizedMessage {
-            .init(key: "cliInterface.tfeeb5f4ef393", table: "CLIInterface", fallback: "启动器数据目录，优先于 RURI_DATA_DIR。")
-        }
-        /// 说明和提示使用的语言。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t83e479a9529d`.
-        public static var t83e479a9529d: LocalizedMessage {
-            .init(key: "cliInterface.t83e479a9529d", table: "CLIInterface", fallback: "说明和提示使用的语言。")
-        }
-        /// 不在标准错误输出显示进度。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1dfd9c76d588`.
-        public static var t1dfd9c76d588: LocalizedMessage {
-            .init(key: "cliInterface.t1dfd9c76d588", table: "CLIInterface", fallback: "不在标准错误输出显示进度。")
-        }
-        /// 缺少 --%1$@。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc3f4b95955b1`.
-        public static func tc3f4b95955b1(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.tc3f4b95955b1", table: "CLIInterface", fallback: "缺少 --%1$@。", arguments: [.text(value0)])
-        }
-        /// 缺少参数 %1$@。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t883e96f211e4`.
-        public static func t883e96f211e4(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.t883e96f211e4", table: "CLIInterface", fallback: "缺少参数 %1$@。", arguments: [.text(value0)])
-        }
-        /// 需要位置参数 %1$@，实际收到 %2$@ 个。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8c27fffd692c`.
-        public static func t8c27fffd692c(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "cliInterface.t8c27fffd692c", table: "CLIInterface", fallback: "需要位置参数 %1$@，实际收到 %2$@ 个。", arguments: [.text(value0), .text(value1)])
-        }
-        /// 请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te36f73cbdb89`.
-        public static var te36f73cbdb89: LocalizedMessage {
-            .init(key: "cliInterface.te36f73cbdb89", table: "CLIInterface", fallback: "请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。")
-        }
-        /// --%1$@ 必须为以下值之一：%2$@。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te66506826636`.
-        public static func te66506826636(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "cliInterface.te66506826636", table: "CLIInterface", fallback: "--%1$@ 必须为以下值之一：%2$@。", arguments: [.text(value0), .text(value1)])
-        }
-        /// --limit 必须介于 1 和 1000 之间。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t73e3848bbeee`.
-        public static var t73e3848bbeee: LocalizedMessage {
-            .init(key: "cliInterface.t73e3848bbeee", table: "CLIInterface", fallback: "--limit 必须介于 1 和 1000 之间。")
-        }
-        /// --offset 不能为负数。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td3901a3793d1`.
-        public static var td3901a3793d1: LocalizedMessage {
-            .init(key: "cliInterface.td3901a3793d1", table: "CLIInterface", fallback: "--offset 不能为负数。")
-        }
-        /// 此操作需要 --yes，可先使用 --dry-run 预览。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf2d2570879da`.
-        public static var tf2d2570879da: LocalizedMessage {
-            .init(key: "cliInterface.tf2d2570879da", table: "CLIInterface", fallback: "此操作需要 --yes，可先使用 --dry-run 预览。")
-        }
-        /// 查询命令及其机器接口。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tfd63207de5ca`.
-        public static var tfd63207de5ca: LocalizedMessage {
-            .init(key: "cliInterface.tfd63207de5ca", table: "CLIInterface", fallback: "查询命令及其机器接口。")
-        }
-        /// 可选的资源、动作和子动作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t907f38578610`.
-        public static var t907f38578610: LocalizedMessage {
-            .init(key: "cliInterface.t907f38578610", table: "CLIInterface", fallback: "可选的资源、动作和子动作。")
-        }
-        /// 显示应用及命令行工具的版本和路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t04f3e8ad5625`.
-        public static var t04f3e8ad5625: LocalizedMessage {
-            .init(key: "cliInterface.t04f3e8ad5625", table: "CLIInterface", fallback: "显示应用及命令行工具的版本和路径。")
-        }
-        /// 读取应用的界面语言。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0adf2f545bf7`.
-        public static var t0adf2f545bf7: LocalizedMessage {
-            .init(key: "cliInterface.t0adf2f545bf7", table: "CLIInterface", fallback: "读取应用的界面语言。")
-        }
-        /// 设置应用语言，重启后生效。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t56774fcdd554`.
-        public static var t56774fcdd554: LocalizedMessage {
-            .init(key: "cliInterface.t56774fcdd554", table: "CLIInterface", fallback: "设置应用语言，重启后生效。")
-        }
-        /// 预览操作，不更改用户数据。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t6034a698016d`.
-        public static var t6034a698016d: LocalizedMessage {
-            .init(key: "cliInterface.t6034a698016d", table: "CLIInterface", fallback: "预览操作，不更改用户数据。")
-        }
-        /// 检查命令行工具及 PATH。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb15b5698e07c`.
-        public static var tb15b5698e07c: LocalizedMessage {
-            .init(key: "cliInterface.tb15b5698e07c", table: "CLIInterface", fallback: "检查命令行工具及 PATH。")
-        }
-        /// 安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t05715f352213`.
-        public static var t05715f352213: LocalizedMessage {
-            .init(key: "cliInterface.t05715f352213", table: "CLIInterface", fallback: "安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。")
-        }
-        /// 命令安装目录，默认为 /usr/local/bin。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t6edc04f9cc0c`.
-        public static var t6edc04f9cc0c: LocalizedMessage {
-            .init(key: "cliInterface.t6edc04f9cc0c", table: "CLIInterface", fallback: "命令安装目录，默认为 /usr/local/bin。")
-        }
-        /// 卸载命令链接，仅移除属于 Ruri 的链接。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t32373072cae3`.
-        public static var t32373072cae3: LocalizedMessage {
-            .init(key: "cliInterface.t32373072cae3", table: "CLIInterface", fallback: "卸载命令链接，仅移除属于 Ruri 的链接。")
-        }
-        /// 命令安装目录，默认为 /usr/local/bin。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t7736b5280e58`.
-        public static var t7736b5280e58: LocalizedMessage {
-            .init(key: "cliInterface.t7736b5280e58", table: "CLIInterface", fallback: "命令安装目录，默认为 /usr/local/bin。")
-        }
-        /// 确认删除或覆盖操作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t3b0368de0fdf`.
-        public static var t3b0368de0fdf: LocalizedMessage {
-            .init(key: "cliInterface.t3b0368de0fdf", table: "CLIInterface", fallback: "确认删除或覆盖操作。")
-        }
-        /// 应用界面语言
-        ///
-        /// Resource: `CLIInterface.cliInterface.teaca59ff6999`.
-        public static var teaca59ff6999: LocalizedMessage {
-            .init(key: "cliInterface.teaca59ff6999", table: "CLIInterface", fallback: "应用界面语言")
-        }
-        /// 应用信息与语言设置
-        ///
-        /// Resource: `CLIInterface.cliInterface.t64c4a55a8346`.
-        public static var t64c4a55a8346: LocalizedMessage {
-            .init(key: "cliInterface.t64c4a55a8346", table: "CLIInterface", fallback: "应用信息与语言设置")
-        }
-        /// 命令行工具的安装与卸载
-        ///
-        /// Resource: `CLIInterface.cliInterface.td9fc3f8ff28d`.
-        public static var td9fc3f8ff28d: LocalizedMessage {
-            .init(key: "cliInterface.td9fc3f8ff28d", table: "CLIInterface", fallback: "命令行工具的安装与卸载")
-        }
-        /// Ruri 启动器命令行接口。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta03f160849e6`.
-        public static var ta03f160849e6: LocalizedMessage {
-            .init(key: "cliInterface.ta03f160849e6", table: "CLIInterface", fallback: "Ruri 启动器命令行接口。")
-        }
-        /// 找不到应用内的命令行工具。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t53102783ab6d`.
-        public static var t53102783ab6d: LocalizedMessage {
-            .init(key: "cliInterface.t53102783ab6d", table: "CLIInterface", fallback: "找不到应用内的命令行工具。")
-        }
-        /// 命令行工具不存在。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tcef88e8371f1`.
-        public static var tcef88e8371f1: LocalizedMessage {
-            .init(key: "cliInterface.tcef88e8371f1", table: "CLIInterface", fallback: "命令行工具不存在。")
-        }
-        /// 目标位置不是 Ruri 创建的链接。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t93432f8e8264`.
-        public static var t93432f8e8264: LocalizedMessage {
-            .init(key: "cliInterface.t93432f8e8264", table: "CLIInterface", fallback: "目标位置不是 Ruri 创建的链接。")
-        }
-        /// 无法安装命令行工具链接。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t301c72c06b6d`.
-        public static var t301c72c06b6d: LocalizedMessage {
-            .init(key: "cliInterface.t301c72c06b6d", table: "CLIInterface", fallback: "无法安装命令行工具链接。")
-        }
-        /// 卸载期间命令行工具链接发生了变化。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te99b33ffd7c8`.
-        public static var te99b33ffd7c8: LocalizedMessage {
-            .init(key: "cliInterface.te99b33ffd7c8", table: "CLIInterface", fallback: "卸载期间命令行工具链接发生了变化。")
-        }
-        /// 无法打开操作锁。
-        ///
-        /// Resource: `CLIInterface.cliInterface.teff59600ae41`.
-        public static var teff59600ae41: LocalizedMessage {
-            .init(key: "cliInterface.teff59600ae41", table: "CLIInterface", fallback: "无法打开操作锁。")
-        }
-        /// 另一个进程正在使用此资源。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tce7693c68759`.
-        public static var tce7693c68759: LocalizedMessage {
-            .init(key: "cliInterface.tce7693c68759", table: "CLIInterface", fallback: "另一个进程正在使用此资源。")
-        }
-        /// 查询显式配置、有效配置及继承来源。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9b80abd0b1ac`.
-        public static var t9b80abd0b1ac: LocalizedMessage {
-            .init(key: "cliInterface.t9b80abd0b1ac", table: "CLIInterface", fallback: "查询显式配置、有效配置及继承来源。")
-        }
-        /// 配置作用域：app、defaults 或 instance:<uuid>。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9f1f1df0e83d`.
-        public static var t9f1f1df0e83d: LocalizedMessage {
-            .init(key: "cliInterface.t9f1f1df0e83d", table: "CLIInterface", fallback: "配置作用域：app、defaults 或 instance:<uuid>。")
-        }
-        /// 显示环境变量的值。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9180c54b32fc`.
-        public static var t9180c54b32fc: LocalizedMessage {
-            .init(key: "cliInterface.t9180c54b32fc", table: "CLIInterface", fallback: "显示环境变量的值。")
-        }
-        /// 使用 JSON 值设置一个配置字段。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t51d568cf62ef`.
-        public static var t51d568cf62ef: LocalizedMessage {
-            .init(key: "cliInterface.t51d568cf62ef", table: "CLIInterface", fallback: "使用 JSON 值设置一个配置字段。")
-        }
-        /// 仅当状态版本与此前读取的一致时提交。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc865886779a0`.
-        public static var tc865886779a0: LocalizedMessage {
-            .init(key: "cliInterface.tc865886779a0", table: "CLIInterface", fallback: "仅当状态版本与此前读取的一致时提交。")
-        }
-        /// 配置字段及 JSON 值。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t3a7dba9c3050`.
-        public static var t3a7dba9c3050: LocalizedMessage {
-            .init(key: "cliInterface.t3a7dba9c3050", table: "CLIInterface", fallback: "配置字段及 JSON 值。")
-        }
-        /// 原子应用 JSON 配置补丁。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t22ad2905d16d`.
-        public static var t22ad2905d16d: LocalizedMessage {
-            .init(key: "cliInterface.t22ad2905d16d", table: "CLIInterface", fallback: "原子应用 JSON 配置补丁。")
-        }
-        /// JSON 补丁文件；使用 - 从标准输入读取。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t149625e63af0`.
-        public static var t149625e63af0: LocalizedMessage {
-            .init(key: "cliInterface.t149625e63af0", table: "CLIInterface", fallback: "JSON 补丁文件；使用 - 从标准输入读取。")
-        }
-        /// 将配置字段或组重置为内置默认值。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t620fab80a2bb`.
-        public static var t620fab80a2bb: LocalizedMessage {
-            .init(key: "cliInterface.t620fab80a2bb", table: "CLIInterface", fallback: "将配置字段或组重置为内置默认值。")
-        }
-        /// 恢复实例配置组的继承。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te7f60fe2aebd`.
-        public static var te7f60fe2aebd: LocalizedMessage {
-            .init(key: "cliInterface.te7f60fe2aebd", table: "CLIInterface", fallback: "恢复实例配置组的继承。")
-        }
-        /// 全局设置、默认配置与实例覆盖
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1fcd3e7a6ffc`.
-        public static var t1fcd3e7a6ffc: LocalizedMessage {
-            .init(key: "cliInterface.t1fcd3e7a6ffc", table: "CLIInterface", fallback: "全局设置、默认配置与实例覆盖")
-        }
-        /// 未知配置字段。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tdf61274dcc9c`.
-        public static var tdf61274dcc9c: LocalizedMessage {
-            .init(key: "cliInterface.tdf61274dcc9c", table: "CLIInterface", fallback: "未知配置字段。")
-        }
-        /// 配置值必须是 JSON；字符串值需要保留双引号。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te3e619f346d3`.
-        public static var te3e619f346d3: LocalizedMessage {
-            .init(key: "cliInterface.te3e619f346d3", table: "CLIInterface", fallback: "配置值必须是 JSON；字符串值需要保留双引号。")
-        }
-        /// 配置补丁不是有效的 JSON。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t64229bd16ecc`.
-        public static var t64229bd16ecc: LocalizedMessage {
-            .init(key: "cliInterface.t64229bd16ecc", table: "CLIInterface", fallback: "配置补丁不是有效的 JSON。")
-        }
-        /// 需要有效的 UUID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t332cdb6a53b4`.
-        public static var t332cdb6a53b4: LocalizedMessage {
-            .init(key: "cliInterface.t332cdb6a53b4", table: "CLIInterface", fallback: "需要有效的 UUID。")
-        }
-        /// 输入超过允许的大小。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf7eb23752b1e`.
-        public static var tf7eb23752b1e: LocalizedMessage {
-            .init(key: "cliInterface.tf7eb23752b1e", table: "CLIInterface", fallback: "输入超过允许的大小。")
-        }
-        /// 读取后状态已发生变化。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te8a7227e2180`.
-        public static var te8a7227e2180: LocalizedMessage {
-            .init(key: "cliInterface.te8a7227e2180", table: "CLIInterface", fallback: "读取后状态已发生变化。")
-        }
-        /// 补丁包含未知操作，请使用 set、reset 或 inherit。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8568ceb9ae27`.
-        public static var t8568ceb9ae27: LocalizedMessage {
-            .init(key: "cliInterface.t8568ceb9ae27", table: "CLIInterface", fallback: "补丁包含未知操作，请使用 set、reset 或 inherit。")
-        }
-        /// 配置字段到值的映射对象
-        ///
-        /// Resource: `CLIInterface.cliInterface.tba308ed7fb67`.
-        public static var tba308ed7fb67: LocalizedMessage {
-            .init(key: "cliInterface.tba308ed7fb67", table: "CLIInterface", fallback: "配置字段到值的映射对象")
-        }
-        /// 配置字段或组的名称
-        ///
-        /// Resource: `CLIInterface.cliInterface.tba6d0ed49ef6`.
-        public static var tba6d0ed49ef6: LocalizedMessage {
-            .init(key: "cliInterface.tba6d0ed49ef6", table: "CLIInterface", fallback: "配置字段或组的名称")
-        }
-        /// 实例配置组的名称，仅适用于实例
-        ///
-        /// Resource: `CLIInterface.cliInterface.t54e4e046502f`.
-        public static var t54e4e046502f: LocalizedMessage {
-            .init(key: "cliInterface.t54e4e046502f", table: "CLIInterface", fallback: "实例配置组的名称，仅适用于实例")
-        }
-        /// 配置作用域必须为 app、defaults 或 instance:<uuid>。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te2e236614526`.
-        public static var te2e236614526: LocalizedMessage {
-            .init(key: "cliInterface.te2e236614526", table: "CLIInterface", fallback: "配置作用域必须为 app、defaults 或 instance:<uuid>。")
-        }
-        /// 找不到实例。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t491b2168687b`.
-        public static var t491b2168687b: LocalizedMessage {
-            .init(key: "cliInterface.t491b2168687b", table: "CLIInterface", fallback: "找不到实例。")
-        }
-        /// 未知或空的配置组：%1$@。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t41f1a159c375`.
-        public static func t41f1a159c375(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.t41f1a159c375", table: "CLIInterface", fallback: "未知或空的配置组：%1$@。", arguments: [.text(value0)])
-        }
-        /// 未知或重复的配置字段：%1$@。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0e5f6b9ca429`.
-        public static func t0e5f6b9ca429(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.t0e5f6b9ca429", table: "CLIInterface", fallback: "未知或重复的配置字段：%1$@。", arguments: [.text(value0)])
-        }
-        /// inherit 仅适用于完整的实例配置组。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0199982aa94e`.
-        public static var t0199982aa94e: LocalizedMessage {
-            .init(key: "cliInterface.t0199982aa94e", table: "CLIInterface", fallback: "inherit 仅适用于完整的实例配置组。")
-        }
-        /// 未知配置字段：%1$@。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tca2c20d623be`.
-        public static func tca2c20d623be(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.tca2c20d623be", table: "CLIInterface", fallback: "未知配置字段：%1$@。", arguments: [.text(value0)])
-        }
-        /// 针对 %1$@ 的补丁操作相互冲突。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta78e60d41732`.
-        public static func ta78e60d41732(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.ta78e60d41732", table: "CLIInterface", fallback: "针对 %1$@ 的补丁操作相互冲突。", arguments: [.text(value0)])
-        }
-        /// %1$@ 的值无效。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t62fca6b0b13b`.
-        public static func t62fca6b0b13b(_ value0: String) -> LocalizedMessage {
-            .init(key: "cliInterface.t62fca6b0b13b", table: "CLIInterface", fallback: "%1$@ 的值无效。", arguments: [.text(value0)])
-        }
-        /// Microsoft Client ID 必须为 UUID 或空字符串。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1f94c2f53310`.
-        public static var t1f94c2f53310: LocalizedMessage {
-            .init(key: "cliInterface.t1f94c2f53310", table: "CLIInterface", fallback: "Microsoft Client ID 必须为 UUID 或空字符串。")
-        }
-        /// major 模式需要设置 java.major。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9b199fcf9a1f`.
-        public static var t9b199fcf9a1f: LocalizedMessage {
-            .init(key: "cliInterface.t9b199fcf9a1f", table: "CLIInterface", fallback: "major 模式需要设置 java.major。")
-        }
-        /// path 模式需要设置 java.path。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t15b3dd14487d`.
-        public static var t15b3dd14487d: LocalizedMessage {
-            .init(key: "cliInterface.t15b3dd14487d", table: "CLIInterface", fallback: "path 模式需要设置 java.path。")
-        }
-        /// 列出托管及已注册的实例。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t163f689a3d2f`.
-        public static var t163f689a3d2f: LocalizedMessage {
-            .init(key: "cliInterface.t163f689a3d2f", table: "CLIInterface", fallback: "列出托管及已注册的实例。")
-        }
-        /// 按完整名称筛选。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t61c2b6ad309c`.
-        public static var t61c2b6ad309c: LocalizedMessage {
-            .init(key: "cliInterface.t61c2b6ad309c", table: "CLIInterface", fallback: "按完整名称筛选。")
-        }
-        /// 按目录 UUID 或 default 筛选。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t3a0b2a4eac30`.
-        public static var t3a0b2a4eac30: LocalizedMessage {
-            .init(key: "cliInterface.t3a0b2a4eac30", table: "CLIInterface", fallback: "按目录 UUID 或 default 筛选。")
-        }
-        /// 最多返回的数量，范围为 1 至 1000，默认 50。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te46ca00ec899`.
-        public static var te46ca00ec899: LocalizedMessage {
-            .init(key: "cliInterface.te46ca00ec899", table: "CLIInterface", fallback: "最多返回的数量，范围为 1 至 1000，默认 50。")
-        }
-        /// 跳过的结果数量，默认 0。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t184bd8d0fe9d`.
-        public static var t184bd8d0fe9d: LocalizedMessage {
-            .init(key: "cliInterface.t184bd8d0fe9d", table: "CLIInterface", fallback: "跳过的结果数量，默认 0。")
-        }
-        /// 返回全部结果。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta412189d9e76`.
-        public static var ta412189d9e76: LocalizedMessage {
-            .init(key: "cliInterface.ta412189d9e76", table: "CLIInterface", fallback: "返回全部结果。")
-        }
-        /// 查询当前选中的实例。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1a9316dc0247`.
-        public static var t1a9316dc0247: LocalizedMessage {
-            .init(key: "cliInterface.t1a9316dc0247", table: "CLIInterface", fallback: "查询当前选中的实例。")
-        }
-        /// 查询实例详情及文件位置。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td25fbbc9aa83`.
-        public static var td25fbbc9aa83: LocalizedMessage {
-            .init(key: "cliInterface.td25fbbc9aa83", table: "CLIInterface", fallback: "查询实例详情及文件位置。")
-        }
-        /// 通过完整名称查找实例，代替 UUID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t554bb290d490`.
-        public static var t554bb290d490: LocalizedMessage {
-            .init(key: "cliInterface.t554bb290d490", table: "CLIInterface", fallback: "通过完整名称查找实例，代替 UUID。")
-        }
-        /// 列出可用的 Minecraft 版本。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t309b2060e6e7`.
-        public static var t309b2060e6e7: LocalizedMessage {
-            .init(key: "cliInterface.t309b2060e6e7", table: "CLIInterface", fallback: "列出可用的 Minecraft 版本。")
-        }
-        /// 包含快照版本。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0f6dcda14ae4`.
-        public static var t0f6dcda14ae4: LocalizedMessage {
-            .init(key: "cliInterface.t0f6dcda14ae4", table: "CLIInterface", fallback: "包含快照版本。")
-        }
-        /// 创建并安装指定名称的实例。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tea647925f201`.
-        public static var tea647925f201: LocalizedMessage {
-            .init(key: "cliInterface.tea647925f201", table: "CLIInterface", fallback: "创建并安装指定名称的实例。")
-        }
-        /// 实例名称。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf78b43b0ee95`.
-        public static var tf78b43b0ee95: LocalizedMessage {
-            .init(key: "cliInterface.tf78b43b0ee95", table: "CLIInterface", fallback: "实例名称。")
-        }
-        /// Minecraft 版本。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc32a76745397`.
-        public static var tc32a76745397: LocalizedMessage {
-            .init(key: "cliInterface.tc32a76745397", table: "CLIInterface", fallback: "Minecraft 版本。")
-        }
-        /// 明确指定目标目录 UUID 或 default。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tcba396edfba1`.
-        public static var tcba396edfba1: LocalizedMessage {
-            .init(key: "cliInterface.tcba396edfba1", table: "CLIInterface", fallback: "明确指定目标目录 UUID 或 default。")
-        }
-        /// 加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc54f734a37a6`.
-        public static var tc54f734a37a6: LocalizedMessage {
-            .init(key: "cliInterface.tc54f734a37a6", table: "CLIInterface", fallback: "加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。")
-        }
-        /// 仅创建实例记录，不下载文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td183fd7d75d0`.
-        public static var td183fd7d75d0: LocalizedMessage {
-            .init(key: "cliInterface.td183fd7d75d0", table: "CLIInterface", fallback: "仅创建实例记录，不下载文件。")
-        }
-        /// 安装尚未完成安装的实例。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc5757d580bc3`.
-        public static var tc5757d580bc3: LocalizedMessage {
-            .init(key: "cliInterface.tc5757d580bc3", table: "CLIInterface", fallback: "安装尚未完成安装的实例。")
-        }
-        /// 修复实例的安装文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te334b8a18014`.
-        public static var te334b8a18014: LocalizedMessage {
-            .init(key: "cliInterface.te334b8a18014", table: "CLIInterface", fallback: "修复实例的安装文件。")
-        }
-        /// 选择实例。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta4178213b601`.
-        public static var ta4178213b601: LocalizedMessage {
-            .init(key: "cliInterface.ta4178213b601", table: "CLIInterface", fallback: "选择实例。")
-        }
-        /// 重命名实例。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t5ba0c4853561`.
-        public static var t5ba0c4853561: LocalizedMessage {
-            .init(key: "cliInterface.t5ba0c4853561", table: "CLIInterface", fallback: "重命名实例。")
-        }
-        /// 实例 ID 和新名称。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb19f8bbe0060`.
-        public static var tb19f8bbe0060: LocalizedMessage {
-            .init(key: "cliInterface.tb19f8bbe0060", table: "CLIInterface", fallback: "实例 ID 和新名称。")
-        }
-        /// 设置实例是否固定到主页。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t850a4e6bffbd`.
-        public static var t850a4e6bffbd: LocalizedMessage {
-            .init(key: "cliInterface.t850a4e6bffbd", table: "CLIInterface", fallback: "设置实例是否固定到主页。")
-        }
-        /// 实例 ID 和收藏状态，状态为 true 或 false。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t07e88e1b19e9`.
-        public static var t07e88e1b19e9: LocalizedMessage {
-            .init(key: "cliInterface.t07e88e1b19e9", table: "CLIInterface", fallback: "实例 ID 和收藏状态，状态为 true 或 false。")
-        }
-        /// 将实例自有文件移到废纸篓，并移除实例记录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1e047c3f4441`.
-        public static var t1e047c3f4441: LocalizedMessage {
-            .init(key: "cliInterface.t1e047c3f4441", table: "CLIInterface", fallback: "将实例自有文件移到废纸篓，并移除实例记录。")
-        }
-        /// 设置或重置实例图标。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t2774fd42ed73`.
-        public static var t2774fd42ed73: LocalizedMessage {
-            .init(key: "cliInterface.t2774fd42ed73", table: "CLIInterface", fallback: "设置或重置实例图标。")
-        }
-        /// PNG 图标文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc9dade836bbe`.
-        public static var tc9dade836bbe: LocalizedMessage {
-            .init(key: "cliInterface.tc9dade836bbe", table: "CLIInterface", fallback: "PNG 图标文件。")
-        }
-        /// 内置图标形状。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t4888fb1eb4ed`.
-        public static var t4888fb1eb4ed: LocalizedMessage {
-            .init(key: "cliInterface.t4888fb1eb4ed", table: "CLIInterface", fallback: "内置图标形状。")
-        }
-        /// 内置图标颜色。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t44893043de60`.
-        public static var t44893043de60: LocalizedMessage {
-            .init(key: "cliInterface.t44893043de60", table: "CLIInterface", fallback: "内置图标颜色。")
-        }
-        /// 恢复默认图标。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t22cb6cbb2d9e`.
-        public static var t22cb6cbb2d9e: LocalizedMessage {
-            .init(key: "cliInterface.t22cb6cbb2d9e", table: "CLIInterface", fallback: "恢复默认图标。")
-        }
-        /// 将实例复制到指定目录并命名。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta496dc81dcac`.
-        public static var ta496dc81dcac: LocalizedMessage {
-            .init(key: "cliInterface.ta496dc81dcac", table: "CLIInterface", fallback: "将实例复制到指定目录并命名。")
-        }
-        /// 新实例名称。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td52e9c9dbb40`.
-        public static var td52e9c9dbb40: LocalizedMessage {
-            .init(key: "cliInterface.td52e9c9dbb40", table: "CLIInterface", fallback: "新实例名称。")
-        }
-        /// 不包含世界存档。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t874415ccd0ab`.
-        public static var t874415ccd0ab: LocalizedMessage {
-            .init(key: "cliInterface.t874415ccd0ab", table: "CLIInterface", fallback: "不包含世界存档。")
-        }
-        /// 包含世界备份。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t4829b4f8f896`.
-        public static var t4829b4f8f896: LocalizedMessage {
-            .init(key: "cliInterface.t4829b4f8f896", table: "CLIInterface", fallback: "包含世界备份。")
-        }
-        /// 将实例移动到另一目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t2aee4e3b9cb2`.
-        public static var t2aee4e3b9cb2: LocalizedMessage {
-            .init(key: "cliInterface.t2aee4e3b9cb2", table: "CLIInterface", fallback: "将实例移动到另一目录。")
-        }
-        /// 导出实例归档。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8f4cf0564496`.
-        public static var t8f4cf0564496: LocalizedMessage {
-            .init(key: "cliInterface.t8f4cf0564496", table: "CLIInterface", fallback: "导出实例归档。")
-        }
-        /// 归档格式：ruri、complete、multimc、mcbbs 或 mrpack。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t148d4a105bd2`.
-        public static var t148d4a105bd2: LocalizedMessage {
-            .init(key: "cliInterface.t148d4a105bd2", table: "CLIInterface", fallback: "归档格式：ruri、complete、multimc、mcbbs 或 mrpack。")
-        }
-        /// 实例 ID 和文件路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc48ebcacc9f3`.
-        public static var tc48ebcacc9f3: LocalizedMessage {
-            .init(key: "cliInterface.tc48ebcacc9f3", table: "CLIInterface", fallback: "实例 ID 和文件路径。")
-        }
-        /// 查询已安装的加载器及组件备份。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t94761d5853b8`.
-        public static var t94761d5853b8: LocalizedMessage {
-            .init(key: "cliInterface.t94761d5853b8", table: "CLIInterface", fallback: "查询已安装的加载器及组件备份。")
-        }
-        /// 列出与游戏兼容的加载器版本。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t66e7670cbafe`.
-        public static var t66e7670cbafe: LocalizedMessage {
-            .init(key: "cliInterface.t66e7670cbafe", table: "CLIInterface", fallback: "列出与游戏兼容的加载器版本。")
-        }
-        /// 实例 ID 和加载器类型。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8ca25fc9cedc`.
-        public static var t8ca25fc9cedc: LocalizedMessage {
-            .init(key: "cliInterface.t8ca25fc9cedc", table: "CLIInterface", fallback: "实例 ID 和加载器类型。")
-        }
-        /// 替换已安装的加载器组合。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td7622dae9d70`.
-        public static var td7622dae9d70: LocalizedMessage {
-            .init(key: "cliInterface.td7622dae9d70", table: "CLIInterface", fallback: "替换已安装的加载器组合。")
-        }
-        /// 加载器及版本，格式为 kind=version；省略时使用原版。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t4465e709e830`.
-        public static var t4465e709e830: LocalizedMessage {
-            .init(key: "cliInterface.t4465e709e830", table: "CLIInterface", fallback: "加载器及版本，格式为 kind=version；省略时使用原版。")
-        }
-        /// 恢复上一次加载器配置。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t3d825619ad66`.
-        public static var t3d825619ad66: LocalizedMessage {
-            .init(key: "cliInterface.t3d825619ad66", table: "CLIInterface", fallback: "恢复上一次加载器配置。")
-        }
-        /// 实例加载器与组件
-        ///
-        /// Resource: `CLIInterface.cliInterface.t336d8b6931f5`.
-        public static var t336d8b6931f5: LocalizedMessage {
-            .init(key: "cliInterface.t336d8b6931f5", table: "CLIInterface", fallback: "实例加载器与组件")
-        }
-        /// 实例管理与游戏安装
-        ///
-        /// Resource: `CLIInterface.cliInterface.tea19eba1f497`.
-        public static var tea19eba1f497: LocalizedMessage {
-            .init(key: "cliInterface.tea19eba1f497", table: "CLIInterface", fallback: "实例管理与游戏安装")
-        }
-        /// 请指定实例 UUID 或 --name，两者只能选一个。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t79f4a3aa9493`.
-        public static var t79f4a3aa9493: LocalizedMessage {
-            .init(key: "cliInterface.t79f4a3aa9493", table: "CLIInterface", fallback: "请指定实例 UUID 或 --name，两者只能选一个。")
-        }
-        /// 请使用 true 或 false。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t188ae1e6f458`.
-        public static var t188ae1e6f458: LocalizedMessage {
-            .init(key: "cliInterface.t188ae1e6f458", table: "CLIInterface", fallback: "请使用 true 或 false。")
-        }
-        /// 请指定 --file、--glyph 或 --reset。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf996e1aeec0d`.
-        public static var tf996e1aeec0d: LocalizedMessage {
-            .init(key: "cliInterface.tf996e1aeec0d", table: "CLIInterface", fallback: "请指定 --file、--glyph 或 --reset。")
-        }
-        /// 未知图标形状或颜色。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te8f93a97f4a5`.
-        public static var te8f93a97f4a5: LocalizedMessage {
-            .init(key: "cliInterface.te8f93a97f4a5", table: "CLIInterface", fallback: "未知图标形状或颜色。")
-        }
-        /// 未知加载器。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tecaf531d009c`.
-        public static var tecaf531d009c: LocalizedMessage {
-            .init(key: "cliInterface.tecaf531d009c", table: "CLIInterface", fallback: "未知加载器。")
-        }
-        /// 未知实例操作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td578c368dab6`.
-        public static var td578c368dab6: LocalizedMessage {
-            .init(key: "cliInterface.td578c368dab6", table: "CLIInterface", fallback: "未知实例操作。")
-        }
-        /// 组件使用 loader=version 格式；原版无需指定组件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc7720bf2a0d4`.
-        public static var tc7720bf2a0d4: LocalizedMessage {
-            .init(key: "cliInterface.tc7720bf2a0d4", table: "CLIInterface", fallback: "组件使用 loader=version 格式；原版无需指定组件。")
-        }
-        /// 重复指定了加载器。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t46989dde4470`.
-        public static var t46989dde4470: LocalizedMessage {
-            .init(key: "cliInterface.t46989dde4470", table: "CLIInterface", fallback: "重复指定了加载器。")
-        }
-        /// RURI_DOWNLOAD_SOURCE 的值无效。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t733e25583e8d`.
-        public static var t733e25583e8d: LocalizedMessage {
-            .init(key: "cliInterface.t733e25583e8d", table: "CLIInterface", fallback: "RURI_DOWNLOAD_SOURCE 的值无效。")
-        }
-        /// 输出文件已存在。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t121c67f22040`.
-        public static var t121c67f22040: LocalizedMessage {
-            .init(key: "cliInterface.t121c67f22040", table: "CLIInterface", fallback: "输出文件已存在。")
-        }
-        /// 有多个实例使用此名称。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tfe6f797e1938`.
-        public static var tfe6f797e1938: LocalizedMessage {
-            .init(key: "cliInterface.tfe6f797e1938", table: "CLIInterface", fallback: "有多个实例使用此名称。")
-        }
-        /// 游戏版本无效。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t79de4634dcb4`.
-        public static var t79de4634dcb4: LocalizedMessage {
-            .init(key: "cliInterface.t79de4634dcb4", table: "CLIInterface", fallback: "游戏版本无效。")
-        }
-        /// 找不到目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t70a45a4240d8`.
-        public static var t70a45a4240d8: LocalizedMessage {
-            .init(key: "cliInterface.t70a45a4240d8", table: "CLIInterface", fallback: "找不到目录。")
-        }
-        /// 目标目录已被移除。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t17574d1bad8e`.
-        public static var t17574d1bad8e: LocalizedMessage {
-            .init(key: "cliInterface.t17574d1bad8e", table: "CLIInterface", fallback: "目标目录已被移除。")
-        }
-        /// 实例在安装期间被移除。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb199229434bb`.
-        public static var tb199229434bb: LocalizedMessage {
-            .init(key: "cliInterface.tb199229434bb", table: "CLIInterface", fallback: "实例在安装期间被移除。")
-        }
-        /// 实例位置已发生变化。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t7d732629b332`.
-        public static var t7d732629b332: LocalizedMessage {
-            .init(key: "cliInterface.t7d732629b332", table: "CLIInterface", fallback: "实例位置已发生变化。")
-        }
-        /// 实例名称无效。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t97013cab62b8`.
-        public static var t97013cab62b8: LocalizedMessage {
-            .init(key: "cliInterface.t97013cab62b8", table: "CLIInterface", fallback: "实例名称无效。")
-        }
-        /// 列出已注册和已断开连接的游戏目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf64fee5acdf0`.
-        public static var tf64fee5acdf0: LocalizedMessage {
-            .init(key: "cliInterface.tf64fee5acdf0", table: "CLIInterface", fallback: "列出已注册和已断开连接的游戏目录。")
-        }
-        /// 查询当前选中的游戏目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t13c336f9a11b`.
-        public static var t13c336f9a11b: LocalizedMessage {
-            .init(key: "cliInterface.t13c336f9a11b", table: "CLIInterface", fallback: "查询当前选中的游戏目录。")
-        }
-        /// 检查已有 Minecraft 文件夹，不注册目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0a77c8493c2e`.
-        public static var t0a77c8493c2e: LocalizedMessage {
-            .init(key: "cliInterface.t0a77c8493c2e", table: "CLIInterface", fallback: "检查已有 Minecraft 文件夹，不注册目录。")
-        }
-        /// 注册已有目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t135973383faa`.
-        public static var t135973383faa: LocalizedMessage {
-            .init(key: "cliInterface.t135973383faa", table: "CLIInterface", fallback: "注册已有目录。")
-        }
-        /// 目录显示名称。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t63c8c08621c5`.
-        public static var t63c8c08621c5: LocalizedMessage {
-            .init(key: "cliInterface.t63c8c08621c5", table: "CLIInterface", fallback: "目录显示名称。")
-        }
-        /// 目录布局。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0175170e7603`.
-        public static var t0175170e7603: LocalizedMessage {
-            .init(key: "cliInterface.t0175170e7603", table: "CLIInterface", fallback: "目录布局。")
-        }
-        /// 选择已注册的目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te995381e7764`.
-        public static var te995381e7764: LocalizedMessage {
-            .init(key: "cliInterface.te995381e7764", table: "CLIInterface", fallback: "选择已注册的目录。")
-        }
-        /// 刷新 Minecraft 目录中的版本。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tac593c150e36`.
-        public static var tac593c150e36: LocalizedMessage {
-            .init(key: "cliInterface.tac593c150e36", table: "CLIInterface", fallback: "刷新 Minecraft 目录中的版本。")
-        }
-        /// 移除目录注册，保留文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8592d66b70ee`.
-        public static var t8592d66b70ee: LocalizedMessage {
-            .init(key: "cliInterface.t8592d66b70ee", table: "CLIInterface", fallback: "移除目录注册，保留文件。")
-        }
-        /// 重命名已注册的目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tbbd25ee7fe86`.
-        public static var tbbd25ee7fe86: LocalizedMessage {
-            .init(key: "cliInterface.tbbd25ee7fe86", table: "CLIInterface", fallback: "重命名已注册的目录。")
-        }
-        /// 重新关联已移动的注册目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t741d898dfaff`.
-        public static var t741d898dfaff: LocalizedMessage {
-            .init(key: "cliInterface.t741d898dfaff", table: "CLIInterface", fallback: "重新关联已移动的注册目录。")
-        }
-        /// 目录 ID 和文件路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te5b3e2aa3520`.
-        public static var te5b3e2aa3520: LocalizedMessage {
-            .init(key: "cliInterface.te5b3e2aa3520", table: "CLIInterface", fallback: "目录 ID 和文件路径。")
-        }
-        /// 恢复已断开连接的 Minecraft 目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.teeb75a68ecdc`.
-        public static var teeb75a68ecdc: LocalizedMessage {
-            .init(key: "cliInterface.teeb75a68ecdc", table: "CLIInterface", fallback: "恢复已断开连接的 Minecraft 目录。")
-        }
-        /// 查询实例的游戏目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t72af20234e14`.
-        public static var t72af20234e14: LocalizedMessage {
-            .init(key: "cliInterface.t72af20234e14", table: "CLIInterface", fallback: "查询实例的游戏目录。")
-        }
-        /// 切换实例的运行目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1db840ce735d`.
-        public static var t1db840ce735d: LocalizedMessage {
-            .init(key: "cliInterface.t1db840ce735d", table: "CLIInterface", fallback: "切换实例的运行目录。")
-        }
-        /// 已有的自定义游戏目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t4d6e9b1a4264`.
-        public static var t4d6e9b1a4264: LocalizedMessage {
-            .init(key: "cliInterface.t4d6e9b1a4264", table: "CLIInterface", fallback: "已有的自定义游戏目录。")
-        }
-        /// 将游戏文件复制到空的目标目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta39f0e134724`.
-        public static var ta39f0e134724: LocalizedMessage {
-            .init(key: "cliInterface.ta39f0e134724", table: "CLIInterface", fallback: "将游戏文件复制到空的目标目录。")
-        }
-        /// 实例 ID 和目录模式。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tdb3bd307aea7`.
-        public static var tdb3bd307aea7: LocalizedMessage {
-            .init(key: "cliInterface.tdb3bd307aea7", table: "CLIInterface", fallback: "实例 ID 和目录模式。")
-        }
-        /// 重新关联已移动的自定义游戏目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tfe9e723a6df9`.
-        public static var tfe9e723a6df9: LocalizedMessage {
-            .init(key: "cliInterface.tfe9e723a6df9", table: "CLIInterface", fallback: "重新关联已移动的自定义游戏目录。")
-        }
-        /// 实例 ID 和目录路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td41369a235db`.
-        public static var td41369a235db: LocalizedMessage {
-            .init(key: "cliInterface.td41369a235db", table: "CLIInterface", fallback: "实例 ID 和目录路径。")
-        }
-        /// 列出本地 Java 运行时及其来源。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t738bb690d8c2`.
-        public static var t738bb690d8c2: LocalizedMessage {
-            .init(key: "cliInterface.t738bb690d8c2", table: "CLIInterface", fallback: "列出本地 Java 运行时及其来源。")
-        }
-        /// 列出可安装的 Java 运行时。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1cd05347cc64`.
-        public static var t1cd05347cc64: LocalizedMessage {
-            .init(key: "cliInterface.t1cd05347cc64", table: "CLIInterface", fallback: "列出可安装的 Java 运行时。")
-        }
-        /// 按 Java 主版本筛选。
-        ///
-        /// Resource: `CLIInterface.cliInterface.teba714b1f2cc`.
-        public static var teba714b1f2cc: LocalizedMessage {
-            .init(key: "cliInterface.teba714b1f2cc", table: "CLIInterface", fallback: "按 Java 主版本筛选。")
-        }
-        /// 按架构筛选。
-        ///
-        /// Resource: `CLIInterface.cliInterface.taa6237af9422`.
-        public static var taa6237af9422: LocalizedMessage {
-            .init(key: "cliInterface.taa6237af9422", table: "CLIInterface", fallback: "按架构筛选。")
-        }
-        /// 注册已安装的 Java 运行时。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf3cf2acb7b9a`.
-        public static var tf3cf2acb7b9a: LocalizedMessage {
-            .init(key: "cliInterface.tf3cf2acb7b9a", table: "CLIInterface", fallback: "注册已安装的 Java 运行时。")
-        }
-        /// 从手动列表中移除 Java，保留文件及配置引用。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0ecfbec54289`.
-        public static var t0ecfbec54289: LocalizedMessage {
-            .init(key: "cliInterface.t0ecfbec54289", table: "CLIInterface", fallback: "从手动列表中移除 Java，保留文件及配置引用。")
-        }
-        /// 设置默认 Java 选择。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tea0c61c73f43`.
-        public static var tea0c61c73f43: LocalizedMessage {
-            .init(key: "cliInterface.tea0c61c73f43", table: "CLIInterface", fallback: "设置默认 Java 选择。")
-        }
-        /// 列出引用指定托管 Java 的配置。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td99052ac398d`.
-        public static var td99052ac398d: LocalizedMessage {
-            .init(key: "cliInterface.td99052ac398d", table: "CLIInterface", fallback: "列出引用指定托管 Java 的配置。")
-        }
-        /// 检查未完成的安装。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb07678654f81`.
-        public static var tb07678654f81: LocalizedMessage {
-            .init(key: "cliInterface.tb07678654f81", table: "CLIInterface", fallback: "检查未完成的安装。")
-        }
-        /// 按目录中的 ID 安装 Java 运行时。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t2b2ab103144b`.
-        public static var t2b2ab103144b: LocalizedMessage {
-            .init(key: "cliInterface.t2b2ab103144b", table: "CLIInterface", fallback: "按目录中的 ID 安装 Java 运行时。")
-        }
-        /// 修复托管的 Java 运行时。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tef883d8efb5c`.
-        public static var tef883d8efb5c: LocalizedMessage {
-            .init(key: "cliInterface.tef883d8efb5c", table: "CLIInterface", fallback: "修复托管的 Java 运行时。")
-        }
-        /// 将托管的 Java 移到废纸篓。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t355d66c16583`.
-        public static var t355d66c16583: LocalizedMessage {
-            .init(key: "cliInterface.t355d66c16583", table: "CLIInterface", fallback: "将托管的 Java 移到废纸篓。")
-        }
-        /// 将引用此 Java 的配置重置为自动选择。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t5897a3d49bb5`.
-        public static var t5897a3d49bb5: LocalizedMessage {
-            .init(key: "cliInterface.t5897a3d49bb5", table: "CLIInterface", fallback: "将引用此 Java 的配置重置为自动选择。")
-        }
-        /// 移除未完成的安装。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t2a5f80694223`.
-        public static var t2a5f80694223: LocalizedMessage {
-            .init(key: "cliInterface.t2a5f80694223", table: "CLIInterface", fallback: "移除未完成的安装。")
-        }
-        /// 实例运行目录
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc67f25bb4cc3`.
-        public static var tc67f25bb4cc3: LocalizedMessage {
-            .init(key: "cliInterface.tc67f25bb4cc3", table: "CLIInterface", fallback: "实例运行目录")
-        }
-        /// 游戏目录的注册、迁移与恢复
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta42145487540`.
-        public static var ta42145487540: LocalizedMessage {
-            .init(key: "cliInterface.ta42145487540", table: "CLIInterface", fallback: "游戏目录的注册、迁移与恢复")
-        }
-        /// Java 发现、安装与管理
-        ///
-        /// Resource: `CLIInterface.cliInterface.tcb439480ed22`.
-        public static var tcb439480ed22: LocalizedMessage {
-            .init(key: "cliInterface.tcb439480ed22", table: "CLIInterface", fallback: "Java 发现、安装与管理")
-        }
-        /// 目录名称不能为空。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t5efd67648f0d`.
-        public static var t5efd67648f0d: LocalizedMessage {
-            .init(key: "cliInterface.t5efd67648f0d", table: "CLIInterface", fallback: "目录名称不能为空。")
-        }
-        /// 新建的托管目录必须为空。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8ba03aeb3548`.
-        public static var t8ba03aeb3548: LocalizedMessage {
-            .init(key: "cliInterface.t8ba03aeb3548", table: "CLIInterface", fallback: "新建的托管目录必须为空。")
-        }
-        /// 目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tdc5f6e9debdb`.
-        public static var tdc5f6e9debdb: LocalizedMessage {
-            .init(key: "cliInterface.tdc5f6e9debdb", table: "CLIInterface", fallback: "目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。")
-        }
-        /// 未知目录操作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9a582e74d089`.
-        public static var t9a582e74d089: LocalizedMessage {
-            .init(key: "cliInterface.t9a582e74d089", table: "CLIInterface", fallback: "未知目录操作。")
-        }
-        /// 找不到指定的 Java 版本条目。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t33604425d94f`.
-        public static var t33604425d94f: LocalizedMessage {
-            .init(key: "cliInterface.t33604425d94f", table: "CLIInterface", fallback: "找不到指定的 Java 版本条目。")
-        }
-        /// 未知 Java 操作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tab6287c24a41`.
-        public static var tab6287c24a41: LocalizedMessage {
-            .init(key: "cliInterface.tab6287c24a41", table: "CLIInterface", fallback: "未知 Java 操作。")
-        }
-        /// Microsoft 登录通过浏览器授权，无需密码。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc6b87186027e`.
-        public static var tc6b87186027e: LocalizedMessage {
-            .init(key: "cliInterface.tc6b87186027e", table: "CLIInterface", fallback: "Microsoft 登录通过浏览器授权，无需密码。")
-        }
-        /// 外置登录需要 --password-stdin。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb34236db1721`.
-        public static var tb34236db1721: LocalizedMessage {
-            .init(key: "cliInterface.tb34236db1721", table: "CLIInterface", fallback: "外置登录需要 --password-stdin。")
-        }
-        /// 请使用 --stdin 从标准输入读取 API Key。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t05b618061083`.
-        public static var t05b618061083: LocalizedMessage {
-            .init(key: "cliInterface.t05b618061083", table: "CLIInterface", fallback: "请使用 --stdin 从标准输入读取 API Key。")
-        }
-        /// 未知账户操作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tfffe65605bf6`.
-        public static var tfffe65605bf6: LocalizedMessage {
-            .init(key: "cliInterface.tfffe65605bf6", table: "CLIInterface", fallback: "未知账户操作。")
-        }
-        /// 列出账户，不显示凭据。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t347c8e743183`.
-        public static var t347c8e743183: LocalizedMessage {
-            .init(key: "cliInterface.t347c8e743183", table: "CLIInterface", fallback: "列出账户，不显示凭据。")
-        }
-        /// 查询当前账户 ID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t60065624116e`.
-        public static var t60065624116e: LocalizedMessage {
-            .init(key: "cliInterface.t60065624116e", table: "CLIInterface", fallback: "查询当前账户 ID。")
-        }
-        /// 查询账户详情。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t29349e23e1f2`.
-        public static var t29349e23e1f2: LocalizedMessage {
-            .init(key: "cliInterface.t29349e23e1f2", table: "CLIInterface", fallback: "查询账户详情。")
-        }
-        /// 添加或复用离线账户。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t5e3954fd00e4`.
-        public static var t5e3954fd00e4: LocalizedMessage {
-            .init(key: "cliInterface.t5e3954fd00e4", table: "CLIInterface", fallback: "添加或复用离线账户。")
-        }
-        /// 保留当前选中的账户。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t4fbd66e4df1d`.
-        public static var t4fbd66e4df1d: LocalizedMessage {
-            .init(key: "cliInterface.t4fbd66e4df1d", table: "CLIInterface", fallback: "保留当前选中的账户。")
-        }
-        /// 选择当前使用的账户。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta88c8f0fa07b`.
-        public static var ta88c8f0fa07b: LocalizedMessage {
-            .init(key: "cliInterface.ta88c8f0fa07b", table: "CLIInterface", fallback: "选择当前使用的账户。")
-        }
-        /// 刷新已保存账户的凭据。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te68622e3a4c1`.
-        public static var te68622e3a4c1: LocalizedMessage {
-            .init(key: "cliInterface.te68622e3a4c1", table: "CLIInterface", fallback: "刷新已保存账户的凭据。")
-        }
-        /// 移除账户及其本地凭据。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t222e7542a935`.
-        public static var t222e7542a935: LocalizedMessage {
-            .init(key: "cliInterface.t222e7542a935", table: "CLIInterface", fallback: "移除账户及其本地凭据。")
-        }
-        /// 注销外置登录凭据并移除账户。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9de45ca5dfe9`.
-        public static var t9de45ca5dfe9: LocalizedMessage {
-            .init(key: "cliInterface.t9de45ca5dfe9", table: "CLIInterface", fallback: "注销外置登录凭据并移除账户。")
-        }
-        /// 开始分步完成的 Microsoft 或外置登录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t5e3d504d2f33`.
-        public static var t5e3d504d2f33: LocalizedMessage {
-            .init(key: "cliInterface.t5e3d504d2f33", table: "CLIInterface", fallback: "开始分步完成的 Microsoft 或外置登录。")
-        }
-        /// 登录服务类型。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t35f41c8dfeb7`.
-        public static var t35f41c8dfeb7: LocalizedMessage {
-            .init(key: "cliInterface.t35f41c8dfeb7", table: "CLIInterface", fallback: "登录服务类型。")
-        }
-        /// 需要重新登录的已有账户。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t06b9c339e88c`.
-        public static var t06b9c339e88c: LocalizedMessage {
-            .init(key: "cliInterface.t06b9c339e88c", table: "CLIInterface", fallback: "需要重新登录的已有账户。")
-        }
-        /// 外置登录服务器。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tda3d5eaa9c6b`.
-        public static var tda3d5eaa9c6b: LocalizedMessage {
-            .init(key: "cliInterface.tda3d5eaa9c6b", table: "CLIInterface", fallback: "外置登录服务器。")
-        }
-        /// 外置登录的用户名或邮箱。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t598bd6abd203`.
-        public static var t598bd6abd203: LocalizedMessage {
-            .init(key: "cliInterface.t598bd6abd203", table: "CLIInterface", fallback: "外置登录的用户名或邮箱。")
-        }
-        /// 从标准输入读取密码。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tae550ce2501b`.
-        public static var tae550ce2501b: LocalizedMessage {
-            .init(key: "cliInterface.tae550ce2501b", table: "CLIInterface", fallback: "从标准输入读取密码。")
-        }
-        /// 等待授权完成并保存所选角色。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td905be5334b1`.
-        public static var td905be5334b1: LocalizedMessage {
-            .init(key: "cliInterface.td905be5334b1", table: "CLIInterface", fallback: "等待授权完成并保存所选角色。")
-        }
-        /// login start 返回的外置登录角色 ID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.taa3d1bfbf09d`.
-        public static var taa3d1bfbf09d: LocalizedMessage {
-            .init(key: "cliInterface.taa3d1bfbf09d", table: "CLIInterface", fallback: "login start 返回的外置登录角色 ID。")
-        }
-        /// 取消待完成的登录流程。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t7bac79515ad0`.
-        public static var t7bac79515ad0: LocalizedMessage {
-            .init(key: "cliInterface.t7bac79515ad0", table: "CLIInterface", fallback: "取消待完成的登录流程。")
-        }
-        /// 检查 CurseForge API Key 是否可用。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t075c8839f62a`.
-        public static var t075c8839f62a: LocalizedMessage {
-            .init(key: "cliInterface.t075c8839f62a", table: "CLIInterface", fallback: "检查 CurseForge API Key 是否可用。")
-        }
-        /// 从标准输入设置 CurseForge API Key。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb513f67f0661`.
-        public static var tb513f67f0661: LocalizedMessage {
-            .init(key: "cliInterface.tb513f67f0661", table: "CLIInterface", fallback: "从标准输入设置 CurseForge API Key。")
-        }
-        /// 从标准输入读取 API Key。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tbee9e14cb9c8`.
-        public static var tbee9e14cb9c8: LocalizedMessage {
-            .init(key: "cliInterface.tbee9e14cb9c8", table: "CLIInterface", fallback: "从标准输入读取 API Key。")
-        }
-        /// 移除自定义 CurseForge API Key。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb412547b5de8`.
-        public static var tb412547b5de8: LocalizedMessage {
-            .init(key: "cliInterface.tb412547b5de8", table: "CLIInterface", fallback: "移除自定义 CurseForge API Key。")
-        }
-        /// 平台服务凭据
-        ///
-        /// Resource: `CLIInterface.cliInterface.td9b80535359b`.
-        public static var td9b80535359b: LocalizedMessage {
-            .init(key: "cliInterface.td9b80535359b", table: "CLIInterface", fallback: "平台服务凭据")
-        }
-        /// Microsoft 与外置登录
-        ///
-        /// Resource: `CLIInterface.cliInterface.t463334485f56`.
-        public static var t463334485f56: LocalizedMessage {
-            .init(key: "cliInterface.t463334485f56", table: "CLIInterface", fallback: "Microsoft 与外置登录")
+        /// 账户已移除，但凭据或外观数据清理失败。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountCleanupFailed`.
+        public static var accountCleanupFailed: LocalizedMessage {
+            .init(key: "CLIInterface.accountCleanupFailed", table: "CLIInterface", fallback: "账户已移除，但凭据或外观数据清理失败。")
         }
         /// 账户管理与登录
         ///
-        /// Resource: `CLIInterface.cliInterface.t52f4179738c0`.
-        public static var t52f4179738c0: LocalizedMessage {
-            .init(key: "cliInterface.t52f4179738c0", table: "CLIInterface", fallback: "账户管理与登录")
-        }
-        /// 账户的登录服务类型不匹配。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t646f7af4624c`.
-        public static var t646f7af4624c: LocalizedMessage {
-            .init(key: "cliInterface.t646f7af4624c", table: "CLIInterface", fallback: "账户的登录服务类型不匹配。")
-        }
-        /// 登录服务器或登录身份已发生变化。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t3a1a6178fec9`.
-        public static var t3a1a6178fec9: LocalizedMessage {
-            .init(key: "cliInterface.t3a1a6178fec9", table: "CLIInterface", fallback: "登录服务器或登录身份已发生变化。")
-        }
-        /// 请在同一数据目录中完成登录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t000e28c5735c`.
-        public static var t000e28c5735c: LocalizedMessage {
-            .init(key: "cliInterface.t000e28c5735c", table: "CLIInterface", fallback: "请在同一数据目录中完成登录。")
-        }
-        /// 登录流程已过期，请重新开始。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf873deb7e49d`.
-        public static var tf873deb7e49d: LocalizedMessage {
-            .init(key: "cliInterface.tf873deb7e49d", table: "CLIInterface", fallback: "登录流程已过期，请重新开始。")
-        }
-        /// 请选择 login start 返回的角色。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta4020b2f41c3`.
-        public static var ta4020b2f41c3: LocalizedMessage {
-            .init(key: "cliInterface.ta4020b2f41c3", table: "CLIInterface", fallback: "请选择 login start 返回的角色。")
-        }
-        /// 此登录流程已选择另一角色。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0ce4aa2e33ec`.
-        public static var t0ce4aa2e33ec: LocalizedMessage {
-            .init(key: "cliInterface.t0ce4aa2e33ec", table: "CLIInterface", fallback: "此登录流程已选择另一角色。")
-        }
-        /// 登录流程无效，请重新开始。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t6176d717fcb9`.
-        public static var t6176d717fcb9: LocalizedMessage {
-            .init(key: "cliInterface.t6176d717fcb9", table: "CLIInterface", fallback: "登录流程无效，请重新开始。")
-        }
-        /// 找不到账户。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te9b1e0403a1e`.
-        public static var te9b1e0403a1e: LocalizedMessage {
-            .init(key: "cliInterface.te9b1e0403a1e", table: "CLIInterface", fallback: "找不到账户。")
-        }
-        /// 账户已被移除或替换。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb0b930baf0cc`.
-        public static var tb0b930baf0cc: LocalizedMessage {
-            .init(key: "cliInterface.tb0b930baf0cc", table: "CLIInterface", fallback: "账户已被移除或替换。")
+        /// Resource: `CLIInterface.CLIInterface.accountCommands`.
+        public static var accountCommands: LocalizedMessage {
+            .init(key: "CLIInterface.accountCommands", table: "CLIInterface", fallback: "账户管理与登录")
         }
         /// 账户身份已发生变化。
         ///
-        /// Resource: `CLIInterface.cliInterface.t9b5e04245098`.
-        public static var t9b5e04245098: LocalizedMessage {
-            .init(key: "cliInterface.t9b5e04245098", table: "CLIInterface", fallback: "账户身份已发生变化。")
+        /// Resource: `CLIInterface.CLIInterface.accountIdentityChanged`.
+        public static var accountIdentityChanged: LocalizedMessage {
+            .init(key: "CLIInterface.accountIdentityChanged", table: "CLIInterface", fallback: "账户身份已发生变化。")
+        }
+        /// 列出账户，不显示凭据。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountListHelp`.
+        public static var accountListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountListHelp", table: "CLIInterface", fallback: "列出账户，不显示凭据。")
+        }
+        /// 取消待完成的登录流程。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountLoginCancelHelp`.
+        public static var accountLoginCancelHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountLoginCancelHelp", table: "CLIInterface", fallback: "取消待完成的登录流程。")
+        }
+        /// Microsoft 与外置登录
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountLoginCommands`.
+        public static var accountLoginCommands: LocalizedMessage {
+            .init(key: "CLIInterface.accountLoginCommands", table: "CLIInterface", fallback: "Microsoft 与外置登录")
+        }
+        /// 等待授权完成并保存所选角色。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountLoginCompleteHelp`.
+        public static var accountLoginCompleteHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountLoginCompleteHelp", table: "CLIInterface", fallback: "等待授权完成并保存所选角色。")
+        }
+        /// 开始分步完成的 Microsoft 或外置登录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountLoginStartHelp`.
+        public static var accountLoginStartHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountLoginStartHelp", table: "CLIInterface", fallback: "开始分步完成的 Microsoft 或外置登录。")
+        }
+        /// 注销外置登录凭据并移除账户。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountLogoutHelp`.
+        public static var accountLogoutHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountLogoutHelp", table: "CLIInterface", fallback: "注销外置登录凭据并移除账户。")
+        }
+        /// 找不到账户。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountNotFound`.
+        public static var accountNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.accountNotFound", table: "CLIInterface", fallback: "找不到账户。")
+        }
+        /// 添加或复用离线账户。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountOfflineHelp`.
+        public static var accountOfflineHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountOfflineHelp", table: "CLIInterface", fallback: "添加或复用离线账户。")
+        }
+        /// 账户的登录服务类型不匹配。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountProviderMismatch`.
+        public static var accountProviderMismatch: LocalizedMessage {
+            .init(key: "CLIInterface.accountProviderMismatch", table: "CLIInterface", fallback: "账户的登录服务类型不匹配。")
+        }
+        /// 刷新已保存账户的凭据。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountRefreshHelp`.
+        public static var accountRefreshHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountRefreshHelp", table: "CLIInterface", fallback: "刷新已保存账户的凭据。")
+        }
+        /// 移除账户及其本地凭据。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.accountRemoveHelp`.
+        public static var accountRemoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountRemoveHelp", table: "CLIInterface", fallback: "移除账户及其本地凭据。")
         }
         /// 账户已被移除。
         ///
-        /// Resource: `CLIInterface.cliInterface.td9ca8e4b44c6`.
-        public static var td9ca8e4b44c6: LocalizedMessage {
-            .init(key: "cliInterface.td9ca8e4b44c6", table: "CLIInterface", fallback: "账户已被移除。")
+        /// Resource: `CLIInterface.CLIInterface.accountRemoved`.
+        public static var accountRemoved: LocalizedMessage {
+            .init(key: "CLIInterface.accountRemoved", table: "CLIInterface", fallback: "账户已被移除。")
         }
-        /// 账户已移除，但凭据或外观数据清理失败。
+        /// 账户已被移除或替换。
         ///
-        /// Resource: `CLIInterface.cliInterface.tf4c5f25a3baf`.
-        public static var tf4c5f25a3baf: LocalizedMessage {
-            .init(key: "cliInterface.tf4c5f25a3baf", table: "CLIInterface", fallback: "账户已移除，但凭据或外观数据清理失败。")
+        /// Resource: `CLIInterface.CLIInterface.accountRemovedOrReplaced`.
+        public static var accountRemovedOrReplaced: LocalizedMessage {
+            .init(key: "CLIInterface.accountRemovedOrReplaced", table: "CLIInterface", fallback: "账户已被移除或替换。")
         }
-        /// 请先安装此实例，再启动游戏。
+        /// 选择当前使用的账户。
         ///
-        /// Resource: `CLIInterface.cliInterface.t1914c0297b34`.
-        public static var t1914c0297b34: LocalizedMessage {
-            .init(key: "cliInterface.t1914c0297b34", table: "CLIInterface", fallback: "请先安装此实例，再启动游戏。")
+        /// Resource: `CLIInterface.CLIInterface.accountSelectHelp`.
+        public static var accountSelectHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountSelectHelp", table: "CLIInterface", fallback: "选择当前使用的账户。")
         }
-        /// 请选择账户，或通过 --account 指定账户。
+        /// 查询当前账户 ID。
         ///
-        /// Resource: `CLIInterface.cliInterface.t46ce3acb0041`.
-        public static var t46ce3acb0041: LocalizedMessage {
-            .init(key: "cliInterface.t46ce3acb0041", table: "CLIInterface", fallback: "请选择账户，或通过 --account 指定账户。")
+        /// Resource: `CLIInterface.CLIInterface.accountSelectedHelp`.
+        public static var accountSelectedHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountSelectedHelp", table: "CLIInterface", fallback: "查询当前账户 ID。")
         }
-        /// 检查实例启动配置，不启动游戏。
+        /// 平台服务凭据
         ///
-        /// Resource: `CLIInterface.cliInterface.tbd6842eb578e`.
-        public static var tbd6842eb578e: LocalizedMessage {
-            .init(key: "cliInterface.tbd6842eb578e", table: "CLIInterface", fallback: "检查实例启动配置，不启动游戏。")
+        /// Resource: `CLIInterface.CLIInterface.accountServiceKeyCommands`.
+        public static var accountServiceKeyCommands: LocalizedMessage {
+            .init(key: "CLIInterface.accountServiceKeyCommands", table: "CLIInterface", fallback: "平台服务凭据")
         }
-        /// 账户 UUID，默认使用当前账户。
+        /// 查询账户详情。
         ///
-        /// Resource: `CLIInterface.cliInterface.tc7d16a18216b`.
-        public static var tc7d16a18216b: LocalizedMessage {
-            .init(key: "cliInterface.tc7d16a18216b", table: "CLIInterface", fallback: "账户 UUID，默认使用当前账户。")
-        }
-        /// 用于快速游玩的世界文件夹。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t7650c678063f`.
-        public static var t7650c678063f: LocalizedMessage {
-            .init(key: "cliInterface.t7650c678063f", table: "CLIInterface", fallback: "用于快速游玩的世界文件夹。")
-        }
-        /// 启动游戏，监控接管后返回。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb27f0522d834`.
-        public static var tb27f0522d834: LocalizedMessage {
-            .init(key: "cliInterface.tb27f0522d834", table: "CLIInterface", fallback: "启动游戏，监控接管后返回。")
-        }
-        /// 列出游戏会话。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t75aa2ae95dbf`.
-        public static var t75aa2ae95dbf: LocalizedMessage {
-            .init(key: "cliInterface.t75aa2ae95dbf", table: "CLIInterface", fallback: "列出游戏会话。")
-        }
-        /// 按实例 UUID 筛选。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t397da266f14b`.
-        public static var t397da266f14b: LocalizedMessage {
-            .init(key: "cliInterface.t397da266f14b", table: "CLIInterface", fallback: "按实例 UUID 筛选。")
-        }
-        /// 按实例名称筛选。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1dc55f419cc4`.
-        public static var t1dc55f419cc4: LocalizedMessage {
-            .init(key: "cliInterface.t1dc55f419cc4", table: "CLIInterface", fallback: "按实例名称筛选。")
-        }
-        /// 仅显示存在问题的会话。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb23f885979d4`.
-        public static var tb23f885979d4: LocalizedMessage {
-            .init(key: "cliInterface.tb23f885979d4", table: "CLIInterface", fallback: "仅显示存在问题的会话。")
-        }
-        /// 查询游戏会话详情。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1c27c266a051`.
-        public static var t1c27c266a051: LocalizedMessage {
-            .init(key: "cliInterface.t1c27c266a051", table: "CLIInterface", fallback: "查询游戏会话详情。")
-        }
-        /// 实例 ID 和会话 ID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t7de41631eebc`.
-        public static var t7de41631eebc: LocalizedMessage {
-            .init(key: "cliInterface.t7de41631eebc", table: "CLIInterface", fallback: "实例 ID 和会话 ID。")
-        }
-        /// 等待监控记录游戏退出。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta977bdb2d5a4`.
-        public static var ta977bdb2d5a4: LocalizedMessage {
-            .init(key: "cliInterface.ta977bdb2d5a4", table: "CLIInterface", fallback: "等待监控记录游戏退出。")
-        }
-        /// 请求游戏正常退出。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t6bbce4221048`.
-        public static var t6bbce4221048: LocalizedMessage {
-            .init(key: "cliInterface.t6bbce4221048", table: "CLIInterface", fallback: "请求游戏正常退出。")
-        }
-        /// 强制停止游戏进程。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t886efc49f631`.
-        public static var t886efc49f631: LocalizedMessage {
-            .init(key: "cliInterface.t886efc49f631", table: "CLIInterface", fallback: "强制停止游戏进程。")
-        }
-        /// 读取或持续跟随会话日志。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t03a5e858530a`.
-        public static var t03a5e858530a: LocalizedMessage {
-            .init(key: "cliInterface.t03a5e858530a", table: "CLIInterface", fallback: "读取或持续跟随会话日志。")
-        }
-        /// 跟随日志直到会话结束，使用 text 或 ndjson 格式。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t61dffc7832ee`.
-        public static var t61dffc7832ee: LocalizedMessage {
-            .init(key: "cliInterface.t61dffc7832ee", table: "CLIInterface", fallback: "跟随日志直到会话结束，使用 text 或 ndjson 格式。")
-        }
-        /// 日志来源。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tdae2c9ca76ca`.
-        public static var tdae2c9ca76ca: LocalizedMessage {
-            .init(key: "cliInterface.tdae2c9ca76ca", table: "CLIInterface", fallback: "日志来源。")
-        }
-        /// 最多读取的末尾行数，默认 200。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t602d83ce6e9a`.
-        public static var t602d83ce6e9a: LocalizedMessage {
-            .init(key: "cliInterface.t602d83ce6e9a", table: "CLIInterface", fallback: "最多读取的末尾行数，默认 200。")
-        }
-        /// 分析已记录的启动与游戏诊断信息。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t5cf1cb615468`.
-        public static var t5cf1cb615468: LocalizedMessage {
-            .init(key: "cliInterface.t5cf1cb615468", table: "CLIInterface", fallback: "分析已记录的启动与游戏诊断信息。")
-        }
-        /// 导出脱敏后的诊断包。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t33ed51c9688b`.
-        public static var t33ed51c9688b: LocalizedMessage {
-            .init(key: "cliInterface.t33ed51c9688b", table: "CLIInterface", fallback: "导出脱敏后的诊断包。")
-        }
-        /// 实例 ID、会话 ID 和文件路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t4e51dca76f06`.
-        public static var t4e51dca76f06: LocalizedMessage {
-            .init(key: "cliInterface.t4e51dca76f06", table: "CLIInterface", fallback: "实例 ID、会话 ID 和文件路径。")
-        }
-        /// 游戏会话、日志与诊断
-        ///
-        /// Resource: `CLIInterface.cliInterface.t03b417601a2c`.
-        public static var t03b417601a2c: LocalizedMessage {
-            .init(key: "cliInterface.t03b417601a2c", table: "CLIInterface", fallback: "游戏会话、日志与诊断")
-        }
-        /// 启动检查与游戏启动
-        ///
-        /// Resource: `CLIInterface.cliInterface.t91806a3a3cd3`.
-        public static var t91806a3a3cd3: LocalizedMessage {
-            .init(key: "cliInterface.t91806a3a3cd3", table: "CLIInterface", fallback: "启动检查与游戏启动")
-        }
-        /// 游戏未正常退出。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tadc93d3bb50c`.
-        public static var tadc93d3bb50c: LocalizedMessage {
-            .init(key: "cliInterface.tadc93d3bb50c", table: "CLIInterface", fallback: "游戏未正常退出。")
-        }
-        /// --follow 需要使用 --output ndjson 或 text。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t28723ddb22d1`.
-        public static var t28723ddb22d1: LocalizedMessage {
-            .init(key: "cliInterface.t28723ddb22d1", table: "CLIInterface", fallback: "--follow 需要使用 --output ndjson 或 text。")
-        }
-        /// --lines 必须介于 1 和 10000 之间。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tafd6142d30ec`.
-        public static var tafd6142d30ec: LocalizedMessage {
-            .init(key: "cliInterface.tafd6142d30ec", table: "CLIInterface", fallback: "--lines 必须介于 1 和 10000 之间。")
-        }
-        /// 监控进程已不可用。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t043b9f54ca4c`.
-        public static var t043b9f54ca4c: LocalizedMessage {
-            .init(key: "cliInterface.t043b9f54ca4c", table: "CLIInterface", fallback: "监控进程已不可用。")
-        }
-        /// 未知会话操作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te5e3bed93ff1`.
-        public static var te5e3bed93ff1: LocalizedMessage {
-            .init(key: "cliInterface.te5e3bed93ff1", table: "CLIInterface", fallback: "未知会话操作。")
-        }
-        /// 搜索 Modrinth 或 CurseForge。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9585ae182d36`.
-        public static var t9585ae182d36: LocalizedMessage {
-            .init(key: "cliInterface.t9585ae182d36", table: "CLIInterface", fallback: "搜索 Modrinth 或 CurseForge。")
-        }
-        /// 内容平台。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t54d62b370b12`.
-        public static var t54d62b370b12: LocalizedMessage {
-            .init(key: "cliInterface.t54d62b370b12", table: "CLIInterface", fallback: "内容平台。")
-        }
-        /// 项目类型。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9c7c66e1cb97`.
-        public static var t9c7c66e1cb97: LocalizedMessage {
-            .init(key: "cliInterface.t9c7c66e1cb97", table: "CLIInterface", fallback: "项目类型。")
-        }
-        /// 按 Minecraft 版本筛选。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t97bb290079c0`.
-        public static var t97bb290079c0: LocalizedMessage {
-            .init(key: "cliInterface.t97bb290079c0", table: "CLIInterface", fallback: "按 Minecraft 版本筛选。")
-        }
-        /// 按加载器筛选。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t6cd3985335f5`.
-        public static var t6cd3985335f5: LocalizedMessage {
-            .init(key: "cliInterface.t6cd3985335f5", table: "CLIInterface", fallback: "按加载器筛选。")
-        }
-        /// 内容平台的分类。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tba245c5c5887`.
-        public static var tba245c5c5887: LocalizedMessage {
-            .init(key: "cliInterface.tba245c5c5887", table: "CLIInterface", fallback: "内容平台的分类。")
-        }
-        /// 排序方式。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tffbd359b4372`.
-        public static var tffbd359b4372: LocalizedMessage {
-            .init(key: "cliInterface.tffbd359b4372", table: "CLIInterface", fallback: "排序方式。")
-        }
-        /// 查询项目描述及元数据。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tef252f7e18ac`.
-        public static var tef252f7e18ac: LocalizedMessage {
-            .init(key: "cliInterface.tef252f7e18ac", table: "CLIInterface", fallback: "查询项目描述及元数据。")
-        }
-        /// 列出项目已发布的版本。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t2015ae2ed51d`.
-        public static var t2015ae2ed51d: LocalizedMessage {
-            .init(key: "cliInterface.t2015ae2ed51d", table: "CLIInterface", fallback: "列出项目已发布的版本。")
-        }
-        /// 列出内容平台的分类。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t96729fb469a0`.
-        public static var t96729fb469a0: LocalizedMessage {
-            .init(key: "cliInterface.t96729fb469a0", table: "CLIInterface", fallback: "列出内容平台的分类。")
-        }
-        /// 列出已安装的模组、资源包或光影。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t31b908b482c0`.
-        public static var t31b908b482c0: LocalizedMessage {
-            .init(key: "cliInterface.t31b908b482c0", table: "CLIInterface", fallback: "列出已安装的模组、资源包或光影。")
-        }
-        /// 内容类型。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1615f94ae45c`.
-        public static var t1615f94ae45c: LocalizedMessage {
-            .init(key: "cliInterface.t1615f94ae45c", table: "CLIInterface", fallback: "内容类型。")
-        }
-        /// 导入本地内容文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0adabdb41fc9`.
-        public static var t0adabdb41fc9: LocalizedMessage {
-            .init(key: "cliInterface.t0adabdb41fc9", table: "CLIInterface", fallback: "导入本地内容文件。")
-        }
-        /// 实例 ID 和文件路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1221c915a9ab`.
-        public static var t1221c915a9ab: LocalizedMessage {
-            .init(key: "cliInterface.t1221c915a9ab", table: "CLIInterface", fallback: "实例 ID 和文件路径。")
-        }
-        /// 安装兼容的项目及其必需依赖。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t6f5c9d328e9f`.
-        public static var t6f5c9d328e9f: LocalizedMessage {
-            .init(key: "cliInterface.t6f5c9d328e9f", table: "CLIInterface", fallback: "安装兼容的项目及其必需依赖。")
-        }
-        /// 指定平台版本 ID，默认选择最新稳定版。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t3adc46ef11f2`.
-        public static var t3adc46ef11f2: LocalizedMessage {
-            .init(key: "cliInterface.t3adc46ef11f2", table: "CLIInterface", fallback: "指定平台版本 ID，默认选择最新稳定版。")
-        }
-        /// 手动下载的 CurseForge 文件，格式为 fileID=path。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t6937c4e2d52d`.
-        public static var t6937c4e2d52d: LocalizedMessage {
-            .init(key: "cliInterface.t6937c4e2d52d", table: "CLIInterface", fallback: "手动下载的 CurseForge 文件，格式为 fileID=path。")
-        }
-        /// 实例 ID 和项目 ID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc9423b403749`.
-        public static var tc9423b403749: LocalizedMessage {
-            .init(key: "cliInterface.tc9423b403749", table: "CLIInterface", fallback: "实例 ID 和项目 ID。")
-        }
-        /// 启用所选内容。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tcb22bf7cdc22`.
-        public static var tcb22bf7cdc22: LocalizedMessage {
-            .init(key: "cliInterface.tcb22bf7cdc22", table: "CLIInterface", fallback: "启用所选内容。")
-        }
-        /// 已安装文件的完整名称，可重复传入以选择多个文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0571cf34f7e5`.
-        public static var t0571cf34f7e5: LocalizedMessage {
-            .init(key: "cliInterface.t0571cf34f7e5", table: "CLIInterface", fallback: "已安装文件的完整名称，可重复传入以选择多个文件。")
+        /// Resource: `CLIInterface.CLIInterface.accountShowHelp`.
+        public static var accountShowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.accountShowHelp", table: "CLIInterface", fallback: "查询账户详情。")
         }
         /// 选择该类型的全部文件。
         ///
-        /// Resource: `CLIInterface.cliInterface.t7a83bde60a43`.
-        public static var t7a83bde60a43: LocalizedMessage {
-            .init(key: "cliInterface.t7a83bde60a43", table: "CLIInterface", fallback: "选择该类型的全部文件。")
+        /// Resource: `CLIInterface.CLIInterface.allContentFilesHelp`.
+        public static var allContentFilesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.allContentFilesHelp", table: "CLIInterface", fallback: "选择该类型的全部文件。")
         }
-        /// 禁用所选内容。
+        /// 返回全部结果。
         ///
-        /// Resource: `CLIInterface.cliInterface.t835a12065b6b`.
-        public static var t835a12065b6b: LocalizedMessage {
-            .init(key: "cliInterface.t835a12065b6b", table: "CLIInterface", fallback: "禁用所选内容。")
+        /// Resource: `CLIInterface.CLIInterface.allResultsHelp`.
+        public static var allResultsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.allResultsHelp", table: "CLIInterface", fallback: "返回全部结果。")
         }
-        /// 将所选内容移到废纸篓。
+        /// 有多个实例使用此名称。
         ///
-        /// Resource: `CLIInterface.cliInterface.tbddc7b97257e`.
-        public static var tbddc7b97257e: LocalizedMessage {
-            .init(key: "cliInterface.tbddc7b97257e", table: "CLIInterface", fallback: "将所选内容移到废纸篓。")
+        /// Resource: `CLIInterface.CLIInterface.ambiguousInstanceName`.
+        public static var ambiguousInstanceName: LocalizedMessage {
+            .init(key: "CLIInterface.ambiguousInstanceName", table: "CLIInterface", fallback: "有多个实例使用此名称。")
         }
-        /// 检查已安装内容的兼容更新。
+        /// 从标准输入读取 API Key。
         ///
-        /// Resource: `CLIInterface.cliInterface.t2648b2127df6`.
-        public static var t2648b2127df6: LocalizedMessage {
-            .init(key: "cliInterface.t2648b2127df6", table: "CLIInterface", fallback: "检查已安装内容的兼容更新。")
+        /// Resource: `CLIInterface.CLIInterface.apiKeyStdinHelp`.
+        public static var apiKeyStdinHelp: LocalizedMessage {
+            .init(key: "CLIInterface.apiKeyStdinHelp", table: "CLIInterface", fallback: "从标准输入读取 API Key。")
         }
-        /// 更新所选内容及依赖。
+        /// 请使用 --stdin 从标准输入读取 API Key。
         ///
-        /// Resource: `CLIInterface.cliInterface.t41cfb5271f5e`.
-        public static var t41cfb5271f5e: LocalizedMessage {
-            .init(key: "cliInterface.t41cfb5271f5e", table: "CLIInterface", fallback: "更新所选内容及依赖。")
+        /// Resource: `CLIInterface.CLIInterface.apiKeyStdinRequired`.
+        public static var apiKeyStdinRequired: LocalizedMessage {
+            .init(key: "CLIInterface.apiKeyStdinRequired", table: "CLIInterface", fallback: "请使用 --stdin 从标准输入读取 API Key。")
         }
-        /// 更新该类型的全部文件。
+        /// 应用信息与语言设置
         ///
-        /// Resource: `CLIInterface.cliInterface.tf53d1d120842`.
-        public static var tf53d1d120842: LocalizedMessage {
-            .init(key: "cliInterface.tf53d1d120842", table: "CLIInterface", fallback: "更新该类型的全部文件。")
+        /// Resource: `CLIInterface.CLIInterface.appCommands`.
+        public static var appCommands: LocalizedMessage {
+            .init(key: "CLIInterface.appCommands", table: "CLIInterface", fallback: "应用信息与语言设置")
         }
-        /// 列出实例中的世界。
+        /// 应用界面语言
         ///
-        /// Resource: `CLIInterface.cliInterface.t0182348543ec`.
-        public static var t0182348543ec: LocalizedMessage {
-            .init(key: "cliInterface.t0182348543ec", table: "CLIInterface", fallback: "列出实例中的世界。")
+        /// Resource: `CLIInterface.CLIInterface.appLanguageCommands`.
+        public static var appLanguageCommands: LocalizedMessage {
+            .init(key: "CLIInterface.appLanguageCommands", table: "CLIInterface", fallback: "应用界面语言")
         }
-        /// 查询世界详情。
+        /// 读取应用的界面语言。
         ///
-        /// Resource: `CLIInterface.cliInterface.tc62375cad94f`.
-        public static var tc62375cad94f: LocalizedMessage {
-            .init(key: "cliInterface.tc62375cad94f", table: "CLIInterface", fallback: "查询世界详情。")
+        /// Resource: `CLIInterface.CLIInterface.appLanguageGetHelp`.
+        public static var appLanguageGetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.appLanguageGetHelp", table: "CLIInterface", fallback: "读取应用的界面语言。")
         }
-        /// 实例 ID 和世界文件夹。
+        /// 设置应用语言，重启后生效。
         ///
-        /// Resource: `CLIInterface.cliInterface.t3cc465fee86f`.
-        public static var t3cc465fee86f: LocalizedMessage {
-            .init(key: "cliInterface.t3cc465fee86f", table: "CLIInterface", fallback: "实例 ID 和世界文件夹。")
+        /// Resource: `CLIInterface.CLIInterface.appLanguageSetHelp`.
+        public static var appLanguageSetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.appLanguageSetHelp", table: "CLIInterface", fallback: "设置应用语言，重启后生效。")
         }
-        /// 导入世界归档或目录。
+        /// 显示应用及命令行工具的版本和路径。
         ///
-        /// Resource: `CLIInterface.cliInterface.td02c3799e5f3`.
-        public static var td02c3799e5f3: LocalizedMessage {
-            .init(key: "cliInterface.td02c3799e5f3", table: "CLIInterface", fallback: "导入世界归档或目录。")
+        /// Resource: `CLIInterface.CLIInterface.appVersionHelp`.
+        public static var appVersionHelp: LocalizedMessage {
+            .init(key: "CLIInterface.appVersionHelp", table: "CLIInterface", fallback: "显示应用及命令行工具的版本和路径。")
         }
-        /// 导出世界归档。
+        /// 请使用 true 或 false。
         ///
-        /// Resource: `CLIInterface.cliInterface.t79b53bfe32d0`.
-        public static var t79b53bfe32d0: LocalizedMessage {
-            .init(key: "cliInterface.t79b53bfe32d0", table: "CLIInterface", fallback: "导出世界归档。")
+        /// Resource: `CLIInterface.CLIInterface.booleanValueRequired`.
+        public static var booleanValueRequired: LocalizedMessage {
+            .init(key: "CLIInterface.booleanValueRequired", table: "CLIInterface", fallback: "请使用 true 或 false。")
         }
-        /// 实例 ID、世界文件夹和文件路径。
+        /// 找不到应用内的命令行工具。
         ///
-        /// Resource: `CLIInterface.cliInterface.tbb4df9d7ac3a`.
-        public static var tbb4df9d7ac3a: LocalizedMessage {
-            .init(key: "cliInterface.tbb4df9d7ac3a", table: "CLIInterface", fallback: "实例 ID、世界文件夹和文件路径。")
+        /// Resource: `CLIInterface.CLIInterface.bundledCliNotFound`.
+        public static var bundledCliNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.bundledCliNotFound", table: "CLIInterface", fallback: "找不到应用内的命令行工具。")
         }
-        /// 将世界移到废纸篓。
+        /// 列出内容平台的分类。
         ///
-        /// Resource: `CLIInterface.cliInterface.t1f3b65ed9678`.
-        public static var t1f3b65ed9678: LocalizedMessage {
-            .init(key: "cliInterface.t1f3b65ed9678", table: "CLIInterface", fallback: "将世界移到废纸篓。")
+        /// Resource: `CLIInterface.CLIInterface.catalogCategoriesHelp`.
+        public static var catalogCategoriesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.catalogCategoriesHelp", table: "CLIInterface", fallback: "列出内容平台的分类。")
         }
-        /// 备份世界。
+        /// 内容平台的分类。
         ///
-        /// Resource: `CLIInterface.cliInterface.t687aa81ce15b`.
-        public static var t687aa81ce15b: LocalizedMessage {
-            .init(key: "cliInterface.t687aa81ce15b", table: "CLIInterface", fallback: "备份世界。")
-        }
-        /// 可选的备份原因。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t243960f924a4`.
-        public static var t243960f924a4: LocalizedMessage {
-            .init(key: "cliInterface.t243960f924a4", table: "CLIInterface", fallback: "可选的备份原因。")
-        }
-        /// 列出世界备份。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t82358ac73619`.
-        public static var t82358ac73619: LocalizedMessage {
-            .init(key: "cliInterface.t82358ac73619", table: "CLIInterface", fallback: "列出世界备份。")
-        }
-        /// 恢复备份，覆盖已有世界时需要明确确认。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t5b12f1ab5a68`.
-        public static var t5b12f1ab5a68: LocalizedMessage {
-            .init(key: "cliInterface.t5b12f1ab5a68", table: "CLIInterface", fallback: "恢复备份，覆盖已有世界时需要明确确认。")
-        }
-        /// 覆盖已有世界。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td2c29dd5d868`.
-        public static var td2c29dd5d868: LocalizedMessage {
-            .init(key: "cliInterface.td2c29dd5d868", table: "CLIInterface", fallback: "覆盖已有世界。")
-        }
-        /// 实例 ID 和备份 ID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.teaf6d847cc14`.
-        public static var teaf6d847cc14: LocalizedMessage {
-            .init(key: "cliInterface.teaf6d847cc14", table: "CLIInterface", fallback: "实例 ID 和备份 ID。")
-        }
-        /// 将世界备份移到废纸篓。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t79d8f9c1b13b`.
-        public static var t79d8f9c1b13b: LocalizedMessage {
-            .init(key: "cliInterface.t79d8f9c1b13b", table: "CLIInterface", fallback: "将世界备份移到废纸篓。")
-        }
-        /// 列出世界的数据包。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t5baea7450859`.
-        public static var t5baea7450859: LocalizedMessage {
-            .init(key: "cliInterface.t5baea7450859", table: "CLIInterface", fallback: "列出世界的数据包。")
-        }
-        /// 实例 ID 和世界名称。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t3f8f11058c17`.
-        public static var t3f8f11058c17: LocalizedMessage {
-            .init(key: "cliInterface.t3f8f11058c17", table: "CLIInterface", fallback: "实例 ID 和世界名称。")
-        }
-        /// 按优先级从高到低查询数据包顺序。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8e719af86d09`.
-        public static var t8e719af86d09: LocalizedMessage {
-            .init(key: "cliInterface.t8e719af86d09", table: "CLIInterface", fallback: "按优先级从高到低查询数据包顺序。")
-        }
-        /// 替换完整的数据包优先级顺序。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc4ef4044f6a8`.
-        public static var tc4ef4044f6a8: LocalizedMessage {
-            .init(key: "cliInterface.tc4ef4044f6a8", table: "CLIInterface", fallback: "替换完整的数据包优先级顺序。")
-        }
-        /// 完整优先级列表，优先级最高的在前。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tcc64529d6ae6`.
-        public static var tcc64529d6ae6: LocalizedMessage {
-            .init(key: "cliInterface.tcc64529d6ae6", table: "CLIInterface", fallback: "完整优先级列表，优先级最高的在前。")
-        }
-        /// 将数据包导入世界。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td44435e60acc`.
-        public static var td44435e60acc: LocalizedMessage {
-            .init(key: "cliInterface.td44435e60acc", table: "CLIInterface", fallback: "将数据包导入世界。")
-        }
-        /// 实例 ID、世界名称和文件路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t027258d65380`.
-        public static var t027258d65380: LocalizedMessage {
-            .init(key: "cliInterface.t027258d65380", table: "CLIInterface", fallback: "实例 ID、世界名称和文件路径。")
-        }
-        /// 启用世界的数据包。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8c443e635faf`.
-        public static var t8c443e635faf: LocalizedMessage {
-            .init(key: "cliInterface.t8c443e635faf", table: "CLIInterface", fallback: "启用世界的数据包。")
-        }
-        /// 实例 ID、世界名称和数据包名称。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t25b74fe94bbb`.
-        public static var t25b74fe94bbb: LocalizedMessage {
-            .init(key: "cliInterface.t25b74fe94bbb", table: "CLIInterface", fallback: "实例 ID、世界名称和数据包名称。")
-        }
-        /// 禁用世界的数据包。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc7d244ea5a4c`.
-        public static var tc7d244ea5a4c: LocalizedMessage {
-            .init(key: "cliInterface.tc7d244ea5a4c", table: "CLIInterface", fallback: "禁用世界的数据包。")
-        }
-        /// 移除世界的数据包。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t08f738b1e5ca`.
-        public static var t08f738b1e5ca: LocalizedMessage {
-            .init(key: "cliInterface.t08f738b1e5ca", table: "CLIInterface", fallback: "移除世界的数据包。")
-        }
-        /// 搜索兼容的 Modrinth 数据包。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t64d56130fbdf`.
-        public static var t64d56130fbdf: LocalizedMessage {
-            .init(key: "cliInterface.t64d56130fbdf", table: "CLIInterface", fallback: "搜索兼容的 Modrinth 数据包。")
-        }
-        /// 实例 ID 和搜索关键词。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9abc5f05470e`.
-        public static var t9abc5f05470e: LocalizedMessage {
-            .init(key: "cliInterface.t9abc5f05470e", table: "CLIInterface", fallback: "实例 ID 和搜索关键词。")
-        }
-        /// 列出兼容的数据包版本。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb511553d589f`.
-        public static var tb511553d589f: LocalizedMessage {
-            .init(key: "cliInterface.tb511553d589f", table: "CLIInterface", fallback: "列出兼容的数据包版本。")
-        }
-        /// 安装数据包及其依赖。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t37b2077e3554`.
-        public static var t37b2077e3554: LocalizedMessage {
-            .init(key: "cliInterface.t37b2077e3554", table: "CLIInterface", fallback: "安装数据包及其依赖。")
-        }
-        /// 指定版本 ID，默认选择最新稳定版。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t5e7708f69f60`.
-        public static var t5e7708f69f60: LocalizedMessage {
-            .init(key: "cliInterface.t5e7708f69f60", table: "CLIInterface", fallback: "指定版本 ID，默认选择最新稳定版。")
-        }
-        /// 实例 ID、世界名称和项目 ID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t4d5a09c55c8c`.
-        public static var t4d5a09c55c8c: LocalizedMessage {
-            .init(key: "cliInterface.t4d5a09c55c8c", table: "CLIInterface", fallback: "实例 ID、世界名称和项目 ID。")
-        }
-        /// 列出投影文件及文件夹。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t45ce4d2add4d`.
-        public static var t45ce4d2add4d: LocalizedMessage {
-            .init(key: "cliInterface.t45ce4d2add4d", table: "CLIInterface", fallback: "列出投影文件及文件夹。")
-        }
-        /// 投影目录的相对路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc48ff6cbe772`.
-        public static var tc48ff6cbe772: LocalizedMessage {
-            .init(key: "cliInterface.tc48ff6cbe772", table: "CLIInterface", fallback: "投影目录的相对路径。")
-        }
-        /// 查询投影文件的元数据。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t9691b8cb26ac`.
-        public static var t9691b8cb26ac: LocalizedMessage {
-            .init(key: "cliInterface.t9691b8cb26ac", table: "CLIInterface", fallback: "查询投影文件的元数据。")
-        }
-        /// 导入投影文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t006d1cafc637`.
-        public static var t006d1cafc637: LocalizedMessage {
-            .init(key: "cliInterface.t006d1cafc637", table: "CLIInterface", fallback: "导入投影文件。")
-        }
-        /// 创建投影文件夹。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf32e6e0f57a1`.
-        public static var tf32e6e0f57a1: LocalizedMessage {
-            .init(key: "cliInterface.tf32e6e0f57a1", table: "CLIInterface", fallback: "创建投影文件夹。")
-        }
-        /// 父目录的相对路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t4af5860f6aeb`.
-        public static var t4af5860f6aeb: LocalizedMessage {
-            .init(key: "cliInterface.t4af5860f6aeb", table: "CLIInterface", fallback: "父目录的相对路径。")
-        }
-        /// 实例 ID 和文件夹名称。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0d2ff8c9a278`.
-        public static var t0d2ff8c9a278: LocalizedMessage {
-            .init(key: "cliInterface.t0d2ff8c9a278", table: "CLIInterface", fallback: "实例 ID 和文件夹名称。")
-        }
-        /// 导出投影文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t7e11030c3d95`.
-        public static var t7e11030c3d95: LocalizedMessage {
-            .init(key: "cliInterface.t7e11030c3d95", table: "CLIInterface", fallback: "导出投影文件。")
-        }
-        /// 实例 ID、投影路径和导出文件路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf0b7b313a90b`.
-        public static var tf0b7b313a90b: LocalizedMessage {
-            .init(key: "cliInterface.tf0b7b313a90b", table: "CLIInterface", fallback: "实例 ID、投影路径和导出文件路径。")
-        }
-        /// 将投影文件或文件夹移到废纸篓。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc7d49c67a14a`.
-        public static var tc7d49c67a14a: LocalizedMessage {
-            .init(key: "cliInterface.tc7d49c67a14a", table: "CLIInterface", fallback: "将投影文件或文件夹移到废纸篓。")
-        }
-        /// 数据包优先级
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb9f8304a17cd`.
-        public static var tb9f8304a17cd: LocalizedMessage {
-            .init(key: "cliInterface.tb9f8304a17cd", table: "CLIInterface", fallback: "数据包优先级")
-        }
-        /// 世界备份与恢复
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1870161676bc`.
-        public static var t1870161676bc: LocalizedMessage {
-            .init(key: "cliInterface.t1870161676bc", table: "CLIInterface", fallback: "世界备份与恢复")
-        }
-        /// 投影文件管理
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb977dca13b5f`.
-        public static var tb977dca13b5f: LocalizedMessage {
-            .init(key: "cliInterface.tb977dca13b5f", table: "CLIInterface", fallback: "投影文件管理")
-        }
-        /// 数据包管理与排序
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8c1e16e1c7f6`.
-        public static var t8c1e16e1c7f6: LocalizedMessage {
-            .init(key: "cliInterface.t8c1e16e1c7f6", table: "CLIInterface", fallback: "数据包管理与排序")
+        /// Resource: `CLIInterface.CLIInterface.catalogCategoryHelp`.
+        public static var catalogCategoryHelp: LocalizedMessage {
+            .init(key: "CLIInterface.catalogCategoryHelp", table: "CLIInterface", fallback: "内容平台的分类。")
         }
         /// 内容搜索与版本查询
         ///
-        /// Resource: `CLIInterface.cliInterface.t28a32d5bd18e`.
-        public static var t28a32d5bd18e: LocalizedMessage {
-            .init(key: "cliInterface.t28a32d5bd18e", table: "CLIInterface", fallback: "内容搜索与版本查询")
+        /// Resource: `CLIInterface.CLIInterface.catalogCommands`.
+        public static var catalogCommands: LocalizedMessage {
+            .init(key: "CLIInterface.catalogCommands", table: "CLIInterface", fallback: "内容搜索与版本查询")
         }
-        /// 模组、资源包与光影管理
+        /// 查询项目描述及元数据。
         ///
-        /// Resource: `CLIInterface.cliInterface.t7f93a6deea4d`.
-        public static var t7f93a6deea4d: LocalizedMessage {
-            .init(key: "cliInterface.t7f93a6deea4d", table: "CLIInterface", fallback: "模组、资源包与光影管理")
+        /// Resource: `CLIInterface.CLIInterface.catalogProjectShowHelp`.
+        public static var catalogProjectShowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.catalogProjectShowHelp", table: "CLIInterface", fallback: "查询项目描述及元数据。")
         }
-        /// 世界管理、导入导出与备份
+        /// 项目类型。
         ///
-        /// Resource: `CLIInterface.cliInterface.tc96234263475`.
-        public static var tc96234263475: LocalizedMessage {
-            .init(key: "cliInterface.tc96234263475", table: "CLIInterface", fallback: "世界管理、导入导出与备份")
+        /// Resource: `CLIInterface.CLIInterface.catalogProjectTypeHelp`.
+        public static var catalogProjectTypeHelp: LocalizedMessage {
+            .init(key: "CLIInterface.catalogProjectTypeHelp", table: "CLIInterface", fallback: "项目类型。")
         }
-        /// 找不到输入文件。
+        /// 搜索 Modrinth 或 CurseForge。
         ///
-        /// Resource: `CLIInterface.cliInterface.t68a342df34e2`.
-        public static var t68a342df34e2: LocalizedMessage {
-            .init(key: "cliInterface.t68a342df34e2", table: "CLIInterface", fallback: "找不到输入文件。")
+        /// Resource: `CLIInterface.CLIInterface.catalogSearchHelp`.
+        public static var catalogSearchHelp: LocalizedMessage {
+            .init(key: "CLIInterface.catalogSearchHelp", table: "CLIInterface", fallback: "搜索 Modrinth 或 CurseForge。")
         }
-        /// 请使用 --file 选择文件，或明确指定 --all。
+        /// 排序方式。
         ///
-        /// Resource: `CLIInterface.cliInterface.t1474aa1131be`.
-        public static var t1474aa1131be: LocalizedMessage {
-            .init(key: "cliInterface.t1474aa1131be", table: "CLIInterface", fallback: "请使用 --file 选择文件，或明确指定 --all。")
+        /// Resource: `CLIInterface.CLIInterface.catalogSortHelp`.
+        public static var catalogSortHelp: LocalizedMessage {
+            .init(key: "CLIInterface.catalogSortHelp", table: "CLIInterface", fallback: "排序方式。")
         }
-        /// 找不到部分所选文件。
+        /// 列出项目已发布的版本。
         ///
-        /// Resource: `CLIInterface.cliInterface.tcf02f30209a6`.
-        public static var tcf02f30209a6: LocalizedMessage {
-            .init(key: "cliInterface.tcf02f30209a6", table: "CLIInterface", fallback: "找不到部分所选文件。")
+        /// Resource: `CLIInterface.CLIInterface.catalogVersionsHelp`.
+        public static var catalogVersionsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.catalogVersionsHelp", table: "CLIInterface", fallback: "列出项目已发布的版本。")
         }
-        /// 未知内容操作。
+        /// 命令行工具的安装与卸载
         ///
-        /// Resource: `CLIInterface.cliInterface.t1fb9146947a6`.
-        public static var t1fb9146947a6: LocalizedMessage {
-            .init(key: "cliInterface.t1fb9146947a6", table: "CLIInterface", fallback: "未知内容操作。")
+        /// Resource: `CLIInterface.CLIInterface.cliCommands`.
+        public static var cliCommands: LocalizedMessage {
+            .init(key: "CLIInterface.cliCommands", table: "CLIInterface", fallback: "命令行工具的安装与卸载")
         }
-        /// 手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。
+        /// 命令行工具不存在。
         ///
-        /// Resource: `CLIInterface.cliInterface.tcf80472afe71`.
-        public static var tcf80472afe71: LocalizedMessage {
-            .init(key: "cliInterface.tcf80472afe71", table: "CLIInterface", fallback: "手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。")
+        /// Resource: `CLIInterface.CLIInterface.cliExecutableNotFound`.
+        public static var cliExecutableNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.cliExecutableNotFound", table: "CLIInterface", fallback: "命令行工具不存在。")
         }
-        /// 请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。
+        /// 命令安装目录，默认为 /usr/local/bin。
         ///
-        /// Resource: `CLIInterface.cliInterface.t22d3a8371f53`.
-        public static var t22d3a8371f53: LocalizedMessage {
-            .init(key: "cliInterface.t22d3a8371f53", table: "CLIInterface", fallback: "请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。")
+        /// Resource: `CLIInterface.CLIInterface.cliInstallDirectoryHelp`.
+        public static var cliInstallDirectoryHelp: LocalizedMessage {
+            .init(key: "CLIInterface.cliInstallDirectoryHelp", table: "CLIInterface", fallback: "命令安装目录，默认为 /usr/local/bin。")
         }
-        /// 所选版本与实例不兼容。
+        /// 安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。
         ///
-        /// Resource: `CLIInterface.cliInterface.t5c54141389e9`.
-        public static var t5c54141389e9: LocalizedMessage {
-            .init(key: "cliInterface.t5c54141389e9", table: "CLIInterface", fallback: "所选版本与实例不兼容。")
+        /// Resource: `CLIInterface.CLIInterface.cliInstallHelp`.
+        public static var cliInstallHelp: LocalizedMessage {
+            .init(key: "CLIInterface.cliInstallHelp", table: "CLIInterface", fallback: "安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。")
         }
-        /// 找不到匹配的兼容版本。
+        /// 卸载期间命令行工具链接发生了变化。
         ///
-        /// Resource: `CLIInterface.cliInterface.t56f6acfec799`.
-        public static var t56f6acfec799: LocalizedMessage {
-            .init(key: "cliInterface.t56f6acfec799", table: "CLIInterface", fallback: "找不到匹配的兼容版本。")
+        /// Resource: `CLIInterface.CLIInterface.cliLinkChangedDuringUninstall`.
+        public static var cliLinkChangedDuringUninstall: LocalizedMessage {
+            .init(key: "CLIInterface.cliLinkChangedDuringUninstall", table: "CLIInterface", fallback: "卸载期间命令行工具链接发生了变化。")
         }
-        /// 找不到备份。
+        /// 无法安装命令行工具链接。
         ///
-        /// Resource: `CLIInterface.cliInterface.t813a5dd4816c`.
-        public static var t813a5dd4816c: LocalizedMessage {
-            .init(key: "cliInterface.t813a5dd4816c", table: "CLIInterface", fallback: "找不到备份。")
+        /// Resource: `CLIInterface.CLIInterface.cliLinkInstallFailed`.
+        public static var cliLinkInstallFailed: LocalizedMessage {
+            .init(key: "CLIInterface.cliLinkInstallFailed", table: "CLIInterface", fallback: "无法安装命令行工具链接。")
         }
-        /// 找不到世界。
+        /// 目标位置不是 Ruri 创建的链接。
         ///
-        /// Resource: `CLIInterface.cliInterface.t90c2d3c97aae`.
-        public static var t90c2d3c97aae: LocalizedMessage {
-            .init(key: "cliInterface.t90c2d3c97aae", table: "CLIInterface", fallback: "找不到世界。")
+        /// Resource: `CLIInterface.CLIInterface.cliLinkNotOwnedByRuri`.
+        public static var cliLinkNotOwnedByRuri: LocalizedMessage {
+            .init(key: "CLIInterface.cliLinkNotOwnedByRuri", table: "CLIInterface", fallback: "目标位置不是 Ruri 创建的链接。")
         }
-        /// 未知世界操作。
+        /// 检查命令行工具及 PATH。
         ///
-        /// Resource: `CLIInterface.cliInterface.ta7cd75ee2906`.
-        public static var ta7cd75ee2906: LocalizedMessage {
-            .init(key: "cliInterface.ta7cd75ee2906", table: "CLIInterface", fallback: "未知世界操作。")
+        /// Resource: `CLIInterface.CLIInterface.cliStatusHelp`.
+        public static var cliStatusHelp: LocalizedMessage {
+            .init(key: "CLIInterface.cliStatusHelp", table: "CLIInterface", fallback: "检查命令行工具及 PATH。")
         }
-        /// 请提供完整的优先级列表，每项只能出现一次。
+        /// 命令安装目录，默认为 /usr/local/bin。
         ///
-        /// Resource: `CLIInterface.cliInterface.tcaf18c90c73d`.
-        public static var tcaf18c90c73d: LocalizedMessage {
-            .init(key: "cliInterface.tcaf18c90c73d", table: "CLIInterface", fallback: "请提供完整的优先级列表，每项只能出现一次。")
+        /// Resource: `CLIInterface.CLIInterface.cliUninstallDirectoryHelp`.
+        public static var cliUninstallDirectoryHelp: LocalizedMessage {
+            .init(key: "CLIInterface.cliUninstallDirectoryHelp", table: "CLIInterface", fallback: "命令安装目录，默认为 /usr/local/bin。")
         }
-        /// 找不到兼容的数据包版本。
+        /// 卸载命令链接，仅移除属于 Ruri 的链接。
         ///
-        /// Resource: `CLIInterface.cliInterface.tdd5661a06a84`.
-        public static var tdd5661a06a84: LocalizedMessage {
-            .init(key: "cliInterface.tdd5661a06a84", table: "CLIInterface", fallback: "找不到兼容的数据包版本。")
-        }
-        /// 找不到数据包。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t921d4db04b98`.
-        public static var t921d4db04b98: LocalizedMessage {
-            .init(key: "cliInterface.t921d4db04b98", table: "CLIInterface", fallback: "找不到数据包。")
-        }
-        /// 未知数据包操作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t31dc407e9871`.
-        public static var t31dc407e9871: LocalizedMessage {
-            .init(key: "cliInterface.t31dc407e9871", table: "CLIInterface", fallback: "未知数据包操作。")
-        }
-        /// 找不到投影文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t90e3b5019ad0`.
-        public static var t90e3b5019ad0: LocalizedMessage {
-            .init(key: "cliInterface.t90e3b5019ad0", table: "CLIInterface", fallback: "找不到投影文件。")
-        }
-        /// 将实例归档导入指定目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tdb74aa2f7d3b`.
-        public static var tdb74aa2f7d3b: LocalizedMessage {
-            .init(key: "cliInterface.tdb74aa2f7d3b", table: "CLIInterface", fallback: "将实例归档导入指定目录。")
-        }
-        /// 目标目录 UUID 或 default。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tddd82092eded`.
-        public static var tddd82092eded: LocalizedMessage {
-            .init(key: "cliInterface.tddd82092eded", table: "CLIInterface", fallback: "目标目录 UUID 或 default。")
-        }
-        /// 导入整合包提供的 JVM 参数。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb86fa4ea53ac`.
-        public static var tb86fa4ea53ac: LocalizedMessage {
-            .init(key: "cliInterface.tb86fa4ea53ac", table: "CLIInterface", fallback: "导入整合包提供的 JVM 参数。")
-        }
-        /// 导入本地整合包归档。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc5c676ace213`.
-        public static var tc5c676ace213: LocalizedMessage {
-            .init(key: "cliInterface.tc5c676ace213", table: "CLIInterface", fallback: "导入本地整合包归档。")
-        }
-        /// 下载并安装内容平台上的整合包。
-        ///
-        /// Resource: `CLIInterface.cliInterface.td48597adbed9`.
-        public static var td48597adbed9: LocalizedMessage {
-            .init(key: "cliInterface.td48597adbed9", table: "CLIInterface", fallback: "下载并安装内容平台上的整合包。")
-        }
-        /// 手动下载的整合包归档。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t2280d783f7cb`.
-        public static var t2280d783f7cb: LocalizedMessage {
-            .init(key: "cliInterface.t2280d783f7cb", table: "CLIInterface", fallback: "手动下载的整合包归档。")
-        }
-        /// 查询已安装整合包的元数据。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1d9fc0c70e58`.
-        public static var t1d9fc0c70e58: LocalizedMessage {
-            .init(key: "cliInterface.t1d9fc0c70e58", table: "CLIInterface", fallback: "查询已安装整合包的元数据。")
-        }
-        /// 列出已安装整合包的可用版本。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t0e0ee827fcda`.
-        public static var t0e0ee827fcda: LocalizedMessage {
-            .init(key: "cliInterface.t0e0ee827fcda", table: "CLIInterface", fallback: "列出已安装整合包的可用版本。")
-        }
-        /// 预览或执行整合包更新。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t7dd4704843e2`.
-        public static var t7dd4704843e2: LocalizedMessage {
-            .init(key: "cliInterface.t7dd4704843e2", table: "CLIInterface", fallback: "预览或执行整合包更新。")
-        }
-        /// 本地更新归档。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te3ce5542c760`.
-        public static var te3ce5542c760: LocalizedMessage {
-            .init(key: "cliInterface.te3ce5542c760", table: "CLIInterface", fallback: "本地更新归档。")
-        }
-        /// 指定远程发布版本 ID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tadff65d82cd8`.
-        public static var tadff65d82cd8: LocalizedMessage {
-            .init(key: "cliInterface.tadff65d82cd8", table: "CLIInterface", fallback: "指定远程发布版本 ID。")
-        }
-        /// 手动下载的远程版本归档。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t33673a17c78a`.
-        public static var t33673a17c78a: LocalizedMessage {
-            .init(key: "cliInterface.t33673a17c78a", table: "CLIInterface", fallback: "手动下载的远程版本归档。")
-        }
-        /// 覆盖本地修改过的文件，不保留本地修改。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tfa5924a2e888`.
-        public static var tfa5924a2e888: LocalizedMessage {
-            .init(key: "cliInterface.tfa5924a2e888", table: "CLIInterface", fallback: "覆盖本地修改过的文件，不保留本地修改。")
-        }
-        /// 确认覆盖本地修改。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf986137b0dee`.
-        public static var tf986137b0dee: LocalizedMessage {
-            .init(key: "cliInterface.tf986137b0dee", table: "CLIInterface", fallback: "确认覆盖本地修改。")
-        }
-        /// 回退上一次整合包更新，保留更新后的本地修改。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8951a110d64d`.
-        public static var t8951a110d64d: LocalizedMessage {
-            .init(key: "cliInterface.t8951a110d64d", table: "CLIInterface", fallback: "回退上一次整合包更新，保留更新后的本地修改。")
-        }
-        /// 下载文件并校验 SHA-1 和大小。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t869f83eac4a5`.
-        public static var t869f83eac4a5: LocalizedMessage {
-            .init(key: "cliInterface.t869f83eac4a5", table: "CLIInterface", fallback: "下载文件并校验 SHA-1 和大小。")
-        }
-        /// 预期的 SHA-1 校验值。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t91bde8e5fa30`.
-        public static var t91bde8e5fa30: LocalizedMessage {
-            .init(key: "cliInterface.t91bde8e5fa30", table: "CLIInterface", fallback: "预期的 SHA-1 校验值。")
-        }
-        /// 预期的字节数。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t8e1d27b3966c`.
-        public static var t8e1d27b3966c: LocalizedMessage {
-            .init(key: "cliInterface.t8e1d27b3966c", table: "CLIInterface", fallback: "预期的字节数。")
-        }
-        /// 下载地址和文件路径。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tff2b9d62fa33`.
-        public static var tff2b9d62fa33: LocalizedMessage {
-            .init(key: "cliInterface.tff2b9d62fa33", table: "CLIInterface", fallback: "下载地址和文件路径。")
-        }
-        /// 文件下载与校验
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta16b7c00b2ba`.
-        public static var ta16b7c00b2ba: LocalizedMessage {
-            .init(key: "cliInterface.ta16b7c00b2ba", table: "CLIInterface", fallback: "文件下载与校验")
-        }
-        /// 整合包安装、更新与回退
-        ///
-        /// Resource: `CLIInterface.cliInterface.t31f0b68ea764`.
-        public static var t31f0b68ea764: LocalizedMessage {
-            .init(key: "cliInterface.t31f0b68ea764", table: "CLIInterface", fallback: "整合包安装、更新与回退")
-        }
-        /// 找不到目标目录。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t4c0ebc2810f1`.
-        public static var t4c0ebc2810f1: LocalizedMessage {
-            .init(key: "cliInterface.t4c0ebc2810f1", table: "CLIInterface", fallback: "找不到目标目录。")
-        }
-        /// 此实例没有已安装整合包的元数据。
-        ///
-        /// Resource: `CLIInterface.cliInterface.te28b99d2f4f4`.
-        public static var te28b99d2f4f4: LocalizedMessage {
-            .init(key: "cliInterface.te28b99d2f4f4", table: "CLIInterface", fallback: "此实例没有已安装整合包的元数据。")
-        }
-        /// 没有可用于回退的整合包更新备份。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf47c36a30379`.
-        public static var tf47c36a30379: LocalizedMessage {
-            .init(key: "cliInterface.tf47c36a30379", table: "CLIInterface", fallback: "没有可用于回退的整合包更新备份。")
-        }
-        /// 覆盖本地修改需要同时指定 --replace --yes。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc94ca55edbe4`.
-        public static var tc94ca55edbe4: LocalizedMessage {
-            .init(key: "cliInterface.tc94ca55edbe4", table: "CLIInterface", fallback: "覆盖本地修改需要同时指定 --replace --yes。")
-        }
-        /// 请选择本地 --file 或远程 --version。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t886cba0bd15a`.
-        public static var t886cba0bd15a: LocalizedMessage {
-            .init(key: "cliInterface.t886cba0bd15a", table: "CLIInterface", fallback: "请选择本地 --file 或远程 --version。")
-        }
-        /// 找不到整合包发布版本。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t092095eba967`.
-        public static var t092095eba967: LocalizedMessage {
-            .init(key: "cliInterface.t092095eba967", table: "CLIInterface", fallback: "找不到整合包发布版本。")
-        }
-        /// 请下载整合包归档，然后添加 --archive path 再次执行。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t75d07f6960ff`.
-        public static var t75d07f6960ff: LocalizedMessage {
-            .init(key: "cliInterface.t75d07f6960ff", table: "CLIInterface", fallback: "请下载整合包归档，然后添加 --archive path 再次执行。")
-        }
-        /// 请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tca976a5cf5f9`.
-        public static var tca976a5cf5f9: LocalizedMessage {
-            .init(key: "cliInterface.tca976a5cf5f9", table: "CLIInterface", fallback: "请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。")
-        }
-        /// 目标位置已存在内容不同的文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tb634c8d3959d`.
-        public static var tb634c8d3959d: LocalizedMessage {
-            .init(key: "cliInterface.tb634c8d3959d", table: "CLIInterface", fallback: "目标位置已存在内容不同的文件。")
-        }
-        /// 列出未完成的数据操作及会话。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tbff4f0f5e780`.
-        public static var tbff4f0f5e780: LocalizedMessage {
-            .init(key: "cliInterface.tbff4f0f5e780", table: "CLIInterface", fallback: "列出未完成的数据操作及会话。")
-        }
-        /// 仅检查指定实例。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc16fc65ec610`.
-        public static var tc16fc65ec610: LocalizedMessage {
-            .init(key: "cliInterface.tc16fc65ec610", table: "CLIInterface", fallback: "仅检查指定实例。")
-        }
-        /// 恢复指定的未完成操作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t25597cca30a1`.
-        public static var t25597cca30a1: LocalizedMessage {
-            .init(key: "cliInterface.t25597cca30a1", table: "CLIInterface", fallback: "恢复指定的未完成操作。")
-        }
-        /// 事务 UUID 或会话 UUID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t617ad9bacfae`.
-        public static var t617ad9bacfae: LocalizedMessage {
-            .init(key: "cliInterface.t617ad9bacfae", table: "CLIInterface", fallback: "事务 UUID 或会话 UUID。")
-        }
-        /// 游戏库导入的恢复方式。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta51e4f921383`.
-        public static var ta51e4f921383: LocalizedMessage {
-            .init(key: "cliInterface.ta51e4f921383", table: "CLIInterface", fallback: "游戏库导入的恢复方式。")
-        }
-        /// 移动已提交后保留原始文件。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t709f4fc13c7d`.
-        public static var t709f4fc13c7d: LocalizedMessage {
-            .init(key: "cliInterface.t709f4fc13c7d", table: "CLIInterface", fallback: "移动已提交后保留原始文件。")
-        }
-        /// 确认失去监控的游戏已结束。
-        ///
-        /// Resource: `CLIInterface.cliInterface.ta42e19194027`.
-        public static var ta42e19194027: LocalizedMessage {
-            .init(key: "cliInterface.ta42e19194027", table: "CLIInterface", fallback: "确认失去监控的游戏已结束。")
-        }
-        /// 恢复类型和目标 ID。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t28237d41435e`.
-        public static var t28237d41435e: LocalizedMessage {
-            .init(key: "cliInterface.t28237d41435e", table: "CLIInterface", fallback: "恢复类型和目标 ID。")
-        }
-        /// 检查状态、路径、Java、账户凭据及内置辅助程序。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tc168cea3e30b`.
-        public static var tc168cea3e30b: LocalizedMessage {
-            .init(key: "cliInterface.tc168cea3e30b", table: "CLIInterface", fallback: "检查状态、路径、Java、账户凭据及内置辅助程序。")
-        }
-        /// 检查指定实例。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tcfab76824678`.
-        public static var tcfab76824678: LocalizedMessage {
-            .init(key: "cliInterface.tcfab76824678", table: "CLIInterface", fallback: "检查指定实例。")
-        }
-        /// 未完成操作的查询与恢复
-        ///
-        /// Resource: `CLIInterface.cliInterface.t2b167c0c4363`.
-        public static var t2b167c0c4363: LocalizedMessage {
-            .init(key: "cliInterface.t2b167c0c4363", table: "CLIInterface", fallback: "未完成操作的查询与恢复")
-        }
-        /// 未知恢复类型。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t1e2f741698a1`.
-        public static var t1e2f741698a1: LocalizedMessage {
-            .init(key: "cliInterface.t1e2f741698a1", table: "CLIInterface", fallback: "未知恢复类型。")
-        }
-        /// 此恢复操作需要指定 recovery list 返回的 --transaction。
-        ///
-        /// Resource: `CLIInterface.cliInterface.t7f8c861b7d62`.
-        public static var t7f8c861b7d62: LocalizedMessage {
-            .init(key: "cliInterface.t7f8c861b7d62", table: "CLIInterface", fallback: "此恢复操作需要指定 recovery list 返回的 --transaction。")
-        }
-        /// 一项或多项检查未通过。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tf19d497be38f`.
-        public static var tf19d497be38f: LocalizedMessage {
-            .init(key: "cliInterface.tf19d497be38f", table: "CLIInterface", fallback: "一项或多项检查未通过。")
-        }
-        /// 检查此数据前，必须先恢复未完成的操作。
-        ///
-        /// Resource: `CLIInterface.cliInterface.tff19ae82a321`.
-        public static var tff19ae82a321: LocalizedMessage {
-            .init(key: "cliInterface.tff19ae82a321", table: "CLIInterface", fallback: "检查此数据前，必须先恢复未完成的操作。")
-        }
-        /// 卸载
-        ///
-        /// Resource: `CLIInterface.cliInterface.t06bc14b60f35`.
-        public static var t06bc14b60f35: LocalizedMessage {
-            .init(key: "cliInterface.t06bc14b60f35", table: "CLIInterface", fallback: "卸载")
+        /// Resource: `CLIInterface.CLIInterface.cliUninstallHelp`.
+        public static var cliUninstallHelp: LocalizedMessage {
+            .init(key: "CLIInterface.cliUninstallHelp", table: "CLIInterface", fallback: "卸载命令链接，仅移除属于 Ruri 的链接。")
         }
         /// 命令行与自动化
         ///
-        /// Resource: `CLIInterface.cliInterface.t56f8e5b9417c`.
-        public static var t56f8e5b9417c: LocalizedMessage {
-            .init(key: "cliInterface.t56f8e5b9417c", table: "CLIInterface", fallback: "命令行与自动化")
+        /// Resource: `CLIInterface.CLIInterface.commandLineAndAutomationTitle`.
+        public static var commandLineAndAutomationTitle: LocalizedMessage {
+            .init(key: "CLIInterface.commandLineAndAutomationTitle", table: "CLIInterface", fallback: "命令行与自动化")
+        }
+        /// 可选的资源、动作和子动作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.commandPathArgumentsHelp`.
+        public static var commandPathArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.commandPathArgumentsHelp", table: "CLIInterface", fallback: "可选的资源、动作和子动作。")
+        }
+        /// 找不到兼容的数据包版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.compatibleDataPackVersionNotFound`.
+        public static var compatibleDataPackVersionNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.compatibleDataPackVersionNotFound", table: "CLIInterface", fallback: "找不到兼容的数据包版本。")
+        }
+        /// 找不到匹配的兼容版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.compatibleVersionNotFound`.
+        public static var compatibleVersionNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.compatibleVersionNotFound", table: "CLIInterface", fallback: "找不到匹配的兼容版本。")
+        }
+        /// 请提供完整的优先级列表，每项只能出现一次。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.completeUniqueDataPackOrderRequired`.
+        public static var completeUniqueDataPackOrderRequired: LocalizedMessage {
+            .init(key: "CLIInterface.completeUniqueDataPackOrderRequired", table: "CLIInterface", fallback: "请提供完整的优先级列表，每项只能出现一次。")
+        }
+        /// 原子应用 JSON 配置补丁。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configApplyHelp`.
+        public static var configApplyHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configApplyHelp", table: "CLIInterface", fallback: "原子应用 JSON 配置补丁。")
+        }
+        /// 全局设置、默认配置与实例覆盖
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configCommands`.
+        public static var configCommands: LocalizedMessage {
+            .init(key: "CLIInterface.configCommands", table: "CLIInterface", fallback: "全局设置、默认配置与实例覆盖")
+        }
+        /// 配置字段或组的名称
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configFieldOrGroupNamesHelp`.
+        public static var configFieldOrGroupNamesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configFieldOrGroupNamesHelp", table: "CLIInterface", fallback: "配置字段或组的名称")
+        }
+        /// 配置字段及 JSON 值。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configFieldValueArgumentsHelp`.
+        public static var configFieldValueArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configFieldValueArgumentsHelp", table: "CLIInterface", fallback: "配置字段及 JSON 值。")
+        }
+        /// 查询显式配置、有效配置及继承来源。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configGetHelp`.
+        public static var configGetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configGetHelp", table: "CLIInterface", fallback: "查询显式配置、有效配置及继承来源。")
+        }
+        /// 恢复实例配置组的继承。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configInheritHelp`.
+        public static var configInheritHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configInheritHelp", table: "CLIInterface", fallback: "恢复实例配置组的继承。")
+        }
+        /// inherit 仅适用于完整的实例配置组。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configInheritanceRequiresCompleteGroups`.
+        public static var configInheritanceRequiresCompleteGroups: LocalizedMessage {
+            .init(key: "CLIInterface.configInheritanceRequiresCompleteGroups", table: "CLIInterface", fallback: "inherit 仅适用于完整的实例配置组。")
+        }
+        /// 实例配置组的名称，仅适用于实例
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configInstanceGroupNamesHelp`.
+        public static var configInstanceGroupNamesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configInstanceGroupNamesHelp", table: "CLIInterface", fallback: "实例配置组的名称，仅适用于实例")
+        }
+        /// JSON 补丁文件；使用 - 从标准输入读取。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configPatchFileHelp`.
+        public static var configPatchFileHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configPatchFileHelp", table: "CLIInterface", fallback: "JSON 补丁文件；使用 - 从标准输入读取。")
+        }
+        /// 将配置字段或组重置为内置默认值。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configResetHelp`.
+        public static var configResetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configResetHelp", table: "CLIInterface", fallback: "将配置字段或组重置为内置默认值。")
+        }
+        /// 配置作用域：app、defaults 或 instance:<uuid>。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configScopeHelp`.
+        public static var configScopeHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configScopeHelp", table: "CLIInterface", fallback: "配置作用域：app、defaults 或 instance:<uuid>。")
+        }
+        /// 使用 JSON 值设置一个配置字段。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configSetHelp`.
+        public static var configSetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configSetHelp", table: "CLIInterface", fallback: "使用 JSON 值设置一个配置字段。")
+        }
+        /// 配置字段到值的映射对象
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configSetMappingHelp`.
+        public static var configSetMappingHelp: LocalizedMessage {
+            .init(key: "CLIInterface.configSetMappingHelp", table: "CLIInterface", fallback: "配置字段到值的映射对象")
+        }
+        /// 配置值必须是 JSON；字符串值需要保留双引号。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.configValueMustBeJson`.
+        public static var configValueMustBeJson: LocalizedMessage {
+            .init(key: "CLIInterface.configValueMustBeJson", table: "CLIInterface", fallback: "配置值必须是 JSON；字符串值需要保留双引号。")
+        }
+        /// 确认删除或覆盖操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.confirmDeleteOrReplaceHelp`.
+        public static var confirmDeleteOrReplaceHelp: LocalizedMessage {
+            .init(key: "CLIInterface.confirmDeleteOrReplaceHelp", table: "CLIInterface", fallback: "确认删除或覆盖操作。")
+        }
+        /// 确认覆盖本地修改。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.confirmLocalModificationsReplacementHelp`.
+        public static var confirmLocalModificationsReplacementHelp: LocalizedMessage {
+            .init(key: "CLIInterface.confirmLocalModificationsReplacementHelp", table: "CLIInterface", fallback: "确认覆盖本地修改。")
+        }
+        /// 确认失去监控的游戏已结束。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.confirmUnmonitoredGameExitHelp`.
+        public static var confirmUnmonitoredGameExitHelp: LocalizedMessage {
+            .init(key: "CLIInterface.confirmUnmonitoredGameExitHelp", table: "CLIInterface", fallback: "确认失去监控的游戏已结束。")
+        }
+        /// 此操作需要 --yes，可先使用 --dry-run 预览。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.confirmationRequired`.
+        public static var confirmationRequired: LocalizedMessage {
+            .init(key: "CLIInterface.confirmationRequired", table: "CLIInterface", fallback: "此操作需要 --yes，可先使用 --dry-run 预览。")
+        }
+        /// 针对 %1$@ 的补丁操作相互冲突。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.conflictingConfigPatchOperations`.
+        public static func conflictingConfigPatchOperations(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.conflictingConfigPatchOperations", table: "CLIInterface", fallback: "针对 %1$@ 的补丁操作相互冲突。", arguments: [.text(value0)])
+        }
+        /// 检查已安装内容的兼容更新。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentCheckUpdatesHelp`.
+        public static var contentCheckUpdatesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentCheckUpdatesHelp", table: "CLIInterface", fallback: "检查已安装内容的兼容更新。")
+        }
+        /// 模组、资源包与光影管理
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentCommands`.
+        public static var contentCommands: LocalizedMessage {
+            .init(key: "CLIInterface.contentCommands", table: "CLIInterface", fallback: "模组、资源包与光影管理")
+        }
+        /// 禁用所选内容。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentDisableHelp`.
+        public static var contentDisableHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentDisableHelp", table: "CLIInterface", fallback: "禁用所选内容。")
+        }
+        /// 启用所选内容。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentEnableHelp`.
+        public static var contentEnableHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentEnableHelp", table: "CLIInterface", fallback: "启用所选内容。")
+        }
+        /// 已安装文件的完整名称，可重复传入以选择多个文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentFileSelectionHelp`.
+        public static var contentFileSelectionHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentFileSelectionHelp", table: "CLIInterface", fallback: "已安装文件的完整名称，可重复传入以选择多个文件。")
+        }
+        /// 请使用 --file 选择文件，或明确指定 --all。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentFileSelectionRequired`.
+        public static var contentFileSelectionRequired: LocalizedMessage {
+            .init(key: "CLIInterface.contentFileSelectionRequired", table: "CLIInterface", fallback: "请使用 --file 选择文件，或明确指定 --all。")
+        }
+        /// 实例 ID 和文件路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentImportArgumentsHelp`.
+        public static var contentImportArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentImportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和文件路径。")
+        }
+        /// 导入本地内容文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentImportHelp`.
+        public static var contentImportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentImportHelp", table: "CLIInterface", fallback: "导入本地内容文件。")
+        }
+        /// 安装兼容的项目及其必需依赖。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentInstallHelp`.
+        public static var contentInstallHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentInstallHelp", table: "CLIInterface", fallback: "安装兼容的项目及其必需依赖。")
+        }
+        /// 内容类型。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentKindHelp`.
+        public static var contentKindHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentKindHelp", table: "CLIInterface", fallback: "内容类型。")
+        }
+        /// 列出已安装的模组、资源包或光影。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentListHelp`.
+        public static var contentListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentListHelp", table: "CLIInterface", fallback: "列出已安装的模组、资源包或光影。")
+        }
+        /// 实例 ID 和项目 ID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentProjectArgumentsHelp`.
+        public static var contentProjectArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentProjectArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和项目 ID。")
+        }
+        /// 内容平台。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentProviderHelp`.
+        public static var contentProviderHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentProviderHelp", table: "CLIInterface", fallback: "内容平台。")
+        }
+        /// 将所选内容移到废纸篓。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentRemoveHelp`.
+        public static var contentRemoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentRemoveHelp", table: "CLIInterface", fallback: "将所选内容移到废纸篓。")
+        }
+        /// 更新所选内容及依赖。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentUpdateHelp`.
+        public static var contentUpdateHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentUpdateHelp", table: "CLIInterface", fallback: "更新所选内容及依赖。")
+        }
+        /// 指定平台版本 ID，默认选择最新稳定版。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.contentVersionIdHelp`.
+        public static var contentVersionIdHelp: LocalizedMessage {
+            .init(key: "CLIInterface.contentVersionIdHelp", table: "CLIInterface", fallback: "指定平台版本 ID，默认选择最新稳定版。")
+        }
+        /// 将游戏文件复制到空的目标目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.copyGameFilesHelp`.
+        public static var copyGameFilesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.copyGameFilesHelp", table: "CLIInterface", fallback: "将游戏文件复制到空的目标目录。")
+        }
+        /// 移除自定义 CurseForge API Key。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.curseForgeKeyClearHelp`.
+        public static var curseForgeKeyClearHelp: LocalizedMessage {
+            .init(key: "CLIInterface.curseForgeKeyClearHelp", table: "CLIInterface", fallback: "移除自定义 CurseForge API Key。")
+        }
+        /// 从标准输入设置 CurseForge API Key。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.curseForgeKeySetHelp`.
+        public static var curseForgeKeySetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.curseForgeKeySetHelp", table: "CLIInterface", fallback: "从标准输入设置 CurseForge API Key。")
+        }
+        /// 检查 CurseForge API Key 是否可用。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.curseForgeKeyStatusHelp`.
+        public static var curseForgeKeyStatusHelp: LocalizedMessage {
+            .init(key: "CLIInterface.curseForgeKeyStatusHelp", table: "CLIInterface", fallback: "检查 CurseForge API Key 是否可用。")
+        }
+        /// 已有的自定义游戏目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.customRunDirectoryPathHelp`.
+        public static var customRunDirectoryPathHelp: LocalizedMessage {
+            .init(key: "CLIInterface.customRunDirectoryPathHelp", table: "CLIInterface", fallback: "已有的自定义游戏目录。")
+        }
+        /// 启动器数据目录，优先于 RURI_DATA_DIR。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataDirectoryHelp`.
+        public static var dataDirectoryHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataDirectoryHelp", table: "CLIInterface", fallback: "启动器数据目录，优先于 RURI_DATA_DIR。")
+        }
+        /// 数据包管理与排序
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackCommands`.
+        public static var dataPackCommands: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackCommands", table: "CLIInterface", fallback: "数据包管理与排序")
+        }
+        /// 禁用世界的数据包。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackDisableHelp`.
+        public static var dataPackDisableHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackDisableHelp", table: "CLIInterface", fallback: "禁用世界的数据包。")
+        }
+        /// 启用世界的数据包。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackEnableHelp`.
+        public static var dataPackEnableHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackEnableHelp", table: "CLIInterface", fallback: "启用世界的数据包。")
+        }
+        /// 实例 ID、世界名称和文件路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackImportArgumentsHelp`.
+        public static var dataPackImportArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackImportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、世界名称和文件路径。")
+        }
+        /// 将数据包导入世界。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackImportHelp`.
+        public static var dataPackImportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackImportHelp", table: "CLIInterface", fallback: "将数据包导入世界。")
+        }
+        /// 安装数据包及其依赖。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackInstallHelp`.
+        public static var dataPackInstallHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackInstallHelp", table: "CLIInterface", fallback: "安装数据包及其依赖。")
+        }
+        /// 列出世界的数据包。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackListHelp`.
+        public static var dataPackListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackListHelp", table: "CLIInterface", fallback: "列出世界的数据包。")
+        }
+        /// 找不到数据包。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackNotFound`.
+        public static var dataPackNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackNotFound", table: "CLIInterface", fallback: "找不到数据包。")
+        }
+        /// 数据包优先级
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackOrderCommands`.
+        public static var dataPackOrderCommands: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackOrderCommands", table: "CLIInterface", fallback: "数据包优先级")
+        }
+        /// 按优先级从高到低查询数据包顺序。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackOrderGetHelp`.
+        public static var dataPackOrderGetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackOrderGetHelp", table: "CLIInterface", fallback: "按优先级从高到低查询数据包顺序。")
+        }
+        /// 替换完整的数据包优先级顺序。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackOrderSetHelp`.
+        public static var dataPackOrderSetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackOrderSetHelp", table: "CLIInterface", fallback: "替换完整的数据包优先级顺序。")
+        }
+        /// 完整优先级列表，优先级最高的在前。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackPriorityListHelp`.
+        public static var dataPackPriorityListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackPriorityListHelp", table: "CLIInterface", fallback: "完整优先级列表，优先级最高的在前。")
+        }
+        /// 实例 ID、世界名称和项目 ID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackProjectArgumentsHelp`.
+        public static var dataPackProjectArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackProjectArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、世界名称和项目 ID。")
+        }
+        /// 移除世界的数据包。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackRemoveHelp`.
+        public static var dataPackRemoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackRemoveHelp", table: "CLIInterface", fallback: "移除世界的数据包。")
+        }
+        /// 实例 ID 和搜索关键词。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackSearchArgumentsHelp`.
+        public static var dataPackSearchArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackSearchArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和搜索关键词。")
+        }
+        /// 搜索兼容的 Modrinth 数据包。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackSearchHelp`.
+        public static var dataPackSearchHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackSearchHelp", table: "CLIInterface", fallback: "搜索兼容的 Modrinth 数据包。")
+        }
+        /// 实例 ID、世界名称和数据包名称。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackTargetArgumentsHelp`.
+        public static var dataPackTargetArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackTargetArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、世界名称和数据包名称。")
+        }
+        /// 指定版本 ID，默认选择最新稳定版。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackVersionIdHelp`.
+        public static var dataPackVersionIdHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackVersionIdHelp", table: "CLIInterface", fallback: "指定版本 ID，默认选择最新稳定版。")
+        }
+        /// 列出兼容的数据包版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackVersionsHelp`.
+        public static var dataPackVersionsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackVersionsHelp", table: "CLIInterface", fallback: "列出兼容的数据包版本。")
+        }
+        /// 实例 ID 和世界名称。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dataPackWorldArgumentsHelp`.
+        public static var dataPackWorldArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dataPackWorldArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和世界名称。")
+        }
+        /// 注册已有目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryAddHelp`.
+        public static var directoryAddHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryAddHelp", table: "CLIInterface", fallback: "注册已有目录。")
+        }
+        /// 游戏目录的注册、迁移与恢复
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryCommands`.
+        public static var directoryCommands: LocalizedMessage {
+            .init(key: "CLIInterface.directoryCommands", table: "CLIInterface", fallback: "游戏目录的注册、迁移与恢复")
+        }
+        /// 按目录 UUID 或 default 筛选。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryFilterHelp`.
+        public static var directoryFilterHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryFilterHelp", table: "CLIInterface", fallback: "按目录 UUID 或 default 筛选。")
+        }
+        /// 检查已有 Minecraft 文件夹，不注册目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryInspectHelp`.
+        public static var directoryInspectHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryInspectHelp", table: "CLIInterface", fallback: "检查已有 Minecraft 文件夹，不注册目录。")
+        }
+        /// 目录布局。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryLayoutHelp`.
+        public static var directoryLayoutHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryLayoutHelp", table: "CLIInterface", fallback: "目录布局。")
+        }
+        /// 列出已注册和已断开连接的游戏目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryListHelp`.
+        public static var directoryListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryListHelp", table: "CLIInterface", fallback: "列出已注册和已断开连接的游戏目录。")
+        }
+        /// 目录显示名称。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryNameHelp`.
+        public static var directoryNameHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryNameHelp", table: "CLIInterface", fallback: "目录显示名称。")
+        }
+        /// 找不到目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryNotFound`.
+        public static var directoryNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.directoryNotFound", table: "CLIInterface", fallback: "找不到目录。")
+        }
+        /// 目录 ID 和文件路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryPathArgumentsHelp`.
+        public static var directoryPathArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryPathArgumentsHelp", table: "CLIInterface", fallback: "目录 ID 和文件路径。")
+        }
+        /// 恢复已断开连接的 Minecraft 目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryRecoverHelp`.
+        public static var directoryRecoverHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryRecoverHelp", table: "CLIInterface", fallback: "恢复已断开连接的 Minecraft 目录。")
+        }
+        /// 刷新 Minecraft 目录中的版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryRefreshHelp`.
+        public static var directoryRefreshHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryRefreshHelp", table: "CLIInterface", fallback: "刷新 Minecraft 目录中的版本。")
+        }
+        /// 重新关联已移动的注册目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryRelocateHelp`.
+        public static var directoryRelocateHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryRelocateHelp", table: "CLIInterface", fallback: "重新关联已移动的注册目录。")
+        }
+        /// 移除目录注册，保留文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryRemoveHelp`.
+        public static var directoryRemoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryRemoveHelp", table: "CLIInterface", fallback: "移除目录注册，保留文件。")
+        }
+        /// 重命名已注册的目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directoryRenameHelp`.
+        public static var directoryRenameHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directoryRenameHelp", table: "CLIInterface", fallback: "重命名已注册的目录。")
+        }
+        /// 选择已注册的目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directorySelectHelp`.
+        public static var directorySelectHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directorySelectHelp", table: "CLIInterface", fallback: "选择已注册的目录。")
+        }
+        /// 查询当前选中的游戏目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.directorySelectedHelp`.
+        public static var directorySelectedHelp: LocalizedMessage {
+            .init(key: "CLIInterface.directorySelectedHelp", table: "CLIInterface", fallback: "查询当前选中的游戏目录。")
+        }
+        /// 一项或多项检查未通过。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.doctorChecksFailed`.
+        public static var doctorChecksFailed: LocalizedMessage {
+            .init(key: "CLIInterface.doctorChecksFailed", table: "CLIInterface", fallback: "一项或多项检查未通过。")
+        }
+        /// 检查状态、路径、Java、账户凭据及内置辅助程序。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.doctorCommandHelp`.
+        public static var doctorCommandHelp: LocalizedMessage {
+            .init(key: "CLIInterface.doctorCommandHelp", table: "CLIInterface", fallback: "检查状态、路径、Java、账户凭据及内置辅助程序。")
+        }
+        /// 检查指定实例。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.doctorInstanceHelp`.
+        public static var doctorInstanceHelp: LocalizedMessage {
+            .init(key: "CLIInterface.doctorInstanceHelp", table: "CLIInterface", fallback: "检查指定实例。")
+        }
+        /// 文件下载与校验
+        ///
+        /// Resource: `CLIInterface.CLIInterface.downloadCommands`.
+        public static var downloadCommands: LocalizedMessage {
+            .init(key: "CLIInterface.downloadCommands", table: "CLIInterface", fallback: "文件下载与校验")
+        }
+        /// 下载文件并校验 SHA-1 和大小。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.downloadFetchHelp`.
+        public static var downloadFetchHelp: LocalizedMessage {
+            .init(key: "CLIInterface.downloadFetchHelp", table: "CLIInterface", fallback: "下载文件并校验 SHA-1 和大小。")
+        }
+        /// 预期的 SHA-1 校验值。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.downloadSha1Help`.
+        public static var downloadSha1Help: LocalizedMessage {
+            .init(key: "CLIInterface.downloadSha1Help", table: "CLIInterface", fallback: "预期的 SHA-1 校验值。")
+        }
+        /// 预期的字节数。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.downloadSizeHelp`.
+        public static var downloadSizeHelp: LocalizedMessage {
+            .init(key: "CLIInterface.downloadSizeHelp", table: "CLIInterface", fallback: "预期的字节数。")
+        }
+        /// 下载地址和文件路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.downloadTargetArgumentsHelp`.
+        public static var downloadTargetArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.downloadTargetArgumentsHelp", table: "CLIInterface", fallback: "下载地址和文件路径。")
+        }
+        /// 目标位置已存在内容不同的文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.downloadTargetContentConflict`.
+        public static var downloadTargetContentConflict: LocalizedMessage {
+            .init(key: "CLIInterface.downloadTargetContentConflict", table: "CLIInterface", fallback: "目标位置已存在内容不同的文件。")
+        }
+        /// 预览操作，不更改用户数据。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.dryRunHelp`.
+        public static var dryRunHelp: LocalizedMessage {
+            .init(key: "CLIInterface.dryRunHelp", table: "CLIInterface", fallback: "预览操作，不更改用户数据。")
+        }
+        /// 重复指定了加载器。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.duplicateLoaderSelection`.
+        public static var duplicateLoaderSelection: LocalizedMessage {
+            .init(key: "CLIInterface.duplicateLoaderSelection", table: "CLIInterface", fallback: "重复指定了加载器。")
+        }
+        /// 目录名称不能为空。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.emptyDirectoryName`.
+        public static var emptyDirectoryName: LocalizedMessage {
+            .init(key: "CLIInterface.emptyDirectoryName", table: "CLIInterface", fallback: "目录名称不能为空。")
+        }
+        /// 按完整名称筛选。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.exactNameFilterHelp`.
+        public static var exactNameFilterHelp: LocalizedMessage {
+            .init(key: "CLIInterface.exactNameFilterHelp", table: "CLIInterface", fallback: "按完整名称筛选。")
+        }
+        /// 不包含世界存档。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.excludeWorldsHelp`.
+        public static var excludeWorldsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.excludeWorldsHelp", table: "CLIInterface", fallback: "不包含世界存档。")
+        }
+        /// 外置登录的用户名或邮箱。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.externalLoginIdentityHelp`.
+        public static var externalLoginIdentityHelp: LocalizedMessage {
+            .init(key: "CLIInterface.externalLoginIdentityHelp", table: "CLIInterface", fallback: "外置登录的用户名或邮箱。")
+        }
+        /// 外置登录需要 --password-stdin。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.externalLoginPasswordStdinRequired`.
+        public static var externalLoginPasswordStdinRequired: LocalizedMessage {
+            .init(key: "CLIInterface.externalLoginPasswordStdinRequired", table: "CLIInterface", fallback: "外置登录需要 --password-stdin。")
+        }
+        /// login start 返回的外置登录角色 ID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.externalLoginProfileIdHelp`.
+        public static var externalLoginProfileIdHelp: LocalizedMessage {
+            .init(key: "CLIInterface.externalLoginProfileIdHelp", table: "CLIInterface", fallback: "login start 返回的外置登录角色 ID。")
+        }
+        /// 外置登录服务器。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.externalLoginServerHelp`.
+        public static var externalLoginServerHelp: LocalizedMessage {
+            .init(key: "CLIInterface.externalLoginServerHelp", table: "CLIInterface", fallback: "外置登录服务器。")
+        }
+        /// 游戏未正常退出。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.gameExitUnsuccessful`.
+        public static var gameExitUnsuccessful: LocalizedMessage {
+            .init(key: "CLIInterface.gameExitUnsuccessful", table: "CLIInterface", fallback: "游戏未正常退出。")
+        }
+        /// 仅当状态版本与此前读取的一致时提交。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.ifRevisionHelp`.
+        public static var ifRevisionHelp: LocalizedMessage {
+            .init(key: "CLIInterface.ifRevisionHelp", table: "CLIInterface", fallback: "仅当状态版本与此前读取的一致时提交。")
+        }
+        /// 导入整合包提供的 JVM 参数。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.importModpackJvmArgumentsHelp`.
+        public static var importModpackJvmArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.importModpackJvmArgumentsHelp", table: "CLIInterface", fallback: "导入整合包提供的 JVM 参数。")
+        }
+        /// 包含快照版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.includeSnapshotsHelp`.
+        public static var includeSnapshotsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.includeSnapshotsHelp", table: "CLIInterface", fallback: "包含快照版本。")
+        }
+        /// 包含世界备份。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.includeWorldBackupsHelp`.
+        public static var includeWorldBackupsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.includeWorldBackupsHelp", table: "CLIInterface", fallback: "包含世界备份。")
+        }
+        /// 找不到输入文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.inputFileNotFound`.
+        public static var inputFileNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.inputFileNotFound", table: "CLIInterface", fallback: "找不到输入文件。")
+        }
+        /// 输入超过允许的大小。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.inputSizeLimitExceeded`.
+        public static var inputSizeLimitExceeded: LocalizedMessage {
+            .init(key: "CLIInterface.inputSizeLimitExceeded", table: "CLIInterface", fallback: "输入超过允许的大小。")
+        }
+        /// 归档格式：ruri、complete、multimc、mcbbs 或 mrpack。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceArchiveFormatHelp`.
+        public static var instanceArchiveFormatHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceArchiveFormatHelp", table: "CLIInterface", fallback: "归档格式：ruri、complete、multimc、mcbbs 或 mrpack。")
+        }
+        /// 实例管理与游戏安装
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceCommands`.
+        public static var instanceCommands: LocalizedMessage {
+            .init(key: "CLIInterface.instanceCommands", table: "CLIInterface", fallback: "实例管理与游戏安装")
+        }
+        /// 实例加载器与组件
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceComponentCommands`.
+        public static var instanceComponentCommands: LocalizedMessage {
+            .init(key: "CLIInterface.instanceComponentCommands", table: "CLIInterface", fallback: "实例加载器与组件")
+        }
+        /// 加载器及版本，格式为 kind=version；省略时使用原版。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceComponentLoadersHelp`.
+        public static var instanceComponentLoadersHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceComponentLoadersHelp", table: "CLIInterface", fallback: "加载器及版本，格式为 kind=version；省略时使用原版。")
+        }
+        /// 恢复上一次加载器配置。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceComponentsRestoreHelp`.
+        public static var instanceComponentsRestoreHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceComponentsRestoreHelp", table: "CLIInterface", fallback: "恢复上一次加载器配置。")
+        }
+        /// 替换已安装的加载器组合。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceComponentsSetHelp`.
+        public static var instanceComponentsSetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceComponentsSetHelp", table: "CLIInterface", fallback: "替换已安装的加载器组合。")
+        }
+        /// 查询已安装的加载器及组件备份。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceComponentsShowHelp`.
+        public static var instanceComponentsShowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceComponentsShowHelp", table: "CLIInterface", fallback: "查询已安装的加载器及组件备份。")
+        }
+        /// 列出与游戏兼容的加载器版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceComponentsVersionsHelp`.
+        public static var instanceComponentsVersionsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceComponentsVersionsHelp", table: "CLIInterface", fallback: "列出与游戏兼容的加载器版本。")
+        }
+        /// 将实例复制到指定目录并命名。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceCopyHelp`.
+        public static var instanceCopyHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceCopyHelp", table: "CLIInterface", fallback: "将实例复制到指定目录并命名。")
+        }
+        /// 创建并安装指定名称的实例。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceCreateHelp`.
+        public static var instanceCreateHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceCreateHelp", table: "CLIInterface", fallback: "创建并安装指定名称的实例。")
+        }
+        /// 加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceCreateLoadersHelp`.
+        public static var instanceCreateLoadersHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceCreateLoadersHelp", table: "CLIInterface", fallback: "加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。")
+        }
+        /// 实例 ID 和文件路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceExportArgumentsHelp`.
+        public static var instanceExportArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceExportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和文件路径。")
+        }
+        /// 导出实例归档。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceExportHelp`.
+        public static var instanceExportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceExportHelp", table: "CLIInterface", fallback: "导出实例归档。")
+        }
+        /// PNG 图标文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceIconFileHelp`.
+        public static var instanceIconFileHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceIconFileHelp", table: "CLIInterface", fallback: "PNG 图标文件。")
+        }
+        /// 内置图标形状。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceIconGlyphHelp`.
+        public static var instanceIconGlyphHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceIconGlyphHelp", table: "CLIInterface", fallback: "内置图标形状。")
+        }
+        /// 设置或重置实例图标。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceIconHelp`.
+        public static var instanceIconHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceIconHelp", table: "CLIInterface", fallback: "设置或重置实例图标。")
+        }
+        /// 恢复默认图标。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceIconResetHelp`.
+        public static var instanceIconResetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceIconResetHelp", table: "CLIInterface", fallback: "恢复默认图标。")
+        }
+        /// 请指定 --file、--glyph 或 --reset。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceIconSelectionRequired`.
+        public static var instanceIconSelectionRequired: LocalizedMessage {
+            .init(key: "CLIInterface.instanceIconSelectionRequired", table: "CLIInterface", fallback: "请指定 --file、--glyph 或 --reset。")
+        }
+        /// 内置图标颜色。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceIconTintHelp`.
+        public static var instanceIconTintHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceIconTintHelp", table: "CLIInterface", fallback: "内置图标颜色。")
+        }
+        /// 请指定实例 UUID 或 --name，两者只能选一个。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceIdOrNameRequired`.
+        public static var instanceIdOrNameRequired: LocalizedMessage {
+            .init(key: "CLIInterface.instanceIdOrNameRequired", table: "CLIInterface", fallback: "请指定实例 UUID 或 --name，两者只能选一个。")
+        }
+        /// 目标目录 UUID 或 default。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceImportDirectoryHelp`.
+        public static var instanceImportDirectoryHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceImportDirectoryHelp", table: "CLIInterface", fallback: "目标目录 UUID 或 default。")
+        }
+        /// 将实例归档导入指定目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceImportHelp`.
+        public static var instanceImportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceImportHelp", table: "CLIInterface", fallback: "将实例归档导入指定目录。")
+        }
+        /// 安装尚未完成安装的实例。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceInstallHelp`.
+        public static var instanceInstallHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceInstallHelp", table: "CLIInterface", fallback: "安装尚未完成安装的实例。")
+        }
+        /// 请先安装此实例，再启动游戏。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceInstallRequiredBeforeLaunch`.
+        public static var instanceInstallRequiredBeforeLaunch: LocalizedMessage {
+            .init(key: "CLIInterface.instanceInstallRequiredBeforeLaunch", table: "CLIInterface", fallback: "请先安装此实例，再启动游戏。")
+        }
+        /// 列出托管及已注册的实例。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceListHelp`.
+        public static var instanceListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceListHelp", table: "CLIInterface", fallback: "列出托管及已注册的实例。")
+        }
+        /// 实例 ID 和加载器类型。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceLoaderArgumentsHelp`.
+        public static var instanceLoaderArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceLoaderArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和加载器类型。")
+        }
+        /// 实例位置已发生变化。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceLocationChanged`.
+        public static var instanceLocationChanged: LocalizedMessage {
+            .init(key: "CLIInterface.instanceLocationChanged", table: "CLIInterface", fallback: "实例位置已发生变化。")
+        }
+        /// 将实例移动到另一目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceMoveHelp`.
+        public static var instanceMoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceMoveHelp", table: "CLIInterface", fallback: "将实例移动到另一目录。")
+        }
+        /// 实例名称。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceNameHelp`.
+        public static var instanceNameHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceNameHelp", table: "CLIInterface", fallback: "实例名称。")
+        }
+        /// 通过完整名称查找实例，代替 UUID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceNameLookupHelp`.
+        public static var instanceNameLookupHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceNameLookupHelp", table: "CLIInterface", fallback: "通过完整名称查找实例，代替 UUID。")
+        }
+        /// 找不到实例。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceNotFound`.
+        public static var instanceNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.instanceNotFound", table: "CLIInterface", fallback: "找不到实例。")
+        }
+        /// 实例 ID 和收藏状态，状态为 true 或 false。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instancePinArgumentsHelp`.
+        public static var instancePinArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instancePinArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和收藏状态，状态为 true 或 false。")
+        }
+        /// 设置实例是否固定到主页。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instancePinHelp`.
+        public static var instancePinHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instancePinHelp", table: "CLIInterface", fallback: "设置实例是否固定到主页。")
+        }
+        /// 仅创建实例记录，不下载文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRecordOnlyHelp`.
+        public static var instanceRecordOnlyHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRecordOnlyHelp", table: "CLIInterface", fallback: "仅创建实例记录，不下载文件。")
+        }
+        /// 将实例自有文件移到废纸篓，并移除实例记录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRemoveHelp`.
+        public static var instanceRemoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRemoveHelp", table: "CLIInterface", fallback: "将实例自有文件移到废纸篓，并移除实例记录。")
+        }
+        /// 实例在安装期间被移除。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRemovedDuringInstall`.
+        public static var instanceRemovedDuringInstall: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRemovedDuringInstall", table: "CLIInterface", fallback: "实例在安装期间被移除。")
+        }
+        /// 实例 ID 和新名称。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRenameArgumentsHelp`.
+        public static var instanceRenameArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRenameArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和新名称。")
+        }
+        /// 重命名实例。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRenameHelp`.
+        public static var instanceRenameHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRenameHelp", table: "CLIInterface", fallback: "重命名实例。")
+        }
+        /// 修复实例的安装文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRepairHelp`.
+        public static var instanceRepairHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRepairHelp", table: "CLIInterface", fallback: "修复实例的安装文件。")
+        }
+        /// 实例运行目录
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRunDirectoryCommands`.
+        public static var instanceRunDirectoryCommands: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRunDirectoryCommands", table: "CLIInterface", fallback: "实例运行目录")
+        }
+        /// 实例 ID 和目录模式。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRunDirectoryModeArgumentsHelp`.
+        public static var instanceRunDirectoryModeArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRunDirectoryModeArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和目录模式。")
+        }
+        /// 实例 ID 和目录路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRunDirectoryPathArgumentsHelp`.
+        public static var instanceRunDirectoryPathArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRunDirectoryPathArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和目录路径。")
+        }
+        /// 重新关联已移动的自定义游戏目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRunDirectoryRelocateHelp`.
+        public static var instanceRunDirectoryRelocateHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRunDirectoryRelocateHelp", table: "CLIInterface", fallback: "重新关联已移动的自定义游戏目录。")
+        }
+        /// 切换实例的运行目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRunDirectorySetHelp`.
+        public static var instanceRunDirectorySetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRunDirectorySetHelp", table: "CLIInterface", fallback: "切换实例的运行目录。")
+        }
+        /// 查询实例的游戏目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceRunDirectoryShowHelp`.
+        public static var instanceRunDirectoryShowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceRunDirectoryShowHelp", table: "CLIInterface", fallback: "查询实例的游戏目录。")
+        }
+        /// 选择实例。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceSelectHelp`.
+        public static var instanceSelectHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceSelectHelp", table: "CLIInterface", fallback: "选择实例。")
+        }
+        /// 查询当前选中的实例。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceSelectedHelp`.
+        public static var instanceSelectedHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceSelectedHelp", table: "CLIInterface", fallback: "查询当前选中的实例。")
+        }
+        /// 查询实例详情及文件位置。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceShowHelp`.
+        public static var instanceShowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceShowHelp", table: "CLIInterface", fallback: "查询实例详情及文件位置。")
+        }
+        /// 明确指定目标目录 UUID 或 default。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.instanceTargetDirectoryHelp`.
+        public static var instanceTargetDirectoryHelp: LocalizedMessage {
+            .init(key: "CLIInterface.instanceTargetDirectoryHelp", table: "CLIInterface", fallback: "明确指定目标目录 UUID 或 default。")
+        }
+        /// 组件使用 loader=version 格式；原版无需指定组件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidComponentSpecification`.
+        public static var invalidComponentSpecification: LocalizedMessage {
+            .init(key: "CLIInterface.invalidComponentSpecification", table: "CLIInterface", fallback: "组件使用 loader=version 格式；原版无需指定组件。")
+        }
+        /// %1$@ 的值无效。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidConfigFieldValue`.
+        public static func invalidConfigFieldValue(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.invalidConfigFieldValue", table: "CLIInterface", fallback: "%1$@ 的值无效。", arguments: [.text(value0)])
+        }
+        /// 配置补丁不是有效的 JSON。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidConfigPatchJson`.
+        public static var invalidConfigPatchJson: LocalizedMessage {
+            .init(key: "CLIInterface.invalidConfigPatchJson", table: "CLIInterface", fallback: "配置补丁不是有效的 JSON。")
+        }
+        /// 配置作用域必须为 app、defaults 或 instance:<uuid>。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidConfigScope`.
+        public static var invalidConfigScope: LocalizedMessage {
+            .init(key: "CLIInterface.invalidConfigScope", table: "CLIInterface", fallback: "配置作用域必须为 app、defaults 或 instance:<uuid>。")
+        }
+        /// RURI_DOWNLOAD_SOURCE 的值无效。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidDownloadSourceEnvironment`.
+        public static var invalidDownloadSourceEnvironment: LocalizedMessage {
+            .init(key: "CLIInterface.invalidDownloadSourceEnvironment", table: "CLIInterface", fallback: "RURI_DOWNLOAD_SOURCE 的值无效。")
+        }
+        /// 请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidDownloadUrlSizeOrChecksum`.
+        public static var invalidDownloadUrlSizeOrChecksum: LocalizedMessage {
+            .init(key: "CLIInterface.invalidDownloadUrlSizeOrChecksum", table: "CLIInterface", fallback: "请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。")
+        }
+        /// 游戏版本无效。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidGameVersion`.
+        public static var invalidGameVersion: LocalizedMessage {
+            .init(key: "CLIInterface.invalidGameVersion", table: "CLIInterface", fallback: "游戏版本无效。")
+        }
+        /// 实例名称无效。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidInstanceName`.
+        public static var invalidInstanceName: LocalizedMessage {
+            .init(key: "CLIInterface.invalidInstanceName", table: "CLIInterface", fallback: "实例名称无效。")
+        }
+        /// 登录流程无效，请重新开始。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidLoginFlow`.
+        public static var invalidLoginFlow: LocalizedMessage {
+            .init(key: "CLIInterface.invalidLoginFlow", table: "CLIInterface", fallback: "登录流程无效，请重新开始。")
+        }
+        /// 手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidManualFileSpecification`.
+        public static var invalidManualFileSpecification: LocalizedMessage {
+            .init(key: "CLIInterface.invalidManualFileSpecification", table: "CLIInterface", fallback: "手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。")
+        }
+        /// Microsoft Client ID 必须为 UUID 或空字符串。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidMicrosoftClientId`.
+        public static var invalidMicrosoftClientId: LocalizedMessage {
+            .init(key: "CLIInterface.invalidMicrosoftClientId", table: "CLIInterface", fallback: "Microsoft Client ID 必须为 UUID 或空字符串。")
+        }
+        /// --%1$@ 必须为以下值之一：%2$@。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidOptionChoice`.
+        public static func invalidOptionChoice(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.invalidOptionChoice", table: "CLIInterface", fallback: "--%1$@ 必须为以下值之一：%2$@。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidOutputFormatCombination`.
+        public static var invalidOutputFormatCombination: LocalizedMessage {
+            .init(key: "CLIInterface.invalidOutputFormatCombination", table: "CLIInterface", fallback: "请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。")
+        }
+        /// 目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.invalidRunDirectoryModeOrPath`.
+        public static var invalidRunDirectoryModeOrPath: LocalizedMessage {
+            .init(key: "CLIInterface.invalidRunDirectoryModeOrPath", table: "CLIInterface", fallback: "目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。")
+        }
+        /// 注册已安装的 Java 运行时。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaAddHelp`.
+        public static var javaAddHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaAddHelp", table: "CLIInterface", fallback: "注册已安装的 Java 运行时。")
+        }
+        /// 按架构筛选。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaArchitectureFilterHelp`.
+        public static var javaArchitectureFilterHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaArchitectureFilterHelp", table: "CLIInterface", fallback: "按架构筛选。")
+        }
+        /// 找不到指定的 Java 版本条目。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaCatalogEntryNotFound`.
+        public static var javaCatalogEntryNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.javaCatalogEntryNotFound", table: "CLIInterface", fallback: "找不到指定的 Java 版本条目。")
+        }
+        /// 列出可安装的 Java 运行时。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaCatalogHelp`.
+        public static var javaCatalogHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaCatalogHelp", table: "CLIInterface", fallback: "列出可安装的 Java 运行时。")
+        }
+        /// 检查未完成的安装。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaCheckIncompleteInstallationsHelp`.
+        public static var javaCheckIncompleteInstallationsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaCheckIncompleteInstallationsHelp", table: "CLIInterface", fallback: "检查未完成的安装。")
+        }
+        /// 移除未完成的安装。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaCleanIncompleteInstallationHelp`.
+        public static var javaCleanIncompleteInstallationHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaCleanIncompleteInstallationHelp", table: "CLIInterface", fallback: "移除未完成的安装。")
+        }
+        /// Java 发现、安装与管理
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaCommands`.
+        public static var javaCommands: LocalizedMessage {
+            .init(key: "CLIInterface.javaCommands", table: "CLIInterface", fallback: "Java 发现、安装与管理")
+        }
+        /// 设置默认 Java 选择。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaDefaultHelp`.
+        public static var javaDefaultHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaDefaultHelp", table: "CLIInterface", fallback: "设置默认 Java 选择。")
+        }
+        /// 从手动列表中移除 Java，保留文件及配置引用。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaForgetHelp`.
+        public static var javaForgetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaForgetHelp", table: "CLIInterface", fallback: "从手动列表中移除 Java，保留文件及配置引用。")
+        }
+        /// 按目录中的 ID 安装 Java 运行时。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaInstallHelp`.
+        public static var javaInstallHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaInstallHelp", table: "CLIInterface", fallback: "按目录中的 ID 安装 Java 运行时。")
+        }
+        /// 列出本地 Java 运行时及其来源。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaListHelp`.
+        public static var javaListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaListHelp", table: "CLIInterface", fallback: "列出本地 Java 运行时及其来源。")
+        }
+        /// 按 Java 主版本筛选。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaMajorFilterHelp`.
+        public static var javaMajorFilterHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaMajorFilterHelp", table: "CLIInterface", fallback: "按 Java 主版本筛选。")
+        }
+        /// major 模式需要设置 java.major。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaMajorRequiredForMajorMode`.
+        public static var javaMajorRequiredForMajorMode: LocalizedMessage {
+            .init(key: "CLIInterface.javaMajorRequiredForMajorMode", table: "CLIInterface", fallback: "major 模式需要设置 java.major。")
+        }
+        /// path 模式需要设置 java.path。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaPathRequiredForPathMode`.
+        public static var javaPathRequiredForPathMode: LocalizedMessage {
+            .init(key: "CLIInterface.javaPathRequiredForPathMode", table: "CLIInterface", fallback: "path 模式需要设置 java.path。")
+        }
+        /// 列出引用指定托管 Java 的配置。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaReferencesHelp`.
+        public static var javaReferencesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaReferencesHelp", table: "CLIInterface", fallback: "列出引用指定托管 Java 的配置。")
+        }
+        /// 将托管的 Java 移到废纸篓。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaRemoveHelp`.
+        public static var javaRemoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaRemoveHelp", table: "CLIInterface", fallback: "将托管的 Java 移到废纸篓。")
+        }
+        /// 修复托管的 Java 运行时。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaRepairHelp`.
+        public static var javaRepairHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaRepairHelp", table: "CLIInterface", fallback: "修复托管的 Java 运行时。")
+        }
+        /// 将引用此 Java 的配置重置为自动选择。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.javaResetReferencesHelp`.
+        public static var javaResetReferencesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.javaResetReferencesHelp", table: "CLIInterface", fallback: "将引用此 Java 的配置重置为自动选择。")
+        }
+        /// 在标准输出返回一个 JSON 结果。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.jsonOutputHelp`.
+        public static var jsonOutputHelp: LocalizedMessage {
+            .init(key: "CLIInterface.jsonOutputHelp", table: "CLIInterface", fallback: "在标准输出返回一个 JSON 结果。")
+        }
+        /// 保留当前选中的账户。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.keepCurrentAccountHelp`.
+        public static var keepCurrentAccountHelp: LocalizedMessage {
+            .init(key: "CLIInterface.keepCurrentAccountHelp", table: "CLIInterface", fallback: "保留当前选中的账户。")
+        }
+        /// 移动已提交后保留原始文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.keepSourceAfterMoveHelp`.
+        public static var keepSourceAfterMoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.keepSourceAfterMoveHelp", table: "CLIInterface", fallback: "移动已提交后保留原始文件。")
+        }
+        /// 账户 UUID，默认使用当前账户。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.launchAccountHelp`.
+        public static var launchAccountHelp: LocalizedMessage {
+            .init(key: "CLIInterface.launchAccountHelp", table: "CLIInterface", fallback: "账户 UUID，默认使用当前账户。")
+        }
+        /// 请选择账户，或通过 --account 指定账户。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.launchAccountRequired`.
+        public static var launchAccountRequired: LocalizedMessage {
+            .init(key: "CLIInterface.launchAccountRequired", table: "CLIInterface", fallback: "请选择账户，或通过 --account 指定账户。")
+        }
+        /// 检查实例启动配置，不启动游戏。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.launchCheckHelp`.
+        public static var launchCheckHelp: LocalizedMessage {
+            .init(key: "CLIInterface.launchCheckHelp", table: "CLIInterface", fallback: "检查实例启动配置，不启动游戏。")
+        }
+        /// 启动检查与游戏启动
+        ///
+        /// Resource: `CLIInterface.CLIInterface.launchCommands`.
+        public static var launchCommands: LocalizedMessage {
+            .init(key: "CLIInterface.launchCommands", table: "CLIInterface", fallback: "启动检查与游戏启动")
+        }
+        /// 启动游戏，监控接管后返回。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.launchStartHelp`.
+        public static var launchStartHelp: LocalizedMessage {
+            .init(key: "CLIInterface.launchStartHelp", table: "CLIInterface", fallback: "启动游戏，监控接管后返回。")
+        }
+        /// 游戏库导入的恢复方式。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.libraryImportRecoveryModeHelp`.
+        public static var libraryImportRecoveryModeHelp: LocalizedMessage {
+            .init(key: "CLIInterface.libraryImportRecoveryModeHelp", table: "CLIInterface", fallback: "游戏库导入的恢复方式。")
+        }
+        /// --limit 必须介于 1 和 1000 之间。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.limitOutOfRange`.
+        public static var limitOutOfRange: LocalizedMessage {
+            .init(key: "CLIInterface.limitOutOfRange", table: "CLIInterface", fallback: "--limit 必须介于 1 和 1000 之间。")
+        }
+        /// 按加载器筛选。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.loaderFilterHelp`.
+        public static var loaderFilterHelp: LocalizedMessage {
+            .init(key: "CLIInterface.loaderFilterHelp", table: "CLIInterface", fallback: "按加载器筛选。")
+        }
+        /// 覆盖本地修改需要同时指定 --replace --yes。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.localModificationsReplacementRequiresConfirmation`.
+        public static var localModificationsReplacementRequiresConfirmation: LocalizedMessage {
+            .init(key: "CLIInterface.localModificationsReplacementRequiresConfirmation", table: "CLIInterface", fallback: "覆盖本地修改需要同时指定 --replace --yes。")
+        }
+        /// --follow 需要使用 --output ndjson 或 text。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.logFollowOutputFormatRequired`.
+        public static var logFollowOutputFormatRequired: LocalizedMessage {
+            .init(key: "CLIInterface.logFollowOutputFormatRequired", table: "CLIInterface", fallback: "--follow 需要使用 --output ndjson 或 text。")
+        }
+        /// --lines 必须介于 1 和 10000 之间。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.logLineLimitOutOfRange`.
+        public static var logLineLimitOutOfRange: LocalizedMessage {
+            .init(key: "CLIInterface.logLineLimitOutOfRange", table: "CLIInterface", fallback: "--lines 必须介于 1 和 10000 之间。")
+        }
+        /// 请在同一数据目录中完成登录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.loginDataDirectoryMismatch`.
+        public static var loginDataDirectoryMismatch: LocalizedMessage {
+            .init(key: "CLIInterface.loginDataDirectoryMismatch", table: "CLIInterface", fallback: "请在同一数据目录中完成登录。")
+        }
+        /// 登录流程已过期，请重新开始。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.loginFlowExpired`.
+        public static var loginFlowExpired: LocalizedMessage {
+            .init(key: "CLIInterface.loginFlowExpired", table: "CLIInterface", fallback: "登录流程已过期，请重新开始。")
+        }
+        /// 此登录流程已选择另一角色。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.loginProfileAlreadySelected`.
+        public static var loginProfileAlreadySelected: LocalizedMessage {
+            .init(key: "CLIInterface.loginProfileAlreadySelected", table: "CLIInterface", fallback: "此登录流程已选择另一角色。")
+        }
+        /// 请选择 login start 返回的角色。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.loginProfileSelectionRequired`.
+        public static var loginProfileSelectionRequired: LocalizedMessage {
+            .init(key: "CLIInterface.loginProfileSelectionRequired", table: "CLIInterface", fallback: "请选择 login start 返回的角色。")
+        }
+        /// 登录服务类型。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.loginProviderHelp`.
+        public static var loginProviderHelp: LocalizedMessage {
+            .init(key: "CLIInterface.loginProviderHelp", table: "CLIInterface", fallback: "登录服务类型。")
+        }
+        /// 登录服务器或登录身份已发生变化。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.loginServerOrIdentityChanged`.
+        public static var loginServerOrIdentityChanged: LocalizedMessage {
+            .init(key: "CLIInterface.loginServerOrIdentityChanged", table: "CLIInterface", fallback: "登录服务器或登录身份已发生变化。")
+        }
+        /// 新建的托管目录必须为空。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.managedDirectoryMustBeEmpty`.
+        public static var managedDirectoryMustBeEmpty: LocalizedMessage {
+            .init(key: "CLIInterface.managedDirectoryMustBeEmpty", table: "CLIInterface", fallback: "新建的托管目录必须为空。")
+        }
+        /// 请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.manualContentDownloadRequired`.
+        public static var manualContentDownloadRequired: LocalizedMessage {
+            .init(key: "CLIInterface.manualContentDownloadRequired", table: "CLIInterface", fallback: "请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。")
+        }
+        /// 手动下载的 CurseForge 文件，格式为 fileID=path。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.manualCurseForgeFileHelp`.
+        public static var manualCurseForgeFileHelp: LocalizedMessage {
+            .init(key: "CLIInterface.manualCurseForgeFileHelp", table: "CLIInterface", fallback: "手动下载的 CurseForge 文件，格式为 fileID=path。")
+        }
+        /// 手动下载的整合包归档。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.manualModpackArchiveHelp`.
+        public static var manualModpackArchiveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.manualModpackArchiveHelp", table: "CLIInterface", fallback: "手动下载的整合包归档。")
+        }
+        /// 请下载整合包归档，然后添加 --archive path 再次执行。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.manualModpackDownloadRequired`.
+        public static var manualModpackDownloadRequired: LocalizedMessage {
+            .init(key: "CLIInterface.manualModpackDownloadRequired", table: "CLIInterface", fallback: "请下载整合包归档，然后添加 --archive path 再次执行。")
+        }
+        /// 手动下载的远程版本归档。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.manualModpackUpdateArchiveHelp`.
+        public static var manualModpackUpdateArchiveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.manualModpackUpdateArchiveHelp", table: "CLIInterface", fallback: "手动下载的远程版本归档。")
+        }
+        /// 说明和提示使用的语言。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.messageLanguageHelp`.
+        public static var messageLanguageHelp: LocalizedMessage {
+            .init(key: "CLIInterface.messageLanguageHelp", table: "CLIInterface", fallback: "说明和提示使用的语言。")
+        }
+        /// Microsoft 登录通过浏览器授权，无需密码。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.microsoftLoginUsesBrowser`.
+        public static var microsoftLoginUsesBrowser: LocalizedMessage {
+            .init(key: "CLIInterface.microsoftLoginUsesBrowser", table: "CLIInterface", fallback: "Microsoft 登录通过浏览器授权，无需密码。")
+        }
+        /// 按 Minecraft 版本筛选。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.minecraftVersionFilterHelp`.
+        public static var minecraftVersionFilterHelp: LocalizedMessage {
+            .init(key: "CLIInterface.minecraftVersionFilterHelp", table: "CLIInterface", fallback: "按 Minecraft 版本筛选。")
+        }
+        /// Minecraft 版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.minecraftVersionHelp`.
+        public static var minecraftVersionHelp: LocalizedMessage {
+            .init(key: "CLIInterface.minecraftVersionHelp", table: "CLIInterface", fallback: "Minecraft 版本。")
+        }
+        /// 列出可用的 Minecraft 版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.minecraftVersionsHelp`.
+        public static var minecraftVersionsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.minecraftVersionsHelp", table: "CLIInterface", fallback: "列出可用的 Minecraft 版本。")
+        }
+        /// 缺少参数 %1$@。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.missingArgument`.
+        public static func missingArgument(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.missingArgument", table: "CLIInterface", fallback: "缺少参数 %1$@。", arguments: [.text(value0)])
+        }
+        /// 缺少 --%1$@。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.missingOption`.
+        public static func missingOption(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.missingOption", table: "CLIInterface", fallback: "缺少 --%1$@。", arguments: [.text(value0)])
+        }
+        /// 整合包安装、更新与回退
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackCommands`.
+        public static var modpackCommands: LocalizedMessage {
+            .init(key: "CLIInterface.modpackCommands", table: "CLIInterface", fallback: "整合包安装、更新与回退")
+        }
+        /// 导入本地整合包归档。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackImportHelp`.
+        public static var modpackImportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.modpackImportHelp", table: "CLIInterface", fallback: "导入本地整合包归档。")
+        }
+        /// 下载并安装内容平台上的整合包。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackInstallHelp`.
+        public static var modpackInstallHelp: LocalizedMessage {
+            .init(key: "CLIInterface.modpackInstallHelp", table: "CLIInterface", fallback: "下载并安装内容平台上的整合包。")
+        }
+        /// 此实例没有已安装整合包的元数据。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackMetadataNotFound`.
+        public static var modpackMetadataNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.modpackMetadataNotFound", table: "CLIInterface", fallback: "此实例没有已安装整合包的元数据。")
+        }
+        /// 找不到整合包发布版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackReleaseNotFound`.
+        public static var modpackReleaseNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.modpackReleaseNotFound", table: "CLIInterface", fallback: "找不到整合包发布版本。")
+        }
+        /// 回退上一次整合包更新，保留更新后的本地修改。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackRollbackHelp`.
+        public static var modpackRollbackHelp: LocalizedMessage {
+            .init(key: "CLIInterface.modpackRollbackHelp", table: "CLIInterface", fallback: "回退上一次整合包更新，保留更新后的本地修改。")
+        }
+        /// 查询已安装整合包的元数据。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackShowHelp`.
+        public static var modpackShowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.modpackShowHelp", table: "CLIInterface", fallback: "查询已安装整合包的元数据。")
+        }
+        /// 找不到目标目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackTargetDirectoryNotFound`.
+        public static var modpackTargetDirectoryNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.modpackTargetDirectoryNotFound", table: "CLIInterface", fallback: "找不到目标目录。")
+        }
+        /// 没有可用于回退的整合包更新备份。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackUpdateBackupNotFound`.
+        public static var modpackUpdateBackupNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.modpackUpdateBackupNotFound", table: "CLIInterface", fallback: "没有可用于回退的整合包更新备份。")
+        }
+        /// 本地更新归档。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackUpdateFileHelp`.
+        public static var modpackUpdateFileHelp: LocalizedMessage {
+            .init(key: "CLIInterface.modpackUpdateFileHelp", table: "CLIInterface", fallback: "本地更新归档。")
+        }
+        /// 预览或执行整合包更新。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackUpdateHelp`.
+        public static var modpackUpdateHelp: LocalizedMessage {
+            .init(key: "CLIInterface.modpackUpdateHelp", table: "CLIInterface", fallback: "预览或执行整合包更新。")
+        }
+        /// 请选择本地 --file 或远程 --version。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackUpdateSourceRequired`.
+        public static var modpackUpdateSourceRequired: LocalizedMessage {
+            .init(key: "CLIInterface.modpackUpdateSourceRequired", table: "CLIInterface", fallback: "请选择本地 --file 或远程 --version。")
+        }
+        /// 指定远程发布版本 ID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackUpdateVersionHelp`.
+        public static var modpackUpdateVersionHelp: LocalizedMessage {
+            .init(key: "CLIInterface.modpackUpdateVersionHelp", table: "CLIInterface", fallback: "指定远程发布版本 ID。")
+        }
+        /// 列出已安装整合包的可用版本。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.modpackVersionsHelp`.
+        public static var modpackVersionsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.modpackVersionsHelp", table: "CLIInterface", fallback: "列出已安装整合包的可用版本。")
+        }
+        /// --offset 不能为负数。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.negativeOffset`.
+        public static var negativeOffset: LocalizedMessage {
+            .init(key: "CLIInterface.negativeOffset", table: "CLIInterface", fallback: "--offset 不能为负数。")
+        }
+        /// 新实例名称。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.newInstanceNameHelp`.
+        public static var newInstanceNameHelp: LocalizedMessage {
+            .init(key: "CLIInterface.newInstanceNameHelp", table: "CLIInterface", fallback: "新实例名称。")
+        }
+        /// 操作已取消。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.operationCancelled`.
+        public static var operationCancelled: LocalizedMessage {
+            .init(key: "CLIInterface.operationCancelled", table: "CLIInterface", fallback: "操作已取消。")
+        }
+        /// 无法打开操作锁。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.operationLockOpenFailed`.
+        public static var operationLockOpenFailed: LocalizedMessage {
+            .init(key: "CLIInterface.operationLockOpenFailed", table: "CLIInterface", fallback: "无法打开操作锁。")
+        }
+        /// 输出文件已存在。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.outputFileAlreadyExists`.
+        public static var outputFileAlreadyExists: LocalizedMessage {
+            .init(key: "CLIInterface.outputFileAlreadyExists", table: "CLIInterface", fallback: "输出文件已存在。")
+        }
+        /// 输出格式：text、json 或 ndjson。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.outputFormatHelp`.
+        public static var outputFormatHelp: LocalizedMessage {
+            .init(key: "CLIInterface.outputFormatHelp", table: "CLIInterface", fallback: "输出格式：text、json 或 ndjson。")
+        }
+        /// 从标准输入读取密码。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.passwordStdinHelp`.
+        public static var passwordStdinHelp: LocalizedMessage {
+            .init(key: "CLIInterface.passwordStdinHelp", table: "CLIInterface", fallback: "从标准输入读取密码。")
+        }
+        /// 需要位置参数 %1$@，实际收到 %2$@ 个。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.positionalArgumentCountMismatch`.
+        public static func positionalArgumentCountMismatch(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.positionalArgumentCountMismatch", table: "CLIInterface", fallback: "需要位置参数 %1$@，实际收到 %2$@ 个。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 仅显示存在问题的会话。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.problemSessionsOnlyHelp`.
+        public static var problemSessionsOnlyHelp: LocalizedMessage {
+            .init(key: "CLIInterface.problemSessionsOnlyHelp", table: "CLIInterface", fallback: "仅显示存在问题的会话。")
+        }
+        /// 用于快速游玩的世界文件夹。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.quickPlayWorldHelp`.
+        public static var quickPlayWorldHelp: LocalizedMessage {
+            .init(key: "CLIInterface.quickPlayWorldHelp", table: "CLIInterface", fallback: "用于快速游玩的世界文件夹。")
+        }
+        /// 不在标准错误输出显示进度。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.quietProgressHelp`.
+        public static var quietProgressHelp: LocalizedMessage {
+            .init(key: "CLIInterface.quietProgressHelp", table: "CLIInterface", fallback: "不在标准错误输出显示进度。")
+        }
+        /// 需要重新登录的已有账户。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.reauthenticateAccountHelp`.
+        public static var reauthenticateAccountHelp: LocalizedMessage {
+            .init(key: "CLIInterface.reauthenticateAccountHelp", table: "CLIInterface", fallback: "需要重新登录的已有账户。")
+        }
+        /// 恢复指定的未完成操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.recoveryApplyHelp`.
+        public static var recoveryApplyHelp: LocalizedMessage {
+            .init(key: "CLIInterface.recoveryApplyHelp", table: "CLIInterface", fallback: "恢复指定的未完成操作。")
+        }
+        /// 未完成操作的查询与恢复
+        ///
+        /// Resource: `CLIInterface.CLIInterface.recoveryCommands`.
+        public static var recoveryCommands: LocalizedMessage {
+            .init(key: "CLIInterface.recoveryCommands", table: "CLIInterface", fallback: "未完成操作的查询与恢复")
+        }
+        /// 仅检查指定实例。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.recoveryInstanceFilterHelp`.
+        public static var recoveryInstanceFilterHelp: LocalizedMessage {
+            .init(key: "CLIInterface.recoveryInstanceFilterHelp", table: "CLIInterface", fallback: "仅检查指定实例。")
+        }
+        /// 列出未完成的数据操作及会话。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.recoveryListHelp`.
+        public static var recoveryListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.recoveryListHelp", table: "CLIInterface", fallback: "列出未完成的数据操作及会话。")
+        }
+        /// 恢复类型和目标 ID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.recoveryTargetArgumentsHelp`.
+        public static var recoveryTargetArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.recoveryTargetArgumentsHelp", table: "CLIInterface", fallback: "恢复类型和目标 ID。")
+        }
+        /// 事务 UUID 或会话 UUID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.recoveryTransactionHelp`.
+        public static var recoveryTransactionHelp: LocalizedMessage {
+            .init(key: "CLIInterface.recoveryTransactionHelp", table: "CLIInterface", fallback: "事务 UUID 或会话 UUID。")
+        }
+        /// 此恢复操作需要指定 recovery list 返回的 --transaction。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.recoveryTransactionRequired`.
+        public static var recoveryTransactionRequired: LocalizedMessage {
+            .init(key: "CLIInterface.recoveryTransactionRequired", table: "CLIInterface", fallback: "此恢复操作需要指定 recovery list 返回的 --transaction。")
+        }
+        /// 覆盖本地修改过的文件，不保留本地修改。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.replaceLocalModificationsHelp`.
+        public static var replaceLocalModificationsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.replaceLocalModificationsHelp", table: "CLIInterface", fallback: "覆盖本地修改过的文件，不保留本地修改。")
+        }
+        /// 另一个进程正在使用此资源。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.resourceInUseByAnotherProcess`.
+        public static var resourceInUseByAnotherProcess: LocalizedMessage {
+            .init(key: "CLIInterface.resourceInUseByAnotherProcess", table: "CLIInterface", fallback: "另一个进程正在使用此资源。")
+        }
+        /// 最多返回的数量，范围为 1 至 1000，默认 50。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.resultLimitHelp`.
+        public static var resultLimitHelp: LocalizedMessage {
+            .init(key: "CLIInterface.resultLimitHelp", table: "CLIInterface", fallback: "最多返回的数量，范围为 1 至 1000，默认 50。")
+        }
+        /// 跳过的结果数量，默认 0。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.resultOffsetHelp`.
+        public static var resultOffsetHelp: LocalizedMessage {
+            .init(key: "CLIInterface.resultOffsetHelp", table: "CLIInterface", fallback: "跳过的结果数量，默认 0。")
+        }
+        /// Ruri 启动器命令行接口。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.rootCommandHelp`.
+        public static var rootCommandHelp: LocalizedMessage {
+            .init(key: "CLIInterface.rootCommandHelp", table: "CLIInterface", fallback: "Ruri 启动器命令行接口。")
+        }
+        /// 查询命令及其机器接口。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schemaCommandHelp`.
+        public static var schemaCommandHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schemaCommandHelp", table: "CLIInterface", fallback: "查询命令及其机器接口。")
+        }
+        /// 投影文件管理
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicCommands`.
+        public static var schematicCommands: LocalizedMessage {
+            .init(key: "CLIInterface.schematicCommands", table: "CLIInterface", fallback: "投影文件管理")
+        }
+        /// 创建投影文件夹。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicCreateFolderHelp`.
+        public static var schematicCreateFolderHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicCreateFolderHelp", table: "CLIInterface", fallback: "创建投影文件夹。")
+        }
+        /// 实例 ID、投影路径和导出文件路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicExportArgumentsHelp`.
+        public static var schematicExportArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicExportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、投影路径和导出文件路径。")
+        }
+        /// 导出投影文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicExportHelp`.
+        public static var schematicExportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicExportHelp", table: "CLIInterface", fallback: "导出投影文件。")
+        }
+        /// 实例 ID 和文件夹名称。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicFolderArgumentsHelp`.
+        public static var schematicFolderArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicFolderArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和文件夹名称。")
+        }
+        /// 导入投影文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicImportHelp`.
+        public static var schematicImportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicImportHelp", table: "CLIInterface", fallback: "导入投影文件。")
+        }
+        /// 列出投影文件及文件夹。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicListHelp`.
+        public static var schematicListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicListHelp", table: "CLIInterface", fallback: "列出投影文件及文件夹。")
+        }
+        /// 找不到投影文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicNotFound`.
+        public static var schematicNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.schematicNotFound", table: "CLIInterface", fallback: "找不到投影文件。")
+        }
+        /// 父目录的相对路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicParentDirectoryHelp`.
+        public static var schematicParentDirectoryHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicParentDirectoryHelp", table: "CLIInterface", fallback: "父目录的相对路径。")
+        }
+        /// 投影目录的相对路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicRelativePathHelp`.
+        public static var schematicRelativePathHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicRelativePathHelp", table: "CLIInterface", fallback: "投影目录的相对路径。")
+        }
+        /// 将投影文件或文件夹移到废纸篓。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicRemoveHelp`.
+        public static var schematicRemoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicRemoveHelp", table: "CLIInterface", fallback: "将投影文件或文件夹移到废纸篓。")
+        }
+        /// 查询投影文件的元数据。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.schematicShowHelp`.
+        public static var schematicShowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.schematicShowHelp", table: "CLIInterface", fallback: "查询投影文件的元数据。")
+        }
+        /// 找不到部分所选文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.selectedContentFilesNotFound`.
+        public static var selectedContentFilesNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.selectedContentFilesNotFound", table: "CLIInterface", fallback: "找不到部分所选文件。")
+        }
+        /// 所选版本与实例不兼容。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.selectedVersionIncompatible`.
+        public static var selectedVersionIncompatible: LocalizedMessage {
+            .init(key: "CLIInterface.selectedVersionIncompatible", table: "CLIInterface", fallback: "所选版本与实例不兼容。")
+        }
+        /// 分析已记录的启动与游戏诊断信息。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionAnalyzeHelp`.
+        public static var sessionAnalyzeHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionAnalyzeHelp", table: "CLIInterface", fallback: "分析已记录的启动与游戏诊断信息。")
+        }
+        /// 游戏会话、日志与诊断
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionCommands`.
+        public static var sessionCommands: LocalizedMessage {
+            .init(key: "CLIInterface.sessionCommands", table: "CLIInterface", fallback: "游戏会话、日志与诊断")
+        }
+        /// 实例 ID、会话 ID 和文件路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionExportArgumentsHelp`.
+        public static var sessionExportArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionExportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、会话 ID 和文件路径。")
+        }
+        /// 导出脱敏后的诊断包。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionExportHelp`.
+        public static var sessionExportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionExportHelp", table: "CLIInterface", fallback: "导出脱敏后的诊断包。")
+        }
+        /// 按实例 UUID 筛选。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionInstanceIdFilterHelp`.
+        public static var sessionInstanceIdFilterHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionInstanceIdFilterHelp", table: "CLIInterface", fallback: "按实例 UUID 筛选。")
+        }
+        /// 按实例名称筛选。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionInstanceNameFilterHelp`.
+        public static var sessionInstanceNameFilterHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionInstanceNameFilterHelp", table: "CLIInterface", fallback: "按实例名称筛选。")
+        }
+        /// 强制停止游戏进程。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionKillHelp`.
+        public static var sessionKillHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionKillHelp", table: "CLIInterface", fallback: "强制停止游戏进程。")
+        }
+        /// 列出游戏会话。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionListHelp`.
+        public static var sessionListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionListHelp", table: "CLIInterface", fallback: "列出游戏会话。")
+        }
+        /// 跟随日志直到会话结束，使用 text 或 ndjson 格式。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionLogFollowHelp`.
+        public static var sessionLogFollowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionLogFollowHelp", table: "CLIInterface", fallback: "跟随日志直到会话结束，使用 text 或 ndjson 格式。")
+        }
+        /// 最多读取的末尾行数，默认 200。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionLogLineLimitHelp`.
+        public static var sessionLogLineLimitHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionLogLineLimitHelp", table: "CLIInterface", fallback: "最多读取的末尾行数，默认 200。")
+        }
+        /// 日志来源。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionLogSourceHelp`.
+        public static var sessionLogSourceHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionLogSourceHelp", table: "CLIInterface", fallback: "日志来源。")
+        }
+        /// 读取或持续跟随会话日志。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionLogsHelp`.
+        public static var sessionLogsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionLogsHelp", table: "CLIInterface", fallback: "读取或持续跟随会话日志。")
+        }
+        /// 监控进程已不可用。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionMonitorUnavailable`.
+        public static var sessionMonitorUnavailable: LocalizedMessage {
+            .init(key: "CLIInterface.sessionMonitorUnavailable", table: "CLIInterface", fallback: "监控进程已不可用。")
+        }
+        /// 查询游戏会话详情。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionShowHelp`.
+        public static var sessionShowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionShowHelp", table: "CLIInterface", fallback: "查询游戏会话详情。")
+        }
+        /// 请求游戏正常退出。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionStopHelp`.
+        public static var sessionStopHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionStopHelp", table: "CLIInterface", fallback: "请求游戏正常退出。")
+        }
+        /// 实例 ID 和会话 ID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionTargetArgumentsHelp`.
+        public static var sessionTargetArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionTargetArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和会话 ID。")
+        }
+        /// 等待监控记录游戏退出。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.sessionWaitHelp`.
+        public static var sessionWaitHelp: LocalizedMessage {
+            .init(key: "CLIInterface.sessionWaitHelp", table: "CLIInterface", fallback: "等待监控记录游戏退出。")
+        }
+        /// 显示环境变量的值。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.showEnvironmentValuesHelp`.
+        public static var showEnvironmentValuesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.showEnvironmentValuesHelp", table: "CLIInterface", fallback: "显示环境变量的值。")
+        }
+        /// 读取后状态已发生变化。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.stateChangedSinceRead`.
+        public static var stateChangedSinceRead: LocalizedMessage {
+            .init(key: "CLIInterface.stateChangedSinceRead", table: "CLIInterface", fallback: "读取后状态已发生变化。")
+        }
+        /// 目标目录已被移除。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.targetDirectoryRemoved`.
+        public static var targetDirectoryRemoved: LocalizedMessage {
+            .init(key: "CLIInterface.targetDirectoryRemoved", table: "CLIInterface", fallback: "目标目录已被移除。")
+        }
+        /// 检查此数据前，必须先恢复未完成的操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unfinishedOperationRecoveryRequired`.
+        public static var unfinishedOperationRecoveryRequired: LocalizedMessage {
+            .init(key: "CLIInterface.unfinishedOperationRecoveryRequired", table: "CLIInterface", fallback: "检查此数据前，必须先恢复未完成的操作。")
+        }
+        /// 卸载
+        ///
+        /// Resource: `CLIInterface.CLIInterface.uninstallAction`.
+        public static var uninstallAction: LocalizedMessage {
+            .init(key: "CLIInterface.uninstallAction", table: "CLIInterface", fallback: "卸载")
+        }
+        /// 未知账户操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownAccountAction`.
+        public static var unknownAccountAction: LocalizedMessage {
+            .init(key: "CLIInterface.unknownAccountAction", table: "CLIInterface", fallback: "未知账户操作。")
+        }
+        /// 未知命令。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownCommand`.
+        public static var unknownCommand: LocalizedMessage {
+            .init(key: "CLIInterface.unknownCommand", table: "CLIInterface", fallback: "未知命令。")
+        }
+        /// 未知命令路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownCommandPath`.
+        public static var unknownCommandPath: LocalizedMessage {
+            .init(key: "CLIInterface.unknownCommandPath", table: "CLIInterface", fallback: "未知命令路径。")
+        }
+        /// 未知配置字段。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownConfigField`.
+        public static var unknownConfigField: LocalizedMessage {
+            .init(key: "CLIInterface.unknownConfigField", table: "CLIInterface", fallback: "未知配置字段。")
+        }
+        /// 补丁包含未知操作，请使用 set、reset 或 inherit。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownConfigPatchOperation`.
+        public static var unknownConfigPatchOperation: LocalizedMessage {
+            .init(key: "CLIInterface.unknownConfigPatchOperation", table: "CLIInterface", fallback: "补丁包含未知操作，请使用 set、reset 或 inherit。")
+        }
+        /// 未知内容操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownContentAction`.
+        public static var unknownContentAction: LocalizedMessage {
+            .init(key: "CLIInterface.unknownContentAction", table: "CLIInterface", fallback: "未知内容操作。")
+        }
+        /// 未知数据包操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownDataPackAction`.
+        public static var unknownDataPackAction: LocalizedMessage {
+            .init(key: "CLIInterface.unknownDataPackAction", table: "CLIInterface", fallback: "未知数据包操作。")
+        }
+        /// 未知目录操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownDirectoryAction`.
+        public static var unknownDirectoryAction: LocalizedMessage {
+            .init(key: "CLIInterface.unknownDirectoryAction", table: "CLIInterface", fallback: "未知目录操作。")
+        }
+        /// 未知图标形状或颜色。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownIconGlyphOrTint`.
+        public static var unknownIconGlyphOrTint: LocalizedMessage {
+            .init(key: "CLIInterface.unknownIconGlyphOrTint", table: "CLIInterface", fallback: "未知图标形状或颜色。")
+        }
+        /// 未知实例操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownInstanceAction`.
+        public static var unknownInstanceAction: LocalizedMessage {
+            .init(key: "CLIInterface.unknownInstanceAction", table: "CLIInterface", fallback: "未知实例操作。")
+        }
+        /// 未知 Java 操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownJavaAction`.
+        public static var unknownJavaAction: LocalizedMessage {
+            .init(key: "CLIInterface.unknownJavaAction", table: "CLIInterface", fallback: "未知 Java 操作。")
+        }
+        /// 未知加载器。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownLoader`.
+        public static var unknownLoader: LocalizedMessage {
+            .init(key: "CLIInterface.unknownLoader", table: "CLIInterface", fallback: "未知加载器。")
+        }
+        /// 未知配置字段：%1$@。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownNamedConfigField`.
+        public static func unknownNamedConfigField(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.unknownNamedConfigField", table: "CLIInterface", fallback: "未知配置字段：%1$@。", arguments: [.text(value0)])
+        }
+        /// 未知或重复的配置字段：%1$@。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownOrDuplicateConfigField`.
+        public static func unknownOrDuplicateConfigField(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.unknownOrDuplicateConfigField", table: "CLIInterface", fallback: "未知或重复的配置字段：%1$@。", arguments: [.text(value0)])
+        }
+        /// 未知或空的配置组：%1$@。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownOrEmptyConfigGroup`.
+        public static func unknownOrEmptyConfigGroup(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.unknownOrEmptyConfigGroup", table: "CLIInterface", fallback: "未知或空的配置组：%1$@。", arguments: [.text(value0)])
+        }
+        /// 未知恢复类型。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownRecoveryKind`.
+        public static var unknownRecoveryKind: LocalizedMessage {
+            .init(key: "CLIInterface.unknownRecoveryKind", table: "CLIInterface", fallback: "未知恢复类型。")
+        }
+        /// 未知会话操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownSessionAction`.
+        public static var unknownSessionAction: LocalizedMessage {
+            .init(key: "CLIInterface.unknownSessionAction", table: "CLIInterface", fallback: "未知会话操作。")
+        }
+        /// 未知世界操作。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unknownWorldAction`.
+        public static var unknownWorldAction: LocalizedMessage {
+            .init(key: "CLIInterface.unknownWorldAction", table: "CLIInterface", fallback: "未知世界操作。")
+        }
+        /// 不支持此语言。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.unsupportedLanguage`.
+        public static var unsupportedLanguage: LocalizedMessage {
+            .init(key: "CLIInterface.unsupportedLanguage", table: "CLIInterface", fallback: "不支持此语言。")
+        }
+        /// 更新该类型的全部文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.updateAllContentFilesHelp`.
+        public static var updateAllContentFilesHelp: LocalizedMessage {
+            .init(key: "CLIInterface.updateAllContentFilesHelp", table: "CLIInterface", fallback: "更新该类型的全部文件。")
+        }
+        /// 需要有效的 UUID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.validUuidRequired`.
+        public static var validUuidRequired: LocalizedMessage {
+            .init(key: "CLIInterface.validUuidRequired", table: "CLIInterface", fallback: "需要有效的 UUID。")
+        }
+        /// 实例 ID 和备份 ID。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldBackupArgumentsHelp`.
+        public static var worldBackupArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldBackupArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和备份 ID。")
+        }
+        /// 世界备份与恢复
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldBackupCommands`.
+        public static var worldBackupCommands: LocalizedMessage {
+            .init(key: "CLIInterface.worldBackupCommands", table: "CLIInterface", fallback: "世界备份与恢复")
+        }
+        /// 备份世界。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldBackupCreateHelp`.
+        public static var worldBackupCreateHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldBackupCreateHelp", table: "CLIInterface", fallback: "备份世界。")
+        }
+        /// 列出世界备份。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldBackupListHelp`.
+        public static var worldBackupListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldBackupListHelp", table: "CLIInterface", fallback: "列出世界备份。")
+        }
+        /// 找不到备份。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldBackupNotFound`.
+        public static var worldBackupNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.worldBackupNotFound", table: "CLIInterface", fallback: "找不到备份。")
+        }
+        /// 可选的备份原因。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldBackupReasonHelp`.
+        public static var worldBackupReasonHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldBackupReasonHelp", table: "CLIInterface", fallback: "可选的备份原因。")
+        }
+        /// 将世界备份移到废纸篓。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldBackupRemoveHelp`.
+        public static var worldBackupRemoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldBackupRemoveHelp", table: "CLIInterface", fallback: "将世界备份移到废纸篓。")
+        }
+        /// 覆盖已有世界。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldBackupReplaceHelp`.
+        public static var worldBackupReplaceHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldBackupReplaceHelp", table: "CLIInterface", fallback: "覆盖已有世界。")
+        }
+        /// 恢复备份，覆盖已有世界时需要明确确认。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldBackupRestoreHelp`.
+        public static var worldBackupRestoreHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldBackupRestoreHelp", table: "CLIInterface", fallback: "恢复备份，覆盖已有世界时需要明确确认。")
+        }
+        /// 世界管理、导入导出与备份
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldCommands`.
+        public static var worldCommands: LocalizedMessage {
+            .init(key: "CLIInterface.worldCommands", table: "CLIInterface", fallback: "世界管理、导入导出与备份")
+        }
+        /// 实例 ID、世界文件夹和文件路径。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldExportArgumentsHelp`.
+        public static var worldExportArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldExportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、世界文件夹和文件路径。")
+        }
+        /// 导出世界归档。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldExportHelp`.
+        public static var worldExportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldExportHelp", table: "CLIInterface", fallback: "导出世界归档。")
+        }
+        /// 实例 ID 和世界文件夹。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldFolderArgumentsHelp`.
+        public static var worldFolderArgumentsHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldFolderArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和世界文件夹。")
+        }
+        /// 导入世界归档或目录。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldImportHelp`.
+        public static var worldImportHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldImportHelp", table: "CLIInterface", fallback: "导入世界归档或目录。")
+        }
+        /// 列出实例中的世界。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldListHelp`.
+        public static var worldListHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldListHelp", table: "CLIInterface", fallback: "列出实例中的世界。")
+        }
+        /// 找不到世界。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldNotFound`.
+        public static var worldNotFound: LocalizedMessage {
+            .init(key: "CLIInterface.worldNotFound", table: "CLIInterface", fallback: "找不到世界。")
+        }
+        /// 将世界移到废纸篓。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldRemoveHelp`.
+        public static var worldRemoveHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldRemoveHelp", table: "CLIInterface", fallback: "将世界移到废纸篓。")
+        }
+        /// 查询世界详情。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.worldShowHelp`.
+        public static var worldShowHelp: LocalizedMessage {
+            .init(key: "CLIInterface.worldShowHelp", table: "CLIInterface", fallback: "查询世界详情。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "CLIInterface:cliInterface.t386cf3b4f8ac": .init("操作已取消。", []),
-            "CLIInterface:cliInterface.t066f88703d3a": .init("未知命令路径。", []),
-            "CLIInterface:cliInterface.t55d7eb65faaa": .init("不支持此语言。", []),
-            "CLIInterface:cliInterface.t616e37d3d71a": .init("未知命令。", []),
-            "CLIInterface:cliInterface.t0719f30a146c": .init("在标准输出返回一个 JSON 结果。", []),
-            "CLIInterface:cliInterface.t0232e54a0c07": .init("输出格式：text、json 或 ndjson。", []),
-            "CLIInterface:cliInterface.tfeeb5f4ef393": .init("启动器数据目录，优先于 RURI_DATA_DIR。", []),
-            "CLIInterface:cliInterface.t83e479a9529d": .init("说明和提示使用的语言。", []),
-            "CLIInterface:cliInterface.t1dfd9c76d588": .init("不在标准错误输出显示进度。", []),
-            "CLIInterface:cliInterface.tc3f4b95955b1": .init("缺少 --%1$@。", [.text]),
-            "CLIInterface:cliInterface.t883e96f211e4": .init("缺少参数 %1$@。", [.text]),
-            "CLIInterface:cliInterface.t8c27fffd692c": .init("需要位置参数 %1$@，实际收到 %2$@ 个。", [.text, .text]),
-            "CLIInterface:cliInterface.te36f73cbdb89": .init("请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。", []),
-            "CLIInterface:cliInterface.te66506826636": .init("--%1$@ 必须为以下值之一：%2$@。", [.text, .text]),
-            "CLIInterface:cliInterface.t73e3848bbeee": .init("--limit 必须介于 1 和 1000 之间。", []),
-            "CLIInterface:cliInterface.td3901a3793d1": .init("--offset 不能为负数。", []),
-            "CLIInterface:cliInterface.tf2d2570879da": .init("此操作需要 --yes，可先使用 --dry-run 预览。", []),
-            "CLIInterface:cliInterface.tfd63207de5ca": .init("查询命令及其机器接口。", []),
-            "CLIInterface:cliInterface.t907f38578610": .init("可选的资源、动作和子动作。", []),
-            "CLIInterface:cliInterface.t04f3e8ad5625": .init("显示应用及命令行工具的版本和路径。", []),
-            "CLIInterface:cliInterface.t0adf2f545bf7": .init("读取应用的界面语言。", []),
-            "CLIInterface:cliInterface.t56774fcdd554": .init("设置应用语言，重启后生效。", []),
-            "CLIInterface:cliInterface.t6034a698016d": .init("预览操作，不更改用户数据。", []),
-            "CLIInterface:cliInterface.tb15b5698e07c": .init("检查命令行工具及 PATH。", []),
-            "CLIInterface:cliInterface.t05715f352213": .init("安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。", []),
-            "CLIInterface:cliInterface.t6edc04f9cc0c": .init("命令安装目录，默认为 /usr/local/bin。", []),
-            "CLIInterface:cliInterface.t32373072cae3": .init("卸载命令链接，仅移除属于 Ruri 的链接。", []),
-            "CLIInterface:cliInterface.t7736b5280e58": .init("命令安装目录，默认为 /usr/local/bin。", []),
-            "CLIInterface:cliInterface.t3b0368de0fdf": .init("确认删除或覆盖操作。", []),
-            "CLIInterface:cliInterface.teaca59ff6999": .init("应用界面语言", []),
-            "CLIInterface:cliInterface.t64c4a55a8346": .init("应用信息与语言设置", []),
-            "CLIInterface:cliInterface.td9fc3f8ff28d": .init("命令行工具的安装与卸载", []),
-            "CLIInterface:cliInterface.ta03f160849e6": .init("Ruri 启动器命令行接口。", []),
-            "CLIInterface:cliInterface.t53102783ab6d": .init("找不到应用内的命令行工具。", []),
-            "CLIInterface:cliInterface.tcef88e8371f1": .init("命令行工具不存在。", []),
-            "CLIInterface:cliInterface.t93432f8e8264": .init("目标位置不是 Ruri 创建的链接。", []),
-            "CLIInterface:cliInterface.t301c72c06b6d": .init("无法安装命令行工具链接。", []),
-            "CLIInterface:cliInterface.te99b33ffd7c8": .init("卸载期间命令行工具链接发生了变化。", []),
-            "CLIInterface:cliInterface.teff59600ae41": .init("无法打开操作锁。", []),
-            "CLIInterface:cliInterface.tce7693c68759": .init("另一个进程正在使用此资源。", []),
-            "CLIInterface:cliInterface.t9b80abd0b1ac": .init("查询显式配置、有效配置及继承来源。", []),
-            "CLIInterface:cliInterface.t9f1f1df0e83d": .init("配置作用域：app、defaults 或 instance:<uuid>。", []),
-            "CLIInterface:cliInterface.t9180c54b32fc": .init("显示环境变量的值。", []),
-            "CLIInterface:cliInterface.t51d568cf62ef": .init("使用 JSON 值设置一个配置字段。", []),
-            "CLIInterface:cliInterface.tc865886779a0": .init("仅当状态版本与此前读取的一致时提交。", []),
-            "CLIInterface:cliInterface.t3a7dba9c3050": .init("配置字段及 JSON 值。", []),
-            "CLIInterface:cliInterface.t22ad2905d16d": .init("原子应用 JSON 配置补丁。", []),
-            "CLIInterface:cliInterface.t149625e63af0": .init("JSON 补丁文件；使用 - 从标准输入读取。", []),
-            "CLIInterface:cliInterface.t620fab80a2bb": .init("将配置字段或组重置为内置默认值。", []),
-            "CLIInterface:cliInterface.te7f60fe2aebd": .init("恢复实例配置组的继承。", []),
-            "CLIInterface:cliInterface.t1fcd3e7a6ffc": .init("全局设置、默认配置与实例覆盖", []),
-            "CLIInterface:cliInterface.tdf61274dcc9c": .init("未知配置字段。", []),
-            "CLIInterface:cliInterface.te3e619f346d3": .init("配置值必须是 JSON；字符串值需要保留双引号。", []),
-            "CLIInterface:cliInterface.t64229bd16ecc": .init("配置补丁不是有效的 JSON。", []),
-            "CLIInterface:cliInterface.t332cdb6a53b4": .init("需要有效的 UUID。", []),
-            "CLIInterface:cliInterface.tf7eb23752b1e": .init("输入超过允许的大小。", []),
-            "CLIInterface:cliInterface.te8a7227e2180": .init("读取后状态已发生变化。", []),
-            "CLIInterface:cliInterface.t8568ceb9ae27": .init("补丁包含未知操作，请使用 set、reset 或 inherit。", []),
-            "CLIInterface:cliInterface.tba308ed7fb67": .init("配置字段到值的映射对象", []),
-            "CLIInterface:cliInterface.tba6d0ed49ef6": .init("配置字段或组的名称", []),
-            "CLIInterface:cliInterface.t54e4e046502f": .init("实例配置组的名称，仅适用于实例", []),
-            "CLIInterface:cliInterface.te2e236614526": .init("配置作用域必须为 app、defaults 或 instance:<uuid>。", []),
-            "CLIInterface:cliInterface.t491b2168687b": .init("找不到实例。", []),
-            "CLIInterface:cliInterface.t41f1a159c375": .init("未知或空的配置组：%1$@。", [.text]),
-            "CLIInterface:cliInterface.t0e5f6b9ca429": .init("未知或重复的配置字段：%1$@。", [.text]),
-            "CLIInterface:cliInterface.t0199982aa94e": .init("inherit 仅适用于完整的实例配置组。", []),
-            "CLIInterface:cliInterface.tca2c20d623be": .init("未知配置字段：%1$@。", [.text]),
-            "CLIInterface:cliInterface.ta78e60d41732": .init("针对 %1$@ 的补丁操作相互冲突。", [.text]),
-            "CLIInterface:cliInterface.t62fca6b0b13b": .init("%1$@ 的值无效。", [.text]),
-            "CLIInterface:cliInterface.t1f94c2f53310": .init("Microsoft Client ID 必须为 UUID 或空字符串。", []),
-            "CLIInterface:cliInterface.t9b199fcf9a1f": .init("major 模式需要设置 java.major。", []),
-            "CLIInterface:cliInterface.t15b3dd14487d": .init("path 模式需要设置 java.path。", []),
-            "CLIInterface:cliInterface.t163f689a3d2f": .init("列出托管及已注册的实例。", []),
-            "CLIInterface:cliInterface.t61c2b6ad309c": .init("按完整名称筛选。", []),
-            "CLIInterface:cliInterface.t3a0b2a4eac30": .init("按目录 UUID 或 default 筛选。", []),
-            "CLIInterface:cliInterface.te46ca00ec899": .init("最多返回的数量，范围为 1 至 1000，默认 50。", []),
-            "CLIInterface:cliInterface.t184bd8d0fe9d": .init("跳过的结果数量，默认 0。", []),
-            "CLIInterface:cliInterface.ta412189d9e76": .init("返回全部结果。", []),
-            "CLIInterface:cliInterface.t1a9316dc0247": .init("查询当前选中的实例。", []),
-            "CLIInterface:cliInterface.td25fbbc9aa83": .init("查询实例详情及文件位置。", []),
-            "CLIInterface:cliInterface.t554bb290d490": .init("通过完整名称查找实例，代替 UUID。", []),
-            "CLIInterface:cliInterface.t309b2060e6e7": .init("列出可用的 Minecraft 版本。", []),
-            "CLIInterface:cliInterface.t0f6dcda14ae4": .init("包含快照版本。", []),
-            "CLIInterface:cliInterface.tea647925f201": .init("创建并安装指定名称的实例。", []),
-            "CLIInterface:cliInterface.tf78b43b0ee95": .init("实例名称。", []),
-            "CLIInterface:cliInterface.tc32a76745397": .init("Minecraft 版本。", []),
-            "CLIInterface:cliInterface.tcba396edfba1": .init("明确指定目标目录 UUID 或 default。", []),
-            "CLIInterface:cliInterface.tc54f734a37a6": .init("加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。", []),
-            "CLIInterface:cliInterface.td183fd7d75d0": .init("仅创建实例记录，不下载文件。", []),
-            "CLIInterface:cliInterface.tc5757d580bc3": .init("安装尚未完成安装的实例。", []),
-            "CLIInterface:cliInterface.te334b8a18014": .init("修复实例的安装文件。", []),
-            "CLIInterface:cliInterface.ta4178213b601": .init("选择实例。", []),
-            "CLIInterface:cliInterface.t5ba0c4853561": .init("重命名实例。", []),
-            "CLIInterface:cliInterface.tb19f8bbe0060": .init("实例 ID 和新名称。", []),
-            "CLIInterface:cliInterface.t850a4e6bffbd": .init("设置实例是否固定到主页。", []),
-            "CLIInterface:cliInterface.t07e88e1b19e9": .init("实例 ID 和收藏状态，状态为 true 或 false。", []),
-            "CLIInterface:cliInterface.t1e047c3f4441": .init("将实例自有文件移到废纸篓，并移除实例记录。", []),
-            "CLIInterface:cliInterface.t2774fd42ed73": .init("设置或重置实例图标。", []),
-            "CLIInterface:cliInterface.tc9dade836bbe": .init("PNG 图标文件。", []),
-            "CLIInterface:cliInterface.t4888fb1eb4ed": .init("内置图标形状。", []),
-            "CLIInterface:cliInterface.t44893043de60": .init("内置图标颜色。", []),
-            "CLIInterface:cliInterface.t22cb6cbb2d9e": .init("恢复默认图标。", []),
-            "CLIInterface:cliInterface.ta496dc81dcac": .init("将实例复制到指定目录并命名。", []),
-            "CLIInterface:cliInterface.td52e9c9dbb40": .init("新实例名称。", []),
-            "CLIInterface:cliInterface.t874415ccd0ab": .init("不包含世界存档。", []),
-            "CLIInterface:cliInterface.t4829b4f8f896": .init("包含世界备份。", []),
-            "CLIInterface:cliInterface.t2aee4e3b9cb2": .init("将实例移动到另一目录。", []),
-            "CLIInterface:cliInterface.t8f4cf0564496": .init("导出实例归档。", []),
-            "CLIInterface:cliInterface.t148d4a105bd2": .init("归档格式：ruri、complete、multimc、mcbbs 或 mrpack。", []),
-            "CLIInterface:cliInterface.tc48ebcacc9f3": .init("实例 ID 和文件路径。", []),
-            "CLIInterface:cliInterface.t94761d5853b8": .init("查询已安装的加载器及组件备份。", []),
-            "CLIInterface:cliInterface.t66e7670cbafe": .init("列出与游戏兼容的加载器版本。", []),
-            "CLIInterface:cliInterface.t8ca25fc9cedc": .init("实例 ID 和加载器类型。", []),
-            "CLIInterface:cliInterface.td7622dae9d70": .init("替换已安装的加载器组合。", []),
-            "CLIInterface:cliInterface.t4465e709e830": .init("加载器及版本，格式为 kind=version；省略时使用原版。", []),
-            "CLIInterface:cliInterface.t3d825619ad66": .init("恢复上一次加载器配置。", []),
-            "CLIInterface:cliInterface.t336d8b6931f5": .init("实例加载器与组件", []),
-            "CLIInterface:cliInterface.tea19eba1f497": .init("实例管理与游戏安装", []),
-            "CLIInterface:cliInterface.t79f4a3aa9493": .init("请指定实例 UUID 或 --name，两者只能选一个。", []),
-            "CLIInterface:cliInterface.t188ae1e6f458": .init("请使用 true 或 false。", []),
-            "CLIInterface:cliInterface.tf996e1aeec0d": .init("请指定 --file、--glyph 或 --reset。", []),
-            "CLIInterface:cliInterface.te8f93a97f4a5": .init("未知图标形状或颜色。", []),
-            "CLIInterface:cliInterface.tecaf531d009c": .init("未知加载器。", []),
-            "CLIInterface:cliInterface.td578c368dab6": .init("未知实例操作。", []),
-            "CLIInterface:cliInterface.tc7720bf2a0d4": .init("组件使用 loader=version 格式；原版无需指定组件。", []),
-            "CLIInterface:cliInterface.t46989dde4470": .init("重复指定了加载器。", []),
-            "CLIInterface:cliInterface.t733e25583e8d": .init("RURI_DOWNLOAD_SOURCE 的值无效。", []),
-            "CLIInterface:cliInterface.t121c67f22040": .init("输出文件已存在。", []),
-            "CLIInterface:cliInterface.tfe6f797e1938": .init("有多个实例使用此名称。", []),
-            "CLIInterface:cliInterface.t79de4634dcb4": .init("游戏版本无效。", []),
-            "CLIInterface:cliInterface.t70a45a4240d8": .init("找不到目录。", []),
-            "CLIInterface:cliInterface.t17574d1bad8e": .init("目标目录已被移除。", []),
-            "CLIInterface:cliInterface.tb199229434bb": .init("实例在安装期间被移除。", []),
-            "CLIInterface:cliInterface.t7d732629b332": .init("实例位置已发生变化。", []),
-            "CLIInterface:cliInterface.t97013cab62b8": .init("实例名称无效。", []),
-            "CLIInterface:cliInterface.tf64fee5acdf0": .init("列出已注册和已断开连接的游戏目录。", []),
-            "CLIInterface:cliInterface.t13c336f9a11b": .init("查询当前选中的游戏目录。", []),
-            "CLIInterface:cliInterface.t0a77c8493c2e": .init("检查已有 Minecraft 文件夹，不注册目录。", []),
-            "CLIInterface:cliInterface.t135973383faa": .init("注册已有目录。", []),
-            "CLIInterface:cliInterface.t63c8c08621c5": .init("目录显示名称。", []),
-            "CLIInterface:cliInterface.t0175170e7603": .init("目录布局。", []),
-            "CLIInterface:cliInterface.te995381e7764": .init("选择已注册的目录。", []),
-            "CLIInterface:cliInterface.tac593c150e36": .init("刷新 Minecraft 目录中的版本。", []),
-            "CLIInterface:cliInterface.t8592d66b70ee": .init("移除目录注册，保留文件。", []),
-            "CLIInterface:cliInterface.tbbd25ee7fe86": .init("重命名已注册的目录。", []),
-            "CLIInterface:cliInterface.t741d898dfaff": .init("重新关联已移动的注册目录。", []),
-            "CLIInterface:cliInterface.te5b3e2aa3520": .init("目录 ID 和文件路径。", []),
-            "CLIInterface:cliInterface.teeb75a68ecdc": .init("恢复已断开连接的 Minecraft 目录。", []),
-            "CLIInterface:cliInterface.t72af20234e14": .init("查询实例的游戏目录。", []),
-            "CLIInterface:cliInterface.t1db840ce735d": .init("切换实例的运行目录。", []),
-            "CLIInterface:cliInterface.t4d6e9b1a4264": .init("已有的自定义游戏目录。", []),
-            "CLIInterface:cliInterface.ta39f0e134724": .init("将游戏文件复制到空的目标目录。", []),
-            "CLIInterface:cliInterface.tdb3bd307aea7": .init("实例 ID 和目录模式。", []),
-            "CLIInterface:cliInterface.tfe9e723a6df9": .init("重新关联已移动的自定义游戏目录。", []),
-            "CLIInterface:cliInterface.td41369a235db": .init("实例 ID 和目录路径。", []),
-            "CLIInterface:cliInterface.t738bb690d8c2": .init("列出本地 Java 运行时及其来源。", []),
-            "CLIInterface:cliInterface.t1cd05347cc64": .init("列出可安装的 Java 运行时。", []),
-            "CLIInterface:cliInterface.teba714b1f2cc": .init("按 Java 主版本筛选。", []),
-            "CLIInterface:cliInterface.taa6237af9422": .init("按架构筛选。", []),
-            "CLIInterface:cliInterface.tf3cf2acb7b9a": .init("注册已安装的 Java 运行时。", []),
-            "CLIInterface:cliInterface.t0ecfbec54289": .init("从手动列表中移除 Java，保留文件及配置引用。", []),
-            "CLIInterface:cliInterface.tea0c61c73f43": .init("设置默认 Java 选择。", []),
-            "CLIInterface:cliInterface.td99052ac398d": .init("列出引用指定托管 Java 的配置。", []),
-            "CLIInterface:cliInterface.tb07678654f81": .init("检查未完成的安装。", []),
-            "CLIInterface:cliInterface.t2b2ab103144b": .init("按目录中的 ID 安装 Java 运行时。", []),
-            "CLIInterface:cliInterface.tef883d8efb5c": .init("修复托管的 Java 运行时。", []),
-            "CLIInterface:cliInterface.t355d66c16583": .init("将托管的 Java 移到废纸篓。", []),
-            "CLIInterface:cliInterface.t5897a3d49bb5": .init("将引用此 Java 的配置重置为自动选择。", []),
-            "CLIInterface:cliInterface.t2a5f80694223": .init("移除未完成的安装。", []),
-            "CLIInterface:cliInterface.tc67f25bb4cc3": .init("实例运行目录", []),
-            "CLIInterface:cliInterface.ta42145487540": .init("游戏目录的注册、迁移与恢复", []),
-            "CLIInterface:cliInterface.tcb439480ed22": .init("Java 发现、安装与管理", []),
-            "CLIInterface:cliInterface.t5efd67648f0d": .init("目录名称不能为空。", []),
-            "CLIInterface:cliInterface.t8ba03aeb3548": .init("新建的托管目录必须为空。", []),
-            "CLIInterface:cliInterface.tdc5f6e9debdb": .init("目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。", []),
-            "CLIInterface:cliInterface.t9a582e74d089": .init("未知目录操作。", []),
-            "CLIInterface:cliInterface.t33604425d94f": .init("找不到指定的 Java 版本条目。", []),
-            "CLIInterface:cliInterface.tab6287c24a41": .init("未知 Java 操作。", []),
-            "CLIInterface:cliInterface.tc6b87186027e": .init("Microsoft 登录通过浏览器授权，无需密码。", []),
-            "CLIInterface:cliInterface.tb34236db1721": .init("外置登录需要 --password-stdin。", []),
-            "CLIInterface:cliInterface.t05b618061083": .init("请使用 --stdin 从标准输入读取 API Key。", []),
-            "CLIInterface:cliInterface.tfffe65605bf6": .init("未知账户操作。", []),
-            "CLIInterface:cliInterface.t347c8e743183": .init("列出账户，不显示凭据。", []),
-            "CLIInterface:cliInterface.t60065624116e": .init("查询当前账户 ID。", []),
-            "CLIInterface:cliInterface.t29349e23e1f2": .init("查询账户详情。", []),
-            "CLIInterface:cliInterface.t5e3954fd00e4": .init("添加或复用离线账户。", []),
-            "CLIInterface:cliInterface.t4fbd66e4df1d": .init("保留当前选中的账户。", []),
-            "CLIInterface:cliInterface.ta88c8f0fa07b": .init("选择当前使用的账户。", []),
-            "CLIInterface:cliInterface.te68622e3a4c1": .init("刷新已保存账户的凭据。", []),
-            "CLIInterface:cliInterface.t222e7542a935": .init("移除账户及其本地凭据。", []),
-            "CLIInterface:cliInterface.t9de45ca5dfe9": .init("注销外置登录凭据并移除账户。", []),
-            "CLIInterface:cliInterface.t5e3d504d2f33": .init("开始分步完成的 Microsoft 或外置登录。", []),
-            "CLIInterface:cliInterface.t35f41c8dfeb7": .init("登录服务类型。", []),
-            "CLIInterface:cliInterface.t06b9c339e88c": .init("需要重新登录的已有账户。", []),
-            "CLIInterface:cliInterface.tda3d5eaa9c6b": .init("外置登录服务器。", []),
-            "CLIInterface:cliInterface.t598bd6abd203": .init("外置登录的用户名或邮箱。", []),
-            "CLIInterface:cliInterface.tae550ce2501b": .init("从标准输入读取密码。", []),
-            "CLIInterface:cliInterface.td905be5334b1": .init("等待授权完成并保存所选角色。", []),
-            "CLIInterface:cliInterface.taa3d1bfbf09d": .init("login start 返回的外置登录角色 ID。", []),
-            "CLIInterface:cliInterface.t7bac79515ad0": .init("取消待完成的登录流程。", []),
-            "CLIInterface:cliInterface.t075c8839f62a": .init("检查 CurseForge API Key 是否可用。", []),
-            "CLIInterface:cliInterface.tb513f67f0661": .init("从标准输入设置 CurseForge API Key。", []),
-            "CLIInterface:cliInterface.tbee9e14cb9c8": .init("从标准输入读取 API Key。", []),
-            "CLIInterface:cliInterface.tb412547b5de8": .init("移除自定义 CurseForge API Key。", []),
-            "CLIInterface:cliInterface.td9b80535359b": .init("平台服务凭据", []),
-            "CLIInterface:cliInterface.t463334485f56": .init("Microsoft 与外置登录", []),
-            "CLIInterface:cliInterface.t52f4179738c0": .init("账户管理与登录", []),
-            "CLIInterface:cliInterface.t646f7af4624c": .init("账户的登录服务类型不匹配。", []),
-            "CLIInterface:cliInterface.t3a1a6178fec9": .init("登录服务器或登录身份已发生变化。", []),
-            "CLIInterface:cliInterface.t000e28c5735c": .init("请在同一数据目录中完成登录。", []),
-            "CLIInterface:cliInterface.tf873deb7e49d": .init("登录流程已过期，请重新开始。", []),
-            "CLIInterface:cliInterface.ta4020b2f41c3": .init("请选择 login start 返回的角色。", []),
-            "CLIInterface:cliInterface.t0ce4aa2e33ec": .init("此登录流程已选择另一角色。", []),
-            "CLIInterface:cliInterface.t6176d717fcb9": .init("登录流程无效，请重新开始。", []),
-            "CLIInterface:cliInterface.te9b1e0403a1e": .init("找不到账户。", []),
-            "CLIInterface:cliInterface.tb0b930baf0cc": .init("账户已被移除或替换。", []),
-            "CLIInterface:cliInterface.t9b5e04245098": .init("账户身份已发生变化。", []),
-            "CLIInterface:cliInterface.td9ca8e4b44c6": .init("账户已被移除。", []),
-            "CLIInterface:cliInterface.tf4c5f25a3baf": .init("账户已移除，但凭据或外观数据清理失败。", []),
-            "CLIInterface:cliInterface.t1914c0297b34": .init("请先安装此实例，再启动游戏。", []),
-            "CLIInterface:cliInterface.t46ce3acb0041": .init("请选择账户，或通过 --account 指定账户。", []),
-            "CLIInterface:cliInterface.tbd6842eb578e": .init("检查实例启动配置，不启动游戏。", []),
-            "CLIInterface:cliInterface.tc7d16a18216b": .init("账户 UUID，默认使用当前账户。", []),
-            "CLIInterface:cliInterface.t7650c678063f": .init("用于快速游玩的世界文件夹。", []),
-            "CLIInterface:cliInterface.tb27f0522d834": .init("启动游戏，监控接管后返回。", []),
-            "CLIInterface:cliInterface.t75aa2ae95dbf": .init("列出游戏会话。", []),
-            "CLIInterface:cliInterface.t397da266f14b": .init("按实例 UUID 筛选。", []),
-            "CLIInterface:cliInterface.t1dc55f419cc4": .init("按实例名称筛选。", []),
-            "CLIInterface:cliInterface.tb23f885979d4": .init("仅显示存在问题的会话。", []),
-            "CLIInterface:cliInterface.t1c27c266a051": .init("查询游戏会话详情。", []),
-            "CLIInterface:cliInterface.t7de41631eebc": .init("实例 ID 和会话 ID。", []),
-            "CLIInterface:cliInterface.ta977bdb2d5a4": .init("等待监控记录游戏退出。", []),
-            "CLIInterface:cliInterface.t6bbce4221048": .init("请求游戏正常退出。", []),
-            "CLIInterface:cliInterface.t886efc49f631": .init("强制停止游戏进程。", []),
-            "CLIInterface:cliInterface.t03a5e858530a": .init("读取或持续跟随会话日志。", []),
-            "CLIInterface:cliInterface.t61dffc7832ee": .init("跟随日志直到会话结束，使用 text 或 ndjson 格式。", []),
-            "CLIInterface:cliInterface.tdae2c9ca76ca": .init("日志来源。", []),
-            "CLIInterface:cliInterface.t602d83ce6e9a": .init("最多读取的末尾行数，默认 200。", []),
-            "CLIInterface:cliInterface.t5cf1cb615468": .init("分析已记录的启动与游戏诊断信息。", []),
-            "CLIInterface:cliInterface.t33ed51c9688b": .init("导出脱敏后的诊断包。", []),
-            "CLIInterface:cliInterface.t4e51dca76f06": .init("实例 ID、会话 ID 和文件路径。", []),
-            "CLIInterface:cliInterface.t03b417601a2c": .init("游戏会话、日志与诊断", []),
-            "CLIInterface:cliInterface.t91806a3a3cd3": .init("启动检查与游戏启动", []),
-            "CLIInterface:cliInterface.tadc93d3bb50c": .init("游戏未正常退出。", []),
-            "CLIInterface:cliInterface.t28723ddb22d1": .init("--follow 需要使用 --output ndjson 或 text。", []),
-            "CLIInterface:cliInterface.tafd6142d30ec": .init("--lines 必须介于 1 和 10000 之间。", []),
-            "CLIInterface:cliInterface.t043b9f54ca4c": .init("监控进程已不可用。", []),
-            "CLIInterface:cliInterface.te5e3bed93ff1": .init("未知会话操作。", []),
-            "CLIInterface:cliInterface.t9585ae182d36": .init("搜索 Modrinth 或 CurseForge。", []),
-            "CLIInterface:cliInterface.t54d62b370b12": .init("内容平台。", []),
-            "CLIInterface:cliInterface.t9c7c66e1cb97": .init("项目类型。", []),
-            "CLIInterface:cliInterface.t97bb290079c0": .init("按 Minecraft 版本筛选。", []),
-            "CLIInterface:cliInterface.t6cd3985335f5": .init("按加载器筛选。", []),
-            "CLIInterface:cliInterface.tba245c5c5887": .init("内容平台的分类。", []),
-            "CLIInterface:cliInterface.tffbd359b4372": .init("排序方式。", []),
-            "CLIInterface:cliInterface.tef252f7e18ac": .init("查询项目描述及元数据。", []),
-            "CLIInterface:cliInterface.t2015ae2ed51d": .init("列出项目已发布的版本。", []),
-            "CLIInterface:cliInterface.t96729fb469a0": .init("列出内容平台的分类。", []),
-            "CLIInterface:cliInterface.t31b908b482c0": .init("列出已安装的模组、资源包或光影。", []),
-            "CLIInterface:cliInterface.t1615f94ae45c": .init("内容类型。", []),
-            "CLIInterface:cliInterface.t0adabdb41fc9": .init("导入本地内容文件。", []),
-            "CLIInterface:cliInterface.t1221c915a9ab": .init("实例 ID 和文件路径。", []),
-            "CLIInterface:cliInterface.t6f5c9d328e9f": .init("安装兼容的项目及其必需依赖。", []),
-            "CLIInterface:cliInterface.t3adc46ef11f2": .init("指定平台版本 ID，默认选择最新稳定版。", []),
-            "CLIInterface:cliInterface.t6937c4e2d52d": .init("手动下载的 CurseForge 文件，格式为 fileID=path。", []),
-            "CLIInterface:cliInterface.tc9423b403749": .init("实例 ID 和项目 ID。", []),
-            "CLIInterface:cliInterface.tcb22bf7cdc22": .init("启用所选内容。", []),
-            "CLIInterface:cliInterface.t0571cf34f7e5": .init("已安装文件的完整名称，可重复传入以选择多个文件。", []),
-            "CLIInterface:cliInterface.t7a83bde60a43": .init("选择该类型的全部文件。", []),
-            "CLIInterface:cliInterface.t835a12065b6b": .init("禁用所选内容。", []),
-            "CLIInterface:cliInterface.tbddc7b97257e": .init("将所选内容移到废纸篓。", []),
-            "CLIInterface:cliInterface.t2648b2127df6": .init("检查已安装内容的兼容更新。", []),
-            "CLIInterface:cliInterface.t41cfb5271f5e": .init("更新所选内容及依赖。", []),
-            "CLIInterface:cliInterface.tf53d1d120842": .init("更新该类型的全部文件。", []),
-            "CLIInterface:cliInterface.t0182348543ec": .init("列出实例中的世界。", []),
-            "CLIInterface:cliInterface.tc62375cad94f": .init("查询世界详情。", []),
-            "CLIInterface:cliInterface.t3cc465fee86f": .init("实例 ID 和世界文件夹。", []),
-            "CLIInterface:cliInterface.td02c3799e5f3": .init("导入世界归档或目录。", []),
-            "CLIInterface:cliInterface.t79b53bfe32d0": .init("导出世界归档。", []),
-            "CLIInterface:cliInterface.tbb4df9d7ac3a": .init("实例 ID、世界文件夹和文件路径。", []),
-            "CLIInterface:cliInterface.t1f3b65ed9678": .init("将世界移到废纸篓。", []),
-            "CLIInterface:cliInterface.t687aa81ce15b": .init("备份世界。", []),
-            "CLIInterface:cliInterface.t243960f924a4": .init("可选的备份原因。", []),
-            "CLIInterface:cliInterface.t82358ac73619": .init("列出世界备份。", []),
-            "CLIInterface:cliInterface.t5b12f1ab5a68": .init("恢复备份，覆盖已有世界时需要明确确认。", []),
-            "CLIInterface:cliInterface.td2c29dd5d868": .init("覆盖已有世界。", []),
-            "CLIInterface:cliInterface.teaf6d847cc14": .init("实例 ID 和备份 ID。", []),
-            "CLIInterface:cliInterface.t79d8f9c1b13b": .init("将世界备份移到废纸篓。", []),
-            "CLIInterface:cliInterface.t5baea7450859": .init("列出世界的数据包。", []),
-            "CLIInterface:cliInterface.t3f8f11058c17": .init("实例 ID 和世界名称。", []),
-            "CLIInterface:cliInterface.t8e719af86d09": .init("按优先级从高到低查询数据包顺序。", []),
-            "CLIInterface:cliInterface.tc4ef4044f6a8": .init("替换完整的数据包优先级顺序。", []),
-            "CLIInterface:cliInterface.tcc64529d6ae6": .init("完整优先级列表，优先级最高的在前。", []),
-            "CLIInterface:cliInterface.td44435e60acc": .init("将数据包导入世界。", []),
-            "CLIInterface:cliInterface.t027258d65380": .init("实例 ID、世界名称和文件路径。", []),
-            "CLIInterface:cliInterface.t8c443e635faf": .init("启用世界的数据包。", []),
-            "CLIInterface:cliInterface.t25b74fe94bbb": .init("实例 ID、世界名称和数据包名称。", []),
-            "CLIInterface:cliInterface.tc7d244ea5a4c": .init("禁用世界的数据包。", []),
-            "CLIInterface:cliInterface.t08f738b1e5ca": .init("移除世界的数据包。", []),
-            "CLIInterface:cliInterface.t64d56130fbdf": .init("搜索兼容的 Modrinth 数据包。", []),
-            "CLIInterface:cliInterface.t9abc5f05470e": .init("实例 ID 和搜索关键词。", []),
-            "CLIInterface:cliInterface.tb511553d589f": .init("列出兼容的数据包版本。", []),
-            "CLIInterface:cliInterface.t37b2077e3554": .init("安装数据包及其依赖。", []),
-            "CLIInterface:cliInterface.t5e7708f69f60": .init("指定版本 ID，默认选择最新稳定版。", []),
-            "CLIInterface:cliInterface.t4d5a09c55c8c": .init("实例 ID、世界名称和项目 ID。", []),
-            "CLIInterface:cliInterface.t45ce4d2add4d": .init("列出投影文件及文件夹。", []),
-            "CLIInterface:cliInterface.tc48ff6cbe772": .init("投影目录的相对路径。", []),
-            "CLIInterface:cliInterface.t9691b8cb26ac": .init("查询投影文件的元数据。", []),
-            "CLIInterface:cliInterface.t006d1cafc637": .init("导入投影文件。", []),
-            "CLIInterface:cliInterface.tf32e6e0f57a1": .init("创建投影文件夹。", []),
-            "CLIInterface:cliInterface.t4af5860f6aeb": .init("父目录的相对路径。", []),
-            "CLIInterface:cliInterface.t0d2ff8c9a278": .init("实例 ID 和文件夹名称。", []),
-            "CLIInterface:cliInterface.t7e11030c3d95": .init("导出投影文件。", []),
-            "CLIInterface:cliInterface.tf0b7b313a90b": .init("实例 ID、投影路径和导出文件路径。", []),
-            "CLIInterface:cliInterface.tc7d49c67a14a": .init("将投影文件或文件夹移到废纸篓。", []),
-            "CLIInterface:cliInterface.tb9f8304a17cd": .init("数据包优先级", []),
-            "CLIInterface:cliInterface.t1870161676bc": .init("世界备份与恢复", []),
-            "CLIInterface:cliInterface.tb977dca13b5f": .init("投影文件管理", []),
-            "CLIInterface:cliInterface.t8c1e16e1c7f6": .init("数据包管理与排序", []),
-            "CLIInterface:cliInterface.t28a32d5bd18e": .init("内容搜索与版本查询", []),
-            "CLIInterface:cliInterface.t7f93a6deea4d": .init("模组、资源包与光影管理", []),
-            "CLIInterface:cliInterface.tc96234263475": .init("世界管理、导入导出与备份", []),
-            "CLIInterface:cliInterface.t68a342df34e2": .init("找不到输入文件。", []),
-            "CLIInterface:cliInterface.t1474aa1131be": .init("请使用 --file 选择文件，或明确指定 --all。", []),
-            "CLIInterface:cliInterface.tcf02f30209a6": .init("找不到部分所选文件。", []),
-            "CLIInterface:cliInterface.t1fb9146947a6": .init("未知内容操作。", []),
-            "CLIInterface:cliInterface.tcf80472afe71": .init("手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。", []),
-            "CLIInterface:cliInterface.t22d3a8371f53": .init("请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。", []),
-            "CLIInterface:cliInterface.t5c54141389e9": .init("所选版本与实例不兼容。", []),
-            "CLIInterface:cliInterface.t56f6acfec799": .init("找不到匹配的兼容版本。", []),
-            "CLIInterface:cliInterface.t813a5dd4816c": .init("找不到备份。", []),
-            "CLIInterface:cliInterface.t90c2d3c97aae": .init("找不到世界。", []),
-            "CLIInterface:cliInterface.ta7cd75ee2906": .init("未知世界操作。", []),
-            "CLIInterface:cliInterface.tcaf18c90c73d": .init("请提供完整的优先级列表，每项只能出现一次。", []),
-            "CLIInterface:cliInterface.tdd5661a06a84": .init("找不到兼容的数据包版本。", []),
-            "CLIInterface:cliInterface.t921d4db04b98": .init("找不到数据包。", []),
-            "CLIInterface:cliInterface.t31dc407e9871": .init("未知数据包操作。", []),
-            "CLIInterface:cliInterface.t90e3b5019ad0": .init("找不到投影文件。", []),
-            "CLIInterface:cliInterface.tdb74aa2f7d3b": .init("将实例归档导入指定目录。", []),
-            "CLIInterface:cliInterface.tddd82092eded": .init("目标目录 UUID 或 default。", []),
-            "CLIInterface:cliInterface.tb86fa4ea53ac": .init("导入整合包提供的 JVM 参数。", []),
-            "CLIInterface:cliInterface.tc5c676ace213": .init("导入本地整合包归档。", []),
-            "CLIInterface:cliInterface.td48597adbed9": .init("下载并安装内容平台上的整合包。", []),
-            "CLIInterface:cliInterface.t2280d783f7cb": .init("手动下载的整合包归档。", []),
-            "CLIInterface:cliInterface.t1d9fc0c70e58": .init("查询已安装整合包的元数据。", []),
-            "CLIInterface:cliInterface.t0e0ee827fcda": .init("列出已安装整合包的可用版本。", []),
-            "CLIInterface:cliInterface.t7dd4704843e2": .init("预览或执行整合包更新。", []),
-            "CLIInterface:cliInterface.te3ce5542c760": .init("本地更新归档。", []),
-            "CLIInterface:cliInterface.tadff65d82cd8": .init("指定远程发布版本 ID。", []),
-            "CLIInterface:cliInterface.t33673a17c78a": .init("手动下载的远程版本归档。", []),
-            "CLIInterface:cliInterface.tfa5924a2e888": .init("覆盖本地修改过的文件，不保留本地修改。", []),
-            "CLIInterface:cliInterface.tf986137b0dee": .init("确认覆盖本地修改。", []),
-            "CLIInterface:cliInterface.t8951a110d64d": .init("回退上一次整合包更新，保留更新后的本地修改。", []),
-            "CLIInterface:cliInterface.t869f83eac4a5": .init("下载文件并校验 SHA-1 和大小。", []),
-            "CLIInterface:cliInterface.t91bde8e5fa30": .init("预期的 SHA-1 校验值。", []),
-            "CLIInterface:cliInterface.t8e1d27b3966c": .init("预期的字节数。", []),
-            "CLIInterface:cliInterface.tff2b9d62fa33": .init("下载地址和文件路径。", []),
-            "CLIInterface:cliInterface.ta16b7c00b2ba": .init("文件下载与校验", []),
-            "CLIInterface:cliInterface.t31f0b68ea764": .init("整合包安装、更新与回退", []),
-            "CLIInterface:cliInterface.t4c0ebc2810f1": .init("找不到目标目录。", []),
-            "CLIInterface:cliInterface.te28b99d2f4f4": .init("此实例没有已安装整合包的元数据。", []),
-            "CLIInterface:cliInterface.tf47c36a30379": .init("没有可用于回退的整合包更新备份。", []),
-            "CLIInterface:cliInterface.tc94ca55edbe4": .init("覆盖本地修改需要同时指定 --replace --yes。", []),
-            "CLIInterface:cliInterface.t886cba0bd15a": .init("请选择本地 --file 或远程 --version。", []),
-            "CLIInterface:cliInterface.t092095eba967": .init("找不到整合包发布版本。", []),
-            "CLIInterface:cliInterface.t75d07f6960ff": .init("请下载整合包归档，然后添加 --archive path 再次执行。", []),
-            "CLIInterface:cliInterface.tca976a5cf5f9": .init("请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。", []),
-            "CLIInterface:cliInterface.tb634c8d3959d": .init("目标位置已存在内容不同的文件。", []),
-            "CLIInterface:cliInterface.tbff4f0f5e780": .init("列出未完成的数据操作及会话。", []),
-            "CLIInterface:cliInterface.tc16fc65ec610": .init("仅检查指定实例。", []),
-            "CLIInterface:cliInterface.t25597cca30a1": .init("恢复指定的未完成操作。", []),
-            "CLIInterface:cliInterface.t617ad9bacfae": .init("事务 UUID 或会话 UUID。", []),
-            "CLIInterface:cliInterface.ta51e4f921383": .init("游戏库导入的恢复方式。", []),
-            "CLIInterface:cliInterface.t709f4fc13c7d": .init("移动已提交后保留原始文件。", []),
-            "CLIInterface:cliInterface.ta42e19194027": .init("确认失去监控的游戏已结束。", []),
-            "CLIInterface:cliInterface.t28237d41435e": .init("恢复类型和目标 ID。", []),
-            "CLIInterface:cliInterface.tc168cea3e30b": .init("检查状态、路径、Java、账户凭据及内置辅助程序。", []),
-            "CLIInterface:cliInterface.tcfab76824678": .init("检查指定实例。", []),
-            "CLIInterface:cliInterface.t2b167c0c4363": .init("未完成操作的查询与恢复", []),
-            "CLIInterface:cliInterface.t1e2f741698a1": .init("未知恢复类型。", []),
-            "CLIInterface:cliInterface.t7f8c861b7d62": .init("此恢复操作需要指定 recovery list 返回的 --transaction。", []),
-            "CLIInterface:cliInterface.tf19d497be38f": .init("一项或多项检查未通过。", []),
-            "CLIInterface:cliInterface.tff19ae82a321": .init("检查此数据前，必须先恢复未完成的操作。", []),
-            "CLIInterface:cliInterface.t06bc14b60f35": .init("卸载", []),
-            "CLIInterface:cliInterface.t56f8e5b9417c": .init("命令行与自动化", []),
+            "CLIInterface:CLIInterface.accountCleanupFailed": .init("账户已移除，但凭据或外观数据清理失败。", []),
+            "CLIInterface:CLIInterface.accountCommands": .init("账户管理与登录", []),
+            "CLIInterface:CLIInterface.accountIdentityChanged": .init("账户身份已发生变化。", []),
+            "CLIInterface:CLIInterface.accountListHelp": .init("列出账户，不显示凭据。", []),
+            "CLIInterface:CLIInterface.accountLoginCancelHelp": .init("取消待完成的登录流程。", []),
+            "CLIInterface:CLIInterface.accountLoginCommands": .init("Microsoft 与外置登录", []),
+            "CLIInterface:CLIInterface.accountLoginCompleteHelp": .init("等待授权完成并保存所选角色。", []),
+            "CLIInterface:CLIInterface.accountLoginStartHelp": .init("开始分步完成的 Microsoft 或外置登录。", []),
+            "CLIInterface:CLIInterface.accountLogoutHelp": .init("注销外置登录凭据并移除账户。", []),
+            "CLIInterface:CLIInterface.accountNotFound": .init("找不到账户。", []),
+            "CLIInterface:CLIInterface.accountOfflineHelp": .init("添加或复用离线账户。", []),
+            "CLIInterface:CLIInterface.accountProviderMismatch": .init("账户的登录服务类型不匹配。", []),
+            "CLIInterface:CLIInterface.accountRefreshHelp": .init("刷新已保存账户的凭据。", []),
+            "CLIInterface:CLIInterface.accountRemoveHelp": .init("移除账户及其本地凭据。", []),
+            "CLIInterface:CLIInterface.accountRemoved": .init("账户已被移除。", []),
+            "CLIInterface:CLIInterface.accountRemovedOrReplaced": .init("账户已被移除或替换。", []),
+            "CLIInterface:CLIInterface.accountSelectHelp": .init("选择当前使用的账户。", []),
+            "CLIInterface:CLIInterface.accountSelectedHelp": .init("查询当前账户 ID。", []),
+            "CLIInterface:CLIInterface.accountServiceKeyCommands": .init("平台服务凭据", []),
+            "CLIInterface:CLIInterface.accountShowHelp": .init("查询账户详情。", []),
+            "CLIInterface:CLIInterface.allContentFilesHelp": .init("选择该类型的全部文件。", []),
+            "CLIInterface:CLIInterface.allResultsHelp": .init("返回全部结果。", []),
+            "CLIInterface:CLIInterface.ambiguousInstanceName": .init("有多个实例使用此名称。", []),
+            "CLIInterface:CLIInterface.apiKeyStdinHelp": .init("从标准输入读取 API Key。", []),
+            "CLIInterface:CLIInterface.apiKeyStdinRequired": .init("请使用 --stdin 从标准输入读取 API Key。", []),
+            "CLIInterface:CLIInterface.appCommands": .init("应用信息与语言设置", []),
+            "CLIInterface:CLIInterface.appLanguageCommands": .init("应用界面语言", []),
+            "CLIInterface:CLIInterface.appLanguageGetHelp": .init("读取应用的界面语言。", []),
+            "CLIInterface:CLIInterface.appLanguageSetHelp": .init("设置应用语言，重启后生效。", []),
+            "CLIInterface:CLIInterface.appVersionHelp": .init("显示应用及命令行工具的版本和路径。", []),
+            "CLIInterface:CLIInterface.booleanValueRequired": .init("请使用 true 或 false。", []),
+            "CLIInterface:CLIInterface.bundledCliNotFound": .init("找不到应用内的命令行工具。", []),
+            "CLIInterface:CLIInterface.catalogCategoriesHelp": .init("列出内容平台的分类。", []),
+            "CLIInterface:CLIInterface.catalogCategoryHelp": .init("内容平台的分类。", []),
+            "CLIInterface:CLIInterface.catalogCommands": .init("内容搜索与版本查询", []),
+            "CLIInterface:CLIInterface.catalogProjectShowHelp": .init("查询项目描述及元数据。", []),
+            "CLIInterface:CLIInterface.catalogProjectTypeHelp": .init("项目类型。", []),
+            "CLIInterface:CLIInterface.catalogSearchHelp": .init("搜索 Modrinth 或 CurseForge。", []),
+            "CLIInterface:CLIInterface.catalogSortHelp": .init("排序方式。", []),
+            "CLIInterface:CLIInterface.catalogVersionsHelp": .init("列出项目已发布的版本。", []),
+            "CLIInterface:CLIInterface.cliCommands": .init("命令行工具的安装与卸载", []),
+            "CLIInterface:CLIInterface.cliExecutableNotFound": .init("命令行工具不存在。", []),
+            "CLIInterface:CLIInterface.cliInstallDirectoryHelp": .init("命令安装目录，默认为 /usr/local/bin。", []),
+            "CLIInterface:CLIInterface.cliInstallHelp": .init("安装 ruri 到 /usr/local/bin；可使用 --bin-dir 自定义目录。需要管理员权限时，请从 Ruri 设置完成系统授权。", []),
+            "CLIInterface:CLIInterface.cliLinkChangedDuringUninstall": .init("卸载期间命令行工具链接发生了变化。", []),
+            "CLIInterface:CLIInterface.cliLinkInstallFailed": .init("无法安装命令行工具链接。", []),
+            "CLIInterface:CLIInterface.cliLinkNotOwnedByRuri": .init("目标位置不是 Ruri 创建的链接。", []),
+            "CLIInterface:CLIInterface.cliStatusHelp": .init("检查命令行工具及 PATH。", []),
+            "CLIInterface:CLIInterface.cliUninstallDirectoryHelp": .init("命令安装目录，默认为 /usr/local/bin。", []),
+            "CLIInterface:CLIInterface.cliUninstallHelp": .init("卸载命令链接，仅移除属于 Ruri 的链接。", []),
+            "CLIInterface:CLIInterface.commandLineAndAutomationTitle": .init("命令行与自动化", []),
+            "CLIInterface:CLIInterface.commandPathArgumentsHelp": .init("可选的资源、动作和子动作。", []),
+            "CLIInterface:CLIInterface.compatibleDataPackVersionNotFound": .init("找不到兼容的数据包版本。", []),
+            "CLIInterface:CLIInterface.compatibleVersionNotFound": .init("找不到匹配的兼容版本。", []),
+            "CLIInterface:CLIInterface.completeUniqueDataPackOrderRequired": .init("请提供完整的优先级列表，每项只能出现一次。", []),
+            "CLIInterface:CLIInterface.configApplyHelp": .init("原子应用 JSON 配置补丁。", []),
+            "CLIInterface:CLIInterface.configCommands": .init("全局设置、默认配置与实例覆盖", []),
+            "CLIInterface:CLIInterface.configFieldOrGroupNamesHelp": .init("配置字段或组的名称", []),
+            "CLIInterface:CLIInterface.configFieldValueArgumentsHelp": .init("配置字段及 JSON 值。", []),
+            "CLIInterface:CLIInterface.configGetHelp": .init("查询显式配置、有效配置及继承来源。", []),
+            "CLIInterface:CLIInterface.configInheritHelp": .init("恢复实例配置组的继承。", []),
+            "CLIInterface:CLIInterface.configInheritanceRequiresCompleteGroups": .init("inherit 仅适用于完整的实例配置组。", []),
+            "CLIInterface:CLIInterface.configInstanceGroupNamesHelp": .init("实例配置组的名称，仅适用于实例", []),
+            "CLIInterface:CLIInterface.configPatchFileHelp": .init("JSON 补丁文件；使用 - 从标准输入读取。", []),
+            "CLIInterface:CLIInterface.configResetHelp": .init("将配置字段或组重置为内置默认值。", []),
+            "CLIInterface:CLIInterface.configScopeHelp": .init("配置作用域：app、defaults 或 instance:<uuid>。", []),
+            "CLIInterface:CLIInterface.configSetHelp": .init("使用 JSON 值设置一个配置字段。", []),
+            "CLIInterface:CLIInterface.configSetMappingHelp": .init("配置字段到值的映射对象", []),
+            "CLIInterface:CLIInterface.configValueMustBeJson": .init("配置值必须是 JSON；字符串值需要保留双引号。", []),
+            "CLIInterface:CLIInterface.confirmDeleteOrReplaceHelp": .init("确认删除或覆盖操作。", []),
+            "CLIInterface:CLIInterface.confirmLocalModificationsReplacementHelp": .init("确认覆盖本地修改。", []),
+            "CLIInterface:CLIInterface.confirmUnmonitoredGameExitHelp": .init("确认失去监控的游戏已结束。", []),
+            "CLIInterface:CLIInterface.confirmationRequired": .init("此操作需要 --yes，可先使用 --dry-run 预览。", []),
+            "CLIInterface:CLIInterface.conflictingConfigPatchOperations": .init("针对 %1$@ 的补丁操作相互冲突。", [.text]),
+            "CLIInterface:CLIInterface.contentCheckUpdatesHelp": .init("检查已安装内容的兼容更新。", []),
+            "CLIInterface:CLIInterface.contentCommands": .init("模组、资源包与光影管理", []),
+            "CLIInterface:CLIInterface.contentDisableHelp": .init("禁用所选内容。", []),
+            "CLIInterface:CLIInterface.contentEnableHelp": .init("启用所选内容。", []),
+            "CLIInterface:CLIInterface.contentFileSelectionHelp": .init("已安装文件的完整名称，可重复传入以选择多个文件。", []),
+            "CLIInterface:CLIInterface.contentFileSelectionRequired": .init("请使用 --file 选择文件，或明确指定 --all。", []),
+            "CLIInterface:CLIInterface.contentImportArgumentsHelp": .init("实例 ID 和文件路径。", []),
+            "CLIInterface:CLIInterface.contentImportHelp": .init("导入本地内容文件。", []),
+            "CLIInterface:CLIInterface.contentInstallHelp": .init("安装兼容的项目及其必需依赖。", []),
+            "CLIInterface:CLIInterface.contentKindHelp": .init("内容类型。", []),
+            "CLIInterface:CLIInterface.contentListHelp": .init("列出已安装的模组、资源包或光影。", []),
+            "CLIInterface:CLIInterface.contentProjectArgumentsHelp": .init("实例 ID 和项目 ID。", []),
+            "CLIInterface:CLIInterface.contentProviderHelp": .init("内容平台。", []),
+            "CLIInterface:CLIInterface.contentRemoveHelp": .init("将所选内容移到废纸篓。", []),
+            "CLIInterface:CLIInterface.contentUpdateHelp": .init("更新所选内容及依赖。", []),
+            "CLIInterface:CLIInterface.contentVersionIdHelp": .init("指定平台版本 ID，默认选择最新稳定版。", []),
+            "CLIInterface:CLIInterface.copyGameFilesHelp": .init("将游戏文件复制到空的目标目录。", []),
+            "CLIInterface:CLIInterface.curseForgeKeyClearHelp": .init("移除自定义 CurseForge API Key。", []),
+            "CLIInterface:CLIInterface.curseForgeKeySetHelp": .init("从标准输入设置 CurseForge API Key。", []),
+            "CLIInterface:CLIInterface.curseForgeKeyStatusHelp": .init("检查 CurseForge API Key 是否可用。", []),
+            "CLIInterface:CLIInterface.customRunDirectoryPathHelp": .init("已有的自定义游戏目录。", []),
+            "CLIInterface:CLIInterface.dataDirectoryHelp": .init("启动器数据目录，优先于 RURI_DATA_DIR。", []),
+            "CLIInterface:CLIInterface.dataPackCommands": .init("数据包管理与排序", []),
+            "CLIInterface:CLIInterface.dataPackDisableHelp": .init("禁用世界的数据包。", []),
+            "CLIInterface:CLIInterface.dataPackEnableHelp": .init("启用世界的数据包。", []),
+            "CLIInterface:CLIInterface.dataPackImportArgumentsHelp": .init("实例 ID、世界名称和文件路径。", []),
+            "CLIInterface:CLIInterface.dataPackImportHelp": .init("将数据包导入世界。", []),
+            "CLIInterface:CLIInterface.dataPackInstallHelp": .init("安装数据包及其依赖。", []),
+            "CLIInterface:CLIInterface.dataPackListHelp": .init("列出世界的数据包。", []),
+            "CLIInterface:CLIInterface.dataPackNotFound": .init("找不到数据包。", []),
+            "CLIInterface:CLIInterface.dataPackOrderCommands": .init("数据包优先级", []),
+            "CLIInterface:CLIInterface.dataPackOrderGetHelp": .init("按优先级从高到低查询数据包顺序。", []),
+            "CLIInterface:CLIInterface.dataPackOrderSetHelp": .init("替换完整的数据包优先级顺序。", []),
+            "CLIInterface:CLIInterface.dataPackPriorityListHelp": .init("完整优先级列表，优先级最高的在前。", []),
+            "CLIInterface:CLIInterface.dataPackProjectArgumentsHelp": .init("实例 ID、世界名称和项目 ID。", []),
+            "CLIInterface:CLIInterface.dataPackRemoveHelp": .init("移除世界的数据包。", []),
+            "CLIInterface:CLIInterface.dataPackSearchArgumentsHelp": .init("实例 ID 和搜索关键词。", []),
+            "CLIInterface:CLIInterface.dataPackSearchHelp": .init("搜索兼容的 Modrinth 数据包。", []),
+            "CLIInterface:CLIInterface.dataPackTargetArgumentsHelp": .init("实例 ID、世界名称和数据包名称。", []),
+            "CLIInterface:CLIInterface.dataPackVersionIdHelp": .init("指定版本 ID，默认选择最新稳定版。", []),
+            "CLIInterface:CLIInterface.dataPackVersionsHelp": .init("列出兼容的数据包版本。", []),
+            "CLIInterface:CLIInterface.dataPackWorldArgumentsHelp": .init("实例 ID 和世界名称。", []),
+            "CLIInterface:CLIInterface.directoryAddHelp": .init("注册已有目录。", []),
+            "CLIInterface:CLIInterface.directoryCommands": .init("游戏目录的注册、迁移与恢复", []),
+            "CLIInterface:CLIInterface.directoryFilterHelp": .init("按目录 UUID 或 default 筛选。", []),
+            "CLIInterface:CLIInterface.directoryInspectHelp": .init("检查已有 Minecraft 文件夹，不注册目录。", []),
+            "CLIInterface:CLIInterface.directoryLayoutHelp": .init("目录布局。", []),
+            "CLIInterface:CLIInterface.directoryListHelp": .init("列出已注册和已断开连接的游戏目录。", []),
+            "CLIInterface:CLIInterface.directoryNameHelp": .init("目录显示名称。", []),
+            "CLIInterface:CLIInterface.directoryNotFound": .init("找不到目录。", []),
+            "CLIInterface:CLIInterface.directoryPathArgumentsHelp": .init("目录 ID 和文件路径。", []),
+            "CLIInterface:CLIInterface.directoryRecoverHelp": .init("恢复已断开连接的 Minecraft 目录。", []),
+            "CLIInterface:CLIInterface.directoryRefreshHelp": .init("刷新 Minecraft 目录中的版本。", []),
+            "CLIInterface:CLIInterface.directoryRelocateHelp": .init("重新关联已移动的注册目录。", []),
+            "CLIInterface:CLIInterface.directoryRemoveHelp": .init("移除目录注册，保留文件。", []),
+            "CLIInterface:CLIInterface.directoryRenameHelp": .init("重命名已注册的目录。", []),
+            "CLIInterface:CLIInterface.directorySelectHelp": .init("选择已注册的目录。", []),
+            "CLIInterface:CLIInterface.directorySelectedHelp": .init("查询当前选中的游戏目录。", []),
+            "CLIInterface:CLIInterface.doctorChecksFailed": .init("一项或多项检查未通过。", []),
+            "CLIInterface:CLIInterface.doctorCommandHelp": .init("检查状态、路径、Java、账户凭据及内置辅助程序。", []),
+            "CLIInterface:CLIInterface.doctorInstanceHelp": .init("检查指定实例。", []),
+            "CLIInterface:CLIInterface.downloadCommands": .init("文件下载与校验", []),
+            "CLIInterface:CLIInterface.downloadFetchHelp": .init("下载文件并校验 SHA-1 和大小。", []),
+            "CLIInterface:CLIInterface.downloadSha1Help": .init("预期的 SHA-1 校验值。", []),
+            "CLIInterface:CLIInterface.downloadSizeHelp": .init("预期的字节数。", []),
+            "CLIInterface:CLIInterface.downloadTargetArgumentsHelp": .init("下载地址和文件路径。", []),
+            "CLIInterface:CLIInterface.downloadTargetContentConflict": .init("目标位置已存在内容不同的文件。", []),
+            "CLIInterface:CLIInterface.dryRunHelp": .init("预览操作，不更改用户数据。", []),
+            "CLIInterface:CLIInterface.duplicateLoaderSelection": .init("重复指定了加载器。", []),
+            "CLIInterface:CLIInterface.emptyDirectoryName": .init("目录名称不能为空。", []),
+            "CLIInterface:CLIInterface.exactNameFilterHelp": .init("按完整名称筛选。", []),
+            "CLIInterface:CLIInterface.excludeWorldsHelp": .init("不包含世界存档。", []),
+            "CLIInterface:CLIInterface.externalLoginIdentityHelp": .init("外置登录的用户名或邮箱。", []),
+            "CLIInterface:CLIInterface.externalLoginPasswordStdinRequired": .init("外置登录需要 --password-stdin。", []),
+            "CLIInterface:CLIInterface.externalLoginProfileIdHelp": .init("login start 返回的外置登录角色 ID。", []),
+            "CLIInterface:CLIInterface.externalLoginServerHelp": .init("外置登录服务器。", []),
+            "CLIInterface:CLIInterface.gameExitUnsuccessful": .init("游戏未正常退出。", []),
+            "CLIInterface:CLIInterface.ifRevisionHelp": .init("仅当状态版本与此前读取的一致时提交。", []),
+            "CLIInterface:CLIInterface.importModpackJvmArgumentsHelp": .init("导入整合包提供的 JVM 参数。", []),
+            "CLIInterface:CLIInterface.includeSnapshotsHelp": .init("包含快照版本。", []),
+            "CLIInterface:CLIInterface.includeWorldBackupsHelp": .init("包含世界备份。", []),
+            "CLIInterface:CLIInterface.inputFileNotFound": .init("找不到输入文件。", []),
+            "CLIInterface:CLIInterface.inputSizeLimitExceeded": .init("输入超过允许的大小。", []),
+            "CLIInterface:CLIInterface.instanceArchiveFormatHelp": .init("归档格式：ruri、complete、multimc、mcbbs 或 mrpack。", []),
+            "CLIInterface:CLIInterface.instanceCommands": .init("实例管理与游戏安装", []),
+            "CLIInterface:CLIInterface.instanceComponentCommands": .init("实例加载器与组件", []),
+            "CLIInterface:CLIInterface.instanceComponentLoadersHelp": .init("加载器及版本，格式为 kind=version；省略时使用原版。", []),
+            "CLIInterface:CLIInterface.instanceComponentsRestoreHelp": .init("恢复上一次加载器配置。", []),
+            "CLIInterface:CLIInterface.instanceComponentsSetHelp": .init("替换已安装的加载器组合。", []),
+            "CLIInterface:CLIInterface.instanceComponentsShowHelp": .init("查询已安装的加载器及组件备份。", []),
+            "CLIInterface:CLIInterface.instanceComponentsVersionsHelp": .init("列出与游戏兼容的加载器版本。", []),
+            "CLIInterface:CLIInterface.instanceCopyHelp": .init("将实例复制到指定目录并命名。", []),
+            "CLIInterface:CLIInterface.instanceCreateHelp": .init("创建并安装指定名称的实例。", []),
+            "CLIInterface:CLIInterface.instanceCreateLoadersHelp": .init("加载器及版本，格式为 kind=version；可重复传入以组合多个加载器。", []),
+            "CLIInterface:CLIInterface.instanceExportArgumentsHelp": .init("实例 ID 和文件路径。", []),
+            "CLIInterface:CLIInterface.instanceExportHelp": .init("导出实例归档。", []),
+            "CLIInterface:CLIInterface.instanceIconFileHelp": .init("PNG 图标文件。", []),
+            "CLIInterface:CLIInterface.instanceIconGlyphHelp": .init("内置图标形状。", []),
+            "CLIInterface:CLIInterface.instanceIconHelp": .init("设置或重置实例图标。", []),
+            "CLIInterface:CLIInterface.instanceIconResetHelp": .init("恢复默认图标。", []),
+            "CLIInterface:CLIInterface.instanceIconSelectionRequired": .init("请指定 --file、--glyph 或 --reset。", []),
+            "CLIInterface:CLIInterface.instanceIconTintHelp": .init("内置图标颜色。", []),
+            "CLIInterface:CLIInterface.instanceIdOrNameRequired": .init("请指定实例 UUID 或 --name，两者只能选一个。", []),
+            "CLIInterface:CLIInterface.instanceImportDirectoryHelp": .init("目标目录 UUID 或 default。", []),
+            "CLIInterface:CLIInterface.instanceImportHelp": .init("将实例归档导入指定目录。", []),
+            "CLIInterface:CLIInterface.instanceInstallHelp": .init("安装尚未完成安装的实例。", []),
+            "CLIInterface:CLIInterface.instanceInstallRequiredBeforeLaunch": .init("请先安装此实例，再启动游戏。", []),
+            "CLIInterface:CLIInterface.instanceListHelp": .init("列出托管及已注册的实例。", []),
+            "CLIInterface:CLIInterface.instanceLoaderArgumentsHelp": .init("实例 ID 和加载器类型。", []),
+            "CLIInterface:CLIInterface.instanceLocationChanged": .init("实例位置已发生变化。", []),
+            "CLIInterface:CLIInterface.instanceMoveHelp": .init("将实例移动到另一目录。", []),
+            "CLIInterface:CLIInterface.instanceNameHelp": .init("实例名称。", []),
+            "CLIInterface:CLIInterface.instanceNameLookupHelp": .init("通过完整名称查找实例，代替 UUID。", []),
+            "CLIInterface:CLIInterface.instanceNotFound": .init("找不到实例。", []),
+            "CLIInterface:CLIInterface.instancePinArgumentsHelp": .init("实例 ID 和收藏状态，状态为 true 或 false。", []),
+            "CLIInterface:CLIInterface.instancePinHelp": .init("设置实例是否固定到主页。", []),
+            "CLIInterface:CLIInterface.instanceRecordOnlyHelp": .init("仅创建实例记录，不下载文件。", []),
+            "CLIInterface:CLIInterface.instanceRemoveHelp": .init("将实例自有文件移到废纸篓，并移除实例记录。", []),
+            "CLIInterface:CLIInterface.instanceRemovedDuringInstall": .init("实例在安装期间被移除。", []),
+            "CLIInterface:CLIInterface.instanceRenameArgumentsHelp": .init("实例 ID 和新名称。", []),
+            "CLIInterface:CLIInterface.instanceRenameHelp": .init("重命名实例。", []),
+            "CLIInterface:CLIInterface.instanceRepairHelp": .init("修复实例的安装文件。", []),
+            "CLIInterface:CLIInterface.instanceRunDirectoryCommands": .init("实例运行目录", []),
+            "CLIInterface:CLIInterface.instanceRunDirectoryModeArgumentsHelp": .init("实例 ID 和目录模式。", []),
+            "CLIInterface:CLIInterface.instanceRunDirectoryPathArgumentsHelp": .init("实例 ID 和目录路径。", []),
+            "CLIInterface:CLIInterface.instanceRunDirectoryRelocateHelp": .init("重新关联已移动的自定义游戏目录。", []),
+            "CLIInterface:CLIInterface.instanceRunDirectorySetHelp": .init("切换实例的运行目录。", []),
+            "CLIInterface:CLIInterface.instanceRunDirectoryShowHelp": .init("查询实例的游戏目录。", []),
+            "CLIInterface:CLIInterface.instanceSelectHelp": .init("选择实例。", []),
+            "CLIInterface:CLIInterface.instanceSelectedHelp": .init("查询当前选中的实例。", []),
+            "CLIInterface:CLIInterface.instanceShowHelp": .init("查询实例详情及文件位置。", []),
+            "CLIInterface:CLIInterface.instanceTargetDirectoryHelp": .init("明确指定目标目录 UUID 或 default。", []),
+            "CLIInterface:CLIInterface.invalidComponentSpecification": .init("组件使用 loader=version 格式；原版无需指定组件。", []),
+            "CLIInterface:CLIInterface.invalidConfigFieldValue": .init("%1$@ 的值无效。", [.text]),
+            "CLIInterface:CLIInterface.invalidConfigPatchJson": .init("配置补丁不是有效的 JSON。", []),
+            "CLIInterface:CLIInterface.invalidConfigScope": .init("配置作用域必须为 app、defaults 或 instance:<uuid>。", []),
+            "CLIInterface:CLIInterface.invalidDownloadSourceEnvironment": .init("RURI_DOWNLOAD_SOURCE 的值无效。", []),
+            "CLIInterface:CLIInterface.invalidDownloadUrlSizeOrChecksum": .init("请提供 HTTP 地址、非负的 --size 和 40 位的 --sha1。", []),
+            "CLIInterface:CLIInterface.invalidGameVersion": .init("游戏版本无效。", []),
+            "CLIInterface:CLIInterface.invalidInstanceName": .init("实例名称无效。", []),
+            "CLIInterface:CLIInterface.invalidLoginFlow": .init("登录流程无效，请重新开始。", []),
+            "CLIInterface:CLIInterface.invalidManualFileSpecification": .init("手动下载文件使用 fileID=path 格式，每个 fileID 只能出现一次。", []),
+            "CLIInterface:CLIInterface.invalidMicrosoftClientId": .init("Microsoft Client ID 必须为 UUID 或空字符串。", []),
+            "CLIInterface:CLIInterface.invalidOptionChoice": .init("--%1$@ 必须为以下值之一：%2$@。", [.text, .text]),
+            "CLIInterface:CLIInterface.invalidOutputFormatCombination": .init("请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。", []),
+            "CLIInterface:CLIInterface.invalidRunDirectoryModeOrPath": .init("目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。", []),
+            "CLIInterface:CLIInterface.javaAddHelp": .init("注册已安装的 Java 运行时。", []),
+            "CLIInterface:CLIInterface.javaArchitectureFilterHelp": .init("按架构筛选。", []),
+            "CLIInterface:CLIInterface.javaCatalogEntryNotFound": .init("找不到指定的 Java 版本条目。", []),
+            "CLIInterface:CLIInterface.javaCatalogHelp": .init("列出可安装的 Java 运行时。", []),
+            "CLIInterface:CLIInterface.javaCheckIncompleteInstallationsHelp": .init("检查未完成的安装。", []),
+            "CLIInterface:CLIInterface.javaCleanIncompleteInstallationHelp": .init("移除未完成的安装。", []),
+            "CLIInterface:CLIInterface.javaCommands": .init("Java 发现、安装与管理", []),
+            "CLIInterface:CLIInterface.javaDefaultHelp": .init("设置默认 Java 选择。", []),
+            "CLIInterface:CLIInterface.javaForgetHelp": .init("从手动列表中移除 Java，保留文件及配置引用。", []),
+            "CLIInterface:CLIInterface.javaInstallHelp": .init("按目录中的 ID 安装 Java 运行时。", []),
+            "CLIInterface:CLIInterface.javaListHelp": .init("列出本地 Java 运行时及其来源。", []),
+            "CLIInterface:CLIInterface.javaMajorFilterHelp": .init("按 Java 主版本筛选。", []),
+            "CLIInterface:CLIInterface.javaMajorRequiredForMajorMode": .init("major 模式需要设置 java.major。", []),
+            "CLIInterface:CLIInterface.javaPathRequiredForPathMode": .init("path 模式需要设置 java.path。", []),
+            "CLIInterface:CLIInterface.javaReferencesHelp": .init("列出引用指定托管 Java 的配置。", []),
+            "CLIInterface:CLIInterface.javaRemoveHelp": .init("将托管的 Java 移到废纸篓。", []),
+            "CLIInterface:CLIInterface.javaRepairHelp": .init("修复托管的 Java 运行时。", []),
+            "CLIInterface:CLIInterface.javaResetReferencesHelp": .init("将引用此 Java 的配置重置为自动选择。", []),
+            "CLIInterface:CLIInterface.jsonOutputHelp": .init("在标准输出返回一个 JSON 结果。", []),
+            "CLIInterface:CLIInterface.keepCurrentAccountHelp": .init("保留当前选中的账户。", []),
+            "CLIInterface:CLIInterface.keepSourceAfterMoveHelp": .init("移动已提交后保留原始文件。", []),
+            "CLIInterface:CLIInterface.launchAccountHelp": .init("账户 UUID，默认使用当前账户。", []),
+            "CLIInterface:CLIInterface.launchAccountRequired": .init("请选择账户，或通过 --account 指定账户。", []),
+            "CLIInterface:CLIInterface.launchCheckHelp": .init("检查实例启动配置，不启动游戏。", []),
+            "CLIInterface:CLIInterface.launchCommands": .init("启动检查与游戏启动", []),
+            "CLIInterface:CLIInterface.launchStartHelp": .init("启动游戏，监控接管后返回。", []),
+            "CLIInterface:CLIInterface.libraryImportRecoveryModeHelp": .init("游戏库导入的恢复方式。", []),
+            "CLIInterface:CLIInterface.limitOutOfRange": .init("--limit 必须介于 1 和 1000 之间。", []),
+            "CLIInterface:CLIInterface.loaderFilterHelp": .init("按加载器筛选。", []),
+            "CLIInterface:CLIInterface.localModificationsReplacementRequiresConfirmation": .init("覆盖本地修改需要同时指定 --replace --yes。", []),
+            "CLIInterface:CLIInterface.logFollowOutputFormatRequired": .init("--follow 需要使用 --output ndjson 或 text。", []),
+            "CLIInterface:CLIInterface.logLineLimitOutOfRange": .init("--lines 必须介于 1 和 10000 之间。", []),
+            "CLIInterface:CLIInterface.loginDataDirectoryMismatch": .init("请在同一数据目录中完成登录。", []),
+            "CLIInterface:CLIInterface.loginFlowExpired": .init("登录流程已过期，请重新开始。", []),
+            "CLIInterface:CLIInterface.loginProfileAlreadySelected": .init("此登录流程已选择另一角色。", []),
+            "CLIInterface:CLIInterface.loginProfileSelectionRequired": .init("请选择 login start 返回的角色。", []),
+            "CLIInterface:CLIInterface.loginProviderHelp": .init("登录服务类型。", []),
+            "CLIInterface:CLIInterface.loginServerOrIdentityChanged": .init("登录服务器或登录身份已发生变化。", []),
+            "CLIInterface:CLIInterface.managedDirectoryMustBeEmpty": .init("新建的托管目录必须为空。", []),
+            "CLIInterface:CLIInterface.manualContentDownloadRequired": .init("请下载列出的文件，然后添加 --manual fileID=path 再次执行命令。", []),
+            "CLIInterface:CLIInterface.manualCurseForgeFileHelp": .init("手动下载的 CurseForge 文件，格式为 fileID=path。", []),
+            "CLIInterface:CLIInterface.manualModpackArchiveHelp": .init("手动下载的整合包归档。", []),
+            "CLIInterface:CLIInterface.manualModpackDownloadRequired": .init("请下载整合包归档，然后添加 --archive path 再次执行。", []),
+            "CLIInterface:CLIInterface.manualModpackUpdateArchiveHelp": .init("手动下载的远程版本归档。", []),
+            "CLIInterface:CLIInterface.messageLanguageHelp": .init("说明和提示使用的语言。", []),
+            "CLIInterface:CLIInterface.microsoftLoginUsesBrowser": .init("Microsoft 登录通过浏览器授权，无需密码。", []),
+            "CLIInterface:CLIInterface.minecraftVersionFilterHelp": .init("按 Minecraft 版本筛选。", []),
+            "CLIInterface:CLIInterface.minecraftVersionHelp": .init("Minecraft 版本。", []),
+            "CLIInterface:CLIInterface.minecraftVersionsHelp": .init("列出可用的 Minecraft 版本。", []),
+            "CLIInterface:CLIInterface.missingArgument": .init("缺少参数 %1$@。", [.text]),
+            "CLIInterface:CLIInterface.missingOption": .init("缺少 --%1$@。", [.text]),
+            "CLIInterface:CLIInterface.modpackCommands": .init("整合包安装、更新与回退", []),
+            "CLIInterface:CLIInterface.modpackImportHelp": .init("导入本地整合包归档。", []),
+            "CLIInterface:CLIInterface.modpackInstallHelp": .init("下载并安装内容平台上的整合包。", []),
+            "CLIInterface:CLIInterface.modpackMetadataNotFound": .init("此实例没有已安装整合包的元数据。", []),
+            "CLIInterface:CLIInterface.modpackReleaseNotFound": .init("找不到整合包发布版本。", []),
+            "CLIInterface:CLIInterface.modpackRollbackHelp": .init("回退上一次整合包更新，保留更新后的本地修改。", []),
+            "CLIInterface:CLIInterface.modpackShowHelp": .init("查询已安装整合包的元数据。", []),
+            "CLIInterface:CLIInterface.modpackTargetDirectoryNotFound": .init("找不到目标目录。", []),
+            "CLIInterface:CLIInterface.modpackUpdateBackupNotFound": .init("没有可用于回退的整合包更新备份。", []),
+            "CLIInterface:CLIInterface.modpackUpdateFileHelp": .init("本地更新归档。", []),
+            "CLIInterface:CLIInterface.modpackUpdateHelp": .init("预览或执行整合包更新。", []),
+            "CLIInterface:CLIInterface.modpackUpdateSourceRequired": .init("请选择本地 --file 或远程 --version。", []),
+            "CLIInterface:CLIInterface.modpackUpdateVersionHelp": .init("指定远程发布版本 ID。", []),
+            "CLIInterface:CLIInterface.modpackVersionsHelp": .init("列出已安装整合包的可用版本。", []),
+            "CLIInterface:CLIInterface.negativeOffset": .init("--offset 不能为负数。", []),
+            "CLIInterface:CLIInterface.newInstanceNameHelp": .init("新实例名称。", []),
+            "CLIInterface:CLIInterface.operationCancelled": .init("操作已取消。", []),
+            "CLIInterface:CLIInterface.operationLockOpenFailed": .init("无法打开操作锁。", []),
+            "CLIInterface:CLIInterface.outputFileAlreadyExists": .init("输出文件已存在。", []),
+            "CLIInterface:CLIInterface.outputFormatHelp": .init("输出格式：text、json 或 ndjson。", []),
+            "CLIInterface:CLIInterface.passwordStdinHelp": .init("从标准输入读取密码。", []),
+            "CLIInterface:CLIInterface.positionalArgumentCountMismatch": .init("需要位置参数 %1$@，实际收到 %2$@ 个。", [.text, .text]),
+            "CLIInterface:CLIInterface.problemSessionsOnlyHelp": .init("仅显示存在问题的会话。", []),
+            "CLIInterface:CLIInterface.quickPlayWorldHelp": .init("用于快速游玩的世界文件夹。", []),
+            "CLIInterface:CLIInterface.quietProgressHelp": .init("不在标准错误输出显示进度。", []),
+            "CLIInterface:CLIInterface.reauthenticateAccountHelp": .init("需要重新登录的已有账户。", []),
+            "CLIInterface:CLIInterface.recoveryApplyHelp": .init("恢复指定的未完成操作。", []),
+            "CLIInterface:CLIInterface.recoveryCommands": .init("未完成操作的查询与恢复", []),
+            "CLIInterface:CLIInterface.recoveryInstanceFilterHelp": .init("仅检查指定实例。", []),
+            "CLIInterface:CLIInterface.recoveryListHelp": .init("列出未完成的数据操作及会话。", []),
+            "CLIInterface:CLIInterface.recoveryTargetArgumentsHelp": .init("恢复类型和目标 ID。", []),
+            "CLIInterface:CLIInterface.recoveryTransactionHelp": .init("事务 UUID 或会话 UUID。", []),
+            "CLIInterface:CLIInterface.recoveryTransactionRequired": .init("此恢复操作需要指定 recovery list 返回的 --transaction。", []),
+            "CLIInterface:CLIInterface.replaceLocalModificationsHelp": .init("覆盖本地修改过的文件，不保留本地修改。", []),
+            "CLIInterface:CLIInterface.resourceInUseByAnotherProcess": .init("另一个进程正在使用此资源。", []),
+            "CLIInterface:CLIInterface.resultLimitHelp": .init("最多返回的数量，范围为 1 至 1000，默认 50。", []),
+            "CLIInterface:CLIInterface.resultOffsetHelp": .init("跳过的结果数量，默认 0。", []),
+            "CLIInterface:CLIInterface.rootCommandHelp": .init("Ruri 启动器命令行接口。", []),
+            "CLIInterface:CLIInterface.schemaCommandHelp": .init("查询命令及其机器接口。", []),
+            "CLIInterface:CLIInterface.schematicCommands": .init("投影文件管理", []),
+            "CLIInterface:CLIInterface.schematicCreateFolderHelp": .init("创建投影文件夹。", []),
+            "CLIInterface:CLIInterface.schematicExportArgumentsHelp": .init("实例 ID、投影路径和导出文件路径。", []),
+            "CLIInterface:CLIInterface.schematicExportHelp": .init("导出投影文件。", []),
+            "CLIInterface:CLIInterface.schematicFolderArgumentsHelp": .init("实例 ID 和文件夹名称。", []),
+            "CLIInterface:CLIInterface.schematicImportHelp": .init("导入投影文件。", []),
+            "CLIInterface:CLIInterface.schematicListHelp": .init("列出投影文件及文件夹。", []),
+            "CLIInterface:CLIInterface.schematicNotFound": .init("找不到投影文件。", []),
+            "CLIInterface:CLIInterface.schematicParentDirectoryHelp": .init("父目录的相对路径。", []),
+            "CLIInterface:CLIInterface.schematicRelativePathHelp": .init("投影目录的相对路径。", []),
+            "CLIInterface:CLIInterface.schematicRemoveHelp": .init("将投影文件或文件夹移到废纸篓。", []),
+            "CLIInterface:CLIInterface.schematicShowHelp": .init("查询投影文件的元数据。", []),
+            "CLIInterface:CLIInterface.selectedContentFilesNotFound": .init("找不到部分所选文件。", []),
+            "CLIInterface:CLIInterface.selectedVersionIncompatible": .init("所选版本与实例不兼容。", []),
+            "CLIInterface:CLIInterface.sessionAnalyzeHelp": .init("分析已记录的启动与游戏诊断信息。", []),
+            "CLIInterface:CLIInterface.sessionCommands": .init("游戏会话、日志与诊断", []),
+            "CLIInterface:CLIInterface.sessionExportArgumentsHelp": .init("实例 ID、会话 ID 和文件路径。", []),
+            "CLIInterface:CLIInterface.sessionExportHelp": .init("导出脱敏后的诊断包。", []),
+            "CLIInterface:CLIInterface.sessionInstanceIdFilterHelp": .init("按实例 UUID 筛选。", []),
+            "CLIInterface:CLIInterface.sessionInstanceNameFilterHelp": .init("按实例名称筛选。", []),
+            "CLIInterface:CLIInterface.sessionKillHelp": .init("强制停止游戏进程。", []),
+            "CLIInterface:CLIInterface.sessionListHelp": .init("列出游戏会话。", []),
+            "CLIInterface:CLIInterface.sessionLogFollowHelp": .init("跟随日志直到会话结束，使用 text 或 ndjson 格式。", []),
+            "CLIInterface:CLIInterface.sessionLogLineLimitHelp": .init("最多读取的末尾行数，默认 200。", []),
+            "CLIInterface:CLIInterface.sessionLogSourceHelp": .init("日志来源。", []),
+            "CLIInterface:CLIInterface.sessionLogsHelp": .init("读取或持续跟随会话日志。", []),
+            "CLIInterface:CLIInterface.sessionMonitorUnavailable": .init("监控进程已不可用。", []),
+            "CLIInterface:CLIInterface.sessionShowHelp": .init("查询游戏会话详情。", []),
+            "CLIInterface:CLIInterface.sessionStopHelp": .init("请求游戏正常退出。", []),
+            "CLIInterface:CLIInterface.sessionTargetArgumentsHelp": .init("实例 ID 和会话 ID。", []),
+            "CLIInterface:CLIInterface.sessionWaitHelp": .init("等待监控记录游戏退出。", []),
+            "CLIInterface:CLIInterface.showEnvironmentValuesHelp": .init("显示环境变量的值。", []),
+            "CLIInterface:CLIInterface.stateChangedSinceRead": .init("读取后状态已发生变化。", []),
+            "CLIInterface:CLIInterface.targetDirectoryRemoved": .init("目标目录已被移除。", []),
+            "CLIInterface:CLIInterface.unfinishedOperationRecoveryRequired": .init("检查此数据前，必须先恢复未完成的操作。", []),
+            "CLIInterface:CLIInterface.uninstallAction": .init("卸载", []),
+            "CLIInterface:CLIInterface.unknownAccountAction": .init("未知账户操作。", []),
+            "CLIInterface:CLIInterface.unknownCommand": .init("未知命令。", []),
+            "CLIInterface:CLIInterface.unknownCommandPath": .init("未知命令路径。", []),
+            "CLIInterface:CLIInterface.unknownConfigField": .init("未知配置字段。", []),
+            "CLIInterface:CLIInterface.unknownConfigPatchOperation": .init("补丁包含未知操作，请使用 set、reset 或 inherit。", []),
+            "CLIInterface:CLIInterface.unknownContentAction": .init("未知内容操作。", []),
+            "CLIInterface:CLIInterface.unknownDataPackAction": .init("未知数据包操作。", []),
+            "CLIInterface:CLIInterface.unknownDirectoryAction": .init("未知目录操作。", []),
+            "CLIInterface:CLIInterface.unknownIconGlyphOrTint": .init("未知图标形状或颜色。", []),
+            "CLIInterface:CLIInterface.unknownInstanceAction": .init("未知实例操作。", []),
+            "CLIInterface:CLIInterface.unknownJavaAction": .init("未知 Java 操作。", []),
+            "CLIInterface:CLIInterface.unknownLoader": .init("未知加载器。", []),
+            "CLIInterface:CLIInterface.unknownNamedConfigField": .init("未知配置字段：%1$@。", [.text]),
+            "CLIInterface:CLIInterface.unknownOrDuplicateConfigField": .init("未知或重复的配置字段：%1$@。", [.text]),
+            "CLIInterface:CLIInterface.unknownOrEmptyConfigGroup": .init("未知或空的配置组：%1$@。", [.text]),
+            "CLIInterface:CLIInterface.unknownRecoveryKind": .init("未知恢复类型。", []),
+            "CLIInterface:CLIInterface.unknownSessionAction": .init("未知会话操作。", []),
+            "CLIInterface:CLIInterface.unknownWorldAction": .init("未知世界操作。", []),
+            "CLIInterface:CLIInterface.unsupportedLanguage": .init("不支持此语言。", []),
+            "CLIInterface:CLIInterface.updateAllContentFilesHelp": .init("更新该类型的全部文件。", []),
+            "CLIInterface:CLIInterface.validUuidRequired": .init("需要有效的 UUID。", []),
+            "CLIInterface:CLIInterface.worldBackupArgumentsHelp": .init("实例 ID 和备份 ID。", []),
+            "CLIInterface:CLIInterface.worldBackupCommands": .init("世界备份与恢复", []),
+            "CLIInterface:CLIInterface.worldBackupCreateHelp": .init("备份世界。", []),
+            "CLIInterface:CLIInterface.worldBackupListHelp": .init("列出世界备份。", []),
+            "CLIInterface:CLIInterface.worldBackupNotFound": .init("找不到备份。", []),
+            "CLIInterface:CLIInterface.worldBackupReasonHelp": .init("可选的备份原因。", []),
+            "CLIInterface:CLIInterface.worldBackupRemoveHelp": .init("将世界备份移到废纸篓。", []),
+            "CLIInterface:CLIInterface.worldBackupReplaceHelp": .init("覆盖已有世界。", []),
+            "CLIInterface:CLIInterface.worldBackupRestoreHelp": .init("恢复备份，覆盖已有世界时需要明确确认。", []),
+            "CLIInterface:CLIInterface.worldCommands": .init("世界管理、导入导出与备份", []),
+            "CLIInterface:CLIInterface.worldExportArgumentsHelp": .init("实例 ID、世界文件夹和文件路径。", []),
+            "CLIInterface:CLIInterface.worldExportHelp": .init("导出世界归档。", []),
+            "CLIInterface:CLIInterface.worldFolderArgumentsHelp": .init("实例 ID 和世界文件夹。", []),
+            "CLIInterface:CLIInterface.worldImportHelp": .init("导入世界归档或目录。", []),
+            "CLIInterface:CLIInterface.worldListHelp": .init("列出实例中的世界。", []),
+            "CLIInterface:CLIInterface.worldNotFound": .init("找不到世界。", []),
+            "CLIInterface:CLIInterface.worldRemoveHelp": .init("将世界移到废纸篓。", []),
+            "CLIInterface:CLIInterface.worldShowHelp": .init("查询世界详情。", []),
         ]
     }
 }

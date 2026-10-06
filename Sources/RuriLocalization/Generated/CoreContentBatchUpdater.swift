@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum CoreContentBatchUpdater {
-        /// 请选择可更新的内容，同一项目只能选择一个版本。
-        ///
-        /// Resource: `Errors.coreContentBatchUpdater.selectedText1`.
-        public static var selectionInvalid: LocalizedMessage {
-            .init(key: "coreContentBatchUpdater.selectedText1", table: "Errors", fallback: "请选择可更新的内容，同一项目只能选择一个版本。")
-        }
         /// %1$@ 已发生变化，请重新检查更新。
         ///
-        /// Resource: `Errors.coreContentBatchUpdater.managerText1`.
+        /// Resource: `Errors.CoreContentBatchUpdater.contentChanged`.
         public static func contentChanged(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreContentBatchUpdater.managerText1", table: "Errors", fallback: "%1$@ 已发生变化，请重新检查更新。", arguments: [.text(value0)])
+            .init(key: "CoreContentBatchUpdater.contentChanged", table: "Errors", fallback: "%1$@ 已发生变化，请重新检查更新。", arguments: [.text(value0)])
         }
         /// 更新版本与已安装项目不匹配。
         ///
-        /// Resource: `Errors.coreContentBatchUpdater.managerText2`.
+        /// Resource: `Errors.CoreContentBatchUpdater.installedProjectMismatch`.
         public static var installedProjectMismatch: LocalizedMessage {
-            .init(key: "coreContentBatchUpdater.managerText2", table: "Errors", fallback: "更新版本与已安装项目不匹配。")
+            .init(key: "CoreContentBatchUpdater.installedProjectMismatch", table: "Errors", fallback: "更新版本与已安装项目不匹配。")
         }
         /// 实例的游戏版本或加载器已改变，请重新检查更新。
         ///
-        /// Resource: `Errors.coreContentBatchUpdater.currentText1`.
+        /// Resource: `Errors.CoreContentBatchUpdater.instanceVersionChanged`.
         public static var instanceVersionChanged: LocalizedMessage {
-            .init(key: "coreContentBatchUpdater.currentText1", table: "Errors", fallback: "实例的游戏版本或加载器已改变，请重新检查更新。")
+            .init(key: "CoreContentBatchUpdater.instanceVersionChanged", table: "Errors", fallback: "实例的游戏版本或加载器已改变，请重新检查更新。")
+        }
+        /// 请选择可更新的内容，同一项目只能选择一个版本。
+        ///
+        /// Resource: `Errors.CoreContentBatchUpdater.selectionInvalid`.
+        public static var selectionInvalid: LocalizedMessage {
+            .init(key: "CoreContentBatchUpdater.selectionInvalid", table: "Errors", fallback: "请选择可更新的内容，同一项目只能选择一个版本。")
         }
         /// 正在应用 %1$lld 项内容更新
         ///
-        /// Resource: `Progress.coreContentBatchUpdater.modFilesText1`.
+        /// Resource: `Progress.CoreContentBatchUpdater.applyingContentUpdates`.
         public static func applyingContentUpdates(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "coreContentBatchUpdater.modFilesText1", table: "Progress", fallback: "正在应用 %1$lld 项内容更新", arguments: [.integer(value0)])
+            .init(key: "CoreContentBatchUpdater.applyingContentUpdates", table: "Progress", fallback: "正在应用 %1$lld 项内容更新", arguments: [.integer(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreContentBatchUpdater.selectedText1": .init("请选择可更新的内容，同一项目只能选择一个版本。", []),
-            "Errors:coreContentBatchUpdater.managerText1": .init("%1$@ 已发生变化，请重新检查更新。", [.text]),
-            "Errors:coreContentBatchUpdater.managerText2": .init("更新版本与已安装项目不匹配。", []),
-            "Errors:coreContentBatchUpdater.currentText1": .init("实例的游戏版本或加载器已改变，请重新检查更新。", []),
-            "Progress:coreContentBatchUpdater.modFilesText1": .init("正在应用 %1$lld 项内容更新", [.integer]),
+            "Errors:CoreContentBatchUpdater.contentChanged": .init("%1$@ 已发生变化，请重新检查更新。", [.text]),
+            "Errors:CoreContentBatchUpdater.installedProjectMismatch": .init("更新版本与已安装项目不匹配。", []),
+            "Errors:CoreContentBatchUpdater.instanceVersionChanged": .init("实例的游戏版本或加载器已改变，请重新检查更新。", []),
+            "Errors:CoreContentBatchUpdater.selectionInvalid": .init("请选择可更新的内容，同一项目只能选择一个版本。", []),
+            "Progress:CoreContentBatchUpdater.applyingContentUpdates": .init("正在应用 %1$lld 项内容更新", [.integer]),
         ]
     }
 }

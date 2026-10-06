@@ -3,217 +3,217 @@ import Foundation
 
 extension Messages {
     public enum AppJavaView {
-        /// 正在检测本机 Java…
+        /// 添加本机已安装的 Java…
         ///
-        /// Resource: `Interface.appJavaView.bodyText1`.
-        public static var detectingJava: LocalizedMessage {
-            .init(key: "appJavaView.bodyText1", table: "Interface", fallback: "正在检测本机 Java…")
-        }
-        /// 没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。
-        ///
-        /// Resource: `Interface.appJavaView.bodyText2`.
-        public static var noJavaFound: LocalizedMessage {
-            .init(key: "appJavaView.bodyText2", table: "Interface", fallback: "没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。")
-        }
-        /// 本机 Java
-        ///
-        /// Resource: `Interface.appJavaView.bodyText3`.
-        public static var localJava: LocalizedMessage {
-            .init(key: "appJavaView.bodyText3", table: "Interface", fallback: "本机 Java")
-        }
-        /// 获取 Mojang 运行时列表…
-        ///
-        /// Resource: `Interface.appJavaView.bodyText4`.
-        public static var fetchingRuntimes: LocalizedMessage {
-            .init(key: "appJavaView.bodyText4", table: "Interface", fallback: "获取 Mojang 运行时列表…")
-        }
-        /// 官方游戏运行时
-        ///
-        /// Resource: `Interface.appJavaView.javaErrorText1`.
-        public static var officialRuntimes: LocalizedMessage {
-            .init(key: "appJavaView.javaErrorText1", table: "Interface", fallback: "官方游戏运行时")
-        }
-        /// Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。
-        ///
-        /// Resource: `Interface.appJavaView.javaErrorText2`.
-        public static var javaRequirements: LocalizedMessage {
-            .init(key: "appJavaView.javaErrorText2", table: "Interface", fallback: "Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。")
-        }
-        /// Azul Zulu 下载
-        ///
-        /// Resource: `Interface.appJavaView.javaErrorText3`.
-        public static var zuluDownload: LocalizedMessage {
-            .init(key: "appJavaView.javaErrorText3", table: "Interface", fallback: "Azul Zulu 下载")
-        }
-        /// Eclipse Temurin 下载
-        ///
-        /// Resource: `Interface.appJavaView.javaErrorText4`.
-        public static var temurinDownload: LocalizedMessage {
-            .init(key: "appJavaView.javaErrorText4", table: "Interface", fallback: "Eclipse Temurin 下载")
-        }
-        /// 重新检测
-        ///
-        /// Resource: `Interface.appJavaView.javaErrorText5`.
-        public static var redetect: LocalizedMessage {
-            .init(key: "appJavaView.javaErrorText5", table: "Interface", fallback: "重新检测")
-        }
-        /// 重新检测本机 Java
-        ///
-        /// Resource: `Interface.appJavaView.javaErrorText6`.
-        public static var redetectLocalJava: LocalizedMessage {
-            .init(key: "appJavaView.javaErrorText6", table: "Interface", fallback: "重新检测本机 Java")
+        /// Resource: `Interface.AppJavaView.addInstalledJava`.
+        public static var addInstalledJava: LocalizedMessage {
+            .init(key: "AppJavaView.addInstalledJava", table: "Interface", fallback: "添加本机已安装的 Java…")
         }
         /// 添加本机 Java…
         ///
-        /// Resource: `Interface.appJavaView.javaErrorText7`.
+        /// Resource: `Interface.AppJavaView.addLocalJava`.
         public static var addLocalJava: LocalizedMessage {
-            .init(key: "appJavaView.javaErrorText7", table: "Interface", fallback: "添加本机 Java…")
-        }
-        /// 添加本机已安装的 Java…
-        ///
-        /// Resource: `Interface.appJavaView.javaErrorText8`.
-        public static var addInstalledJava: LocalizedMessage {
-            .init(key: "appJavaView.javaErrorText8", table: "Interface", fallback: "添加本机已安装的 Java…")
-        }
-        /// 不可用的 Java
-        ///
-        /// Resource: `Interface.appJavaView.runtimeText1`.
-        public static var unavailableJava: LocalizedMessage {
-            .init(key: "appJavaView.runtimeText1", table: "Interface", fallback: "不可用的 Java")
-        }
-        /// 默认
-        ///
-        /// Resource: `Interface.appJavaView.selectedText1`.
-        public static var defaultSelection: LocalizedMessage {
-            .init(key: "appJavaView.selectedText1", table: "Interface", fallback: "默认")
-        }
-        /// 修复
-        ///
-        /// Resource: `Interface.appJavaView.remoteText1`.
-        public static var repair: LocalizedMessage {
-            .init(key: "appJavaView.remoteText1", table: "Interface", fallback: "修复")
-        }
-        /// 设为默认 Java
-        ///
-        /// Resource: `Interface.appJavaView.remoteText2`.
-        public static var setDefaultJava: LocalizedMessage {
-            .init(key: "appJavaView.remoteText2", table: "Interface", fallback: "设为默认 Java")
-        }
-        /// 重新选择路径…
-        ///
-        /// Resource: `Interface.appJavaView.remoteText3`.
-        public static var relocatePath: LocalizedMessage {
-            .init(key: "appJavaView.remoteText3", table: "Interface", fallback: "重新选择路径…")
-        }
-        /// 在 Finder 中显示
-        ///
-        /// Resource: `Interface.appJavaView.remoteText4`.
-        public static var showInFinder: LocalizedMessage {
-            .init(key: "appJavaView.remoteText4", table: "Interface", fallback: "在 Finder 中显示")
-        }
-        /// 从手动列表移除
-        ///
-        /// Resource: `Interface.appJavaView.remoteText5`.
-        public static var removeManualJava: LocalizedMessage {
-            .init(key: "appJavaView.remoteText5", table: "Interface", fallback: "从手动列表移除")
-        }
-        /// 移到废纸篓…
-        ///
-        /// Resource: `Interface.appJavaView.idText1`.
-        public static var trashJava: LocalizedMessage {
-            .init(key: "appJavaView.idText1", table: "Interface", fallback: "移到废纸篓…")
-        }
-        /// 清理未完成文件
-        ///
-        /// Resource: `Interface.appJavaView.brokenText1`.
-        public static var incompleteDownloads: LocalizedMessage {
-            .init(key: "appJavaView.brokenText1", table: "Interface", fallback: "清理未完成文件")
-        }
-        /// 已安装
-        ///
-        /// Resource: `Interface.appJavaView.brokenText2`.
-        public static var installed: LocalizedMessage {
-            .init(key: "appJavaView.brokenText2", table: "Interface", fallback: "已安装")
-        }
-        /// 继续安装
-        ///
-        /// Resource: `Interface.appJavaView.brokenText3`.
-        public static var continueInstall: LocalizedMessage {
-            .init(key: "appJavaView.brokenText3", table: "Interface", fallback: "继续安装")
-        }
-        /// 安装
-        ///
-        /// Resource: `Interface.appJavaView.brokenText4`.
-        public static var install: LocalizedMessage {
-            .init(key: "appJavaView.brokenText4", table: "Interface", fallback: "安装")
+            .init(key: "AppJavaView.addLocalJava", table: "Interface", fallback: "添加本机 Java…")
         }
         /// 清理未完成的 Java 下载
         ///
-        /// Resource: `Interface.appJavaView.bodyText5`.
+        /// Resource: `Interface.AppJavaView.cleanIncompleteDownloads`.
         public static var cleanIncompleteDownloads: LocalizedMessage {
-            .init(key: "appJavaView.bodyText5", table: "Interface", fallback: "清理未完成的 Java 下载")
+            .init(key: "AppJavaView.cleanIncompleteDownloads", table: "Interface", fallback: "清理未完成的 Java 下载")
         }
-        /// 移除 Ruri 下载的 Java
+        /// 继续安装
         ///
-        /// Resource: `Interface.appJavaView.bodyText6`.
-        public static var removeManagedJava: LocalizedMessage {
-            .init(key: "appJavaView.bodyText6", table: "Interface", fallback: "移除 Ruri 下载的 Java")
+        /// Resource: `Interface.AppJavaView.continueInstall`.
+        public static var continueInstall: LocalizedMessage {
+            .init(key: "AppJavaView.continueInstall", table: "Interface", fallback: "继续安装")
+        }
+        /// 默认
+        ///
+        /// Resource: `Interface.AppJavaView.defaultSelection`.
+        public static var defaultSelection: LocalizedMessage {
+            .init(key: "AppJavaView.defaultSelection", table: "Interface", fallback: "默认")
+        }
+        /// 正在检测本机 Java…
+        ///
+        /// Resource: `Interface.AppJavaView.detectingJava`.
+        public static var detectingJava: LocalizedMessage {
+            .init(key: "AppJavaView.detectingJava", table: "Interface", fallback: "正在检测本机 Java…")
+        }
+        /// 获取 Mojang 运行时列表…
+        ///
+        /// Resource: `Interface.AppJavaView.fetchingRuntimes`.
+        public static var fetchingRuntimes: LocalizedMessage {
+            .init(key: "AppJavaView.fetchingRuntimes", table: "Interface", fallback: "获取 Mojang 运行时列表…")
+        }
+        /// 清理未完成文件
+        ///
+        /// Resource: `Interface.AppJavaView.incompleteDownloads`.
+        public static var incompleteDownloads: LocalizedMessage {
+            .init(key: "AppJavaView.incompleteDownloads", table: "Interface", fallback: "清理未完成文件")
+        }
+        /// 安装
+        ///
+        /// Resource: `Interface.AppJavaView.install`.
+        public static var install: LocalizedMessage {
+            .init(key: "AppJavaView.install", table: "Interface", fallback: "安装")
+        }
+        /// 已安装
+        ///
+        /// Resource: `Interface.AppJavaView.installed`.
+        public static var installed: LocalizedMessage {
+            .init(key: "AppJavaView.installed", table: "Interface", fallback: "已安装")
+        }
+        /// Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。
+        ///
+        /// Resource: `Interface.AppJavaView.javaRequirements`.
+        public static var javaRequirements: LocalizedMessage {
+            .init(key: "AppJavaView.javaRequirements", table: "Interface", fallback: "Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。")
         }
         /// 以下设置仍在使用这一路径：
         ///
-        /// Resource: `Interface.appJavaView.bodyText7`.
+        /// Resource: `Interface.AppJavaView.javaStillReferenced`.
         public static var javaStillReferenced: LocalizedMessage {
-            .init(key: "appJavaView.bodyText7", table: "Interface", fallback: "以下设置仍在使用这一路径：")
+            .init(key: "AppJavaView.javaStillReferenced", table: "Interface", fallback: "以下设置仍在使用这一路径：")
         }
-        /// 将这些设置改为自动选择 Java
+        /// 本机 Java
         ///
-        /// Resource: `Interface.appJavaView.bodyText8`.
-        public static var switchToAutomaticJava: LocalizedMessage {
-            .init(key: "appJavaView.bodyText8", table: "Interface", fallback: "将这些设置改为自动选择 Java")
-        }
-        /// 文件会移到废纸篓；正在被游戏或安装器使用时无法移除。
-        ///
-        /// Resource: `Interface.appJavaView.bodyText9`.
-        public static var trashNotice: LocalizedMessage {
-            .init(key: "appJavaView.bodyText9", table: "Interface", fallback: "文件会移到废纸篓；正在被游戏或安装器使用时无法移除。")
+        /// Resource: `Interface.AppJavaView.localJava`.
+        public static var localJava: LocalizedMessage {
+            .init(key: "AppJavaView.localJava", table: "Interface", fallback: "本机 Java")
         }
         /// 移到废纸篓
         ///
-        /// Resource: `Interface.appJavaView.bodyText10`.
+        /// Resource: `Interface.AppJavaView.moveToTrash`.
         public static var moveToTrash: LocalizedMessage {
-            .init(key: "appJavaView.bodyText10", table: "Interface", fallback: "移到废纸篓")
+            .init(key: "AppJavaView.moveToTrash", table: "Interface", fallback: "移到废纸篓")
+        }
+        /// 没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。
+        ///
+        /// Resource: `Interface.AppJavaView.noJavaFound`.
+        public static var noJavaFound: LocalizedMessage {
+            .init(key: "AppJavaView.noJavaFound", table: "Interface", fallback: "没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。")
+        }
+        /// 官方游戏运行时
+        ///
+        /// Resource: `Interface.AppJavaView.officialRuntimes`.
+        public static var officialRuntimes: LocalizedMessage {
+            .init(key: "AppJavaView.officialRuntimes", table: "Interface", fallback: "官方游戏运行时")
+        }
+        /// 重新检测
+        ///
+        /// Resource: `Interface.AppJavaView.redetect`.
+        public static var redetect: LocalizedMessage {
+            .init(key: "AppJavaView.redetect", table: "Interface", fallback: "重新检测")
+        }
+        /// 重新检测本机 Java
+        ///
+        /// Resource: `Interface.AppJavaView.redetectLocalJava`.
+        public static var redetectLocalJava: LocalizedMessage {
+            .init(key: "AppJavaView.redetectLocalJava", table: "Interface", fallback: "重新检测本机 Java")
+        }
+        /// 重新选择路径…
+        ///
+        /// Resource: `Interface.AppJavaView.relocatePath`.
+        public static var relocatePath: LocalizedMessage {
+            .init(key: "AppJavaView.relocatePath", table: "Interface", fallback: "重新选择路径…")
+        }
+        /// 移除 Ruri 下载的 Java
+        ///
+        /// Resource: `Interface.AppJavaView.removeManagedJava`.
+        public static var removeManagedJava: LocalizedMessage {
+            .init(key: "AppJavaView.removeManagedJava", table: "Interface", fallback: "移除 Ruri 下载的 Java")
+        }
+        /// 从手动列表移除
+        ///
+        /// Resource: `Interface.AppJavaView.removeManualJava`.
+        public static var removeManualJava: LocalizedMessage {
+            .init(key: "AppJavaView.removeManualJava", table: "Interface", fallback: "从手动列表移除")
+        }
+        /// 修复
+        ///
+        /// Resource: `Interface.AppJavaView.repair`.
+        public static var repair: LocalizedMessage {
+            .init(key: "AppJavaView.repair", table: "Interface", fallback: "修复")
+        }
+        /// 设为默认 Java
+        ///
+        /// Resource: `Interface.AppJavaView.setDefaultJava`.
+        public static var setDefaultJava: LocalizedMessage {
+            .init(key: "AppJavaView.setDefaultJava", table: "Interface", fallback: "设为默认 Java")
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.AppJavaView.showInFinder`.
+        public static var showInFinder: LocalizedMessage {
+            .init(key: "AppJavaView.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
+        }
+        /// 将这些设置改为自动选择 Java
+        ///
+        /// Resource: `Interface.AppJavaView.switchToAutomaticJava`.
+        public static var switchToAutomaticJava: LocalizedMessage {
+            .init(key: "AppJavaView.switchToAutomaticJava", table: "Interface", fallback: "将这些设置改为自动选择 Java")
+        }
+        /// Eclipse Temurin 下载
+        ///
+        /// Resource: `Interface.AppJavaView.temurinDownload`.
+        public static var temurinDownload: LocalizedMessage {
+            .init(key: "AppJavaView.temurinDownload", table: "Interface", fallback: "Eclipse Temurin 下载")
+        }
+        /// 移到废纸篓…
+        ///
+        /// Resource: `Interface.AppJavaView.trashJava`.
+        public static var trashJava: LocalizedMessage {
+            .init(key: "AppJavaView.trashJava", table: "Interface", fallback: "移到废纸篓…")
+        }
+        /// 文件会移到废纸篓；正在被游戏或安装器使用时无法移除。
+        ///
+        /// Resource: `Interface.AppJavaView.trashNotice`.
+        public static var trashNotice: LocalizedMessage {
+            .init(key: "AppJavaView.trashNotice", table: "Interface", fallback: "文件会移到废纸篓；正在被游戏或安装器使用时无法移除。")
+        }
+        /// 不可用的 Java
+        ///
+        /// Resource: `Interface.AppJavaView.unavailableJava`.
+        public static var unavailableJava: LocalizedMessage {
+            .init(key: "AppJavaView.unavailableJava", table: "Interface", fallback: "不可用的 Java")
+        }
+        /// Azul Zulu 下载
+        ///
+        /// Resource: `Interface.AppJavaView.zuluDownload`.
+        public static var zuluDownload: LocalizedMessage {
+            .init(key: "AppJavaView.zuluDownload", table: "Interface", fallback: "Azul Zulu 下载")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appJavaView.bodyText1": .init("正在检测本机 Java…", []),
-            "Interface:appJavaView.bodyText2": .init("没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。", []),
-            "Interface:appJavaView.bodyText3": .init("本机 Java", []),
-            "Interface:appJavaView.bodyText4": .init("获取 Mojang 运行时列表…", []),
-            "Interface:appJavaView.javaErrorText1": .init("官方游戏运行时", []),
-            "Interface:appJavaView.javaErrorText2": .init("Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。", []),
-            "Interface:appJavaView.javaErrorText3": .init("Azul Zulu 下载", []),
-            "Interface:appJavaView.javaErrorText4": .init("Eclipse Temurin 下载", []),
-            "Interface:appJavaView.javaErrorText5": .init("重新检测", []),
-            "Interface:appJavaView.javaErrorText6": .init("重新检测本机 Java", []),
-            "Interface:appJavaView.javaErrorText7": .init("添加本机 Java…", []),
-            "Interface:appJavaView.javaErrorText8": .init("添加本机已安装的 Java…", []),
-            "Interface:appJavaView.runtimeText1": .init("不可用的 Java", []),
-            "Interface:appJavaView.selectedText1": .init("默认", []),
-            "Interface:appJavaView.remoteText1": .init("修复", []),
-            "Interface:appJavaView.remoteText2": .init("设为默认 Java", []),
-            "Interface:appJavaView.remoteText3": .init("重新选择路径…", []),
-            "Interface:appJavaView.remoteText4": .init("在 Finder 中显示", []),
-            "Interface:appJavaView.remoteText5": .init("从手动列表移除", []),
-            "Interface:appJavaView.idText1": .init("移到废纸篓…", []),
-            "Interface:appJavaView.brokenText1": .init("清理未完成文件", []),
-            "Interface:appJavaView.brokenText2": .init("已安装", []),
-            "Interface:appJavaView.brokenText3": .init("继续安装", []),
-            "Interface:appJavaView.brokenText4": .init("安装", []),
-            "Interface:appJavaView.bodyText5": .init("清理未完成的 Java 下载", []),
-            "Interface:appJavaView.bodyText6": .init("移除 Ruri 下载的 Java", []),
-            "Interface:appJavaView.bodyText7": .init("以下设置仍在使用这一路径：", []),
-            "Interface:appJavaView.bodyText8": .init("将这些设置改为自动选择 Java", []),
-            "Interface:appJavaView.bodyText9": .init("文件会移到废纸篓；正在被游戏或安装器使用时无法移除。", []),
-            "Interface:appJavaView.bodyText10": .init("移到废纸篓", []),
+            "Interface:AppJavaView.addInstalledJava": .init("添加本机已安装的 Java…", []),
+            "Interface:AppJavaView.addLocalJava": .init("添加本机 Java…", []),
+            "Interface:AppJavaView.cleanIncompleteDownloads": .init("清理未完成的 Java 下载", []),
+            "Interface:AppJavaView.continueInstall": .init("继续安装", []),
+            "Interface:AppJavaView.defaultSelection": .init("默认", []),
+            "Interface:AppJavaView.detectingJava": .init("正在检测本机 Java…", []),
+            "Interface:AppJavaView.fetchingRuntimes": .init("获取 Mojang 运行时列表…", []),
+            "Interface:AppJavaView.incompleteDownloads": .init("清理未完成文件", []),
+            "Interface:AppJavaView.install": .init("安装", []),
+            "Interface:AppJavaView.installed": .init("已安装", []),
+            "Interface:AppJavaView.javaRequirements": .init("Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。", []),
+            "Interface:AppJavaView.javaStillReferenced": .init("以下设置仍在使用这一路径：", []),
+            "Interface:AppJavaView.localJava": .init("本机 Java", []),
+            "Interface:AppJavaView.moveToTrash": .init("移到废纸篓", []),
+            "Interface:AppJavaView.noJavaFound": .init("没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。", []),
+            "Interface:AppJavaView.officialRuntimes": .init("官方游戏运行时", []),
+            "Interface:AppJavaView.redetect": .init("重新检测", []),
+            "Interface:AppJavaView.redetectLocalJava": .init("重新检测本机 Java", []),
+            "Interface:AppJavaView.relocatePath": .init("重新选择路径…", []),
+            "Interface:AppJavaView.removeManagedJava": .init("移除 Ruri 下载的 Java", []),
+            "Interface:AppJavaView.removeManualJava": .init("从手动列表移除", []),
+            "Interface:AppJavaView.repair": .init("修复", []),
+            "Interface:AppJavaView.setDefaultJava": .init("设为默认 Java", []),
+            "Interface:AppJavaView.showInFinder": .init("在 Finder 中显示", []),
+            "Interface:AppJavaView.switchToAutomaticJava": .init("将这些设置改为自动选择 Java", []),
+            "Interface:AppJavaView.temurinDownload": .init("Eclipse Temurin 下载", []),
+            "Interface:AppJavaView.trashJava": .init("移到废纸篓…", []),
+            "Interface:AppJavaView.trashNotice": .init("文件会移到废纸篓；正在被游戏或安装器使用时无法移除。", []),
+            "Interface:AppJavaView.unavailableJava": .init("不可用的 Java", []),
+            "Interface:AppJavaView.zuluDownload": .init("Azul Zulu 下载", []),
         ]
     }
 }

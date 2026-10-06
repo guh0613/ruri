@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreMinecraftEndpoints {
         /// 资源索引包含无效哈希
         ///
-        /// Resource: `Errors.coreMinecraftEndpoints.assetText1`.
+        /// Resource: `Errors.CoreMinecraftEndpoints.invalidAssetHash`.
         public static var invalidAssetHash: LocalizedMessage {
-            .init(key: "coreMinecraftEndpoints.assetText1", table: "Errors", fallback: "资源索引包含无效哈希")
+            .init(key: "CoreMinecraftEndpoints.invalidAssetHash", table: "Errors", fallback: "资源索引包含无效哈希")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreMinecraftEndpoints.assetText1": .init("资源索引包含无效哈希", []),
+            "Errors:CoreMinecraftEndpoints.invalidAssetHash": .init("资源索引包含无效哈希", []),
         ]
     }
 }

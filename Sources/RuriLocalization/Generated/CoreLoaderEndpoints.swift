@@ -3,21 +3,21 @@ import Foundation
 
 extension Messages {
     public enum CoreLoaderEndpoints {
-        /// 此加载器不提供 Fabric/Quilt 启动清单。
-        ///
-        /// Resource: `Errors.coreLoaderEndpoints.profileServiceText1`.
-        public static var loaderProfileServiceUnavailable: LocalizedMessage {
-            .init(key: "coreLoaderEndpoints.profileServiceText1", table: "Errors", fallback: "此加载器不提供 Fabric/Quilt 启动清单。")
-        }
         /// 此加载器不使用 Forge 安装包。
         ///
-        /// Resource: `Errors.coreLoaderEndpoints.installerText1`.
+        /// Resource: `Errors.CoreLoaderEndpoints.loaderInstallerUnavailable`.
         public static var loaderInstallerUnavailable: LocalizedMessage {
-            .init(key: "coreLoaderEndpoints.installerText1", table: "Errors", fallback: "此加载器不使用 Forge 安装包。")
+            .init(key: "CoreLoaderEndpoints.loaderInstallerUnavailable", table: "Errors", fallback: "此加载器不使用 Forge 安装包。")
+        }
+        /// 此加载器不提供 Fabric/Quilt 启动清单。
+        ///
+        /// Resource: `Errors.CoreLoaderEndpoints.loaderProfileServiceUnavailable`.
+        public static var loaderProfileServiceUnavailable: LocalizedMessage {
+            .init(key: "CoreLoaderEndpoints.loaderProfileServiceUnavailable", table: "Errors", fallback: "此加载器不提供 Fabric/Quilt 启动清单。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreLoaderEndpoints.profileServiceText1": .init("此加载器不提供 Fabric/Quilt 启动清单。", []),
-            "Errors:coreLoaderEndpoints.installerText1": .init("此加载器不使用 Forge 安装包。", []),
+            "Errors:CoreLoaderEndpoints.loaderInstallerUnavailable": .init("此加载器不使用 Forge 安装包。", []),
+            "Errors:CoreLoaderEndpoints.loaderProfileServiceUnavailable": .init("此加载器不提供 Fabric/Quilt 启动清单。", []),
         ]
     }
 }

@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreDetachedMinecraftFolder {
         /// 已移除的 Minecraft 文件夹记录无效。
         ///
-        /// Resource: `Errors.coreDetachedMinecraftFolder.validateText1`.
+        /// Resource: `Errors.CoreDetachedMinecraftFolder.detachedFolderInvalid`.
         public static var detachedFolderInvalid: LocalizedMessage {
-            .init(key: "coreDetachedMinecraftFolder.validateText1", table: "Errors", fallback: "已移除的 Minecraft 文件夹记录无效。")
+            .init(key: "CoreDetachedMinecraftFolder.detachedFolderInvalid", table: "Errors", fallback: "已移除的 Minecraft 文件夹记录无效。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreDetachedMinecraftFolder.validateText1": .init("已移除的 Minecraft 文件夹记录无效。", []),
+            "Errors:CoreDetachedMinecraftFolder.detachedFolderInvalid": .init("已移除的 Minecraft 文件夹记录无效。", []),
         ]
     }
 }

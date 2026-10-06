@@ -5,26 +5,26 @@ extension Messages {
     public enum CoreDownloadFileLock {
         /// 下载缓存目录不能是符号链接
         ///
-        /// Resource: `Errors.coreDownloadFileLock.directoryText1`.
+        /// Resource: `Errors.CoreDownloadFileLock.downloadCacheSymlink`.
         public static var downloadCacheSymlink: LocalizedMessage {
-            .init(key: "coreDownloadFileLock.directoryText1", table: "Errors", fallback: "下载缓存目录不能是符号链接")
+            .init(key: "CoreDownloadFileLock.downloadCacheSymlink", table: "Errors", fallback: "下载缓存目录不能是符号链接")
         }
         /// 无法锁定下载文件：%1$@
         ///
-        /// Resource: `Errors.coreDownloadFileLock.fdText1`.
+        /// Resource: `Errors.CoreDownloadFileLock.downloadFileLockFailed`.
         public static func downloadFileLockFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreDownloadFileLock.fdText1", table: "Errors", fallback: "无法锁定下载文件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreDownloadFileLock.downloadFileLockFailed", table: "Errors", fallback: "无法锁定下载文件：%1$@", arguments: [.text(value0)])
         }
         /// 无法取得下载文件锁：%1$@
         ///
-        /// Resource: `Errors.coreDownloadFileLock.lockText1`.
+        /// Resource: `Errors.CoreDownloadFileLock.downloadFileLockUnavailable`.
         public static func downloadFileLockUnavailable(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreDownloadFileLock.lockText1", table: "Errors", fallback: "无法取得下载文件锁：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreDownloadFileLock.downloadFileLockUnavailable", table: "Errors", fallback: "无法取得下载文件锁：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreDownloadFileLock.directoryText1": .init("下载缓存目录不能是符号链接", []),
-            "Errors:coreDownloadFileLock.fdText1": .init("无法锁定下载文件：%1$@", [.text]),
-            "Errors:coreDownloadFileLock.lockText1": .init("无法取得下载文件锁：%1$@", [.text]),
+            "Errors:CoreDownloadFileLock.downloadCacheSymlink": .init("下载缓存目录不能是符号链接", []),
+            "Errors:CoreDownloadFileLock.downloadFileLockFailed": .init("无法锁定下载文件：%1$@", [.text]),
+            "Errors:CoreDownloadFileLock.downloadFileLockUnavailable": .init("无法取得下载文件锁：%1$@", [.text]),
         ]
     }
 }

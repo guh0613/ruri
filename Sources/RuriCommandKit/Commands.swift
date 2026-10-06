@@ -4,7 +4,7 @@ import Foundation
 import RuriCore
 
 struct SchemaCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["schema"], summary: Messages.CLIInterface.tfd63207de5ca.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["schema"], summary: Messages.CLIInterface.schemaCommandHelp.localized, operands: [
         .init(name: "resource", type: "string", required: false, help: "resource"),
         .init(name: "action", type: "string", required: false, help: "action"),
         .init(name: "subaction", type: "string", required: false, help: "subaction")
@@ -15,7 +15,7 @@ struct SchemaCommand: ExecutableCommand {
         .init(name: "full", type: "bool", required: false, help: Messages.CLIExperience.fullSchema.localized)
     ], examples: ["ruri schema config apply --input --scope instance --json"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t907f38578610.localized)) var operands: [String] = []
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.commandPathArgumentsHelp.localized)) var operands: [String] = []
     @Flag(help: ArgumentHelp(Messages.CLIExperience.inputSchema.localized)) var input = false
     @Flag(name: .customLong("output-schema"), help: ArgumentHelp(Messages.CLIExperience.outputSchema.localized)) var outputSchema = false
     @Option(help: ArgumentHelp(Messages.CLIExperience.schemaScope.localized)) var scope: String?
@@ -24,7 +24,7 @@ struct SchemaCommand: ExecutableCommand {
 }
 
 struct AppInfoCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["app","info"], summary: Messages.CLIInterface.t04f3e8ad5625.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["app","info"], summary: Messages.CLIInterface.appVersionHelp.localized, operands: [
 
     ], options: [
 
@@ -37,7 +37,7 @@ struct AppInfoCommand: ExecutableCommand {
 }
 
 struct AppLanguageGetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["app","language","get"], summary: Messages.CLIInterface.t0adf2f545bf7.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["app","language","get"], summary: Messages.CLIInterface.appLanguageGetHelp.localized, operands: [
 
     ], options: [
 
@@ -50,44 +50,44 @@ struct AppLanguageGetCommand: ExecutableCommand {
 }
 
 struct AppLanguageSetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["app","language","set"], summary: Messages.CLIInterface.t56774fcdd554.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["app","language","set"], summary: Messages.CLIInterface.appLanguageSetHelp.localized, operands: [
         .init(name: "language", type: "string", required: true, help: "language")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "language") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct CliStatusCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["cli","status"], summary: Messages.CLIInterface.tb15b5698e07c.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["cli","status"], summary: Messages.CLIInterface.cliStatusHelp.localized, operands: [
 
     ], options: [
-        .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.t7736b5280e58.localized, values: [])
+        .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.cliUninstallDirectoryHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.t7736b5280e58.localized)) var optionBinDir: String?
+    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.cliUninstallDirectoryHelp.localized)) var optionBinDir: String?
     var parameters: [String: Value] { [
         "bin-dir": .text(optionBinDir)
     ].filter { $0.value != .null } }
 }
 
 struct CliInstallCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["cli","install"], summary: Messages.CLIInterface.t05715f352213.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["cli","install"], summary: Messages.CLIInterface.cliInstallHelp.localized, operands: [
 
     ], options: [
-        .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.t6edc04f9cc0c.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.cliInstallDirectoryHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: true, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.t6edc04f9cc0c.localized)) var optionBinDir: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.cliInstallDirectoryHelp.localized)) var optionBinDir: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "bin-dir": .text(optionBinDir),
         "dry-run": .bool(optionDryRun)
@@ -95,18 +95,18 @@ struct CliInstallCommand: ExecutableCommand {
 }
 
 struct CliUninstallCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["cli","uninstall"], summary: Messages.CLIInterface.t32373072cae3.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["cli","uninstall"], summary: Messages.CLIInterface.cliUninstallHelp.localized, operands: [
 
     ], options: [
-        .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.t7736b5280e58.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.cliUninstallDirectoryHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: true, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.t7736b5280e58.localized)) var optionBinDir: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.cliUninstallDirectoryHelp.localized)) var optionBinDir: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "bin-dir": .text(optionBinDir),
         "dry-run": .bool(optionDryRun),
@@ -115,16 +115,16 @@ struct CliUninstallCommand: ExecutableCommand {
 }
 
 struct ConfigGetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["config","get"], summary: Messages.CLIInterface.t9b80abd0b1ac.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["config","get"], summary: Messages.CLIInterface.configGetHelp.localized, operands: [
         .init(name: "key", type: "string", required: false, help: "key")
     ], options: [
-        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.t9f1f1df0e83d.localized, values: []),
-        .init(name: "show-secrets", type: "bool", required: false, help: Messages.CLIInterface.t9180c54b32fc.localized, values: [])
+        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.configScopeHelp.localized, values: []),
+        .init(name: "show-secrets", type: "bool", required: false, help: Messages.CLIInterface.showEnvironmentValuesHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "key?") var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.t9f1f1df0e83d.localized)) var optionScope: String?
-    @Flag(name: .customLong("show-secrets"), help: ArgumentHelp(Messages.CLIInterface.t9180c54b32fc.localized)) var optionShowSecrets = false
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
+    @Flag(name: .customLong("show-secrets"), help: ArgumentHelp(Messages.CLIInterface.showEnvironmentValuesHelp.localized)) var optionShowSecrets = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
         "show-secrets": .bool(optionShowSecrets)
@@ -132,19 +132,19 @@ struct ConfigGetCommand: ExecutableCommand {
 }
 
 struct ConfigSetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["config","set"], summary: Messages.CLIInterface.t51d568cf62ef.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["config","set"], summary: Messages.CLIInterface.configSetHelp.localized, operands: [
         .init(name: "key", type: "string", required: true, help: "key"),
         .init(name: "value", type: "string", required: true, help: "value")
     ], options: [
-        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.t9f1f1df0e83d.localized, values: []),
-        .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.tc865886779a0.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.configScopeHelp.localized, values: []),
+        .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.ifRevisionHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config set memory.maximumMB 6144 --scope defaults --json"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t3a7dba9c3050.localized)) var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.t9f1f1df0e83d.localized)) var optionScope: String?
-    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.tc865886779a0.localized)) var optionIfRevision: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.configFieldValueArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
+    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized)) var optionIfRevision: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
         "if-revision": .text(optionIfRevision),
@@ -153,20 +153,20 @@ struct ConfigSetCommand: ExecutableCommand {
 }
 
 struct ConfigApplyCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["config","apply"], summary: Messages.CLIInterface.t22ad2905d16d.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["config","apply"], summary: Messages.CLIInterface.configApplyHelp.localized, operands: [
 
     ], options: [
-        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.t9f1f1df0e83d.localized, values: []),
-        .init(name: "file", type: "string", required: true, help: Messages.CLIInterface.t149625e63af0.localized, values: []),
-        .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.tc865886779a0.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.configScopeHelp.localized, values: []),
+        .init(name: "file", type: "string", required: true, help: Messages.CLIInterface.configPatchFileHelp.localized, values: []),
+        .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.ifRevisionHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config apply --scope instance:<uuid> --file patch.json --dry-run --json"]) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.t9f1f1df0e83d.localized)) var optionScope: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.t149625e63af0.localized)) var optionFile: String?
-    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.tc865886779a0.localized)) var optionIfRevision: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.configPatchFileHelp.localized)) var optionFile: String?
+    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized)) var optionIfRevision: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
         "file": .text(optionFile),
@@ -176,18 +176,18 @@ struct ConfigApplyCommand: ExecutableCommand {
 }
 
 struct ConfigResetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["config","reset"], summary: Messages.CLIInterface.t620fab80a2bb.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["config","reset"], summary: Messages.CLIInterface.configResetHelp.localized, operands: [
         .init(name: "key", type: "string", required: true, help: "key")
     ], options: [
-        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.t9f1f1df0e83d.localized, values: []),
-        .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.tc865886779a0.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.configScopeHelp.localized, values: []),
+        .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.ifRevisionHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "key") var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.t9f1f1df0e83d.localized)) var optionScope: String?
-    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.tc865886779a0.localized)) var optionIfRevision: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
+    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized)) var optionIfRevision: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
         "if-revision": .text(optionIfRevision),
@@ -196,18 +196,18 @@ struct ConfigResetCommand: ExecutableCommand {
 }
 
 struct ConfigInheritCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["config","inherit"], summary: Messages.CLIInterface.te7f60fe2aebd.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["config","inherit"], summary: Messages.CLIInterface.configInheritHelp.localized, operands: [
         .init(name: "key", type: "string", required: true, help: "key")
     ], options: [
-        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.t9f1f1df0e83d.localized, values: []),
-        .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.tc865886779a0.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.configScopeHelp.localized, values: []),
+        .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.ifRevisionHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config inherit memory --scope instance:<uuid> --json"]) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "key") var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.t9f1f1df0e83d.localized)) var optionScope: String?
-    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.tc865886779a0.localized)) var optionIfRevision: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
+    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized)) var optionIfRevision: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
         "if-revision": .text(optionIfRevision),
@@ -216,22 +216,22 @@ struct ConfigInheritCommand: ExecutableCommand {
 }
 
 struct InstanceListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","list"], summary: Messages.CLIInterface.t163f689a3d2f.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","list"], summary: Messages.CLIInterface.instanceListHelp.localized, operands: [
 
     ], options: [
-        .init(name: "name", type: "string", required: false, help: Messages.CLIInterface.t61c2b6ad309c.localized, values: []),
-        .init(name: "directory", type: "string", required: false, help: Messages.CLIInterface.t3a0b2a4eac30.localized, values: []),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "name", type: "string", required: false, help: Messages.CLIInterface.exactNameFilterHelp.localized, values: []),
+        .init(name: "directory", type: "string", required: false, help: Messages.CLIInterface.directoryFilterHelp.localized, values: []),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.t61c2b6ad309c.localized)) var optionName: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.t3a0b2a4eac30.localized)) var optionDirectory: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.exactNameFilterHelp.localized)) var optionName: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.directoryFilterHelp.localized)) var optionDirectory: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "name": .text(optionName),
         "directory": .text(optionDirectory),
@@ -242,7 +242,7 @@ struct InstanceListCommand: ExecutableCommand {
 }
 
 struct InstanceSelectedCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","selected"], summary: Messages.CLIInterface.t1a9316dc0247.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","selected"], summary: Messages.CLIInterface.instanceSelectedHelp.localized, operands: [
 
     ], options: [
 
@@ -255,34 +255,34 @@ struct InstanceSelectedCommand: ExecutableCommand {
 }
 
 struct InstanceShowCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","show"], summary: Messages.CLIInterface.td25fbbc9aa83.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","show"], summary: Messages.CLIInterface.instanceShowHelp.localized, operands: [
         .init(name: "id", type: "string", required: false, help: "id")
     ], options: [
-        .init(name: "name", type: "string", required: false, help: Messages.CLIInterface.t554bb290d490.localized, values: [])
+        .init(name: "name", type: "string", required: false, help: Messages.CLIInterface.instanceNameLookupHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id?") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.t554bb290d490.localized)) var optionName: String?
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.instanceNameLookupHelp.localized)) var optionName: String?
     var parameters: [String: Value] { [
         "name": .text(optionName)
     ].filter { $0.value != .null } }
 }
 
 struct InstanceVersionsCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","versions"], summary: Messages.CLIInterface.t309b2060e6e7.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","versions"], summary: Messages.CLIInterface.minecraftVersionsHelp.localized, operands: [
 
     ], options: [
-        .init(name: "snapshots", type: "bool", required: false, help: Messages.CLIInterface.t0f6dcda14ae4.localized, values: []),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "snapshots", type: "bool", required: false, help: Messages.CLIInterface.includeSnapshotsHelp.localized, values: []),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Flag(name: .customLong("snapshots"), help: ArgumentHelp(Messages.CLIInterface.t0f6dcda14ae4.localized)) var optionSnapshots = false
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Flag(name: .customLong("snapshots"), help: ArgumentHelp(Messages.CLIInterface.includeSnapshotsHelp.localized)) var optionSnapshots = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "snapshots": .bool(optionSnapshots),
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -292,24 +292,24 @@ struct InstanceVersionsCommand: ExecutableCommand {
 }
 
 struct InstanceCreateCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","create"], summary: Messages.CLIInterface.tea647925f201.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","create"], summary: Messages.CLIInterface.instanceCreateHelp.localized, operands: [
 
     ], options: [
-        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.tf78b43b0ee95.localized, values: []),
-        .init(name: "game", type: "string", required: true, help: Messages.CLIInterface.tc32a76745397.localized, values: []),
-        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.tcba396edfba1.localized, values: []),
-        .init(name: "component", type: "strings", required: false, help: Messages.CLIInterface.tc54f734a37a6.localized, values: []),
-        .init(name: "no-install", type: "bool", required: false, help: Messages.CLIInterface.td183fd7d75d0.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.instanceNameHelp.localized, values: []),
+        .init(name: "game", type: "string", required: true, help: Messages.CLIInterface.minecraftVersionHelp.localized, values: []),
+        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.instanceTargetDirectoryHelp.localized, values: []),
+        .init(name: "component", type: "strings", required: false, help: Messages.CLIInterface.instanceCreateLoadersHelp.localized, values: []),
+        .init(name: "no-install", type: "bool", required: false, help: Messages.CLIInterface.instanceRecordOnlyHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance create --name Survival --game 1.21.1 --directory default --json"]) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.tf78b43b0ee95.localized)) var optionName: String?
-    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.tc32a76745397.localized)) var optionGame: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.tcba396edfba1.localized)) var optionDirectory: String?
-    @Option(name: .customLong("component"), help: ArgumentHelp(Messages.CLIInterface.tc54f734a37a6.localized)) var optionComponent: [String] = []
-    @Flag(name: .customLong("no-install"), help: ArgumentHelp(Messages.CLIInterface.td183fd7d75d0.localized)) var optionNoInstall = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.instanceNameHelp.localized)) var optionName: String?
+    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.minecraftVersionHelp.localized)) var optionGame: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceTargetDirectoryHelp.localized)) var optionDirectory: String?
+    @Option(name: .customLong("component"), help: ArgumentHelp(Messages.CLIInterface.instanceCreateLoadersHelp.localized)) var optionComponent: [String] = []
+    @Flag(name: .customLong("no-install"), help: ArgumentHelp(Messages.CLIInterface.instanceRecordOnlyHelp.localized)) var optionNoInstall = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "name": .text(optionName),
         "game": .text(optionGame),
@@ -321,88 +321,88 @@ struct InstanceCreateCommand: ExecutableCommand {
 }
 
 struct InstanceInstallCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","install"], summary: Messages.CLIInterface.tc5757d580bc3.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","install"], summary: Messages.CLIInterface.instanceInstallHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct InstanceRepairCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","repair"], summary: Messages.CLIInterface.te334b8a18014.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","repair"], summary: Messages.CLIInterface.instanceRepairHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct InstanceSelectCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","select"], summary: Messages.CLIInterface.ta4178213b601.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","select"], summary: Messages.CLIInterface.instanceSelectHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct InstanceRenameCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","rename"], summary: Messages.CLIInterface.t5ba0c4853561.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","rename"], summary: Messages.CLIInterface.instanceRenameHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id"),
         .init(name: "name", type: "string", required: true, help: "name")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.tb19f8bbe0060.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRenameArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct InstanceFavoriteCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","favorite"], summary: Messages.CLIInterface.t850a4e6bffbd.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","favorite"], summary: Messages.CLIInterface.instancePinHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id"),
         .init(name: "enabled", type: "string", required: true, help: "enabled")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t07e88e1b19e9.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.instancePinArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct InstanceRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","remove"], summary: Messages.CLIInterface.t1e047c3f4441.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","remove"], summary: Messages.CLIInterface.instanceRemoveHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -410,22 +410,22 @@ struct InstanceRemoveCommand: ExecutableCommand {
 }
 
 struct InstanceIconCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","icon"], summary: Messages.CLIInterface.t2774fd42ed73.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","icon"], summary: Messages.CLIInterface.instanceIconHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "file", type: "string", required: false, help: Messages.CLIInterface.tc9dade836bbe.localized, values: []),
-        .init(name: "glyph", type: "string", required: false, help: Messages.CLIInterface.t4888fb1eb4ed.localized, values: []),
-        .init(name: "tint", type: "string", required: false, help: Messages.CLIInterface.t44893043de60.localized, values: []),
-        .init(name: "reset", type: "bool", required: false, help: Messages.CLIInterface.t22cb6cbb2d9e.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "file", type: "string", required: false, help: Messages.CLIInterface.instanceIconFileHelp.localized, values: []),
+        .init(name: "glyph", type: "string", required: false, help: Messages.CLIInterface.instanceIconGlyphHelp.localized, values: []),
+        .init(name: "tint", type: "string", required: false, help: Messages.CLIInterface.instanceIconTintHelp.localized, values: []),
+        .init(name: "reset", type: "bool", required: false, help: Messages.CLIInterface.instanceIconResetHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.tc9dade836bbe.localized)) var optionFile: String?
-    @Option(name: .customLong("glyph"), help: ArgumentHelp(Messages.CLIInterface.t4888fb1eb4ed.localized)) var optionGlyph: String?
-    @Option(name: .customLong("tint"), help: ArgumentHelp(Messages.CLIInterface.t44893043de60.localized)) var optionTint: String?
-    @Flag(name: .customLong("reset"), help: ArgumentHelp(Messages.CLIInterface.t22cb6cbb2d9e.localized)) var optionReset = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.instanceIconFileHelp.localized)) var optionFile: String?
+    @Option(name: .customLong("glyph"), help: ArgumentHelp(Messages.CLIInterface.instanceIconGlyphHelp.localized)) var optionGlyph: String?
+    @Option(name: .customLong("tint"), help: ArgumentHelp(Messages.CLIInterface.instanceIconTintHelp.localized)) var optionTint: String?
+    @Flag(name: .customLong("reset"), help: ArgumentHelp(Messages.CLIInterface.instanceIconResetHelp.localized)) var optionReset = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "file": .text(optionFile),
         "glyph": .text(optionGlyph),
@@ -436,22 +436,22 @@ struct InstanceIconCommand: ExecutableCommand {
 }
 
 struct InstanceCopyCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","copy"], summary: Messages.CLIInterface.ta496dc81dcac.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","copy"], summary: Messages.CLIInterface.instanceCopyHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.tcba396edfba1.localized, values: []),
-        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.td52e9c9dbb40.localized, values: []),
-        .init(name: "without-worlds", type: "bool", required: false, help: Messages.CLIInterface.t874415ccd0ab.localized, values: []),
-        .init(name: "with-backups", type: "bool", required: false, help: Messages.CLIInterface.t4829b4f8f896.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.instanceTargetDirectoryHelp.localized, values: []),
+        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.newInstanceNameHelp.localized, values: []),
+        .init(name: "without-worlds", type: "bool", required: false, help: Messages.CLIInterface.excludeWorldsHelp.localized, values: []),
+        .init(name: "with-backups", type: "bool", required: false, help: Messages.CLIInterface.includeWorldBackupsHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.tcba396edfba1.localized)) var optionDirectory: String?
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.td52e9c9dbb40.localized)) var optionName: String?
-    @Flag(name: .customLong("without-worlds"), help: ArgumentHelp(Messages.CLIInterface.t874415ccd0ab.localized)) var optionWithoutWorlds = false
-    @Flag(name: .customLong("with-backups"), help: ArgumentHelp(Messages.CLIInterface.t4829b4f8f896.localized)) var optionWithBackups = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceTargetDirectoryHelp.localized)) var optionDirectory: String?
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized)) var optionName: String?
+    @Flag(name: .customLong("without-worlds"), help: ArgumentHelp(Messages.CLIInterface.excludeWorldsHelp.localized)) var optionWithoutWorlds = false
+    @Flag(name: .customLong("with-backups"), help: ArgumentHelp(Messages.CLIInterface.includeWorldBackupsHelp.localized)) var optionWithBackups = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "directory": .text(optionDirectory),
         "name": .text(optionName),
@@ -462,16 +462,16 @@ struct InstanceCopyCommand: ExecutableCommand {
 }
 
 struct InstanceMoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","move"], summary: Messages.CLIInterface.t2aee4e3b9cb2.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","move"], summary: Messages.CLIInterface.instanceMoveHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.tcba396edfba1.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.instanceTargetDirectoryHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.tcba396edfba1.localized)) var optionDirectory: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceTargetDirectoryHelp.localized)) var optionDirectory: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "directory": .text(optionDirectory),
         "dry-run": .bool(optionDryRun)
@@ -479,19 +479,19 @@ struct InstanceMoveCommand: ExecutableCommand {
 }
 
 struct InstanceExportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","export"], summary: Messages.CLIInterface.t8f4cf0564496.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","export"], summary: Messages.CLIInterface.instanceExportHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id"),
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "format", type: "string", required: false, help: Messages.CLIInterface.t148d4a105bd2.localized, values: ["ruri","complete","multimc","mcbbs","mrpack"]),
-        .init(name: "without-worlds", type: "bool", required: false, help: Messages.CLIInterface.t874415ccd0ab.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "format", type: "string", required: false, help: Messages.CLIInterface.instanceArchiveFormatHelp.localized, values: ["ruri","complete","multimc","mcbbs","mrpack"]),
+        .init(name: "without-worlds", type: "bool", required: false, help: Messages.CLIInterface.excludeWorldsHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.tc48ebcacc9f3.localized)) var operands: [String] = []
-    @Option(name: .customLong("format"), help: ArgumentHelp(Messages.CLIInterface.t148d4a105bd2.localized)) var optionFormat: String?
-    @Flag(name: .customLong("without-worlds"), help: ArgumentHelp(Messages.CLIInterface.t874415ccd0ab.localized)) var optionWithoutWorlds = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceExportArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("format"), help: ArgumentHelp(Messages.CLIInterface.instanceArchiveFormatHelp.localized)) var optionFormat: String?
+    @Flag(name: .customLong("without-worlds"), help: ArgumentHelp(Messages.CLIInterface.excludeWorldsHelp.localized)) var optionWithoutWorlds = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "format": .text(optionFormat),
         "without-worlds": .bool(optionWithoutWorlds),
@@ -500,7 +500,7 @@ struct InstanceExportCommand: ExecutableCommand {
 }
 
 struct InstanceComponentListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","component","list"], summary: Messages.CLIInterface.t94761d5853b8.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","component","list"], summary: Messages.CLIInterface.instanceComponentsShowHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
 
@@ -513,19 +513,19 @@ struct InstanceComponentListCommand: ExecutableCommand {
 }
 
 struct InstanceComponentVersionsCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","component","versions"], summary: Messages.CLIInterface.t66e7670cbafe.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","component","versions"], summary: Messages.CLIInterface.instanceComponentsVersionsHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id"),
         .init(name: "loader", type: "string", required: true, help: "loader")
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t8ca25fc9cedc.localized)) var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceLoaderArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -534,16 +534,16 @@ struct InstanceComponentVersionsCommand: ExecutableCommand {
 }
 
 struct InstanceComponentSetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","component","set"], summary: Messages.CLIInterface.td7622dae9d70.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","component","set"], summary: Messages.CLIInterface.instanceComponentsSetHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "component", type: "strings", required: false, help: Messages.CLIInterface.t4465e709e830.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "component", type: "strings", required: false, help: Messages.CLIInterface.instanceComponentLoadersHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Option(name: .customLong("component"), help: ArgumentHelp(Messages.CLIInterface.t4465e709e830.localized)) var optionComponent: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("component"), help: ArgumentHelp(Messages.CLIInterface.instanceComponentLoadersHelp.localized)) var optionComponent: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "component": .array(optionComponent.map(Value.string)),
         "dry-run": .bool(optionDryRun)
@@ -551,16 +551,16 @@ struct InstanceComponentSetCommand: ExecutableCommand {
 }
 
 struct InstanceComponentRestoreCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","component","restore"], summary: Messages.CLIInterface.t3d825619ad66.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","component","restore"], summary: Messages.CLIInterface.instanceComponentsRestoreHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -568,18 +568,18 @@ struct InstanceComponentRestoreCommand: ExecutableCommand {
 }
 
 struct DirectoryListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","list"], summary: Messages.CLIInterface.tf64fee5acdf0.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","list"], summary: Messages.CLIInterface.directoryListHelp.localized, operands: [
 
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -588,7 +588,7 @@ struct DirectoryListCommand: ExecutableCommand {
 }
 
 struct DirectorySelectedCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","selected"], summary: Messages.CLIInterface.t13c336f9a11b.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","selected"], summary: Messages.CLIInterface.directorySelectedHelp.localized, operands: [
 
     ], options: [
 
@@ -601,18 +601,18 @@ struct DirectorySelectedCommand: ExecutableCommand {
 }
 
 struct DirectoryScanCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","scan"], summary: Messages.CLIInterface.t0a77c8493c2e.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","scan"], summary: Messages.CLIInterface.directoryInspectHelp.localized, operands: [
         .init(name: "path", type: "string", required: true, help: "path")
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "path") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -621,18 +621,18 @@ struct DirectoryScanCommand: ExecutableCommand {
 }
 
 struct DirectoryAddCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","add"], summary: Messages.CLIInterface.t135973383faa.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","add"], summary: Messages.CLIInterface.directoryAddHelp.localized, operands: [
         .init(name: "path", type: "string", required: true, help: "path")
     ], options: [
-        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.t63c8c08621c5.localized, values: []),
-        .init(name: "layout", type: "string", required: false, help: Messages.CLIInterface.t0175170e7603.localized, values: ["minecraft","managed"]),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.directoryNameHelp.localized, values: []),
+        .init(name: "layout", type: "string", required: false, help: Messages.CLIInterface.directoryLayoutHelp.localized, values: ["minecraft","managed"]),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "path") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.t63c8c08621c5.localized)) var optionName: String?
-    @Option(name: .customLong("layout"), help: ArgumentHelp(Messages.CLIInterface.t0175170e7603.localized)) var optionLayout: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.directoryNameHelp.localized)) var optionName: String?
+    @Option(name: .customLong("layout"), help: ArgumentHelp(Messages.CLIInterface.directoryLayoutHelp.localized)) var optionLayout: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "name": .text(optionName),
         "layout": .text(optionLayout),
@@ -641,44 +641,44 @@ struct DirectoryAddCommand: ExecutableCommand {
 }
 
 struct DirectorySelectCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","select"], summary: Messages.CLIInterface.te995381e7764.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","select"], summary: Messages.CLIInterface.directorySelectHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct DirectoryRefreshCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","refresh"], summary: Messages.CLIInterface.tac593c150e36.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","refresh"], summary: Messages.CLIInterface.directoryRefreshHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct DirectoryRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","remove"], summary: Messages.CLIInterface.t8592d66b70ee.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","remove"], summary: Messages.CLIInterface.directoryRemoveHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -686,52 +686,52 @@ struct DirectoryRemoveCommand: ExecutableCommand {
 }
 
 struct DirectoryRenameCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","rename"], summary: Messages.CLIInterface.tbbd25ee7fe86.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","rename"], summary: Messages.CLIInterface.directoryRenameHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id"),
         .init(name: "name", type: "string", required: true, help: "name")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.tb19f8bbe0060.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRenameArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct DirectoryRelocateCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","relocate"], summary: Messages.CLIInterface.t741d898dfaff.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","relocate"], summary: Messages.CLIInterface.directoryRelocateHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id"),
         .init(name: "path", type: "string", required: true, help: "path")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.te5b3e2aa3520.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.directoryPathArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct DirectoryRestoreCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","restore"], summary: Messages.CLIInterface.teeb75a68ecdc.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","restore"], summary: Messages.CLIInterface.directoryRecoverHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id"),
         .init(name: "path", type: "string", required: true, help: "path")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.te5b3e2aa3520.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.directoryPathArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct DirectoryRunGetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","run","get"], summary: Messages.CLIInterface.t72af20234e14.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","run","get"], summary: Messages.CLIInterface.instanceRunDirectoryShowHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
 
@@ -744,19 +744,19 @@ struct DirectoryRunGetCommand: ExecutableCommand {
 }
 
 struct DirectoryRunSetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","run","set"], summary: Messages.CLIInterface.t1db840ce735d.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","run","set"], summary: Messages.CLIInterface.instanceRunDirectorySetHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "mode", type: "string", required: true, help: "mode")
     ], options: [
-        .init(name: "path", type: "string", required: false, help: Messages.CLIInterface.t4d6e9b1a4264.localized, values: []),
-        .init(name: "copy", type: "bool", required: false, help: Messages.CLIInterface.ta39f0e134724.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "path", type: "string", required: false, help: Messages.CLIInterface.customRunDirectoryPathHelp.localized, values: []),
+        .init(name: "copy", type: "bool", required: false, help: Messages.CLIInterface.copyGameFilesHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.tdb3bd307aea7.localized)) var operands: [String] = []
-    @Option(name: .customLong("path"), help: ArgumentHelp(Messages.CLIInterface.t4d6e9b1a4264.localized)) var optionPath: String?
-    @Flag(name: .customLong("copy"), help: ArgumentHelp(Messages.CLIInterface.ta39f0e134724.localized)) var optionCopy = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRunDirectoryModeArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("path"), help: ArgumentHelp(Messages.CLIInterface.customRunDirectoryPathHelp.localized)) var optionPath: String?
+    @Flag(name: .customLong("copy"), help: ArgumentHelp(Messages.CLIInterface.copyGameFilesHelp.localized)) var optionCopy = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "path": .text(optionPath),
         "copy": .bool(optionCopy),
@@ -765,33 +765,33 @@ struct DirectoryRunSetCommand: ExecutableCommand {
 }
 
 struct DirectoryRunRelocateCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["directory","run","relocate"], summary: Messages.CLIInterface.tfe9e723a6df9.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["directory","run","relocate"], summary: Messages.CLIInterface.instanceRunDirectoryRelocateHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "path", type: "string", required: true, help: "path")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.td41369a235db.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRunDirectoryPathArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct JavaListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["java","list"], summary: Messages.CLIInterface.t738bb690d8c2.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["java","list"], summary: Messages.CLIInterface.javaListHelp.localized, operands: [
 
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -800,22 +800,22 @@ struct JavaListCommand: ExecutableCommand {
 }
 
 struct JavaAvailableCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["java","available"], summary: Messages.CLIInterface.t1cd05347cc64.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["java","available"], summary: Messages.CLIInterface.javaCatalogHelp.localized, operands: [
 
     ], options: [
-        .init(name: "major", type: "int", required: false, help: Messages.CLIInterface.teba714b1f2cc.localized, values: []),
-        .init(name: "architecture", type: "string", required: false, help: Messages.CLIInterface.taa6237af9422.localized, values: ["aarch64","x86_64"]),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "major", type: "int", required: false, help: Messages.CLIInterface.javaMajorFilterHelp.localized, values: []),
+        .init(name: "architecture", type: "string", required: false, help: Messages.CLIInterface.javaArchitectureFilterHelp.localized, values: ["aarch64","x86_64"]),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("major"), help: ArgumentHelp(Messages.CLIInterface.teba714b1f2cc.localized)) var optionMajor: Int?
-    @Option(name: .customLong("architecture"), help: ArgumentHelp(Messages.CLIInterface.taa6237af9422.localized)) var optionArchitecture: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("major"), help: ArgumentHelp(Messages.CLIInterface.javaMajorFilterHelp.localized)) var optionMajor: Int?
+    @Option(name: .customLong("architecture"), help: ArgumentHelp(Messages.CLIInterface.javaArchitectureFilterHelp.localized)) var optionArchitecture: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "major": optionMajor.map(Value.integer) ?? .null,
         "architecture": .text(optionArchitecture),
@@ -826,62 +826,62 @@ struct JavaAvailableCommand: ExecutableCommand {
 }
 
 struct JavaAddCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["java","add"], summary: Messages.CLIInterface.tf3cf2acb7b9a.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["java","add"], summary: Messages.CLIInterface.javaAddHelp.localized, operands: [
         .init(name: "path", type: "string", required: true, help: "path")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "path") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct JavaForgetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["java","forget"], summary: Messages.CLIInterface.t0ecfbec54289.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["java","forget"], summary: Messages.CLIInterface.javaForgetHelp.localized, operands: [
         .init(name: "path", type: "string", required: true, help: "path")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "path") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct JavaDefaultCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["java","default"], summary: Messages.CLIInterface.tea0c61c73f43.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["java","default"], summary: Messages.CLIInterface.javaDefaultHelp.localized, operands: [
         .init(name: "path-or-automatic", type: "string", required: true, help: "path-or-automatic")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "path-or-automatic") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct JavaReferencesCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["java","references"], summary: Messages.CLIInterface.td99052ac398d.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["java","references"], summary: Messages.CLIInterface.javaReferencesHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "partial", type: "bool", required: false, help: Messages.CLIInterface.tb07678654f81.localized, values: []),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "partial", type: "bool", required: false, help: Messages.CLIInterface.javaCheckIncompleteInstallationsHelp.localized, values: []),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("partial"), help: ArgumentHelp(Messages.CLIInterface.tb07678654f81.localized)) var optionPartial = false
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Flag(name: .customLong("partial"), help: ArgumentHelp(Messages.CLIInterface.javaCheckIncompleteInstallationsHelp.localized)) var optionPartial = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "partial": .bool(optionPartial),
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -891,48 +891,48 @@ struct JavaReferencesCommand: ExecutableCommand {
 }
 
 struct JavaInstallCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["java","install"], summary: Messages.CLIInterface.t2b2ab103144b.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["java","install"], summary: Messages.CLIInterface.javaInstallHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct JavaRepairCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["java","repair"], summary: Messages.CLIInterface.tef883d8efb5c.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["java","repair"], summary: Messages.CLIInterface.javaRepairHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct JavaRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["java","remove"], summary: Messages.CLIInterface.t355d66c16583.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["java","remove"], summary: Messages.CLIInterface.javaRemoveHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "reset-references", type: "bool", required: false, help: Messages.CLIInterface.t5897a3d49bb5.localized, values: []),
-        .init(name: "partial", type: "bool", required: false, help: Messages.CLIInterface.t2a5f80694223.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "reset-references", type: "bool", required: false, help: Messages.CLIInterface.javaResetReferencesHelp.localized, values: []),
+        .init(name: "partial", type: "bool", required: false, help: Messages.CLIInterface.javaCleanIncompleteInstallationHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("reset-references"), help: ArgumentHelp(Messages.CLIInterface.t5897a3d49bb5.localized)) var optionResetReferences = false
-    @Flag(name: .customLong("partial"), help: ArgumentHelp(Messages.CLIInterface.t2a5f80694223.localized)) var optionPartial = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Flag(name: .customLong("reset-references"), help: ArgumentHelp(Messages.CLIInterface.javaResetReferencesHelp.localized)) var optionResetReferences = false
+    @Flag(name: .customLong("partial"), help: ArgumentHelp(Messages.CLIInterface.javaCleanIncompleteInstallationHelp.localized)) var optionPartial = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "reset-references": .bool(optionResetReferences),
         "partial": .bool(optionPartial),
@@ -942,18 +942,18 @@ struct JavaRemoveCommand: ExecutableCommand {
 }
 
 struct AccountListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","list"], summary: Messages.CLIInterface.t347c8e743183.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","list"], summary: Messages.CLIInterface.accountListHelp.localized, operands: [
 
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -962,7 +962,7 @@ struct AccountListCommand: ExecutableCommand {
 }
 
 struct AccountSelectedCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","selected"], summary: Messages.CLIInterface.t60065624116e.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","selected"], summary: Messages.CLIInterface.accountSelectedHelp.localized, operands: [
 
     ], options: [
 
@@ -975,7 +975,7 @@ struct AccountSelectedCommand: ExecutableCommand {
 }
 
 struct AccountShowCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","show"], summary: Messages.CLIInterface.t29349e23e1f2.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","show"], summary: Messages.CLIInterface.accountShowHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
 
@@ -988,16 +988,16 @@ struct AccountShowCommand: ExecutableCommand {
 }
 
 struct AccountAddOfflineCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","add-offline"], summary: Messages.CLIInterface.t5e3954fd00e4.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","add-offline"], summary: Messages.CLIInterface.accountOfflineHelp.localized, operands: [
         .init(name: "username", type: "string", required: true, help: "username")
     ], options: [
-        .init(name: "no-select", type: "bool", required: false, help: Messages.CLIInterface.t4fbd66e4df1d.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "no-select", type: "bool", required: false, help: Messages.CLIInterface.keepCurrentAccountHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "username") var operands: [String] = []
-    @Flag(name: .customLong("no-select"), help: ArgumentHelp(Messages.CLIInterface.t4fbd66e4df1d.localized)) var optionNoSelect = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("no-select"), help: ArgumentHelp(Messages.CLIInterface.keepCurrentAccountHelp.localized)) var optionNoSelect = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "no-select": .bool(optionNoSelect),
         "dry-run": .bool(optionDryRun)
@@ -1005,44 +1005,44 @@ struct AccountAddOfflineCommand: ExecutableCommand {
 }
 
 struct AccountSelectCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","select"], summary: Messages.CLIInterface.ta88c8f0fa07b.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","select"], summary: Messages.CLIInterface.accountSelectHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct AccountRefreshCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","refresh"], summary: Messages.CLIInterface.te68622e3a4c1.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","refresh"], summary: Messages.CLIInterface.accountRefreshHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct AccountRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","remove"], summary: Messages.CLIInterface.t222e7542a935.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","remove"], summary: Messages.CLIInterface.accountRemoveHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -1050,16 +1050,16 @@ struct AccountRemoveCommand: ExecutableCommand {
 }
 
 struct AccountLogoutCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","logout"], summary: Messages.CLIInterface.t9de45ca5dfe9.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","logout"], summary: Messages.CLIInterface.accountLogoutHelp.localized, operands: [
         .init(name: "id", type: "string", required: true, help: "id")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "id") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -1067,24 +1067,24 @@ struct AccountLogoutCommand: ExecutableCommand {
 }
 
 struct AccountLoginStartCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","login","start"], summary: Messages.CLIInterface.t5e3d504d2f33.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","login","start"], summary: Messages.CLIInterface.accountLoginStartHelp.localized, operands: [
 
     ], options: [
-        .init(name: "provider", type: "string", required: true, help: Messages.CLIInterface.t35f41c8dfeb7.localized, values: ["microsoft","external"]),
-        .init(name: "account", type: "string", required: false, help: Messages.CLIInterface.t06b9c339e88c.localized, values: []),
-        .init(name: "server", type: "string", required: false, help: Messages.CLIInterface.tda3d5eaa9c6b.localized, values: []),
-        .init(name: "username", type: "string", required: false, help: Messages.CLIInterface.t598bd6abd203.localized, values: []),
-        .init(name: "password-stdin", type: "bool", required: false, help: Messages.CLIInterface.tae550ce2501b.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "provider", type: "string", required: true, help: Messages.CLIInterface.loginProviderHelp.localized, values: ["microsoft","external"]),
+        .init(name: "account", type: "string", required: false, help: Messages.CLIInterface.reauthenticateAccountHelp.localized, values: []),
+        .init(name: "server", type: "string", required: false, help: Messages.CLIInterface.externalLoginServerHelp.localized, values: []),
+        .init(name: "username", type: "string", required: false, help: Messages.CLIInterface.externalLoginIdentityHelp.localized, values: []),
+        .init(name: "password-stdin", type: "bool", required: false, help: Messages.CLIInterface.passwordStdinHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: true, examples: ["ruri account login start --provider microsoft --json"]) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.t35f41c8dfeb7.localized)) var optionProvider: String?
-    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.t06b9c339e88c.localized)) var optionAccount: String?
-    @Option(name: .customLong("server"), help: ArgumentHelp(Messages.CLIInterface.tda3d5eaa9c6b.localized)) var optionServer: String?
-    @Option(name: .customLong("username"), help: ArgumentHelp(Messages.CLIInterface.t598bd6abd203.localized)) var optionUsername: String?
-    @Flag(name: .customLong("password-stdin"), help: ArgumentHelp(Messages.CLIInterface.tae550ce2501b.localized)) var optionPasswordStdin = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.loginProviderHelp.localized)) var optionProvider: String?
+    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.reauthenticateAccountHelp.localized)) var optionAccount: String?
+    @Option(name: .customLong("server"), help: ArgumentHelp(Messages.CLIInterface.externalLoginServerHelp.localized)) var optionServer: String?
+    @Option(name: .customLong("username"), help: ArgumentHelp(Messages.CLIInterface.externalLoginIdentityHelp.localized)) var optionUsername: String?
+    @Flag(name: .customLong("password-stdin"), help: ArgumentHelp(Messages.CLIInterface.passwordStdinHelp.localized)) var optionPasswordStdin = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
         "account": .text(optionAccount),
@@ -1096,16 +1096,16 @@ struct AccountLoginStartCommand: ExecutableCommand {
 }
 
 struct AccountLoginCompleteCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","login","complete"], summary: Messages.CLIInterface.td905be5334b1.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","login","complete"], summary: Messages.CLIInterface.accountLoginCompleteHelp.localized, operands: [
         .init(name: "flow", type: "string", required: true, help: "flow")
     ], options: [
-        .init(name: "profile", type: "string", required: false, help: Messages.CLIInterface.taa3d1bfbf09d.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "profile", type: "string", required: false, help: Messages.CLIInterface.externalLoginProfileIdHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: true, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "flow") var operands: [String] = []
-    @Option(name: .customLong("profile"), help: ArgumentHelp(Messages.CLIInterface.taa3d1bfbf09d.localized)) var optionProfile: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("profile"), help: ArgumentHelp(Messages.CLIInterface.externalLoginProfileIdHelp.localized)) var optionProfile: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "profile": .text(optionProfile),
         "dry-run": .bool(optionDryRun)
@@ -1113,21 +1113,21 @@ struct AccountLoginCompleteCommand: ExecutableCommand {
 }
 
 struct AccountLoginCancelCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","login","cancel"], summary: Messages.CLIInterface.t7bac79515ad0.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","login","cancel"], summary: Messages.CLIInterface.accountLoginCancelHelp.localized, operands: [
         .init(name: "flow", type: "string", required: true, help: "flow")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "flow") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct AccountServiceKeyStatusCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","service-key","status"], summary: Messages.CLIInterface.t075c8839f62a.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","service-key","status"], summary: Messages.CLIInterface.curseForgeKeyStatusHelp.localized, operands: [
 
     ], options: [
 
@@ -1140,16 +1140,16 @@ struct AccountServiceKeyStatusCommand: ExecutableCommand {
 }
 
 struct AccountServiceKeySetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","service-key","set"], summary: Messages.CLIInterface.tb513f67f0661.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","service-key","set"], summary: Messages.CLIInterface.curseForgeKeySetHelp.localized, operands: [
 
     ], options: [
-        .init(name: "stdin", type: "bool", required: true, help: Messages.CLIInterface.tbee9e14cb9c8.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "stdin", type: "bool", required: true, help: Messages.CLIInterface.apiKeyStdinHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Flag(name: .customLong("stdin"), help: ArgumentHelp(Messages.CLIInterface.tbee9e14cb9c8.localized)) var optionStdin = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Flag(name: .customLong("stdin"), help: ArgumentHelp(Messages.CLIInterface.apiKeyStdinHelp.localized)) var optionStdin = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "stdin": .bool(optionStdin),
         "dry-run": .bool(optionDryRun)
@@ -1157,16 +1157,16 @@ struct AccountServiceKeySetCommand: ExecutableCommand {
 }
 
 struct AccountServiceKeyRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["account","service-key","remove"], summary: Messages.CLIInterface.tb412547b5de8.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["account","service-key","remove"], summary: Messages.CLIInterface.curseForgeKeyClearHelp.localized, operands: [
 
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -1174,18 +1174,18 @@ struct AccountServiceKeyRemoveCommand: ExecutableCommand {
 }
 
 struct LaunchPreflightCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["launch","preflight"], summary: Messages.CLIInterface.tbd6842eb578e.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["launch","preflight"], summary: Messages.CLIInterface.launchCheckHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
         .init(name: "server", type: "string", required: false, help: Messages.Servers.address.localized, values: []),
-        .init(name: "account", type: "string", required: false, help: Messages.CLIInterface.tc7d16a18216b.localized, values: []),
-        .init(name: "world", type: "string", required: false, help: Messages.CLIInterface.t7650c678063f.localized, values: [])
+        .init(name: "account", type: "string", required: false, help: Messages.CLIInterface.launchAccountHelp.localized, values: []),
+        .init(name: "world", type: "string", required: false, help: Messages.CLIInterface.quickPlayWorldHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
     @Option(name: .customLong("server"), help: ArgumentHelp(Messages.Servers.address.localized)) var optionServer: String?
-    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.tc7d16a18216b.localized)) var optionAccount: String?
-    @Option(name: .customLong("world"), help: ArgumentHelp(Messages.CLIInterface.t7650c678063f.localized)) var optionWorld: String?
+    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.launchAccountHelp.localized)) var optionAccount: String?
+    @Option(name: .customLong("world"), help: ArgumentHelp(Messages.CLIInterface.quickPlayWorldHelp.localized)) var optionWorld: String?
     var parameters: [String: Value] { [
         "server": .text(optionServer),
         "account": .text(optionAccount),
@@ -1194,20 +1194,20 @@ struct LaunchPreflightCommand: ExecutableCommand {
 }
 
 struct LaunchStartCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["launch","start"], summary: Messages.CLIInterface.tb27f0522d834.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["launch","start"], summary: Messages.CLIInterface.launchStartHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
         .init(name: "server", type: "string", required: false, help: Messages.Servers.address.localized, values: []),
-        .init(name: "account", type: "string", required: false, help: Messages.CLIInterface.tc7d16a18216b.localized, values: []),
-        .init(name: "world", type: "string", required: false, help: Messages.CLIInterface.t7650c678063f.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "account", type: "string", required: false, help: Messages.CLIInterface.launchAccountHelp.localized, values: []),
+        .init(name: "world", type: "string", required: false, help: Messages.CLIInterface.quickPlayWorldHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri launch start <instance-uuid> --account <account-uuid> --json"]) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
     @Option(name: .customLong("server"), help: ArgumentHelp(Messages.Servers.address.localized)) var optionServer: String?
-    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.tc7d16a18216b.localized)) var optionAccount: String?
-    @Option(name: .customLong("world"), help: ArgumentHelp(Messages.CLIInterface.t7650c678063f.localized)) var optionWorld: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.launchAccountHelp.localized)) var optionAccount: String?
+    @Option(name: .customLong("world"), help: ArgumentHelp(Messages.CLIInterface.quickPlayWorldHelp.localized)) var optionWorld: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "server": .text(optionServer),
         "account": .text(optionAccount),
@@ -1217,24 +1217,24 @@ struct LaunchStartCommand: ExecutableCommand {
 }
 
 struct SessionListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["session","list"], summary: Messages.CLIInterface.t75aa2ae95dbf.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["session","list"], summary: Messages.CLIInterface.sessionListHelp.localized, operands: [
 
     ], options: [
-        .init(name: "instance", type: "string", required: false, help: Messages.CLIInterface.t397da266f14b.localized, values: []),
-        .init(name: "search", type: "string", required: false, help: Messages.CLIInterface.t1dc55f419cc4.localized, values: []),
-        .init(name: "problems", type: "bool", required: false, help: Messages.CLIInterface.tb23f885979d4.localized, values: []),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "instance", type: "string", required: false, help: Messages.CLIInterface.sessionInstanceIdFilterHelp.localized, values: []),
+        .init(name: "search", type: "string", required: false, help: Messages.CLIInterface.sessionInstanceNameFilterHelp.localized, values: []),
+        .init(name: "problems", type: "bool", required: false, help: Messages.CLIInterface.problemSessionsOnlyHelp.localized, values: []),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.t397da266f14b.localized)) var optionInstance: String?
-    @Option(name: .customLong("search"), help: ArgumentHelp(Messages.CLIInterface.t1dc55f419cc4.localized)) var optionSearch: String?
-    @Flag(name: .customLong("problems"), help: ArgumentHelp(Messages.CLIInterface.tb23f885979d4.localized)) var optionProblems = false
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.sessionInstanceIdFilterHelp.localized)) var optionInstance: String?
+    @Option(name: .customLong("search"), help: ArgumentHelp(Messages.CLIInterface.sessionInstanceNameFilterHelp.localized)) var optionSearch: String?
+    @Flag(name: .customLong("problems"), help: ArgumentHelp(Messages.CLIInterface.problemSessionsOnlyHelp.localized)) var optionProblems = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "instance": .text(optionInstance),
         "search": .text(optionSearch),
@@ -1246,60 +1246,60 @@ struct SessionListCommand: ExecutableCommand {
 }
 
 struct SessionShowCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["session","show"], summary: Messages.CLIInterface.t1c27c266a051.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["session","show"], summary: Messages.CLIInterface.sessionShowHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "session", type: "string", required: true, help: "session")
     ], options: [
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t7de41631eebc.localized)) var operands: [String] = []
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
 }
 
 struct SessionWaitCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["session","wait"], summary: Messages.CLIInterface.ta977bdb2d5a4.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["session","wait"], summary: Messages.CLIInterface.sessionWaitHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "session", type: "string", required: true, help: "session")
     ], options: [
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t7de41631eebc.localized)) var operands: [String] = []
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
 }
 
 struct SessionQuitCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["session","quit"], summary: Messages.CLIInterface.t6bbce4221048.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["session","quit"], summary: Messages.CLIInterface.sessionStopHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "session", type: "string", required: true, help: "session")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t7de41631eebc.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct SessionStopCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["session","stop"], summary: Messages.CLIInterface.t886efc49f631.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["session","stop"], summary: Messages.CLIInterface.sessionKillHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "session", type: "string", required: true, help: "session")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t7de41631eebc.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -1307,19 +1307,19 @@ struct SessionStopCommand: ExecutableCommand {
 }
 
 struct SessionLogsCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["session","logs"], summary: Messages.CLIInterface.t03a5e858530a.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["session","logs"], summary: Messages.CLIInterface.sessionLogsHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "session", type: "string", required: true, help: "session")
     ], options: [
-        .init(name: "follow", type: "bool", required: false, help: Messages.CLIInterface.t61dffc7832ee.localized, values: []),
-        .init(name: "source", type: "string", required: false, help: Messages.CLIInterface.tdae2c9ca76ca.localized, values: ["output","preparation","latest","debug"]),
-        .init(name: "lines", type: "int", required: false, help: Messages.CLIInterface.t602d83ce6e9a.localized, values: [])
+        .init(name: "follow", type: "bool", required: false, help: Messages.CLIInterface.sessionLogFollowHelp.localized, values: []),
+        .init(name: "source", type: "string", required: false, help: Messages.CLIInterface.sessionLogSourceHelp.localized, values: ["output","preparation","latest","debug"]),
+        .init(name: "lines", type: "int", required: false, help: Messages.CLIInterface.sessionLogLineLimitHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri session logs <instance-uuid> <session-uuid> --follow --output ndjson"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t7de41631eebc.localized)) var operands: [String] = []
-    @Flag(name: .customLong("follow"), help: ArgumentHelp(Messages.CLIInterface.t61dffc7832ee.localized)) var optionFollow = false
-    @Option(name: .customLong("source"), help: ArgumentHelp(Messages.CLIInterface.tdae2c9ca76ca.localized)) var optionSource: String?
-    @Option(name: .customLong("lines"), help: ArgumentHelp(Messages.CLIInterface.t602d83ce6e9a.localized)) var optionLines: Int?
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("follow"), help: ArgumentHelp(Messages.CLIInterface.sessionLogFollowHelp.localized)) var optionFollow = false
+    @Option(name: .customLong("source"), help: ArgumentHelp(Messages.CLIInterface.sessionLogSourceHelp.localized)) var optionSource: String?
+    @Option(name: .customLong("lines"), help: ArgumentHelp(Messages.CLIInterface.sessionLogLineLimitHelp.localized)) var optionLines: Int?
     var parameters: [String: Value] { [
         "follow": .bool(optionFollow),
         "source": .text(optionSource),
@@ -1328,60 +1328,60 @@ struct SessionLogsCommand: ExecutableCommand {
 }
 
 struct SessionDiagnoseCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["session","diagnose"], summary: Messages.CLIInterface.t5cf1cb615468.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["session","diagnose"], summary: Messages.CLIInterface.sessionAnalyzeHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "session", type: "string", required: true, help: "session")
     ], options: [
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t7de41631eebc.localized)) var operands: [String] = []
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
 }
 
 struct SessionExportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["session","export"], summary: Messages.CLIInterface.t33ed51c9688b.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["session","export"], summary: Messages.CLIInterface.sessionExportHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "session", type: "string", required: true, help: "session"),
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t4e51dca76f06.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionExportArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct CatalogSearchCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["catalog","search"], summary: Messages.CLIInterface.t9585ae182d36.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["catalog","search"], summary: Messages.CLIInterface.catalogSearchHelp.localized, operands: [
         .init(name: "query", type: "string", required: false, help: "query")
     ], options: [
-        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.t54d62b370b12.localized, values: ["modrinth","curseforge"]),
-        .init(name: "type", type: "string", required: false, help: Messages.CLIInterface.t9c7c66e1cb97.localized, values: ["mod","modpack","resourcepack","shader"]),
-        .init(name: "game", type: "string", required: false, help: Messages.CLIInterface.t97bb290079c0.localized, values: []),
-        .init(name: "loader", type: "string", required: false, help: Messages.CLIInterface.t6cd3985335f5.localized, values: []),
-        .init(name: "category", type: "string", required: false, help: Messages.CLIInterface.tba245c5c5887.localized, values: []),
-        .init(name: "sort", type: "string", required: false, help: Messages.CLIInterface.tffbd359b4372.localized, values: ["relevance","downloads","updated","newest"]),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.contentProviderHelp.localized, values: ["modrinth","curseforge"]),
+        .init(name: "type", type: "string", required: false, help: Messages.CLIInterface.catalogProjectTypeHelp.localized, values: ["mod","modpack","resourcepack","shader"]),
+        .init(name: "game", type: "string", required: false, help: Messages.CLIInterface.minecraftVersionFilterHelp.localized, values: []),
+        .init(name: "loader", type: "string", required: false, help: Messages.CLIInterface.loaderFilterHelp.localized, values: []),
+        .init(name: "category", type: "string", required: false, help: Messages.CLIInterface.catalogCategoryHelp.localized, values: []),
+        .init(name: "sort", type: "string", required: false, help: Messages.CLIInterface.catalogSortHelp.localized, values: ["relevance","downloads","updated","newest"]),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "query?") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.t54d62b370b12.localized)) var optionProvider: String?
-    @Option(name: .customLong("type"), help: ArgumentHelp(Messages.CLIInterface.t9c7c66e1cb97.localized)) var optionType: String?
-    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.t97bb290079c0.localized)) var optionGame: String?
-    @Option(name: .customLong("loader"), help: ArgumentHelp(Messages.CLIInterface.t6cd3985335f5.localized)) var optionLoader: String?
-    @Option(name: .customLong("category"), help: ArgumentHelp(Messages.CLIInterface.tba245c5c5887.localized)) var optionCategory: String?
-    @Option(name: .customLong("sort"), help: ArgumentHelp(Messages.CLIInterface.tffbd359b4372.localized)) var optionSort: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
+    @Option(name: .customLong("type"), help: ArgumentHelp(Messages.CLIInterface.catalogProjectTypeHelp.localized)) var optionType: String?
+    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.minecraftVersionFilterHelp.localized)) var optionGame: String?
+    @Option(name: .customLong("loader"), help: ArgumentHelp(Messages.CLIInterface.loaderFilterHelp.localized)) var optionLoader: String?
+    @Option(name: .customLong("category"), help: ArgumentHelp(Messages.CLIInterface.catalogCategoryHelp.localized)) var optionCategory: String?
+    @Option(name: .customLong("sort"), help: ArgumentHelp(Messages.CLIInterface.catalogSortHelp.localized)) var optionSort: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
         "type": .text(optionType),
@@ -1396,38 +1396,38 @@ struct CatalogSearchCommand: ExecutableCommand {
 }
 
 struct CatalogShowCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["catalog","show"], summary: Messages.CLIInterface.tef252f7e18ac.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["catalog","show"], summary: Messages.CLIInterface.catalogProjectShowHelp.localized, operands: [
         .init(name: "project", type: "string", required: true, help: "project")
     ], options: [
-        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.t54d62b370b12.localized, values: ["modrinth","curseforge"])
+        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.contentProviderHelp.localized, values: ["modrinth","curseforge"])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "project") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.t54d62b370b12.localized)) var optionProvider: String?
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
     var parameters: [String: Value] { [
         "provider": .text(optionProvider)
     ].filter { $0.value != .null } }
 }
 
 struct CatalogVersionsCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["catalog","versions"], summary: Messages.CLIInterface.t2015ae2ed51d.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["catalog","versions"], summary: Messages.CLIInterface.catalogVersionsHelp.localized, operands: [
         .init(name: "project", type: "string", required: true, help: "project")
     ], options: [
-        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.t54d62b370b12.localized, values: ["modrinth","curseforge"]),
-        .init(name: "game", type: "string", required: false, help: Messages.CLIInterface.t97bb290079c0.localized, values: []),
-        .init(name: "loader", type: "string", required: false, help: Messages.CLIInterface.t6cd3985335f5.localized, values: []),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.contentProviderHelp.localized, values: ["modrinth","curseforge"]),
+        .init(name: "game", type: "string", required: false, help: Messages.CLIInterface.minecraftVersionFilterHelp.localized, values: []),
+        .init(name: "loader", type: "string", required: false, help: Messages.CLIInterface.loaderFilterHelp.localized, values: []),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "project") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.t54d62b370b12.localized)) var optionProvider: String?
-    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.t97bb290079c0.localized)) var optionGame: String?
-    @Option(name: .customLong("loader"), help: ArgumentHelp(Messages.CLIInterface.t6cd3985335f5.localized)) var optionLoader: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
+    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.minecraftVersionFilterHelp.localized)) var optionGame: String?
+    @Option(name: .customLong("loader"), help: ArgumentHelp(Messages.CLIInterface.loaderFilterHelp.localized)) var optionLoader: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
         "game": .text(optionGame),
@@ -1439,20 +1439,20 @@ struct CatalogVersionsCommand: ExecutableCommand {
 }
 
 struct CatalogCategoriesCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["catalog","categories"], summary: Messages.CLIInterface.t96729fb469a0.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["catalog","categories"], summary: Messages.CLIInterface.catalogCategoriesHelp.localized, operands: [
 
     ], options: [
-        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.t54d62b370b12.localized, values: ["modrinth","curseforge"]),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.contentProviderHelp.localized, values: ["modrinth","curseforge"]),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.t54d62b370b12.localized)) var optionProvider: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -1462,20 +1462,20 @@ struct CatalogCategoriesCommand: ExecutableCommand {
 }
 
 struct ContentListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["content","list"], summary: Messages.CLIInterface.t31b908b482c0.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["content","list"], summary: Messages.CLIInterface.contentListHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.t1615f94ae45c.localized, values: ["mod","resourcepack","shader"]),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.contentKindHelp.localized, values: ["mod","resourcepack","shader"]),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.t1615f94ae45c.localized)) var optionKind: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -1485,17 +1485,17 @@ struct ContentListCommand: ExecutableCommand {
 }
 
 struct ContentImportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["content","import"], summary: Messages.CLIInterface.t0adabdb41fc9.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["content","import"], summary: Messages.CLIInterface.contentImportHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.t1615f94ae45c.localized, values: ["mod","resourcepack","shader"]),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.contentKindHelp.localized, values: ["mod","resourcepack","shader"]),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t1221c915a9ab.localized)) var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.t1615f94ae45c.localized)) var optionKind: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentImportArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
         "dry-run": .bool(optionDryRun)
@@ -1503,21 +1503,21 @@ struct ContentImportCommand: ExecutableCommand {
 }
 
 struct ContentInstallCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["content","install"], summary: Messages.CLIInterface.t6f5c9d328e9f.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["content","install"], summary: Messages.CLIInterface.contentInstallHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "project", type: "string", required: true, help: "project")
     ], options: [
-        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.t54d62b370b12.localized, values: ["modrinth","curseforge"]),
-        .init(name: "version", type: "string", required: false, help: Messages.CLIInterface.t3adc46ef11f2.localized, values: []),
-        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.t6937c4e2d52d.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.contentProviderHelp.localized, values: ["modrinth","curseforge"]),
+        .init(name: "version", type: "string", required: false, help: Messages.CLIInterface.contentVersionIdHelp.localized, values: []),
+        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.manualCurseForgeFileHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri content install <instance-uuid> sodium --provider modrinth --dry-run --json"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.tc9423b403749.localized)) var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.t54d62b370b12.localized)) var optionProvider: String?
-    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.t3adc46ef11f2.localized)) var optionVersion: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.t6937c4e2d52d.localized)) var optionManual: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentProjectArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
+    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.contentVersionIdHelp.localized)) var optionVersion: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
         "version": .text(optionVersion),
@@ -1527,20 +1527,20 @@ struct ContentInstallCommand: ExecutableCommand {
 }
 
 struct ContentEnableCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["content","enable"], summary: Messages.CLIInterface.tcb22bf7cdc22.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["content","enable"], summary: Messages.CLIInterface.contentEnableHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.t1615f94ae45c.localized, values: ["mod","resourcepack","shader"]),
-        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.t0571cf34f7e5.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.t7a83bde60a43.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.contentKindHelp.localized, values: ["mod","resourcepack","shader"]),
+        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.contentFileSelectionHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allContentFilesHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.t1615f94ae45c.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.t0571cf34f7e5.localized)) var optionFile: [String] = []
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.t7a83bde60a43.localized)) var optionAll = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allContentFilesHelp.localized)) var optionAll = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
         "file": .array(optionFile.map(Value.string)),
@@ -1550,20 +1550,20 @@ struct ContentEnableCommand: ExecutableCommand {
 }
 
 struct ContentDisableCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["content","disable"], summary: Messages.CLIInterface.t835a12065b6b.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["content","disable"], summary: Messages.CLIInterface.contentDisableHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.t1615f94ae45c.localized, values: ["mod","resourcepack","shader"]),
-        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.t0571cf34f7e5.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.t7a83bde60a43.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.contentKindHelp.localized, values: ["mod","resourcepack","shader"]),
+        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.contentFileSelectionHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allContentFilesHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.t1615f94ae45c.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.t0571cf34f7e5.localized)) var optionFile: [String] = []
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.t7a83bde60a43.localized)) var optionAll = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allContentFilesHelp.localized)) var optionAll = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
         "file": .array(optionFile.map(Value.string)),
@@ -1573,22 +1573,22 @@ struct ContentDisableCommand: ExecutableCommand {
 }
 
 struct ContentRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["content","remove"], summary: Messages.CLIInterface.tbddc7b97257e.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["content","remove"], summary: Messages.CLIInterface.contentRemoveHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.t1615f94ae45c.localized, values: ["mod","resourcepack","shader"]),
-        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.t0571cf34f7e5.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.t7a83bde60a43.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.contentKindHelp.localized, values: ["mod","resourcepack","shader"]),
+        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.contentFileSelectionHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allContentFilesHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.t1615f94ae45c.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.t0571cf34f7e5.localized)) var optionFile: [String] = []
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.t7a83bde60a43.localized)) var optionAll = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allContentFilesHelp.localized)) var optionAll = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
         "file": .array(optionFile.map(Value.string)),
@@ -1599,16 +1599,16 @@ struct ContentRemoveCommand: ExecutableCommand {
 }
 
 struct ContentUpdateCheckCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["content","update-check"], summary: Messages.CLIInterface.t2648b2127df6.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["content","update-check"], summary: Messages.CLIInterface.contentCheckUpdatesHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.t1615f94ae45c.localized, values: ["mod","resourcepack","shader"]),
-        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.t0571cf34f7e5.localized, values: [])
+        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.contentKindHelp.localized, values: ["mod","resourcepack","shader"]),
+        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.contentFileSelectionHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.t1615f94ae45c.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.t0571cf34f7e5.localized)) var optionFile: [String] = []
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
         "file": .array(optionFile.map(Value.string))
@@ -1616,22 +1616,22 @@ struct ContentUpdateCheckCommand: ExecutableCommand {
 }
 
 struct ContentUpdateCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["content","update"], summary: Messages.CLIInterface.t41cfb5271f5e.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["content","update"], summary: Messages.CLIInterface.contentUpdateHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.t1615f94ae45c.localized, values: ["mod","resourcepack","shader"]),
-        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.t0571cf34f7e5.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.tf53d1d120842.localized, values: []),
-        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.t6937c4e2d52d.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "kind", type: "string", required: false, help: Messages.CLIInterface.contentKindHelp.localized, values: ["mod","resourcepack","shader"]),
+        .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.contentFileSelectionHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.updateAllContentFilesHelp.localized, values: []),
+        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.manualCurseForgeFileHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.t1615f94ae45c.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.t0571cf34f7e5.localized)) var optionFile: [String] = []
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.tf53d1d120842.localized)) var optionAll = false
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.t6937c4e2d52d.localized)) var optionManual: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.updateAllContentFilesHelp.localized)) var optionAll = false
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
         "file": .array(optionFile.map(Value.string)),
@@ -1642,18 +1642,18 @@ struct ContentUpdateCommand: ExecutableCommand {
 }
 
 struct WorldListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["world","list"], summary: Messages.CLIInterface.t0182348543ec.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["world","list"], summary: Messages.CLIInterface.worldListHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -1662,62 +1662,62 @@ struct WorldListCommand: ExecutableCommand {
 }
 
 struct WorldShowCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["world","show"], summary: Messages.CLIInterface.tc62375cad94f.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["world","show"], summary: Messages.CLIInterface.worldShowHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "folder", type: "string", required: true, help: "folder")
     ], options: [
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t3cc465fee86f.localized)) var operands: [String] = []
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldFolderArgumentsHelp.localized)) var operands: [String] = []
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
 }
 
 struct WorldImportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["world","import"], summary: Messages.CLIInterface.td02c3799e5f3.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["world","import"], summary: Messages.CLIInterface.worldImportHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t1221c915a9ab.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentImportArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct WorldExportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["world","export"], summary: Messages.CLIInterface.t79b53bfe32d0.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["world","export"], summary: Messages.CLIInterface.worldExportHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "folder", type: "string", required: true, help: "folder"),
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.tbb4df9d7ac3a.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldExportArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct WorldRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["world","remove"], summary: Messages.CLIInterface.t1f3b65ed9678.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["world","remove"], summary: Messages.CLIInterface.worldRemoveHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "folder", type: "string", required: true, help: "folder")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t3cc465fee86f.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldFolderArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -1725,17 +1725,17 @@ struct WorldRemoveCommand: ExecutableCommand {
 }
 
 struct WorldBackupCreateCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["world","backup","create"], summary: Messages.CLIInterface.t687aa81ce15b.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["world","backup","create"], summary: Messages.CLIInterface.worldBackupCreateHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "folder", type: "string", required: true, help: "folder")
     ], options: [
-        .init(name: "reason", type: "string", required: false, help: Messages.CLIInterface.t243960f924a4.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "reason", type: "string", required: false, help: Messages.CLIInterface.worldBackupReasonHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t3cc465fee86f.localized)) var operands: [String] = []
-    @Option(name: .customLong("reason"), help: ArgumentHelp(Messages.CLIInterface.t243960f924a4.localized)) var optionReason: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldFolderArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("reason"), help: ArgumentHelp(Messages.CLIInterface.worldBackupReasonHelp.localized)) var optionReason: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "reason": .text(optionReason),
         "dry-run": .bool(optionDryRun)
@@ -1743,18 +1743,18 @@ struct WorldBackupCreateCommand: ExecutableCommand {
 }
 
 struct WorldBackupListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["world","backup","list"], summary: Messages.CLIInterface.t82358ac73619.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["world","backup","list"], summary: Messages.CLIInterface.worldBackupListHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -1763,19 +1763,19 @@ struct WorldBackupListCommand: ExecutableCommand {
 }
 
 struct WorldBackupRestoreCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["world","backup","restore"], summary: Messages.CLIInterface.t5b12f1ab5a68.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["world","backup","restore"], summary: Messages.CLIInterface.worldBackupRestoreHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "backup", type: "string", required: true, help: "backup")
     ], options: [
-        .init(name: "replace", type: "bool", required: false, help: Messages.CLIInterface.td2c29dd5d868.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "replace", type: "bool", required: false, help: Messages.CLIInterface.worldBackupReplaceHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.teaf6d847cc14.localized)) var operands: [String] = []
-    @Flag(name: .customLong("replace"), help: ArgumentHelp(Messages.CLIInterface.td2c29dd5d868.localized)) var optionReplace = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldBackupArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("replace"), help: ArgumentHelp(Messages.CLIInterface.worldBackupReplaceHelp.localized)) var optionReplace = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "replace": .bool(optionReplace),
         "dry-run": .bool(optionDryRun),
@@ -1784,17 +1784,17 @@ struct WorldBackupRestoreCommand: ExecutableCommand {
 }
 
 struct WorldBackupRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["world","backup","remove"], summary: Messages.CLIInterface.t79d8f9c1b13b.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["world","backup","remove"], summary: Messages.CLIInterface.worldBackupRemoveHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "backup", type: "string", required: true, help: "backup")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.teaf6d847cc14.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldBackupArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -1802,19 +1802,19 @@ struct WorldBackupRemoveCommand: ExecutableCommand {
 }
 
 struct DatapackListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","list"], summary: Messages.CLIInterface.t5baea7450859.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","list"], summary: Messages.CLIInterface.dataPackListHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "world", type: "string", required: true, help: "world")
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t3f8f11058c17.localized)) var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackWorldArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -1823,31 +1823,31 @@ struct DatapackListCommand: ExecutableCommand {
 }
 
 struct DatapackOrderGetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","order","get"], summary: Messages.CLIInterface.t8e719af86d09.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","order","get"], summary: Messages.CLIInterface.dataPackOrderGetHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "world", type: "string", required: true, help: "world")
     ], options: [
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t3f8f11058c17.localized)) var operands: [String] = []
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackWorldArgumentsHelp.localized)) var operands: [String] = []
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
 }
 
 struct DatapackOrderSetCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","order","set"], summary: Messages.CLIInterface.tc4ef4044f6a8.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","order","set"], summary: Messages.CLIInterface.dataPackOrderSetHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "world", type: "string", required: true, help: "world")
     ], options: [
-        .init(name: "key", type: "strings", required: true, help: Messages.CLIInterface.tcc64529d6ae6.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "key", type: "strings", required: true, help: Messages.CLIInterface.dataPackPriorityListHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t3f8f11058c17.localized)) var operands: [String] = []
-    @Option(name: .customLong("key"), help: ArgumentHelp(Messages.CLIInterface.tcc64529d6ae6.localized)) var optionKey: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackWorldArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("key"), help: ArgumentHelp(Messages.CLIInterface.dataPackPriorityListHelp.localized)) var optionKey: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "key": .array(optionKey.map(Value.string)),
         "dry-run": .bool(optionDryRun)
@@ -1855,66 +1855,66 @@ struct DatapackOrderSetCommand: ExecutableCommand {
 }
 
 struct DatapackImportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","import"], summary: Messages.CLIInterface.td44435e60acc.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","import"], summary: Messages.CLIInterface.dataPackImportHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "world", type: "string", required: true, help: "world"),
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t027258d65380.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackImportArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct DatapackEnableCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","enable"], summary: Messages.CLIInterface.t8c443e635faf.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","enable"], summary: Messages.CLIInterface.dataPackEnableHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "world", type: "string", required: true, help: "world"),
         .init(name: "name", type: "string", required: true, help: "name")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t25b74fe94bbb.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct DatapackDisableCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","disable"], summary: Messages.CLIInterface.tc7d244ea5a4c.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","disable"], summary: Messages.CLIInterface.dataPackDisableHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "world", type: "string", required: true, help: "world"),
         .init(name: "name", type: "string", required: true, help: "name")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t25b74fe94bbb.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct DatapackRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","remove"], summary: Messages.CLIInterface.t08f738b1e5ca.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","remove"], summary: Messages.CLIInterface.dataPackRemoveHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "world", type: "string", required: true, help: "world"),
         .init(name: "name", type: "string", required: true, help: "name")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t25b74fe94bbb.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -1922,19 +1922,19 @@ struct DatapackRemoveCommand: ExecutableCommand {
 }
 
 struct DatapackSearchCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","search"], summary: Messages.CLIInterface.t64d56130fbdf.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","search"], summary: Messages.CLIInterface.dataPackSearchHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "query", type: "string", required: true, help: "query")
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t9abc5f05470e.localized)) var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackSearchArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -1943,19 +1943,19 @@ struct DatapackSearchCommand: ExecutableCommand {
 }
 
 struct DatapackVersionsCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","versions"], summary: Messages.CLIInterface.tb511553d589f.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","versions"], summary: Messages.CLIInterface.dataPackVersionsHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "project", type: "string", required: true, help: "project")
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.tc9423b403749.localized)) var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentProjectArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -1964,18 +1964,18 @@ struct DatapackVersionsCommand: ExecutableCommand {
 }
 
 struct DatapackInstallCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["datapack","install"], summary: Messages.CLIInterface.t37b2077e3554.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["datapack","install"], summary: Messages.CLIInterface.dataPackInstallHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "world", type: "string", required: true, help: "world"),
         .init(name: "project", type: "string", required: true, help: "project")
     ], options: [
-        .init(name: "version", type: "string", required: false, help: Messages.CLIInterface.t5e7708f69f60.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "version", type: "string", required: false, help: Messages.CLIInterface.dataPackVersionIdHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t4d5a09c55c8c.localized)) var operands: [String] = []
-    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.t5e7708f69f60.localized)) var optionVersion: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackProjectArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.dataPackVersionIdHelp.localized)) var optionVersion: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "version": .text(optionVersion),
         "dry-run": .bool(optionDryRun)
@@ -1983,20 +1983,20 @@ struct DatapackInstallCommand: ExecutableCommand {
 }
 
 struct SchematicListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["schematic","list"], summary: Messages.CLIInterface.t45ce4d2add4d.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["schematic","list"], summary: Messages.CLIInterface.schematicListHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "directory", type: "string", required: false, help: Messages.CLIInterface.tc48ff6cbe772.localized, values: []),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "directory", type: "string", required: false, help: Messages.CLIInterface.schematicRelativePathHelp.localized, values: []),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.tc48ff6cbe772.localized)) var optionDirectory: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.schematicRelativePathHelp.localized)) var optionDirectory: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "directory": .text(optionDirectory),
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -2006,31 +2006,31 @@ struct SchematicListCommand: ExecutableCommand {
 }
 
 struct SchematicInfoCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["schematic","info"], summary: Messages.CLIInterface.t9691b8cb26ac.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["schematic","info"], summary: Messages.CLIInterface.schematicShowHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "path", type: "string", required: true, help: "path")
     ], options: [
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.td41369a235db.localized)) var operands: [String] = []
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRunDirectoryPathArgumentsHelp.localized)) var operands: [String] = []
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
 }
 
 struct SchematicImportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["schematic","import"], summary: Messages.CLIInterface.t006d1cafc637.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["schematic","import"], summary: Messages.CLIInterface.schematicImportHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "directory", type: "string", required: false, help: Messages.CLIInterface.tc48ff6cbe772.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "directory", type: "string", required: false, help: Messages.CLIInterface.schematicRelativePathHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t1221c915a9ab.localized)) var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.tc48ff6cbe772.localized)) var optionDirectory: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentImportArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.schematicRelativePathHelp.localized)) var optionDirectory: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "directory": .text(optionDirectory),
         "dry-run": .bool(optionDryRun)
@@ -2038,17 +2038,17 @@ struct SchematicImportCommand: ExecutableCommand {
 }
 
 struct SchematicMkdirCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["schematic","mkdir"], summary: Messages.CLIInterface.tf32e6e0f57a1.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["schematic","mkdir"], summary: Messages.CLIInterface.schematicCreateFolderHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "name", type: "string", required: true, help: "name")
     ], options: [
-        .init(name: "directory", type: "string", required: false, help: Messages.CLIInterface.t4af5860f6aeb.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "directory", type: "string", required: false, help: Messages.CLIInterface.schematicParentDirectoryHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t0d2ff8c9a278.localized)) var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.t4af5860f6aeb.localized)) var optionDirectory: String?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.schematicFolderArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.schematicParentDirectoryHelp.localized)) var optionDirectory: String?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "directory": .text(optionDirectory),
         "dry-run": .bool(optionDryRun)
@@ -2056,33 +2056,33 @@ struct SchematicMkdirCommand: ExecutableCommand {
 }
 
 struct SchematicExportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["schematic","export"], summary: Messages.CLIInterface.t7e11030c3d95.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["schematic","export"], summary: Messages.CLIInterface.schematicExportHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "path", type: "string", required: true, help: "path"),
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.tf0b7b313a90b.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.schematicExportArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
     ].filter { $0.value != .null } }
 }
 
 struct SchematicRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["schematic","remove"], summary: Messages.CLIInterface.tc7d49c67a14a.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["schematic","remove"], summary: Messages.CLIInterface.schematicRemoveHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance"),
         .init(name: "path", type: "string", required: true, help: "path")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.td41369a235db.localized)) var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRunDirectoryPathArgumentsHelp.localized)) var operands: [String] = []
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -2090,22 +2090,22 @@ struct SchematicRemoveCommand: ExecutableCommand {
 }
 
 struct InstanceImportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["instance","import"], summary: Messages.CLIInterface.tdb74aa2f7d3b.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["instance","import"], summary: Messages.CLIInterface.instanceImportHelp.localized, operands: [
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.td52e9c9dbb40.localized, values: []),
-        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.tddd82092eded.localized, values: []),
-        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.t6937c4e2d52d.localized, values: []),
-        .init(name: "import-jvm-arguments", type: "bool", required: false, help: Messages.CLIInterface.tb86fa4ea53ac.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.newInstanceNameHelp.localized, values: []),
+        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.instanceImportDirectoryHelp.localized, values: []),
+        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.manualCurseForgeFileHelp.localized, values: []),
+        .init(name: "import-jvm-arguments", type: "bool", required: false, help: Messages.CLIInterface.importModpackJvmArgumentsHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "file") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.td52e9c9dbb40.localized)) var optionName: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.tddd82092eded.localized)) var optionDirectory: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.t6937c4e2d52d.localized)) var optionManual: [String] = []
-    @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.tb86fa4ea53ac.localized)) var optionImportJvmArguments = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized)) var optionName: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceImportDirectoryHelp.localized)) var optionDirectory: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.importModpackJvmArgumentsHelp.localized)) var optionImportJvmArguments = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "name": .text(optionName),
         "directory": .text(optionDirectory),
@@ -2116,22 +2116,22 @@ struct InstanceImportCommand: ExecutableCommand {
 }
 
 struct PackImportCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["pack","import"], summary: Messages.CLIInterface.tc5c676ace213.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["pack","import"], summary: Messages.CLIInterface.modpackImportHelp.localized, operands: [
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.td52e9c9dbb40.localized, values: []),
-        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.tddd82092eded.localized, values: []),
-        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.t6937c4e2d52d.localized, values: []),
-        .init(name: "import-jvm-arguments", type: "bool", required: false, help: Messages.CLIInterface.tb86fa4ea53ac.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.newInstanceNameHelp.localized, values: []),
+        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.instanceImportDirectoryHelp.localized, values: []),
+        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.manualCurseForgeFileHelp.localized, values: []),
+        .init(name: "import-jvm-arguments", type: "bool", required: false, help: Messages.CLIInterface.importModpackJvmArgumentsHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "file") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.td52e9c9dbb40.localized)) var optionName: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.tddd82092eded.localized)) var optionDirectory: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.t6937c4e2d52d.localized)) var optionManual: [String] = []
-    @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.tb86fa4ea53ac.localized)) var optionImportJvmArguments = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized)) var optionName: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceImportDirectoryHelp.localized)) var optionDirectory: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.importModpackJvmArgumentsHelp.localized)) var optionImportJvmArguments = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "name": .text(optionName),
         "directory": .text(optionDirectory),
@@ -2142,28 +2142,28 @@ struct PackImportCommand: ExecutableCommand {
 }
 
 struct PackInstallCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["pack","install"], summary: Messages.CLIInterface.td48597adbed9.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["pack","install"], summary: Messages.CLIInterface.modpackInstallHelp.localized, operands: [
         .init(name: "project", type: "string", required: true, help: "project")
     ], options: [
-        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.t54d62b370b12.localized, values: ["modrinth","curseforge"]),
-        .init(name: "version", type: "string", required: false, help: Messages.CLIInterface.t3adc46ef11f2.localized, values: []),
-        .init(name: "archive", type: "string", required: false, help: Messages.CLIInterface.t2280d783f7cb.localized, values: []),
-        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.td52e9c9dbb40.localized, values: []),
-        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.tddd82092eded.localized, values: []),
-        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.t6937c4e2d52d.localized, values: []),
-        .init(name: "import-jvm-arguments", type: "bool", required: false, help: Messages.CLIInterface.tb86fa4ea53ac.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.contentProviderHelp.localized, values: ["modrinth","curseforge"]),
+        .init(name: "version", type: "string", required: false, help: Messages.CLIInterface.contentVersionIdHelp.localized, values: []),
+        .init(name: "archive", type: "string", required: false, help: Messages.CLIInterface.manualModpackArchiveHelp.localized, values: []),
+        .init(name: "name", type: "string", required: true, help: Messages.CLIInterface.newInstanceNameHelp.localized, values: []),
+        .init(name: "directory", type: "string", required: true, help: Messages.CLIInterface.instanceImportDirectoryHelp.localized, values: []),
+        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.manualCurseForgeFileHelp.localized, values: []),
+        .init(name: "import-jvm-arguments", type: "bool", required: false, help: Messages.CLIInterface.importModpackJvmArgumentsHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "project") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.t54d62b370b12.localized)) var optionProvider: String?
-    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.t3adc46ef11f2.localized)) var optionVersion: String?
-    @Option(name: .customLong("archive"), help: ArgumentHelp(Messages.CLIInterface.t2280d783f7cb.localized)) var optionArchive: String?
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.td52e9c9dbb40.localized)) var optionName: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.tddd82092eded.localized)) var optionDirectory: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.t6937c4e2d52d.localized)) var optionManual: [String] = []
-    @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.tb86fa4ea53ac.localized)) var optionImportJvmArguments = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
+    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.contentVersionIdHelp.localized)) var optionVersion: String?
+    @Option(name: .customLong("archive"), help: ArgumentHelp(Messages.CLIInterface.manualModpackArchiveHelp.localized)) var optionArchive: String?
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized)) var optionName: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceImportDirectoryHelp.localized)) var optionDirectory: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.importModpackJvmArgumentsHelp.localized)) var optionImportJvmArguments = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
         "version": .text(optionVersion),
@@ -2177,7 +2177,7 @@ struct PackInstallCommand: ExecutableCommand {
 }
 
 struct PackShowCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["pack","show"], summary: Messages.CLIInterface.t1d9fc0c70e58.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["pack","show"], summary: Messages.CLIInterface.modpackShowHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
 
@@ -2190,18 +2190,18 @@ struct PackShowCommand: ExecutableCommand {
 }
 
 struct PackUpdateCheckCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["pack","update-check"], summary: Messages.CLIInterface.t0e0ee827fcda.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["pack","update-check"], summary: Messages.CLIInterface.modpackVersionsHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
         "offset": optionOffset.map(Value.integer) ?? .null,
@@ -2210,28 +2210,28 @@ struct PackUpdateCheckCommand: ExecutableCommand {
 }
 
 struct PackUpdateCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["pack","update"], summary: Messages.CLIInterface.t7dd4704843e2.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["pack","update"], summary: Messages.CLIInterface.modpackUpdateHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "file", type: "string", required: false, help: Messages.CLIInterface.te3ce5542c760.localized, values: []),
-        .init(name: "version", type: "string", required: false, help: Messages.CLIInterface.tadff65d82cd8.localized, values: []),
-        .init(name: "archive", type: "string", required: false, help: Messages.CLIInterface.t33673a17c78a.localized, values: []),
-        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.t6937c4e2d52d.localized, values: []),
-        .init(name: "replace", type: "bool", required: false, help: Messages.CLIInterface.tfa5924a2e888.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.tf986137b0dee.localized, values: []),
-        .init(name: "import-jvm-arguments", type: "bool", required: false, help: Messages.CLIInterface.tb86fa4ea53ac.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "file", type: "string", required: false, help: Messages.CLIInterface.modpackUpdateFileHelp.localized, values: []),
+        .init(name: "version", type: "string", required: false, help: Messages.CLIInterface.modpackUpdateVersionHelp.localized, values: []),
+        .init(name: "archive", type: "string", required: false, help: Messages.CLIInterface.manualModpackUpdateArchiveHelp.localized, values: []),
+        .init(name: "manual", type: "strings", required: false, help: Messages.CLIInterface.manualCurseForgeFileHelp.localized, values: []),
+        .init(name: "replace", type: "bool", required: false, help: Messages.CLIInterface.replaceLocalModificationsHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmLocalModificationsReplacementHelp.localized, values: []),
+        .init(name: "import-jvm-arguments", type: "bool", required: false, help: Messages.CLIInterface.importModpackJvmArgumentsHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.te3ce5542c760.localized)) var optionFile: String?
-    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.tadff65d82cd8.localized)) var optionVersion: String?
-    @Option(name: .customLong("archive"), help: ArgumentHelp(Messages.CLIInterface.t33673a17c78a.localized)) var optionArchive: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.t6937c4e2d52d.localized)) var optionManual: [String] = []
-    @Flag(name: .customLong("replace"), help: ArgumentHelp(Messages.CLIInterface.tfa5924a2e888.localized)) var optionReplace = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.tf986137b0dee.localized)) var optionYes = false
-    @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.tb86fa4ea53ac.localized)) var optionImportJvmArguments = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.modpackUpdateFileHelp.localized)) var optionFile: String?
+    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.modpackUpdateVersionHelp.localized)) var optionVersion: String?
+    @Option(name: .customLong("archive"), help: ArgumentHelp(Messages.CLIInterface.manualModpackUpdateArchiveHelp.localized)) var optionArchive: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Flag(name: .customLong("replace"), help: ArgumentHelp(Messages.CLIInterface.replaceLocalModificationsHelp.localized)) var optionReplace = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmLocalModificationsReplacementHelp.localized)) var optionYes = false
+    @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.importModpackJvmArgumentsHelp.localized)) var optionImportJvmArguments = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "file": .text(optionFile),
         "version": .text(optionVersion),
@@ -2245,16 +2245,16 @@ struct PackUpdateCommand: ExecutableCommand {
 }
 
 struct PackRollbackCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["pack","rollback"], summary: Messages.CLIInterface.t8951a110d64d.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["pack","rollback"], summary: Messages.CLIInterface.modpackRollbackHelp.localized, operands: [
         .init(name: "instance", type: "string", required: true, help: "instance")
     ], options: [
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "instance") var operands: [String] = []
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun),
         "yes": .bool(optionYes)
@@ -2262,19 +2262,19 @@ struct PackRollbackCommand: ExecutableCommand {
 }
 
 struct DownloadFetchCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["download","fetch"], summary: Messages.CLIInterface.t869f83eac4a5.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["download","fetch"], summary: Messages.CLIInterface.downloadFetchHelp.localized, operands: [
         .init(name: "url", type: "string", required: true, help: "url"),
         .init(name: "file", type: "string", required: true, help: "file")
     ], options: [
-        .init(name: "sha1", type: "string", required: true, help: Messages.CLIInterface.t91bde8e5fa30.localized, values: []),
-        .init(name: "size", type: "int", required: true, help: Messages.CLIInterface.t8e1d27b3966c.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: [])
+        .init(name: "sha1", type: "string", required: true, help: Messages.CLIInterface.downloadSha1Help.localized, values: []),
+        .init(name: "size", type: "int", required: true, help: Messages.CLIInterface.downloadSizeHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.tff2b9d62fa33.localized)) var operands: [String] = []
-    @Option(name: .customLong("sha1"), help: ArgumentHelp(Messages.CLIInterface.t91bde8e5fa30.localized)) var optionSha1: String?
-    @Option(name: .customLong("size"), help: ArgumentHelp(Messages.CLIInterface.t8e1d27b3966c.localized)) var optionSize: Int?
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.downloadTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("sha1"), help: ArgumentHelp(Messages.CLIInterface.downloadSha1Help.localized)) var optionSha1: String?
+    @Option(name: .customLong("size"), help: ArgumentHelp(Messages.CLIInterface.downloadSizeHelp.localized)) var optionSize: Int?
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "sha1": .text(optionSha1),
         "size": optionSize.map(Value.integer) ?? .null,
@@ -2283,20 +2283,20 @@ struct DownloadFetchCommand: ExecutableCommand {
 }
 
 struct RecoveryListCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["recovery","list"], summary: Messages.CLIInterface.tbff4f0f5e780.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["recovery","list"], summary: Messages.CLIInterface.recoveryListHelp.localized, operands: [
 
     ], options: [
-        .init(name: "instance", type: "string", required: false, help: Messages.CLIInterface.tc16fc65ec610.localized, values: []),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.te46ca00ec899.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.t184bd8d0fe9d.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.ta412189d9e76.localized, values: [])
+        .init(name: "instance", type: "string", required: false, help: Messages.CLIInterface.recoveryInstanceFilterHelp.localized, values: []),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.tc16fc65ec610.localized)) var optionInstance: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.te46ca00ec899.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.t184bd8d0fe9d.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.ta412189d9e76.localized)) var optionAll = false
+    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.recoveryInstanceFilterHelp.localized)) var optionInstance: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "instance": .text(optionInstance),
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -2306,25 +2306,25 @@ struct RecoveryListCommand: ExecutableCommand {
 }
 
 struct RecoveryApplyCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["recovery","apply"], summary: Messages.CLIInterface.t25597cca30a1.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["recovery","apply"], summary: Messages.CLIInterface.recoveryApplyHelp.localized, operands: [
         .init(name: "kind", type: "string", required: true, help: "kind"),
         .init(name: "target", type: "string", required: true, help: "target")
     ], options: [
-        .init(name: "transaction", type: "string", required: false, help: Messages.CLIInterface.t617ad9bacfae.localized, values: []),
-        .init(name: "mode", type: "string", required: false, help: Messages.CLIInterface.ta51e4f921383.localized, values: ["finish","keep-files"]),
-        .init(name: "keep-source", type: "bool", required: false, help: Messages.CLIInterface.t709f4fc13c7d.localized, values: []),
-        .init(name: "confirm-game-ended", type: "bool", required: false, help: Messages.CLIInterface.ta42e19194027.localized, values: []),
-        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.t6034a698016d.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.t3b0368de0fdf.localized, values: [])
+        .init(name: "transaction", type: "string", required: false, help: Messages.CLIInterface.recoveryTransactionHelp.localized, values: []),
+        .init(name: "mode", type: "string", required: false, help: Messages.CLIInterface.libraryImportRecoveryModeHelp.localized, values: ["finish","keep-files"]),
+        .init(name: "keep-source", type: "bool", required: false, help: Messages.CLIInterface.keepSourceAfterMoveHelp.localized, values: []),
+        .init(name: "confirm-game-ended", type: "bool", required: false, help: Messages.CLIInterface.confirmUnmonitoredGameExitHelp.localized, values: []),
+        .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.t28237d41435e.localized)) var operands: [String] = []
-    @Option(name: .customLong("transaction"), help: ArgumentHelp(Messages.CLIInterface.t617ad9bacfae.localized)) var optionTransaction: String?
-    @Option(name: .customLong("mode"), help: ArgumentHelp(Messages.CLIInterface.ta51e4f921383.localized)) var optionMode: String?
-    @Flag(name: .customLong("keep-source"), help: ArgumentHelp(Messages.CLIInterface.t709f4fc13c7d.localized)) var optionKeepSource = false
-    @Flag(name: .customLong("confirm-game-ended"), help: ArgumentHelp(Messages.CLIInterface.ta42e19194027.localized)) var optionConfirmGameEnded = false
-    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.t6034a698016d.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.t3b0368de0fdf.localized)) var optionYes = false
+    @Argument(help: ArgumentHelp(Messages.CLIInterface.recoveryTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Option(name: .customLong("transaction"), help: ArgumentHelp(Messages.CLIInterface.recoveryTransactionHelp.localized)) var optionTransaction: String?
+    @Option(name: .customLong("mode"), help: ArgumentHelp(Messages.CLIInterface.libraryImportRecoveryModeHelp.localized)) var optionMode: String?
+    @Flag(name: .customLong("keep-source"), help: ArgumentHelp(Messages.CLIInterface.keepSourceAfterMoveHelp.localized)) var optionKeepSource = false
+    @Flag(name: .customLong("confirm-game-ended"), help: ArgumentHelp(Messages.CLIInterface.confirmUnmonitoredGameExitHelp.localized)) var optionConfirmGameEnded = false
+    @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
         "transaction": .text(optionTransaction),
         "mode": .text(optionMode),
@@ -2336,117 +2336,117 @@ struct RecoveryApplyCommand: ExecutableCommand {
 }
 
 struct DoctorCommand: ExecutableCommand {
-    static var spec: CommandSpec { CommandSpec(path: ["doctor"], summary: Messages.CLIInterface.tc168cea3e30b.localized, operands: [
+    static var spec: CommandSpec { CommandSpec(path: ["doctor"], summary: Messages.CLIInterface.doctorCommandHelp.localized, operands: [
 
     ], options: [
-        .init(name: "instance", type: "string", required: false, help: Messages.CLIInterface.tcfab76824678.localized, values: [])
+        .init(name: "instance", type: "string", required: false, help: Messages.CLIInterface.doctorInstanceHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
     @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.tcfab76824678.localized)) var optionInstance: String?
+    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.doctorInstanceHelp.localized)) var optionInstance: String?
     var parameters: [String: Value] { [
         "instance": .text(optionInstance)
     ].filter { $0.value != .null } }
 }
 
 struct AccountServiceKeyGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "service-key", abstract: Messages.CLIInterface.td9b80535359b.localized, subcommands: [AccountServiceKeyStatusCommand.self, AccountServiceKeySetCommand.self, AccountServiceKeyRemoveCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "service-key", abstract: Messages.CLIInterface.accountServiceKeyCommands.localized, subcommands: [AccountServiceKeyStatusCommand.self, AccountServiceKeySetCommand.self, AccountServiceKeyRemoveCommand.self]) }
 }
 
 struct InstanceComponentGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "component", abstract: Messages.CLIInterface.t336d8b6931f5.localized, subcommands: [InstanceComponentListCommand.self, InstanceComponentVersionsCommand.self, InstanceComponentSetCommand.self, InstanceComponentRestoreCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "component", abstract: Messages.CLIInterface.instanceComponentCommands.localized, subcommands: [InstanceComponentListCommand.self, InstanceComponentVersionsCommand.self, InstanceComponentSetCommand.self, InstanceComponentRestoreCommand.self]) }
 }
 
 struct DatapackOrderGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "order", abstract: Messages.CLIInterface.tb9f8304a17cd.localized, subcommands: [DatapackOrderGetCommand.self, DatapackOrderSetCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "order", abstract: Messages.CLIInterface.dataPackOrderCommands.localized, subcommands: [DatapackOrderGetCommand.self, DatapackOrderSetCommand.self]) }
 }
 
 struct DirectoryRunGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "run", abstract: Messages.CLIInterface.tc67f25bb4cc3.localized, subcommands: [DirectoryRunGetCommand.self, DirectoryRunSetCommand.self, DirectoryRunRelocateCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "run", abstract: Messages.CLIInterface.instanceRunDirectoryCommands.localized, subcommands: [DirectoryRunGetCommand.self, DirectoryRunSetCommand.self, DirectoryRunRelocateCommand.self]) }
 }
 
 struct AccountLoginGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "login", abstract: Messages.CLIInterface.t463334485f56.localized, subcommands: [AccountLoginStartCommand.self, AccountLoginCompleteCommand.self, AccountLoginCancelCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "login", abstract: Messages.CLIInterface.accountLoginCommands.localized, subcommands: [AccountLoginStartCommand.self, AccountLoginCompleteCommand.self, AccountLoginCancelCommand.self]) }
 }
 
 struct AppLanguageGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "language", abstract: Messages.CLIInterface.teaca59ff6999.localized, subcommands: [AppLanguageGetCommand.self, AppLanguageSetCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "language", abstract: Messages.CLIInterface.appLanguageCommands.localized, subcommands: [AppLanguageGetCommand.self, AppLanguageSetCommand.self]) }
 }
 
 struct WorldBackupGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "backup", abstract: Messages.CLIInterface.t1870161676bc.localized, subcommands: [WorldBackupCreateCommand.self, WorldBackupListCommand.self, WorldBackupRestoreCommand.self, WorldBackupRemoveCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "backup", abstract: Messages.CLIInterface.worldBackupCommands.localized, subcommands: [WorldBackupCreateCommand.self, WorldBackupListCommand.self, WorldBackupRestoreCommand.self, WorldBackupRemoveCommand.self]) }
 }
 
 struct DirectoryGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "directory", abstract: Messages.CLIInterface.ta42145487540.localized, subcommands: [DirectoryListCommand.self, DirectorySelectedCommand.self, DirectoryScanCommand.self, DirectoryAddCommand.self, DirectorySelectCommand.self, DirectoryRefreshCommand.self, DirectoryRemoveCommand.self, DirectoryRenameCommand.self, DirectoryRelocateCommand.self, DirectoryRestoreCommand.self, DirectoryRunGroup.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "directory", abstract: Messages.CLIInterface.directoryCommands.localized, subcommands: [DirectoryListCommand.self, DirectorySelectedCommand.self, DirectoryScanCommand.self, DirectoryAddCommand.self, DirectorySelectCommand.self, DirectoryRefreshCommand.self, DirectoryRemoveCommand.self, DirectoryRenameCommand.self, DirectoryRelocateCommand.self, DirectoryRestoreCommand.self, DirectoryRunGroup.self]) }
 }
 
 struct SchematicGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "schematic", abstract: Messages.CLIInterface.tb977dca13b5f.localized, subcommands: [SchematicListCommand.self, SchematicInfoCommand.self, SchematicImportCommand.self, SchematicMkdirCommand.self, SchematicExportCommand.self, SchematicRemoveCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "schematic", abstract: Messages.CLIInterface.schematicCommands.localized, subcommands: [SchematicListCommand.self, SchematicInfoCommand.self, SchematicImportCommand.self, SchematicMkdirCommand.self, SchematicExportCommand.self, SchematicRemoveCommand.self]) }
 }
 
 struct InstanceGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "instance", abstract: Messages.CLIInterface.tea19eba1f497.localized, subcommands: [InstanceListCommand.self, InstanceSelectedCommand.self, InstanceShowCommand.self, InstanceVersionsCommand.self, InstanceCreateCommand.self, InstanceInstallCommand.self, InstanceRepairCommand.self, InstanceSelectCommand.self, InstanceRenameCommand.self, InstanceFavoriteCommand.self, InstanceRemoveCommand.self, InstanceIconCommand.self, InstanceCopyCommand.self, InstanceMoveCommand.self, InstanceExportCommand.self, InstanceComponentGroup.self, InstanceImportCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "instance", abstract: Messages.CLIInterface.instanceCommands.localized, subcommands: [InstanceListCommand.self, InstanceSelectedCommand.self, InstanceShowCommand.self, InstanceVersionsCommand.self, InstanceCreateCommand.self, InstanceInstallCommand.self, InstanceRepairCommand.self, InstanceSelectCommand.self, InstanceRenameCommand.self, InstanceFavoriteCommand.self, InstanceRemoveCommand.self, InstanceIconCommand.self, InstanceCopyCommand.self, InstanceMoveCommand.self, InstanceExportCommand.self, InstanceComponentGroup.self, InstanceImportCommand.self]) }
 }
 
 struct DatapackGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "datapack", abstract: Messages.CLIInterface.t8c1e16e1c7f6.localized, subcommands: [DatapackListCommand.self, DatapackOrderGroup.self, DatapackImportCommand.self, DatapackEnableCommand.self, DatapackDisableCommand.self, DatapackRemoveCommand.self, DatapackSearchCommand.self, DatapackVersionsCommand.self, DatapackInstallCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "datapack", abstract: Messages.CLIInterface.dataPackCommands.localized, subcommands: [DatapackListCommand.self, DatapackOrderGroup.self, DatapackImportCommand.self, DatapackEnableCommand.self, DatapackDisableCommand.self, DatapackRemoveCommand.self, DatapackSearchCommand.self, DatapackVersionsCommand.self, DatapackInstallCommand.self]) }
 }
 
 struct DownloadGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "download", abstract: Messages.CLIInterface.ta16b7c00b2ba.localized, subcommands: [DownloadFetchCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "download", abstract: Messages.CLIInterface.downloadCommands.localized, subcommands: [DownloadFetchCommand.self]) }
 }
 
 struct RecoveryGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "recovery", abstract: Messages.CLIInterface.t2b167c0c4363.localized, subcommands: [RecoveryListCommand.self, RecoveryApplyCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "recovery", abstract: Messages.CLIInterface.recoveryCommands.localized, subcommands: [RecoveryListCommand.self, RecoveryApplyCommand.self]) }
 }
 
 struct AccountGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "account", abstract: Messages.CLIInterface.t52f4179738c0.localized, subcommands: [AccountListCommand.self, AccountSelectedCommand.self, AccountShowCommand.self, AccountAddOfflineCommand.self, AccountSelectCommand.self, AccountRefreshCommand.self, AccountRemoveCommand.self, AccountLogoutCommand.self, AccountLoginGroup.self, AccountServiceKeyGroup.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "account", abstract: Messages.CLIInterface.accountCommands.localized, subcommands: [AccountListCommand.self, AccountSelectedCommand.self, AccountShowCommand.self, AccountAddOfflineCommand.self, AccountSelectCommand.self, AccountRefreshCommand.self, AccountRemoveCommand.self, AccountLogoutCommand.self, AccountLoginGroup.self, AccountServiceKeyGroup.self]) }
 }
 
 struct SessionGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "session", abstract: Messages.CLIInterface.t03b417601a2c.localized, subcommands: [SessionListCommand.self, SessionShowCommand.self, SessionWaitCommand.self, SessionQuitCommand.self, SessionStopCommand.self, SessionLogsCommand.self, SessionDiagnoseCommand.self, SessionExportCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "session", abstract: Messages.CLIInterface.sessionCommands.localized, subcommands: [SessionListCommand.self, SessionShowCommand.self, SessionWaitCommand.self, SessionQuitCommand.self, SessionStopCommand.self, SessionLogsCommand.self, SessionDiagnoseCommand.self, SessionExportCommand.self]) }
 }
 
 struct CatalogGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "catalog", abstract: Messages.CLIInterface.t28a32d5bd18e.localized, subcommands: [CatalogSearchCommand.self, CatalogShowCommand.self, CatalogVersionsCommand.self, CatalogCategoriesCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "catalog", abstract: Messages.CLIInterface.catalogCommands.localized, subcommands: [CatalogSearchCommand.self, CatalogShowCommand.self, CatalogVersionsCommand.self, CatalogCategoriesCommand.self]) }
 }
 
 struct ContentGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "content", abstract: Messages.CLIInterface.t7f93a6deea4d.localized, subcommands: [ContentListCommand.self, ContentImportCommand.self, ContentInstallCommand.self, ContentEnableCommand.self, ContentDisableCommand.self, ContentRemoveCommand.self, ContentUpdateCheckCommand.self, ContentUpdateCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "content", abstract: Messages.CLIInterface.contentCommands.localized, subcommands: [ContentListCommand.self, ContentImportCommand.self, ContentInstallCommand.self, ContentEnableCommand.self, ContentDisableCommand.self, ContentRemoveCommand.self, ContentUpdateCheckCommand.self, ContentUpdateCommand.self]) }
 }
 
 struct ConfigGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "config", abstract: Messages.CLIInterface.t1fcd3e7a6ffc.localized, subcommands: [ConfigGetCommand.self, ConfigSetCommand.self, ConfigApplyCommand.self, ConfigResetCommand.self, ConfigInheritCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "config", abstract: Messages.CLIInterface.configCommands.localized, subcommands: [ConfigGetCommand.self, ConfigSetCommand.self, ConfigApplyCommand.self, ConfigResetCommand.self, ConfigInheritCommand.self]) }
 }
 
 struct LaunchGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "launch", abstract: Messages.CLIInterface.t91806a3a3cd3.localized, subcommands: [LaunchPreflightCommand.self, LaunchStartCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "launch", abstract: Messages.CLIInterface.launchCommands.localized, subcommands: [LaunchPreflightCommand.self, LaunchStartCommand.self]) }
 }
 
 struct WorldGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "world", abstract: Messages.CLIInterface.tc96234263475.localized, subcommands: [WorldListCommand.self, WorldShowCommand.self, WorldImportCommand.self, WorldExportCommand.self, WorldRemoveCommand.self, WorldBackupGroup.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "world", abstract: Messages.CLIInterface.worldCommands.localized, subcommands: [WorldListCommand.self, WorldShowCommand.self, WorldImportCommand.self, WorldExportCommand.self, WorldRemoveCommand.self, WorldBackupGroup.self]) }
 }
 
 struct JavaGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "java", abstract: Messages.CLIInterface.tcb439480ed22.localized, subcommands: [JavaListCommand.self, JavaAvailableCommand.self, JavaAddCommand.self, JavaForgetCommand.self, JavaDefaultCommand.self, JavaReferencesCommand.self, JavaInstallCommand.self, JavaRepairCommand.self, JavaRemoveCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "java", abstract: Messages.CLIInterface.javaCommands.localized, subcommands: [JavaListCommand.self, JavaAvailableCommand.self, JavaAddCommand.self, JavaForgetCommand.self, JavaDefaultCommand.self, JavaReferencesCommand.self, JavaInstallCommand.self, JavaRepairCommand.self, JavaRemoveCommand.self]) }
 }
 
 struct PackGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "pack", abstract: Messages.CLIInterface.t31f0b68ea764.localized, subcommands: [PackImportCommand.self, PackInstallCommand.self, PackShowCommand.self, PackUpdateCheckCommand.self, PackUpdateCommand.self, PackRollbackCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "pack", abstract: Messages.CLIInterface.modpackCommands.localized, subcommands: [PackImportCommand.self, PackInstallCommand.self, PackShowCommand.self, PackUpdateCheckCommand.self, PackUpdateCommand.self, PackRollbackCommand.self]) }
 }
 
 struct AppGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "app", abstract: Messages.CLIInterface.t64c4a55a8346.localized, subcommands: [AppInfoCommand.self, AppLanguageGroup.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "app", abstract: Messages.CLIInterface.appCommands.localized, subcommands: [AppInfoCommand.self, AppLanguageGroup.self]) }
 }
 
 struct CliGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "cli", abstract: Messages.CLIInterface.td9fc3f8ff28d.localized, subcommands: [CliStatusCommand.self, CliInstallCommand.self, CliUninstallCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "cli", abstract: Messages.CLIInterface.cliCommands.localized, subcommands: [CliStatusCommand.self, CliInstallCommand.self, CliUninstallCommand.self]) }
 }
 
 struct RuriCommand: ParsableCommand {
-    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "ruri", abstract: Messages.CLIInterface.ta03f160849e6.localized, version: BuildConfiguration().version, subcommands: [SchemaCommand.self, AppGroup.self, CliGroup.self, ConfigGroup.self, InstanceGroup.self, DirectoryGroup.self, JavaGroup.self, AccountGroup.self, LaunchGroup.self, ServerGroup.self, SessionGroup.self, CatalogGroup.self, ContentGroup.self, WorldGroup.self, DatapackGroup.self, SchematicGroup.self, PackGroup.self, DownloadGroup.self, RecoveryGroup.self, DoctorCommand.self]) }
+    static var configuration: CommandConfiguration { CommandConfiguration(commandName: "ruri", abstract: Messages.CLIInterface.rootCommandHelp.localized, version: BuildConfiguration().version, subcommands: [SchemaCommand.self, AppGroup.self, CliGroup.self, ConfigGroup.self, InstanceGroup.self, DirectoryGroup.self, JavaGroup.self, AccountGroup.self, LaunchGroup.self, ServerGroup.self, SessionGroup.self, CatalogGroup.self, ContentGroup.self, WorldGroup.self, DatapackGroup.self, SchematicGroup.self, PackGroup.self, DownloadGroup.self, RecoveryGroup.self, DoctorCommand.self]) }
 }
 
 enum CommandRegistry {

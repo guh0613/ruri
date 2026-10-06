@@ -3,126 +3,126 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftDirectoryReader {
-        /// 此目录的版本数量超过读取限制。
+        /// 游戏版本或组件在预览后改变，请重新扫描。
         ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.childrenText1`.
-        public static var tooManyVersions: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.childrenText1", table: "Errors", fallback: "此目录的版本数量超过读取限制。")
-        }
-        /// 版本目录是符号链接，请选择实际的游戏目录。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.idText1`.
-        public static var versionDirectorySymlink: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.idText1", table: "Errors", fallback: "版本目录是符号链接，请选择实际的游戏目录。")
-        }
-        /// 读取期间游戏目录发生变化，请重新扫描。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.currentChildrenText1`.
-        public static var versionsChangedDuringRead: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.currentChildrenText1", table: "Errors", fallback: "读取期间游戏目录发生变化，请重新扫描。")
-        }
-        /// 此目录的 versions 文件夹里没有找到版本。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.currentChildrenText2`.
-        public static var noVersionsFound: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.currentChildrenText2", table: "Errors", fallback: "此目录的 versions 文件夹里没有找到版本。")
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.componentsChangedAfterPreview`.
+        public static var componentsChangedAfterPreview: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.componentsChangedAfterPreview", table: "Errors", fallback: "游戏版本或组件在预览后改变，请重新扫描。")
         }
         /// 游戏目录或所选版本已不可用，请重新扫描。
         ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.validateNowText1`.
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.directoryUnavailableAfterPreview`.
         public static var directoryUnavailableAfterPreview: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.validateNowText1", table: "Errors", fallback: "游戏目录或所选版本已不可用，请重新扫描。")
-        }
-        /// 版本或原启动器设置在预览后改变，请重新扫描。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.actualText1`.
-        public static var settingsChangedAfterPreview: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.actualText1", table: "Errors", fallback: "版本或原启动器设置在预览后改变，请重新扫描。")
-        }
-        /// 游戏版本或组件在预览后改变，请重新扫描。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.currentText1`.
-        public static var componentsChangedAfterPreview: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.currentText1", table: "Errors", fallback: "游戏版本或组件在预览后改变，请重新扫描。")
-        }
-        /// 请选择实际的 Minecraft 目录。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.infoText1`.
-        public static var minecraftDirectoryRequired: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.infoText1", table: "Errors", fallback: "请选择实际的 Minecraft 目录。")
-        }
-        /// 没有找到 versions 文件夹。请选择 .minecraft、versions 或其中一个版本目录。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.rootText1`.
-        public static var versionsFolderMissing: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.rootText1", table: "Errors", fallback: "没有找到 versions 文件夹。请选择 .minecraft、versions 或其中一个版本目录。")
-        }
-        /// 请选择版本文件夹或同名 JSON 清单。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.selectedText1`.
-        public static var versionFolderRequired: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.selectedText1", table: "Errors", fallback: "请选择版本文件夹或同名 JSON 清单。")
-        }
-        /// Minecraft 目录不存在或是符号链接。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.selectedText2`.
-        public static var minecraftDirectoryMissing: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.selectedText2", table: "Errors", fallback: "Minecraft 目录不存在或是符号链接。")
-        }
-        /// 版本清单和设置的总大小超过读取限制。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.existingText1`.
-        public static var manifestTooLarge: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.existingText1", table: "Errors", fallback: "版本清单和设置的总大小超过读取限制。")
-        }
-        /// 版本清单或设置包含符号链接，请使用实际文件：%1$@
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.prefixText1`.
-        public static func symlinkInManifest(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.prefixText1", table: "Errors", fallback: "版本清单或设置包含符号链接，请使用实际文件：%1$@", arguments: [.text(value0)])
-        }
-        /// 无法读取版本清单或设置：%1$@
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.fdText1`.
-        public static func unableToReadManifest(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.fdText1", table: "Errors", fallback: "无法读取版本清单或设置：%1$@", arguments: [.text(value0)])
-        }
-        /// 版本清单或设置不是普通文件，或超过读取限制：%1$@
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.beforeText1`.
-        public static func nonRegularManifest(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.beforeText1", table: "Errors", fallback: "版本清单或设置不是普通文件，或超过读取限制：%1$@", arguments: [.text(value0)])
-        }
-        /// 版本清单或设置在读取期间改变，请重新扫描。
-        ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.afterText1`.
-        public static var manifestChangedDuringRead: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.afterText1", table: "Errors", fallback: "版本清单或设置在读取期间改变，请重新扫描。")
+            .init(key: "CoreMinecraftDirectoryReader.directoryUnavailableAfterPreview", table: "Errors", fallback: "游戏目录或所选版本已不可用，请重新扫描。")
         }
         /// 清单或设置不是有效的 JSON 对象：%1$@
         ///
-        /// Resource: `Errors.coreMinecraftDirectoryReader.valueText1`.
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.invalidManifestObject`.
         public static func invalidManifestObject(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryReader.valueText1", table: "Errors", fallback: "清单或设置不是有效的 JSON 对象：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreMinecraftDirectoryReader.invalidManifestObject", table: "Errors", fallback: "清单或设置不是有效的 JSON 对象：%1$@", arguments: [.text(value0)])
+        }
+        /// 版本清单或设置在读取期间改变，请重新扫描。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.manifestChangedDuringRead`.
+        public static var manifestChangedDuringRead: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.manifestChangedDuringRead", table: "Errors", fallback: "版本清单或设置在读取期间改变，请重新扫描。")
+        }
+        /// 版本清单和设置的总大小超过读取限制。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.manifestTooLarge`.
+        public static var manifestTooLarge: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.manifestTooLarge", table: "Errors", fallback: "版本清单和设置的总大小超过读取限制。")
+        }
+        /// Minecraft 目录不存在或是符号链接。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.minecraftDirectoryMissing`.
+        public static var minecraftDirectoryMissing: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.minecraftDirectoryMissing", table: "Errors", fallback: "Minecraft 目录不存在或是符号链接。")
+        }
+        /// 请选择实际的 Minecraft 目录。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.minecraftDirectoryRequired`.
+        public static var minecraftDirectoryRequired: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.minecraftDirectoryRequired", table: "Errors", fallback: "请选择实际的 Minecraft 目录。")
+        }
+        /// 此目录的 versions 文件夹里没有找到版本。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.noVersionsFound`.
+        public static var noVersionsFound: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.noVersionsFound", table: "Errors", fallback: "此目录的 versions 文件夹里没有找到版本。")
+        }
+        /// 版本清单或设置不是普通文件，或超过读取限制：%1$@
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.nonRegularManifest`.
+        public static func nonRegularManifest(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.nonRegularManifest", table: "Errors", fallback: "版本清单或设置不是普通文件，或超过读取限制：%1$@", arguments: [.text(value0)])
+        }
+        /// 版本或原启动器设置在预览后改变，请重新扫描。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.settingsChangedAfterPreview`.
+        public static var settingsChangedAfterPreview: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.settingsChangedAfterPreview", table: "Errors", fallback: "版本或原启动器设置在预览后改变，请重新扫描。")
+        }
+        /// 版本清单或设置包含符号链接，请使用实际文件：%1$@
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.symlinkInManifest`.
+        public static func symlinkInManifest(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.symlinkInManifest", table: "Errors", fallback: "版本清单或设置包含符号链接，请使用实际文件：%1$@", arguments: [.text(value0)])
+        }
+        /// 此目录的版本数量超过读取限制。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.tooManyVersions`.
+        public static var tooManyVersions: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.tooManyVersions", table: "Errors", fallback: "此目录的版本数量超过读取限制。")
+        }
+        /// 无法读取版本清单或设置：%1$@
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.unableToReadManifest`.
+        public static func unableToReadManifest(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.unableToReadManifest", table: "Errors", fallback: "无法读取版本清单或设置：%1$@", arguments: [.text(value0)])
+        }
+        /// 版本目录是符号链接，请选择实际的游戏目录。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.versionDirectorySymlink`.
+        public static var versionDirectorySymlink: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.versionDirectorySymlink", table: "Errors", fallback: "版本目录是符号链接，请选择实际的游戏目录。")
+        }
+        /// 请选择版本文件夹或同名 JSON 清单。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.versionFolderRequired`.
+        public static var versionFolderRequired: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.versionFolderRequired", table: "Errors", fallback: "请选择版本文件夹或同名 JSON 清单。")
+        }
+        /// 读取期间游戏目录发生变化，请重新扫描。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.versionsChangedDuringRead`.
+        public static var versionsChangedDuringRead: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.versionsChangedDuringRead", table: "Errors", fallback: "读取期间游戏目录发生变化，请重新扫描。")
+        }
+        /// 没有找到 versions 文件夹。请选择 .minecraft、versions 或其中一个版本目录。
+        ///
+        /// Resource: `Errors.CoreMinecraftDirectoryReader.versionsFolderMissing`.
+        public static var versionsFolderMissing: LocalizedMessage {
+            .init(key: "CoreMinecraftDirectoryReader.versionsFolderMissing", table: "Errors", fallback: "没有找到 versions 文件夹。请选择 .minecraft、versions 或其中一个版本目录。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreMinecraftDirectoryReader.childrenText1": .init("此目录的版本数量超过读取限制。", []),
-            "Errors:coreMinecraftDirectoryReader.idText1": .init("版本目录是符号链接，请选择实际的游戏目录。", []),
-            "Errors:coreMinecraftDirectoryReader.currentChildrenText1": .init("读取期间游戏目录发生变化，请重新扫描。", []),
-            "Errors:coreMinecraftDirectoryReader.currentChildrenText2": .init("此目录的 versions 文件夹里没有找到版本。", []),
-            "Errors:coreMinecraftDirectoryReader.validateNowText1": .init("游戏目录或所选版本已不可用，请重新扫描。", []),
-            "Errors:coreMinecraftDirectoryReader.actualText1": .init("版本或原启动器设置在预览后改变，请重新扫描。", []),
-            "Errors:coreMinecraftDirectoryReader.currentText1": .init("游戏版本或组件在预览后改变，请重新扫描。", []),
-            "Errors:coreMinecraftDirectoryReader.infoText1": .init("请选择实际的 Minecraft 目录。", []),
-            "Errors:coreMinecraftDirectoryReader.rootText1": .init("没有找到 versions 文件夹。请选择 .minecraft、versions 或其中一个版本目录。", []),
-            "Errors:coreMinecraftDirectoryReader.selectedText1": .init("请选择版本文件夹或同名 JSON 清单。", []),
-            "Errors:coreMinecraftDirectoryReader.selectedText2": .init("Minecraft 目录不存在或是符号链接。", []),
-            "Errors:coreMinecraftDirectoryReader.existingText1": .init("版本清单和设置的总大小超过读取限制。", []),
-            "Errors:coreMinecraftDirectoryReader.prefixText1": .init("版本清单或设置包含符号链接，请使用实际文件：%1$@", [.text]),
-            "Errors:coreMinecraftDirectoryReader.fdText1": .init("无法读取版本清单或设置：%1$@", [.text]),
-            "Errors:coreMinecraftDirectoryReader.beforeText1": .init("版本清单或设置不是普通文件，或超过读取限制：%1$@", [.text]),
-            "Errors:coreMinecraftDirectoryReader.afterText1": .init("版本清单或设置在读取期间改变，请重新扫描。", []),
-            "Errors:coreMinecraftDirectoryReader.valueText1": .init("清单或设置不是有效的 JSON 对象：%1$@", [.text]),
+            "Errors:CoreMinecraftDirectoryReader.componentsChangedAfterPreview": .init("游戏版本或组件在预览后改变，请重新扫描。", []),
+            "Errors:CoreMinecraftDirectoryReader.directoryUnavailableAfterPreview": .init("游戏目录或所选版本已不可用，请重新扫描。", []),
+            "Errors:CoreMinecraftDirectoryReader.invalidManifestObject": .init("清单或设置不是有效的 JSON 对象：%1$@", [.text]),
+            "Errors:CoreMinecraftDirectoryReader.manifestChangedDuringRead": .init("版本清单或设置在读取期间改变，请重新扫描。", []),
+            "Errors:CoreMinecraftDirectoryReader.manifestTooLarge": .init("版本清单和设置的总大小超过读取限制。", []),
+            "Errors:CoreMinecraftDirectoryReader.minecraftDirectoryMissing": .init("Minecraft 目录不存在或是符号链接。", []),
+            "Errors:CoreMinecraftDirectoryReader.minecraftDirectoryRequired": .init("请选择实际的 Minecraft 目录。", []),
+            "Errors:CoreMinecraftDirectoryReader.noVersionsFound": .init("此目录的 versions 文件夹里没有找到版本。", []),
+            "Errors:CoreMinecraftDirectoryReader.nonRegularManifest": .init("版本清单或设置不是普通文件，或超过读取限制：%1$@", [.text]),
+            "Errors:CoreMinecraftDirectoryReader.settingsChangedAfterPreview": .init("版本或原启动器设置在预览后改变，请重新扫描。", []),
+            "Errors:CoreMinecraftDirectoryReader.symlinkInManifest": .init("版本清单或设置包含符号链接，请使用实际文件：%1$@", [.text]),
+            "Errors:CoreMinecraftDirectoryReader.tooManyVersions": .init("此目录的版本数量超过读取限制。", []),
+            "Errors:CoreMinecraftDirectoryReader.unableToReadManifest": .init("无法读取版本清单或设置：%1$@", [.text]),
+            "Errors:CoreMinecraftDirectoryReader.versionDirectorySymlink": .init("版本目录是符号链接，请选择实际的游戏目录。", []),
+            "Errors:CoreMinecraftDirectoryReader.versionFolderRequired": .init("请选择版本文件夹或同名 JSON 清单。", []),
+            "Errors:CoreMinecraftDirectoryReader.versionsChangedDuringRead": .init("读取期间游戏目录发生变化，请重新扫描。", []),
+            "Errors:CoreMinecraftDirectoryReader.versionsFolderMissing": .init("没有找到 versions 文件夹。请选择 .minecraft、versions 或其中一个版本目录。", []),
         ]
     }
 }

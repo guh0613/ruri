@@ -3,396 +3,6 @@ import Foundation
 
 extension Messages {
     public enum SessionUI {
-        /// 回顾
-        ///
-        /// Resource: `Sessions.SessionUI.history`.
-        public static var history: LocalizedMessage {
-            .init(key: "SessionUI.history", table: "Sessions", fallback: "回顾")
-        }
-        /// 所有实例
-        ///
-        /// Resource: `Sessions.SessionUI.allInstances`.
-        public static var allInstances: LocalizedMessage {
-            .init(key: "SessionUI.allInstances", table: "Sessions", fallback: "所有实例")
-        }
-        /// 需要关注
-        ///
-        /// Resource: `Sessions.SessionUI.problemsOnly`.
-        public static var problemsOnly: LocalizedMessage {
-            .init(key: "SessionUI.problemsOnly", table: "Sessions", fallback: "需要关注")
-        }
-        /// 搜索
-        ///
-        /// Resource: `Sessions.SessionUI.search`.
-        public static var search: LocalizedMessage {
-            .init(key: "SessionUI.search", table: "Sessions", fallback: "搜索")
-        }
-        /// 暂无游玩记录
-        ///
-        /// Resource: `Sessions.SessionUI.noHistory`.
-        public static var noHistory: LocalizedMessage {
-            .init(key: "SessionUI.noHistory", table: "Sessions", fallback: "暂无游玩记录")
-        }
-        /// 启动游戏后会自动记录。
-        ///
-        /// Resource: `Sessions.SessionUI.noHistoryHelp`.
-        public static var noHistoryHelp: LocalizedMessage {
-            .init(key: "SessionUI.noHistoryHelp", table: "Sessions", fallback: "启动游戏后会自动记录。")
-        }
-        /// 没有匹配的记录
-        ///
-        /// Resource: `Sessions.SessionUI.noMatches`.
-        public static var noMatches: LocalizedMessage {
-            .init(key: "SessionUI.noMatches", table: "Sessions", fallback: "没有匹配的记录")
-        }
-        /// 加载更早的记录
-        ///
-        /// Resource: `Sessions.SessionUI.loadMore`.
-        public static var loadMore: LocalizedMessage {
-            .init(key: "SessionUI.loadMore", table: "Sessions", fallback: "加载更早的记录")
-        }
-        /// 累计游玩
-        ///
-        /// Resource: `Sessions.SessionUI.totalTime`.
-        public static var totalTime: LocalizedMessage {
-            .init(key: "SessionUI.totalTime", table: "Sessions", fallback: "累计游玩")
-        }
-        /// 游玩次数
-        ///
-        /// Resource: `Sessions.SessionUI.playCount`.
-        public static var playCount: LocalizedMessage {
-            .init(key: "SessionUI.playCount", table: "Sessions", fallback: "游玩次数")
-        }
-        /// 实例
-        ///
-        /// Resource: `Sessions.SessionUI.instance`.
-        public static var instance: LocalizedMessage {
-            .init(key: "SessionUI.instance", table: "Sessions", fallback: "实例")
-        }
-        /// 开始时间
-        ///
-        /// Resource: `Sessions.SessionUI.date`.
-        public static var date: LocalizedMessage {
-            .init(key: "SessionUI.date", table: "Sessions", fallback: "开始时间")
-        }
-        /// 游玩时长
-        ///
-        /// Resource: `Sessions.SessionUI.duration`.
-        public static var duration: LocalizedMessage {
-            .init(key: "SessionUI.duration", table: "Sessions", fallback: "游玩时长")
-        }
-        /// 结果
-        ///
-        /// Resource: `Sessions.SessionUI.result`.
-        public static var result: LocalizedMessage {
-            .init(key: "SessionUI.result", table: "Sessions", fallback: "结果")
-        }
-        /// 查看详情
-        ///
-        /// Resource: `Sessions.SessionUI.details`.
-        public static var details: LocalizedMessage {
-            .init(key: "SessionUI.details", table: "Sessions", fallback: "查看详情")
-        }
-        /// 游戏详情
-        ///
-        /// Resource: `Sessions.SessionUI.session`.
-        public static var session: LocalizedMessage {
-            .init(key: "SessionUI.session", table: "Sessions", fallback: "游戏详情")
-        }
-        /// 正在运行
-        ///
-        /// Resource: `Sessions.SessionUI.running`.
-        public static var running: LocalizedMessage {
-            .init(key: "SessionUI.running", table: "Sessions", fallback: "正在运行")
-        }
-        /// 正在启动
-        ///
-        /// Resource: `Sessions.SessionUI.preparing`.
-        public static var preparing: LocalizedMessage {
-            .init(key: "SessionUI.preparing", table: "Sessions", fallback: "正在启动")
-        }
-        /// 已结束
-        ///
-        /// Resource: `Sessions.SessionUI.finished`.
-        public static var finished: LocalizedMessage {
-            .init(key: "SessionUI.finished", table: "Sessions", fallback: "已结束")
-        }
-        /// 已终止
-        ///
-        /// Resource: `Sessions.SessionUI.stopped`.
-        public static var stopped: LocalizedMessage {
-            .init(key: "SessionUI.stopped", table: "Sessions", fallback: "已终止")
-        }
-        /// 已取消
-        ///
-        /// Resource: `Sessions.SessionUI.cancelled`.
-        public static var cancelled: LocalizedMessage {
-            .init(key: "SessionUI.cancelled", table: "Sessions", fallback: "已取消")
-        }
-        /// 未能启动
-        ///
-        /// Resource: `Sessions.SessionUI.launchFailed`.
-        public static var launchFailed: LocalizedMessage {
-            .init(key: "SessionUI.launchFailed", table: "Sessions", fallback: "未能启动")
-        }
-        /// 异常退出
-        ///
-        /// Resource: `Sessions.SessionUI.crashed`.
-        public static var crashed: LocalizedMessage {
-            .init(key: "SessionUI.crashed", table: "Sessions", fallback: "异常退出")
-        }
-        /// 记录中断
-        ///
-        /// Resource: `Sessions.SessionUI.interrupted`.
-        public static var interrupted: LocalizedMessage {
-            .init(key: "SessionUI.interrupted", table: "Sessions", fallback: "记录中断")
-        }
-        /// 正在收尾
-        ///
-        /// Resource: `Sessions.SessionUI.checking`.
-        public static var checking: LocalizedMessage {
-            .init(key: "SessionUI.checking", table: "Sessions", fallback: "正在收尾")
-        }
-        /// 未进入游戏
-        ///
-        /// Resource: `Sessions.SessionUI.notStarted`.
-        public static var notStarted: LocalizedMessage {
-            .init(key: "SessionUI.notStarted", table: "Sessions", fallback: "未进入游戏")
-        }
-        /// 时长未知
-        ///
-        /// Resource: `Sessions.SessionUI.unknownTime`.
-        public static var unknownTime: LocalizedMessage {
-            .init(key: "SessionUI.unknownTime", table: "Sessions", fallback: "时长未知")
-        }
-        /// 至少 %1$@
-        ///
-        /// Resource: `Sessions.SessionUI.partialTime`.
-        public static func partialTime(_ value0: String) -> LocalizedMessage {
-            .init(key: "SessionUI.partialTime", table: "Sessions", fallback: "至少 %1$@", arguments: [.text(value0)])
-        }
-        /// 查看日志
-        ///
-        /// Resource: `Sessions.SessionUI.console`.
-        public static var console: LocalizedMessage {
-            .init(key: "SessionUI.console", table: "Sessions", fallback: "查看日志")
-        }
-        /// 导出诊断报告…
-        ///
-        /// Resource: `Sessions.SessionUI.exportReport`.
-        public static var exportReport: LocalizedMessage {
-            .init(key: "SessionUI.exportReport", table: "Sessions", fallback: "导出诊断报告…")
-        }
-        /// 隐藏常见隐私信息后打包日志，可发给整合包作者或支持人员。
-        ///
-        /// Resource: `Sessions.SessionUI.reportHelp`.
-        public static var reportHelp: LocalizedMessage {
-            .init(key: "SessionUI.reportHelp", table: "Sessions", fallback: "隐藏常见隐私信息后打包日志，可发给整合包作者或支持人员。")
-        }
-        /// 游戏已正常结束。
-        ///
-        /// Resource: `Sessions.SessionUI.normalHelp`.
-        public static var normalHelp: LocalizedMessage {
-            .init(key: "SessionUI.normalHelp", table: "Sessions", fallback: "游戏已正常结束。")
-        }
-        /// 关闭此窗口或退出启动器不会结束游戏。
-        ///
-        /// Resource: `Sessions.SessionUI.runningHelp`.
-        public static var runningHelp: LocalizedMessage {
-            .init(key: "SessionUI.runningHelp", table: "Sessions", fallback: "关闭此窗口或退出启动器不会结束游戏。")
-        }
-        /// 游戏未正常结束。可参考下方建议，或导出诊断报告。
-        ///
-        /// Resource: `Sessions.SessionUI.failureHelp`.
-        public static var failureHelp: LocalizedMessage {
-            .init(key: "SessionUI.failureHelp", table: "Sessions", fallback: "游戏未正常结束。可参考下方建议，或导出诊断报告。")
-        }
-        /// 无法确定原因
-        ///
-        /// Resource: `Sessions.SessionUI.noFinding`.
-        public static var noFinding: LocalizedMessage {
-            .init(key: "SessionUI.noFinding", table: "Sessions", fallback: "无法确定原因")
-        }
-        /// 现有信息不足以判断原因，可导出报告进一步检查。
-        ///
-        /// Resource: `Sessions.SessionUI.noFindingHelp`.
-        public static var noFindingHelp: LocalizedMessage {
-            .init(key: "SessionUI.noFindingHelp", table: "Sessions", fallback: "现有信息不足以判断原因，可导出报告进一步检查。")
-        }
-        /// 建议
-        ///
-        /// Resource: `Sessions.SessionUI.suggestions`.
-        public static var suggestions: LocalizedMessage {
-            .init(key: "SessionUI.suggestions", table: "Sessions", fallback: "建议")
-        }
-        /// 技术信息
-        ///
-        /// Resource: `Sessions.SessionUI.technicalDetails`.
-        public static var technicalDetails: LocalizedMessage {
-            .init(key: "SessionUI.technicalDetails", table: "Sessions", fallback: "技术信息")
-        }
-        /// 依据
-        ///
-        /// Resource: `Sessions.SessionUI.evidence`.
-        public static var evidence: LocalizedMessage {
-            .init(key: "SessionUI.evidence", table: "Sessions", fallback: "依据")
-        }
-        /// 游戏环境
-        ///
-        /// Resource: `Sessions.SessionUI.environment`.
-        public static var environment: LocalizedMessage {
-            .init(key: "SessionUI.environment", table: "Sessions", fallback: "游戏环境")
-        }
-        /// 开始
-        ///
-        /// Resource: `Sessions.SessionUI.started`.
-        public static var started: LocalizedMessage {
-            .init(key: "SessionUI.started", table: "Sessions", fallback: "开始")
-        }
-        /// 结束
-        ///
-        /// Resource: `Sessions.SessionUI.ended`.
-        public static var ended: LocalizedMessage {
-            .init(key: "SessionUI.ended", table: "Sessions", fallback: "结束")
-        }
-        /// 日志来源
-        ///
-        /// Resource: `Sessions.SessionUI.logSource`.
-        public static var logSource: LocalizedMessage {
-            .init(key: "SessionUI.logSource", table: "Sessions", fallback: "日志来源")
-        }
-        /// 启动信息
-        ///
-        /// Resource: `Sessions.SessionUI.launcherLog`.
-        public static var launcherLog: LocalizedMessage {
-            .init(key: "SessionUI.launcherLog", table: "Sessions", fallback: "启动信息")
-        }
-        /// 搜索当前日志
-        ///
-        /// Resource: `Sessions.SessionUI.logSearch`.
-        public static var logSearch: LocalizedMessage {
-            .init(key: "SessionUI.logSearch", table: "Sessions", fallback: "搜索当前日志")
-        }
-        /// 跟随新输出
-        ///
-        /// Resource: `Sessions.SessionUI.follow`.
-        public static var follow: LocalizedMessage {
-            .init(key: "SessionUI.follow", table: "Sessions", fallback: "跟随新输出")
-        }
-        /// 保存当前日志…
-        ///
-        /// Resource: `Sessions.SessionUI.saveVisibleLog`.
-        public static var saveVisibleLog: LocalizedMessage {
-            .init(key: "SessionUI.saveVisibleLog", table: "Sessions", fallback: "保存当前日志…")
-        }
-        /// 打开游戏日志文件夹
-        ///
-        /// Resource: `Sessions.SessionUI.openGameFolder`.
-        public static var openGameFolder: LocalizedMessage {
-            .init(key: "SessionUI.openGameFolder", table: "Sessions", fallback: "打开游戏日志文件夹")
-        }
-        /// 暂无输出
-        ///
-        /// Resource: `Sessions.SessionUI.emptyLog`.
-        public static var emptyLog: LocalizedMessage {
-            .init(key: "SessionUI.emptyLog", table: "Sessions", fallback: "暂无输出")
-        }
-        /// 实时连接已断开，已显示内容仍可保存。
-        ///
-        /// Resource: `Sessions.SessionUI.noLiveConnection`.
-        public static var noLiveConnection: LocalizedMessage {
-            .init(key: "SessionUI.noLiveConnection", table: "Sessions", fallback: "实时连接已断开，已显示内容仍可保存。")
-        }
-        /// 重试
-        ///
-        /// Resource: `Sessions.SessionUI.retry`.
-        public static var retry: LocalizedMessage {
-            .init(key: "SessionUI.retry", table: "Sessions", fallback: "重试")
-        }
-        /// 导出诊断报告
-        ///
-        /// Resource: `Sessions.SessionUI.reportTitle`.
-        public static var reportTitle: LocalizedMessage {
-            .init(key: "SessionUI.reportTitle", table: "Sessions", fallback: "导出诊断报告")
-        }
-        /// 报告已准备好
-        ///
-        /// Resource: `Sessions.SessionUI.reportReady`.
-        public static var reportReady: LocalizedMessage {
-            .init(key: "SessionUI.reportReady", table: "Sessions", fallback: "报告已准备好")
-        }
-        /// 正在收集日志…
-        ///
-        /// Resource: `Sessions.SessionUI.reportPreparing`.
-        public static var reportPreparing: LocalizedMessage {
-            .init(key: "SessionUI.reportPreparing", table: "Sessions", fallback: "正在收集日志…")
-        }
-        /// 报告仅保存在本地，不会上传。自动隐藏可能不完整，分享前请检查。
-        ///
-        /// Resource: `Sessions.SessionUI.reportPrivacy`.
-        public static var reportPrivacy: LocalizedMessage {
-            .init(key: "SessionUI.reportPrivacy", table: "Sessions", fallback: "报告仅保存在本地，不会上传。自动隐藏可能不完整，分享前请检查。")
-        }
-        /// 检查文件
-        ///
-        /// Resource: `Sessions.SessionUI.reviewFiles`.
-        public static var reviewFiles: LocalizedMessage {
-            .init(key: "SessionUI.reviewFiles", table: "Sessions", fallback: "检查文件")
-        }
-        /// 额外隐藏内容（每行一项）
-        ///
-        /// Resource: `Sessions.SessionUI.extraRedaction`.
-        public static var extraRedaction: LocalizedMessage {
-            .init(key: "SessionUI.extraRedaction", table: "Sessions", fallback: "额外隐藏内容（每行一项）")
-        }
-        /// 保存报告…
-        ///
-        /// Resource: `Sessions.SessionUI.exportZIP`.
-        public static var exportZIP: LocalizedMessage {
-            .init(key: "SessionUI.exportZIP", table: "Sessions", fallback: "保存报告…")
-        }
-        /// 报告已保存
-        ///
-        /// Resource: `Sessions.SessionUI.reportSaved`.
-        public static var reportSaved: LocalizedMessage {
-            .init(key: "SessionUI.reportSaved", table: "Sessions", fallback: "报告已保存")
-        }
-        /// 在 Finder 中显示
-        ///
-        /// Resource: `Sessions.SessionUI.showFile`.
-        public static var showFile: LocalizedMessage {
-            .init(key: "SessionUI.showFile", table: "Sessions", fallback: "在 Finder 中显示")
-        }
-        /// 部分日志不可用
-        ///
-        /// Resource: `Sessions.SessionUI.collectingLimits`.
-        public static var collectingLimits: LocalizedMessage {
-            .init(key: "SessionUI.collectingLimits", table: "Sessions", fallback: "部分日志不可用")
-        }
-        /// 打开 macOS 控制台
-        ///
-        /// Resource: `Sessions.SessionUI.openSystemReports`.
-        public static var openSystemReports: LocalizedMessage {
-            .init(key: "SessionUI.openSystemReports", table: "Sessions", fallback: "打开 macOS 控制台")
-        }
-        /// 活动
-        ///
-        /// Resource: `Sessions.SessionUI.launcherActivity`.
-        public static var launcherActivity: LocalizedMessage {
-            .init(key: "SessionUI.launcherActivity", table: "Sessions", fallback: "活动")
-        }
-        /// 包含 %1$lld 个文件 · %2$@
-        ///
-        /// Resource: `Sessions.SessionUI.reportContents`.
-        public static func reportContents(_ value0: Int64, _ value1: String) -> LocalizedMessage {
-            .init(key: "SessionUI.reportContents", table: "Sessions", fallback: "包含 %1$lld 个文件 · %2$@", arguments: [.integer(value0), .text(value1)])
-        }
-        /// 找不到这条记录。
-        ///
-        /// Resource: `Sessions.SessionUI.recordUnavailable`.
-        public static var recordUnavailable: LocalizedMessage {
-            .init(key: "SessionUI.recordUnavailable", table: "Sessions", fallback: "找不到这条记录。")
-        }
         /// 后置命令失败
         ///
         /// Resource: `Sessions.SessionUI.afterCommandFailed`.
@@ -405,59 +15,107 @@ extension Messages {
         public static var afterCommandHelp: LocalizedMessage {
             .init(key: "SessionUI.afterCommandHelp", table: "Sessions", fallback: "游戏已结束，但后置命令执行失败。请检查启动设置。")
         }
-        /// 未收到完整的结束信息，仅保留已确认的时长与日志。
+        /// 所有实例
         ///
-        /// Resource: `Sessions.SessionUI.interruptedHelp`.
-        public static var interruptedHelp: LocalizedMessage {
-            .init(key: "SessionUI.interruptedHelp", table: "Sessions", fallback: "未收到完整的结束信息，仅保留已确认的时长与日志。")
+        /// Resource: `Sessions.SessionUI.allInstances`.
+        public static var allInstances: LocalizedMessage {
+            .init(key: "SessionUI.allInstances", table: "Sessions", fallback: "所有实例")
         }
-        /// 游戏已退出，正在执行后置操作。
+        /// 已取消
         ///
-        /// Resource: `Sessions.SessionUI.finishingHelp`.
-        public static var finishingHelp: LocalizedMessage {
-            .init(key: "SessionUI.finishingHelp", table: "Sessions", fallback: "游戏已退出，正在执行后置操作。")
+        /// Resource: `Sessions.SessionUI.cancelled`.
+        public static var cancelled: LocalizedMessage {
+            .init(key: "SessionUI.cancelled", table: "Sessions", fallback: "已取消")
         }
-        /// 进程输出（补充）
+        /// 正在收尾
         ///
-        /// Resource: `Sessions.SessionUI.processOutput`.
-        public static var processOutput: LocalizedMessage {
-            .init(key: "SessionUI.processOutput", table: "Sessions", fallback: "进程输出（补充）")
+        /// Resource: `Sessions.SessionUI.checking`.
+        public static var checking: LocalizedMessage {
+            .init(key: "SessionUI.checking", table: "Sessions", fallback: "正在收尾")
         }
-        /// 游戏日志
+        /// 部分日志不可用
         ///
-        /// Resource: `Sessions.SessionUI.nativeGameLog`.
-        public static var nativeGameLog: LocalizedMessage {
-            .init(key: "SessionUI.nativeGameLog", table: "Sessions", fallback: "游戏日志")
+        /// Resource: `Sessions.SessionUI.collectingLimits`.
+        public static var collectingLimits: LocalizedMessage {
+            .init(key: "SessionUI.collectingLimits", table: "Sessions", fallback: "部分日志不可用")
         }
-        /// 详细游戏日志
+        /// 查看日志
         ///
-        /// Resource: `Sessions.SessionUI.nativeDebugLog`.
-        public static var nativeDebugLog: LocalizedMessage {
-            .init(key: "SessionUI.nativeDebugLog", table: "Sessions", fallback: "详细游戏日志")
+        /// Resource: `Sessions.SessionUI.console`.
+        public static var console: LocalizedMessage {
+            .init(key: "SessionUI.console", table: "Sessions", fallback: "查看日志")
         }
-        /// 仅预览开头和末尾，导出包含完整内容。
+        /// 异常退出
         ///
-        /// Resource: `Sessions.SessionUI.fullFilePreview`.
-        public static var fullFilePreview: LocalizedMessage {
-            .init(key: "SessionUI.fullFilePreview", table: "Sessions", fallback: "仅预览开头和末尾，导出包含完整内容。")
+        /// Resource: `Sessions.SessionUI.crashed`.
+        public static var crashed: LocalizedMessage {
+            .init(key: "SessionUI.crashed", table: "Sessions", fallback: "异常退出")
         }
-        /// 日志含超过 1 MiB 的单行，无法安全隐藏敏感信息，仅提供摘录。可在游戏目录中查看原文件。
+        /// 开始时间
         ///
-        /// Resource: `Sessions.SessionUI.unsafeLongLine`.
-        public static var unsafeLongLine: LocalizedMessage {
-            .init(key: "SessionUI.unsafeLongLine", table: "Sessions", fallback: "日志含超过 1 MiB 的单行，无法安全隐藏敏感信息，仅提供摘录。可在游戏目录中查看原文件。")
+        /// Resource: `Sessions.SessionUI.date`.
+        public static var date: LocalizedMessage {
+            .init(key: "SessionUI.date", table: "Sessions", fallback: "开始时间")
         }
-        /// 未能准备 %1$@ 的完整文件：%2$@。其他日志仍可导出。
+        /// 查看详情
         ///
-        /// Resource: `Sessions.SessionUI.fullExportFailed`.
-        public static func fullExportFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "SessionUI.fullExportFailed", table: "Sessions", fallback: "未能准备 %1$@ 的完整文件：%2$@。其他日志仍可导出。", arguments: [.text(value0), .text(value1)])
+        /// Resource: `Sessions.SessionUI.details`.
+        public static var details: LocalizedMessage {
+            .init(key: "SessionUI.details", table: "Sessions", fallback: "查看详情")
         }
-        /// 来源：%1$@
+        /// 游玩时长
         ///
-        /// Resource: `Sessions.SessionUI.logOrigin`.
-        public static func logOrigin(_ value0: String) -> LocalizedMessage {
-            .init(key: "SessionUI.logOrigin", table: "Sessions", fallback: "来源：%1$@", arguments: [.text(value0)])
+        /// Resource: `Sessions.SessionUI.duration`.
+        public static var duration: LocalizedMessage {
+            .init(key: "SessionUI.duration", table: "Sessions", fallback: "游玩时长")
+        }
+        /// 暂无输出
+        ///
+        /// Resource: `Sessions.SessionUI.emptyLog`.
+        public static var emptyLog: LocalizedMessage {
+            .init(key: "SessionUI.emptyLog", table: "Sessions", fallback: "暂无输出")
+        }
+        /// 结束
+        ///
+        /// Resource: `Sessions.SessionUI.ended`.
+        public static var ended: LocalizedMessage {
+            .init(key: "SessionUI.ended", table: "Sessions", fallback: "结束")
+        }
+        /// 游戏环境
+        ///
+        /// Resource: `Sessions.SessionUI.environment`.
+        public static var environment: LocalizedMessage {
+            .init(key: "SessionUI.environment", table: "Sessions", fallback: "游戏环境")
+        }
+        /// 依据
+        ///
+        /// Resource: `Sessions.SessionUI.evidence`.
+        public static var evidence: LocalizedMessage {
+            .init(key: "SessionUI.evidence", table: "Sessions", fallback: "依据")
+        }
+        /// 导出诊断报告…
+        ///
+        /// Resource: `Sessions.SessionUI.exportReport`.
+        public static var exportReport: LocalizedMessage {
+            .init(key: "SessionUI.exportReport", table: "Sessions", fallback: "导出诊断报告…")
+        }
+        /// 保存报告…
+        ///
+        /// Resource: `Sessions.SessionUI.exportZIP`.
+        public static var exportZIP: LocalizedMessage {
+            .init(key: "SessionUI.exportZIP", table: "Sessions", fallback: "保存报告…")
+        }
+        /// 额外隐藏内容（每行一项）
+        ///
+        /// Resource: `Sessions.SessionUI.extraRedaction`.
+        public static var extraRedaction: LocalizedMessage {
+            .init(key: "SessionUI.extraRedaction", table: "Sessions", fallback: "额外隐藏内容（每行一项）")
+        }
+        /// 游戏未正常结束。可参考下方建议，或导出诊断报告。
+        ///
+        /// Resource: `Sessions.SessionUI.failureHelp`.
+        public static var failureHelp: LocalizedMessage {
+            .init(key: "SessionUI.failureHelp", table: "Sessions", fallback: "游戏未正常结束。可参考下方建议，或导出诊断报告。")
         }
         /// 未找到游戏日志，当前显示进程输出。
         ///
@@ -465,11 +123,107 @@ extension Messages {
         public static var fallbackLogHelp: LocalizedMessage {
             .init(key: "SessionUI.fallbackLogHelp", table: "Sessions", fallback: "未找到游戏日志，当前显示进程输出。")
         }
-        /// 未找到本次游玩的日志，文件可能已轮转或清理。
+        /// 已结束
         ///
-        /// Resource: `Sessions.SessionUI.nativeLogUnavailable`.
-        public static var nativeLogUnavailable: LocalizedMessage {
-            .init(key: "SessionUI.nativeLogUnavailable", table: "Sessions", fallback: "未找到本次游玩的日志，文件可能已轮转或清理。")
+        /// Resource: `Sessions.SessionUI.finished`.
+        public static var finished: LocalizedMessage {
+            .init(key: "SessionUI.finished", table: "Sessions", fallback: "已结束")
+        }
+        /// 游戏已退出，正在执行后置操作。
+        ///
+        /// Resource: `Sessions.SessionUI.finishingHelp`.
+        public static var finishingHelp: LocalizedMessage {
+            .init(key: "SessionUI.finishingHelp", table: "Sessions", fallback: "游戏已退出，正在执行后置操作。")
+        }
+        /// 跟随新输出
+        ///
+        /// Resource: `Sessions.SessionUI.follow`.
+        public static var follow: LocalizedMessage {
+            .init(key: "SessionUI.follow", table: "Sessions", fallback: "跟随新输出")
+        }
+        /// 未能准备 %1$@ 的完整文件：%2$@。其他日志仍可导出。
+        ///
+        /// Resource: `Sessions.SessionUI.fullExportFailed`.
+        public static func fullExportFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "SessionUI.fullExportFailed", table: "Sessions", fallback: "未能准备 %1$@ 的完整文件：%2$@。其他日志仍可导出。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 仅预览开头和末尾，导出包含完整内容。
+        ///
+        /// Resource: `Sessions.SessionUI.fullFilePreview`.
+        public static var fullFilePreview: LocalizedMessage {
+            .init(key: "SessionUI.fullFilePreview", table: "Sessions", fallback: "仅预览开头和末尾，导出包含完整内容。")
+        }
+        /// 回顾
+        ///
+        /// Resource: `Sessions.SessionUI.history`.
+        public static var history: LocalizedMessage {
+            .init(key: "SessionUI.history", table: "Sessions", fallback: "回顾")
+        }
+        /// 实例
+        ///
+        /// Resource: `Sessions.SessionUI.instance`.
+        public static var instance: LocalizedMessage {
+            .init(key: "SessionUI.instance", table: "Sessions", fallback: "实例")
+        }
+        /// 记录中断
+        ///
+        /// Resource: `Sessions.SessionUI.interrupted`.
+        public static var interrupted: LocalizedMessage {
+            .init(key: "SessionUI.interrupted", table: "Sessions", fallback: "记录中断")
+        }
+        /// 未收到完整的结束信息，仅保留已确认的时长与日志。
+        ///
+        /// Resource: `Sessions.SessionUI.interruptedHelp`.
+        public static var interruptedHelp: LocalizedMessage {
+            .init(key: "SessionUI.interruptedHelp", table: "Sessions", fallback: "未收到完整的结束信息，仅保留已确认的时长与日志。")
+        }
+        /// JVM 崩溃报告
+        ///
+        /// Resource: `Sessions.SessionUI.jvmCrashReport`.
+        public static var jvmCrashReport: LocalizedMessage {
+            .init(key: "SessionUI.jvmCrashReport", table: "Sessions", fallback: "JVM 崩溃报告")
+        }
+        /// 未能启动
+        ///
+        /// Resource: `Sessions.SessionUI.launchFailed`.
+        public static var launchFailed: LocalizedMessage {
+            .init(key: "SessionUI.launchFailed", table: "Sessions", fallback: "未能启动")
+        }
+        /// 活动
+        ///
+        /// Resource: `Sessions.SessionUI.launcherActivity`.
+        public static var launcherActivity: LocalizedMessage {
+            .init(key: "SessionUI.launcherActivity", table: "Sessions", fallback: "活动")
+        }
+        /// 启动信息
+        ///
+        /// Resource: `Sessions.SessionUI.launcherLog`.
+        public static var launcherLog: LocalizedMessage {
+            .init(key: "SessionUI.launcherLog", table: "Sessions", fallback: "启动信息")
+        }
+        /// 加载更早的记录
+        ///
+        /// Resource: `Sessions.SessionUI.loadMore`.
+        public static var loadMore: LocalizedMessage {
+            .init(key: "SessionUI.loadMore", table: "Sessions", fallback: "加载更早的记录")
+        }
+        /// 来源：%1$@
+        ///
+        /// Resource: `Sessions.SessionUI.logOrigin`.
+        public static func logOrigin(_ value0: String) -> LocalizedMessage {
+            .init(key: "SessionUI.logOrigin", table: "Sessions", fallback: "来源：%1$@", arguments: [.text(value0)])
+        }
+        /// 搜索当前日志
+        ///
+        /// Resource: `Sessions.SessionUI.logSearch`.
+        public static var logSearch: LocalizedMessage {
+            .init(key: "SessionUI.logSearch", table: "Sessions", fallback: "搜索当前日志")
+        }
+        /// 日志来源
+        ///
+        /// Resource: `Sessions.SessionUI.logSource`.
+        public static var logSource: LocalizedMessage {
+            .init(key: "SessionUI.logSource", table: "Sessions", fallback: "日志来源")
         }
         /// macOS 崩溃报告
         ///
@@ -483,17 +237,125 @@ extension Messages {
         public static var minecraftCrashReport: LocalizedMessage {
             .init(key: "SessionUI.minecraftCrashReport", table: "Sessions", fallback: "Minecraft 崩溃报告")
         }
-        /// JVM 崩溃报告
+        /// 详细游戏日志
         ///
-        /// Resource: `Sessions.SessionUI.jvmCrashReport`.
-        public static var jvmCrashReport: LocalizedMessage {
-            .init(key: "SessionUI.jvmCrashReport", table: "Sessions", fallback: "JVM 崩溃报告")
+        /// Resource: `Sessions.SessionUI.nativeDebugLog`.
+        public static var nativeDebugLog: LocalizedMessage {
+            .init(key: "SessionUI.nativeDebugLog", table: "Sessions", fallback: "详细游戏日志")
         }
-        /// 这份崩溃报告已不可用。
+        /// 游戏日志
         ///
-        /// Resource: `Sessions.SessionUI.reportNotAvailable`.
-        public static var reportNotAvailable: LocalizedMessage {
-            .init(key: "SessionUI.reportNotAvailable", table: "Sessions", fallback: "这份崩溃报告已不可用。")
+        /// Resource: `Sessions.SessionUI.nativeGameLog`.
+        public static var nativeGameLog: LocalizedMessage {
+            .init(key: "SessionUI.nativeGameLog", table: "Sessions", fallback: "游戏日志")
+        }
+        /// 未找到本次游玩的日志，文件可能已轮转或清理。
+        ///
+        /// Resource: `Sessions.SessionUI.nativeLogUnavailable`.
+        public static var nativeLogUnavailable: LocalizedMessage {
+            .init(key: "SessionUI.nativeLogUnavailable", table: "Sessions", fallback: "未找到本次游玩的日志，文件可能已轮转或清理。")
+        }
+        /// 无法确定原因
+        ///
+        /// Resource: `Sessions.SessionUI.noFinding`.
+        public static var noFinding: LocalizedMessage {
+            .init(key: "SessionUI.noFinding", table: "Sessions", fallback: "无法确定原因")
+        }
+        /// 现有信息不足以判断原因，可导出报告进一步检查。
+        ///
+        /// Resource: `Sessions.SessionUI.noFindingHelp`.
+        public static var noFindingHelp: LocalizedMessage {
+            .init(key: "SessionUI.noFindingHelp", table: "Sessions", fallback: "现有信息不足以判断原因，可导出报告进一步检查。")
+        }
+        /// 暂无游玩记录
+        ///
+        /// Resource: `Sessions.SessionUI.noHistory`.
+        public static var noHistory: LocalizedMessage {
+            .init(key: "SessionUI.noHistory", table: "Sessions", fallback: "暂无游玩记录")
+        }
+        /// 启动游戏后会自动记录。
+        ///
+        /// Resource: `Sessions.SessionUI.noHistoryHelp`.
+        public static var noHistoryHelp: LocalizedMessage {
+            .init(key: "SessionUI.noHistoryHelp", table: "Sessions", fallback: "启动游戏后会自动记录。")
+        }
+        /// 实时连接已断开，已显示内容仍可保存。
+        ///
+        /// Resource: `Sessions.SessionUI.noLiveConnection`.
+        public static var noLiveConnection: LocalizedMessage {
+            .init(key: "SessionUI.noLiveConnection", table: "Sessions", fallback: "实时连接已断开，已显示内容仍可保存。")
+        }
+        /// 没有匹配的记录
+        ///
+        /// Resource: `Sessions.SessionUI.noMatches`.
+        public static var noMatches: LocalizedMessage {
+            .init(key: "SessionUI.noMatches", table: "Sessions", fallback: "没有匹配的记录")
+        }
+        /// 游戏已正常结束。
+        ///
+        /// Resource: `Sessions.SessionUI.normalHelp`.
+        public static var normalHelp: LocalizedMessage {
+            .init(key: "SessionUI.normalHelp", table: "Sessions", fallback: "游戏已正常结束。")
+        }
+        /// 未进入游戏
+        ///
+        /// Resource: `Sessions.SessionUI.notStarted`.
+        public static var notStarted: LocalizedMessage {
+            .init(key: "SessionUI.notStarted", table: "Sessions", fallback: "未进入游戏")
+        }
+        /// 打开游戏日志文件夹
+        ///
+        /// Resource: `Sessions.SessionUI.openGameFolder`.
+        public static var openGameFolder: LocalizedMessage {
+            .init(key: "SessionUI.openGameFolder", table: "Sessions", fallback: "打开游戏日志文件夹")
+        }
+        /// 打开 macOS 控制台
+        ///
+        /// Resource: `Sessions.SessionUI.openSystemReports`.
+        public static var openSystemReports: LocalizedMessage {
+            .init(key: "SessionUI.openSystemReports", table: "Sessions", fallback: "打开 macOS 控制台")
+        }
+        /// 至少 %1$@
+        ///
+        /// Resource: `Sessions.SessionUI.partialTime`.
+        public static func partialTime(_ value0: String) -> LocalizedMessage {
+            .init(key: "SessionUI.partialTime", table: "Sessions", fallback: "至少 %1$@", arguments: [.text(value0)])
+        }
+        /// 游玩次数
+        ///
+        /// Resource: `Sessions.SessionUI.playCount`.
+        public static var playCount: LocalizedMessage {
+            .init(key: "SessionUI.playCount", table: "Sessions", fallback: "游玩次数")
+        }
+        /// 正在启动
+        ///
+        /// Resource: `Sessions.SessionUI.preparing`.
+        public static var preparing: LocalizedMessage {
+            .init(key: "SessionUI.preparing", table: "Sessions", fallback: "正在启动")
+        }
+        /// 需要关注
+        ///
+        /// Resource: `Sessions.SessionUI.problemsOnly`.
+        public static var problemsOnly: LocalizedMessage {
+            .init(key: "SessionUI.problemsOnly", table: "Sessions", fallback: "需要关注")
+        }
+        /// 进程输出（补充）
+        ///
+        /// Resource: `Sessions.SessionUI.processOutput`.
+        public static var processOutput: LocalizedMessage {
+            .init(key: "SessionUI.processOutput", table: "Sessions", fallback: "进程输出（补充）")
+        }
+        /// 找不到这条记录。
+        ///
+        /// Resource: `Sessions.SessionUI.recordUnavailable`.
+        public static var recordUnavailable: LocalizedMessage {
+            .init(key: "SessionUI.recordUnavailable", table: "Sessions", fallback: "找不到这条记录。")
+        }
+        /// 包含 %1$lld 个文件 · %2$@
+        ///
+        /// Resource: `Sessions.SessionUI.reportContents`.
+        public static func reportContents(_ value0: Int64, _ value1: String) -> LocalizedMessage {
+            .init(key: "SessionUI.reportContents", table: "Sessions", fallback: "包含 %1$lld 个文件 · %2$@", arguments: [.integer(value0), .text(value1)])
         }
         /// 此报告仅保留了部分内容，可能缺少上下文。
         ///
@@ -501,97 +363,235 @@ extension Messages {
         public static var reportExcerpt: LocalizedMessage {
             .init(key: "SessionUI.reportExcerpt", table: "Sessions", fallback: "此报告仅保留了部分内容，可能缺少上下文。")
         }
+        /// 隐藏常见隐私信息后打包日志，可发给整合包作者或支持人员。
+        ///
+        /// Resource: `Sessions.SessionUI.reportHelp`.
+        public static var reportHelp: LocalizedMessage {
+            .init(key: "SessionUI.reportHelp", table: "Sessions", fallback: "隐藏常见隐私信息后打包日志，可发给整合包作者或支持人员。")
+        }
+        /// 这份崩溃报告已不可用。
+        ///
+        /// Resource: `Sessions.SessionUI.reportNotAvailable`.
+        public static var reportNotAvailable: LocalizedMessage {
+            .init(key: "SessionUI.reportNotAvailable", table: "Sessions", fallback: "这份崩溃报告已不可用。")
+        }
+        /// 正在收集日志…
+        ///
+        /// Resource: `Sessions.SessionUI.reportPreparing`.
+        public static var reportPreparing: LocalizedMessage {
+            .init(key: "SessionUI.reportPreparing", table: "Sessions", fallback: "正在收集日志…")
+        }
+        /// 报告仅保存在本地，不会上传。自动隐藏可能不完整，分享前请检查。
+        ///
+        /// Resource: `Sessions.SessionUI.reportPrivacy`.
+        public static var reportPrivacy: LocalizedMessage {
+            .init(key: "SessionUI.reportPrivacy", table: "Sessions", fallback: "报告仅保存在本地，不会上传。自动隐藏可能不完整，分享前请检查。")
+        }
+        /// 报告已准备好
+        ///
+        /// Resource: `Sessions.SessionUI.reportReady`.
+        public static var reportReady: LocalizedMessage {
+            .init(key: "SessionUI.reportReady", table: "Sessions", fallback: "报告已准备好")
+        }
+        /// 报告已保存
+        ///
+        /// Resource: `Sessions.SessionUI.reportSaved`.
+        public static var reportSaved: LocalizedMessage {
+            .init(key: "SessionUI.reportSaved", table: "Sessions", fallback: "报告已保存")
+        }
+        /// 导出诊断报告
+        ///
+        /// Resource: `Sessions.SessionUI.reportTitle`.
+        public static var reportTitle: LocalizedMessage {
+            .init(key: "SessionUI.reportTitle", table: "Sessions", fallback: "导出诊断报告")
+        }
+        /// 结果
+        ///
+        /// Resource: `Sessions.SessionUI.result`.
+        public static var result: LocalizedMessage {
+            .init(key: "SessionUI.result", table: "Sessions", fallback: "结果")
+        }
+        /// 重试
+        ///
+        /// Resource: `Sessions.SessionUI.retry`.
+        public static var retry: LocalizedMessage {
+            .init(key: "SessionUI.retry", table: "Sessions", fallback: "重试")
+        }
+        /// 检查文件
+        ///
+        /// Resource: `Sessions.SessionUI.reviewFiles`.
+        public static var reviewFiles: LocalizedMessage {
+            .init(key: "SessionUI.reviewFiles", table: "Sessions", fallback: "检查文件")
+        }
+        /// 正在运行
+        ///
+        /// Resource: `Sessions.SessionUI.running`.
+        public static var running: LocalizedMessage {
+            .init(key: "SessionUI.running", table: "Sessions", fallback: "正在运行")
+        }
+        /// 关闭此窗口或退出启动器不会结束游戏。
+        ///
+        /// Resource: `Sessions.SessionUI.runningHelp`.
+        public static var runningHelp: LocalizedMessage {
+            .init(key: "SessionUI.runningHelp", table: "Sessions", fallback: "关闭此窗口或退出启动器不会结束游戏。")
+        }
+        /// 保存当前日志…
+        ///
+        /// Resource: `Sessions.SessionUI.saveVisibleLog`.
+        public static var saveVisibleLog: LocalizedMessage {
+            .init(key: "SessionUI.saveVisibleLog", table: "Sessions", fallback: "保存当前日志…")
+        }
         /// 保存当前报告…
         ///
         /// Resource: `Sessions.SessionUI.saveVisibleReport`.
         public static var saveVisibleReport: LocalizedMessage {
             .init(key: "SessionUI.saveVisibleReport", table: "Sessions", fallback: "保存当前报告…")
         }
+        /// 搜索
+        ///
+        /// Resource: `Sessions.SessionUI.search`.
+        public static var search: LocalizedMessage {
+            .init(key: "SessionUI.search", table: "Sessions", fallback: "搜索")
+        }
+        /// 游戏详情
+        ///
+        /// Resource: `Sessions.SessionUI.session`.
+        public static var session: LocalizedMessage {
+            .init(key: "SessionUI.session", table: "Sessions", fallback: "游戏详情")
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Sessions.SessionUI.showFile`.
+        public static var showFile: LocalizedMessage {
+            .init(key: "SessionUI.showFile", table: "Sessions", fallback: "在 Finder 中显示")
+        }
+        /// 开始
+        ///
+        /// Resource: `Sessions.SessionUI.started`.
+        public static var started: LocalizedMessage {
+            .init(key: "SessionUI.started", table: "Sessions", fallback: "开始")
+        }
+        /// 已终止
+        ///
+        /// Resource: `Sessions.SessionUI.stopped`.
+        public static var stopped: LocalizedMessage {
+            .init(key: "SessionUI.stopped", table: "Sessions", fallback: "已终止")
+        }
+        /// 建议
+        ///
+        /// Resource: `Sessions.SessionUI.suggestions`.
+        public static var suggestions: LocalizedMessage {
+            .init(key: "SessionUI.suggestions", table: "Sessions", fallback: "建议")
+        }
+        /// 技术信息
+        ///
+        /// Resource: `Sessions.SessionUI.technicalDetails`.
+        public static var technicalDetails: LocalizedMessage {
+            .init(key: "SessionUI.technicalDetails", table: "Sessions", fallback: "技术信息")
+        }
+        /// 累计游玩
+        ///
+        /// Resource: `Sessions.SessionUI.totalTime`.
+        public static var totalTime: LocalizedMessage {
+            .init(key: "SessionUI.totalTime", table: "Sessions", fallback: "累计游玩")
+        }
+        /// 时长未知
+        ///
+        /// Resource: `Sessions.SessionUI.unknownTime`.
+        public static var unknownTime: LocalizedMessage {
+            .init(key: "SessionUI.unknownTime", table: "Sessions", fallback: "时长未知")
+        }
+        /// 日志含超过 1 MiB 的单行，无法安全隐藏敏感信息，仅提供摘录。可在游戏目录中查看原文件。
+        ///
+        /// Resource: `Sessions.SessionUI.unsafeLongLine`.
+        public static var unsafeLongLine: LocalizedMessage {
+            .init(key: "SessionUI.unsafeLongLine", table: "Sessions", fallback: "日志含超过 1 MiB 的单行，无法安全隐藏敏感信息，仅提供摘录。可在游戏目录中查看原文件。")
+        }
         static let definitions: [String: MessageDefinition] = [
-            "Sessions:SessionUI.history": .init("回顾", []),
-            "Sessions:SessionUI.allInstances": .init("所有实例", []),
-            "Sessions:SessionUI.problemsOnly": .init("需要关注", []),
-            "Sessions:SessionUI.search": .init("搜索", []),
-            "Sessions:SessionUI.noHistory": .init("暂无游玩记录", []),
-            "Sessions:SessionUI.noHistoryHelp": .init("启动游戏后会自动记录。", []),
-            "Sessions:SessionUI.noMatches": .init("没有匹配的记录", []),
-            "Sessions:SessionUI.loadMore": .init("加载更早的记录", []),
-            "Sessions:SessionUI.totalTime": .init("累计游玩", []),
-            "Sessions:SessionUI.playCount": .init("游玩次数", []),
-            "Sessions:SessionUI.instance": .init("实例", []),
-            "Sessions:SessionUI.date": .init("开始时间", []),
-            "Sessions:SessionUI.duration": .init("游玩时长", []),
-            "Sessions:SessionUI.result": .init("结果", []),
-            "Sessions:SessionUI.details": .init("查看详情", []),
-            "Sessions:SessionUI.session": .init("游戏详情", []),
-            "Sessions:SessionUI.running": .init("正在运行", []),
-            "Sessions:SessionUI.preparing": .init("正在启动", []),
-            "Sessions:SessionUI.finished": .init("已结束", []),
-            "Sessions:SessionUI.stopped": .init("已终止", []),
-            "Sessions:SessionUI.cancelled": .init("已取消", []),
-            "Sessions:SessionUI.launchFailed": .init("未能启动", []),
-            "Sessions:SessionUI.crashed": .init("异常退出", []),
-            "Sessions:SessionUI.interrupted": .init("记录中断", []),
-            "Sessions:SessionUI.checking": .init("正在收尾", []),
-            "Sessions:SessionUI.notStarted": .init("未进入游戏", []),
-            "Sessions:SessionUI.unknownTime": .init("时长未知", []),
-            "Sessions:SessionUI.partialTime": .init("至少 %1$@", [.text]),
-            "Sessions:SessionUI.console": .init("查看日志", []),
-            "Sessions:SessionUI.exportReport": .init("导出诊断报告…", []),
-            "Sessions:SessionUI.reportHelp": .init("隐藏常见隐私信息后打包日志，可发给整合包作者或支持人员。", []),
-            "Sessions:SessionUI.normalHelp": .init("游戏已正常结束。", []),
-            "Sessions:SessionUI.runningHelp": .init("关闭此窗口或退出启动器不会结束游戏。", []),
-            "Sessions:SessionUI.failureHelp": .init("游戏未正常结束。可参考下方建议，或导出诊断报告。", []),
-            "Sessions:SessionUI.noFinding": .init("无法确定原因", []),
-            "Sessions:SessionUI.noFindingHelp": .init("现有信息不足以判断原因，可导出报告进一步检查。", []),
-            "Sessions:SessionUI.suggestions": .init("建议", []),
-            "Sessions:SessionUI.technicalDetails": .init("技术信息", []),
-            "Sessions:SessionUI.evidence": .init("依据", []),
-            "Sessions:SessionUI.environment": .init("游戏环境", []),
-            "Sessions:SessionUI.started": .init("开始", []),
-            "Sessions:SessionUI.ended": .init("结束", []),
-            "Sessions:SessionUI.logSource": .init("日志来源", []),
-            "Sessions:SessionUI.launcherLog": .init("启动信息", []),
-            "Sessions:SessionUI.logSearch": .init("搜索当前日志", []),
-            "Sessions:SessionUI.follow": .init("跟随新输出", []),
-            "Sessions:SessionUI.saveVisibleLog": .init("保存当前日志…", []),
-            "Sessions:SessionUI.openGameFolder": .init("打开游戏日志文件夹", []),
-            "Sessions:SessionUI.emptyLog": .init("暂无输出", []),
-            "Sessions:SessionUI.noLiveConnection": .init("实时连接已断开，已显示内容仍可保存。", []),
-            "Sessions:SessionUI.retry": .init("重试", []),
-            "Sessions:SessionUI.reportTitle": .init("导出诊断报告", []),
-            "Sessions:SessionUI.reportReady": .init("报告已准备好", []),
-            "Sessions:SessionUI.reportPreparing": .init("正在收集日志…", []),
-            "Sessions:SessionUI.reportPrivacy": .init("报告仅保存在本地，不会上传。自动隐藏可能不完整，分享前请检查。", []),
-            "Sessions:SessionUI.reviewFiles": .init("检查文件", []),
-            "Sessions:SessionUI.extraRedaction": .init("额外隐藏内容（每行一项）", []),
-            "Sessions:SessionUI.exportZIP": .init("保存报告…", []),
-            "Sessions:SessionUI.reportSaved": .init("报告已保存", []),
-            "Sessions:SessionUI.showFile": .init("在 Finder 中显示", []),
-            "Sessions:SessionUI.collectingLimits": .init("部分日志不可用", []),
-            "Sessions:SessionUI.openSystemReports": .init("打开 macOS 控制台", []),
-            "Sessions:SessionUI.launcherActivity": .init("活动", []),
-            "Sessions:SessionUI.reportContents": .init("包含 %1$lld 个文件 · %2$@", [.integer, .text]),
-            "Sessions:SessionUI.recordUnavailable": .init("找不到这条记录。", []),
             "Sessions:SessionUI.afterCommandFailed": .init("后置命令失败", []),
             "Sessions:SessionUI.afterCommandHelp": .init("游戏已结束，但后置命令执行失败。请检查启动设置。", []),
-            "Sessions:SessionUI.interruptedHelp": .init("未收到完整的结束信息，仅保留已确认的时长与日志。", []),
-            "Sessions:SessionUI.finishingHelp": .init("游戏已退出，正在执行后置操作。", []),
-            "Sessions:SessionUI.processOutput": .init("进程输出（补充）", []),
-            "Sessions:SessionUI.nativeGameLog": .init("游戏日志", []),
-            "Sessions:SessionUI.nativeDebugLog": .init("详细游戏日志", []),
-            "Sessions:SessionUI.fullFilePreview": .init("仅预览开头和末尾，导出包含完整内容。", []),
-            "Sessions:SessionUI.unsafeLongLine": .init("日志含超过 1 MiB 的单行，无法安全隐藏敏感信息，仅提供摘录。可在游戏目录中查看原文件。", []),
-            "Sessions:SessionUI.fullExportFailed": .init("未能准备 %1$@ 的完整文件：%2$@。其他日志仍可导出。", [.text, .text]),
-            "Sessions:SessionUI.logOrigin": .init("来源：%1$@", [.text]),
+            "Sessions:SessionUI.allInstances": .init("所有实例", []),
+            "Sessions:SessionUI.cancelled": .init("已取消", []),
+            "Sessions:SessionUI.checking": .init("正在收尾", []),
+            "Sessions:SessionUI.collectingLimits": .init("部分日志不可用", []),
+            "Sessions:SessionUI.console": .init("查看日志", []),
+            "Sessions:SessionUI.crashed": .init("异常退出", []),
+            "Sessions:SessionUI.date": .init("开始时间", []),
+            "Sessions:SessionUI.details": .init("查看详情", []),
+            "Sessions:SessionUI.duration": .init("游玩时长", []),
+            "Sessions:SessionUI.emptyLog": .init("暂无输出", []),
+            "Sessions:SessionUI.ended": .init("结束", []),
+            "Sessions:SessionUI.environment": .init("游戏环境", []),
+            "Sessions:SessionUI.evidence": .init("依据", []),
+            "Sessions:SessionUI.exportReport": .init("导出诊断报告…", []),
+            "Sessions:SessionUI.exportZIP": .init("保存报告…", []),
+            "Sessions:SessionUI.extraRedaction": .init("额外隐藏内容（每行一项）", []),
+            "Sessions:SessionUI.failureHelp": .init("游戏未正常结束。可参考下方建议，或导出诊断报告。", []),
             "Sessions:SessionUI.fallbackLogHelp": .init("未找到游戏日志，当前显示进程输出。", []),
-            "Sessions:SessionUI.nativeLogUnavailable": .init("未找到本次游玩的日志，文件可能已轮转或清理。", []),
+            "Sessions:SessionUI.finished": .init("已结束", []),
+            "Sessions:SessionUI.finishingHelp": .init("游戏已退出，正在执行后置操作。", []),
+            "Sessions:SessionUI.follow": .init("跟随新输出", []),
+            "Sessions:SessionUI.fullExportFailed": .init("未能准备 %1$@ 的完整文件：%2$@。其他日志仍可导出。", [.text, .text]),
+            "Sessions:SessionUI.fullFilePreview": .init("仅预览开头和末尾，导出包含完整内容。", []),
+            "Sessions:SessionUI.history": .init("回顾", []),
+            "Sessions:SessionUI.instance": .init("实例", []),
+            "Sessions:SessionUI.interrupted": .init("记录中断", []),
+            "Sessions:SessionUI.interruptedHelp": .init("未收到完整的结束信息，仅保留已确认的时长与日志。", []),
+            "Sessions:SessionUI.jvmCrashReport": .init("JVM 崩溃报告", []),
+            "Sessions:SessionUI.launchFailed": .init("未能启动", []),
+            "Sessions:SessionUI.launcherActivity": .init("活动", []),
+            "Sessions:SessionUI.launcherLog": .init("启动信息", []),
+            "Sessions:SessionUI.loadMore": .init("加载更早的记录", []),
+            "Sessions:SessionUI.logOrigin": .init("来源：%1$@", [.text]),
+            "Sessions:SessionUI.logSearch": .init("搜索当前日志", []),
+            "Sessions:SessionUI.logSource": .init("日志来源", []),
             "Sessions:SessionUI.macosCrashReport": .init("macOS 崩溃报告", []),
             "Sessions:SessionUI.minecraftCrashReport": .init("Minecraft 崩溃报告", []),
-            "Sessions:SessionUI.jvmCrashReport": .init("JVM 崩溃报告", []),
-            "Sessions:SessionUI.reportNotAvailable": .init("这份崩溃报告已不可用。", []),
+            "Sessions:SessionUI.nativeDebugLog": .init("详细游戏日志", []),
+            "Sessions:SessionUI.nativeGameLog": .init("游戏日志", []),
+            "Sessions:SessionUI.nativeLogUnavailable": .init("未找到本次游玩的日志，文件可能已轮转或清理。", []),
+            "Sessions:SessionUI.noFinding": .init("无法确定原因", []),
+            "Sessions:SessionUI.noFindingHelp": .init("现有信息不足以判断原因，可导出报告进一步检查。", []),
+            "Sessions:SessionUI.noHistory": .init("暂无游玩记录", []),
+            "Sessions:SessionUI.noHistoryHelp": .init("启动游戏后会自动记录。", []),
+            "Sessions:SessionUI.noLiveConnection": .init("实时连接已断开，已显示内容仍可保存。", []),
+            "Sessions:SessionUI.noMatches": .init("没有匹配的记录", []),
+            "Sessions:SessionUI.normalHelp": .init("游戏已正常结束。", []),
+            "Sessions:SessionUI.notStarted": .init("未进入游戏", []),
+            "Sessions:SessionUI.openGameFolder": .init("打开游戏日志文件夹", []),
+            "Sessions:SessionUI.openSystemReports": .init("打开 macOS 控制台", []),
+            "Sessions:SessionUI.partialTime": .init("至少 %1$@", [.text]),
+            "Sessions:SessionUI.playCount": .init("游玩次数", []),
+            "Sessions:SessionUI.preparing": .init("正在启动", []),
+            "Sessions:SessionUI.problemsOnly": .init("需要关注", []),
+            "Sessions:SessionUI.processOutput": .init("进程输出（补充）", []),
+            "Sessions:SessionUI.recordUnavailable": .init("找不到这条记录。", []),
+            "Sessions:SessionUI.reportContents": .init("包含 %1$lld 个文件 · %2$@", [.integer, .text]),
             "Sessions:SessionUI.reportExcerpt": .init("此报告仅保留了部分内容，可能缺少上下文。", []),
+            "Sessions:SessionUI.reportHelp": .init("隐藏常见隐私信息后打包日志，可发给整合包作者或支持人员。", []),
+            "Sessions:SessionUI.reportNotAvailable": .init("这份崩溃报告已不可用。", []),
+            "Sessions:SessionUI.reportPreparing": .init("正在收集日志…", []),
+            "Sessions:SessionUI.reportPrivacy": .init("报告仅保存在本地，不会上传。自动隐藏可能不完整，分享前请检查。", []),
+            "Sessions:SessionUI.reportReady": .init("报告已准备好", []),
+            "Sessions:SessionUI.reportSaved": .init("报告已保存", []),
+            "Sessions:SessionUI.reportTitle": .init("导出诊断报告", []),
+            "Sessions:SessionUI.result": .init("结果", []),
+            "Sessions:SessionUI.retry": .init("重试", []),
+            "Sessions:SessionUI.reviewFiles": .init("检查文件", []),
+            "Sessions:SessionUI.running": .init("正在运行", []),
+            "Sessions:SessionUI.runningHelp": .init("关闭此窗口或退出启动器不会结束游戏。", []),
+            "Sessions:SessionUI.saveVisibleLog": .init("保存当前日志…", []),
             "Sessions:SessionUI.saveVisibleReport": .init("保存当前报告…", []),
+            "Sessions:SessionUI.search": .init("搜索", []),
+            "Sessions:SessionUI.session": .init("游戏详情", []),
+            "Sessions:SessionUI.showFile": .init("在 Finder 中显示", []),
+            "Sessions:SessionUI.started": .init("开始", []),
+            "Sessions:SessionUI.stopped": .init("已终止", []),
+            "Sessions:SessionUI.suggestions": .init("建议", []),
+            "Sessions:SessionUI.technicalDetails": .init("技术信息", []),
+            "Sessions:SessionUI.totalTime": .init("累计游玩", []),
+            "Sessions:SessionUI.unknownTime": .init("时长未知", []),
+            "Sessions:SessionUI.unsafeLongLine": .init("日志含超过 1 MiB 的单行，无法安全隐藏敏感信息，仅提供摘录。可在游戏目录中查看原文件。", []),
         ]
     }
 }

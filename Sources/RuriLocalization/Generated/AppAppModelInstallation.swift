@@ -5,68 +5,68 @@ extension Messages {
     public enum AppAppModelInstallation {
         /// 设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。
         ///
-        /// Resource: `Errors.appAppModelInstallation.recordInstallationText1`.
+        /// Resource: `Errors.AppAppModelInstallation.installationWritePaused`.
         public static var installationWritePaused: LocalizedMessage {
-            .init(key: "appAppModelInstallation.recordInstallationText1", table: "Errors", fallback: "设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。")
+            .init(key: "AppAppModelInstallation.installationWritePaused", table: "Errors", fallback: "设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。")
         }
         /// 实例已被移除，未重新登记。
         ///
-        /// Resource: `Errors.appAppModelInstallation.indexText1`.
+        /// Resource: `Errors.AppAppModelInstallation.instanceRemoved`.
         public static var instanceRemoved: LocalizedMessage {
-            .init(key: "appAppModelInstallation.indexText1", table: "Errors", fallback: "实例已被移除，未重新登记。")
-        }
-        /// 安装 %1$@
-        ///
-        /// Resource: `Interface.appAppModelInstallation.installText1`.
-        public static func installInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstallation.installText1", table: "Interface", fallback: "安装 %1$@", arguments: [.text(value0)])
-        }
-        /// %1$@ 已准备就绪
-        ///
-        /// Resource: `Interface.appAppModelInstallation.resultText1`.
-        public static func installationResult(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstallation.resultText1", table: "Interface", fallback: "%1$@ 已准备就绪", arguments: [.text(value0)])
-        }
-        /// 修复 %1$@
-        ///
-        /// Resource: `Interface.appAppModelInstallation.repairText1`.
-        public static func repairInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstallation.repairText1", table: "Interface", fallback: "修复 %1$@", arguments: [.text(value0)])
+            .init(key: "AppAppModelInstallation.instanceRemoved", table: "Errors", fallback: "实例已被移除，未重新登记。")
         }
         /// 更换 %1$@ 的加载器
         ///
-        /// Resource: `Interface.appAppModelInstallation.changeComponentsText1`.
+        /// Resource: `Interface.AppAppModelInstallation.changeLoader`.
         public static func changeLoader(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstallation.changeComponentsText1", table: "Interface", fallback: "更换 %1$@ 的加载器", arguments: [.text(value0)])
+            .init(key: "AppAppModelInstallation.changeLoader", table: "Interface", fallback: "更换 %1$@ 的加载器", arguments: [.text(value0)])
         }
-        /// %1$@ 已切换为 %2$@，下次启动生效
+        /// 安装 %1$@
         ///
-        /// Resource: `Interface.appAppModelInstallation.savedText1`.
-        public static func loaderConfigurationSaved(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstallation.savedText1", table: "Interface", fallback: "%1$@ 已切换为 %2$@，下次启动生效", arguments: [.text(value0), .text(value1)])
+        /// Resource: `Interface.AppAppModelInstallation.installInstance`.
+        public static func installInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstallation.installInstance", table: "Interface", fallback: "安装 %1$@", arguments: [.text(value0)])
         }
-        /// 恢复 %1$@ 的加载器配置
+        /// %1$@ 已准备就绪
         ///
-        /// Resource: `Interface.appAppModelInstallation.restoreComponentsText1`.
-        public static func restoreLoaderConfiguration(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstallation.restoreComponentsText1", table: "Interface", fallback: "恢复 %1$@ 的加载器配置", arguments: [.text(value0)])
+        /// Resource: `Interface.AppAppModelInstallation.installationResult`.
+        public static func installationResult(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstallation.installationResult", table: "Interface", fallback: "%1$@ 已准备就绪", arguments: [.text(value0)])
         }
         /// 已恢复上次的加载器配置
         ///
-        /// Resource: `Interface.appAppModelInstallation.savedText2`.
+        /// Resource: `Interface.AppAppModelInstallation.loaderConfigurationRestored`.
         public static var loaderConfigurationRestored: LocalizedMessage {
-            .init(key: "appAppModelInstallation.savedText2", table: "Interface", fallback: "已恢复上次的加载器配置")
+            .init(key: "AppAppModelInstallation.loaderConfigurationRestored", table: "Interface", fallback: "已恢复上次的加载器配置")
+        }
+        /// %1$@ 已切换为 %2$@，下次启动生效
+        ///
+        /// Resource: `Interface.AppAppModelInstallation.loaderConfigurationSaved`.
+        public static func loaderConfigurationSaved(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstallation.loaderConfigurationSaved", table: "Interface", fallback: "%1$@ 已切换为 %2$@，下次启动生效", arguments: [.text(value0), .text(value1)])
+        }
+        /// 修复 %1$@
+        ///
+        /// Resource: `Interface.AppAppModelInstallation.repairInstance`.
+        public static func repairInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstallation.repairInstance", table: "Interface", fallback: "修复 %1$@", arguments: [.text(value0)])
+        }
+        /// 恢复 %1$@ 的加载器配置
+        ///
+        /// Resource: `Interface.AppAppModelInstallation.restoreLoaderConfiguration`.
+        public static func restoreLoaderConfiguration(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstallation.restoreLoaderConfiguration", table: "Interface", fallback: "恢复 %1$@ 的加载器配置", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:appAppModelInstallation.recordInstallationText1": .init("设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。", []),
-            "Errors:appAppModelInstallation.indexText1": .init("实例已被移除，未重新登记。", []),
-            "Interface:appAppModelInstallation.installText1": .init("安装 %1$@", [.text]),
-            "Interface:appAppModelInstallation.resultText1": .init("%1$@ 已准备就绪", [.text]),
-            "Interface:appAppModelInstallation.repairText1": .init("修复 %1$@", [.text]),
-            "Interface:appAppModelInstallation.changeComponentsText1": .init("更换 %1$@ 的加载器", [.text]),
-            "Interface:appAppModelInstallation.savedText1": .init("%1$@ 已切换为 %2$@，下次启动生效", [.text, .text]),
-            "Interface:appAppModelInstallation.restoreComponentsText1": .init("恢复 %1$@ 的加载器配置", [.text]),
-            "Interface:appAppModelInstallation.savedText2": .init("已恢复上次的加载器配置", []),
+            "Errors:AppAppModelInstallation.installationWritePaused": .init("设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。", []),
+            "Errors:AppAppModelInstallation.instanceRemoved": .init("实例已被移除，未重新登记。", []),
+            "Interface:AppAppModelInstallation.changeLoader": .init("更换 %1$@ 的加载器", [.text]),
+            "Interface:AppAppModelInstallation.installInstance": .init("安装 %1$@", [.text]),
+            "Interface:AppAppModelInstallation.installationResult": .init("%1$@ 已准备就绪", [.text]),
+            "Interface:AppAppModelInstallation.loaderConfigurationRestored": .init("已恢复上次的加载器配置", []),
+            "Interface:AppAppModelInstallation.loaderConfigurationSaved": .init("%1$@ 已切换为 %2$@，下次启动生效", [.text, .text]),
+            "Interface:AppAppModelInstallation.repairInstance": .init("修复 %1$@", [.text]),
+            "Interface:AppAppModelInstallation.restoreLoaderConfiguration": .init("恢复 %1$@ 的加载器配置", [.text]),
         ]
     }
 }

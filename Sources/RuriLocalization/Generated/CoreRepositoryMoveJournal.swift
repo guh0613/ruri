@@ -3,63 +3,63 @@ import Foundation
 
 extension Messages {
     public enum CoreRepositoryMoveJournal {
-        /// Minecraft 实例移动记录无效，文件已保留。
-        ///
-        /// Resource: `Errors.coreRepositoryMoveJournal.recordText1`.
-        public static var invalidMoveRecord: LocalizedMessage {
-            .init(key: "coreRepositoryMoveJournal.recordText1", table: "Errors", fallback: "Minecraft 实例移动记录无效，文件已保留。")
-        }
-        /// 移动记录缺少版本位置。
-        ///
-        /// Resource: `Errors.coreRepositoryMoveJournal.nameText1`.
-        public static var missingVersionLocation: LocalizedMessage {
-            .init(key: "coreRepositoryMoveJournal.nameText1", table: "Errors", fallback: "移动记录缺少版本位置。")
-        }
-        /// 移动中的实例已被移除，请先核对文件。
-        ///
-        /// Resource: `Errors.coreRepositoryMoveJournal.instanceText1`.
-        public static var instanceRemoved: LocalizedMessage {
-            .init(key: "coreRepositoryMoveJournal.instanceText1", table: "Errors", fallback: "移动中的实例已被移除，请先核对文件。")
-        }
-        /// 实例位置与移动记录不一致。
-        ///
-        /// Resource: `Errors.coreRepositoryMoveJournal.instanceText2`.
-        public static var locationMismatch: LocalizedMessage {
-            .init(key: "coreRepositoryMoveJournal.instanceText2", table: "Errors", fallback: "实例位置与移动记录不一致。")
-        }
         /// 移动凭据与实例位置不一致。
         ///
-        /// Resource: `Errors.coreRepositoryMoveJournal.instanceText3`.
+        /// Resource: `Errors.CoreRepositoryMoveJournal.credentialMismatch`.
         public static var credentialMismatch: LocalizedMessage {
-            .init(key: "coreRepositoryMoveJournal.instanceText3", table: "Errors", fallback: "移动凭据与实例位置不一致。")
+            .init(key: "CoreRepositoryMoveJournal.credentialMismatch", table: "Errors", fallback: "移动凭据与实例位置不一致。")
         }
         /// 移动涉及的文件夹位置已改变，请恢复原位置后重试。
         ///
-        /// Resource: `Errors.coreRepositoryMoveJournal.stateText1`.
+        /// Resource: `Errors.CoreRepositoryMoveJournal.folderLocationChanged`.
         public static var folderLocationChanged: LocalizedMessage {
-            .init(key: "coreRepositoryMoveJournal.stateText1", table: "Errors", fallback: "移动涉及的文件夹位置已改变，请恢复原位置后重试。")
+            .init(key: "CoreRepositoryMoveJournal.folderLocationChanged", table: "Errors", fallback: "移动涉及的文件夹位置已改变，请恢复原位置后重试。")
         }
-        /// 移动占用记录已改变，未清理。
+        /// 移动中的实例已被移除，请先核对文件。
         ///
-        /// Resource: `Errors.coreRepositoryMoveJournal.currentText1`.
-        public static var reservationChanged: LocalizedMessage {
-            .init(key: "coreRepositoryMoveJournal.currentText1", table: "Errors", fallback: "移动占用记录已改变，未清理。")
+        /// Resource: `Errors.CoreRepositoryMoveJournal.instanceRemoved`.
+        public static var instanceRemoved: LocalizedMessage {
+            .init(key: "CoreRepositoryMoveJournal.instanceRemoved", table: "Errors", fallback: "移动中的实例已被移除，请先核对文件。")
+        }
+        /// Minecraft 实例移动记录无效，文件已保留。
+        ///
+        /// Resource: `Errors.CoreRepositoryMoveJournal.invalidMoveRecord`.
+        public static var invalidMoveRecord: LocalizedMessage {
+            .init(key: "CoreRepositoryMoveJournal.invalidMoveRecord", table: "Errors", fallback: "Minecraft 实例移动记录无效，文件已保留。")
         }
         /// 实例移动占用记录无效。
         ///
-        /// Resource: `Errors.coreRepositoryMoveJournal.recordText2`.
+        /// Resource: `Errors.CoreRepositoryMoveJournal.invalidReservation`.
         public static var invalidReservation: LocalizedMessage {
-            .init(key: "coreRepositoryMoveJournal.recordText2", table: "Errors", fallback: "实例移动占用记录无效。")
+            .init(key: "CoreRepositoryMoveJournal.invalidReservation", table: "Errors", fallback: "实例移动占用记录无效。")
+        }
+        /// 实例位置与移动记录不一致。
+        ///
+        /// Resource: `Errors.CoreRepositoryMoveJournal.locationMismatch`.
+        public static var locationMismatch: LocalizedMessage {
+            .init(key: "CoreRepositoryMoveJournal.locationMismatch", table: "Errors", fallback: "实例位置与移动记录不一致。")
+        }
+        /// 移动记录缺少版本位置。
+        ///
+        /// Resource: `Errors.CoreRepositoryMoveJournal.missingVersionLocation`.
+        public static var missingVersionLocation: LocalizedMessage {
+            .init(key: "CoreRepositoryMoveJournal.missingVersionLocation", table: "Errors", fallback: "移动记录缺少版本位置。")
+        }
+        /// 移动占用记录已改变，未清理。
+        ///
+        /// Resource: `Errors.CoreRepositoryMoveJournal.reservationChanged`.
+        public static var reservationChanged: LocalizedMessage {
+            .init(key: "CoreRepositoryMoveJournal.reservationChanged", table: "Errors", fallback: "移动占用记录已改变，未清理。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreRepositoryMoveJournal.recordText1": .init("Minecraft 实例移动记录无效，文件已保留。", []),
-            "Errors:coreRepositoryMoveJournal.nameText1": .init("移动记录缺少版本位置。", []),
-            "Errors:coreRepositoryMoveJournal.instanceText1": .init("移动中的实例已被移除，请先核对文件。", []),
-            "Errors:coreRepositoryMoveJournal.instanceText2": .init("实例位置与移动记录不一致。", []),
-            "Errors:coreRepositoryMoveJournal.instanceText3": .init("移动凭据与实例位置不一致。", []),
-            "Errors:coreRepositoryMoveJournal.stateText1": .init("移动涉及的文件夹位置已改变，请恢复原位置后重试。", []),
-            "Errors:coreRepositoryMoveJournal.currentText1": .init("移动占用记录已改变，未清理。", []),
-            "Errors:coreRepositoryMoveJournal.recordText2": .init("实例移动占用记录无效。", []),
+            "Errors:CoreRepositoryMoveJournal.credentialMismatch": .init("移动凭据与实例位置不一致。", []),
+            "Errors:CoreRepositoryMoveJournal.folderLocationChanged": .init("移动涉及的文件夹位置已改变，请恢复原位置后重试。", []),
+            "Errors:CoreRepositoryMoveJournal.instanceRemoved": .init("移动中的实例已被移除，请先核对文件。", []),
+            "Errors:CoreRepositoryMoveJournal.invalidMoveRecord": .init("Minecraft 实例移动记录无效，文件已保留。", []),
+            "Errors:CoreRepositoryMoveJournal.invalidReservation": .init("实例移动占用记录无效。", []),
+            "Errors:CoreRepositoryMoveJournal.locationMismatch": .init("实例位置与移动记录不一致。", []),
+            "Errors:CoreRepositoryMoveJournal.missingVersionLocation": .init("移动记录缺少版本位置。", []),
+            "Errors:CoreRepositoryMoveJournal.reservationChanged": .init("移动占用记录已改变，未清理。", []),
         ]
     }
 }

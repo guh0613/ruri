@@ -3,224 +3,224 @@ import Foundation
 
 extension Messages {
     public enum AppImportInstanceView {
-        /// 导入游戏实例
+        /// 高级
         ///
-        /// Resource: `Interface.appImportInstanceView.bodyText1`.
-        public static var importGameInstance: LocalizedMessage {
-            .init(key: "appImportInstanceView.bodyText1", table: "Interface", fallback: "导入游戏实例")
-        }
-        /// 准备整合包更新
-        ///
-        /// Resource: `Interface.appImportInstanceView.bodyText2`.
-        public static var prepareModpackUpdate: LocalizedMessage {
-            .init(key: "appImportInstanceView.bodyText2", table: "Interface", fallback: "准备整合包更新")
-        }
-        /// 保存到
-        ///
-        /// Resource: `Interface.appImportInstanceView.updateTargetText3`.
-        public static var saveTo: LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText3", table: "Interface", fallback: "保存到")
-        }
-        /// 实例名称
-        ///
-        /// Resource: `Interface.appImportInstanceView.updateTargetText7`.
-        public static var instanceName: LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText7", table: "Interface", fallback: "实例名称")
-        }
-        /// 内存
-        ///
-        /// Resource: `Interface.appImportInstanceView.updateTargetText9`.
-        public static var memory: LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText9", table: "Interface", fallback: "内存")
-        }
-        /// 窗口
-        ///
-        /// Resource: `Interface.appImportInstanceView.updateTargetText10`.
-        public static var window: LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTargetText10", table: "Interface", fallback: "窗口")
-        }
-        /// 支持 Java
-        ///
-        /// Resource: `Interface.appImportInstanceView.javaText1`.
-        public static var supportedJava: LocalizedMessage {
-            .init(key: "appImportInstanceView.javaText1", table: "Interface", fallback: "支持 Java")
-        }
-        /// 需下载
-        ///
-        /// Resource: `Interface.appImportInstanceView.javaText2`.
-        public static var pendingDownloads: LocalizedMessage {
-            .init(key: "appImportInstanceView.javaText2", table: "Interface", fallback: "需下载")
-        }
-        /// 包内文件
-        ///
-        /// Resource: `Interface.appImportInstanceView.javaText4`.
-        public static var migratedContent: LocalizedMessage {
-            .init(key: "appImportInstanceView.javaText4", table: "Interface", fallback: "包内文件")
-        }
-        /// 可选内容
-        ///
-        /// Resource: `Interface.appImportInstanceView.javaText6`.
-        public static var optionalContent: LocalizedMessage {
-            .init(key: "appImportInstanceView.javaText6", table: "Interface", fallback: "可选内容")
-        }
-        /// 正在解析整合包文件…
-        ///
-        /// Resource: `Interface.appImportInstanceView.optionalText2`.
-        public static var resolvingModpackFiles: LocalizedMessage {
-            .init(key: "appImportInstanceView.optionalText2", table: "Interface", fallback: "正在解析整合包文件…")
-        }
-        /// 继续前需要解析 CurseForge 文件清单。
-        ///
-        /// Resource: `Interface.appImportInstanceView.optionalText3`.
-        public static var curseforgeManifestRequired: LocalizedMessage {
-            .init(key: "appImportInstanceView.optionalText3", table: "Interface", fallback: "继续前需要解析 CurseForge 文件清单。")
-        }
-        /// 解析文件清单
-        ///
-        /// Resource: `Interface.appImportInstanceView.optionalText4`.
-        public static var resolveFileManifest: LocalizedMessage {
-            .init(key: "appImportInstanceView.optionalText4", table: "Interface", fallback: "解析文件清单")
-        }
-        /// 可在设置中配置 API Key，再重新导入此整合包。
-        ///
-        /// Resource: `Interface.appImportInstanceView.optionalText5`.
-        public static var configureAPIKeyInstruction: LocalizedMessage {
-            .init(key: "appImportInstanceView.optionalText5", table: "Interface", fallback: "可在设置中配置 API Key，再重新导入此整合包。")
-        }
-        /// 保留自定义 JVM 参数
-        ///
-        /// Resource: `Interface.appImportInstanceView.argumentsText2`.
-        public static var preserveCustomJVMArguments: LocalizedMessage {
-            .init(key: "appImportInstanceView.argumentsText2", table: "Interface", fallback: "保留自定义 JVM 参数")
-        }
-        /// 导入实例
-        ///
-        /// Resource: `Interface.appImportInstanceView.onCancelText1`.
-        public static var importInstance: LocalizedMessage {
-            .init(key: "appImportInstanceView.onCancelText1", table: "Interface", fallback: "导入实例")
-        }
-        /// 查看更新差异
-        ///
-        /// Resource: `Interface.appImportInstanceView.onCancelText2`.
-        public static var viewUpdateDiff: LocalizedMessage {
-            .init(key: "appImportInstanceView.onCancelText2", table: "Interface", fallback: "查看更新差异")
-        }
-        /// 查看
-        ///
-        /// Resource: `Interface.appImportInstanceView.browseContent`.
-        public static var browseContent: LocalizedMessage {
-            .init(key: "appImportInstanceView.browseContent", table: "Interface", fallback: "查看")
+        /// Resource: `Interface.AppImportInstanceView.advanced`.
+        public static var advanced: LocalizedMessage {
+            .init(key: "AppImportInstanceView.advanced", table: "Interface", fallback: "高级")
         }
         /// 全部
         ///
-        /// Resource: `Interface.appImportInstanceView.allContent`.
+        /// Resource: `Interface.AppImportInstanceView.allContent`.
         public static var allContent: LocalizedMessage {
-            .init(key: "appImportInstanceView.allContent", table: "Interface", fallback: "全部")
-        }
-        /// 其他
-        ///
-        /// Resource: `Interface.appImportInstanceView.otherContent`.
-        public static var otherContent: LocalizedMessage {
-            .init(key: "appImportInstanceView.otherContent", table: "Interface", fallback: "其他")
-        }
-        /// 搜索内容
-        ///
-        /// Resource: `Interface.appImportInstanceView.searchContent`.
-        public static var searchContent: LocalizedMessage {
-            .init(key: "appImportInstanceView.searchContent", table: "Interface", fallback: "搜索内容")
-        }
-        /// 无匹配内容
-        ///
-        /// Resource: `Interface.appImportInstanceView.noMatchingContent`.
-        public static var noMatchingContent: LocalizedMessage {
-            .init(key: "appImportInstanceView.noMatchingContent", table: "Interface", fallback: "无匹配内容")
-        }
-        /// 包内附带
-        ///
-        /// Resource: `Interface.appImportInstanceView.bundledInPack`.
-        public static var bundledInPack: LocalizedMessage {
-            .init(key: "appImportInstanceView.bundledInPack", table: "Interface", fallback: "包内附带")
-        }
-        /// CurseForge 文件
-        ///
-        /// Resource: `Interface.appImportInstanceView.curseForgeFiles`.
-        public static var curseForgeFiles: LocalizedMessage {
-            .init(key: "appImportInstanceView.curseForgeFiles", table: "Interface", fallback: "CurseForge 文件")
+            .init(key: "AppImportInstanceView.allContent", table: "Interface", fallback: "全部")
         }
         /// 待解析
         ///
-        /// Resource: `Interface.appImportInstanceView.awaitingResolution`.
+        /// Resource: `Interface.AppImportInstanceView.awaitingResolution`.
         public static var awaitingResolution: LocalizedMessage {
-            .init(key: "appImportInstanceView.awaitingResolution", table: "Interface", fallback: "待解析")
+            .init(key: "AppImportInstanceView.awaitingResolution", table: "Interface", fallback: "待解析")
         }
-        /// 需手动下载
+        /// 查看
         ///
-        /// Resource: `Interface.appImportInstanceView.manualDownloads`.
-        public static var manualDownloads: LocalizedMessage {
-            .init(key: "appImportInstanceView.manualDownloads", table: "Interface", fallback: "需手动下载")
+        /// Resource: `Interface.AppImportInstanceView.browseContent`.
+        public static var browseContent: LocalizedMessage {
+            .init(key: "AppImportInstanceView.browseContent", table: "Interface", fallback: "查看")
         }
-        /// 高级
+        /// 包内附带
         ///
-        /// Resource: `Interface.appImportInstanceView.advanced`.
-        public static var advanced: LocalizedMessage {
-            .init(key: "appImportInstanceView.advanced", table: "Interface", fallback: "高级")
+        /// Resource: `Interface.AppImportInstanceView.bundledInPack`.
+        public static var bundledInPack: LocalizedMessage {
+            .init(key: "AppImportInstanceView.bundledInPack", table: "Interface", fallback: "包内附带")
         }
-        /// 启动设置
+        /// 可在设置中配置 API Key，再重新导入此整合包。
         ///
-        /// Resource: `Interface.appImportInstanceView.launchSettings`.
-        public static var launchSettings: LocalizedMessage {
-            .init(key: "appImportInstanceView.launchSettings", table: "Interface", fallback: "启动设置")
+        /// Resource: `Interface.AppImportInstanceView.configureAPIKeyInstruction`.
+        public static var configureAPIKeyInstruction: LocalizedMessage {
+            .init(key: "AppImportInstanceView.configureAPIKeyInstruction", table: "Interface", fallback: "可在设置中配置 API Key，再重新导入此整合包。")
         }
-        /// 使用整合包的启动设置
+        /// CurseForge 文件
         ///
-        /// Resource: `Interface.appImportInstanceView.usePackLaunchSettings`.
-        public static var usePackLaunchSettings: LocalizedMessage {
-            .init(key: "appImportInstanceView.usePackLaunchSettings", table: "Interface", fallback: "使用整合包的启动设置")
+        /// Resource: `Interface.AppImportInstanceView.curseForgeFiles`.
+        public static var curseForgeFiles: LocalizedMessage {
+            .init(key: "AppImportInstanceView.curseForgeFiles", table: "Interface", fallback: "CurseForge 文件")
+        }
+        /// 继续前需要解析 CurseForge 文件清单。
+        ///
+        /// Resource: `Interface.AppImportInstanceView.curseforgeManifestRequired`.
+        public static var curseforgeManifestRequired: LocalizedMessage {
+            .init(key: "AppImportInstanceView.curseforgeManifestRequired", table: "Interface", fallback: "继续前需要解析 CurseForge 文件清单。")
         }
         /// 游戏参数
         ///
-        /// Resource: `Interface.appImportInstanceView.gameArguments`.
+        /// Resource: `Interface.AppImportInstanceView.gameArguments`.
         public static var gameArguments: LocalizedMessage {
-            .init(key: "appImportInstanceView.gameArguments", table: "Interface", fallback: "游戏参数")
+            .init(key: "AppImportInstanceView.gameArguments", table: "Interface", fallback: "游戏参数")
+        }
+        /// 导入游戏实例
+        ///
+        /// Resource: `Interface.AppImportInstanceView.importGameInstance`.
+        public static var importGameInstance: LocalizedMessage {
+            .init(key: "AppImportInstanceView.importGameInstance", table: "Interface", fallback: "导入游戏实例")
+        }
+        /// 导入实例
+        ///
+        /// Resource: `Interface.AppImportInstanceView.importInstance`.
+        public static var importInstance: LocalizedMessage {
+            .init(key: "AppImportInstanceView.importInstance", table: "Interface", fallback: "导入实例")
+        }
+        /// 实例名称
+        ///
+        /// Resource: `Interface.AppImportInstanceView.instanceName`.
+        public static var instanceName: LocalizedMessage {
+            .init(key: "AppImportInstanceView.instanceName", table: "Interface", fallback: "实例名称")
+        }
+        /// 启动设置
+        ///
+        /// Resource: `Interface.AppImportInstanceView.launchSettings`.
+        public static var launchSettings: LocalizedMessage {
+            .init(key: "AppImportInstanceView.launchSettings", table: "Interface", fallback: "启动设置")
+        }
+        /// 需手动下载
+        ///
+        /// Resource: `Interface.AppImportInstanceView.manualDownloads`.
+        public static var manualDownloads: LocalizedMessage {
+            .init(key: "AppImportInstanceView.manualDownloads", table: "Interface", fallback: "需手动下载")
+        }
+        /// 内存
+        ///
+        /// Resource: `Interface.AppImportInstanceView.memory`.
+        public static var memory: LocalizedMessage {
+            .init(key: "AppImportInstanceView.memory", table: "Interface", fallback: "内存")
+        }
+        /// 包内文件
+        ///
+        /// Resource: `Interface.AppImportInstanceView.migratedContent`.
+        public static var migratedContent: LocalizedMessage {
+            .init(key: "AppImportInstanceView.migratedContent", table: "Interface", fallback: "包内文件")
+        }
+        /// 无匹配内容
+        ///
+        /// Resource: `Interface.AppImportInstanceView.noMatchingContent`.
+        public static var noMatchingContent: LocalizedMessage {
+            .init(key: "AppImportInstanceView.noMatchingContent", table: "Interface", fallback: "无匹配内容")
+        }
+        /// 可选内容
+        ///
+        /// Resource: `Interface.AppImportInstanceView.optionalContent`.
+        public static var optionalContent: LocalizedMessage {
+            .init(key: "AppImportInstanceView.optionalContent", table: "Interface", fallback: "可选内容")
+        }
+        /// 其他
+        ///
+        /// Resource: `Interface.AppImportInstanceView.otherContent`.
+        public static var otherContent: LocalizedMessage {
+            .init(key: "AppImportInstanceView.otherContent", table: "Interface", fallback: "其他")
+        }
+        /// 需下载
+        ///
+        /// Resource: `Interface.AppImportInstanceView.pendingDownloads`.
+        public static var pendingDownloads: LocalizedMessage {
+            .init(key: "AppImportInstanceView.pendingDownloads", table: "Interface", fallback: "需下载")
+        }
+        /// 准备整合包更新
+        ///
+        /// Resource: `Interface.AppImportInstanceView.prepareModpackUpdate`.
+        public static var prepareModpackUpdate: LocalizedMessage {
+            .init(key: "AppImportInstanceView.prepareModpackUpdate", table: "Interface", fallback: "准备整合包更新")
+        }
+        /// 保留自定义 JVM 参数
+        ///
+        /// Resource: `Interface.AppImportInstanceView.preserveCustomJVMArguments`.
+        public static var preserveCustomJVMArguments: LocalizedMessage {
+            .init(key: "AppImportInstanceView.preserveCustomJVMArguments", table: "Interface", fallback: "保留自定义 JVM 参数")
+        }
+        /// 解析文件清单
+        ///
+        /// Resource: `Interface.AppImportInstanceView.resolveFileManifest`.
+        public static var resolveFileManifest: LocalizedMessage {
+            .init(key: "AppImportInstanceView.resolveFileManifest", table: "Interface", fallback: "解析文件清单")
+        }
+        /// 正在解析整合包文件…
+        ///
+        /// Resource: `Interface.AppImportInstanceView.resolvingModpackFiles`.
+        public static var resolvingModpackFiles: LocalizedMessage {
+            .init(key: "AppImportInstanceView.resolvingModpackFiles", table: "Interface", fallback: "正在解析整合包文件…")
+        }
+        /// 保存到
+        ///
+        /// Resource: `Interface.AppImportInstanceView.saveTo`.
+        public static var saveTo: LocalizedMessage {
+            .init(key: "AppImportInstanceView.saveTo", table: "Interface", fallback: "保存到")
+        }
+        /// 搜索内容
+        ///
+        /// Resource: `Interface.AppImportInstanceView.searchContent`.
+        public static var searchContent: LocalizedMessage {
+            .init(key: "AppImportInstanceView.searchContent", table: "Interface", fallback: "搜索内容")
+        }
+        /// 支持 Java
+        ///
+        /// Resource: `Interface.AppImportInstanceView.supportedJava`.
+        public static var supportedJava: LocalizedMessage {
+            .init(key: "AppImportInstanceView.supportedJava", table: "Interface", fallback: "支持 Java")
         }
         /// 更新实例
         ///
-        /// Resource: `Interface.appImportInstanceView.updateTarget`.
+        /// Resource: `Interface.AppImportInstanceView.updatingInstance`.
         public static var updatingInstance: LocalizedMessage {
-            .init(key: "appImportInstanceView.updateTarget", table: "Interface", fallback: "更新实例")
+            .init(key: "AppImportInstanceView.updatingInstance", table: "Interface", fallback: "更新实例")
+        }
+        /// 使用整合包的启动设置
+        ///
+        /// Resource: `Interface.AppImportInstanceView.usePackLaunchSettings`.
+        public static var usePackLaunchSettings: LocalizedMessage {
+            .init(key: "AppImportInstanceView.usePackLaunchSettings", table: "Interface", fallback: "使用整合包的启动设置")
+        }
+        /// 查看更新差异
+        ///
+        /// Resource: `Interface.AppImportInstanceView.viewUpdateDiff`.
+        public static var viewUpdateDiff: LocalizedMessage {
+            .init(key: "AppImportInstanceView.viewUpdateDiff", table: "Interface", fallback: "查看更新差异")
+        }
+        /// 窗口
+        ///
+        /// Resource: `Interface.AppImportInstanceView.window`.
+        public static var window: LocalizedMessage {
+            .init(key: "AppImportInstanceView.window", table: "Interface", fallback: "窗口")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appImportInstanceView.bodyText1": .init("导入游戏实例", []),
-            "Interface:appImportInstanceView.bodyText2": .init("准备整合包更新", []),
-            "Interface:appImportInstanceView.updateTargetText3": .init("保存到", []),
-            "Interface:appImportInstanceView.updateTargetText7": .init("实例名称", []),
-            "Interface:appImportInstanceView.updateTargetText9": .init("内存", []),
-            "Interface:appImportInstanceView.updateTargetText10": .init("窗口", []),
-            "Interface:appImportInstanceView.javaText1": .init("支持 Java", []),
-            "Interface:appImportInstanceView.javaText2": .init("需下载", []),
-            "Interface:appImportInstanceView.javaText4": .init("包内文件", []),
-            "Interface:appImportInstanceView.javaText6": .init("可选内容", []),
-            "Interface:appImportInstanceView.optionalText2": .init("正在解析整合包文件…", []),
-            "Interface:appImportInstanceView.optionalText3": .init("继续前需要解析 CurseForge 文件清单。", []),
-            "Interface:appImportInstanceView.optionalText4": .init("解析文件清单", []),
-            "Interface:appImportInstanceView.optionalText5": .init("可在设置中配置 API Key，再重新导入此整合包。", []),
-            "Interface:appImportInstanceView.argumentsText2": .init("保留自定义 JVM 参数", []),
-            "Interface:appImportInstanceView.onCancelText1": .init("导入实例", []),
-            "Interface:appImportInstanceView.onCancelText2": .init("查看更新差异", []),
-            "Interface:appImportInstanceView.browseContent": .init("查看", []),
-            "Interface:appImportInstanceView.allContent": .init("全部", []),
-            "Interface:appImportInstanceView.otherContent": .init("其他", []),
-            "Interface:appImportInstanceView.searchContent": .init("搜索内容", []),
-            "Interface:appImportInstanceView.noMatchingContent": .init("无匹配内容", []),
-            "Interface:appImportInstanceView.bundledInPack": .init("包内附带", []),
-            "Interface:appImportInstanceView.curseForgeFiles": .init("CurseForge 文件", []),
-            "Interface:appImportInstanceView.awaitingResolution": .init("待解析", []),
-            "Interface:appImportInstanceView.manualDownloads": .init("需手动下载", []),
-            "Interface:appImportInstanceView.advanced": .init("高级", []),
-            "Interface:appImportInstanceView.launchSettings": .init("启动设置", []),
-            "Interface:appImportInstanceView.usePackLaunchSettings": .init("使用整合包的启动设置", []),
-            "Interface:appImportInstanceView.gameArguments": .init("游戏参数", []),
-            "Interface:appImportInstanceView.updateTarget": .init("更新实例", []),
+            "Interface:AppImportInstanceView.advanced": .init("高级", []),
+            "Interface:AppImportInstanceView.allContent": .init("全部", []),
+            "Interface:AppImportInstanceView.awaitingResolution": .init("待解析", []),
+            "Interface:AppImportInstanceView.browseContent": .init("查看", []),
+            "Interface:AppImportInstanceView.bundledInPack": .init("包内附带", []),
+            "Interface:AppImportInstanceView.configureAPIKeyInstruction": .init("可在设置中配置 API Key，再重新导入此整合包。", []),
+            "Interface:AppImportInstanceView.curseForgeFiles": .init("CurseForge 文件", []),
+            "Interface:AppImportInstanceView.curseforgeManifestRequired": .init("继续前需要解析 CurseForge 文件清单。", []),
+            "Interface:AppImportInstanceView.gameArguments": .init("游戏参数", []),
+            "Interface:AppImportInstanceView.importGameInstance": .init("导入游戏实例", []),
+            "Interface:AppImportInstanceView.importInstance": .init("导入实例", []),
+            "Interface:AppImportInstanceView.instanceName": .init("实例名称", []),
+            "Interface:AppImportInstanceView.launchSettings": .init("启动设置", []),
+            "Interface:AppImportInstanceView.manualDownloads": .init("需手动下载", []),
+            "Interface:AppImportInstanceView.memory": .init("内存", []),
+            "Interface:AppImportInstanceView.migratedContent": .init("包内文件", []),
+            "Interface:AppImportInstanceView.noMatchingContent": .init("无匹配内容", []),
+            "Interface:AppImportInstanceView.optionalContent": .init("可选内容", []),
+            "Interface:AppImportInstanceView.otherContent": .init("其他", []),
+            "Interface:AppImportInstanceView.pendingDownloads": .init("需下载", []),
+            "Interface:AppImportInstanceView.prepareModpackUpdate": .init("准备整合包更新", []),
+            "Interface:AppImportInstanceView.preserveCustomJVMArguments": .init("保留自定义 JVM 参数", []),
+            "Interface:AppImportInstanceView.resolveFileManifest": .init("解析文件清单", []),
+            "Interface:AppImportInstanceView.resolvingModpackFiles": .init("正在解析整合包文件…", []),
+            "Interface:AppImportInstanceView.saveTo": .init("保存到", []),
+            "Interface:AppImportInstanceView.searchContent": .init("搜索内容", []),
+            "Interface:AppImportInstanceView.supportedJava": .init("支持 Java", []),
+            "Interface:AppImportInstanceView.updatingInstance": .init("更新实例", []),
+            "Interface:AppImportInstanceView.usePackLaunchSettings": .init("使用整合包的启动设置", []),
+            "Interface:AppImportInstanceView.viewUpdateDiff": .init("查看更新差异", []),
+            "Interface:AppImportInstanceView.window": .init("窗口", []),
         ]
     }
 }

@@ -3,21 +3,21 @@ import Foundation
 
 extension Messages {
     public enum CoreInstallationState {
-        /// 实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。
-        ///
-        /// Resource: `Errors.coreInstallationState.applyingInstallationText1`.
-        public static var installationChangedBeforeApply: LocalizedMessage {
-            .init(key: "coreInstallationState.applyingInstallationText1", table: "Errors", fallback: "实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。")
-        }
         /// 自定义运行目录在安装期间改变，未覆盖最新设置。
         ///
-        /// Resource: `Errors.coreInstallationState.installedText1`.
+        /// Resource: `Errors.CoreInstallationState.customDirectoryChangedDuringInstall`.
         public static var customDirectoryChangedDuringInstall: LocalizedMessage {
-            .init(key: "coreInstallationState.installedText1", table: "Errors", fallback: "自定义运行目录在安装期间改变，未覆盖最新设置。")
+            .init(key: "CoreInstallationState.customDirectoryChangedDuringInstall", table: "Errors", fallback: "自定义运行目录在安装期间改变，未覆盖最新设置。")
+        }
+        /// 实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。
+        ///
+        /// Resource: `Errors.CoreInstallationState.installationChangedBeforeApply`.
+        public static var installationChangedBeforeApply: LocalizedMessage {
+            .init(key: "CoreInstallationState.installationChangedBeforeApply", table: "Errors", fallback: "实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstallationState.applyingInstallationText1": .init("实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。", []),
-            "Errors:coreInstallationState.installedText1": .init("自定义运行目录在安装期间改变，未覆盖最新设置。", []),
+            "Errors:CoreInstallationState.customDirectoryChangedDuringInstall": .init("自定义运行目录在安装期间改变，未覆盖最新设置。", []),
+            "Errors:CoreInstallationState.installationChangedBeforeApply": .init("实例的版本或目录在安装期间改变，未覆盖最新设置。请重新检查实例。", []),
         ]
     }
 }

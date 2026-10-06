@@ -5,68 +5,68 @@ extension Messages {
     public enum Common {
         /// 取消
         ///
-        /// Resource: `Common.common.cancel`.
+        /// Resource: `Common.Common.cancel`.
         public static var cancel: LocalizedMessage {
-            .init(key: "common.cancel", table: "Common", fallback: "取消")
+            .init(key: "Common.cancel", table: "Common", fallback: "取消")
         }
         /// 完成
         ///
-        /// Resource: `Common.common.done`.
+        /// Resource: `Common.Common.done`.
         public static var done: LocalizedMessage {
-            .init(key: "common.done", table: "Common", fallback: "完成")
-        }
-        /// 语言
-        ///
-        /// Resource: `Common.common.language`.
-        public static var language: LocalizedMessage {
-            .init(key: "common.language", table: "Common", fallback: "语言")
-        }
-        /// 跟随系统
-        ///
-        /// Resource: `Common.common.followSystem`.
-        public static var followSystem: LocalizedMessage {
-            .init(key: "common.followSystem", table: "Common", fallback: "跟随系统")
-        }
-        /// 重新打开 Ruri 后生效。
-        ///
-        /// Resource: `Common.common.languageRestart`.
-        public static var languageRestart: LocalizedMessage {
-            .init(key: "common.languageRestart", table: "Common", fallback: "重新打开 Ruri 后生效。")
+            .init(key: "Common.done", table: "Common", fallback: "完成")
         }
         /// %1$lld 个文件
         ///
-        /// Resource: `Common.common.fileCount`.
+        /// Resource: `Common.Common.fileCount`.
         public static func fileCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "common.fileCount", table: "Common", fallback: "%1$lld 个文件", arguments: [.integer(value0)])
+            .init(key: "Common.fileCount", table: "Common", fallback: "%1$lld 个文件", arguments: [.integer(value0)])
         }
         /// %1$lld 个文件 · %2$@
         ///
-        /// Resource: `Common.common.filesAndSize`.
+        /// Resource: `Common.Common.filesAndSize`.
         public static func filesAndSize(_ value0: Int64, _ value1: String) -> LocalizedMessage {
-            .init(key: "common.filesAndSize", table: "Common", fallback: "%1$lld 个文件 · %2$@", arguments: [.integer(value0), .text(value1)])
+            .init(key: "Common.filesAndSize", table: "Common", fallback: "%1$lld 个文件 · %2$@", arguments: [.integer(value0), .text(value1)])
         }
-        /// 本地化资源读取成功
+        /// 跟随系统
         ///
-        /// Resource: `Common.common.localizationCheck`.
-        public static var localizationCheck: LocalizedMessage {
-            .init(key: "common.localizationCheck", table: "Common", fallback: "本地化资源读取成功")
+        /// Resource: `Common.Common.followSystem`.
+        public static var followSystem: LocalizedMessage {
+            .init(key: "Common.followSystem", table: "Common", fallback: "跟随系统")
         }
         /// --language 后需要填写语言代码。
         ///
-        /// Resource: `Common.common.invalidLanguageOption`.
+        /// Resource: `Common.Common.invalidLanguageOption`.
         public static var invalidLanguageOption: LocalizedMessage {
-            .init(key: "common.invalidLanguageOption", table: "Common", fallback: "--language 后需要填写语言代码。")
+            .init(key: "Common.invalidLanguageOption", table: "Common", fallback: "--language 后需要填写语言代码。")
+        }
+        /// 语言
+        ///
+        /// Resource: `Common.Common.language`.
+        public static var language: LocalizedMessage {
+            .init(key: "Common.language", table: "Common", fallback: "语言")
+        }
+        /// 重新打开 Ruri 后生效。
+        ///
+        /// Resource: `Common.Common.languageRestart`.
+        public static var languageRestart: LocalizedMessage {
+            .init(key: "Common.languageRestart", table: "Common", fallback: "重新打开 Ruri 后生效。")
+        }
+        /// 本地化资源读取成功
+        ///
+        /// Resource: `Common.Common.localizationCheck`.
+        public static var localizationCheck: LocalizedMessage {
+            .init(key: "Common.localizationCheck", table: "Common", fallback: "本地化资源读取成功")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Common:common.cancel": .init("取消", []),
-            "Common:common.done": .init("完成", []),
-            "Common:common.language": .init("语言", []),
-            "Common:common.followSystem": .init("跟随系统", []),
-            "Common:common.languageRestart": .init("重新打开 Ruri 后生效。", []),
-            "Common:common.fileCount": .init("%1$lld 个文件", [.integer]),
-            "Common:common.filesAndSize": .init("%1$lld 个文件 · %2$@", [.integer, .text]),
-            "Common:common.localizationCheck": .init("本地化资源读取成功", []),
-            "Common:common.invalidLanguageOption": .init("--language 后需要填写语言代码。", []),
+            "Common:Common.cancel": .init("取消", []),
+            "Common:Common.done": .init("完成", []),
+            "Common:Common.fileCount": .init("%1$lld 个文件", [.integer]),
+            "Common:Common.filesAndSize": .init("%1$lld 个文件 · %2$@", [.integer, .text]),
+            "Common:Common.followSystem": .init("跟随系统", []),
+            "Common:Common.invalidLanguageOption": .init("--language 后需要填写语言代码。", []),
+            "Common:Common.language": .init("语言", []),
+            "Common:Common.languageRestart": .init("重新打开 Ruri 后生效。", []),
+            "Common:Common.localizationCheck": .init("本地化资源读取成功", []),
         ]
     }
 }

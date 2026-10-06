@@ -3,28 +3,28 @@ import Foundation
 
 extension Messages {
     public enum CoreModrinth {
-        /// 不支持的内容类型
-        ///
-        /// Resource: `Errors.coreModrinth.kindText1`.
-        public static var unsupportedContentType: LocalizedMessage {
-            .init(key: "coreModrinth.kindText1", table: "Errors", fallback: "不支持的内容类型")
-        }
         /// 此文件不是 Modrinth 整合包
         ///
-        /// Resource: `Errors.coreModrinth.preparedText1`.
+        /// Resource: `Errors.CoreModrinth.notModrinthPack`.
         public static var notModrinthPack: LocalizedMessage {
-            .init(key: "coreModrinth.preparedText1", table: "Errors", fallback: "此文件不是 Modrinth 整合包")
+            .init(key: "CoreModrinth.notModrinthPack", table: "Errors", fallback: "此文件不是 Modrinth 整合包")
+        }
+        /// 不支持的内容类型
+        ///
+        /// Resource: `Errors.CoreModrinth.unsupportedContentType`.
+        public static var unsupportedContentType: LocalizedMessage {
+            .init(key: "CoreModrinth.unsupportedContentType", table: "Errors", fallback: "不支持的内容类型")
         }
         /// 正在应用内容更新
         ///
-        /// Resource: `Progress.coreModrinth.filesText1`.
+        /// Resource: `Progress.CoreModrinth.applyingContentUpdate`.
         public static var applyingContentUpdate: LocalizedMessage {
-            .init(key: "coreModrinth.filesText1", table: "Progress", fallback: "正在应用内容更新")
+            .init(key: "CoreModrinth.applyingContentUpdate", table: "Progress", fallback: "正在应用内容更新")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreModrinth.kindText1": .init("不支持的内容类型", []),
-            "Errors:coreModrinth.preparedText1": .init("此文件不是 Modrinth 整合包", []),
-            "Progress:coreModrinth.filesText1": .init("正在应用内容更新", []),
+            "Errors:CoreModrinth.notModrinthPack": .init("此文件不是 Modrinth 整合包", []),
+            "Errors:CoreModrinth.unsupportedContentType": .init("不支持的内容类型", []),
+            "Progress:CoreModrinth.applyingContentUpdate": .init("正在应用内容更新", []),
         ]
     }
 }

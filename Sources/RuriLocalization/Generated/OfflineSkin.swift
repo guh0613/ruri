@@ -5,40 +5,40 @@ extension Messages {
     public enum OfflineSkin {
         /// 离线皮肤配置无效，请重新应用皮肤后再启动游戏。
         ///
-        /// Resource: `Accounts.offlineSkin.invalidConfiguration`.
+        /// Resource: `Accounts.OfflineSkin.invalidConfiguration`.
         public static var invalidConfiguration: LocalizedMessage {
-            .init(key: "offlineSkin.invalidConfiguration", table: "Accounts", fallback: "离线皮肤配置无效，请重新应用皮肤后再启动游戏。")
-        }
-        /// 无法为离线皮肤生成签名。
-        ///
-        /// Resource: `Accounts.offlineSkin.signingFailed`.
-        public static var signingFailed: LocalizedMessage {
-            .init(key: "offlineSkin.signingFailed", table: "Accounts", fallback: "无法为离线皮肤生成签名。")
-        }
-        /// 本地皮肤服务未能启动，请重试。
-        ///
-        /// Resource: `Accounts.offlineSkin.serviceFailed`.
-        public static var serviceFailed: LocalizedMessage {
-            .init(key: "offlineSkin.serviceFailed", table: "Accounts", fallback: "本地皮肤服务未能启动，请重试。")
+            .init(key: "OfflineSkin.invalidConfiguration", table: "Accounts", fallback: "离线皮肤配置无效，请重新应用皮肤后再启动游戏。")
         }
         /// 正在准备离线皮肤…
         ///
-        /// Resource: `Accounts.offlineSkin.preparing`.
+        /// Resource: `Accounts.OfflineSkin.preparing`.
         public static var preparing: LocalizedMessage {
-            .init(key: "offlineSkin.preparing", table: "Accounts", fallback: "正在准备离线皮肤…")
+            .init(key: "OfflineSkin.preparing", table: "Accounts", fallback: "正在准备离线皮肤…")
         }
         /// [Ruri] 离线皮肤服务已就绪。
         ///
-        /// Resource: `Accounts.offlineSkin.ready`.
+        /// Resource: `Accounts.OfflineSkin.ready`.
         public static var ready: LocalizedMessage {
-            .init(key: "offlineSkin.ready", table: "Accounts", fallback: "[Ruri] 离线皮肤服务已就绪。")
+            .init(key: "OfflineSkin.ready", table: "Accounts", fallback: "[Ruri] 离线皮肤服务已就绪。")
+        }
+        /// 本地皮肤服务未能启动，请重试。
+        ///
+        /// Resource: `Accounts.OfflineSkin.serviceFailed`.
+        public static var serviceFailed: LocalizedMessage {
+            .init(key: "OfflineSkin.serviceFailed", table: "Accounts", fallback: "本地皮肤服务未能启动，请重试。")
+        }
+        /// 无法为离线皮肤生成签名。
+        ///
+        /// Resource: `Accounts.OfflineSkin.signingFailed`.
+        public static var signingFailed: LocalizedMessage {
+            .init(key: "OfflineSkin.signingFailed", table: "Accounts", fallback: "无法为离线皮肤生成签名。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Accounts:offlineSkin.invalidConfiguration": .init("离线皮肤配置无效，请重新应用皮肤后再启动游戏。", []),
-            "Accounts:offlineSkin.signingFailed": .init("无法为离线皮肤生成签名。", []),
-            "Accounts:offlineSkin.serviceFailed": .init("本地皮肤服务未能启动，请重试。", []),
-            "Accounts:offlineSkin.preparing": .init("正在准备离线皮肤…", []),
-            "Accounts:offlineSkin.ready": .init("[Ruri] 离线皮肤服务已就绪。", []),
+            "Accounts:OfflineSkin.invalidConfiguration": .init("离线皮肤配置无效，请重新应用皮肤后再启动游戏。", []),
+            "Accounts:OfflineSkin.preparing": .init("正在准备离线皮肤…", []),
+            "Accounts:OfflineSkin.ready": .init("[Ruri] 离线皮肤服务已就绪。", []),
+            "Accounts:OfflineSkin.serviceFailed": .init("本地皮肤服务未能启动，请重试。", []),
+            "Accounts:OfflineSkin.signingFailed": .init("无法为离线皮肤生成签名。", []),
         ]
     }
 }

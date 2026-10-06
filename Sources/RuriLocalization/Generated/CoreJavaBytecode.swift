@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreJavaBytecode {
         /// 无法读取安装工具 %1$@ 的 Java 字节码版本。请重新下载后重试。
         ///
-        /// Resource: `Errors.coreJavaBytecode.invalidClass`.
+        /// Resource: `Errors.CoreJavaBytecode.invalidClass`.
         public static func invalidClass(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreJavaBytecode.invalidClass", table: "Errors", fallback: "无法读取安装工具 %1$@ 的 Java 字节码版本。请重新下载后重试。", arguments: [.text(value0)])
+            .init(key: "CoreJavaBytecode.invalidClass", table: "Errors", fallback: "无法读取安装工具 %1$@ 的 Java 字节码版本。请重新下载后重试。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreJavaBytecode.invalidClass": .init("无法读取安装工具 %1$@ 的 Java 字节码版本。请重新下载后重试。", [.text]),
+            "Errors:CoreJavaBytecode.invalidClass": .init("无法读取安装工具 %1$@ 的 Java 字节码版本。请重新下载后重试。", [.text]),
         ]
     }
 }

@@ -3,84 +3,84 @@ import Foundation
 
 extension Messages {
     public enum CoreGameRunDirectory {
-        /// 独立运行目录
+        /// 所有新实例独立
         ///
-        /// Resource: `Core.coreGameRunDirectory.titleText1`.
-        public static var isolatedDirectory: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.titleText1", table: "Core", fallback: "独立运行目录")
-        }
-        /// 共享运行目录
-        ///
-        /// Resource: `Core.coreGameRunDirectory.titleText2`.
-        public static var sharedDirectory: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.titleText2", table: "Core", fallback: "共享运行目录")
+        /// Resource: `Core.CoreGameRunDirectory.allNewInstancesIsolated`.
+        public static var allNewInstancesIsolated: LocalizedMessage {
+            .init(key: "CoreGameRunDirectory.allNewInstancesIsolated", table: "Core", fallback: "所有新实例独立")
         }
         /// 自定义运行目录
         ///
-        /// Resource: `Core.coreGameRunDirectory.titleText3`.
+        /// Resource: `Core.CoreGameRunDirectory.customDirectory`.
         public static var customDirectory: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.titleText3", table: "Core", fallback: "自定义运行目录")
-        }
-        /// 此实例单独保存模组、存档和游戏设置。
-        ///
-        /// Resource: `Core.coreGameRunDirectory.explanationText1`.
-        public static var isolatedDirectoryDescription: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.explanationText1", table: "Core", fallback: "此实例单独保存模组、存档和游戏设置。")
-        }
-        /// 使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。
-        ///
-        /// Resource: `Core.coreGameRunDirectory.explanationText2`.
-        public static var sharedDirectoryDescription: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.explanationText2", table: "Core", fallback: "使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。")
+            .init(key: "CoreGameRunDirectory.customDirectory", table: "Core", fallback: "自定义运行目录")
         }
         /// 在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。
         ///
-        /// Resource: `Core.coreGameRunDirectory.explanationText3`.
+        /// Resource: `Core.CoreGameRunDirectory.customDirectoryDescription`.
         public static var customDirectoryDescription: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.explanationText3", table: "Core", fallback: "在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。")
+            .init(key: "CoreGameRunDirectory.customDirectoryDescription", table: "Core", fallback: "在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。")
         }
-        /// 所有新实例独立
+        /// 独立运行目录
         ///
-        /// Resource: `Core.coreGameRunDirectory.titleText4`.
-        public static var allNewInstancesIsolated: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.titleText4", table: "Core", fallback: "所有新实例独立")
+        /// Resource: `Core.CoreGameRunDirectory.isolatedDirectory`.
+        public static var isolatedDirectory: LocalizedMessage {
+            .init(key: "CoreGameRunDirectory.isolatedDirectory", table: "Core", fallback: "独立运行目录")
+        }
+        /// 此实例单独保存模组、存档和游戏设置。
+        ///
+        /// Resource: `Core.CoreGameRunDirectory.isolatedDirectoryDescription`.
+        public static var isolatedDirectoryDescription: LocalizedMessage {
+            .init(key: "CoreGameRunDirectory.isolatedDirectoryDescription", table: "Core", fallback: "此实例单独保存模组、存档和游戏设置。")
         }
         /// 有模组加载器的实例独立
         ///
-        /// Resource: `Core.coreGameRunDirectory.titleText5`.
+        /// Resource: `Core.CoreGameRunDirectory.loaderInstancesIsolated`.
         public static var loaderInstancesIsolated: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.titleText5", table: "Core", fallback: "有模组加载器的实例独立")
+            .init(key: "CoreGameRunDirectory.loaderInstancesIsolated", table: "Core", fallback: "有模组加载器的实例独立")
         }
         /// 新实例使用共享目录
         ///
-        /// Resource: `Core.coreGameRunDirectory.titleText6`.
+        /// Resource: `Core.CoreGameRunDirectory.newInstancesShared`.
         public static var newInstancesShared: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.titleText6", table: "Core", fallback: "新实例使用共享目录")
+            .init(key: "CoreGameRunDirectory.newInstancesShared", table: "Core", fallback: "新实例使用共享目录")
+        }
+        /// 共享运行目录
+        ///
+        /// Resource: `Core.CoreGameRunDirectory.sharedDirectory`.
+        public static var sharedDirectory: LocalizedMessage {
+            .init(key: "CoreGameRunDirectory.sharedDirectory", table: "Core", fallback: "共享运行目录")
+        }
+        /// 使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。
+        ///
+        /// Resource: `Core.CoreGameRunDirectory.sharedDirectoryDescription`.
+        public static var sharedDirectoryDescription: LocalizedMessage {
+            .init(key: "CoreGameRunDirectory.sharedDirectoryDescription", table: "Core", fallback: "使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。")
         }
         /// 实例设置与本次操作的目录不一致，请刷新后重试。
         ///
-        /// Resource: `Errors.coreGameRunDirectory.validateBindingText1`.
+        /// Resource: `Errors.CoreGameRunDirectory.bindingMismatch`.
         public static var bindingMismatch: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.validateBindingText1", table: "Errors", fallback: "实例设置与本次操作的目录不一致，请刷新后重试。")
+            .init(key: "CoreGameRunDirectory.bindingMismatch", table: "Errors", fallback: "实例设置与本次操作的目录不一致，请刷新后重试。")
         }
         /// 自定义运行目录与本次操作的路径不一致，请刷新后重试。
         ///
-        /// Resource: `Errors.coreGameRunDirectory.actualText1`.
+        /// Resource: `Errors.CoreGameRunDirectory.customPathMismatch`.
         public static var customPathMismatch: LocalizedMessage {
-            .init(key: "coreGameRunDirectory.actualText1", table: "Errors", fallback: "自定义运行目录与本次操作的路径不一致，请刷新后重试。")
+            .init(key: "CoreGameRunDirectory.customPathMismatch", table: "Errors", fallback: "自定义运行目录与本次操作的路径不一致，请刷新后重试。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreGameRunDirectory.titleText1": .init("独立运行目录", []),
-            "Core:coreGameRunDirectory.titleText2": .init("共享运行目录", []),
-            "Core:coreGameRunDirectory.titleText3": .init("自定义运行目录", []),
-            "Core:coreGameRunDirectory.explanationText1": .init("此实例单独保存模组、存档和游戏设置。", []),
-            "Core:coreGameRunDirectory.explanationText2": .init("使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。", []),
-            "Core:coreGameRunDirectory.explanationText3": .init("在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。", []),
-            "Core:coreGameRunDirectory.titleText4": .init("所有新实例独立", []),
-            "Core:coreGameRunDirectory.titleText5": .init("有模组加载器的实例独立", []),
-            "Core:coreGameRunDirectory.titleText6": .init("新实例使用共享目录", []),
-            "Errors:coreGameRunDirectory.validateBindingText1": .init("实例设置与本次操作的目录不一致，请刷新后重试。", []),
-            "Errors:coreGameRunDirectory.actualText1": .init("自定义运行目录与本次操作的路径不一致，请刷新后重试。", []),
+            "Core:CoreGameRunDirectory.allNewInstancesIsolated": .init("所有新实例独立", []),
+            "Core:CoreGameRunDirectory.customDirectory": .init("自定义运行目录", []),
+            "Core:CoreGameRunDirectory.customDirectoryDescription": .init("在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。", []),
+            "Core:CoreGameRunDirectory.isolatedDirectory": .init("独立运行目录", []),
+            "Core:CoreGameRunDirectory.isolatedDirectoryDescription": .init("此实例单独保存模组、存档和游戏设置。", []),
+            "Core:CoreGameRunDirectory.loaderInstancesIsolated": .init("有模组加载器的实例独立", []),
+            "Core:CoreGameRunDirectory.newInstancesShared": .init("新实例使用共享目录", []),
+            "Core:CoreGameRunDirectory.sharedDirectory": .init("共享运行目录", []),
+            "Core:CoreGameRunDirectory.sharedDirectoryDescription": .init("使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。", []),
+            "Errors:CoreGameRunDirectory.bindingMismatch": .init("实例设置与本次操作的目录不一致，请刷新后重试。", []),
+            "Errors:CoreGameRunDirectory.customPathMismatch": .init("自定义运行目录与本次操作的路径不一致，请刷新后重试。", []),
         ]
     }
 }

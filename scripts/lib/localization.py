@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import tempfile
 from .swift_strings import Scanner
+from .localization_catalog import shipping_languages
 
 HAN = re.compile(r'[\u3400-\u9fff]')
 UI_ARGUMENT = re.compile(r'(?:Text|Button|Label|Section|Toggle|Picker|TextField|SecureField|ProgressView|ContentUnavailableView|LabeledContent|CommandMenu|navigationTitle|navigationSubtitle|help|accessibilityLabel|alert|confirmationDialog)\(\s*$')

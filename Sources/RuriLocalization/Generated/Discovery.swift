@@ -3,924 +3,924 @@ import Foundation
 
 extension Messages {
     public enum Discovery {
-        /// 正在安装资源…
-        ///
-        /// Resource: `Discovery.discovery.applyingInstall`.
-        public static var applyingInstall: LocalizedMessage {
-            .init(key: "discovery.applyingInstall", table: "Discovery", fallback: "正在安装资源…")
-        }
-        /// 所选文件不属于当前项目，请重新载入版本列表。
-        ///
-        /// Resource: `Discovery.discovery.versionProjectMismatch`.
-        public static var versionProjectMismatch: LocalizedMessage {
-            .init(key: "discovery.versionProjectMismatch", table: "Discovery", fallback: "所选文件不属于当前项目，请重新载入版本列表。")
-        }
-        /// 将更新并启用
-        ///
-        /// Resource: `Discovery.discovery.willUpdateAndEnable`.
-        public static var willUpdateAndEnable: LocalizedMessage {
-            .init(key: "discovery.willUpdateAndEnable", table: "Discovery", fallback: "将更新并启用")
-        }
-        /// 当前显示上次成功载入的结果。
-        ///
-        /// Resource: `Discovery.discovery.showingPreviousResults`.
-        public static var showingPreviousResults: LocalizedMessage {
-            .init(key: "discovery.showingPreviousResults", table: "Discovery", fallback: "当前显示上次成功载入的结果。")
-        }
-        /// 相关程度
-        ///
-        /// Resource: `Discovery.discovery.relevance`.
-        public static var relevance: LocalizedMessage {
-            .init(key: "discovery.relevance", table: "Discovery", fallback: "相关程度")
-        }
-        /// 下载最多
-        ///
-        /// Resource: `Discovery.discovery.mostDownloads`.
-        public static var mostDownloads: LocalizedMessage {
-            .init(key: "discovery.mostDownloads", table: "Discovery", fallback: "下载最多")
-        }
-        /// 最近更新
-        ///
-        /// Resource: `Discovery.discovery.recentlyUpdated`.
-        public static var recentlyUpdated: LocalizedMessage {
-            .init(key: "discovery.recentlyUpdated", table: "Discovery", fallback: "最近更新")
-        }
-        /// 最新发布
-        ///
-        /// Resource: `Discovery.discovery.newest`.
-        public static var newest: LocalizedMessage {
-            .init(key: "discovery.newest", table: "Discovery", fallback: "最新发布")
-        }
-        /// 未提供游戏版本
-        ///
-        /// Resource: `Discovery.discovery.versionsUnknown`.
-        public static var versionsUnknown: LocalizedMessage {
-            .init(key: "discovery.versionsUnknown", table: "Discovery", fallback: "未提供游戏版本")
-        }
-        /// 未提供加载器
-        ///
-        /// Resource: `Discovery.discovery.loadersUnknown`.
-        public static var loadersUnknown: LocalizedMessage {
-            .init(key: "discovery.loadersUnknown", table: "Discovery", fallback: "未提供加载器")
-        }
-        /// 源代码
-        ///
-        /// Resource: `Discovery.discovery.sourceCode`.
-        public static var sourceCode: LocalizedMessage {
-            .init(key: "discovery.sourceCode", table: "Discovery", fallback: "源代码")
-        }
-        /// 问题反馈
-        ///
-        /// Resource: `Discovery.discovery.issues`.
-        public static var issues: LocalizedMessage {
-            .init(key: "discovery.issues", table: "Discovery", fallback: "问题反馈")
-        }
-        /// 使用文档
-        ///
-        /// Resource: `Discovery.discovery.wiki`.
-        public static var wiki: LocalizedMessage {
-            .init(key: "discovery.wiki", table: "Discovery", fallback: "使用文档")
-        }
-        /// 必需依赖
-        ///
-        /// Resource: `Discovery.discovery.required`.
-        public static var required: LocalizedMessage {
-            .init(key: "discovery.required", table: "Discovery", fallback: "必需依赖")
-        }
-        /// 可选依赖
-        ///
-        /// Resource: `Discovery.discovery.optional`.
-        public static var optional: LocalizedMessage {
-            .init(key: "discovery.optional", table: "Discovery", fallback: "可选依赖")
-        }
-        /// 不兼容
-        ///
-        /// Resource: `Discovery.discovery.incompatible`.
-        public static var incompatible: LocalizedMessage {
-            .init(key: "discovery.incompatible", table: "Discovery", fallback: "不兼容")
-        }
-        /// 已内置
-        ///
-        /// Resource: `Discovery.discovery.embedded`.
-        public static var embedded: LocalizedMessage {
-            .init(key: "discovery.embedded", table: "Discovery", fallback: "已内置")
-        }
-        /// 工具
-        ///
-        /// Resource: `Discovery.discovery.tool`.
-        public static var tool: LocalizedMessage {
-            .init(key: "discovery.tool", table: "Discovery", fallback: "工具")
-        }
-        /// 下载游戏
-        ///
-        /// Resource: `Discovery.discovery.downloadGame`.
-        public static var downloadGame: LocalizedMessage {
-            .init(key: "discovery.downloadGame", table: "Discovery", fallback: "下载游戏")
-        }
-        /// 刷新
-        ///
-        /// Resource: `Discovery.discovery.refresh`.
-        public static var refresh: LocalizedMessage {
-            .init(key: "discovery.refresh", table: "Discovery", fallback: "刷新")
-        }
-        /// 分类暂时不可用，仍可搜索资源。
-        ///
-        /// Resource: `Discovery.discovery.categoriesUnavailable`.
-        public static var categoriesUnavailable: LocalizedMessage {
-            .init(key: "discovery.categoriesUnavailable", table: "Discovery", fallback: "分类暂时不可用，仍可搜索资源。")
-        }
-        /// 加载器
-        ///
-        /// Resource: `Discovery.discovery.loader`.
-        public static var loader: LocalizedMessage {
-            .init(key: "discovery.loader", table: "Discovery", fallback: "加载器")
-        }
-        /// 全部加载器
-        ///
-        /// Resource: `Discovery.discovery.allLoaders`.
-        public static var allLoaders: LocalizedMessage {
-            .init(key: "discovery.allLoaders", table: "Discovery", fallback: "全部加载器")
-        }
-        /// 分类
-        ///
-        /// Resource: `Discovery.discovery.category`.
-        public static var category: LocalizedMessage {
-            .init(key: "discovery.category", table: "Discovery", fallback: "分类")
-        }
         /// 全部分类
         ///
-        /// Resource: `Discovery.discovery.allCategories`.
+        /// Resource: `Discovery.Discovery.allCategories`.
         public static var allCategories: LocalizedMessage {
-            .init(key: "discovery.allCategories", table: "Discovery", fallback: "全部分类")
-        }
-        /// 清除筛选
-        ///
-        /// Resource: `Discovery.discovery.clearFilters`.
-        public static var clearFilters: LocalizedMessage {
-            .init(key: "discovery.clearFilters", table: "Discovery", fallback: "清除筛选")
-        }
-        /// 共 %1$lld 个项目
-        ///
-        /// Resource: `Discovery.discovery.resultCount`.
-        public static func resultCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "discovery.resultCount", table: "Discovery", fallback: "共 %1$lld 个项目", arguments: [.integer(value0)])
-        }
-        /// 正在搜索…
-        ///
-        /// Resource: `Discovery.discovery.searching`.
-        public static var searching: LocalizedMessage {
-            .init(key: "discovery.searching", table: "Discovery", fallback: "正在搜索…")
-        }
-        /// 排序
-        ///
-        /// Resource: `Discovery.discovery.sort`.
-        public static var sort: LocalizedMessage {
-            .init(key: "discovery.sort", table: "Discovery", fallback: "排序")
-        }
-        /// 显示方式
-        ///
-        /// Resource: `Discovery.discovery.layout`.
-        public static var layout: LocalizedMessage {
-            .init(key: "discovery.layout", table: "Discovery", fallback: "显示方式")
-        }
-        /// %1$lld–%2$lld，共 %3$lld 个
-        ///
-        /// Resource: `Discovery.discovery.pageRange`.
-        public static func pageRange(_ value0: Int64, _ value1: Int64, _ value2: Int64) -> LocalizedMessage {
-            .init(key: "discovery.pageRange", table: "Discovery", fallback: "%1$lld–%2$lld，共 %3$lld 个", arguments: [.integer(value0), .integer(value1), .integer(value2)])
-        }
-        /// 全部游戏版本
-        ///
-        /// Resource: `Discovery.discovery.allGameVersions`.
-        public static var allGameVersions: LocalizedMessage {
-            .init(key: "discovery.allGameVersions", table: "Discovery", fallback: "全部游戏版本")
-        }
-        /// Minecraft %1$@
-        ///
-        /// Resource: `Discovery.discovery.minecraftVersion`.
-        public static func minecraftVersion(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.minecraftVersion", table: "Discovery", fallback: "Minecraft %1$@", arguments: [.text(value0)])
-        }
-        /// 游戏版本
-        ///
-        /// Resource: `Discovery.discovery.gameVersion`.
-        public static var gameVersion: LocalizedMessage {
-            .init(key: "discovery.gameVersion", table: "Discovery", fallback: "游戏版本")
-        }
-        /// 搜索或输入游戏版本
-        ///
-        /// Resource: `Discovery.discovery.findGameVersion`.
-        public static var findGameVersion: LocalizedMessage {
-            .init(key: "discovery.findGameVersion", table: "Discovery", fallback: "搜索或输入游戏版本")
-        }
-        /// 找不到版本时，可输入完整版本号并按回车。
-        ///
-        /// Resource: `Discovery.discovery.customVersionHint`.
-        public static var customVersionHint: LocalizedMessage {
-            .init(key: "discovery.customVersionHint", table: "Discovery", fallback: "找不到版本时，可输入完整版本号并按回车。")
-        }
-        /// 冒险
-        ///
-        /// Resource: `Discovery.discovery.categoryAdventure`.
-        public static var categoryAdventure: LocalizedMessage {
-            .init(key: "discovery.categoryAdventure", table: "Discovery", fallback: "冒险")
-        }
-        /// 科技
-        ///
-        /// Resource: `Discovery.discovery.categoryTechnology`.
-        public static var categoryTechnology: LocalizedMessage {
-            .init(key: "discovery.categoryTechnology", table: "Discovery", fallback: "科技")
-        }
-        /// 魔法
-        ///
-        /// Resource: `Discovery.discovery.categoryMagic`.
-        public static var categoryMagic: LocalizedMessage {
-            .init(key: "discovery.categoryMagic", table: "Discovery", fallback: "魔法")
-        }
-        /// 性能优化
-        ///
-        /// Resource: `Discovery.discovery.categoryOptimization`.
-        public static var categoryOptimization: LocalizedMessage {
-            .init(key: "discovery.categoryOptimization", table: "Discovery", fallback: "性能优化")
-        }
-        /// 装饰
-        ///
-        /// Resource: `Discovery.discovery.categoryDecoration`.
-        public static var categoryDecoration: LocalizedMessage {
-            .init(key: "discovery.categoryDecoration", table: "Discovery", fallback: "装饰")
-        }
-        /// 实用工具
-        ///
-        /// Resource: `Discovery.discovery.categoryUtility`.
-        public static var categoryUtility: LocalizedMessage {
-            .init(key: "discovery.categoryUtility", table: "Discovery", fallback: "实用工具")
-        }
-        /// 世界生成
-        ///
-        /// Resource: `Discovery.discovery.categoryWorldgen`.
-        public static var categoryWorldgen: LocalizedMessage {
-            .init(key: "discovery.categoryWorldgen", table: "Discovery", fallback: "世界生成")
-        }
-        /// 前置库
-        ///
-        /// Resource: `Discovery.discovery.categoryLibrary`.
-        public static var categoryLibrary: LocalizedMessage {
-            .init(key: "discovery.categoryLibrary", table: "Discovery", fallback: "前置库")
-        }
-        /// 存储
-        ///
-        /// Resource: `Discovery.discovery.categoryStorage`.
-        public static var categoryStorage: LocalizedMessage {
-            .init(key: "discovery.categoryStorage", table: "Discovery", fallback: "存储")
-        }
-        /// 装备
-        ///
-        /// Resource: `Discovery.discovery.categoryEquipment`.
-        public static var categoryEquipment: LocalizedMessage {
-            .init(key: "discovery.categoryEquipment", table: "Discovery", fallback: "装备")
-        }
-        /// 任务
-        ///
-        /// Resource: `Discovery.discovery.categoryQuests`.
-        public static var categoryQuests: LocalizedMessage {
-            .init(key: "discovery.categoryQuests", table: "Discovery", fallback: "任务")
-        }
-        /// 综合整合包
-        ///
-        /// Resource: `Discovery.discovery.categoryKitchenSink`.
-        public static var categoryKitchenSink: LocalizedMessage {
-            .init(key: "discovery.categoryKitchenSink", table: "Discovery", fallback: "综合整合包")
-        }
-        /// 项目内容
-        ///
-        /// Resource: `Discovery.discovery.projectSections`.
-        public static var projectSections: LocalizedMessage {
-            .init(key: "discovery.projectSections", table: "Discovery", fallback: "项目内容")
-        }
-        /// 简介
-        ///
-        /// Resource: `Discovery.discovery.overview`.
-        public static var overview: LocalizedMessage {
-            .init(key: "discovery.overview", table: "Discovery", fallback: "简介")
-        }
-        /// 版本
-        ///
-        /// Resource: `Discovery.discovery.versions`.
-        public static var versions: LocalizedMessage {
-            .init(key: "discovery.versions", table: "Discovery", fallback: "版本")
-        }
-        /// 图库
-        ///
-        /// Resource: `Discovery.discovery.gallery`.
-        public static var gallery: LocalizedMessage {
-            .init(key: "discovery.gallery", table: "Discovery", fallback: "图库")
-        }
-        /// 在网站查看
-        ///
-        /// Resource: `Discovery.discovery.openWebsite`.
-        public static var openWebsite: LocalizedMessage {
-            .init(key: "discovery.openWebsite", table: "Discovery", fallback: "在网站查看")
-        }
-        /// 正在载入项目详情…
-        ///
-        /// Resource: `Discovery.discovery.loadingDetail`.
-        public static var loadingDetail: LocalizedMessage {
-            .init(key: "discovery.loadingDetail", table: "Discovery", fallback: "正在载入项目详情…")
-        }
-        /// 获取
-        ///
-        /// Resource: `Discovery.discovery.getVersions`.
-        public static var getVersions: LocalizedMessage {
-            .init(key: "discovery.getVersions", table: "Discovery", fallback: "获取")
-        }
-        /// 更新于 %1$@
-        ///
-        /// Resource: `Discovery.discovery.updatedOn`.
-        public static func updatedOn(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.updatedOn", table: "Discovery", fallback: "更新于 %1$@", arguments: [.text(value0)])
-        }
-        /// 作者尚未提供详细介绍
-        ///
-        /// Resource: `Discovery.discovery.noDescription`.
-        public static var noDescription: LocalizedMessage {
-            .init(key: "discovery.noDescription", table: "Discovery", fallback: "作者尚未提供详细介绍")
-        }
-        /// 作者尚未上传截图
-        ///
-        /// Resource: `Discovery.discovery.noGallery`.
-        public static var noGallery: LocalizedMessage {
-            .init(key: "discovery.noGallery", table: "Discovery", fallback: "作者尚未上传截图")
-        }
-        /// 查看原图
-        ///
-        /// Resource: `Discovery.discovery.openImage`.
-        public static var openImage: LocalizedMessage {
-            .init(key: "discovery.openImage", table: "Discovery", fallback: "查看原图")
-        }
-        /// 搜索已载入的版本或文件名
-        ///
-        /// Resource: `Discovery.discovery.searchLoadedVersions`.
-        public static var searchLoadedVersions: LocalizedMessage {
-            .init(key: "discovery.searchLoadedVersions", table: "Discovery", fallback: "搜索已载入的版本或文件名")
-        }
-        /// 匹配当前实例
-        ///
-        /// Resource: `Discovery.discovery.matchInstance`.
-        public static var matchInstance: LocalizedMessage {
-            .init(key: "discovery.matchInstance", table: "Discovery", fallback: "匹配当前实例")
-        }
-        /// 正在载入版本…
-        ///
-        /// Resource: `Discovery.discovery.loadingVersions`.
-        public static var loadingVersions: LocalizedMessage {
-            .init(key: "discovery.loadingVersions", table: "Discovery", fallback: "正在载入版本…")
-        }
-        /// 没有符合条件的版本
-        ///
-        /// Resource: `Discovery.discovery.noVersions`.
-        public static var noVersions: LocalizedMessage {
-            .init(key: "discovery.noVersions", table: "Discovery", fallback: "没有符合条件的版本")
-        }
-        /// 尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。
-        ///
-        /// Resource: `Discovery.discovery.noVersionsHint`.
-        public static var noVersionsHint: LocalizedMessage {
-            .init(key: "discovery.noVersionsHint", table: "Discovery", fallback: "尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。")
-        }
-        /// 已载入 %1$lld / %2$lld 个文件
-        ///
-        /// Resource: `Discovery.discovery.loadedVersions`.
-        public static func loadedVersions(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
-            .init(key: "discovery.loadedVersions", table: "Discovery", fallback: "已载入 %1$lld / %2$lld 个文件", arguments: [.integer(value0), .integer(value1)])
-        }
-        /// 载入更多
-        ///
-        /// Resource: `Discovery.discovery.loadMore`.
-        public static var loadMore: LocalizedMessage {
-            .init(key: "discovery.loadMore", table: "Discovery", fallback: "载入更多")
-        }
-        /// 发布类型
-        ///
-        /// Resource: `Discovery.discovery.releaseChannel`.
-        public static var releaseChannel: LocalizedMessage {
-            .init(key: "discovery.releaseChannel", table: "Discovery", fallback: "发布类型")
+            .init(key: "Discovery.allCategories", table: "Discovery", fallback: "全部分类")
         }
         /// 全部发布类型
         ///
-        /// Resource: `Discovery.discovery.allChannels`.
+        /// Resource: `Discovery.Discovery.allChannels`.
         public static var allChannels: LocalizedMessage {
-            .init(key: "discovery.allChannels", table: "Discovery", fallback: "全部发布类型")
+            .init(key: "Discovery.allChannels", table: "Discovery", fallback: "全部发布类型")
         }
-        /// 正式版
+        /// 全部游戏版本
         ///
-        /// Resource: `Discovery.discovery.release`.
-        public static var release: LocalizedMessage {
-            .init(key: "discovery.release", table: "Discovery", fallback: "正式版")
+        /// Resource: `Discovery.Discovery.allGameVersions`.
+        public static var allGameVersions: LocalizedMessage {
+            .init(key: "Discovery.allGameVersions", table: "Discovery", fallback: "全部游戏版本")
         }
-        /// 文件详情
+        /// 全部加载器
         ///
-        /// Resource: `Discovery.discovery.fileDetails`.
-        public static var fileDetails: LocalizedMessage {
-            .init(key: "discovery.fileDetails", table: "Discovery", fallback: "文件详情")
-        }
-        /// 安装或下载…
-        ///
-        /// Resource: `Discovery.discovery.installOrSave`.
-        public static var installOrSave: LocalizedMessage {
-            .init(key: "discovery.installOrSave", table: "Discovery", fallback: "安装或下载…")
-        }
-        /// 将安装
-        ///
-        /// Resource: `Discovery.discovery.willInstall`.
-        public static var willInstall: LocalizedMessage {
-            .init(key: "discovery.willInstall", table: "Discovery", fallback: "将安装")
-        }
-        /// 将更新
-        ///
-        /// Resource: `Discovery.discovery.willUpdate`.
-        public static var willUpdate: LocalizedMessage {
-            .init(key: "discovery.willUpdate", table: "Discovery", fallback: "将更新")
-        }
-        /// 将重新启用
-        ///
-        /// Resource: `Discovery.discovery.willEnable`.
-        public static var willEnable: LocalizedMessage {
-            .init(key: "discovery.willEnable", table: "Discovery", fallback: "将重新启用")
+        /// Resource: `Discovery.Discovery.allLoaders`.
+        public static var allLoaders: LocalizedMessage {
+            .init(key: "Discovery.allLoaders", table: "Discovery", fallback: "全部加载器")
         }
         /// 已安装
         ///
-        /// Resource: `Discovery.discovery.alreadyInstalled`.
+        /// Resource: `Discovery.Discovery.alreadyInstalled`.
         public static var alreadyInstalled: LocalizedMessage {
-            .init(key: "discovery.alreadyInstalled", table: "Discovery", fallback: "已安装")
+            .init(key: "Discovery.alreadyInstalled", table: "Discovery", fallback: "已安装")
         }
-        /// 游戏版本或加载器不兼容
+        /// 正在安装资源…
         ///
-        /// Resource: `Discovery.discovery.incompatibleTarget`.
-        public static var incompatibleTarget: LocalizedMessage {
-            .init(key: "discovery.incompatibleTarget", table: "Discovery", fallback: "游戏版本或加载器不兼容")
+        /// Resource: `Discovery.Discovery.applyingInstall`.
+        public static var applyingInstall: LocalizedMessage {
+            .init(key: "Discovery.applyingInstall", table: "Discovery", fallback: "正在安装资源…")
         }
-        /// 实例中的资源已更改，请重新检查后再安装。
+        /// 分类暂时不可用，仍可搜索资源。
         ///
-        /// Resource: `Discovery.discovery.contentChanged`.
-        public static var contentChanged: LocalizedMessage {
-            .init(key: "discovery.contentChanged", table: "Discovery", fallback: "实例中的资源已更改，请重新检查后再安装。")
+        /// Resource: `Discovery.Discovery.categoriesUnavailable`.
+        public static var categoriesUnavailable: LocalizedMessage {
+            .init(key: "Discovery.categoriesUnavailable", table: "Discovery", fallback: "分类暂时不可用，仍可搜索资源。")
         }
-        /// 依赖关系
+        /// 分类
         ///
-        /// Resource: `Discovery.discovery.dependencies`.
-        public static var dependencies: LocalizedMessage {
-            .init(key: "discovery.dependencies", table: "Discovery", fallback: "依赖关系")
+        /// Resource: `Discovery.Discovery.category`.
+        public static var category: LocalizedMessage {
+            .init(key: "Discovery.category", table: "Discovery", fallback: "分类")
+        }
+        /// 冒险
+        ///
+        /// Resource: `Discovery.Discovery.categoryAdventure`.
+        public static var categoryAdventure: LocalizedMessage {
+            .init(key: "Discovery.categoryAdventure", table: "Discovery", fallback: "冒险")
+        }
+        /// 装饰
+        ///
+        /// Resource: `Discovery.Discovery.categoryDecoration`.
+        public static var categoryDecoration: LocalizedMessage {
+            .init(key: "Discovery.categoryDecoration", table: "Discovery", fallback: "装饰")
+        }
+        /// 装备
+        ///
+        /// Resource: `Discovery.Discovery.categoryEquipment`.
+        public static var categoryEquipment: LocalizedMessage {
+            .init(key: "Discovery.categoryEquipment", table: "Discovery", fallback: "装备")
+        }
+        /// 综合整合包
+        ///
+        /// Resource: `Discovery.Discovery.categoryKitchenSink`.
+        public static var categoryKitchenSink: LocalizedMessage {
+            .init(key: "Discovery.categoryKitchenSink", table: "Discovery", fallback: "综合整合包")
+        }
+        /// 前置库
+        ///
+        /// Resource: `Discovery.Discovery.categoryLibrary`.
+        public static var categoryLibrary: LocalizedMessage {
+            .init(key: "Discovery.categoryLibrary", table: "Discovery", fallback: "前置库")
+        }
+        /// 魔法
+        ///
+        /// Resource: `Discovery.Discovery.categoryMagic`.
+        public static var categoryMagic: LocalizedMessage {
+            .init(key: "Discovery.categoryMagic", table: "Discovery", fallback: "魔法")
+        }
+        /// 性能优化
+        ///
+        /// Resource: `Discovery.Discovery.categoryOptimization`.
+        public static var categoryOptimization: LocalizedMessage {
+            .init(key: "Discovery.categoryOptimization", table: "Discovery", fallback: "性能优化")
+        }
+        /// 任务
+        ///
+        /// Resource: `Discovery.Discovery.categoryQuests`.
+        public static var categoryQuests: LocalizedMessage {
+            .init(key: "Discovery.categoryQuests", table: "Discovery", fallback: "任务")
+        }
+        /// 存储
+        ///
+        /// Resource: `Discovery.Discovery.categoryStorage`.
+        public static var categoryStorage: LocalizedMessage {
+            .init(key: "Discovery.categoryStorage", table: "Discovery", fallback: "存储")
+        }
+        /// 科技
+        ///
+        /// Resource: `Discovery.Discovery.categoryTechnology`.
+        public static var categoryTechnology: LocalizedMessage {
+            .init(key: "Discovery.categoryTechnology", table: "Discovery", fallback: "科技")
+        }
+        /// 实用工具
+        ///
+        /// Resource: `Discovery.Discovery.categoryUtility`.
+        public static var categoryUtility: LocalizedMessage {
+            .init(key: "Discovery.categoryUtility", table: "Discovery", fallback: "实用工具")
+        }
+        /// 世界生成
+        ///
+        /// Resource: `Discovery.Discovery.categoryWorldgen`.
+        public static var categoryWorldgen: LocalizedMessage {
+            .init(key: "Discovery.categoryWorldgen", table: "Discovery", fallback: "世界生成")
         }
         /// 更新日志
         ///
-        /// Resource: `Discovery.discovery.changelog`.
+        /// Resource: `Discovery.Discovery.changelog`.
         public static var changelog: LocalizedMessage {
-            .init(key: "discovery.changelog", table: "Discovery", fallback: "更新日志")
-        }
-        /// 作者未列出此版本的依赖
-        ///
-        /// Resource: `Discovery.discovery.noDependencies`.
-        public static var noDependencies: LocalizedMessage {
-            .init(key: "discovery.noDependencies", table: "Discovery", fallback: "作者未列出此版本的依赖")
-        }
-        /// 以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。
-        ///
-        /// Resource: `Discovery.discovery.dependencyVersionNotice`.
-        public static var dependencyVersionNotice: LocalizedMessage {
-            .init(key: "discovery.dependencyVersionNotice", table: "Discovery", fallback: "以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。")
-        }
-        /// 作者尚未提供此版本的更新日志
-        ///
-        /// Resource: `Discovery.discovery.noChangelog`.
-        public static var noChangelog: LocalizedMessage {
-            .init(key: "discovery.noChangelog", table: "Discovery", fallback: "作者尚未提供此版本的更新日志")
-        }
-        /// 正在载入更新日志…
-        ///
-        /// Resource: `Discovery.discovery.loadingChangelog`.
-        public static var loadingChangelog: LocalizedMessage {
-            .init(key: "discovery.loadingChangelog", table: "Discovery", fallback: "正在载入更新日志…")
-        }
-        /// 未知依赖
-        ///
-        /// Resource: `Discovery.discovery.unknownDependency`.
-        public static var unknownDependency: LocalizedMessage {
-            .init(key: "discovery.unknownDependency", table: "Discovery", fallback: "未知依赖")
-        }
-        /// 指定版本
-        ///
-        /// Resource: `Discovery.discovery.pinnedVersion`.
-        public static var pinnedVersion: LocalizedMessage {
-            .init(key: "discovery.pinnedVersion", table: "Discovery", fallback: "指定版本")
-        }
-        /// 查看项目
-        ///
-        /// Resource: `Discovery.discovery.viewProject`.
-        public static var viewProject: LocalizedMessage {
-            .init(key: "discovery.viewProject", table: "Discovery", fallback: "查看项目")
-        }
-        /// 完成
-        ///
-        /// Resource: `Discovery.discovery.done`.
-        public static var done: LocalizedMessage {
-            .init(key: "discovery.done", table: "Discovery", fallback: "完成")
-        }
-        /// 下载到
-        ///
-        /// Resource: `Discovery.discovery.destination`.
-        public static var destination: LocalizedMessage {
-            .init(key: "discovery.destination", table: "Discovery", fallback: "下载到")
-        }
-        /// 已有实例
-        ///
-        /// Resource: `Discovery.discovery.existingInstance`.
-        public static var existingInstance: LocalizedMessage {
-            .init(key: "discovery.existingInstance", table: "Discovery", fallback: "已有实例")
-        }
-        /// 新建实例
-        ///
-        /// Resource: `Discovery.discovery.newInstance`.
-        public static var newInstance: LocalizedMessage {
-            .init(key: "discovery.newInstance", table: "Discovery", fallback: "新建实例")
-        }
-        /// 仅下载文件
-        ///
-        /// Resource: `Discovery.discovery.saveFile`.
-        public static var saveFile: LocalizedMessage {
-            .init(key: "discovery.saveFile", table: "Discovery", fallback: "仅下载文件")
-        }
-        /// 选择文件的保存位置，之后可以手动安装。
-        ///
-        /// Resource: `Discovery.discovery.saveFileNotice`.
-        public static var saveFileNotice: LocalizedMessage {
-            .init(key: "discovery.saveFileNotice", table: "Discovery", fallback: "选择文件的保存位置，之后可以手动安装。")
-        }
-        /// 仅下载文件时，依赖需自行安装。你可以在“文件详情”中查看所需的依赖。
-        ///
-        /// Resource: `Discovery.discovery.fileDependenciesNotice`.
-        public static var fileDependenciesNotice: LocalizedMessage {
-            .init(key: "discovery.fileDependenciesNotice", table: "Discovery", fallback: "仅下载文件时，依赖需自行安装。你可以在“文件详情”中查看所需的依赖。")
-        }
-        /// Ruri 会先读取整合包，再让你确认实例名称和安装内容。
-        ///
-        /// Resource: `Discovery.discovery.modpackImportNotice`.
-        public static var modpackImportNotice: LocalizedMessage {
-            .init(key: "discovery.modpackImportNotice", table: "Discovery", fallback: "Ruri 会先读取整合包，再让你确认实例名称和安装内容。")
+            .init(key: "Discovery.changelog", table: "Discovery", fallback: "更新日志")
         }
         /// 正在检查依赖…
         ///
-        /// Resource: `Discovery.discovery.checkingDependencies`.
+        /// Resource: `Discovery.Discovery.checkingDependencies`.
         public static var checkingDependencies: LocalizedMessage {
-            .init(key: "discovery.checkingDependencies", table: "Discovery", fallback: "正在检查依赖…")
-        }
-        /// %1$lld 个文件 · 需下载 %2$@
-        ///
-        /// Resource: `Discovery.discovery.installSummary`.
-        public static func installSummary(_ value0: Int64, _ value1: String) -> LocalizedMessage {
-            .init(key: "discovery.installSummary", table: "Discovery", fallback: "%1$lld 个文件 · 需下载 %2$@", arguments: [.integer(value0), .text(value1)])
-        }
-        /// 选择保存位置…
-        ///
-        /// Resource: `Discovery.discovery.chooseSaveLocation`.
-        public static var chooseSaveLocation: LocalizedMessage {
-            .init(key: "discovery.chooseSaveLocation", table: "Discovery", fallback: "选择保存位置…")
-        }
-        /// 读取整合包
-        ///
-        /// Resource: `Discovery.discovery.readModpack`.
-        public static var readModpack: LocalizedMessage {
-            .init(key: "discovery.readModpack", table: "Discovery", fallback: "读取整合包")
-        }
-        /// 创建并安装
-        ///
-        /// Resource: `Discovery.discovery.createAndInstall`.
-        public static var createAndInstall: LocalizedMessage {
-            .init(key: "discovery.createAndInstall", table: "Discovery", fallback: "创建并安装")
-        }
-        /// 安装
-        ///
-        /// Resource: `Discovery.discovery.confirmInstall`.
-        public static var confirmInstall: LocalizedMessage {
-            .init(key: "discovery.confirmInstall", table: "Discovery", fallback: "安装")
-        }
-        /// Ruri 会在下载完成后检查文件是否完整。
-        ///
-        /// Resource: `Discovery.discovery.verifiedDownload`.
-        public static var verifiedDownload: LocalizedMessage {
-            .init(key: "discovery.verifiedDownload", table: "Discovery", fallback: "Ruri 会在下载完成后检查文件是否完整。")
+            .init(key: "Discovery.checkingDependencies", table: "Discovery", fallback: "正在检查依赖…")
         }
         /// 选择安装实例
         ///
-        /// Resource: `Discovery.discovery.chooseInstance`.
+        /// Resource: `Discovery.Discovery.chooseInstance`.
         public static var chooseInstance: LocalizedMessage {
-            .init(key: "discovery.chooseInstance", table: "Discovery", fallback: "选择安装实例")
+            .init(key: "Discovery.chooseInstance", table: "Discovery", fallback: "选择安装实例")
         }
-        /// 显示不兼容实例
+        /// 选择保存位置…
         ///
-        /// Resource: `Discovery.discovery.showIncompatible`.
-        public static var showIncompatible: LocalizedMessage {
-            .init(key: "discovery.showIncompatible", table: "Discovery", fallback: "显示不兼容实例")
+        /// Resource: `Discovery.Discovery.chooseSaveLocation`.
+        public static var chooseSaveLocation: LocalizedMessage {
+            .init(key: "Discovery.chooseSaveLocation", table: "Discovery", fallback: "选择保存位置…")
         }
-        /// 没有适合此版本的实例。可以新建实例，或仅下载文件。
+        /// 清除筛选
         ///
-        /// Resource: `Discovery.discovery.noCompatibleInstance`.
-        public static var noCompatibleInstance: LocalizedMessage {
-            .init(key: "discovery.noCompatibleInstance", table: "Discovery", fallback: "没有适合此版本的实例。可以新建实例，或仅下载文件。")
-        }
-        /// 正在使用
-        ///
-        /// Resource: `Discovery.discovery.instanceInUse`.
-        public static var instanceInUse: LocalizedMessage {
-            .init(key: "discovery.instanceInUse", table: "Discovery", fallback: "正在使用")
-        }
-        /// 创建新实例
-        ///
-        /// Resource: `Discovery.discovery.createCompatibleInstance`.
-        public static var createCompatibleInstance: LocalizedMessage {
-            .init(key: "discovery.createCompatibleInstance", table: "Discovery", fallback: "创建新实例")
-        }
-        /// Ruri 会先安装游戏和加载器，再安装所选资源及其依赖。
-        ///
-        /// Resource: `Discovery.discovery.newInstanceNotice`.
-        public static var newInstanceNotice: LocalizedMessage {
-            .init(key: "discovery.newInstanceNotice", table: "Discovery", fallback: "Ruri 会先安装游戏和加载器，再安装所选资源及其依赖。")
-        }
-        /// 依赖检查
-        ///
-        /// Resource: `Discovery.discovery.installPreview`.
-        public static var installPreview: LocalizedMessage {
-            .init(key: "discovery.installPreview", table: "Discovery", fallback: "依赖检查")
-        }
-        /// Ruri 会自动安装所需的依赖，已安装的兼容依赖会保留。
-        ///
-        /// Resource: `Discovery.discovery.dependencyPreviewNotice`.
-        public static var dependencyPreviewNotice: LocalizedMessage {
-            .init(key: "discovery.dependencyPreviewNotice", table: "Discovery", fallback: "Ruri 会自动安装所需的依赖，已安装的兼容依赖会保留。")
-        }
-        /// 替换现有版本：%1$@
-        ///
-        /// Resource: `Discovery.discovery.replacingVersion`.
-        public static func replacingVersion(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.replacingVersion", table: "Discovery", fallback: "替换现有版本：%1$@", arguments: [.text(value0)])
-        }
-        /// Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。
-        ///
-        /// Resource: `Discovery.discovery.untrackedNotice`.
-        public static func untrackedNotice(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "discovery.untrackedNotice", table: "Discovery", fallback: "Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。", arguments: [.integer(value0)])
-        }
-        /// 实例的游戏版本或加载器已更改，请重新选择实例。
-        ///
-        /// Resource: `Discovery.discovery.instanceChanged`.
-        public static var instanceChanged: LocalizedMessage {
-            .init(key: "discovery.instanceChanged", table: "Discovery", fallback: "实例的游戏版本或加载器已更改，请重新选择实例。")
-        }
-        /// 正在安装到 %1$@
-        ///
-        /// Resource: `Discovery.discovery.installingInto`.
-        public static func installingInto(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.installingInto", table: "Discovery", fallback: "正在安装到 %1$@", arguments: [.text(value0)])
-        }
-        /// 已完成 %1$@ 的资源安装。
-        ///
-        /// Resource: `Discovery.discovery.installComplete`.
-        public static func installComplete(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.installComplete", table: "Discovery", fallback: "已完成 %1$@ 的资源安装。", arguments: [.text(value0)])
-        }
-        /// 正在下载 %1$@
-        ///
-        /// Resource: `Discovery.discovery.downloadingFile`.
-        public static func downloadingFile(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.downloadingFile", table: "Discovery", fallback: "正在下载 %1$@", arguments: [.text(value0)])
-        }
-        /// 无法保存文件，请检查目标位置的权限。
-        ///
-        /// Resource: `Discovery.discovery.saveFailed`.
-        public static var saveFailed: LocalizedMessage {
-            .init(key: "discovery.saveFailed", table: "Discovery", fallback: "无法保存文件，请检查目标位置的权限。")
-        }
-        /// 已保存 %1$@。
-        ///
-        /// Resource: `Discovery.discovery.savedFile`.
-        public static func savedFile(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.savedFile", table: "Discovery", fallback: "已保存 %1$@。", arguments: [.text(value0)])
-        }
-        /// 查看下载
-        ///
-        /// Resource: `Discovery.discovery.viewDownloads`.
-        public static var viewDownloads: LocalizedMessage {
-            .init(key: "discovery.viewDownloads", table: "Discovery", fallback: "查看下载")
-        }
-        /// 不限
-        ///
-        /// Resource: `Discovery.discovery.unrestricted`.
-        public static var unrestricted: LocalizedMessage {
-            .init(key: "discovery.unrestricted", table: "Discovery", fallback: "不限")
-        }
-        /// 支持的游戏版本：%1$@
-        ///
-        /// Resource: `Discovery.discovery.supportedGameVersions`.
-        public static func supportedGameVersions(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.supportedGameVersions", table: "Discovery", fallback: "支持的游戏版本：%1$@", arguments: [.text(value0)])
-        }
-        /// 支持的加载器：%1$@
-        ///
-        /// Resource: `Discovery.discovery.supportedLoaders`.
-        public static func supportedLoaders(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.supportedLoaders", table: "Discovery", fallback: "支持的加载器：%1$@", arguments: [.text(value0)])
-        }
-        /// 按实例筛选
-        ///
-        /// Resource: `Discovery.discovery.filterByInstance`.
-        public static var filterByInstance: LocalizedMessage {
-            .init(key: "discovery.filterByInstance", table: "Discovery", fallback: "按实例筛选")
-        }
-        /// 不按实例筛选
-        ///
-        /// Resource: `Discovery.discovery.noInstanceFilter`.
-        public static var noInstanceFilter: LocalizedMessage {
-            .init(key: "discovery.noInstanceFilter", table: "Discovery", fallback: "不按实例筛选")
-        }
-        /// 选择实例后，按它的游戏版本和加载器筛选。
-        ///
-        /// Resource: `Discovery.discovery.instanceFilterHint`.
-        public static var instanceFilterHint: LocalizedMessage {
-            .init(key: "discovery.instanceFilterHint", table: "Discovery", fallback: "选择实例后，按它的游戏版本和加载器筛选。")
-        }
-        /// 正在为「%1$@」筛选
-        ///
-        /// Resource: `Discovery.discovery.filteringForInstance`.
-        public static func filteringForInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.filteringForInstance", table: "Discovery", fallback: "正在为「%1$@」筛选", arguments: [.text(value0)])
+        /// Resource: `Discovery.Discovery.clearFilters`.
+        public static var clearFilters: LocalizedMessage {
+            .init(key: "Discovery.clearFilters", table: "Discovery", fallback: "清除筛选")
         }
         /// 取消实例筛选
         ///
-        /// Resource: `Discovery.discovery.clearInstanceFilter`.
+        /// Resource: `Discovery.Discovery.clearInstanceFilter`.
         public static var clearInstanceFilter: LocalizedMessage {
-            .init(key: "discovery.clearInstanceFilter", table: "Discovery", fallback: "取消实例筛选")
-        }
-        /// 在默认浏览器中打开 %1$@ 项目页面
-        ///
-        /// Resource: `Discovery.discovery.openProviderWebsite`.
-        public static func openProviderWebsite(_ value0: String) -> LocalizedMessage {
-            .init(key: "discovery.openProviderWebsite", table: "Discovery", fallback: "在默认浏览器中打开 %1$@ 项目页面", arguments: [.text(value0)])
-        }
-        /// 已展开
-        ///
-        /// Resource: `Discovery.discovery.groupExpanded`.
-        public static var groupExpanded: LocalizedMessage {
-            .init(key: "discovery.groupExpanded", table: "Discovery", fallback: "已展开")
-        }
-        /// 已折叠
-        ///
-        /// Resource: `Discovery.discovery.groupCollapsed`.
-        public static var groupCollapsed: LocalizedMessage {
-            .init(key: "discovery.groupCollapsed", table: "Discovery", fallback: "已折叠")
+            .init(key: "Discovery.clearInstanceFilter", table: "Discovery", fallback: "取消实例筛选")
         }
         /// 折叠此游戏版本
         ///
-        /// Resource: `Discovery.discovery.collapseGroup`.
+        /// Resource: `Discovery.Discovery.collapseGroup`.
         public static var collapseGroup: LocalizedMessage {
-            .init(key: "discovery.collapseGroup", table: "Discovery", fallback: "折叠此游戏版本")
+            .init(key: "Discovery.collapseGroup", table: "Discovery", fallback: "折叠此游戏版本")
+        }
+        /// 安装
+        ///
+        /// Resource: `Discovery.Discovery.confirmInstall`.
+        public static var confirmInstall: LocalizedMessage {
+            .init(key: "Discovery.confirmInstall", table: "Discovery", fallback: "安装")
+        }
+        /// 实例中的资源已更改，请重新检查后再安装。
+        ///
+        /// Resource: `Discovery.Discovery.contentChanged`.
+        public static var contentChanged: LocalizedMessage {
+            .init(key: "Discovery.contentChanged", table: "Discovery", fallback: "实例中的资源已更改，请重新检查后再安装。")
+        }
+        /// 创建并安装
+        ///
+        /// Resource: `Discovery.Discovery.createAndInstall`.
+        public static var createAndInstall: LocalizedMessage {
+            .init(key: "Discovery.createAndInstall", table: "Discovery", fallback: "创建并安装")
+        }
+        /// 创建新实例
+        ///
+        /// Resource: `Discovery.Discovery.createCompatibleInstance`.
+        public static var createCompatibleInstance: LocalizedMessage {
+            .init(key: "Discovery.createCompatibleInstance", table: "Discovery", fallback: "创建新实例")
+        }
+        /// 找不到版本时，可输入完整版本号并按回车。
+        ///
+        /// Resource: `Discovery.Discovery.customVersionHint`.
+        public static var customVersionHint: LocalizedMessage {
+            .init(key: "Discovery.customVersionHint", table: "Discovery", fallback: "找不到版本时，可输入完整版本号并按回车。")
+        }
+        /// 依赖关系
+        ///
+        /// Resource: `Discovery.Discovery.dependencies`.
+        public static var dependencies: LocalizedMessage {
+            .init(key: "Discovery.dependencies", table: "Discovery", fallback: "依赖关系")
+        }
+        /// Ruri 会自动安装所需的依赖，已安装的兼容依赖会保留。
+        ///
+        /// Resource: `Discovery.Discovery.dependencyPreviewNotice`.
+        public static var dependencyPreviewNotice: LocalizedMessage {
+            .init(key: "Discovery.dependencyPreviewNotice", table: "Discovery", fallback: "Ruri 会自动安装所需的依赖，已安装的兼容依赖会保留。")
+        }
+        /// 以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。
+        ///
+        /// Resource: `Discovery.Discovery.dependencyVersionNotice`.
+        public static var dependencyVersionNotice: LocalizedMessage {
+            .init(key: "Discovery.dependencyVersionNotice", table: "Discovery", fallback: "以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。")
+        }
+        /// 下载到
+        ///
+        /// Resource: `Discovery.Discovery.destination`.
+        public static var destination: LocalizedMessage {
+            .init(key: "Discovery.destination", table: "Discovery", fallback: "下载到")
+        }
+        /// 完成
+        ///
+        /// Resource: `Discovery.Discovery.done`.
+        public static var done: LocalizedMessage {
+            .init(key: "Discovery.done", table: "Discovery", fallback: "完成")
+        }
+        /// 下载游戏
+        ///
+        /// Resource: `Discovery.Discovery.downloadGame`.
+        public static var downloadGame: LocalizedMessage {
+            .init(key: "Discovery.downloadGame", table: "Discovery", fallback: "下载游戏")
+        }
+        /// 正在下载 %1$@
+        ///
+        /// Resource: `Discovery.Discovery.downloadingFile`.
+        public static func downloadingFile(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.downloadingFile", table: "Discovery", fallback: "正在下载 %1$@", arguments: [.text(value0)])
+        }
+        /// 已内置
+        ///
+        /// Resource: `Discovery.Discovery.embedded`.
+        public static var embedded: LocalizedMessage {
+            .init(key: "Discovery.embedded", table: "Discovery", fallback: "已内置")
+        }
+        /// 已有实例
+        ///
+        /// Resource: `Discovery.Discovery.existingInstance`.
+        public static var existingInstance: LocalizedMessage {
+            .init(key: "Discovery.existingInstance", table: "Discovery", fallback: "已有实例")
         }
         /// 展开此游戏版本
         ///
-        /// Resource: `Discovery.discovery.expandGroup`.
+        /// Resource: `Discovery.Discovery.expandGroup`.
         public static var expandGroup: LocalizedMessage {
-            .init(key: "discovery.expandGroup", table: "Discovery", fallback: "展开此游戏版本")
+            .init(key: "Discovery.expandGroup", table: "Discovery", fallback: "展开此游戏版本")
+        }
+        /// 仅下载文件时，依赖需自行安装。你可以在“文件详情”中查看所需的依赖。
+        ///
+        /// Resource: `Discovery.Discovery.fileDependenciesNotice`.
+        public static var fileDependenciesNotice: LocalizedMessage {
+            .init(key: "Discovery.fileDependenciesNotice", table: "Discovery", fallback: "仅下载文件时，依赖需自行安装。你可以在“文件详情”中查看所需的依赖。")
+        }
+        /// 文件详情
+        ///
+        /// Resource: `Discovery.Discovery.fileDetails`.
+        public static var fileDetails: LocalizedMessage {
+            .init(key: "Discovery.fileDetails", table: "Discovery", fallback: "文件详情")
+        }
+        /// 按实例筛选
+        ///
+        /// Resource: `Discovery.Discovery.filterByInstance`.
+        public static var filterByInstance: LocalizedMessage {
+            .init(key: "Discovery.filterByInstance", table: "Discovery", fallback: "按实例筛选")
+        }
+        /// 正在为「%1$@」筛选
+        ///
+        /// Resource: `Discovery.Discovery.filteringForInstance`.
+        public static func filteringForInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.filteringForInstance", table: "Discovery", fallback: "正在为「%1$@」筛选", arguments: [.text(value0)])
+        }
+        /// 搜索或输入游戏版本
+        ///
+        /// Resource: `Discovery.Discovery.findGameVersion`.
+        public static var findGameVersion: LocalizedMessage {
+            .init(key: "Discovery.findGameVersion", table: "Discovery", fallback: "搜索或输入游戏版本")
+        }
+        /// 图库
+        ///
+        /// Resource: `Discovery.Discovery.gallery`.
+        public static var gallery: LocalizedMessage {
+            .init(key: "Discovery.gallery", table: "Discovery", fallback: "图库")
+        }
+        /// 游戏版本
+        ///
+        /// Resource: `Discovery.Discovery.gameVersion`.
+        public static var gameVersion: LocalizedMessage {
+            .init(key: "Discovery.gameVersion", table: "Discovery", fallback: "游戏版本")
+        }
+        /// 获取
+        ///
+        /// Resource: `Discovery.Discovery.getVersions`.
+        public static var getVersions: LocalizedMessage {
+            .init(key: "Discovery.getVersions", table: "Discovery", fallback: "获取")
+        }
+        /// 已折叠
+        ///
+        /// Resource: `Discovery.Discovery.groupCollapsed`.
+        public static var groupCollapsed: LocalizedMessage {
+            .init(key: "Discovery.groupCollapsed", table: "Discovery", fallback: "已折叠")
+        }
+        /// 已展开
+        ///
+        /// Resource: `Discovery.Discovery.groupExpanded`.
+        public static var groupExpanded: LocalizedMessage {
+            .init(key: "Discovery.groupExpanded", table: "Discovery", fallback: "已展开")
+        }
+        /// 不兼容
+        ///
+        /// Resource: `Discovery.Discovery.incompatible`.
+        public static var incompatible: LocalizedMessage {
+            .init(key: "Discovery.incompatible", table: "Discovery", fallback: "不兼容")
+        }
+        /// 游戏版本或加载器不兼容
+        ///
+        /// Resource: `Discovery.Discovery.incompatibleTarget`.
+        public static var incompatibleTarget: LocalizedMessage {
+            .init(key: "Discovery.incompatibleTarget", table: "Discovery", fallback: "游戏版本或加载器不兼容")
+        }
+        /// 已完成 %1$@ 的资源安装。
+        ///
+        /// Resource: `Discovery.Discovery.installComplete`.
+        public static func installComplete(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.installComplete", table: "Discovery", fallback: "已完成 %1$@ 的资源安装。", arguments: [.text(value0)])
+        }
+        /// 安装或下载…
+        ///
+        /// Resource: `Discovery.Discovery.installOrSave`.
+        public static var installOrSave: LocalizedMessage {
+            .init(key: "Discovery.installOrSave", table: "Discovery", fallback: "安装或下载…")
+        }
+        /// 依赖检查
+        ///
+        /// Resource: `Discovery.Discovery.installPreview`.
+        public static var installPreview: LocalizedMessage {
+            .init(key: "Discovery.installPreview", table: "Discovery", fallback: "依赖检查")
+        }
+        /// %1$lld 个文件 · 需下载 %2$@
+        ///
+        /// Resource: `Discovery.Discovery.installSummary`.
+        public static func installSummary(_ value0: Int64, _ value1: String) -> LocalizedMessage {
+            .init(key: "Discovery.installSummary", table: "Discovery", fallback: "%1$lld 个文件 · 需下载 %2$@", arguments: [.integer(value0), .text(value1)])
+        }
+        /// 正在安装到 %1$@
+        ///
+        /// Resource: `Discovery.Discovery.installingInto`.
+        public static func installingInto(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.installingInto", table: "Discovery", fallback: "正在安装到 %1$@", arguments: [.text(value0)])
+        }
+        /// 实例的游戏版本或加载器已更改，请重新选择实例。
+        ///
+        /// Resource: `Discovery.Discovery.instanceChanged`.
+        public static var instanceChanged: LocalizedMessage {
+            .init(key: "Discovery.instanceChanged", table: "Discovery", fallback: "实例的游戏版本或加载器已更改，请重新选择实例。")
+        }
+        /// 选择实例后，按它的游戏版本和加载器筛选。
+        ///
+        /// Resource: `Discovery.Discovery.instanceFilterHint`.
+        public static var instanceFilterHint: LocalizedMessage {
+            .init(key: "Discovery.instanceFilterHint", table: "Discovery", fallback: "选择实例后，按它的游戏版本和加载器筛选。")
+        }
+        /// 正在使用
+        ///
+        /// Resource: `Discovery.Discovery.instanceInUse`.
+        public static var instanceInUse: LocalizedMessage {
+            .init(key: "Discovery.instanceInUse", table: "Discovery", fallback: "正在使用")
+        }
+        /// 问题反馈
+        ///
+        /// Resource: `Discovery.Discovery.issues`.
+        public static var issues: LocalizedMessage {
+            .init(key: "Discovery.issues", table: "Discovery", fallback: "问题反馈")
+        }
+        /// 显示方式
+        ///
+        /// Resource: `Discovery.Discovery.layout`.
+        public static var layout: LocalizedMessage {
+            .init(key: "Discovery.layout", table: "Discovery", fallback: "显示方式")
+        }
+        /// 载入更多
+        ///
+        /// Resource: `Discovery.Discovery.loadMore`.
+        public static var loadMore: LocalizedMessage {
+            .init(key: "Discovery.loadMore", table: "Discovery", fallback: "载入更多")
+        }
+        /// 已载入 %1$lld / %2$lld 个文件
+        ///
+        /// Resource: `Discovery.Discovery.loadedVersions`.
+        public static func loadedVersions(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
+            .init(key: "Discovery.loadedVersions", table: "Discovery", fallback: "已载入 %1$lld / %2$lld 个文件", arguments: [.integer(value0), .integer(value1)])
+        }
+        /// 加载器
+        ///
+        /// Resource: `Discovery.Discovery.loader`.
+        public static var loader: LocalizedMessage {
+            .init(key: "Discovery.loader", table: "Discovery", fallback: "加载器")
+        }
+        /// 未提供加载器
+        ///
+        /// Resource: `Discovery.Discovery.loadersUnknown`.
+        public static var loadersUnknown: LocalizedMessage {
+            .init(key: "Discovery.loadersUnknown", table: "Discovery", fallback: "未提供加载器")
+        }
+        /// 正在载入更新日志…
+        ///
+        /// Resource: `Discovery.Discovery.loadingChangelog`.
+        public static var loadingChangelog: LocalizedMessage {
+            .init(key: "Discovery.loadingChangelog", table: "Discovery", fallback: "正在载入更新日志…")
+        }
+        /// 正在载入项目详情…
+        ///
+        /// Resource: `Discovery.Discovery.loadingDetail`.
+        public static var loadingDetail: LocalizedMessage {
+            .init(key: "Discovery.loadingDetail", table: "Discovery", fallback: "正在载入项目详情…")
+        }
+        /// 正在载入版本…
+        ///
+        /// Resource: `Discovery.Discovery.loadingVersions`.
+        public static var loadingVersions: LocalizedMessage {
+            .init(key: "Discovery.loadingVersions", table: "Discovery", fallback: "正在载入版本…")
+        }
+        /// 匹配当前实例
+        ///
+        /// Resource: `Discovery.Discovery.matchInstance`.
+        public static var matchInstance: LocalizedMessage {
+            .init(key: "Discovery.matchInstance", table: "Discovery", fallback: "匹配当前实例")
+        }
+        /// Minecraft %1$@
+        ///
+        /// Resource: `Discovery.Discovery.minecraftVersion`.
+        public static func minecraftVersion(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.minecraftVersion", table: "Discovery", fallback: "Minecraft %1$@", arguments: [.text(value0)])
+        }
+        /// Ruri 会先读取整合包，再让你确认实例名称和安装内容。
+        ///
+        /// Resource: `Discovery.Discovery.modpackImportNotice`.
+        public static var modpackImportNotice: LocalizedMessage {
+            .init(key: "Discovery.modpackImportNotice", table: "Discovery", fallback: "Ruri 会先读取整合包，再让你确认实例名称和安装内容。")
+        }
+        /// 下载最多
+        ///
+        /// Resource: `Discovery.Discovery.mostDownloads`.
+        public static var mostDownloads: LocalizedMessage {
+            .init(key: "Discovery.mostDownloads", table: "Discovery", fallback: "下载最多")
+        }
+        /// 新建实例
+        ///
+        /// Resource: `Discovery.Discovery.newInstance`.
+        public static var newInstance: LocalizedMessage {
+            .init(key: "Discovery.newInstance", table: "Discovery", fallback: "新建实例")
+        }
+        /// Ruri 会先安装游戏和加载器，再安装所选资源及其依赖。
+        ///
+        /// Resource: `Discovery.Discovery.newInstanceNotice`.
+        public static var newInstanceNotice: LocalizedMessage {
+            .init(key: "Discovery.newInstanceNotice", table: "Discovery", fallback: "Ruri 会先安装游戏和加载器，再安装所选资源及其依赖。")
+        }
+        /// 最新发布
+        ///
+        /// Resource: `Discovery.Discovery.newest`.
+        public static var newest: LocalizedMessage {
+            .init(key: "Discovery.newest", table: "Discovery", fallback: "最新发布")
+        }
+        /// 作者尚未提供此版本的更新日志
+        ///
+        /// Resource: `Discovery.Discovery.noChangelog`.
+        public static var noChangelog: LocalizedMessage {
+            .init(key: "Discovery.noChangelog", table: "Discovery", fallback: "作者尚未提供此版本的更新日志")
+        }
+        /// 没有适合此版本的实例。可以新建实例，或仅下载文件。
+        ///
+        /// Resource: `Discovery.Discovery.noCompatibleInstance`.
+        public static var noCompatibleInstance: LocalizedMessage {
+            .init(key: "Discovery.noCompatibleInstance", table: "Discovery", fallback: "没有适合此版本的实例。可以新建实例，或仅下载文件。")
+        }
+        /// 作者未列出此版本的依赖
+        ///
+        /// Resource: `Discovery.Discovery.noDependencies`.
+        public static var noDependencies: LocalizedMessage {
+            .init(key: "Discovery.noDependencies", table: "Discovery", fallback: "作者未列出此版本的依赖")
+        }
+        /// 作者尚未提供详细介绍
+        ///
+        /// Resource: `Discovery.Discovery.noDescription`.
+        public static var noDescription: LocalizedMessage {
+            .init(key: "Discovery.noDescription", table: "Discovery", fallback: "作者尚未提供详细介绍")
+        }
+        /// 作者尚未上传截图
+        ///
+        /// Resource: `Discovery.Discovery.noGallery`.
+        public static var noGallery: LocalizedMessage {
+            .init(key: "Discovery.noGallery", table: "Discovery", fallback: "作者尚未上传截图")
+        }
+        /// 不按实例筛选
+        ///
+        /// Resource: `Discovery.Discovery.noInstanceFilter`.
+        public static var noInstanceFilter: LocalizedMessage {
+            .init(key: "Discovery.noInstanceFilter", table: "Discovery", fallback: "不按实例筛选")
+        }
+        /// 没有符合条件的版本
+        ///
+        /// Resource: `Discovery.Discovery.noVersions`.
+        public static var noVersions: LocalizedMessage {
+            .init(key: "Discovery.noVersions", table: "Discovery", fallback: "没有符合条件的版本")
+        }
+        /// 尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。
+        ///
+        /// Resource: `Discovery.Discovery.noVersionsHint`.
+        public static var noVersionsHint: LocalizedMessage {
+            .init(key: "Discovery.noVersionsHint", table: "Discovery", fallback: "尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。")
+        }
+        /// 查看原图
+        ///
+        /// Resource: `Discovery.Discovery.openImage`.
+        public static var openImage: LocalizedMessage {
+            .init(key: "Discovery.openImage", table: "Discovery", fallback: "查看原图")
+        }
+        /// 在默认浏览器中打开 %1$@ 项目页面
+        ///
+        /// Resource: `Discovery.Discovery.openProviderWebsite`.
+        public static func openProviderWebsite(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.openProviderWebsite", table: "Discovery", fallback: "在默认浏览器中打开 %1$@ 项目页面", arguments: [.text(value0)])
+        }
+        /// 在网站查看
+        ///
+        /// Resource: `Discovery.Discovery.openWebsite`.
+        public static var openWebsite: LocalizedMessage {
+            .init(key: "Discovery.openWebsite", table: "Discovery", fallback: "在网站查看")
+        }
+        /// 可选依赖
+        ///
+        /// Resource: `Discovery.Discovery.optionalDependency`.
+        public static var optionalDependency: LocalizedMessage {
+            .init(key: "Discovery.optionalDependency", table: "Discovery", fallback: "可选依赖")
+        }
+        /// 简介
+        ///
+        /// Resource: `Discovery.Discovery.overview`.
+        public static var overview: LocalizedMessage {
+            .init(key: "Discovery.overview", table: "Discovery", fallback: "简介")
+        }
+        /// %1$lld–%2$lld，共 %3$lld 个
+        ///
+        /// Resource: `Discovery.Discovery.pageRange`.
+        public static func pageRange(_ value0: Int64, _ value1: Int64, _ value2: Int64) -> LocalizedMessage {
+            .init(key: "Discovery.pageRange", table: "Discovery", fallback: "%1$lld–%2$lld，共 %3$lld 个", arguments: [.integer(value0), .integer(value1), .integer(value2)])
+        }
+        /// 指定版本
+        ///
+        /// Resource: `Discovery.Discovery.pinnedVersion`.
+        public static var pinnedVersion: LocalizedMessage {
+            .init(key: "Discovery.pinnedVersion", table: "Discovery", fallback: "指定版本")
+        }
+        /// 项目内容
+        ///
+        /// Resource: `Discovery.Discovery.projectSections`.
+        public static var projectSections: LocalizedMessage {
+            .init(key: "Discovery.projectSections", table: "Discovery", fallback: "项目内容")
+        }
+        /// 读取整合包
+        ///
+        /// Resource: `Discovery.Discovery.readModpack`.
+        public static var readModpack: LocalizedMessage {
+            .init(key: "Discovery.readModpack", table: "Discovery", fallback: "读取整合包")
+        }
+        /// 最近更新
+        ///
+        /// Resource: `Discovery.Discovery.recentlyUpdated`.
+        public static var recentlyUpdated: LocalizedMessage {
+            .init(key: "Discovery.recentlyUpdated", table: "Discovery", fallback: "最近更新")
+        }
+        /// 刷新
+        ///
+        /// Resource: `Discovery.Discovery.refresh`.
+        public static var refresh: LocalizedMessage {
+            .init(key: "Discovery.refresh", table: "Discovery", fallback: "刷新")
+        }
+        /// 正式版
+        ///
+        /// Resource: `Discovery.Discovery.release`.
+        public static var release: LocalizedMessage {
+            .init(key: "Discovery.release", table: "Discovery", fallback: "正式版")
+        }
+        /// 发布类型
+        ///
+        /// Resource: `Discovery.Discovery.releaseChannel`.
+        public static var releaseChannel: LocalizedMessage {
+            .init(key: "Discovery.releaseChannel", table: "Discovery", fallback: "发布类型")
+        }
+        /// 相关程度
+        ///
+        /// Resource: `Discovery.Discovery.relevance`.
+        public static var relevance: LocalizedMessage {
+            .init(key: "Discovery.relevance", table: "Discovery", fallback: "相关程度")
+        }
+        /// 替换现有版本：%1$@
+        ///
+        /// Resource: `Discovery.Discovery.replacingVersion`.
+        public static func replacingVersion(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.replacingVersion", table: "Discovery", fallback: "替换现有版本：%1$@", arguments: [.text(value0)])
+        }
+        /// 必需依赖
+        ///
+        /// Resource: `Discovery.Discovery.requiredDependency`.
+        public static var requiredDependency: LocalizedMessage {
+            .init(key: "Discovery.requiredDependency", table: "Discovery", fallback: "必需依赖")
+        }
+        /// 共 %1$lld 个项目
+        ///
+        /// Resource: `Discovery.Discovery.resultCount`.
+        public static func resultCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "Discovery.resultCount", table: "Discovery", fallback: "共 %1$lld 个项目", arguments: [.integer(value0)])
+        }
+        /// 无法保存文件，请检查目标位置的权限。
+        ///
+        /// Resource: `Discovery.Discovery.saveFailed`.
+        public static var saveFailed: LocalizedMessage {
+            .init(key: "Discovery.saveFailed", table: "Discovery", fallback: "无法保存文件，请检查目标位置的权限。")
+        }
+        /// 仅下载文件
+        ///
+        /// Resource: `Discovery.Discovery.saveFile`.
+        public static var saveFile: LocalizedMessage {
+            .init(key: "Discovery.saveFile", table: "Discovery", fallback: "仅下载文件")
+        }
+        /// 选择文件的保存位置，之后可以手动安装。
+        ///
+        /// Resource: `Discovery.Discovery.saveFileNotice`.
+        public static var saveFileNotice: LocalizedMessage {
+            .init(key: "Discovery.saveFileNotice", table: "Discovery", fallback: "选择文件的保存位置，之后可以手动安装。")
+        }
+        /// 已保存 %1$@。
+        ///
+        /// Resource: `Discovery.Discovery.savedFile`.
+        public static func savedFile(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.savedFile", table: "Discovery", fallback: "已保存 %1$@。", arguments: [.text(value0)])
+        }
+        /// 搜索已载入的版本或文件名
+        ///
+        /// Resource: `Discovery.Discovery.searchLoadedVersions`.
+        public static var searchLoadedVersions: LocalizedMessage {
+            .init(key: "Discovery.searchLoadedVersions", table: "Discovery", fallback: "搜索已载入的版本或文件名")
+        }
+        /// 正在搜索…
+        ///
+        /// Resource: `Discovery.Discovery.searching`.
+        public static var searching: LocalizedMessage {
+            .init(key: "Discovery.searching", table: "Discovery", fallback: "正在搜索…")
+        }
+        /// 显示不兼容实例
+        ///
+        /// Resource: `Discovery.Discovery.showIncompatible`.
+        public static var showIncompatible: LocalizedMessage {
+            .init(key: "Discovery.showIncompatible", table: "Discovery", fallback: "显示不兼容实例")
+        }
+        /// 当前显示上次成功载入的结果。
+        ///
+        /// Resource: `Discovery.Discovery.showingPreviousResults`.
+        public static var showingPreviousResults: LocalizedMessage {
+            .init(key: "Discovery.showingPreviousResults", table: "Discovery", fallback: "当前显示上次成功载入的结果。")
+        }
+        /// 排序
+        ///
+        /// Resource: `Discovery.Discovery.sort`.
+        public static var sort: LocalizedMessage {
+            .init(key: "Discovery.sort", table: "Discovery", fallback: "排序")
+        }
+        /// 源代码
+        ///
+        /// Resource: `Discovery.Discovery.sourceCode`.
+        public static var sourceCode: LocalizedMessage {
+            .init(key: "Discovery.sourceCode", table: "Discovery", fallback: "源代码")
+        }
+        /// 支持的游戏版本：%1$@
+        ///
+        /// Resource: `Discovery.Discovery.supportedGameVersions`.
+        public static func supportedGameVersions(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.supportedGameVersions", table: "Discovery", fallback: "支持的游戏版本：%1$@", arguments: [.text(value0)])
+        }
+        /// 支持的加载器：%1$@
+        ///
+        /// Resource: `Discovery.Discovery.supportedLoaders`.
+        public static func supportedLoaders(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.supportedLoaders", table: "Discovery", fallback: "支持的加载器：%1$@", arguments: [.text(value0)])
+        }
+        /// 工具
+        ///
+        /// Resource: `Discovery.Discovery.tool`.
+        public static var tool: LocalizedMessage {
+            .init(key: "Discovery.tool", table: "Discovery", fallback: "工具")
+        }
+        /// 未知依赖
+        ///
+        /// Resource: `Discovery.Discovery.unknownDependency`.
+        public static var unknownDependency: LocalizedMessage {
+            .init(key: "Discovery.unknownDependency", table: "Discovery", fallback: "未知依赖")
+        }
+        /// 不限
+        ///
+        /// Resource: `Discovery.Discovery.unrestricted`.
+        public static var unrestricted: LocalizedMessage {
+            .init(key: "Discovery.unrestricted", table: "Discovery", fallback: "不限")
+        }
+        /// Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。
+        ///
+        /// Resource: `Discovery.Discovery.untrackedNotice`.
+        public static func untrackedNotice(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "Discovery.untrackedNotice", table: "Discovery", fallback: "Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。", arguments: [.integer(value0)])
+        }
+        /// 更新于 %1$@
+        ///
+        /// Resource: `Discovery.Discovery.updatedOn`.
+        public static func updatedOn(_ value0: String) -> LocalizedMessage {
+            .init(key: "Discovery.updatedOn", table: "Discovery", fallback: "更新于 %1$@", arguments: [.text(value0)])
+        }
+        /// Ruri 会在下载完成后检查文件是否完整。
+        ///
+        /// Resource: `Discovery.Discovery.verifiedDownload`.
+        public static var verifiedDownload: LocalizedMessage {
+            .init(key: "Discovery.verifiedDownload", table: "Discovery", fallback: "Ruri 会在下载完成后检查文件是否完整。")
+        }
+        /// 所选文件不属于当前项目，请重新载入版本列表。
+        ///
+        /// Resource: `Discovery.Discovery.versionProjectMismatch`.
+        public static var versionProjectMismatch: LocalizedMessage {
+            .init(key: "Discovery.versionProjectMismatch", table: "Discovery", fallback: "所选文件不属于当前项目，请重新载入版本列表。")
+        }
+        /// 版本
+        ///
+        /// Resource: `Discovery.Discovery.versions`.
+        public static var versions: LocalizedMessage {
+            .init(key: "Discovery.versions", table: "Discovery", fallback: "版本")
+        }
+        /// 未提供游戏版本
+        ///
+        /// Resource: `Discovery.Discovery.versionsUnknown`.
+        public static var versionsUnknown: LocalizedMessage {
+            .init(key: "Discovery.versionsUnknown", table: "Discovery", fallback: "未提供游戏版本")
+        }
+        /// 查看下载
+        ///
+        /// Resource: `Discovery.Discovery.viewDownloads`.
+        public static var viewDownloads: LocalizedMessage {
+            .init(key: "Discovery.viewDownloads", table: "Discovery", fallback: "查看下载")
+        }
+        /// 查看项目
+        ///
+        /// Resource: `Discovery.Discovery.viewProject`.
+        public static var viewProject: LocalizedMessage {
+            .init(key: "Discovery.viewProject", table: "Discovery", fallback: "查看项目")
+        }
+        /// 使用文档
+        ///
+        /// Resource: `Discovery.Discovery.wiki`.
+        public static var wiki: LocalizedMessage {
+            .init(key: "Discovery.wiki", table: "Discovery", fallback: "使用文档")
+        }
+        /// 将重新启用
+        ///
+        /// Resource: `Discovery.Discovery.willEnable`.
+        public static var willEnable: LocalizedMessage {
+            .init(key: "Discovery.willEnable", table: "Discovery", fallback: "将重新启用")
+        }
+        /// 将安装
+        ///
+        /// Resource: `Discovery.Discovery.willInstall`.
+        public static var willInstall: LocalizedMessage {
+            .init(key: "Discovery.willInstall", table: "Discovery", fallback: "将安装")
+        }
+        /// 将更新
+        ///
+        /// Resource: `Discovery.Discovery.willUpdate`.
+        public static var willUpdate: LocalizedMessage {
+            .init(key: "Discovery.willUpdate", table: "Discovery", fallback: "将更新")
+        }
+        /// 将更新并启用
+        ///
+        /// Resource: `Discovery.Discovery.willUpdateAndEnable`.
+        public static var willUpdateAndEnable: LocalizedMessage {
+            .init(key: "Discovery.willUpdateAndEnable", table: "Discovery", fallback: "将更新并启用")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Discovery:discovery.applyingInstall": .init("正在安装资源…", []),
-            "Discovery:discovery.versionProjectMismatch": .init("所选文件不属于当前项目，请重新载入版本列表。", []),
-            "Discovery:discovery.willUpdateAndEnable": .init("将更新并启用", []),
-            "Discovery:discovery.showingPreviousResults": .init("当前显示上次成功载入的结果。", []),
-            "Discovery:discovery.relevance": .init("相关程度", []),
-            "Discovery:discovery.mostDownloads": .init("下载最多", []),
-            "Discovery:discovery.recentlyUpdated": .init("最近更新", []),
-            "Discovery:discovery.newest": .init("最新发布", []),
-            "Discovery:discovery.versionsUnknown": .init("未提供游戏版本", []),
-            "Discovery:discovery.loadersUnknown": .init("未提供加载器", []),
-            "Discovery:discovery.sourceCode": .init("源代码", []),
-            "Discovery:discovery.issues": .init("问题反馈", []),
-            "Discovery:discovery.wiki": .init("使用文档", []),
-            "Discovery:discovery.required": .init("必需依赖", []),
-            "Discovery:discovery.optional": .init("可选依赖", []),
-            "Discovery:discovery.incompatible": .init("不兼容", []),
-            "Discovery:discovery.embedded": .init("已内置", []),
-            "Discovery:discovery.tool": .init("工具", []),
-            "Discovery:discovery.downloadGame": .init("下载游戏", []),
-            "Discovery:discovery.refresh": .init("刷新", []),
-            "Discovery:discovery.categoriesUnavailable": .init("分类暂时不可用，仍可搜索资源。", []),
-            "Discovery:discovery.loader": .init("加载器", []),
-            "Discovery:discovery.allLoaders": .init("全部加载器", []),
-            "Discovery:discovery.category": .init("分类", []),
-            "Discovery:discovery.allCategories": .init("全部分类", []),
-            "Discovery:discovery.clearFilters": .init("清除筛选", []),
-            "Discovery:discovery.resultCount": .init("共 %1$lld 个项目", [.integer]),
-            "Discovery:discovery.searching": .init("正在搜索…", []),
-            "Discovery:discovery.sort": .init("排序", []),
-            "Discovery:discovery.layout": .init("显示方式", []),
-            "Discovery:discovery.pageRange": .init("%1$lld–%2$lld，共 %3$lld 个", [.integer, .integer, .integer]),
-            "Discovery:discovery.allGameVersions": .init("全部游戏版本", []),
-            "Discovery:discovery.minecraftVersion": .init("Minecraft %1$@", [.text]),
-            "Discovery:discovery.gameVersion": .init("游戏版本", []),
-            "Discovery:discovery.findGameVersion": .init("搜索或输入游戏版本", []),
-            "Discovery:discovery.customVersionHint": .init("找不到版本时，可输入完整版本号并按回车。", []),
-            "Discovery:discovery.categoryAdventure": .init("冒险", []),
-            "Discovery:discovery.categoryTechnology": .init("科技", []),
-            "Discovery:discovery.categoryMagic": .init("魔法", []),
-            "Discovery:discovery.categoryOptimization": .init("性能优化", []),
-            "Discovery:discovery.categoryDecoration": .init("装饰", []),
-            "Discovery:discovery.categoryUtility": .init("实用工具", []),
-            "Discovery:discovery.categoryWorldgen": .init("世界生成", []),
-            "Discovery:discovery.categoryLibrary": .init("前置库", []),
-            "Discovery:discovery.categoryStorage": .init("存储", []),
-            "Discovery:discovery.categoryEquipment": .init("装备", []),
-            "Discovery:discovery.categoryQuests": .init("任务", []),
-            "Discovery:discovery.categoryKitchenSink": .init("综合整合包", []),
-            "Discovery:discovery.projectSections": .init("项目内容", []),
-            "Discovery:discovery.overview": .init("简介", []),
-            "Discovery:discovery.versions": .init("版本", []),
-            "Discovery:discovery.gallery": .init("图库", []),
-            "Discovery:discovery.openWebsite": .init("在网站查看", []),
-            "Discovery:discovery.loadingDetail": .init("正在载入项目详情…", []),
-            "Discovery:discovery.getVersions": .init("获取", []),
-            "Discovery:discovery.updatedOn": .init("更新于 %1$@", [.text]),
-            "Discovery:discovery.noDescription": .init("作者尚未提供详细介绍", []),
-            "Discovery:discovery.noGallery": .init("作者尚未上传截图", []),
-            "Discovery:discovery.openImage": .init("查看原图", []),
-            "Discovery:discovery.searchLoadedVersions": .init("搜索已载入的版本或文件名", []),
-            "Discovery:discovery.matchInstance": .init("匹配当前实例", []),
-            "Discovery:discovery.loadingVersions": .init("正在载入版本…", []),
-            "Discovery:discovery.noVersions": .init("没有符合条件的版本", []),
-            "Discovery:discovery.noVersionsHint": .init("尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。", []),
-            "Discovery:discovery.loadedVersions": .init("已载入 %1$lld / %2$lld 个文件", [.integer, .integer]),
-            "Discovery:discovery.loadMore": .init("载入更多", []),
-            "Discovery:discovery.releaseChannel": .init("发布类型", []),
-            "Discovery:discovery.allChannels": .init("全部发布类型", []),
-            "Discovery:discovery.release": .init("正式版", []),
-            "Discovery:discovery.fileDetails": .init("文件详情", []),
-            "Discovery:discovery.installOrSave": .init("安装或下载…", []),
-            "Discovery:discovery.willInstall": .init("将安装", []),
-            "Discovery:discovery.willUpdate": .init("将更新", []),
-            "Discovery:discovery.willEnable": .init("将重新启用", []),
-            "Discovery:discovery.alreadyInstalled": .init("已安装", []),
-            "Discovery:discovery.incompatibleTarget": .init("游戏版本或加载器不兼容", []),
-            "Discovery:discovery.contentChanged": .init("实例中的资源已更改，请重新检查后再安装。", []),
-            "Discovery:discovery.dependencies": .init("依赖关系", []),
-            "Discovery:discovery.changelog": .init("更新日志", []),
-            "Discovery:discovery.noDependencies": .init("作者未列出此版本的依赖", []),
-            "Discovery:discovery.dependencyVersionNotice": .init("以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。", []),
-            "Discovery:discovery.noChangelog": .init("作者尚未提供此版本的更新日志", []),
-            "Discovery:discovery.loadingChangelog": .init("正在载入更新日志…", []),
-            "Discovery:discovery.unknownDependency": .init("未知依赖", []),
-            "Discovery:discovery.pinnedVersion": .init("指定版本", []),
-            "Discovery:discovery.viewProject": .init("查看项目", []),
-            "Discovery:discovery.done": .init("完成", []),
-            "Discovery:discovery.destination": .init("下载到", []),
-            "Discovery:discovery.existingInstance": .init("已有实例", []),
-            "Discovery:discovery.newInstance": .init("新建实例", []),
-            "Discovery:discovery.saveFile": .init("仅下载文件", []),
-            "Discovery:discovery.saveFileNotice": .init("选择文件的保存位置，之后可以手动安装。", []),
-            "Discovery:discovery.fileDependenciesNotice": .init("仅下载文件时，依赖需自行安装。你可以在“文件详情”中查看所需的依赖。", []),
-            "Discovery:discovery.modpackImportNotice": .init("Ruri 会先读取整合包，再让你确认实例名称和安装内容。", []),
-            "Discovery:discovery.checkingDependencies": .init("正在检查依赖…", []),
-            "Discovery:discovery.installSummary": .init("%1$lld 个文件 · 需下载 %2$@", [.integer, .text]),
-            "Discovery:discovery.chooseSaveLocation": .init("选择保存位置…", []),
-            "Discovery:discovery.readModpack": .init("读取整合包", []),
-            "Discovery:discovery.createAndInstall": .init("创建并安装", []),
-            "Discovery:discovery.confirmInstall": .init("安装", []),
-            "Discovery:discovery.verifiedDownload": .init("Ruri 会在下载完成后检查文件是否完整。", []),
-            "Discovery:discovery.chooseInstance": .init("选择安装实例", []),
-            "Discovery:discovery.showIncompatible": .init("显示不兼容实例", []),
-            "Discovery:discovery.noCompatibleInstance": .init("没有适合此版本的实例。可以新建实例，或仅下载文件。", []),
-            "Discovery:discovery.instanceInUse": .init("正在使用", []),
-            "Discovery:discovery.createCompatibleInstance": .init("创建新实例", []),
-            "Discovery:discovery.newInstanceNotice": .init("Ruri 会先安装游戏和加载器，再安装所选资源及其依赖。", []),
-            "Discovery:discovery.installPreview": .init("依赖检查", []),
-            "Discovery:discovery.dependencyPreviewNotice": .init("Ruri 会自动安装所需的依赖，已安装的兼容依赖会保留。", []),
-            "Discovery:discovery.replacingVersion": .init("替换现有版本：%1$@", [.text]),
-            "Discovery:discovery.untrackedNotice": .init("Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。", [.integer]),
-            "Discovery:discovery.instanceChanged": .init("实例的游戏版本或加载器已更改，请重新选择实例。", []),
-            "Discovery:discovery.installingInto": .init("正在安装到 %1$@", [.text]),
-            "Discovery:discovery.installComplete": .init("已完成 %1$@ 的资源安装。", [.text]),
-            "Discovery:discovery.downloadingFile": .init("正在下载 %1$@", [.text]),
-            "Discovery:discovery.saveFailed": .init("无法保存文件，请检查目标位置的权限。", []),
-            "Discovery:discovery.savedFile": .init("已保存 %1$@。", [.text]),
-            "Discovery:discovery.viewDownloads": .init("查看下载", []),
-            "Discovery:discovery.unrestricted": .init("不限", []),
-            "Discovery:discovery.supportedGameVersions": .init("支持的游戏版本：%1$@", [.text]),
-            "Discovery:discovery.supportedLoaders": .init("支持的加载器：%1$@", [.text]),
-            "Discovery:discovery.filterByInstance": .init("按实例筛选", []),
-            "Discovery:discovery.noInstanceFilter": .init("不按实例筛选", []),
-            "Discovery:discovery.instanceFilterHint": .init("选择实例后，按它的游戏版本和加载器筛选。", []),
-            "Discovery:discovery.filteringForInstance": .init("正在为「%1$@」筛选", [.text]),
-            "Discovery:discovery.clearInstanceFilter": .init("取消实例筛选", []),
-            "Discovery:discovery.openProviderWebsite": .init("在默认浏览器中打开 %1$@ 项目页面", [.text]),
-            "Discovery:discovery.groupExpanded": .init("已展开", []),
-            "Discovery:discovery.groupCollapsed": .init("已折叠", []),
-            "Discovery:discovery.collapseGroup": .init("折叠此游戏版本", []),
-            "Discovery:discovery.expandGroup": .init("展开此游戏版本", []),
+            "Discovery:Discovery.allCategories": .init("全部分类", []),
+            "Discovery:Discovery.allChannels": .init("全部发布类型", []),
+            "Discovery:Discovery.allGameVersions": .init("全部游戏版本", []),
+            "Discovery:Discovery.allLoaders": .init("全部加载器", []),
+            "Discovery:Discovery.alreadyInstalled": .init("已安装", []),
+            "Discovery:Discovery.applyingInstall": .init("正在安装资源…", []),
+            "Discovery:Discovery.categoriesUnavailable": .init("分类暂时不可用，仍可搜索资源。", []),
+            "Discovery:Discovery.category": .init("分类", []),
+            "Discovery:Discovery.categoryAdventure": .init("冒险", []),
+            "Discovery:Discovery.categoryDecoration": .init("装饰", []),
+            "Discovery:Discovery.categoryEquipment": .init("装备", []),
+            "Discovery:Discovery.categoryKitchenSink": .init("综合整合包", []),
+            "Discovery:Discovery.categoryLibrary": .init("前置库", []),
+            "Discovery:Discovery.categoryMagic": .init("魔法", []),
+            "Discovery:Discovery.categoryOptimization": .init("性能优化", []),
+            "Discovery:Discovery.categoryQuests": .init("任务", []),
+            "Discovery:Discovery.categoryStorage": .init("存储", []),
+            "Discovery:Discovery.categoryTechnology": .init("科技", []),
+            "Discovery:Discovery.categoryUtility": .init("实用工具", []),
+            "Discovery:Discovery.categoryWorldgen": .init("世界生成", []),
+            "Discovery:Discovery.changelog": .init("更新日志", []),
+            "Discovery:Discovery.checkingDependencies": .init("正在检查依赖…", []),
+            "Discovery:Discovery.chooseInstance": .init("选择安装实例", []),
+            "Discovery:Discovery.chooseSaveLocation": .init("选择保存位置…", []),
+            "Discovery:Discovery.clearFilters": .init("清除筛选", []),
+            "Discovery:Discovery.clearInstanceFilter": .init("取消实例筛选", []),
+            "Discovery:Discovery.collapseGroup": .init("折叠此游戏版本", []),
+            "Discovery:Discovery.confirmInstall": .init("安装", []),
+            "Discovery:Discovery.contentChanged": .init("实例中的资源已更改，请重新检查后再安装。", []),
+            "Discovery:Discovery.createAndInstall": .init("创建并安装", []),
+            "Discovery:Discovery.createCompatibleInstance": .init("创建新实例", []),
+            "Discovery:Discovery.customVersionHint": .init("找不到版本时，可输入完整版本号并按回车。", []),
+            "Discovery:Discovery.dependencies": .init("依赖关系", []),
+            "Discovery:Discovery.dependencyPreviewNotice": .init("Ruri 会自动安装所需的依赖，已安装的兼容依赖会保留。", []),
+            "Discovery:Discovery.dependencyVersionNotice": .init("以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。", []),
+            "Discovery:Discovery.destination": .init("下载到", []),
+            "Discovery:Discovery.done": .init("完成", []),
+            "Discovery:Discovery.downloadGame": .init("下载游戏", []),
+            "Discovery:Discovery.downloadingFile": .init("正在下载 %1$@", [.text]),
+            "Discovery:Discovery.embedded": .init("已内置", []),
+            "Discovery:Discovery.existingInstance": .init("已有实例", []),
+            "Discovery:Discovery.expandGroup": .init("展开此游戏版本", []),
+            "Discovery:Discovery.fileDependenciesNotice": .init("仅下载文件时，依赖需自行安装。你可以在“文件详情”中查看所需的依赖。", []),
+            "Discovery:Discovery.fileDetails": .init("文件详情", []),
+            "Discovery:Discovery.filterByInstance": .init("按实例筛选", []),
+            "Discovery:Discovery.filteringForInstance": .init("正在为「%1$@」筛选", [.text]),
+            "Discovery:Discovery.findGameVersion": .init("搜索或输入游戏版本", []),
+            "Discovery:Discovery.gallery": .init("图库", []),
+            "Discovery:Discovery.gameVersion": .init("游戏版本", []),
+            "Discovery:Discovery.getVersions": .init("获取", []),
+            "Discovery:Discovery.groupCollapsed": .init("已折叠", []),
+            "Discovery:Discovery.groupExpanded": .init("已展开", []),
+            "Discovery:Discovery.incompatible": .init("不兼容", []),
+            "Discovery:Discovery.incompatibleTarget": .init("游戏版本或加载器不兼容", []),
+            "Discovery:Discovery.installComplete": .init("已完成 %1$@ 的资源安装。", [.text]),
+            "Discovery:Discovery.installOrSave": .init("安装或下载…", []),
+            "Discovery:Discovery.installPreview": .init("依赖检查", []),
+            "Discovery:Discovery.installSummary": .init("%1$lld 个文件 · 需下载 %2$@", [.integer, .text]),
+            "Discovery:Discovery.installingInto": .init("正在安装到 %1$@", [.text]),
+            "Discovery:Discovery.instanceChanged": .init("实例的游戏版本或加载器已更改，请重新选择实例。", []),
+            "Discovery:Discovery.instanceFilterHint": .init("选择实例后，按它的游戏版本和加载器筛选。", []),
+            "Discovery:Discovery.instanceInUse": .init("正在使用", []),
+            "Discovery:Discovery.issues": .init("问题反馈", []),
+            "Discovery:Discovery.layout": .init("显示方式", []),
+            "Discovery:Discovery.loadMore": .init("载入更多", []),
+            "Discovery:Discovery.loadedVersions": .init("已载入 %1$lld / %2$lld 个文件", [.integer, .integer]),
+            "Discovery:Discovery.loader": .init("加载器", []),
+            "Discovery:Discovery.loadersUnknown": .init("未提供加载器", []),
+            "Discovery:Discovery.loadingChangelog": .init("正在载入更新日志…", []),
+            "Discovery:Discovery.loadingDetail": .init("正在载入项目详情…", []),
+            "Discovery:Discovery.loadingVersions": .init("正在载入版本…", []),
+            "Discovery:Discovery.matchInstance": .init("匹配当前实例", []),
+            "Discovery:Discovery.minecraftVersion": .init("Minecraft %1$@", [.text]),
+            "Discovery:Discovery.modpackImportNotice": .init("Ruri 会先读取整合包，再让你确认实例名称和安装内容。", []),
+            "Discovery:Discovery.mostDownloads": .init("下载最多", []),
+            "Discovery:Discovery.newInstance": .init("新建实例", []),
+            "Discovery:Discovery.newInstanceNotice": .init("Ruri 会先安装游戏和加载器，再安装所选资源及其依赖。", []),
+            "Discovery:Discovery.newest": .init("最新发布", []),
+            "Discovery:Discovery.noChangelog": .init("作者尚未提供此版本的更新日志", []),
+            "Discovery:Discovery.noCompatibleInstance": .init("没有适合此版本的实例。可以新建实例，或仅下载文件。", []),
+            "Discovery:Discovery.noDependencies": .init("作者未列出此版本的依赖", []),
+            "Discovery:Discovery.noDescription": .init("作者尚未提供详细介绍", []),
+            "Discovery:Discovery.noGallery": .init("作者尚未上传截图", []),
+            "Discovery:Discovery.noInstanceFilter": .init("不按实例筛选", []),
+            "Discovery:Discovery.noVersions": .init("没有符合条件的版本", []),
+            "Discovery:Discovery.noVersionsHint": .init("尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。", []),
+            "Discovery:Discovery.openImage": .init("查看原图", []),
+            "Discovery:Discovery.openProviderWebsite": .init("在默认浏览器中打开 %1$@ 项目页面", [.text]),
+            "Discovery:Discovery.openWebsite": .init("在网站查看", []),
+            "Discovery:Discovery.optionalDependency": .init("可选依赖", []),
+            "Discovery:Discovery.overview": .init("简介", []),
+            "Discovery:Discovery.pageRange": .init("%1$lld–%2$lld，共 %3$lld 个", [.integer, .integer, .integer]),
+            "Discovery:Discovery.pinnedVersion": .init("指定版本", []),
+            "Discovery:Discovery.projectSections": .init("项目内容", []),
+            "Discovery:Discovery.readModpack": .init("读取整合包", []),
+            "Discovery:Discovery.recentlyUpdated": .init("最近更新", []),
+            "Discovery:Discovery.refresh": .init("刷新", []),
+            "Discovery:Discovery.release": .init("正式版", []),
+            "Discovery:Discovery.releaseChannel": .init("发布类型", []),
+            "Discovery:Discovery.relevance": .init("相关程度", []),
+            "Discovery:Discovery.replacingVersion": .init("替换现有版本：%1$@", [.text]),
+            "Discovery:Discovery.requiredDependency": .init("必需依赖", []),
+            "Discovery:Discovery.resultCount": .init("共 %1$lld 个项目", [.integer]),
+            "Discovery:Discovery.saveFailed": .init("无法保存文件，请检查目标位置的权限。", []),
+            "Discovery:Discovery.saveFile": .init("仅下载文件", []),
+            "Discovery:Discovery.saveFileNotice": .init("选择文件的保存位置，之后可以手动安装。", []),
+            "Discovery:Discovery.savedFile": .init("已保存 %1$@。", [.text]),
+            "Discovery:Discovery.searchLoadedVersions": .init("搜索已载入的版本或文件名", []),
+            "Discovery:Discovery.searching": .init("正在搜索…", []),
+            "Discovery:Discovery.showIncompatible": .init("显示不兼容实例", []),
+            "Discovery:Discovery.showingPreviousResults": .init("当前显示上次成功载入的结果。", []),
+            "Discovery:Discovery.sort": .init("排序", []),
+            "Discovery:Discovery.sourceCode": .init("源代码", []),
+            "Discovery:Discovery.supportedGameVersions": .init("支持的游戏版本：%1$@", [.text]),
+            "Discovery:Discovery.supportedLoaders": .init("支持的加载器：%1$@", [.text]),
+            "Discovery:Discovery.tool": .init("工具", []),
+            "Discovery:Discovery.unknownDependency": .init("未知依赖", []),
+            "Discovery:Discovery.unrestricted": .init("不限", []),
+            "Discovery:Discovery.untrackedNotice": .init("Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。", [.integer]),
+            "Discovery:Discovery.updatedOn": .init("更新于 %1$@", [.text]),
+            "Discovery:Discovery.verifiedDownload": .init("Ruri 会在下载完成后检查文件是否完整。", []),
+            "Discovery:Discovery.versionProjectMismatch": .init("所选文件不属于当前项目，请重新载入版本列表。", []),
+            "Discovery:Discovery.versions": .init("版本", []),
+            "Discovery:Discovery.versionsUnknown": .init("未提供游戏版本", []),
+            "Discovery:Discovery.viewDownloads": .init("查看下载", []),
+            "Discovery:Discovery.viewProject": .init("查看项目", []),
+            "Discovery:Discovery.wiki": .init("使用文档", []),
+            "Discovery:Discovery.willEnable": .init("将重新启用", []),
+            "Discovery:Discovery.willInstall": .init("将安装", []),
+            "Discovery:Discovery.willUpdate": .init("将更新", []),
+            "Discovery:Discovery.willUpdateAndEnable": .init("将更新并启用", []),
         ]
     }
 }

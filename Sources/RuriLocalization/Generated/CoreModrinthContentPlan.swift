@@ -3,84 +3,84 @@ import Foundation
 
 extension Messages {
     public enum CoreModrinthContentPlan {
-        /// 模组需要已安装加载器的实例，请先创建相应实例。
+        /// 找不到兼容的必需依赖：%1$@
         ///
-        /// Resource: `Errors.coreModrinthContentPlan.planText1`.
-        public static var loaderInstanceRequired: LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.planText1", table: "Errors", fallback: "模组需要已安装加载器的实例，请先创建相应实例。")
-        }
-        /// 依赖要求同一项目的不同版本：%1$@。请选择其他兼容版本。
-        ///
-        /// Resource: `Errors.coreModrinthContentPlan.otherText1`.
-        public static func incompatibleProjectVersions(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.otherText1", table: "Errors", fallback: "依赖要求同一项目的不同版本：%1$@。请选择其他兼容版本。", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreModrinthContentPlan.compatibleDependencyMissing`.
+        public static func compatibleDependencyMissing(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreModrinthContentPlan.compatibleDependencyMissing", table: "Errors", fallback: "找不到兼容的必需依赖：%1$@", arguments: [.text(value0)])
         }
         /// 模组依赖数量超出限制
         ///
-        /// Resource: `Errors.coreModrinthContentPlan.otherText2`.
+        /// Resource: `Errors.CoreModrinthContentPlan.dependencyLimitExceeded`.
         public static var dependencyLimitExceeded: LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.otherText2", table: "Errors", fallback: "模组依赖数量超出限制")
+            .init(key: "CoreModrinthContentPlan.dependencyLimitExceeded", table: "Errors", fallback: "模组依赖数量超出限制")
         }
-        /// %1$@ 不支持 Minecraft %2$@
+        /// 依赖要求同一项目的不同版本：%1$@。请选择其他兼容版本。
         ///
-        /// Resource: `Errors.coreModrinthContentPlan.otherText3`.
-        public static func minecraftVersionUnsupported(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.otherText3", table: "Errors", fallback: "%1$@ 不支持 Minecraft %2$@", arguments: [.text(value0), .text(value1)])
+        /// Resource: `Errors.CoreModrinthContentPlan.incompatibleProjectVersions`.
+        public static func incompatibleProjectVersions(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreModrinthContentPlan.incompatibleProjectVersions", table: "Errors", fallback: "依赖要求同一项目的不同版本：%1$@。请选择其他兼容版本。", arguments: [.text(value0)])
+        }
+        /// 模组需要已安装加载器的实例，请先创建相应实例。
+        ///
+        /// Resource: `Errors.CoreModrinthContentPlan.loaderInstanceRequired`.
+        public static var loaderInstanceRequired: LocalizedMessage {
+            .init(key: "CoreModrinthContentPlan.loaderInstanceRequired", table: "Errors", fallback: "模组需要已安装加载器的实例，请先创建相应实例。")
         }
         /// %1$@ 不支持此实例的加载器
         ///
-        /// Resource: `Errors.coreModrinthContentPlan.otherText4`.
+        /// Resource: `Errors.CoreModrinthContentPlan.loaderUnsupported`.
         public static func loaderUnsupported(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.otherText4", table: "Errors", fallback: "%1$@ 不支持此实例的加载器", arguments: [.text(value0)])
+            .init(key: "CoreModrinthContentPlan.loaderUnsupported", table: "Errors", fallback: "%1$@ 不支持此实例的加载器", arguments: [.text(value0)])
         }
-        /// 找不到兼容的必需依赖：%1$@
+        /// %1$@ 不支持 Minecraft %2$@
         ///
-        /// Resource: `Errors.coreModrinthContentPlan.matchText1`.
-        public static func compatibleDependencyMissing(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.matchText1", table: "Errors", fallback: "找不到兼容的必需依赖：%1$@", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreModrinthContentPlan.minecraftVersionUnsupported`.
+        public static func minecraftVersionUnsupported(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreModrinthContentPlan.minecraftVersionUnsupported", table: "Errors", fallback: "%1$@ 不支持 Minecraft %2$@", arguments: [.text(value0), .text(value1)])
         }
         /// 必需依赖缺少下载标识
         ///
-        /// Resource: `Errors.coreModrinthContentPlan.matchText2`.
+        /// Resource: `Errors.CoreModrinthContentPlan.missingDependencyDownloadID`.
         public static var missingDependencyDownloadID: LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.matchText2", table: "Errors", fallback: "必需依赖缺少下载标识")
-        }
-        /// %1$@ 与本次选择的其他内容不兼容。
-        ///
-        /// Resource: `Errors.coreModrinthContentPlan.matchText3`.
-        public static func selectedContentIncompatible(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.matchText3", table: "Errors", fallback: "%1$@ 与本次选择的其他内容不兼容。", arguments: [.text(value0)])
-        }
-        /// %1$@ 没有可下载的文件
-        ///
-        /// Resource: `Errors.coreModrinthContentPlan.fileText1`.
-        public static func noDownloadableFile(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.fileText1", table: "Errors", fallback: "%1$@ 没有可下载的文件", arguments: [.text(value0)])
+            .init(key: "CoreModrinthContentPlan.missingDependencyDownloadID", table: "Errors", fallback: "必需依赖缺少下载标识")
         }
         /// %1$@ 缺少校验信息
         ///
-        /// Resource: `Errors.coreModrinthContentPlan.fileText2`.
+        /// Resource: `Errors.CoreModrinthContentPlan.missingFileChecksum`.
         public static func missingFileChecksum(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.fileText2", table: "Errors", fallback: "%1$@ 缺少校验信息", arguments: [.text(value0)])
+            .init(key: "CoreModrinthContentPlan.missingFileChecksum", table: "Errors", fallback: "%1$@ 缺少校验信息", arguments: [.text(value0)])
+        }
+        /// %1$@ 没有可下载的文件
+        ///
+        /// Resource: `Errors.CoreModrinthContentPlan.noDownloadableFile`.
+        public static func noDownloadableFile(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreModrinthContentPlan.noDownloadableFile", table: "Errors", fallback: "%1$@ 没有可下载的文件", arguments: [.text(value0)])
+        }
+        /// %1$@ 与本次选择的其他内容不兼容。
+        ///
+        /// Resource: `Errors.CoreModrinthContentPlan.selectedContentIncompatible`.
+        public static func selectedContentIncompatible(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreModrinthContentPlan.selectedContentIncompatible", table: "Errors", fallback: "%1$@ 与本次选择的其他内容不兼容。", arguments: [.text(value0)])
         }
         /// 下载 %1$@
         ///
-        /// Resource: `Progress.coreModrinthContentPlan.destinationText1`.
+        /// Resource: `Progress.CoreModrinthContentPlan.downloadingContent`.
         public static func downloadingContent(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreModrinthContentPlan.destinationText1", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
+            .init(key: "CoreModrinthContentPlan.downloadingContent", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreModrinthContentPlan.planText1": .init("模组需要已安装加载器的实例，请先创建相应实例。", []),
-            "Errors:coreModrinthContentPlan.otherText1": .init("依赖要求同一项目的不同版本：%1$@。请选择其他兼容版本。", [.text]),
-            "Errors:coreModrinthContentPlan.otherText2": .init("模组依赖数量超出限制", []),
-            "Errors:coreModrinthContentPlan.otherText3": .init("%1$@ 不支持 Minecraft %2$@", [.text, .text]),
-            "Errors:coreModrinthContentPlan.otherText4": .init("%1$@ 不支持此实例的加载器", [.text]),
-            "Errors:coreModrinthContentPlan.matchText1": .init("找不到兼容的必需依赖：%1$@", [.text]),
-            "Errors:coreModrinthContentPlan.matchText2": .init("必需依赖缺少下载标识", []),
-            "Errors:coreModrinthContentPlan.matchText3": .init("%1$@ 与本次选择的其他内容不兼容。", [.text]),
-            "Errors:coreModrinthContentPlan.fileText1": .init("%1$@ 没有可下载的文件", [.text]),
-            "Errors:coreModrinthContentPlan.fileText2": .init("%1$@ 缺少校验信息", [.text]),
-            "Progress:coreModrinthContentPlan.destinationText1": .init("下载 %1$@", [.text]),
+            "Errors:CoreModrinthContentPlan.compatibleDependencyMissing": .init("找不到兼容的必需依赖：%1$@", [.text]),
+            "Errors:CoreModrinthContentPlan.dependencyLimitExceeded": .init("模组依赖数量超出限制", []),
+            "Errors:CoreModrinthContentPlan.incompatibleProjectVersions": .init("依赖要求同一项目的不同版本：%1$@。请选择其他兼容版本。", [.text]),
+            "Errors:CoreModrinthContentPlan.loaderInstanceRequired": .init("模组需要已安装加载器的实例，请先创建相应实例。", []),
+            "Errors:CoreModrinthContentPlan.loaderUnsupported": .init("%1$@ 不支持此实例的加载器", [.text]),
+            "Errors:CoreModrinthContentPlan.minecraftVersionUnsupported": .init("%1$@ 不支持 Minecraft %2$@", [.text, .text]),
+            "Errors:CoreModrinthContentPlan.missingDependencyDownloadID": .init("必需依赖缺少下载标识", []),
+            "Errors:CoreModrinthContentPlan.missingFileChecksum": .init("%1$@ 缺少校验信息", [.text]),
+            "Errors:CoreModrinthContentPlan.noDownloadableFile": .init("%1$@ 没有可下载的文件", [.text]),
+            "Errors:CoreModrinthContentPlan.selectedContentIncompatible": .init("%1$@ 与本次选择的其他内容不兼容。", [.text]),
+            "Progress:CoreModrinthContentPlan.downloadingContent": .init("下载 %1$@", [.text]),
         ]
     }
 }

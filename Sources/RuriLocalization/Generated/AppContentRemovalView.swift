@@ -5,47 +5,47 @@ extension Messages {
     public enum AppContentRemovalView {
         /// 全部状态
         ///
-        /// Resource: `Interface.appContentRemovalView.titleText1`.
+        /// Resource: `Interface.AppContentRemovalView.allStatus`.
         public static var allStatus: LocalizedMessage {
-            .init(key: "appContentRemovalView.titleText1", table: "Interface", fallback: "全部状态")
-        }
-        /// 已启用
-        ///
-        /// Resource: `Interface.appContentRemovalView.titleText2`.
-        public static var enabledStatus: LocalizedMessage {
-            .init(key: "appContentRemovalView.titleText2", table: "Interface", fallback: "已启用")
+            .init(key: "AppContentRemovalView.allStatus", table: "Interface", fallback: "全部状态")
         }
         /// 已停用
         ///
-        /// Resource: `Interface.appContentRemovalView.titleText3`.
+        /// Resource: `Interface.AppContentRemovalView.disabledStatus`.
         public static var disabledStatus: LocalizedMessage {
-            .init(key: "appContentRemovalView.titleText3", table: "Interface", fallback: "已停用")
+            .init(key: "AppContentRemovalView.disabledStatus", table: "Interface", fallback: "已停用")
         }
-        /// 移除 %1$lld 项游戏内容
+        /// 已启用
         ///
-        /// Resource: `Interface.appContentRemovalView.bodyText1`.
-        public static func removeContent(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appContentRemovalView.bodyText1", table: "Interface", fallback: "移除 %1$lld 项游戏内容", arguments: [.integer(value0)])
-        }
-        /// 所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。
-        ///
-        /// Resource: `Interface.appContentRemovalView.bodyText2`.
-        public static var removeContentHelp: LocalizedMessage {
-            .init(key: "appContentRemovalView.bodyText2", table: "Interface", fallback: "所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。")
+        /// Resource: `Interface.AppContentRemovalView.enabledStatus`.
+        public static var enabledStatus: LocalizedMessage {
+            .init(key: "AppContentRemovalView.enabledStatus", table: "Interface", fallback: "已启用")
         }
         /// 移到废纸篓
         ///
-        /// Resource: `Interface.appContentRemovalView.bodyText3`.
+        /// Resource: `Interface.AppContentRemovalView.moveToTrash`.
         public static var moveToTrash: LocalizedMessage {
-            .init(key: "appContentRemovalView.bodyText3", table: "Interface", fallback: "移到废纸篓")
+            .init(key: "AppContentRemovalView.moveToTrash", table: "Interface", fallback: "移到废纸篓")
+        }
+        /// 移除 %1$lld 项游戏内容
+        ///
+        /// Resource: `Interface.AppContentRemovalView.removeContent`.
+        public static func removeContent(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppContentRemovalView.removeContent", table: "Interface", fallback: "移除 %1$lld 项游戏内容", arguments: [.integer(value0)])
+        }
+        /// 所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。
+        ///
+        /// Resource: `Interface.AppContentRemovalView.removeContentHelp`.
+        public static var removeContentHelp: LocalizedMessage {
+            .init(key: "AppContentRemovalView.removeContentHelp", table: "Interface", fallback: "所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appContentRemovalView.titleText1": .init("全部状态", []),
-            "Interface:appContentRemovalView.titleText2": .init("已启用", []),
-            "Interface:appContentRemovalView.titleText3": .init("已停用", []),
-            "Interface:appContentRemovalView.bodyText1": .init("移除 %1$lld 项游戏内容", [.integer]),
-            "Interface:appContentRemovalView.bodyText2": .init("所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。", []),
-            "Interface:appContentRemovalView.bodyText3": .init("移到废纸篓", []),
+            "Interface:AppContentRemovalView.allStatus": .init("全部状态", []),
+            "Interface:AppContentRemovalView.disabledStatus": .init("已停用", []),
+            "Interface:AppContentRemovalView.enabledStatus": .init("已启用", []),
+            "Interface:AppContentRemovalView.moveToTrash": .init("移到废纸篓", []),
+            "Interface:AppContentRemovalView.removeContent": .init("移除 %1$lld 项游戏内容", [.integer]),
+            "Interface:AppContentRemovalView.removeContentHelp": .init("所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。", []),
         ]
     }
 }

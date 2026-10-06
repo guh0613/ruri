@@ -3,35 +3,35 @@ import Foundation
 
 extension Messages {
     public enum AppLaunchButton {
-        /// 返回游戏
+        /// 继续安装
         ///
-        /// Resource: `Interface.appLaunchButton.titleText1`.
-        public static var returnToGame: LocalizedMessage {
-            .init(key: "appLaunchButton.titleText1", table: "Interface", fallback: "返回游戏")
-        }
-        /// 查看运行记录
-        ///
-        /// Resource: `Interface.appLaunchButton.titleText2`.
-        public static var viewRunHistory: LocalizedMessage {
-            .init(key: "appLaunchButton.titleText2", table: "Interface", fallback: "查看运行记录")
+        /// Resource: `Interface.AppLaunchButton.continueInstallation`.
+        public static var continueInstallation: LocalizedMessage {
+            .init(key: "AppLaunchButton.continueInstallation", table: "Interface", fallback: "继续安装")
         }
         /// 启动游戏
         ///
-        /// Resource: `Interface.appLaunchButton.titleText3`.
+        /// Resource: `Interface.AppLaunchButton.launchGame`.
         public static var launchGame: LocalizedMessage {
-            .init(key: "appLaunchButton.titleText3", table: "Interface", fallback: "启动游戏")
+            .init(key: "AppLaunchButton.launchGame", table: "Interface", fallback: "启动游戏")
         }
-        /// 继续安装
+        /// 返回游戏
         ///
-        /// Resource: `Interface.appLaunchButton.titleText4`.
-        public static var continueInstallation: LocalizedMessage {
-            .init(key: "appLaunchButton.titleText4", table: "Interface", fallback: "继续安装")
+        /// Resource: `Interface.AppLaunchButton.returnToGame`.
+        public static var returnToGame: LocalizedMessage {
+            .init(key: "AppLaunchButton.returnToGame", table: "Interface", fallback: "返回游戏")
+        }
+        /// 查看运行记录
+        ///
+        /// Resource: `Interface.AppLaunchButton.viewRunHistory`.
+        public static var viewRunHistory: LocalizedMessage {
+            .init(key: "AppLaunchButton.viewRunHistory", table: "Interface", fallback: "查看运行记录")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appLaunchButton.titleText1": .init("返回游戏", []),
-            "Interface:appLaunchButton.titleText2": .init("查看运行记录", []),
-            "Interface:appLaunchButton.titleText3": .init("启动游戏", []),
-            "Interface:appLaunchButton.titleText4": .init("继续安装", []),
+            "Interface:AppLaunchButton.continueInstallation": .init("继续安装", []),
+            "Interface:AppLaunchButton.launchGame": .init("启动游戏", []),
+            "Interface:AppLaunchButton.returnToGame": .init("返回游戏", []),
+            "Interface:AppLaunchButton.viewRunHistory": .init("查看运行记录", []),
         ]
     }
 }

@@ -34,7 +34,7 @@ public enum CLIApplication {
                     throw OperationFailure("INVALID_ARGUMENT", CommandHelp.Query.message(for: error))
                 }
                 guard ["text", "json", "ndjson"].contains(query.common.output), !query.common.json || ["text", "json"].contains(query.common.output) else {
-                    throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te36f73cbdb89.localized)
+                    throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidOutputFormatCombination.localized)
                 }
                 let help = try CommandHelp.render(path: query.path, all: query.all)
                 if requestedFormat(args) == .text { output.help(help) }
@@ -84,7 +84,7 @@ public enum CLIApplication {
             var failure: OperationFailure
             if error is CancellationError || Task.isCancelled || (error as? InstanceMoveFailure)?.cancelled == true || (error as? RunDirectoryCopyFailure)?.cancelled == true {
                 let original = error as? OperationFailure
-                failure = .init("CANCELLED", Messages.CLIInterface.t386cf3b4f8ac.localized, nextActions: original?.nextActions ?? [], details: original?.details ?? .null)
+                failure = .init("CANCELLED", Messages.CLIInterface.operationCancelled.localized, nextActions: original?.nextActions ?? [], details: original?.details ?? .null)
             }
             else if let value = error as? OperationFailure { failure = value }
             else if let value = error as? RuriError {
@@ -129,7 +129,7 @@ public enum CLIApplication {
             if request.path.hasSuffix("set") {
                 let language = try request.operand()
                 guard language == "system" || LocalizationContext.supportedLanguages.contains(language) else {
-                    throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t55d7eb65faaa.localized, details: .array((["system"] + LocalizationContext.supportedLanguages).map(Value.string)))
+                    throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unsupportedLanguage.localized, details: .array((["system"] + LocalizationContext.supportedLanguages).map(Value.string)))
                 }
                 if !request.dryRun { preferences.set(language, forKey: LocalizationContext.preferenceKey) }
                 return .object(["language": .string(language), "restartRequired": .bool(true), "dryRun": .bool(request.dryRun)])
@@ -140,7 +140,7 @@ public enum CLIApplication {
             if request.path == "cli install" { return try service.install(dryRun: request.dryRun) }
             if request.path == "cli uninstall" { return try service.uninstall(dryRun: request.dryRun) }
             return service.status()
-        default: throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t616e37d3d71a.localized)
+        default: throw OperationFailure("NOT_FOUND", Messages.CLIInterface.unknownCommand.localized)
         }
     }
     static func basePaths(_ request: CommandRequest) -> LauncherPaths {

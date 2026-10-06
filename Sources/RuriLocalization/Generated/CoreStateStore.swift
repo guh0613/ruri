@@ -3,224 +3,224 @@ import Foundation
 
 extension Messages {
     public enum CoreStateStore {
-        /// 数据已由另一个 Ruri 更新
-        ///
-        /// Resource: `Core.coreStateStore.baselineText1`.
-        public static var dataUpdatedElsewhere: LocalizedMessage {
-            .init(key: "coreStateStore.baselineText1", table: "Core", fallback: "数据已由另一个 Ruri 更新")
-        }
-        /// 同一实例
-        ///
-        /// Resource: `Core.coreStateStore.labelsText1`.
-        public static var sameInstance: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText1", table: "Core", fallback: "同一实例")
-        }
-        /// 同一账号
-        ///
-        /// Resource: `Core.coreStateStore.labelsText2`.
-        public static var sameAccount: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText2", table: "Core", fallback: "同一账号")
-        }
-        /// 同一实例文件夹
-        ///
-        /// Resource: `Core.coreStateStore.labelsText3`.
-        public static var sameInstanceDirectory: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText3", table: "Core", fallback: "同一实例文件夹")
-        }
-        /// 保留的文件夹记录
-        ///
-        /// Resource: `Core.coreStateStore.labelsText4`.
-        public static var retainedFolderRecord: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText4", table: "Core", fallback: "保留的文件夹记录")
-        }
-        /// 启动器设置
-        ///
-        /// Resource: `Core.coreStateStore.labelsText5`.
-        public static var launcherSettings: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText5", table: "Core", fallback: "启动器设置")
-        }
-        /// 名称
-        ///
-        /// Resource: `Core.coreStateStore.labelsText6`.
-        public static var name: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText6", table: "Core", fallback: "名称")
-        }
-        /// 固定状态
-        ///
-        /// Resource: `Core.coreStateStore.labelsText7`.
-        public static var favoriteStatus: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText7", table: "Core", fallback: "固定状态")
-        }
-        /// 内存
-        ///
-        /// Resource: `Core.coreStateStore.labelsText8`.
-        public static var memory: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText8", table: "Core", fallback: "内存")
-        }
-        /// Java 选择
-        ///
-        /// Resource: `Core.coreStateStore.labelsText10`.
-        public static var javaSelection: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText10", table: "Core", fallback: "Java 选择")
-        }
-        /// 窗口宽度
-        ///
-        /// Resource: `Core.coreStateStore.labelsText11`.
-        public static var windowWidth: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText11", table: "Core", fallback: "窗口宽度")
-        }
-        /// 窗口高度
-        ///
-        /// Resource: `Core.coreStateStore.labelsText12`.
-        public static var windowHeight: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText12", table: "Core", fallback: "窗口高度")
-        }
         /// 外观
         ///
-        /// Resource: `Core.coreStateStore.labelsText13`.
+        /// Resource: `Core.CoreStateStore.appearance`.
         public static var appearance: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText13", table: "Core", fallback: "外观")
+            .init(key: "CoreStateStore.appearance", table: "Core", fallback: "外观")
         }
-        /// 下载源
+        /// 数据已由另一个 Ruri 更新
         ///
-        /// Resource: `Core.coreStateStore.labelsText14`.
-        public static var downloadSource: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText14", table: "Core", fallback: "下载源")
-        }
-        /// JVM 参数
-        ///
-        /// Resource: `Core.coreStateStore.labelsText15`.
-        public static var jvmArguments: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText15", table: "Core", fallback: "JVM 参数")
-        }
-        /// 游戏参数
-        ///
-        /// Resource: `Core.coreStateStore.labelsText16`.
-        public static var gameArguments: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText16", table: "Core", fallback: "游戏参数")
-        }
-        /// 所属文件夹
-        ///
-        /// Resource: `Core.coreStateStore.labelsText17`.
-        public static var owningFolder: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText17", table: "Core", fallback: "所属文件夹")
-        }
-        /// 内存策略
-        ///
-        /// Resource: `Core.coreStateStore.labelsText18`.
-        public static var memoryPolicy: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText18", table: "Core", fallback: "内存策略")
+        /// Resource: `Core.CoreStateStore.dataUpdatedElsewhere`.
+        public static var dataUpdatedElsewhere: LocalizedMessage {
+            .init(key: "CoreStateStore.dataUpdatedElsewhere", table: "Core", fallback: "数据已由另一个 Ruri 更新")
         }
         /// 默认内存策略
         ///
-        /// Resource: `Core.coreStateStore.labelsText19`.
+        /// Resource: `Core.CoreStateStore.defaultMemoryPolicy`.
         public static var defaultMemoryPolicy: LocalizedMessage {
-            .init(key: "coreStateStore.labelsText19", table: "Core", fallback: "默认内存策略")
+            .init(key: "CoreStateStore.defaultMemoryPolicy", table: "Core", fallback: "默认内存策略")
         }
-        /// 当前实例、文件夹或账号的选择已在另一窗口改变
+        /// 下载源
         ///
-        /// Resource: `Core.coreStateStore.subjectText3`.
-        public static var selectionChangedElsewhere: LocalizedMessage {
-            .init(key: "coreStateStore.subjectText3", table: "Core", fallback: "当前实例、文件夹或账号的选择已在另一窗口改变")
+        /// Resource: `Core.CoreStateStore.downloadSource`.
+        public static var downloadSource: LocalizedMessage {
+            .init(key: "CoreStateStore.downloadSource", table: "Core", fallback: "下载源")
         }
-        /// 保存冲突：%1$@。原文件已保留，请重新载入后再修改。
+        /// 固定状态
         ///
-        /// Resource: `Core.coreStateStore.subjectText4`.
-        public static func saveConflictPreservingOriginal(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreStateStore.subjectText4", table: "Core", fallback: "保存冲突：%1$@。原文件已保留，请重新载入后再修改。", arguments: [.text(value0)])
-        }
-        /// 数据格式无效
-        ///
-        /// Resource: `Core.coreStateStore.resultText2`.
-        public static var invalidDataFormat: LocalizedMessage {
-            .init(key: "coreStateStore.resultText2", table: "Core", fallback: "数据格式无效")
+        /// Resource: `Core.CoreStateStore.favoriteStatus`.
+        public static var favoriteStatus: LocalizedMessage {
+            .init(key: "CoreStateStore.favoriteStatus", table: "Core", fallback: "固定状态")
         }
         /// %1$@的修改与另一窗口冲突（%2$@）
         ///
-        /// Resource: `Core.coreStateStore.fieldConflict`.
+        /// Resource: `Core.CoreStateStore.fieldConflict`.
         public static func fieldConflict(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreStateStore.fieldConflict", table: "Core", fallback: "%1$@的修改与另一窗口冲突（%2$@）", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreStateStore.fieldConflict", table: "Core", fallback: "%1$@的修改与另一窗口冲突（%2$@）", arguments: [.text(value0), .text(value1)])
         }
-        /// %1$@与另一窗口冲突
+        /// 游戏参数
         ///
-        /// Resource: `Core.coreStateStore.subjectConflict`.
-        public static func subjectConflict(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreStateStore.subjectConflict", table: "Core", fallback: "%1$@与另一窗口冲突", arguments: [.text(value0)])
+        /// Resource: `Core.CoreStateStore.gameArguments`.
+        public static var gameArguments: LocalizedMessage {
+            .init(key: "CoreStateStore.gameArguments", table: "Core", fallback: "游戏参数")
+        }
+        /// 数据格式无效
+        ///
+        /// Resource: `Core.CoreStateStore.invalidDataFormat`.
+        public static var invalidDataFormat: LocalizedMessage {
+            .init(key: "CoreStateStore.invalidDataFormat", table: "Core", fallback: "数据格式无效")
+        }
+        /// Java 选择
+        ///
+        /// Resource: `Core.CoreStateStore.javaSelection`.
+        public static var javaSelection: LocalizedMessage {
+            .init(key: "CoreStateStore.javaSelection", table: "Core", fallback: "Java 选择")
+        }
+        /// JVM 参数
+        ///
+        /// Resource: `Core.CoreStateStore.jvmArguments`.
+        public static var jvmArguments: LocalizedMessage {
+            .init(key: "CoreStateStore.jvmArguments", table: "Core", fallback: "JVM 参数")
+        }
+        /// 启动器设置
+        ///
+        /// Resource: `Core.CoreStateStore.launcherSettings`.
+        public static var launcherSettings: LocalizedMessage {
+            .init(key: "CoreStateStore.launcherSettings", table: "Core", fallback: "启动器设置")
+        }
+        /// 内存
+        ///
+        /// Resource: `Core.CoreStateStore.memory`.
+        public static var memory: LocalizedMessage {
+            .init(key: "CoreStateStore.memory", table: "Core", fallback: "内存")
+        }
+        /// 内存策略
+        ///
+        /// Resource: `Core.CoreStateStore.memoryPolicy`.
+        public static var memoryPolicy: LocalizedMessage {
+            .init(key: "CoreStateStore.memoryPolicy", table: "Core", fallback: "内存策略")
+        }
+        /// 名称
+        ///
+        /// Resource: `Core.CoreStateStore.name`.
+        public static var name: LocalizedMessage {
+            .init(key: "CoreStateStore.name", table: "Core", fallback: "名称")
+        }
+        /// 所属文件夹
+        ///
+        /// Resource: `Core.CoreStateStore.owningFolder`.
+        public static var owningFolder: LocalizedMessage {
+            .init(key: "CoreStateStore.owningFolder", table: "Core", fallback: "所属文件夹")
+        }
+        /// 保留的文件夹记录
+        ///
+        /// Resource: `Core.CoreStateStore.retainedFolderRecord`.
+        public static var retainedFolderRecord: LocalizedMessage {
+            .init(key: "CoreStateStore.retainedFolderRecord", table: "Core", fallback: "保留的文件夹记录")
+        }
+        /// 同一账号
+        ///
+        /// Resource: `Core.CoreStateStore.sameAccount`.
+        public static var sameAccount: LocalizedMessage {
+            .init(key: "CoreStateStore.sameAccount", table: "Core", fallback: "同一账号")
+        }
+        /// 同一实例
+        ///
+        /// Resource: `Core.CoreStateStore.sameInstance`.
+        public static var sameInstance: LocalizedMessage {
+            .init(key: "CoreStateStore.sameInstance", table: "Core", fallback: "同一实例")
+        }
+        /// 同一实例文件夹
+        ///
+        /// Resource: `Core.CoreStateStore.sameInstanceDirectory`.
+        public static var sameInstanceDirectory: LocalizedMessage {
+            .init(key: "CoreStateStore.sameInstanceDirectory", table: "Core", fallback: "同一实例文件夹")
+        }
+        /// 保存冲突：%1$@。原文件已保留，请重新载入后再修改。
+        ///
+        /// Resource: `Core.CoreStateStore.saveConflictPreservingOriginal`.
+        public static func saveConflictPreservingOriginal(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreStateStore.saveConflictPreservingOriginal", table: "Core", fallback: "保存冲突：%1$@。原文件已保留，请重新载入后再修改。", arguments: [.text(value0)])
+        }
+        /// 当前实例、文件夹或账号的选择已在另一窗口改变
+        ///
+        /// Resource: `Core.CoreStateStore.selectionChangedElsewhere`.
+        public static var selectionChangedElsewhere: LocalizedMessage {
+            .init(key: "CoreStateStore.selectionChangedElsewhere", table: "Core", fallback: "当前实例、文件夹或账号的选择已在另一窗口改变")
         }
         /// %1$@的修改与另一窗口冲突
         ///
-        /// Resource: `Core.coreStateStore.subjectChangeConflict`.
+        /// Resource: `Core.CoreStateStore.subjectChangeConflict`.
         public static func subjectChangeConflict(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreStateStore.subjectChangeConflict", table: "Core", fallback: "%1$@的修改与另一窗口冲突", arguments: [.text(value0)])
+            .init(key: "CoreStateStore.subjectChangeConflict", table: "Core", fallback: "%1$@的修改与另一窗口冲突", arguments: [.text(value0)])
         }
-        /// 此数据由更新版本的 Ruri 创建，请升级启动器。
+        /// %1$@与另一窗口冲突
         ///
-        /// Resource: `Errors.coreStateStore.resultText1`.
-        public static var newerDataVersion: LocalizedMessage {
-            .init(key: "coreStateStore.resultText1", table: "Errors", fallback: "此数据由更新版本的 Ruri 创建，请升级启动器。")
+        /// Resource: `Core.CoreStateStore.subjectConflict`.
+        public static func subjectConflict(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreStateStore.subjectConflict", table: "Core", fallback: "%1$@与另一窗口冲突", arguments: [.text(value0)])
         }
-        /// 启动快照不能覆盖实例设置，请保存原实例的覆盖项。
+        /// 窗口高度
         ///
-        /// Resource: `Errors.coreStateStore.validateText1`.
-        public static var snapshotCannotOverwriteSettings: LocalizedMessage {
-            .init(key: "coreStateStore.validateText1", table: "Errors", fallback: "启动快照不能覆盖实例设置，请保存原实例的覆盖项。")
+        /// Resource: `Core.CoreStateStore.windowHeight`.
+        public static var windowHeight: LocalizedMessage {
+            .init(key: "CoreStateStore.windowHeight", table: "Core", fallback: "窗口高度")
         }
-        /// 数据包含重复实例或账号，已暂停写入。
+        /// 窗口宽度
         ///
-        /// Resource: `Errors.coreStateStore.validateText2`.
-        public static var duplicateInstancesOrAccounts: LocalizedMessage {
-            .init(key: "coreStateStore.validateText2", table: "Errors", fallback: "数据包含重复实例或账号，已暂停写入。")
+        /// Resource: `Core.CoreStateStore.windowWidth`.
+        public static var windowWidth: LocalizedMessage {
+            .init(key: "CoreStateStore.windowWidth", table: "Core", fallback: "窗口宽度")
         }
         /// 文件夹登记与保留记录包含重复身份，已暂停写入。
         ///
-        /// Resource: `Errors.coreStateStore.instancesText1`.
+        /// Resource: `Errors.CoreStateStore.duplicateDirectoryIdentities`.
         public static var duplicateDirectoryIdentities: LocalizedMessage {
-            .init(key: "coreStateStore.instancesText1", table: "Errors", fallback: "文件夹登记与保留记录包含重复身份，已暂停写入。")
+            .init(key: "CoreStateStore.duplicateDirectoryIdentities", table: "Errors", fallback: "文件夹登记与保留记录包含重复身份，已暂停写入。")
         }
-        /// 无法锁定 Ruri 设置文件。
+        /// 数据包含重复实例或账号，已暂停写入。
         ///
-        /// Resource: `Errors.coreStateStore.fdText1`.
-        public static var settingsLockFailed: LocalizedMessage {
-            .init(key: "coreStateStore.fdText1", table: "Errors", fallback: "无法锁定 Ruri 设置文件。")
+        /// Resource: `Errors.CoreStateStore.duplicateInstancesOrAccounts`.
+        public static var duplicateInstancesOrAccounts: LocalizedMessage {
+            .init(key: "CoreStateStore.duplicateInstancesOrAccounts", table: "Errors", fallback: "数据包含重复实例或账号，已暂停写入。")
+        }
+        /// 此数据由更新版本的 Ruri 创建，请升级启动器。
+        ///
+        /// Resource: `Errors.CoreStateStore.newerDataVersion`.
+        public static var newerDataVersion: LocalizedMessage {
+            .init(key: "CoreStateStore.newerDataVersion", table: "Errors", fallback: "此数据由更新版本的 Ruri 创建，请升级启动器。")
         }
         /// 另一个 Ruri 正在保存数据，请稍后重试。
         ///
-        /// Resource: `Errors.coreStateStore.infoText1`.
+        /// Resource: `Errors.CoreStateStore.saveInProgress`.
         public static var saveInProgress: LocalizedMessage {
-            .init(key: "coreStateStore.infoText1", table: "Errors", fallback: "另一个 Ruri 正在保存数据，请稍后重试。")
+            .init(key: "CoreStateStore.saveInProgress", table: "Errors", fallback: "另一个 Ruri 正在保存数据，请稍后重试。")
+        }
+        /// 无法锁定 Ruri 设置文件。
+        ///
+        /// Resource: `Errors.CoreStateStore.settingsLockFailed`.
+        public static var settingsLockFailed: LocalizedMessage {
+            .init(key: "CoreStateStore.settingsLockFailed", table: "Errors", fallback: "无法锁定 Ruri 设置文件。")
+        }
+        /// 启动快照不能覆盖实例设置，请保存原实例的覆盖项。
+        ///
+        /// Resource: `Errors.CoreStateStore.snapshotCannotOverwriteSettings`.
+        public static var snapshotCannotOverwriteSettings: LocalizedMessage {
+            .init(key: "CoreStateStore.snapshotCannotOverwriteSettings", table: "Errors", fallback: "启动快照不能覆盖实例设置，请保存原实例的覆盖项。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreStateStore.baselineText1": .init("数据已由另一个 Ruri 更新", []),
-            "Core:coreStateStore.labelsText1": .init("同一实例", []),
-            "Core:coreStateStore.labelsText2": .init("同一账号", []),
-            "Core:coreStateStore.labelsText3": .init("同一实例文件夹", []),
-            "Core:coreStateStore.labelsText4": .init("保留的文件夹记录", []),
-            "Core:coreStateStore.labelsText5": .init("启动器设置", []),
-            "Core:coreStateStore.labelsText6": .init("名称", []),
-            "Core:coreStateStore.labelsText7": .init("固定状态", []),
-            "Core:coreStateStore.labelsText8": .init("内存", []),
-            "Core:coreStateStore.labelsText10": .init("Java 选择", []),
-            "Core:coreStateStore.labelsText11": .init("窗口宽度", []),
-            "Core:coreStateStore.labelsText12": .init("窗口高度", []),
-            "Core:coreStateStore.labelsText13": .init("外观", []),
-            "Core:coreStateStore.labelsText14": .init("下载源", []),
-            "Core:coreStateStore.labelsText15": .init("JVM 参数", []),
-            "Core:coreStateStore.labelsText16": .init("游戏参数", []),
-            "Core:coreStateStore.labelsText17": .init("所属文件夹", []),
-            "Core:coreStateStore.labelsText18": .init("内存策略", []),
-            "Core:coreStateStore.labelsText19": .init("默认内存策略", []),
-            "Core:coreStateStore.subjectText3": .init("当前实例、文件夹或账号的选择已在另一窗口改变", []),
-            "Core:coreStateStore.subjectText4": .init("保存冲突：%1$@。原文件已保留，请重新载入后再修改。", [.text]),
-            "Core:coreStateStore.resultText2": .init("数据格式无效", []),
-            "Core:coreStateStore.fieldConflict": .init("%1$@的修改与另一窗口冲突（%2$@）", [.text, .text]),
-            "Core:coreStateStore.subjectConflict": .init("%1$@与另一窗口冲突", [.text]),
-            "Core:coreStateStore.subjectChangeConflict": .init("%1$@的修改与另一窗口冲突", [.text]),
-            "Errors:coreStateStore.resultText1": .init("此数据由更新版本的 Ruri 创建，请升级启动器。", []),
-            "Errors:coreStateStore.validateText1": .init("启动快照不能覆盖实例设置，请保存原实例的覆盖项。", []),
-            "Errors:coreStateStore.validateText2": .init("数据包含重复实例或账号，已暂停写入。", []),
-            "Errors:coreStateStore.instancesText1": .init("文件夹登记与保留记录包含重复身份，已暂停写入。", []),
-            "Errors:coreStateStore.fdText1": .init("无法锁定 Ruri 设置文件。", []),
-            "Errors:coreStateStore.infoText1": .init("另一个 Ruri 正在保存数据，请稍后重试。", []),
+            "Core:CoreStateStore.appearance": .init("外观", []),
+            "Core:CoreStateStore.dataUpdatedElsewhere": .init("数据已由另一个 Ruri 更新", []),
+            "Core:CoreStateStore.defaultMemoryPolicy": .init("默认内存策略", []),
+            "Core:CoreStateStore.downloadSource": .init("下载源", []),
+            "Core:CoreStateStore.favoriteStatus": .init("固定状态", []),
+            "Core:CoreStateStore.fieldConflict": .init("%1$@的修改与另一窗口冲突（%2$@）", [.text, .text]),
+            "Core:CoreStateStore.gameArguments": .init("游戏参数", []),
+            "Core:CoreStateStore.invalidDataFormat": .init("数据格式无效", []),
+            "Core:CoreStateStore.javaSelection": .init("Java 选择", []),
+            "Core:CoreStateStore.jvmArguments": .init("JVM 参数", []),
+            "Core:CoreStateStore.launcherSettings": .init("启动器设置", []),
+            "Core:CoreStateStore.memory": .init("内存", []),
+            "Core:CoreStateStore.memoryPolicy": .init("内存策略", []),
+            "Core:CoreStateStore.name": .init("名称", []),
+            "Core:CoreStateStore.owningFolder": .init("所属文件夹", []),
+            "Core:CoreStateStore.retainedFolderRecord": .init("保留的文件夹记录", []),
+            "Core:CoreStateStore.sameAccount": .init("同一账号", []),
+            "Core:CoreStateStore.sameInstance": .init("同一实例", []),
+            "Core:CoreStateStore.sameInstanceDirectory": .init("同一实例文件夹", []),
+            "Core:CoreStateStore.saveConflictPreservingOriginal": .init("保存冲突：%1$@。原文件已保留，请重新载入后再修改。", [.text]),
+            "Core:CoreStateStore.selectionChangedElsewhere": .init("当前实例、文件夹或账号的选择已在另一窗口改变", []),
+            "Core:CoreStateStore.subjectChangeConflict": .init("%1$@的修改与另一窗口冲突", [.text]),
+            "Core:CoreStateStore.subjectConflict": .init("%1$@与另一窗口冲突", [.text]),
+            "Core:CoreStateStore.windowHeight": .init("窗口高度", []),
+            "Core:CoreStateStore.windowWidth": .init("窗口宽度", []),
+            "Errors:CoreStateStore.duplicateDirectoryIdentities": .init("文件夹登记与保留记录包含重复身份，已暂停写入。", []),
+            "Errors:CoreStateStore.duplicateInstancesOrAccounts": .init("数据包含重复实例或账号，已暂停写入。", []),
+            "Errors:CoreStateStore.newerDataVersion": .init("此数据由更新版本的 Ruri 创建，请升级启动器。", []),
+            "Errors:CoreStateStore.saveInProgress": .init("另一个 Ruri 正在保存数据，请稍后重试。", []),
+            "Errors:CoreStateStore.settingsLockFailed": .init("无法锁定 Ruri 设置文件。", []),
+            "Errors:CoreStateStore.snapshotCannotOverwriteSettings": .init("启动快照不能覆盖实例设置，请保存原实例的覆盖项。", []),
         ]
     }
 }

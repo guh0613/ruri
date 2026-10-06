@@ -3,49 +3,49 @@ import Foundation
 
 extension Messages {
     public enum CoreModpackReleases {
+        /// 请先从 CurseForge 下载此整合包，再选择已下载的文件。
+        ///
+        /// Resource: `Errors.CoreModpackReleases.curseForgeDownloadRequired`.
+        public static var curseForgeDownloadRequired: LocalizedMessage {
+            .init(key: "CoreModpackReleases.curseForgeDownloadRequired", table: "Errors", fallback: "请先从 CurseForge 下载此整合包，再选择已下载的文件。")
+        }
         /// 整合包来源标识无效。
         ///
-        /// Resource: `Errors.coreModpackReleases.projectIDText1`.
+        /// Resource: `Errors.CoreModpackReleases.invalidPackProjectID`.
         public static var invalidPackProjectID: LocalizedMessage {
-            .init(key: "coreModpackReleases.projectIDText1", table: "Errors", fallback: "整合包来源标识无效。")
-        }
-        /// 来源项目不是整合包。
-        ///
-        /// Resource: `Errors.coreModpackReleases.serviceText1`.
-        public static var projectIsNotModpack: LocalizedMessage {
-            .init(key: "coreModpackReleases.serviceText1", table: "Errors", fallback: "来源项目不是整合包。")
+            .init(key: "CoreModpackReleases.invalidPackProjectID", table: "Errors", fallback: "整合包来源标识无效。")
         }
         /// 整合包版本缺少校验信息。
         ///
-        /// Resource: `Errors.coreModpackReleases.prepareText1`.
+        /// Resource: `Errors.CoreModpackReleases.missingReleaseChecksum`.
         public static var missingReleaseChecksum: LocalizedMessage {
-            .init(key: "coreModpackReleases.prepareText1", table: "Errors", fallback: "整合包版本缺少校验信息。")
+            .init(key: "CoreModpackReleases.missingReleaseChecksum", table: "Errors", fallback: "整合包版本缺少校验信息。")
         }
-        /// 请先从 CurseForge 下载此整合包，再选择已下载的文件。
+        /// 来源项目不是整合包。
         ///
-        /// Resource: `Errors.coreModpackReleases.itemText1`.
-        public static var curseForgeDownloadRequired: LocalizedMessage {
-            .init(key: "coreModpackReleases.itemText1", table: "Errors", fallback: "请先从 CurseForge 下载此整合包，再选择已下载的文件。")
+        /// Resource: `Errors.CoreModpackReleases.projectIsNotModpack`.
+        public static var projectIsNotModpack: LocalizedMessage {
+            .init(key: "CoreModpackReleases.projectIsNotModpack", table: "Errors", fallback: "来源项目不是整合包。")
         }
         /// 所选文件与整合包版本不符。
         ///
-        /// Resource: `Errors.coreModpackReleases.itemText3`.
+        /// Resource: `Errors.CoreModpackReleases.selectedReleaseMismatch`.
         public static var selectedReleaseMismatch: LocalizedMessage {
-            .init(key: "coreModpackReleases.itemText3", table: "Errors", fallback: "所选文件与整合包版本不符。")
+            .init(key: "CoreModpackReleases.selectedReleaseMismatch", table: "Errors", fallback: "所选文件与整合包版本不符。")
         }
         /// 正在下载整合包版本
         ///
-        /// Resource: `Progress.coreModpackReleases.itemText2`.
+        /// Resource: `Progress.CoreModpackReleases.downloadingPackRelease`.
         public static var downloadingPackRelease: LocalizedMessage {
-            .init(key: "coreModpackReleases.itemText2", table: "Progress", fallback: "正在下载整合包版本")
+            .init(key: "CoreModpackReleases.downloadingPackRelease", table: "Progress", fallback: "正在下载整合包版本")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreModpackReleases.projectIDText1": .init("整合包来源标识无效。", []),
-            "Errors:coreModpackReleases.serviceText1": .init("来源项目不是整合包。", []),
-            "Errors:coreModpackReleases.prepareText1": .init("整合包版本缺少校验信息。", []),
-            "Errors:coreModpackReleases.itemText1": .init("请先从 CurseForge 下载此整合包，再选择已下载的文件。", []),
-            "Errors:coreModpackReleases.itemText3": .init("所选文件与整合包版本不符。", []),
-            "Progress:coreModpackReleases.itemText2": .init("正在下载整合包版本", []),
+            "Errors:CoreModpackReleases.curseForgeDownloadRequired": .init("请先从 CurseForge 下载此整合包，再选择已下载的文件。", []),
+            "Errors:CoreModpackReleases.invalidPackProjectID": .init("整合包来源标识无效。", []),
+            "Errors:CoreModpackReleases.missingReleaseChecksum": .init("整合包版本缺少校验信息。", []),
+            "Errors:CoreModpackReleases.projectIsNotModpack": .init("来源项目不是整合包。", []),
+            "Errors:CoreModpackReleases.selectedReleaseMismatch": .init("所选文件与整合包版本不符。", []),
+            "Progress:CoreModpackReleases.downloadingPackRelease": .init("正在下载整合包版本", []),
         ]
     }
 }

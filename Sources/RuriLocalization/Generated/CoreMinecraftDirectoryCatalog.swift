@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreMinecraftDirectoryCatalog {
         /// Minecraft 版本待确认
         ///
-        /// Resource: `Core.coreMinecraftDirectoryCatalog.subtitleText1`.
+        /// Resource: `Core.CoreMinecraftDirectoryCatalog.minecraftVersionPending`.
         public static var minecraftVersionPending: LocalizedMessage {
-            .init(key: "coreMinecraftDirectoryCatalog.subtitleText1", table: "Core", fallback: "Minecraft 版本待确认")
+            .init(key: "CoreMinecraftDirectoryCatalog.minecraftVersionPending", table: "Core", fallback: "Minecraft 版本待确认")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreMinecraftDirectoryCatalog.subtitleText1": .init("Minecraft 版本待确认", []),
+            "Core:CoreMinecraftDirectoryCatalog.minecraftVersionPending": .init("Minecraft 版本待确认", []),
         ]
     }
 }

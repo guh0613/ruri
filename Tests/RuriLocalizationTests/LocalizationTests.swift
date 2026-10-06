@@ -11,9 +11,9 @@ struct LocalizationTests {
         #expect(LocalizationContext.resolve("system", available: available, preferences: ["en-AU"]) == "en")
         let context = LocalizationContext(language: "fr", resources: nil)
         #expect(context.string(Messages.Common.cancel) == "取消")
-        #expect(context.string(.verbatim("common.cancel")) == "common.cancel")
+        #expect(context.string(.verbatim("Common.cancel")) == "Common.cancel")
         #expect(context.string(.init(key: "future.message", table: "Common", fallback: "old recorded text")) == "old recorded text")
-        #expect(context.string(.init(key: "common.fileCount", table: "Common", fallback: "invalid data", arguments: [.text("unsafe")])) == "invalid data")
+        #expect(context.string(.init(key: "Common.fileCount", table: "Common", fallback: "invalid data", arguments: [.text("unsafe")])) == "invalid data")
     }
 
     @Test func pluralRulesArgumentReorderingAndConcurrentContexts() async throws {
@@ -26,16 +26,16 @@ struct LocalizationTests {
             let directory = root.appendingPathComponent(language + ".lproj")
             try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
             let cancel = language == "en" ? "Cancel" : "取消"
-            try Data(("\"common.cancel\" = \"" + cancel + "\";\n").utf8).write(to: directory.appendingPathComponent("Common.strings"))
+            try Data(("\"Common.cancel\" = \"" + cancel + "\";\n").utf8).write(to: directory.appendingPathComponent("Common.strings"))
         }
         let spec: [String: Any] = [
-            "common.fileCount": ["NSStringLocalizedFormatKey": "%#@files@", "files": ["NSStringFormatSpecTypeKey": "NSStringPluralRuleType", "NSStringFormatValueTypeKey": "lld", "one": "%lld file", "other": "%lld files"]],
-            "common.filesAndSize": ["NSStringLocalizedFormatKey": "%2$@ across %1$#@files@", "files": ["NSStringFormatSpecTypeKey": "NSStringPluralRuleType", "NSStringFormatValueTypeKey": "lld", "one": "%lld file", "other": "%lld files"]]
+            "Common.fileCount": ["NSStringLocalizedFormatKey": "%#@files@", "files": ["NSStringFormatSpecTypeKey": "NSStringPluralRuleType", "NSStringFormatValueTypeKey": "lld", "one": "%lld file", "other": "%lld files"]],
+            "Common.filesAndSize": ["NSStringLocalizedFormatKey": "%2$@ across %1$#@files@", "files": ["NSStringFormatSpecTypeKey": "NSStringPluralRuleType", "NSStringFormatValueTypeKey": "lld", "one": "%lld file", "other": "%lld files"]]
         ]
         try PropertyListSerialization.data(fromPropertyList: spec, format: .xml, options: 0).write(to: root.appendingPathComponent("en.lproj/Common.stringsdict"))
         let resources = try #require(Bundle(url: root))
-        let english = LocalizationContext(language: "en", region: "en_US", resources: resources)
-        let chinese = LocalizationContext(language: "zh-Hans", region: "zh_CN", resources: resources)
+        let english = LocalizationContext(language: "en", region: "en_US", resources: resources, available: ["en", "zh-Hans"])
+        let chinese = LocalizationContext(language: "zh-Hans", region: "zh_CN", resources: resources, available: ["en", "zh-Hans"])
         for count: Int64 in [0, 1, 2, 5] {
             let noun = count == 1 ? "file" : "files"
             #expect(english.string(Messages.Common.fileCount(count)) == "\(count) \(noun)")

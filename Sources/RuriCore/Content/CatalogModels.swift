@@ -149,8 +149,8 @@ public struct CatalogDependency: Identifiable, Sendable {
     public let relation: String
     public var title: String {
         switch relation {
-        case "required": Messages.Discovery.required.localized
-        case "optional": Messages.Discovery.optional.localized
+        case "required": Messages.Discovery.requiredDependency.localized
+        case "optional": Messages.Discovery.optionalDependency.localized
         case "incompatible": Messages.Discovery.incompatible.localized
         case "embedded", "include": Messages.Discovery.embedded.localized
         default: Messages.Discovery.tool.localized

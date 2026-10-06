@@ -3,49 +3,49 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelInstanceTransfers {
-        /// 选择实例目录或整合包：Ruri、Prism/MultiMC、Modrinth、CurseForge、HMCL 或 MCBBS。
+        /// 导出 %1$@
         ///
-        /// Resource: `Interface.appAppModelInstanceTransfers.panelText1`.
-        public static var transferFormats: LocalizedMessage {
-            .init(key: "appAppModelInstanceTransfers.panelText1", table: "Interface", fallback: "选择实例目录或整合包：Ruri、Prism/MultiMC、Modrinth、CurseForge、HMCL 或 MCBBS。")
-        }
-        /// 读取 %1$@
-        ///
-        /// Resource: `Interface.appAppModelInstanceTransfers.prepareInstanceImportText1`.
-        public static func prepareImport(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceTransfers.prepareInstanceImportText1", table: "Interface", fallback: "读取 %1$@", arguments: [.text(value0)])
+        /// Resource: `Interface.AppAppModelInstanceTransfers.exportInstance`.
+        public static func exportInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstanceTransfers.exportInstance", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
         }
         /// 导入 %1$@
         ///
-        /// Resource: `Interface.appAppModelInstanceTransfers.finishImportText1`.
+        /// Resource: `Interface.AppAppModelInstanceTransfers.finishImport`.
         public static func finishImport(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceTransfers.finishImportText1", table: "Interface", fallback: "导入 %1$@", arguments: [.text(value0)])
-        }
-        /// %1$@ 已导入
-        ///
-        /// Resource: `Interface.appAppModelInstanceTransfers.instanceText1`.
-        public static func instanceImported(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceTransfers.instanceText1", table: "Interface", fallback: "%1$@ 已导入", arguments: [.text(value0)])
-        }
-        /// 导出 %1$@
-        ///
-        /// Resource: `Interface.appAppModelInstanceTransfers.exportText1`.
-        public static func exportInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceTransfers.exportText1", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
+            .init(key: "AppAppModelInstanceTransfers.finishImport", table: "Interface", fallback: "导入 %1$@", arguments: [.text(value0)])
         }
         /// %1$@ 已导出
         ///
-        /// Resource: `Interface.appAppModelInstanceTransfers.scopedText1`.
+        /// Resource: `Interface.AppAppModelInstanceTransfers.instanceExported`.
         public static func instanceExported(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceTransfers.scopedText1", table: "Interface", fallback: "%1$@ 已导出", arguments: [.text(value0)])
+            .init(key: "AppAppModelInstanceTransfers.instanceExported", table: "Interface", fallback: "%1$@ 已导出", arguments: [.text(value0)])
+        }
+        /// %1$@ 已导入
+        ///
+        /// Resource: `Interface.AppAppModelInstanceTransfers.instanceImported`.
+        public static func instanceImported(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstanceTransfers.instanceImported", table: "Interface", fallback: "%1$@ 已导入", arguments: [.text(value0)])
+        }
+        /// 读取 %1$@
+        ///
+        /// Resource: `Interface.AppAppModelInstanceTransfers.prepareImport`.
+        public static func prepareImport(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstanceTransfers.prepareImport", table: "Interface", fallback: "读取 %1$@", arguments: [.text(value0)])
+        }
+        /// 选择实例目录或整合包：Ruri、Prism/MultiMC、Modrinth、CurseForge、HMCL 或 MCBBS。
+        ///
+        /// Resource: `Interface.AppAppModelInstanceTransfers.transferFormats`.
+        public static var transferFormats: LocalizedMessage {
+            .init(key: "AppAppModelInstanceTransfers.transferFormats", table: "Interface", fallback: "选择实例目录或整合包：Ruri、Prism/MultiMC、Modrinth、CurseForge、HMCL 或 MCBBS。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAppModelInstanceTransfers.panelText1": .init("选择实例目录或整合包：Ruri、Prism/MultiMC、Modrinth、CurseForge、HMCL 或 MCBBS。", []),
-            "Interface:appAppModelInstanceTransfers.prepareInstanceImportText1": .init("读取 %1$@", [.text]),
-            "Interface:appAppModelInstanceTransfers.finishImportText1": .init("导入 %1$@", [.text]),
-            "Interface:appAppModelInstanceTransfers.instanceText1": .init("%1$@ 已导入", [.text]),
-            "Interface:appAppModelInstanceTransfers.exportText1": .init("导出 %1$@", [.text]),
-            "Interface:appAppModelInstanceTransfers.scopedText1": .init("%1$@ 已导出", [.text]),
+            "Interface:AppAppModelInstanceTransfers.exportInstance": .init("导出 %1$@", [.text]),
+            "Interface:AppAppModelInstanceTransfers.finishImport": .init("导入 %1$@", [.text]),
+            "Interface:AppAppModelInstanceTransfers.instanceExported": .init("%1$@ 已导出", [.text]),
+            "Interface:AppAppModelInstanceTransfers.instanceImported": .init("%1$@ 已导入", [.text]),
+            "Interface:AppAppModelInstanceTransfers.prepareImport": .init("读取 %1$@", [.text]),
+            "Interface:AppAppModelInstanceTransfers.transferFormats": .init("选择实例目录或整合包：Ruri、Prism/MultiMC、Modrinth、CurseForge、HMCL 或 MCBBS。", []),
         ]
     }
 }

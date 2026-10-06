@@ -12,13 +12,13 @@ import Foundation
     }
     public func preflight(instanceID: UUID, accountID: UUID? = nil, worldFolder: String? = nil, destination: LaunchDestination = .normal) async throws -> OperationValue {
         let state = try StateStore.load(paths), paths = paths.configured(with: state), stored = try InstanceService(paths: paths).resolve(id: instanceID)
-        guard stored.installed else { throw OperationFailure("INSTALLATION_REQUIRED", Messages.CLIInterface.t1914c0297b34.localized, nextActions: [.init(["instance", "install", instanceID.uuidString])]) }
+        guard stored.installed else { throw OperationFailure("INSTALLATION_REQUIRED", Messages.CLIInterface.instanceInstallRequiredBeforeLaunch.localized, nextActions: [.init(["instance", "install", instanceID.uuidString])]) }
         let instance = try stored.launchSnapshot(defaults: state.settings, workload: MemoryWorkload.scan(paths: paths, instance: stored))
         let manifest = try await GameInstaller(paths: paths, downloader: downloader).loadManifest(instance)
         let requirement = try GameJavaRequirement(instance: instance, manifest: manifest)
         let java = try await resolveJava(instance: instance, requirement: requirement, paths: paths)
         let selectedAccount = accountID ?? state.activeAccountID
-        guard let selectedAccount, let account = state.accounts.first(where: { $0.id == selectedAccount }) else { throw OperationFailure("ACCOUNT_REQUIRED", Messages.CLIInterface.t46ce3acb0041.localized, nextActions: [.init(["account", "list", "--json"])]) }
+        guard let selectedAccount, let account = state.accounts.first(where: { $0.id == selectedAccount }) else { throw OperationFailure("ACCOUNT_REQUIRED", Messages.CLIInterface.launchAccountRequired.localized, nextActions: [.init(["account", "list", "--json"])]) }
         guard worldFolder == nil || destination == .normal else { throw RuriError.message(Messages.Servers.destinationConflict) }
         let target = worldFolder.map { LaunchDestination.world(folder: $0) } ?? destination
         let selectedFolder: String? = { if case .world(let folder) = target { return folder }; return nil }()
@@ -38,7 +38,7 @@ import Foundation
         var state = try StateStore.load(paths)
         let initial = try InstanceService(paths: paths).resolve(id: instanceID)
         guard let selectedID = accountID ?? state.activeAccountID, let selected = state.accounts.first(where: { $0.id == selectedID }) else {
-            throw OperationFailure("ACCOUNT_REQUIRED", Messages.CLIInterface.t46ce3acb0041.localized, nextActions: [.init(["account", "list", "--json"])])
+            throw OperationFailure("ACCOUNT_REQUIRED", Messages.CLIInterface.launchAccountRequired.localized, nextActions: [.init(["account", "list", "--json"])])
         }
         let configured = paths.configured(with: state)
         let recorder = try provided ?? GameSessionRecorder(paths: configured, instance: initial, accountMode: selected.kind.rawValue)

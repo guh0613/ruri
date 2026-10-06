@@ -1,0 +1,174 @@
+"""Read String Catalogs and validate the formats used by typed messages."""
+import json
+from pathlib import Path
+import re
+import sys
+sys.dont_write_bytecode = True
+
+BASE_LANGUAGE = 'zh-Hans'
+CLI_LANGUAGES = ['en', BASE_LANGUAGE]
+CLI_TABLES = {'CLIInterface', 'CLIExperience', 'CLISetup', 'Progress'}
+FORMAT = re.compile(r'%(?:(\d+)\$)?(lld|@|g|f|d|%)')
+SUBSTITUTION = re.compile(r'%(?:(\d+)\$)?#@([A-Za-z][A-Za-z0-9_]*)@')
+PLURAL_CATEGORIES = {'zero', 'one', 'two', 'few', 'many', 'other'}
+SWIFT_KEYWORDS = set('associatedtype borrowing class consuming deinit enum extension fileprivate func import init inout internal let nonisolated open operator precedencegroup private protocol public rethrows some static struct subscript typealias var break case catch continue default defer do else fallthrough for guard if in repeat return throw switch where while as Any false is nil self Self super throws true try _ actor any async await distributed dynamic final get indirect infix isolated lazy left macro mutating none nonmutating optional override package postfix prefix required right set unowned weak willSet didSet convenience'.split())
+
+
+def read_json(path):
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f'{path}: duplicate JSON key: {key}')
+            result[key] = value
+        return result
+    return json.loads(path.read_text(), object_pairs_hook=unique)
+
+
+def catalog_text(value):
+    # Match Xcode's stable, sorted String Catalog representation.
+    return json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True, separators=(',', ' : ')) + '\n'
+
+
+def signature(value):
+    result = {}
+    position = 0
+    cursor = 0
+    for match in FORMAT.finditer(value):
+        if '%' in value[cursor:match.start()]:
+            raise ValueError('Unsupported format token in ' + value)
+        cursor = match.end()
+        index, kind = match.groups()
+        if kind == '%':
+            continue
+        position += 1
+        index = int(index) if index else position
+        if index < 1:
+            raise ValueError('Argument positions start at 1: ' + value)
+        resolved = 'integer' if kind in ('lld', 'd') else 'text' if kind == '@' else 'decimal'
+        if index in result and result[index] != resolved:
+            raise ValueError('Inconsistent argument in ' + value)
+        result[index] = resolved
+    if '%' in value[cursor:]:
+        raise ValueError('Unescaped percent in ' + value)
+    return result
+
+
+def unit_value(node):
+    unit = node.get('stringUnit', {})
+    value = unit.get('value')
+    if not isinstance(value, str) or unit.get('state') not in {'translated', 'needs_review', 'new'}:
+        raise ValueError('Missing string value or invalid translation state')
+    return value
+
+
+def plural_variants(node):
+    if set(node.get('variations', {})) != {'plural'}:
+        raise ValueError('Only plural variations are supported')
+    variants = node['variations']['plural']
+    if not isinstance(variants, dict) or 'other' not in variants or not set(variants) <= PLURAL_CATEGORIES:
+        raise ValueError('Invalid plural categories; other is required')
+    return {category: unit_value(variant) for category, variant in variants.items()}
+
+
+def localization_value(node):
+    """Return the fallback format, signature and the plural argument positions."""
+    if not isinstance(node, dict):
+        raise ValueError('Localization must be an object')
+    if 'variations' in node:
+        if 'stringUnit' in node or 'substitutions' in node:
+            raise ValueError('A plural cannot also contain a stringUnit or substitutions')
+        variants = plural_variants(node)
+        value = variants['other']
+        expected = signature(value)
+        numeric = [int(m[1]) if m[1] else index + 1 for index, m in enumerate(m for m in FORMAT.finditer(value) if m[2] != '%') if m[2] in {'lld', 'd'}]
+        if not numeric:
+            raise ValueError('Plural variant must contain its numeric argument')
+        argument = numeric[0]
+        for text in variants.values():
+            if signature(text) != expected or signature(text).get(argument) != 'integer':
+                raise ValueError('Plural variant changes parameters or omits its numeric argument')
+        return value, expected, {argument}
+    value = unit_value(node)
+    substitutions = node.get('substitutions', {})
+    if not substitutions:
+        return value, signature(value), set()
+    references = list(SUBSTITUTION.finditer(value))
+    if set(m[2] for m in references) != set(substitutions):
+        raise ValueError('Unknown or unused plural substitution')
+    plural_arguments = set()
+    for match in references:
+        rule = substitutions[match[2]]
+        argument = rule.get('argNum')
+        if type(argument) is not int or argument < 1 or rule.get('formatSpecifier') not in {'lld', 'd'}:
+            raise ValueError('Invalid plural substitution argument')
+        if match[1] and int(match[1]) != argument:
+            raise ValueError('Substitution position differs from argNum')
+        if argument in plural_arguments:
+            raise ValueError('Duplicate plural argument')
+        plural_arguments.add(argument)
+        for text in plural_variants(rule).values():
+            # Substitutions format their own value; other arguments belong to
+            # the outer format or to a whole-message plural variation.
+            if signature(text) not in ({1: 'integer'}, {argument: 'integer'}):
+                raise ValueError('Plural variant must format its own numeric argument')
+    def expand(match):
+        rule = substitutions[match[2]]
+        text = plural_variants(rule)['other']
+        return FORMAT.sub(lambda token: token[0] if token[2] == '%' else f'%{rule["argNum"]}${token[2]}', text)
+    value = SUBSTITUTION.sub(expand, value)
+    return value, signature(value), plural_arguments
+
+
+def read_catalogs(root, check_format=False, format_files=False):
+    resources = root / 'Sources/RuriLocalization/Resources'
+    catalogs = {}
+    keys = set()
+    paths = sorted(resources.glob('*.xcstrings'))
+    if not paths:
+        raise ValueError('No String Catalogs found')
+    for path in paths:
+        catalog = read_json(path)
+        if catalog.get('sourceLanguage') != BASE_LANGUAGE or catalog.get('version') != '1.0':
+            raise ValueError(f'{path}: expected zh-Hans String Catalog version 1.0')
+        canonical = catalog_text(catalog)
+        if format_files:
+            path.write_text(canonical)
+        elif check_format and path.read_text() != canonical:
+            raise ValueError(f'{path}: noncanonical formatting; run scripts/localization.py --format')
+        for key, entry in catalog['strings'].items():
+            identity = path.stem + ':' + key
+            if not re.fullmatch(r'[A-Z][A-Za-z0-9]*\.[a-z][A-Za-z0-9]*', key):
+                raise ValueError('Invalid Group.name key: ' + identity)
+            group, name = key.split('.')
+            if group in SWIFT_KEYWORDS or name in SWIFT_KEYWORDS or name == 'definitions':
+                raise ValueError('Reserved Swift identifier: ' + identity)
+            if key in keys:
+                raise ValueError('Duplicate message key: ' + key)
+            keys.add(key)
+            if entry.get('extractionState') != 'manual':
+                raise ValueError('Messages must use manual extraction: ' + identity)
+            localizations = entry.get('localizations', {})
+            if BASE_LANGUAGE not in localizations:
+                raise ValueError('Unknown key without a source localization: ' + identity)
+            try:
+                value, expected, plurals = localization_value(localizations[BASE_LANGUAGE])
+                if set(expected) != set(range(1, len(expected) + 1)):
+                    raise ValueError('Format argument positions must be contiguous')
+                for language, localization in localizations.items():
+                    if localization_value(localization)[1] != expected:
+                        raise ValueError(language + ': translation changes parameters')
+            except (ValueError, KeyError, TypeError) as error:
+                raise ValueError(f'{identity}: {error}') from error
+            catalogs[identity] = {'table': path.stem, 'key': key, 'group': group, 'name': name,
+                                  'value': value, 'kinds': [expected[i + 1] for i in range(len(expected))],
+                                  'plurals': plurals, 'entry': entry}
+    for identity, item in catalogs.items():
+        if item['table'] in CLI_TABLES and 'en' not in item['entry']['localizations']:
+            raise ValueError('Missing CLI English translation: ' + identity)
+    return catalogs
+
+
+def shipping_languages(root):
+    # Partial English currently serves CLI messages only.
+    return [BASE_LANGUAGE]

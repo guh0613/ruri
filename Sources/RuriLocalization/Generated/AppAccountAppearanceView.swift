@@ -3,252 +3,252 @@ import Foundation
 
 extension Messages {
     public enum AppAccountAppearanceView {
-        /// 皮肤与披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.bodyText1`.
-        public static var skinsAndCapes: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.bodyText1", table: "Interface", fallback: "皮肤与披风")
-        }
-        /// 当前皮肤
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.clientText1`.
-        public static var currentSkin: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.clientText1", table: "Interface", fallback: "当前皮肤")
-        }
-        /// 选择皮肤 PNG…
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.skinText1`.
-        public static var chooseSkinPNG: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.skinText1", table: "Interface", fallback: "选择皮肤 PNG…")
-        }
-        /// 恢复默认皮肤
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.skinText2`.
-        public static var restoreDefaultSkin: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.skinText2", table: "Interface", fallback: "恢复默认皮肤")
-        }
-        /// 已恢复默认皮肤
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.skinText3`.
-        public static var defaultSkinRestored: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.skinText3", table: "Interface", fallback: "已恢复默认皮肤")
-        }
-        /// 此认证站未开放皮肤上传，请在认证站管理。
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.skinText4`.
-        public static var skinUploadUnavailable: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.skinText4", table: "Interface", fallback: "此认证站未开放皮肤上传，请在认证站管理。")
-        }
-        /// 披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.skinText5`.
-        public static var cape: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.skinText5", table: "Interface", fallback: "披风")
-        }
-        /// 已拥有的披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.skinText6`.
-        public static var ownedCapes: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.skinText6", table: "Interface", fallback: "已拥有的披风")
-        }
-        /// 不显示披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.skinText7`.
-        public static var hideCape: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.skinText7", table: "Interface", fallback: "不显示披风")
-        }
-        /// 隐藏披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.skinText8`.
-        public static var hiddenCape: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.skinText8", table: "Interface", fallback: "隐藏披风")
-        }
-        /// 使用这件披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.skinText9`.
-        public static var useCape: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.skinText9", table: "Interface", fallback: "使用这件披风")
-        }
-        /// 已隐藏披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText1`.
-        public static var capeHidden: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText1", table: "Interface", fallback: "已隐藏披风")
-        }
-        /// 已更换披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText2`.
-        public static var capeChanged: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText2", table: "Interface", fallback: "已更换披风")
-        }
-        /// 当前未使用披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText3`.
-        public static var noCapeInUse: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText3", table: "Interface", fallback: "当前未使用披风")
-        }
-        /// 当前正在使用
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText4`.
-        public static var currentlyInUse: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText4", table: "Interface", fallback: "当前正在使用")
-        }
-        /// 此账号暂无披风。
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText5`.
-        public static var noCapeOwned: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText5", table: "Interface", fallback: "此账号暂无披风。")
-        }
-        /// 选择披风 PNG…
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText6`.
-        public static var chooseCapePNG: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText6", table: "Interface", fallback: "选择披风 PNG…")
-        }
-        /// 移除当前披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText7`.
-        public static var removeCurrentCape: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText7", table: "Interface", fallback: "移除当前披风")
-        }
-        /// 已移除披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText8`.
-        public static var capeRemoved: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText8", table: "Interface", fallback: "已移除披风")
-        }
-        /// 此认证站未开放披风上传，请在认证站管理。
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText9`.
-        public static var capeUploadUnavailable: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText9", table: "Interface", fallback: "此认证站未开放披风上传，请在认证站管理。")
-        }
         /// 更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。
         ///
-        /// Resource: `Interface.appAccountAppearanceView.selectedText10`.
+        /// Resource: `Interface.AppAccountAppearanceView.appearanceChangesSaved`.
         public static var appearanceChangesSaved: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.selectedText10", table: "Interface", fallback: "更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。")
-        }
-        /// 正在处理…
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.errorText1`.
-        public static var processing: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.errorText1", table: "Interface", fallback: "正在处理…")
-        }
-        /// 刷新
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.errorText2`.
-        public static var refresh: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.errorText2", table: "Interface", fallback: "刷新")
-        }
-        /// 准备上传%1$@
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.uploadEditorText1`.
-        public static func prepareUpload(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAccountAppearanceView.uploadEditorText1", table: "Interface", fallback: "准备上传%1$@", arguments: [.text(value0)])
-        }
-        /// 皮肤模型
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.uploadEditorText2`.
-        public static var skinModel: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.uploadEditorText2", table: "Interface", fallback: "皮肤模型")
-        }
-        /// 重新选择…
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.uploadEditorText3`.
-        public static var chooseAgain: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.uploadEditorText3", table: "Interface", fallback: "重新选择…")
-        }
-        /// 上传到此账号
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.uploadEditorText4`.
-        public static var uploadToAccount: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.uploadEditorText4", table: "Interface", fallback: "上传到此账号")
-        }
-        /// 已上传%1$@
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.kindText1`.
-        public static func uploaded(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAccountAppearanceView.kindText1", table: "Interface", fallback: "已上传%1$@", arguments: [.text(value0)])
-        }
-        /// 展开的 PNG 纹理
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.nativeText1`.
-        public static var expandedPNGTexture: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.nativeText1", table: "Interface", fallback: "展开的 PNG 纹理")
-        }
-        /// 纹理预览
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.imageText1`.
-        public static var texturePreview: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.imageText1", table: "Interface", fallback: "纹理预览")
-        }
-        /// 保存 PNG…
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.imageText2`.
-        public static var savePNG: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.imageText2", table: "Interface", fallback: "保存 PNG…")
-        }
-        /// 使用默认皮肤
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.errorText3`.
-        public static var useDefaultSkin: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.errorText3", table: "Interface", fallback: "使用默认皮肤")
-        }
-        /// 没有披风
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.errorText4`.
-        public static var noCape: LocalizedMessage {
-            .init(key: "appAccountAppearanceView.errorText4", table: "Interface", fallback: "没有披风")
-        }
-        /// 更改已提交，但刷新外观失败：%1$@
-        ///
-        /// Resource: `Interface.appAccountAppearanceView.refreshAppearanceError`.
-        public static func refreshAppearanceError(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAccountAppearanceView.refreshAppearanceError", table: "Interface", fallback: "更改已提交，但刷新外观失败：%1$@", arguments: [.text(value0)])
+            .init(key: "AppAccountAppearanceView.appearanceChangesSaved", table: "Interface", fallback: "更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。")
         }
         /// 预览未能加载：%1$@
         ///
-        /// Resource: `Interface.appAccountAppearanceView.appearanceError`.
+        /// Resource: `Interface.AppAccountAppearanceView.appearanceError`.
         public static func appearanceError(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAccountAppearanceView.appearanceError", table: "Interface", fallback: "预览未能加载：%1$@", arguments: [.text(value0)])
+            .init(key: "AppAccountAppearanceView.appearanceError", table: "Interface", fallback: "预览未能加载：%1$@", arguments: [.text(value0)])
+        }
+        /// 披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.cape`.
+        public static var cape: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.cape", table: "Interface", fallback: "披风")
+        }
+        /// 已更换披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.capeChanged`.
+        public static var capeChanged: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.capeChanged", table: "Interface", fallback: "已更换披风")
+        }
+        /// 已隐藏披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.capeHidden`.
+        public static var capeHidden: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.capeHidden", table: "Interface", fallback: "已隐藏披风")
+        }
+        /// 已移除披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.capeRemoved`.
+        public static var capeRemoved: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.capeRemoved", table: "Interface", fallback: "已移除披风")
+        }
+        /// 此认证站未开放披风上传，请在认证站管理。
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.capeUploadUnavailable`.
+        public static var capeUploadUnavailable: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.capeUploadUnavailable", table: "Interface", fallback: "此认证站未开放披风上传，请在认证站管理。")
+        }
+        /// 重新选择…
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.chooseAgain`.
+        public static var chooseAgain: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.chooseAgain", table: "Interface", fallback: "重新选择…")
+        }
+        /// 选择披风 PNG…
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.chooseCapePNG`.
+        public static var chooseCapePNG: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.chooseCapePNG", table: "Interface", fallback: "选择披风 PNG…")
+        }
+        /// 选择皮肤 PNG…
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.chooseSkinPNG`.
+        public static var chooseSkinPNG: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.chooseSkinPNG", table: "Interface", fallback: "选择皮肤 PNG…")
+        }
+        /// 当前皮肤
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.currentSkin`.
+        public static var currentSkin: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.currentSkin", table: "Interface", fallback: "当前皮肤")
+        }
+        /// 当前正在使用
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.currentlyInUse`.
+        public static var currentlyInUse: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.currentlyInUse", table: "Interface", fallback: "当前正在使用")
+        }
+        /// 已恢复默认皮肤
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.defaultSkinRestored`.
+        public static var defaultSkinRestored: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.defaultSkinRestored", table: "Interface", fallback: "已恢复默认皮肤")
+        }
+        /// 展开的 PNG 纹理
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.expandedPNGTexture`.
+        public static var expandedPNGTexture: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.expandedPNGTexture", table: "Interface", fallback: "展开的 PNG 纹理")
+        }
+        /// 隐藏披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.hiddenCape`.
+        public static var hiddenCape: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.hiddenCape", table: "Interface", fallback: "隐藏披风")
+        }
+        /// 不显示披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.hideCape`.
+        public static var hideCape: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.hideCape", table: "Interface", fallback: "不显示披风")
+        }
+        /// 没有披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.noCape`.
+        public static var noCape: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.noCape", table: "Interface", fallback: "没有披风")
+        }
+        /// 当前未使用披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.noCapeInUse`.
+        public static var noCapeInUse: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.noCapeInUse", table: "Interface", fallback: "当前未使用披风")
+        }
+        /// 此账号暂无披风。
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.noCapeOwned`.
+        public static var noCapeOwned: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.noCapeOwned", table: "Interface", fallback: "此账号暂无披风。")
+        }
+        /// 已拥有的披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.ownedCapes`.
+        public static var ownedCapes: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.ownedCapes", table: "Interface", fallback: "已拥有的披风")
+        }
+        /// 准备上传%1$@
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.prepareUpload`.
+        public static func prepareUpload(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.prepareUpload", table: "Interface", fallback: "准备上传%1$@", arguments: [.text(value0)])
+        }
+        /// 正在处理…
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.processing`.
+        public static var processing: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.processing", table: "Interface", fallback: "正在处理…")
+        }
+        /// 刷新
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.refresh`.
+        public static var refresh: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.refresh", table: "Interface", fallback: "刷新")
+        }
+        /// 更改已提交，但刷新外观失败：%1$@
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.refreshAppearanceError`.
+        public static func refreshAppearanceError(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.refreshAppearanceError", table: "Interface", fallback: "更改已提交，但刷新外观失败：%1$@", arguments: [.text(value0)])
+        }
+        /// 移除当前披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.removeCurrentCape`.
+        public static var removeCurrentCape: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.removeCurrentCape", table: "Interface", fallback: "移除当前披风")
+        }
+        /// 恢复默认皮肤
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.restoreDefaultSkin`.
+        public static var restoreDefaultSkin: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.restoreDefaultSkin", table: "Interface", fallback: "恢复默认皮肤")
+        }
+        /// 保存 PNG…
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.savePNG`.
+        public static var savePNG: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.savePNG", table: "Interface", fallback: "保存 PNG…")
+        }
+        /// 皮肤模型
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.skinModel`.
+        public static var skinModel: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.skinModel", table: "Interface", fallback: "皮肤模型")
+        }
+        /// 此认证站未开放皮肤上传，请在认证站管理。
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.skinUploadUnavailable`.
+        public static var skinUploadUnavailable: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.skinUploadUnavailable", table: "Interface", fallback: "此认证站未开放皮肤上传，请在认证站管理。")
+        }
+        /// 皮肤与披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.skinsAndCapes`.
+        public static var skinsAndCapes: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.skinsAndCapes", table: "Interface", fallback: "皮肤与披风")
+        }
+        /// 纹理预览
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.texturePreview`.
+        public static var texturePreview: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.texturePreview", table: "Interface", fallback: "纹理预览")
+        }
+        /// 上传到此账号
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.uploadToAccount`.
+        public static var uploadToAccount: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.uploadToAccount", table: "Interface", fallback: "上传到此账号")
+        }
+        /// 已上传%1$@
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.uploaded`.
+        public static func uploaded(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.uploaded", table: "Interface", fallback: "已上传%1$@", arguments: [.text(value0)])
+        }
+        /// 使用这件披风
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.useCape`.
+        public static var useCape: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.useCape", table: "Interface", fallback: "使用这件披风")
+        }
+        /// 使用默认皮肤
+        ///
+        /// Resource: `Interface.AppAccountAppearanceView.useDefaultSkin`.
+        public static var useDefaultSkin: LocalizedMessage {
+            .init(key: "AppAccountAppearanceView.useDefaultSkin", table: "Interface", fallback: "使用默认皮肤")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAccountAppearanceView.bodyText1": .init("皮肤与披风", []),
-            "Interface:appAccountAppearanceView.clientText1": .init("当前皮肤", []),
-            "Interface:appAccountAppearanceView.skinText1": .init("选择皮肤 PNG…", []),
-            "Interface:appAccountAppearanceView.skinText2": .init("恢复默认皮肤", []),
-            "Interface:appAccountAppearanceView.skinText3": .init("已恢复默认皮肤", []),
-            "Interface:appAccountAppearanceView.skinText4": .init("此认证站未开放皮肤上传，请在认证站管理。", []),
-            "Interface:appAccountAppearanceView.skinText5": .init("披风", []),
-            "Interface:appAccountAppearanceView.skinText6": .init("已拥有的披风", []),
-            "Interface:appAccountAppearanceView.skinText7": .init("不显示披风", []),
-            "Interface:appAccountAppearanceView.skinText8": .init("隐藏披风", []),
-            "Interface:appAccountAppearanceView.skinText9": .init("使用这件披风", []),
-            "Interface:appAccountAppearanceView.selectedText1": .init("已隐藏披风", []),
-            "Interface:appAccountAppearanceView.selectedText2": .init("已更换披风", []),
-            "Interface:appAccountAppearanceView.selectedText3": .init("当前未使用披风", []),
-            "Interface:appAccountAppearanceView.selectedText4": .init("当前正在使用", []),
-            "Interface:appAccountAppearanceView.selectedText5": .init("此账号暂无披风。", []),
-            "Interface:appAccountAppearanceView.selectedText6": .init("选择披风 PNG…", []),
-            "Interface:appAccountAppearanceView.selectedText7": .init("移除当前披风", []),
-            "Interface:appAccountAppearanceView.selectedText8": .init("已移除披风", []),
-            "Interface:appAccountAppearanceView.selectedText9": .init("此认证站未开放披风上传，请在认证站管理。", []),
-            "Interface:appAccountAppearanceView.selectedText10": .init("更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。", []),
-            "Interface:appAccountAppearanceView.errorText1": .init("正在处理…", []),
-            "Interface:appAccountAppearanceView.errorText2": .init("刷新", []),
-            "Interface:appAccountAppearanceView.uploadEditorText1": .init("准备上传%1$@", [.text]),
-            "Interface:appAccountAppearanceView.uploadEditorText2": .init("皮肤模型", []),
-            "Interface:appAccountAppearanceView.uploadEditorText3": .init("重新选择…", []),
-            "Interface:appAccountAppearanceView.uploadEditorText4": .init("上传到此账号", []),
-            "Interface:appAccountAppearanceView.kindText1": .init("已上传%1$@", [.text]),
-            "Interface:appAccountAppearanceView.nativeText1": .init("展开的 PNG 纹理", []),
-            "Interface:appAccountAppearanceView.imageText1": .init("纹理预览", []),
-            "Interface:appAccountAppearanceView.imageText2": .init("保存 PNG…", []),
-            "Interface:appAccountAppearanceView.errorText3": .init("使用默认皮肤", []),
-            "Interface:appAccountAppearanceView.errorText4": .init("没有披风", []),
-            "Interface:appAccountAppearanceView.refreshAppearanceError": .init("更改已提交，但刷新外观失败：%1$@", [.text]),
-            "Interface:appAccountAppearanceView.appearanceError": .init("预览未能加载：%1$@", [.text]),
+            "Interface:AppAccountAppearanceView.appearanceChangesSaved": .init("更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。", []),
+            "Interface:AppAccountAppearanceView.appearanceError": .init("预览未能加载：%1$@", [.text]),
+            "Interface:AppAccountAppearanceView.cape": .init("披风", []),
+            "Interface:AppAccountAppearanceView.capeChanged": .init("已更换披风", []),
+            "Interface:AppAccountAppearanceView.capeHidden": .init("已隐藏披风", []),
+            "Interface:AppAccountAppearanceView.capeRemoved": .init("已移除披风", []),
+            "Interface:AppAccountAppearanceView.capeUploadUnavailable": .init("此认证站未开放披风上传，请在认证站管理。", []),
+            "Interface:AppAccountAppearanceView.chooseAgain": .init("重新选择…", []),
+            "Interface:AppAccountAppearanceView.chooseCapePNG": .init("选择披风 PNG…", []),
+            "Interface:AppAccountAppearanceView.chooseSkinPNG": .init("选择皮肤 PNG…", []),
+            "Interface:AppAccountAppearanceView.currentSkin": .init("当前皮肤", []),
+            "Interface:AppAccountAppearanceView.currentlyInUse": .init("当前正在使用", []),
+            "Interface:AppAccountAppearanceView.defaultSkinRestored": .init("已恢复默认皮肤", []),
+            "Interface:AppAccountAppearanceView.expandedPNGTexture": .init("展开的 PNG 纹理", []),
+            "Interface:AppAccountAppearanceView.hiddenCape": .init("隐藏披风", []),
+            "Interface:AppAccountAppearanceView.hideCape": .init("不显示披风", []),
+            "Interface:AppAccountAppearanceView.noCape": .init("没有披风", []),
+            "Interface:AppAccountAppearanceView.noCapeInUse": .init("当前未使用披风", []),
+            "Interface:AppAccountAppearanceView.noCapeOwned": .init("此账号暂无披风。", []),
+            "Interface:AppAccountAppearanceView.ownedCapes": .init("已拥有的披风", []),
+            "Interface:AppAccountAppearanceView.prepareUpload": .init("准备上传%1$@", [.text]),
+            "Interface:AppAccountAppearanceView.processing": .init("正在处理…", []),
+            "Interface:AppAccountAppearanceView.refresh": .init("刷新", []),
+            "Interface:AppAccountAppearanceView.refreshAppearanceError": .init("更改已提交，但刷新外观失败：%1$@", [.text]),
+            "Interface:AppAccountAppearanceView.removeCurrentCape": .init("移除当前披风", []),
+            "Interface:AppAccountAppearanceView.restoreDefaultSkin": .init("恢复默认皮肤", []),
+            "Interface:AppAccountAppearanceView.savePNG": .init("保存 PNG…", []),
+            "Interface:AppAccountAppearanceView.skinModel": .init("皮肤模型", []),
+            "Interface:AppAccountAppearanceView.skinUploadUnavailable": .init("此认证站未开放皮肤上传，请在认证站管理。", []),
+            "Interface:AppAccountAppearanceView.skinsAndCapes": .init("皮肤与披风", []),
+            "Interface:AppAccountAppearanceView.texturePreview": .init("纹理预览", []),
+            "Interface:AppAccountAppearanceView.uploadToAccount": .init("上传到此账号", []),
+            "Interface:AppAccountAppearanceView.uploaded": .init("已上传%1$@", [.text]),
+            "Interface:AppAccountAppearanceView.useCape": .init("使用这件披风", []),
+            "Interface:AppAccountAppearanceView.useDefaultSkin": .init("使用默认皮肤", []),
         ]
     }
 }

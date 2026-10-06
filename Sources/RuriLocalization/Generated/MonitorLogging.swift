@@ -3,56 +3,56 @@ import Foundation
 
 extension Messages {
     public enum MonitorLogging {
+        /// 已达到本次运行的 64 MiB 调试日志上限
+        ///
+        /// Resource: `Interface.MonitorLogging.debugLimit`.
+        public static var debugLimit: LocalizedMessage {
+            .init(key: "MonitorLogging.debugLimit", table: "Interface", fallback: "已达到本次运行的 64 MiB 调试日志上限")
+        }
         /// 调试模式
         ///
-        /// Resource: `Interface.monitorLogging.debugMode`.
+        /// Resource: `Interface.MonitorLogging.debugMode`.
         public static var debugMode: LocalizedMessage {
-            .init(key: "monitorLogging.debugMode", table: "Interface", fallback: "调试模式")
+            .init(key: "MonitorLogging.debugMode", table: "Interface", fallback: "调试模式")
         }
         /// 详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB。
         ///
-        /// Resource: `Interface.monitorLogging.debugModeHelp`.
+        /// Resource: `Interface.MonitorLogging.debugModeHelp`.
         public static var debugModeHelp: LocalizedMessage {
-            .init(key: "monitorLogging.debugModeHelp", table: "Interface", fallback: "详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB。")
+            .init(key: "MonitorLogging.debugModeHelp", table: "Interface", fallback: "详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB。")
         }
         /// 默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。
         ///
-        /// Resource: `Interface.monitorLogging.defaultModeHelp`.
+        /// Resource: `Interface.MonitorLogging.defaultModeHelp`.
         public static var defaultModeHelp: LocalizedMessage {
-            .init(key: "monitorLogging.defaultModeHelp", table: "Interface", fallback: "默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。")
-        }
-        /// [Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。
-        ///
-        /// Resource: `Interface.monitorLogging.writeFailed`.
-        public static func writeFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "monitorLogging.writeFailed", table: "Interface", fallback: "[Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。", arguments: [.text(value0)])
-        }
-        /// 已达到本次运行的 64 MiB 调试日志上限
-        ///
-        /// Resource: `Interface.monitorLogging.debugLimit`.
-        public static var debugLimit: LocalizedMessage {
-            .init(key: "monitorLogging.debugLimit", table: "Interface", fallback: "已达到本次运行的 64 MiB 调试日志上限")
+            .init(key: "MonitorLogging.defaultModeHelp", table: "Interface", fallback: "默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。")
         }
         /// 游戏报告了启动失败或崩溃
         ///
-        /// Resource: `Interface.monitorLogging.reportedFailure`.
+        /// Resource: `Interface.MonitorLogging.reportedFailure`.
         public static var reportedFailure: LocalizedMessage {
-            .init(key: "monitorLogging.reportedFailure", table: "Interface", fallback: "游戏报告了启动失败或崩溃")
+            .init(key: "MonitorLogging.reportedFailure", table: "Interface", fallback: "游戏报告了启动失败或崩溃")
         }
         /// 游戏日志文件夹
         ///
-        /// Resource: `Interface.monitorLogging.showGameLogs`.
+        /// Resource: `Interface.MonitorLogging.showGameLogs`.
         public static var showGameLogs: LocalizedMessage {
-            .init(key: "monitorLogging.showGameLogs", table: "Interface", fallback: "游戏日志文件夹")
+            .init(key: "MonitorLogging.showGameLogs", table: "Interface", fallback: "游戏日志文件夹")
+        }
+        /// [Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。
+        ///
+        /// Resource: `Interface.MonitorLogging.writeFailed`.
+        public static func writeFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "MonitorLogging.writeFailed", table: "Interface", fallback: "[Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:monitorLogging.debugMode": .init("调试模式", []),
-            "Interface:monitorLogging.debugModeHelp": .init("详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB。", []),
-            "Interface:monitorLogging.defaultModeHelp": .init("默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。", []),
-            "Interface:monitorLogging.writeFailed": .init("[Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。", [.text]),
-            "Interface:monitorLogging.debugLimit": .init("已达到本次运行的 64 MiB 调试日志上限", []),
-            "Interface:monitorLogging.reportedFailure": .init("游戏报告了启动失败或崩溃", []),
-            "Interface:monitorLogging.showGameLogs": .init("游戏日志文件夹", []),
+            "Interface:MonitorLogging.debugLimit": .init("已达到本次运行的 64 MiB 调试日志上限", []),
+            "Interface:MonitorLogging.debugMode": .init("调试模式", []),
+            "Interface:MonitorLogging.debugModeHelp": .init("详细记录控制台输出，会增加资源占用和磁盘写入。记录上限为 64 MiB。", []),
+            "Interface:MonitorLogging.defaultModeHelp": .init("默认保留启动信息和有界的近期输出，异常时保存游戏日志。需要更详细的控制台记录时，可在启动设置中开启调试模式。", []),
+            "Interface:MonitorLogging.reportedFailure": .init("游戏报告了启动失败或崩溃", []),
+            "Interface:MonitorLogging.showGameLogs": .init("游戏日志文件夹", []),
+            "Interface:MonitorLogging.writeFailed": .init("[Ruri] 调试日志写入已停止：%1$@。近期输出仍保留用于故障诊断。", [.text]),
         ]
     }
 }

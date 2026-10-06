@@ -3,77 +3,77 @@ import Foundation
 
 extension Messages {
     public enum CoreNetwork {
+        /// 文件校验失败：%1$@
+        ///
+        /// Resource: `Core.CoreNetwork.downloadChecksumFailed`.
+        public static func downloadChecksumFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreNetwork.downloadChecksumFailed", table: "Core", fallback: "文件校验失败：%1$@", arguments: [.text(value0)])
+        }
         /// 服务
         ///
-        /// Resource: `Core.coreNetwork.statusText1`.
+        /// Resource: `Core.CoreNetwork.serviceName`.
         public static var serviceName: LocalizedMessage {
-            .init(key: "coreNetwork.statusText1", table: "Core", fallback: "服务")
+            .init(key: "CoreNetwork.serviceName", table: "Core", fallback: "服务")
         }
         /// 未知来源
         ///
-        /// Resource: `Core.coreNetwork.urlText2`.
+        /// Resource: `Core.CoreNetwork.unknownSource`.
         public static var unknownSource: LocalizedMessage {
-            .init(key: "coreNetwork.urlText2", table: "Core", fallback: "未知来源")
-        }
-        /// 文件校验失败：%1$@
-        ///
-        /// Resource: `Core.coreNetwork.streamText1`.
-        public static func downloadChecksumFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreNetwork.streamText1", table: "Core", fallback: "文件校验失败：%1$@", arguments: [.text(value0)])
-        }
-        /// 请求缺少地址
-        ///
-        /// Resource: `Errors.coreNetwork.lastErrorText1`.
-        public static var missingRequestURL: LocalizedMessage {
-            .init(key: "coreNetwork.lastErrorText1", table: "Errors", fallback: "请求缺少地址")
-        }
-        /// %1$@ 返回 HTTP %2$@。请检查网络后重试。
-        ///
-        /// Resource: `Errors.coreNetwork.statusText2`.
-        public static func httpError(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreNetwork.statusText2", table: "Errors", fallback: "%1$@ 返回 HTTP %2$@。请检查网络后重试。", arguments: [.text(value0), .text(value1)])
-        }
-        /// 安装器生成的文件缺失或损坏：%1$@。请修复此实例。
-        ///
-        /// Resource: `Errors.coreNetwork.urlText1`.
-        public static func installerFileMissing(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreNetwork.urlText1", table: "Errors", fallback: "安装器生成的文件缺失或损坏：%1$@。请修复此实例。", arguments: [.text(value0)])
-        }
-        /// 下载仅接受 HTTPS：%1$@
-        ///
-        /// Resource: `Errors.coreNetwork.urlText3`.
-        public static func httpsRequired(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreNetwork.urlText3", table: "Errors", fallback: "下载仅接受 HTTPS：%1$@", arguments: [.text(value0)])
-        }
-        /// 多个下载要求写入同一文件：%1$@
-        ///
-        /// Resource: `Errors.coreNetwork.existingText1`.
-        public static func duplicateDownloadDestination(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreNetwork.existingText1", table: "Errors", fallback: "多个下载要求写入同一文件：%1$@", arguments: [.text(value0)])
-        }
-        /// 无法保存已校验的下载文件
-        ///
-        /// Resource: `Errors.coreNetwork.urlText4`.
-        public static var verifiedDownloadSaveFailed: LocalizedMessage {
-            .init(key: "coreNetwork.urlText4", table: "Errors", fallback: "无法保存已校验的下载文件")
+            .init(key: "CoreNetwork.unknownSource", table: "Core", fallback: "未知来源")
         }
         /// 无法保存下载：%1$@
         ///
-        /// Resource: `Errors.coreNetwork.streamText2`.
+        /// Resource: `Errors.CoreNetwork.downloadSaveFailed`.
         public static func downloadSaveFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreNetwork.streamText2", table: "Errors", fallback: "无法保存下载：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreNetwork.downloadSaveFailed", table: "Errors", fallback: "无法保存下载：%1$@", arguments: [.text(value0)])
+        }
+        /// 多个下载要求写入同一文件：%1$@
+        ///
+        /// Resource: `Errors.CoreNetwork.duplicateDownloadDestination`.
+        public static func duplicateDownloadDestination(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreNetwork.duplicateDownloadDestination", table: "Errors", fallback: "多个下载要求写入同一文件：%1$@", arguments: [.text(value0)])
+        }
+        /// %1$@ 返回 HTTP %2$@。请检查网络后重试。
+        ///
+        /// Resource: `Errors.CoreNetwork.httpError`.
+        public static func httpError(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CoreNetwork.httpError", table: "Errors", fallback: "%1$@ 返回 HTTP %2$@。请检查网络后重试。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 下载仅接受 HTTPS：%1$@
+        ///
+        /// Resource: `Errors.CoreNetwork.httpsRequired`.
+        public static func httpsRequired(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreNetwork.httpsRequired", table: "Errors", fallback: "下载仅接受 HTTPS：%1$@", arguments: [.text(value0)])
+        }
+        /// 安装器生成的文件缺失或损坏：%1$@。请修复此实例。
+        ///
+        /// Resource: `Errors.CoreNetwork.installerFileMissing`.
+        public static func installerFileMissing(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreNetwork.installerFileMissing", table: "Errors", fallback: "安装器生成的文件缺失或损坏：%1$@。请修复此实例。", arguments: [.text(value0)])
+        }
+        /// 请求缺少地址
+        ///
+        /// Resource: `Errors.CoreNetwork.missingRequestURL`.
+        public static var missingRequestURL: LocalizedMessage {
+            .init(key: "CoreNetwork.missingRequestURL", table: "Errors", fallback: "请求缺少地址")
+        }
+        /// 无法保存已校验的下载文件
+        ///
+        /// Resource: `Errors.CoreNetwork.verifiedDownloadSaveFailed`.
+        public static var verifiedDownloadSaveFailed: LocalizedMessage {
+            .init(key: "CoreNetwork.verifiedDownloadSaveFailed", table: "Errors", fallback: "无法保存已校验的下载文件")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreNetwork.statusText1": .init("服务", []),
-            "Core:coreNetwork.urlText2": .init("未知来源", []),
-            "Core:coreNetwork.streamText1": .init("文件校验失败：%1$@", [.text]),
-            "Errors:coreNetwork.lastErrorText1": .init("请求缺少地址", []),
-            "Errors:coreNetwork.statusText2": .init("%1$@ 返回 HTTP %2$@。请检查网络后重试。", [.text, .text]),
-            "Errors:coreNetwork.urlText1": .init("安装器生成的文件缺失或损坏：%1$@。请修复此实例。", [.text]),
-            "Errors:coreNetwork.urlText3": .init("下载仅接受 HTTPS：%1$@", [.text]),
-            "Errors:coreNetwork.existingText1": .init("多个下载要求写入同一文件：%1$@", [.text]),
-            "Errors:coreNetwork.urlText4": .init("无法保存已校验的下载文件", []),
-            "Errors:coreNetwork.streamText2": .init("无法保存下载：%1$@", [.text]),
+            "Core:CoreNetwork.downloadChecksumFailed": .init("文件校验失败：%1$@", [.text]),
+            "Core:CoreNetwork.serviceName": .init("服务", []),
+            "Core:CoreNetwork.unknownSource": .init("未知来源", []),
+            "Errors:CoreNetwork.downloadSaveFailed": .init("无法保存下载：%1$@", [.text]),
+            "Errors:CoreNetwork.duplicateDownloadDestination": .init("多个下载要求写入同一文件：%1$@", [.text]),
+            "Errors:CoreNetwork.httpError": .init("%1$@ 返回 HTTP %2$@。请检查网络后重试。", [.text, .text]),
+            "Errors:CoreNetwork.httpsRequired": .init("下载仅接受 HTTPS：%1$@", [.text]),
+            "Errors:CoreNetwork.installerFileMissing": .init("安装器生成的文件缺失或损坏：%1$@。请修复此实例。", [.text]),
+            "Errors:CoreNetwork.missingRequestURL": .init("请求缺少地址", []),
+            "Errors:CoreNetwork.verifiedDownloadSaveFailed": .init("无法保存已校验的下载文件", []),
         ]
     }
 }

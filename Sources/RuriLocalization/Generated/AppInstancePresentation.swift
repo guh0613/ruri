@@ -3,77 +3,77 @@ import Foundation
 
 extension Messages {
     public enum AppInstancePresentation {
-        /// 需要检查
-        ///
-        /// Resource: `Interface.appInstancePresentation.statusLabelText1`.
-        public static var needsCheck: LocalizedMessage {
-            .init(key: "appInstancePresentation.statusLabelText1", table: "Interface", fallback: "需要检查")
-        }
-        /// 就绪
-        ///
-        /// Resource: `Interface.appInstancePresentation.statusLabelText2`.
-        public static var ready: LocalizedMessage {
-            .init(key: "appInstancePresentation.statusLabelText2", table: "Interface", fallback: "就绪")
-        }
-        /// 待安装
-        ///
-        /// Resource: `Interface.appInstancePresentation.statusLabelText3`.
-        public static var pendingInstall: LocalizedMessage {
-            .init(key: "appInstancePresentation.statusLabelText3", table: "Interface", fallback: "待安装")
-        }
-        /// 内存设置待检查
-        ///
-        /// Resource: `Interface.appInstancePresentation.memoryText1`.
-        public static var memoryNeedsCheck: LocalizedMessage {
-            .init(key: "appInstancePresentation.memoryText1", table: "Interface", fallback: "内存设置待检查")
-        }
         ///  · 自动
         ///
-        /// Resource: `Interface.appInstancePresentation.memoryText2`.
+        /// Resource: `Interface.AppInstancePresentation.automaticMemory`.
         public static var automaticMemory: LocalizedMessage {
-            .init(key: "appInstancePresentation.memoryText2", table: "Interface", fallback: " · 自动")
-        }
-        ///  · 参数
-        ///
-        /// Resource: `Interface.appInstancePresentation.memoryText3`.
-        public static var memoryArguments: LocalizedMessage {
-            .init(key: "appInstancePresentation.memoryText3", table: "Interface", fallback: " · 参数")
-        }
-        /// 尚未游玩
-        ///
-        /// Resource: `Interface.appInstancePresentation.lastPlayedLabelText2`.
-        public static var neverPlayed: LocalizedMessage {
-            .init(key: "appInstancePresentation.lastPlayedLabelText2", table: "Interface", fallback: "尚未游玩")
-        }
-        /// 不到 1 分钟
-        ///
-        /// Resource: `Interface.appInstancePresentation.playTimeLabelText1`.
-        public static var lessThanAMinute: LocalizedMessage {
-            .init(key: "appInstancePresentation.playTimeLabelText1", table: "Interface", fallback: "不到 1 分钟")
-        }
-        /// 原版
-        ///
-        /// Resource: `Interface.appInstancePresentation.loaderLabelText1`.
-        public static var vanilla: LocalizedMessage {
-            .init(key: "appInstancePresentation.loaderLabelText1", table: "Interface", fallback: "原版")
+            .init(key: "AppInstancePresentation.automaticMemory", table: "Interface", fallback: " · 自动")
         }
         /// 上次游玩 %1$@
         ///
-        /// Resource: `Interface.appInstancePresentation.lastPlayed`.
+        /// Resource: `Interface.AppInstancePresentation.lastPlayed`.
         public static func lastPlayed(_ value0: String) -> LocalizedMessage {
-            .init(key: "appInstancePresentation.lastPlayed", table: "Interface", fallback: "上次游玩 %1$@", arguments: [.text(value0)])
+            .init(key: "AppInstancePresentation.lastPlayed", table: "Interface", fallback: "上次游玩 %1$@", arguments: [.text(value0)])
+        }
+        /// 不到 1 分钟
+        ///
+        /// Resource: `Interface.AppInstancePresentation.lessThanAMinute`.
+        public static var lessThanAMinute: LocalizedMessage {
+            .init(key: "AppInstancePresentation.lessThanAMinute", table: "Interface", fallback: "不到 1 分钟")
+        }
+        ///  · 参数
+        ///
+        /// Resource: `Interface.AppInstancePresentation.memoryArguments`.
+        public static var memoryArguments: LocalizedMessage {
+            .init(key: "AppInstancePresentation.memoryArguments", table: "Interface", fallback: " · 参数")
+        }
+        /// 内存设置待检查
+        ///
+        /// Resource: `Interface.AppInstancePresentation.memoryNeedsCheck`.
+        public static var memoryNeedsCheck: LocalizedMessage {
+            .init(key: "AppInstancePresentation.memoryNeedsCheck", table: "Interface", fallback: "内存设置待检查")
+        }
+        /// 需要检查
+        ///
+        /// Resource: `Interface.AppInstancePresentation.needsCheck`.
+        public static var needsCheck: LocalizedMessage {
+            .init(key: "AppInstancePresentation.needsCheck", table: "Interface", fallback: "需要检查")
+        }
+        /// 尚未游玩
+        ///
+        /// Resource: `Interface.AppInstancePresentation.neverPlayed`.
+        public static var neverPlayed: LocalizedMessage {
+            .init(key: "AppInstancePresentation.neverPlayed", table: "Interface", fallback: "尚未游玩")
+        }
+        /// 待安装
+        ///
+        /// Resource: `Interface.AppInstancePresentation.pendingInstall`.
+        public static var pendingInstall: LocalizedMessage {
+            .init(key: "AppInstancePresentation.pendingInstall", table: "Interface", fallback: "待安装")
+        }
+        /// 就绪
+        ///
+        /// Resource: `Interface.AppInstancePresentation.ready`.
+        public static var ready: LocalizedMessage {
+            .init(key: "AppInstancePresentation.ready", table: "Interface", fallback: "就绪")
+        }
+        /// 原版
+        ///
+        /// Resource: `Interface.AppInstancePresentation.vanilla`.
+        public static var vanilla: LocalizedMessage {
+            .init(key: "AppInstancePresentation.vanilla", table: "Interface", fallback: "原版")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appInstancePresentation.statusLabelText1": .init("需要检查", []),
-            "Interface:appInstancePresentation.statusLabelText2": .init("就绪", []),
-            "Interface:appInstancePresentation.statusLabelText3": .init("待安装", []),
-            "Interface:appInstancePresentation.memoryText1": .init("内存设置待检查", []),
-            "Interface:appInstancePresentation.memoryText2": .init(" · 自动", []),
-            "Interface:appInstancePresentation.memoryText3": .init(" · 参数", []),
-            "Interface:appInstancePresentation.lastPlayedLabelText2": .init("尚未游玩", []),
-            "Interface:appInstancePresentation.playTimeLabelText1": .init("不到 1 分钟", []),
-            "Interface:appInstancePresentation.loaderLabelText1": .init("原版", []),
-            "Interface:appInstancePresentation.lastPlayed": .init("上次游玩 %1$@", [.text]),
+            "Interface:AppInstancePresentation.automaticMemory": .init(" · 自动", []),
+            "Interface:AppInstancePresentation.lastPlayed": .init("上次游玩 %1$@", [.text]),
+            "Interface:AppInstancePresentation.lessThanAMinute": .init("不到 1 分钟", []),
+            "Interface:AppInstancePresentation.memoryArguments": .init(" · 参数", []),
+            "Interface:AppInstancePresentation.memoryNeedsCheck": .init("内存设置待检查", []),
+            "Interface:AppInstancePresentation.needsCheck": .init("需要检查", []),
+            "Interface:AppInstancePresentation.neverPlayed": .init("尚未游玩", []),
+            "Interface:AppInstancePresentation.pendingInstall": .init("待安装", []),
+            "Interface:AppInstancePresentation.ready": .init("就绪", []),
+            "Interface:AppInstancePresentation.vanilla": .init("原版", []),
         ]
     }
 }

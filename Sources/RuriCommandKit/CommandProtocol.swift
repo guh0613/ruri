@@ -6,11 +6,11 @@ import RuriCore
 public typealias Value = OperationValue
 
 struct CommonOptions: ParsableArguments {
-    @Flag(help: ArgumentHelp(Messages.CLIInterface.t0719f30a146c.localized)) var json = false
-    @Option(help: ArgumentHelp(Messages.CLIInterface.t0232e54a0c07.localized)) var output: String = "text"
-    @Option(help: ArgumentHelp(Messages.CLIInterface.tfeeb5f4ef393.localized)) var dataDir: String?
-    @Option(help: ArgumentHelp(Messages.CLIInterface.t83e479a9529d.localized)) var language: String?
-    @Flag(help: ArgumentHelp(Messages.CLIInterface.t1dfd9c76d588.localized)) var quiet = false
+    @Flag(help: ArgumentHelp(Messages.CLIInterface.jsonOutputHelp.localized)) var json = false
+    @Option(help: ArgumentHelp(Messages.CLIInterface.outputFormatHelp.localized)) var output: String = "text"
+    @Option(help: ArgumentHelp(Messages.CLIInterface.dataDirectoryHelp.localized)) var dataDir: String?
+    @Option(help: ArgumentHelp(Messages.CLIInterface.messageLanguageHelp.localized)) var language: String?
+    @Flag(help: ArgumentHelp(Messages.CLIInterface.quietProgressHelp.localized)) var quiet = false
 }
 
 struct ParameterSpec: Codable, Sendable {
@@ -69,20 +69,20 @@ struct CommandRequest: Sendable {
     func string(_ name: String) -> String? { options[name]?.string }
     func integer(_ name: String) -> Int? { options[name]?.int }
     func required(_ name: String) throws -> String {
-        guard let value = string(name), !value.isEmpty else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tc3f4b95955b1(String(describing: name)).localized) }
+        guard let value = string(name), !value.isEmpty else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.missingOption(String(describing: name)).localized) }
         return value
     }
     func operand(_ index: Int = 0) throws -> String {
-        guard operands.indices.contains(index) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t883e96f211e4(String(describing: spec.operands[safe: index]?.name ?? String(index + 1))).localized) }
+        guard operands.indices.contains(index) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.missingArgument(String(describing: spec.operands[safe: index]?.name ?? String(index + 1))).localized) }
         return operands[index]
     }
     func validate() throws {
         let minimum = spec.operands.filter(\.required).count
         guard operands.count >= minimum, operands.count <= spec.operands.count else {
-            throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t8c27fffd692c(String(describing: spec.operands.map(\.name).joined(separator: " ")), String(describing: operands.count)).localized)
+            throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.positionalArgumentCountMismatch(String(describing: spec.operands.map(\.name).joined(separator: " ")), String(describing: operands.count)).localized)
         }
         guard ["text", "json", "ndjson"].contains(common.output), !common.json || ["text", "json"].contains(common.output) else {
-            throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te36f73cbdb89.localized)
+            throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidOutputFormatCombination.localized)
         }
         for option in spec.options {
             if option.required {
@@ -92,16 +92,16 @@ struct CommandRequest: Sendable {
                 case "strings": missing = options[option.name] == nil || options[option.name] == .array([])
                 default: missing = options[option.name] == nil || options[option.name] == .string("")
                 }
-                if missing { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tc3f4b95955b1(String(describing: option.name)).localized) }
+                if missing { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.missingOption(String(describing: option.name)).localized) }
             }
             if !option.values.isEmpty, let value = string(option.name), !option.values.contains(value) {
-                throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.te66506826636(String(describing: option.name), String(describing: option.values.joined(separator: ", "))).localized)
+                throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidOptionChoice(String(describing: option.name), String(describing: option.values.joined(separator: ", "))).localized)
             }
         }
-        if let limit = integer("limit"), !(1...1000).contains(limit) { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.t73e3848bbeee.localized) }
-        if let offset = integer("offset"), offset < 0 { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.td3901a3793d1.localized) }
+        if let limit = integer("limit"), !(1...1000).contains(limit) { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.limitOutOfRange.localized) }
+        if let offset = integer("offset"), offset < 0 { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.negativeOffset.localized) }
         if spec.confirmation && !dryRun && !flag("yes") {
-            throw OperationFailure("CONFIRMATION_REQUIRED", Messages.CLIInterface.tf2d2570879da.localized)
+            throw OperationFailure("CONFIRMATION_REQUIRED", Messages.CLIInterface.confirmationRequired.localized)
         }
     }
     func page(_ values: [Value]) -> Value {

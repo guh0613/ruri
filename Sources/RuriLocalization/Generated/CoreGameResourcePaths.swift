@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreGameResourcePaths {
         /// 依赖库缺少文件路径。
         ///
-        /// Resource: `Errors.coreGameResourcePaths.pathText1`.
+        /// Resource: `Errors.CoreGameResourcePaths.missingLibraryPath`.
         public static var missingLibraryPath: LocalizedMessage {
-            .init(key: "coreGameResourcePaths.pathText1", table: "Errors", fallback: "依赖库缺少文件路径。")
+            .init(key: "CoreGameResourcePaths.missingLibraryPath", table: "Errors", fallback: "依赖库缺少文件路径。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreGameResourcePaths.pathText1": .init("依赖库缺少文件路径。", []),
+            "Errors:CoreGameResourcePaths.missingLibraryPath": .init("依赖库缺少文件路径。", []),
         ]
     }
 }

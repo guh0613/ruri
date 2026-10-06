@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum CoreWorldQuickPlay {
-        /// 此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。
+        /// 存档信息不完整，请先在游戏中检查此世界。
         ///
-        /// Resource: `Errors.coreWorldQuickPlay.requireSupportText1`.
-        public static var unsupportedVersion: LocalizedMessage {
-            .init(key: "coreWorldQuickPlay.requireSupportText1", table: "Errors", fallback: "此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。")
+        /// Resource: `Errors.CoreWorldQuickPlay.incompleteWorldData`.
+        public static var incompleteWorldData: LocalizedMessage {
+            .init(key: "CoreWorldQuickPlay.incompleteWorldData", table: "Errors", fallback: "存档信息不完整，请先在游戏中检查此世界。")
         }
         /// 无效的存档目录名。
         ///
-        /// Resource: `Errors.coreWorldQuickPlay.selectionText1`.
+        /// Resource: `Errors.CoreWorldQuickPlay.invalidWorldName`.
         public static var invalidWorldName: LocalizedMessage {
-            .init(key: "coreWorldQuickPlay.selectionText1", table: "Errors", fallback: "无效的存档目录名。")
-        }
-        /// 存档已移除或不是有效的文件夹，请刷新存档列表。
-        ///
-        /// Resource: `Errors.coreWorldQuickPlay.infoText1`.
-        public static var worldDirectoryInvalid: LocalizedMessage {
-            .init(key: "coreWorldQuickPlay.infoText1", table: "Errors", fallback: "存档已移除或不是有效的文件夹，请刷新存档列表。")
-        }
-        /// 存档信息不完整，请先在游戏中检查此世界。
-        ///
-        /// Resource: `Errors.coreWorldQuickPlay.dataText1`.
-        public static var incompleteWorldData: LocalizedMessage {
-            .init(key: "coreWorldQuickPlay.dataText1", table: "Errors", fallback: "存档信息不完整，请先在游戏中检查此世界。")
+            .init(key: "CoreWorldQuickPlay.invalidWorldName", table: "Errors", fallback: "无效的存档目录名。")
         }
         /// 实例运行目录在选择存档后改变，请重新选择世界。
         ///
-        /// Resource: `Errors.coreWorldQuickPlay.currentText1`.
+        /// Resource: `Errors.CoreWorldQuickPlay.runDirectoryChanged`.
         public static var runDirectoryChanged: LocalizedMessage {
-            .init(key: "coreWorldQuickPlay.currentText1", table: "Errors", fallback: "实例运行目录在选择存档后改变，请重新选择世界。")
+            .init(key: "CoreWorldQuickPlay.runDirectoryChanged", table: "Errors", fallback: "实例运行目录在选择存档后改变，请重新选择世界。")
+        }
+        /// 此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。
+        ///
+        /// Resource: `Errors.CoreWorldQuickPlay.unsupportedVersion`.
+        public static var unsupportedVersion: LocalizedMessage {
+            .init(key: "CoreWorldQuickPlay.unsupportedVersion", table: "Errors", fallback: "此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。")
+        }
+        /// 存档已移除或不是有效的文件夹，请刷新存档列表。
+        ///
+        /// Resource: `Errors.CoreWorldQuickPlay.worldDirectoryInvalid`.
+        public static var worldDirectoryInvalid: LocalizedMessage {
+            .init(key: "CoreWorldQuickPlay.worldDirectoryInvalid", table: "Errors", fallback: "存档已移除或不是有效的文件夹，请刷新存档列表。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreWorldQuickPlay.requireSupportText1": .init("此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。", []),
-            "Errors:coreWorldQuickPlay.selectionText1": .init("无效的存档目录名。", []),
-            "Errors:coreWorldQuickPlay.infoText1": .init("存档已移除或不是有效的文件夹，请刷新存档列表。", []),
-            "Errors:coreWorldQuickPlay.dataText1": .init("存档信息不完整，请先在游戏中检查此世界。", []),
-            "Errors:coreWorldQuickPlay.currentText1": .init("实例运行目录在选择存档后改变，请重新选择世界。", []),
+            "Errors:CoreWorldQuickPlay.incompleteWorldData": .init("存档信息不完整，请先在游戏中检查此世界。", []),
+            "Errors:CoreWorldQuickPlay.invalidWorldName": .init("无效的存档目录名。", []),
+            "Errors:CoreWorldQuickPlay.runDirectoryChanged": .init("实例运行目录在选择存档后改变，请重新选择世界。", []),
+            "Errors:CoreWorldQuickPlay.unsupportedVersion": .init("此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。", []),
+            "Errors:CoreWorldQuickPlay.worldDirectoryInvalid": .init("存档已移除或不是有效的文件夹，请刷新存档列表。", []),
         ]
     }
 }

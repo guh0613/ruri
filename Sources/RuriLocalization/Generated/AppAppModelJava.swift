@@ -3,98 +3,98 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelJava {
-        /// 选择 java 可执行文件、JDK 包或 Java Home 文件夹。
-        ///
-        /// Resource: `Interface.appAppModelJava.panelText1`.
-        public static var javaPathPurpose: LocalizedMessage {
-            .init(key: "appAppModelJava.panelText1", table: "Interface", fallback: "选择 java 可执行文件、JDK 包或 Java Home 文件夹。")
-        }
-        /// 选择新的 Java 路径，原来指定这一路径的实例和默认设置会随之更新。
-        ///
-        /// Resource: `Interface.appAppModelJava.panelText2`.
-        public static var javaPathReplacementDetails: LocalizedMessage {
-            .init(key: "appAppModelJava.panelText2", table: "Interface", fallback: "选择新的 Java 路径，原来指定这一路径的实例和默认设置会随之更新。")
-        }
         /// 添加本机 Java
         ///
-        /// Resource: `Interface.appAppModelJava.urlText1`.
+        /// Resource: `Interface.AppAppModelJava.addLocalJava`.
         public static var addLocalJava: LocalizedMessage {
-            .init(key: "appAppModelJava.urlText1", table: "Interface", fallback: "添加本机 Java")
+            .init(key: "AppAppModelJava.addLocalJava", table: "Interface", fallback: "添加本机 Java")
         }
         /// 重新选择 Java
         ///
-        /// Resource: `Interface.appAppModelJava.urlText2`.
+        /// Resource: `Interface.AppAppModelJava.chooseJavaAgain`.
         public static var chooseJavaAgain: LocalizedMessage {
-            .init(key: "appAppModelJava.urlText2", table: "Interface", fallback: "重新选择 Java")
-        }
-        /// Java 已添加，可在启动设置中选择
-        ///
-        /// Resource: `Interface.appAppModelJava.savedText1`.
-        public static var javaAdded: LocalizedMessage {
-            .init(key: "appAppModelJava.savedText1", table: "Interface", fallback: "Java 已添加，可在启动设置中选择")
-        }
-        /// 已更新默认 Java，下一次启动生效
-        ///
-        /// Resource: `Interface.appAppModelJava.defaultJavaText1`.
-        public static var defaultJavaUpdated: LocalizedMessage {
-            .init(key: "appAppModelJava.defaultJavaText1", table: "Interface", fallback: "已更新默认 Java，下一次启动生效")
-        }
-        /// 修复
-        ///
-        /// Resource: `Interface.appAppModelJava.installJavaText1`.
-        public static var repair: LocalizedMessage {
-            .init(key: "appAppModelJava.installJavaText1", table: "Interface", fallback: "修复")
-        }
-        /// 安装
-        ///
-        /// Resource: `Interface.appAppModelJava.installJavaText2`.
-        public static var install: LocalizedMessage {
-            .init(key: "appAppModelJava.installJavaText2", table: "Interface", fallback: "安装")
-        }
-        /// Java 已修复
-        ///
-        /// Resource: `Interface.appAppModelJava.installJavaText3`.
-        public static var javaRepaired: LocalizedMessage {
-            .init(key: "appAppModelJava.installJavaText3", table: "Interface", fallback: "Java 已修复")
-        }
-        /// Java 已安装
-        ///
-        /// Resource: `Interface.appAppModelJava.installJavaText4`.
-        public static var javaInstalled: LocalizedMessage {
-            .init(key: "appAppModelJava.installJavaText4", table: "Interface", fallback: "Java 已安装")
+            .init(key: "AppAppModelJava.chooseJavaAgain", table: "Interface", fallback: "重新选择 Java")
         }
         /// 清理 Java 未完成下载
         ///
-        /// Resource: `Interface.appAppModelJava.removeJavaText1`.
+        /// Resource: `Interface.AppAppModelJava.cleanIncompleteJavaDownload`.
         public static var cleanIncompleteJavaDownload: LocalizedMessage {
-            .init(key: "appAppModelJava.removeJavaText1", table: "Interface", fallback: "清理 Java 未完成下载")
+            .init(key: "AppAppModelJava.cleanIncompleteJavaDownload", table: "Interface", fallback: "清理 Java 未完成下载")
         }
-        /// 移除 Java
+        /// 已更新默认 Java，下一次启动生效
         ///
-        /// Resource: `Interface.appAppModelJava.removeJavaText2`.
-        public static var removeJava: LocalizedMessage {
-            .init(key: "appAppModelJava.removeJavaText2", table: "Interface", fallback: "移除 Java")
+        /// Resource: `Interface.AppAppModelJava.defaultJavaUpdated`.
+        public static var defaultJavaUpdated: LocalizedMessage {
+            .init(key: "AppAppModelJava.defaultJavaUpdated", table: "Interface", fallback: "已更新默认 Java，下一次启动生效")
+        }
+        /// 安装
+        ///
+        /// Resource: `Interface.AppAppModelJava.install`.
+        public static var install: LocalizedMessage {
+            .init(key: "AppAppModelJava.install", table: "Interface", fallback: "安装")
+        }
+        /// Java 已添加，可在启动设置中选择
+        ///
+        /// Resource: `Interface.AppAppModelJava.javaAdded`.
+        public static var javaAdded: LocalizedMessage {
+            .init(key: "AppAppModelJava.javaAdded", table: "Interface", fallback: "Java 已添加，可在启动设置中选择")
+        }
+        /// Java 已安装
+        ///
+        /// Resource: `Interface.AppAppModelJava.javaInstalled`.
+        public static var javaInstalled: LocalizedMessage {
+            .init(key: "AppAppModelJava.javaInstalled", table: "Interface", fallback: "Java 已安装")
         }
         /// Java 文件已移到废纸篓
         ///
-        /// Resource: `Interface.appAppModelJava.resultText1`.
+        /// Resource: `Interface.AppAppModelJava.javaMovedToTrash`.
         public static var javaMovedToTrash: LocalizedMessage {
-            .init(key: "appAppModelJava.resultText1", table: "Interface", fallback: "Java 文件已移到废纸篓")
+            .init(key: "AppAppModelJava.javaMovedToTrash", table: "Interface", fallback: "Java 文件已移到废纸篓")
+        }
+        /// 选择 java 可执行文件、JDK 包或 Java Home 文件夹。
+        ///
+        /// Resource: `Interface.AppAppModelJava.javaPathPurpose`.
+        public static var javaPathPurpose: LocalizedMessage {
+            .init(key: "AppAppModelJava.javaPathPurpose", table: "Interface", fallback: "选择 java 可执行文件、JDK 包或 Java Home 文件夹。")
+        }
+        /// 选择新的 Java 路径，原来指定这一路径的实例和默认设置会随之更新。
+        ///
+        /// Resource: `Interface.AppAppModelJava.javaPathReplacementDetails`.
+        public static var javaPathReplacementDetails: LocalizedMessage {
+            .init(key: "AppAppModelJava.javaPathReplacementDetails", table: "Interface", fallback: "选择新的 Java 路径，原来指定这一路径的实例和默认设置会随之更新。")
+        }
+        /// Java 已修复
+        ///
+        /// Resource: `Interface.AppAppModelJava.javaRepaired`.
+        public static var javaRepaired: LocalizedMessage {
+            .init(key: "AppAppModelJava.javaRepaired", table: "Interface", fallback: "Java 已修复")
+        }
+        /// 移除 Java
+        ///
+        /// Resource: `Interface.AppAppModelJava.removeJava`.
+        public static var removeJava: LocalizedMessage {
+            .init(key: "AppAppModelJava.removeJava", table: "Interface", fallback: "移除 Java")
+        }
+        /// 修复
+        ///
+        /// Resource: `Interface.AppAppModelJava.repair`.
+        public static var repair: LocalizedMessage {
+            .init(key: "AppAppModelJava.repair", table: "Interface", fallback: "修复")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAppModelJava.panelText1": .init("选择 java 可执行文件、JDK 包或 Java Home 文件夹。", []),
-            "Interface:appAppModelJava.panelText2": .init("选择新的 Java 路径，原来指定这一路径的实例和默认设置会随之更新。", []),
-            "Interface:appAppModelJava.urlText1": .init("添加本机 Java", []),
-            "Interface:appAppModelJava.urlText2": .init("重新选择 Java", []),
-            "Interface:appAppModelJava.savedText1": .init("Java 已添加，可在启动设置中选择", []),
-            "Interface:appAppModelJava.defaultJavaText1": .init("已更新默认 Java，下一次启动生效", []),
-            "Interface:appAppModelJava.installJavaText1": .init("修复", []),
-            "Interface:appAppModelJava.installJavaText2": .init("安装", []),
-            "Interface:appAppModelJava.installJavaText3": .init("Java 已修复", []),
-            "Interface:appAppModelJava.installJavaText4": .init("Java 已安装", []),
-            "Interface:appAppModelJava.removeJavaText1": .init("清理 Java 未完成下载", []),
-            "Interface:appAppModelJava.removeJavaText2": .init("移除 Java", []),
-            "Interface:appAppModelJava.resultText1": .init("Java 文件已移到废纸篓", []),
+            "Interface:AppAppModelJava.addLocalJava": .init("添加本机 Java", []),
+            "Interface:AppAppModelJava.chooseJavaAgain": .init("重新选择 Java", []),
+            "Interface:AppAppModelJava.cleanIncompleteJavaDownload": .init("清理 Java 未完成下载", []),
+            "Interface:AppAppModelJava.defaultJavaUpdated": .init("已更新默认 Java，下一次启动生效", []),
+            "Interface:AppAppModelJava.install": .init("安装", []),
+            "Interface:AppAppModelJava.javaAdded": .init("Java 已添加，可在启动设置中选择", []),
+            "Interface:AppAppModelJava.javaInstalled": .init("Java 已安装", []),
+            "Interface:AppAppModelJava.javaMovedToTrash": .init("Java 文件已移到废纸篓", []),
+            "Interface:AppAppModelJava.javaPathPurpose": .init("选择 java 可执行文件、JDK 包或 Java Home 文件夹。", []),
+            "Interface:AppAppModelJava.javaPathReplacementDetails": .init("选择新的 Java 路径，原来指定这一路径的实例和默认设置会随之更新。", []),
+            "Interface:AppAppModelJava.javaRepaired": .init("Java 已修复", []),
+            "Interface:AppAppModelJava.removeJava": .init("移除 Java", []),
+            "Interface:AppAppModelJava.repair": .init("修复", []),
         ]
     }
 }

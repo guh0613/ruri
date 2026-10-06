@@ -3,42 +3,42 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelInstanceMoves {
-        /// 移动 %1$@
+        /// 实例移动已完成，原文件与工作记录已清理。
         ///
-        /// Resource: `Interface.appAppModelInstanceMoves.moveInstanceText1`.
-        public static func moveInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceMoves.moveInstanceText1", table: "Interface", fallback: "移动 %1$@", arguments: [.text(value0)])
+        /// Resource: `Interface.AppAppModelInstanceMoves.instanceMoveCompleted`.
+        public static var instanceMoveCompleted: LocalizedMessage {
+            .init(key: "AppAppModelInstanceMoves.instanceMoveCompleted", table: "Interface", fallback: "实例移动已完成，原文件与工作记录已清理。")
         }
         /// 已移动“%1$@”。
         ///
-        /// Resource: `Interface.appAppModelInstanceMoves.resultText1`.
+        /// Resource: `Interface.AppAppModelInstanceMoves.instanceMoved`.
         public static func instanceMoved(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceMoves.resultText1", table: "Interface", fallback: "已移动“%1$@”。", arguments: [.text(value0)])
+            .init(key: "AppAppModelInstanceMoves.instanceMoved", table: "Interface", fallback: "已移动“%1$@”。", arguments: [.text(value0)])
+        }
+        /// 移动 %1$@
+        ///
+        /// Resource: `Interface.AppAppModelInstanceMoves.moveInstance`.
+        public static func moveInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModelInstanceMoves.moveInstance", table: "Interface", fallback: "移动 %1$@", arguments: [.text(value0)])
         }
         /// 实例已移至目标位置，还需完成清理。
         ///
-        /// Resource: `Interface.appAppModelInstanceMoves.resultText2`.
+        /// Resource: `Interface.AppAppModelInstanceMoves.moveNeedsRecovery`.
         public static var moveNeedsRecovery: LocalizedMessage {
-            .init(key: "appAppModelInstanceMoves.resultText2", table: "Interface", fallback: "实例已移至目标位置，还需完成清理。")
+            .init(key: "AppAppModelInstanceMoves.moveNeedsRecovery", table: "Interface", fallback: "实例已移至目标位置，还需完成清理。")
         }
         /// 恢复 %1$@ 的移动
         ///
-        /// Resource: `Interface.appAppModelInstanceMoves.recoverInstanceMoveText1`.
+        /// Resource: `Interface.AppAppModelInstanceMoves.recoverInstanceMove`.
         public static func recoverInstanceMove(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModelInstanceMoves.recoverInstanceMoveText1", table: "Interface", fallback: "恢复 %1$@ 的移动", arguments: [.text(value0)])
-        }
-        /// 实例移动已完成，原文件与工作记录已清理。
-        ///
-        /// Resource: `Interface.appAppModelInstanceMoves.resultText3`.
-        public static var instanceMoveCompleted: LocalizedMessage {
-            .init(key: "appAppModelInstanceMoves.resultText3", table: "Interface", fallback: "实例移动已完成，原文件与工作记录已清理。")
+            .init(key: "AppAppModelInstanceMoves.recoverInstanceMove", table: "Interface", fallback: "恢复 %1$@ 的移动", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appAppModelInstanceMoves.moveInstanceText1": .init("移动 %1$@", [.text]),
-            "Interface:appAppModelInstanceMoves.resultText1": .init("已移动“%1$@”。", [.text]),
-            "Interface:appAppModelInstanceMoves.resultText2": .init("实例已移至目标位置，还需完成清理。", []),
-            "Interface:appAppModelInstanceMoves.recoverInstanceMoveText1": .init("恢复 %1$@ 的移动", [.text]),
-            "Interface:appAppModelInstanceMoves.resultText3": .init("实例移动已完成，原文件与工作记录已清理。", []),
+            "Interface:AppAppModelInstanceMoves.instanceMoveCompleted": .init("实例移动已完成，原文件与工作记录已清理。", []),
+            "Interface:AppAppModelInstanceMoves.instanceMoved": .init("已移动“%1$@”。", [.text]),
+            "Interface:AppAppModelInstanceMoves.moveInstance": .init("移动 %1$@", [.text]),
+            "Interface:AppAppModelInstanceMoves.moveNeedsRecovery": .init("实例已移至目标位置，还需完成清理。", []),
+            "Interface:AppAppModelInstanceMoves.recoverInstanceMove": .init("恢复 %1$@ 的移动", [.text]),
         ]
     }
 }

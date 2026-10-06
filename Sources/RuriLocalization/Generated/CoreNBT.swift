@@ -3,182 +3,182 @@ import Foundation
 
 extension Messages {
     public enum CoreNBT {
-        /// NBT 文件过大
-        ///
-        /// Resource: `Errors.coreNBT.compressText1`.
-        public static var nbtCompressionInputTooLarge: LocalizedMessage {
-            .init(key: "coreNBT.compressText1", table: "Errors", fallback: "NBT 文件过大")
-        }
-        /// 无法初始化 gzip 压缩
-        ///
-        /// Resource: `Errors.coreNBT.streamText1`.
-        public static var gzipCompressionInitializationFailed: LocalizedMessage {
-            .init(key: "coreNBT.streamText1", table: "Errors", fallback: "无法初始化 gzip 压缩")
-        }
-        /// 无法压缩 NBT
-        ///
-        /// Resource: `Errors.coreNBT.statusText1`.
-        public static var nbtCompressionFailed: LocalizedMessage {
-            .init(key: "coreNBT.statusText1", table: "Errors", fallback: "无法压缩 NBT")
-        }
         /// 压缩 NBT 文件过大
         ///
-        /// Resource: `Errors.coreNBT.decompressText1`.
+        /// Resource: `Errors.CoreNBT.compressedNbtInputTooLarge`.
         public static var compressedNbtInputTooLarge: LocalizedMessage {
-            .init(key: "coreNBT.decompressText1", table: "Errors", fallback: "压缩 NBT 文件过大")
-        }
-        /// 无法初始化 gzip 解压
-        ///
-        /// Resource: `Errors.coreNBT.streamText2`.
-        public static var gzipDecompressionInitializationFailed: LocalizedMessage {
-            .init(key: "coreNBT.streamText2", table: "Errors", fallback: "无法初始化 gzip 解压")
-        }
-        /// NBT 解压大小超出限制
-        ///
-        /// Resource: `Errors.coreNBT.writtenText1`.
-        public static var nbtDecompressedSizeExceeded: LocalizedMessage {
-            .init(key: "coreNBT.writtenText1", table: "Errors", fallback: "NBT 解压大小超出限制")
-        }
-        /// gzip 文件包含多余数据
-        ///
-        /// Resource: `Errors.coreNBT.writtenText2`.
-        public static var gzipTrailingDataFound: LocalizedMessage {
-            .init(key: "coreNBT.writtenText2", table: "Errors", fallback: "gzip 文件包含多余数据")
-        }
-        /// gzip 文件损坏或校验失败
-        ///
-        /// Resource: `Errors.coreNBT.writtenText3`.
-        public static var gzipDataCorruptOrChecksumFailed: LocalizedMessage {
-            .init(key: "coreNBT.writtenText3", table: "Errors", fallback: "gzip 文件损坏或校验失败")
-        }
-        /// NBT 根节点不是复合标签
-        ///
-        /// Resource: `Errors.coreNBT.readText1`.
-        public static var nbtRootIsNotCompound: LocalizedMessage {
-            .init(key: "coreNBT.readText1", table: "Errors", fallback: "NBT 根节点不是复合标签")
-        }
-        /// NBT 根节点后有多余数据
-        ///
-        /// Resource: `Errors.coreNBT.valueText1`.
-        public static var nbtTrailingDataFound: LocalizedMessage {
-            .init(key: "coreNBT.valueText1", table: "Errors", fallback: "NBT 根节点后有多余数据")
-        }
-        /// NBT 文件结构或大小无效
-        ///
-        /// Resource: `Errors.coreNBT.replacementsText1`.
-        public static var invalidNbtStructureOrSize: LocalizedMessage {
-            .init(key: "coreNBT.replacementsText1", table: "Errors", fallback: "NBT 文件结构或大小无效")
-        }
-        /// NBT 结构超出限制
-        ///
-        /// Resource: `Errors.coreNBT.rewriteCompoundText1`.
-        public static var nbtStructureSizeExceeded: LocalizedMessage {
-            .init(key: "coreNBT.rewriteCompoundText1", table: "Errors", fallback: "NBT 结构超出限制")
-        }
-        /// NBT 包含重复标签
-        ///
-        /// Resource: `Errors.coreNBT.nameText1`.
-        public static var duplicateNbtTag: LocalizedMessage {
-            .init(key: "coreNBT.nameText1", table: "Errors", fallback: "NBT 包含重复标签")
-        }
-        /// 存档数据包配置不是复合标签
-        ///
-        /// Resource: `Errors.coreNBT.nameText2`.
-        public static var worldDataPackConfigNotCompound: LocalizedMessage {
-            .init(key: "coreNBT.nameText2", table: "Errors", fallback: "存档数据包配置不是复合标签")
-        }
-        /// 存档缺少 Data 标签
-        ///
-        /// Resource: `Errors.coreNBT.nameText3`.
-        public static var worldDataMissingDataTag: LocalizedMessage {
-            .init(key: "coreNBT.nameText3", table: "Errors", fallback: "存档缺少 Data 标签")
+            .init(key: "CoreNBT.compressedNbtInputTooLarge", table: "Errors", fallback: "压缩 NBT 文件过大")
         }
         /// 数据包数量超出限制
         ///
-        /// Resource: `Errors.coreNBT.stringListText1`.
+        /// Resource: `Errors.CoreNBT.dataPackCountExceeded`.
         public static var dataPackCountExceeded: LocalizedMessage {
-            .init(key: "coreNBT.stringListText1", table: "Errors", fallback: "数据包数量超出限制")
+            .init(key: "CoreNBT.dataPackCountExceeded", table: "Errors", fallback: "数据包数量超出限制")
         }
-        /// NBT 字符串过长
+        /// NBT 包含重复标签
         ///
-        /// Resource: `Errors.coreNBT.bytesText1`.
-        public static var nbtStringTooLong: LocalizedMessage {
-            .init(key: "coreNBT.bytesText1", table: "Errors", fallback: "NBT 字符串过长")
+        /// Resource: `Errors.CoreNBT.duplicateNbtTag`.
+        public static var duplicateNbtTag: LocalizedMessage {
+            .init(key: "CoreNBT.duplicateNbtTag", table: "Errors", fallback: "NBT 包含重复标签")
         }
-        /// NBT 数组越界
+        /// 无法初始化 gzip 压缩
         ///
-        /// Resource: `Errors.coreNBT.widthText1`.
-        public static var nbtArrayIndexOutOfBounds: LocalizedMessage {
-            .init(key: "coreNBT.widthText1", table: "Errors", fallback: "NBT 数组越界")
+        /// Resource: `Errors.CoreNBT.gzipCompressionInitializationFailed`.
+        public static var gzipCompressionInitializationFailed: LocalizedMessage {
+            .init(key: "CoreNBT.gzipCompressionInitializationFailed", table: "Errors", fallback: "无法初始化 gzip 压缩")
+        }
+        /// gzip 文件损坏或校验失败
+        ///
+        /// Resource: `Errors.CoreNBT.gzipDataCorruptOrChecksumFailed`.
+        public static var gzipDataCorruptOrChecksumFailed: LocalizedMessage {
+            .init(key: "CoreNBT.gzipDataCorruptOrChecksumFailed", table: "Errors", fallback: "gzip 文件损坏或校验失败")
+        }
+        /// 无法初始化 gzip 解压
+        ///
+        /// Resource: `Errors.CoreNBT.gzipDecompressionInitializationFailed`.
+        public static var gzipDecompressionInitializationFailed: LocalizedMessage {
+            .init(key: "CoreNBT.gzipDecompressionInitializationFailed", table: "Errors", fallback: "无法初始化 gzip 解压")
+        }
+        /// gzip 文件包含多余数据
+        ///
+        /// Resource: `Errors.CoreNBT.gzipTrailingDataFound`.
+        public static var gzipTrailingDataFound: LocalizedMessage {
+            .init(key: "CoreNBT.gzipTrailingDataFound", table: "Errors", fallback: "gzip 文件包含多余数据")
         }
         /// NBT 列表无效
         ///
-        /// Resource: `Errors.coreNBT.countText1`.
+        /// Resource: `Errors.CoreNBT.invalidNbtList`.
         public static var invalidNbtList: LocalizedMessage {
-            .init(key: "coreNBT.countText1", table: "Errors", fallback: "NBT 列表无效")
-        }
-        /// 未知 NBT 标签：%1$@
-        ///
-        /// Resource: `Errors.coreNBT.keyText1`.
-        public static func unknownNbtTag(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreNBT.keyText1", table: "Errors", fallback: "未知 NBT 标签：%1$@", arguments: [.text(value0)])
-        }
-        /// NBT 文件被截断
-        ///
-        /// Resource: `Errors.coreNBT.byteText1`.
-        public static var truncatedNbtFile: LocalizedMessage {
-            .init(key: "coreNBT.byteText1", table: "Errors", fallback: "NBT 文件被截断")
-        }
-        /// NBT 数值越界
-        ///
-        /// Resource: `Errors.coreNBT.unsignedText1`.
-        public static var nbtNumberOutOfRange: LocalizedMessage {
-            .init(key: "coreNBT.unsignedText1", table: "Errors", fallback: "NBT 数值越界")
-        }
-        /// NBT 数组长度为负
-        ///
-        /// Resource: `Errors.coreNBT.valueText2`.
-        public static var negativeNbtArrayLength: LocalizedMessage {
-            .init(key: "coreNBT.valueText2", table: "Errors", fallback: "NBT 数组长度为负")
-        }
-        /// NBT 字符串越界
-        ///
-        /// Resource: `Errors.coreNBT.lengthText1`.
-        public static var nbtStringIndexOutOfBounds: LocalizedMessage {
-            .init(key: "coreNBT.lengthText1", table: "Errors", fallback: "NBT 字符串越界")
+            .init(key: "CoreNBT.invalidNbtList", table: "Errors", fallback: "NBT 列表无效")
         }
         /// NBT 字符编码无效
         ///
-        /// Resource: `Errors.coreNBT.aText1`.
+        /// Resource: `Errors.CoreNBT.invalidNbtStringEncoding`.
         public static var invalidNbtStringEncoding: LocalizedMessage {
-            .init(key: "coreNBT.aText1", table: "Errors", fallback: "NBT 字符编码无效")
+            .init(key: "CoreNBT.invalidNbtStringEncoding", table: "Errors", fallback: "NBT 字符编码无效")
+        }
+        /// NBT 文件结构或大小无效
+        ///
+        /// Resource: `Errors.CoreNBT.invalidNbtStructureOrSize`.
+        public static var invalidNbtStructureOrSize: LocalizedMessage {
+            .init(key: "CoreNBT.invalidNbtStructureOrSize", table: "Errors", fallback: "NBT 文件结构或大小无效")
+        }
+        /// NBT 数组越界
+        ///
+        /// Resource: `Errors.CoreNBT.nbtArrayIndexOutOfBounds`.
+        public static var nbtArrayIndexOutOfBounds: LocalizedMessage {
+            .init(key: "CoreNBT.nbtArrayIndexOutOfBounds", table: "Errors", fallback: "NBT 数组越界")
+        }
+        /// 无法压缩 NBT
+        ///
+        /// Resource: `Errors.CoreNBT.nbtCompressionFailed`.
+        public static var nbtCompressionFailed: LocalizedMessage {
+            .init(key: "CoreNBT.nbtCompressionFailed", table: "Errors", fallback: "无法压缩 NBT")
+        }
+        /// NBT 文件过大
+        ///
+        /// Resource: `Errors.CoreNBT.nbtCompressionInputTooLarge`.
+        public static var nbtCompressionInputTooLarge: LocalizedMessage {
+            .init(key: "CoreNBT.nbtCompressionInputTooLarge", table: "Errors", fallback: "NBT 文件过大")
+        }
+        /// NBT 解压大小超出限制
+        ///
+        /// Resource: `Errors.CoreNBT.nbtDecompressedSizeExceeded`.
+        public static var nbtDecompressedSizeExceeded: LocalizedMessage {
+            .init(key: "CoreNBT.nbtDecompressedSizeExceeded", table: "Errors", fallback: "NBT 解压大小超出限制")
+        }
+        /// NBT 数值越界
+        ///
+        /// Resource: `Errors.CoreNBT.nbtNumberOutOfRange`.
+        public static var nbtNumberOutOfRange: LocalizedMessage {
+            .init(key: "CoreNBT.nbtNumberOutOfRange", table: "Errors", fallback: "NBT 数值越界")
+        }
+        /// NBT 根节点不是复合标签
+        ///
+        /// Resource: `Errors.CoreNBT.nbtRootIsNotCompound`.
+        public static var nbtRootIsNotCompound: LocalizedMessage {
+            .init(key: "CoreNBT.nbtRootIsNotCompound", table: "Errors", fallback: "NBT 根节点不是复合标签")
+        }
+        /// NBT 字符串越界
+        ///
+        /// Resource: `Errors.CoreNBT.nbtStringIndexOutOfBounds`.
+        public static var nbtStringIndexOutOfBounds: LocalizedMessage {
+            .init(key: "CoreNBT.nbtStringIndexOutOfBounds", table: "Errors", fallback: "NBT 字符串越界")
+        }
+        /// NBT 字符串过长
+        ///
+        /// Resource: `Errors.CoreNBT.nbtStringTooLong`.
+        public static var nbtStringTooLong: LocalizedMessage {
+            .init(key: "CoreNBT.nbtStringTooLong", table: "Errors", fallback: "NBT 字符串过长")
+        }
+        /// NBT 结构超出限制
+        ///
+        /// Resource: `Errors.CoreNBT.nbtStructureSizeExceeded`.
+        public static var nbtStructureSizeExceeded: LocalizedMessage {
+            .init(key: "CoreNBT.nbtStructureSizeExceeded", table: "Errors", fallback: "NBT 结构超出限制")
+        }
+        /// NBT 根节点后有多余数据
+        ///
+        /// Resource: `Errors.CoreNBT.nbtTrailingDataFound`.
+        public static var nbtTrailingDataFound: LocalizedMessage {
+            .init(key: "CoreNBT.nbtTrailingDataFound", table: "Errors", fallback: "NBT 根节点后有多余数据")
+        }
+        /// NBT 数组长度为负
+        ///
+        /// Resource: `Errors.CoreNBT.negativeNbtArrayLength`.
+        public static var negativeNbtArrayLength: LocalizedMessage {
+            .init(key: "CoreNBT.negativeNbtArrayLength", table: "Errors", fallback: "NBT 数组长度为负")
+        }
+        /// NBT 文件被截断
+        ///
+        /// Resource: `Errors.CoreNBT.truncatedNbtFile`.
+        public static var truncatedNbtFile: LocalizedMessage {
+            .init(key: "CoreNBT.truncatedNbtFile", table: "Errors", fallback: "NBT 文件被截断")
+        }
+        /// 未知 NBT 标签：%1$@
+        ///
+        /// Resource: `Errors.CoreNBT.unknownNbtTag`.
+        public static func unknownNbtTag(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreNBT.unknownNbtTag", table: "Errors", fallback: "未知 NBT 标签：%1$@", arguments: [.text(value0)])
+        }
+        /// 存档缺少 Data 标签
+        ///
+        /// Resource: `Errors.CoreNBT.worldDataMissingDataTag`.
+        public static var worldDataMissingDataTag: LocalizedMessage {
+            .init(key: "CoreNBT.worldDataMissingDataTag", table: "Errors", fallback: "存档缺少 Data 标签")
+        }
+        /// 存档数据包配置不是复合标签
+        ///
+        /// Resource: `Errors.CoreNBT.worldDataPackConfigNotCompound`.
+        public static var worldDataPackConfigNotCompound: LocalizedMessage {
+            .init(key: "CoreNBT.worldDataPackConfigNotCompound", table: "Errors", fallback: "存档数据包配置不是复合标签")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreNBT.compressText1": .init("NBT 文件过大", []),
-            "Errors:coreNBT.streamText1": .init("无法初始化 gzip 压缩", []),
-            "Errors:coreNBT.statusText1": .init("无法压缩 NBT", []),
-            "Errors:coreNBT.decompressText1": .init("压缩 NBT 文件过大", []),
-            "Errors:coreNBT.streamText2": .init("无法初始化 gzip 解压", []),
-            "Errors:coreNBT.writtenText1": .init("NBT 解压大小超出限制", []),
-            "Errors:coreNBT.writtenText2": .init("gzip 文件包含多余数据", []),
-            "Errors:coreNBT.writtenText3": .init("gzip 文件损坏或校验失败", []),
-            "Errors:coreNBT.readText1": .init("NBT 根节点不是复合标签", []),
-            "Errors:coreNBT.valueText1": .init("NBT 根节点后有多余数据", []),
-            "Errors:coreNBT.replacementsText1": .init("NBT 文件结构或大小无效", []),
-            "Errors:coreNBT.rewriteCompoundText1": .init("NBT 结构超出限制", []),
-            "Errors:coreNBT.nameText1": .init("NBT 包含重复标签", []),
-            "Errors:coreNBT.nameText2": .init("存档数据包配置不是复合标签", []),
-            "Errors:coreNBT.nameText3": .init("存档缺少 Data 标签", []),
-            "Errors:coreNBT.stringListText1": .init("数据包数量超出限制", []),
-            "Errors:coreNBT.bytesText1": .init("NBT 字符串过长", []),
-            "Errors:coreNBT.widthText1": .init("NBT 数组越界", []),
-            "Errors:coreNBT.countText1": .init("NBT 列表无效", []),
-            "Errors:coreNBT.keyText1": .init("未知 NBT 标签：%1$@", [.text]),
-            "Errors:coreNBT.byteText1": .init("NBT 文件被截断", []),
-            "Errors:coreNBT.unsignedText1": .init("NBT 数值越界", []),
-            "Errors:coreNBT.valueText2": .init("NBT 数组长度为负", []),
-            "Errors:coreNBT.lengthText1": .init("NBT 字符串越界", []),
-            "Errors:coreNBT.aText1": .init("NBT 字符编码无效", []),
+            "Errors:CoreNBT.compressedNbtInputTooLarge": .init("压缩 NBT 文件过大", []),
+            "Errors:CoreNBT.dataPackCountExceeded": .init("数据包数量超出限制", []),
+            "Errors:CoreNBT.duplicateNbtTag": .init("NBT 包含重复标签", []),
+            "Errors:CoreNBT.gzipCompressionInitializationFailed": .init("无法初始化 gzip 压缩", []),
+            "Errors:CoreNBT.gzipDataCorruptOrChecksumFailed": .init("gzip 文件损坏或校验失败", []),
+            "Errors:CoreNBT.gzipDecompressionInitializationFailed": .init("无法初始化 gzip 解压", []),
+            "Errors:CoreNBT.gzipTrailingDataFound": .init("gzip 文件包含多余数据", []),
+            "Errors:CoreNBT.invalidNbtList": .init("NBT 列表无效", []),
+            "Errors:CoreNBT.invalidNbtStringEncoding": .init("NBT 字符编码无效", []),
+            "Errors:CoreNBT.invalidNbtStructureOrSize": .init("NBT 文件结构或大小无效", []),
+            "Errors:CoreNBT.nbtArrayIndexOutOfBounds": .init("NBT 数组越界", []),
+            "Errors:CoreNBT.nbtCompressionFailed": .init("无法压缩 NBT", []),
+            "Errors:CoreNBT.nbtCompressionInputTooLarge": .init("NBT 文件过大", []),
+            "Errors:CoreNBT.nbtDecompressedSizeExceeded": .init("NBT 解压大小超出限制", []),
+            "Errors:CoreNBT.nbtNumberOutOfRange": .init("NBT 数值越界", []),
+            "Errors:CoreNBT.nbtRootIsNotCompound": .init("NBT 根节点不是复合标签", []),
+            "Errors:CoreNBT.nbtStringIndexOutOfBounds": .init("NBT 字符串越界", []),
+            "Errors:CoreNBT.nbtStringTooLong": .init("NBT 字符串过长", []),
+            "Errors:CoreNBT.nbtStructureSizeExceeded": .init("NBT 结构超出限制", []),
+            "Errors:CoreNBT.nbtTrailingDataFound": .init("NBT 根节点后有多余数据", []),
+            "Errors:CoreNBT.negativeNbtArrayLength": .init("NBT 数组长度为负", []),
+            "Errors:CoreNBT.truncatedNbtFile": .init("NBT 文件被截断", []),
+            "Errors:CoreNBT.unknownNbtTag": .init("未知 NBT 标签：%1$@", [.text]),
+            "Errors:CoreNBT.worldDataMissingDataTag": .init("存档缺少 Data 标签", []),
+            "Errors:CoreNBT.worldDataPackConfigNotCompound": .init("存档数据包配置不是复合标签", []),
         ]
     }
 }

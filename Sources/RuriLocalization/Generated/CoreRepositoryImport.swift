@@ -3,147 +3,147 @@ import Foundation
 
 extension Messages {
     public enum CoreRepositoryImport {
-        /// 请选择 Minecraft 文件夹。
+        /// 目标 Minecraft 文件夹已移动或从列表移除，请恢复原位置后处理导入。
         ///
-        /// Resource: `Errors.coreRepositoryImport.directoryText1`.
-        public static var minecraftDirectoryRequired: LocalizedMessage {
-            .init(key: "coreRepositoryImport.directoryText1", table: "Errors", fallback: "请选择 Minecraft 文件夹。")
-        }
-        /// 无法创建实例工作目录。
-        ///
-        /// Resource: `Errors.coreRepositoryImport.directoryText2`.
-        public static var workspaceCreateFailed: LocalizedMessage {
-            .init(key: "coreRepositoryImport.directoryText2", table: "Errors", fallback: "无法创建实例工作目录。")
-        }
-        /// 导入记录已改变，请刷新后重试。
-        ///
-        /// Resource: `Errors.coreRepositoryImport.currentText1`.
-        public static var importRecordChanged: LocalizedMessage {
-            .init(key: "coreRepositoryImport.currentText1", table: "Errors", fallback: "导入记录已改变，请刷新后重试。")
-        }
-        /// 整合包安装结果与目标实例不一致。
-        ///
-        /// Resource: `Errors.coreRepositoryImport.publishFilesText1`.
-        public static var publishedResultMismatch: LocalizedMessage {
-            .init(key: "coreRepositoryImport.publishFilesText1", table: "Errors", fallback: "整合包安装结果与目标实例不一致。")
-        }
-        /// 实例位置已经改变，请检查导入记录。
-        ///
-        /// Resource: `Errors.coreRepositoryImport.existingText1`.
-        public static var instanceLocationChanged: LocalizedMessage {
-            .init(key: "coreRepositoryImport.existingText1", table: "Errors", fallback: "实例位置已经改变，请检查导入记录。")
+        /// Resource: `Errors.CoreRepositoryImport.destinationMoved`.
+        public static var destinationMoved: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.destinationMoved", table: "Errors", fallback: "目标 Minecraft 文件夹已移动或从列表移除，请恢复原位置后处理导入。")
         }
         /// 另一个实例已使用此版本名称，导入文件已保留。
         ///
-        /// Resource: `Errors.coreRepositoryImport.existingText2`.
+        /// Resource: `Errors.CoreRepositoryImport.duplicateVersionName`.
         public static var duplicateVersionName: LocalizedMessage {
-            .init(key: "coreRepositoryImport.existingText2", table: "Errors", fallback: "另一个实例已使用此版本名称，导入文件已保留。")
-        }
-        /// 此实例已经创建，请完成操作以清理工作记录。
-        ///
-        /// Resource: `Errors.coreRepositoryImport.instanceText1`.
-        public static var instanceAlreadyCreated: LocalizedMessage {
-            .init(key: "coreRepositoryImport.instanceText1", table: "Errors", fallback: "此实例已经创建，请完成操作以清理工作记录。")
-        }
-        /// 导入目标已被替换，工作文件保留，请先检查：%1$@
-        ///
-        /// Resource: `Errors.coreRepositoryImport.identityText1`.
-        public static func targetReplaced(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryImport.identityText1", table: "Errors", fallback: "导入目标已被替换，工作文件保留，请先检查：%1$@", arguments: [.text(value0)])
-        }
-        /// 无法保存导入工作文件。
-        ///
-        /// Resource: `Errors.coreRepositoryImport.keptText1`.
-        public static var workFilesSaveFailed: LocalizedMessage {
-            .init(key: "coreRepositoryImport.keptText1", table: "Errors", fallback: "无法保存导入工作文件。")
-        }
-        /// 无法收回导入工作文件，请连接原磁盘后重试。
-        ///
-        /// Resource: `Errors.coreRepositoryImport.destinationText1`.
-        public static var recoverWorkFilesFailed: LocalizedMessage {
-            .init(key: "coreRepositoryImport.destinationText1", table: "Errors", fallback: "无法收回导入工作文件，请连接原磁盘后重试。")
-        }
-        /// 实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。
-        ///
-        /// Resource: `Errors.coreRepositoryImport.manifestMatchesText1`.
-        public static var incompletePublication: LocalizedMessage {
-            .init(key: "coreRepositoryImport.manifestMatchesText1", table: "Errors", fallback: "实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。")
+            .init(key: "CoreRepositoryImport.duplicateVersionName", table: "Errors", fallback: "另一个实例已使用此版本名称，导入文件已保留。")
         }
         /// 导入标记已改变，未清理工作文件。
         ///
-        /// Resource: `Errors.coreRepositoryImport.idText1`.
+        /// Resource: `Errors.CoreRepositoryImport.importMarkerChanged`.
         public static var importMarkerChanged: LocalizedMessage {
-            .init(key: "coreRepositoryImport.idText1", table: "Errors", fallback: "导入标记已改变，未清理工作文件。")
+            .init(key: "CoreRepositoryImport.importMarkerChanged", table: "Errors", fallback: "导入标记已改变，未清理工作文件。")
         }
-        /// 目标 Minecraft 文件夹已移动或从列表移除，请恢复原位置后处理导入。
+        /// 导入记录已改变，请刷新后重试。
         ///
-        /// Resource: `Errors.coreRepositoryImport.actualText1`.
-        public static var destinationMoved: LocalizedMessage {
-            .init(key: "coreRepositoryImport.actualText1", table: "Errors", fallback: "目标 Minecraft 文件夹已移动或从列表移除，请恢复原位置后处理导入。")
+        /// Resource: `Errors.CoreRepositoryImport.importRecordChanged`.
+        public static var importRecordChanged: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.importRecordChanged", table: "Errors", fallback: "导入记录已改变，请刷新后重试。")
         }
-        /// 整合包导入记录无效：%1$@
+        /// 实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。
         ///
-        /// Resource: `Errors.coreRepositoryImport.versionText1`.
-        public static func invalidImportRecord(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryImport.versionText1", table: "Errors", fallback: "整合包导入记录无效：%1$@", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreRepositoryImport.incompletePublication`.
+        public static var incompletePublication: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.incompletePublication", table: "Errors", fallback: "实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。")
+        }
+        /// 此实例已经创建，请完成操作以清理工作记录。
+        ///
+        /// Resource: `Errors.CoreRepositoryImport.instanceAlreadyCreated`.
+        public static var instanceAlreadyCreated: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.instanceAlreadyCreated", table: "Errors", fallback: "此实例已经创建，请完成操作以清理工作记录。")
+        }
+        /// 实例位置已经改变，请检查导入记录。
+        ///
+        /// Resource: `Errors.CoreRepositoryImport.instanceLocationChanged`.
+        public static var instanceLocationChanged: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.instanceLocationChanged", table: "Errors", fallback: "实例位置已经改变，请检查导入记录。")
         }
         /// 实例复制记录无效。
         ///
-        /// Resource: `Errors.coreRepositoryImport.ownerText1`.
+        /// Resource: `Errors.CoreRepositoryImport.invalidCopyRecord`.
         public static var invalidCopyRecord: LocalizedMessage {
-            .init(key: "coreRepositoryImport.ownerText1", table: "Errors", fallback: "实例复制记录无效。")
+            .init(key: "CoreRepositoryImport.invalidCopyRecord", table: "Errors", fallback: "实例复制记录无效。")
         }
         /// 此游戏文件夹含有无效的导入记录，请先检查：%1$@
         ///
-        /// Resource: `Errors.coreRepositoryImport.nameText1`.
+        /// Resource: `Errors.CoreRepositoryImport.invalidFolderImportRecord`.
         public static func invalidFolderImportRecord(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryImport.nameText1", table: "Errors", fallback: "此游戏文件夹含有无效的导入记录，请先检查：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreRepositoryImport.invalidFolderImportRecord", table: "Errors", fallback: "此游戏文件夹含有无效的导入记录，请先检查：%1$@", arguments: [.text(value0)])
         }
-        /// 没有找到未完成的导入或复制。
+        /// 整合包导入记录无效：%1$@
         ///
-        /// Resource: `Errors.coreRepositoryImport.recoveryText1`.
-        public static var pendingOperationMissing: LocalizedMessage {
-            .init(key: "coreRepositoryImport.recoveryText1", table: "Errors", fallback: "没有找到未完成的导入或复制。")
+        /// Resource: `Errors.CoreRepositoryImport.invalidImportRecord`.
+        public static func invalidImportRecord(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreRepositoryImport.invalidImportRecord", table: "Errors", fallback: "整合包导入记录无效：%1$@", arguments: [.text(value0)])
         }
-        /// 此名称仍有未完成的导入或复制，请先处理工作文件。
+        /// 请选择 Minecraft 文件夹。
         ///
-        /// Resource: `Errors.coreRepositoryImport.journalText1`.
-        public static var pendingNameConflict: LocalizedMessage {
-            .init(key: "coreRepositoryImport.journalText1", table: "Errors", fallback: "此名称仍有未完成的导入或复制，请先处理工作文件。")
+        /// Resource: `Errors.CoreRepositoryImport.minecraftDirectoryRequired`.
+        public static var minecraftDirectoryRequired: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.minecraftDirectoryRequired", table: "Errors", fallback: "请选择 Minecraft 文件夹。")
         }
         /// 此文件夹仍有未完成的导入或复制，请先完成或取消操作。
         ///
-        /// Resource: `Errors.coreRepositoryImport.requireDirectoryAvailableText1`.
+        /// Resource: `Errors.CoreRepositoryImport.pendingFolderOperation`.
         public static var pendingFolderOperation: LocalizedMessage {
-            .init(key: "coreRepositoryImport.requireDirectoryAvailableText1", table: "Errors", fallback: "此文件夹仍有未完成的导入或复制，请先完成或取消操作。")
+            .init(key: "CoreRepositoryImport.pendingFolderOperation", table: "Errors", fallback: "此文件夹仍有未完成的导入或复制，请先完成或取消操作。")
         }
         /// 此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。
         ///
-        /// Resource: `Errors.coreRepositoryImport.rootText1`.
+        /// Resource: `Errors.CoreRepositoryImport.pendingFolderOperationForMove`.
         public static var pendingFolderOperationForMove: LocalizedMessage {
-            .init(key: "coreRepositoryImport.rootText1", table: "Errors", fallback: "此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。")
+            .init(key: "CoreRepositoryImport.pendingFolderOperationForMove", table: "Errors", fallback: "此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。")
+        }
+        /// 此名称仍有未完成的导入或复制，请先处理工作文件。
+        ///
+        /// Resource: `Errors.CoreRepositoryImport.pendingNameConflict`.
+        public static var pendingNameConflict: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.pendingNameConflict", table: "Errors", fallback: "此名称仍有未完成的导入或复制，请先处理工作文件。")
+        }
+        /// 没有找到未完成的导入或复制。
+        ///
+        /// Resource: `Errors.CoreRepositoryImport.pendingOperationMissing`.
+        public static var pendingOperationMissing: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.pendingOperationMissing", table: "Errors", fallback: "没有找到未完成的导入或复制。")
+        }
+        /// 整合包安装结果与目标实例不一致。
+        ///
+        /// Resource: `Errors.CoreRepositoryImport.publishedResultMismatch`.
+        public static var publishedResultMismatch: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.publishedResultMismatch", table: "Errors", fallback: "整合包安装结果与目标实例不一致。")
+        }
+        /// 无法收回导入工作文件，请连接原磁盘后重试。
+        ///
+        /// Resource: `Errors.CoreRepositoryImport.recoverWorkFilesFailed`.
+        public static var recoverWorkFilesFailed: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.recoverWorkFilesFailed", table: "Errors", fallback: "无法收回导入工作文件，请连接原磁盘后重试。")
+        }
+        /// 导入目标已被替换，工作文件保留，请先检查：%1$@
+        ///
+        /// Resource: `Errors.CoreRepositoryImport.targetReplaced`.
+        public static func targetReplaced(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreRepositoryImport.targetReplaced", table: "Errors", fallback: "导入目标已被替换，工作文件保留，请先检查：%1$@", arguments: [.text(value0)])
+        }
+        /// 无法保存导入工作文件。
+        ///
+        /// Resource: `Errors.CoreRepositoryImport.workFilesSaveFailed`.
+        public static var workFilesSaveFailed: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.workFilesSaveFailed", table: "Errors", fallback: "无法保存导入工作文件。")
+        }
+        /// 无法创建实例工作目录。
+        ///
+        /// Resource: `Errors.CoreRepositoryImport.workspaceCreateFailed`.
+        public static var workspaceCreateFailed: LocalizedMessage {
+            .init(key: "CoreRepositoryImport.workspaceCreateFailed", table: "Errors", fallback: "无法创建实例工作目录。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreRepositoryImport.directoryText1": .init("请选择 Minecraft 文件夹。", []),
-            "Errors:coreRepositoryImport.directoryText2": .init("无法创建实例工作目录。", []),
-            "Errors:coreRepositoryImport.currentText1": .init("导入记录已改变，请刷新后重试。", []),
-            "Errors:coreRepositoryImport.publishFilesText1": .init("整合包安装结果与目标实例不一致。", []),
-            "Errors:coreRepositoryImport.existingText1": .init("实例位置已经改变，请检查导入记录。", []),
-            "Errors:coreRepositoryImport.existingText2": .init("另一个实例已使用此版本名称，导入文件已保留。", []),
-            "Errors:coreRepositoryImport.instanceText1": .init("此实例已经创建，请完成操作以清理工作记录。", []),
-            "Errors:coreRepositoryImport.identityText1": .init("导入目标已被替换，工作文件保留，请先检查：%1$@", [.text]),
-            "Errors:coreRepositoryImport.keptText1": .init("无法保存导入工作文件。", []),
-            "Errors:coreRepositoryImport.destinationText1": .init("无法收回导入工作文件，请连接原磁盘后重试。", []),
-            "Errors:coreRepositoryImport.manifestMatchesText1": .init("实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。", []),
-            "Errors:coreRepositoryImport.idText1": .init("导入标记已改变，未清理工作文件。", []),
-            "Errors:coreRepositoryImport.actualText1": .init("目标 Minecraft 文件夹已移动或从列表移除，请恢复原位置后处理导入。", []),
-            "Errors:coreRepositoryImport.versionText1": .init("整合包导入记录无效：%1$@", [.text]),
-            "Errors:coreRepositoryImport.ownerText1": .init("实例复制记录无效。", []),
-            "Errors:coreRepositoryImport.nameText1": .init("此游戏文件夹含有无效的导入记录，请先检查：%1$@", [.text]),
-            "Errors:coreRepositoryImport.recoveryText1": .init("没有找到未完成的导入或复制。", []),
-            "Errors:coreRepositoryImport.journalText1": .init("此名称仍有未完成的导入或复制，请先处理工作文件。", []),
-            "Errors:coreRepositoryImport.requireDirectoryAvailableText1": .init("此文件夹仍有未完成的导入或复制，请先完成或取消操作。", []),
-            "Errors:coreRepositoryImport.rootText1": .init("此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。", []),
+            "Errors:CoreRepositoryImport.destinationMoved": .init("目标 Minecraft 文件夹已移动或从列表移除，请恢复原位置后处理导入。", []),
+            "Errors:CoreRepositoryImport.duplicateVersionName": .init("另一个实例已使用此版本名称，导入文件已保留。", []),
+            "Errors:CoreRepositoryImport.importMarkerChanged": .init("导入标记已改变，未清理工作文件。", []),
+            "Errors:CoreRepositoryImport.importRecordChanged": .init("导入记录已改变，请刷新后重试。", []),
+            "Errors:CoreRepositoryImport.incompletePublication": .init("实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。", []),
+            "Errors:CoreRepositoryImport.instanceAlreadyCreated": .init("此实例已经创建，请完成操作以清理工作记录。", []),
+            "Errors:CoreRepositoryImport.instanceLocationChanged": .init("实例位置已经改变，请检查导入记录。", []),
+            "Errors:CoreRepositoryImport.invalidCopyRecord": .init("实例复制记录无效。", []),
+            "Errors:CoreRepositoryImport.invalidFolderImportRecord": .init("此游戏文件夹含有无效的导入记录，请先检查：%1$@", [.text]),
+            "Errors:CoreRepositoryImport.invalidImportRecord": .init("整合包导入记录无效：%1$@", [.text]),
+            "Errors:CoreRepositoryImport.minecraftDirectoryRequired": .init("请选择 Minecraft 文件夹。", []),
+            "Errors:CoreRepositoryImport.pendingFolderOperation": .init("此文件夹仍有未完成的导入或复制，请先完成或取消操作。", []),
+            "Errors:CoreRepositoryImport.pendingFolderOperationForMove": .init("此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。", []),
+            "Errors:CoreRepositoryImport.pendingNameConflict": .init("此名称仍有未完成的导入或复制，请先处理工作文件。", []),
+            "Errors:CoreRepositoryImport.pendingOperationMissing": .init("没有找到未完成的导入或复制。", []),
+            "Errors:CoreRepositoryImport.publishedResultMismatch": .init("整合包安装结果与目标实例不一致。", []),
+            "Errors:CoreRepositoryImport.recoverWorkFilesFailed": .init("无法收回导入工作文件，请连接原磁盘后重试。", []),
+            "Errors:CoreRepositoryImport.targetReplaced": .init("导入目标已被替换，工作文件保留，请先检查：%1$@", [.text]),
+            "Errors:CoreRepositoryImport.workFilesSaveFailed": .init("无法保存导入工作文件。", []),
+            "Errors:CoreRepositoryImport.workspaceCreateFailed": .init("无法创建实例工作目录。", []),
         ]
     }
 }

@@ -3,154 +3,154 @@ import Foundation
 
 extension Messages {
     public enum GameHost {
-        /// macOS 游戏集成
-        ///
-        /// Resource: `Core.gameHost.settings`.
-        public static var settings: LocalizedMessage {
-            .init(key: "gameHost.settings", table: "Core", fallback: "macOS 游戏集成")
-        }
-        /// 在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。
-        ///
-        /// Resource: `Core.gameHost.settingsHelp`.
-        public static var settingsHelp: LocalizedMessage {
-            .init(key: "gameHost.settingsHelp", table: "Core", fallback: "在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。")
-        }
-        /// 启用 macOS 游戏集成
-        ///
-        /// Resource: `Core.gameHost.enableIntegration`.
-        public static var enableIntegration: LocalizedMessage {
-            .init(key: "gameHost.enableIntegration", table: "Core", fallback: "启用 macOS 游戏集成")
-        }
-        /// 使用实例图标和窗口名称
-        ///
-        /// Resource: `Core.gameHost.instanceAppearance`.
-        public static var instanceAppearance: LocalizedMessage {
-            .init(key: "gameHost.instanceAppearance", table: "Core", fallback: "使用实例图标和窗口名称")
-        }
-        /// 全屏启动时使用 macOS 原生全屏
-        ///
-        /// Resource: `Core.gameHost.nativeFullscreen`.
-        public static var nativeFullscreen: LocalizedMessage {
-            .init(key: "gameHost.nativeFullscreen", table: "Core", fallback: "全屏启动时使用 macOS 原生全屏")
-        }
-        /// 正在准备 macOS 游戏集成
-        ///
-        /// Resource: `Core.gameHost.starting`.
-        public static var starting: LocalizedMessage {
-            .init(key: "gameHost.starting", table: "Core", fallback: "正在准备 macOS 游戏集成")
-        }
-        /// 正在启动游戏 JVM
-        ///
-        /// Resource: `Core.gameHost.jvmStarting`.
-        public static var jvmStarting: LocalizedMessage {
-            .init(key: "gameHost.jvmStarting", table: "Core", fallback: "正在启动游戏 JVM")
-        }
-        /// 游戏窗口已就绪
-        ///
-        /// Resource: `Core.gameHost.windowReady`.
-        public static var windowReady: LocalizedMessage {
-            .init(key: "gameHost.windowReady", table: "Core", fallback: "游戏窗口已就绪")
-        }
-        /// 游戏处于 macOS 原生全屏
-        ///
-        /// Resource: `Core.gameHost.fullscreen`.
-        public static var fullscreen: LocalizedMessage {
-            .init(key: "gameHost.fullscreen", table: "Core", fallback: "游戏处于 macOS 原生全屏")
-        }
-        /// macOS 游戏集成未启用
-        ///
-        /// Resource: `Core.gameHost.disabled`.
-        public static var disabled: LocalizedMessage {
-            .init(key: "gameHost.disabled", table: "Core", fallback: "macOS 游戏集成未启用")
-        }
-        /// 已配置自定义包装命令
-        ///
-        /// Resource: `Core.gameHost.wrapper`.
-        public static var wrapper: LocalizedMessage {
-            .init(key: "gameHost.wrapper", table: "Core", fallback: "已配置自定义包装命令")
-        }
         /// Java 架构不受宿主支持
         ///
-        /// Resource: `Core.gameHost.architecture`.
+        /// Resource: `Core.GameHost.architecture`.
         public static var architecture: LocalizedMessage {
-            .init(key: "gameHost.architecture", table: "Core", fallback: "Java 架构不受宿主支持")
-        }
-        /// 当前安装缺少游戏宿主
-        ///
-        /// Resource: `Core.gameHost.hostMissing`.
-        public static var hostMissing: LocalizedMessage {
-            .init(key: "gameHost.hostMissing", table: "Core", fallback: "当前安装缺少游戏宿主")
-        }
-        /// 所选 Java 无法通过游戏宿主加载
-        ///
-        /// Resource: `Core.gameHost.runtimeUnavailable`.
-        public static var runtimeUnavailable: LocalizedMessage {
-            .init(key: "gameHost.runtimeUnavailable", table: "Core", fallback: "所选 Java 无法通过游戏宿主加载")
-        }
-        /// 无法进入游戏运行目录
-        ///
-        /// Resource: `Core.gameHost.directory`.
-        public static var directory: LocalizedMessage {
-            .init(key: "gameHost.directory", table: "Core", fallback: "无法进入游戏运行目录")
-        }
-        /// 无法启动所选 Java
-        ///
-        /// Resource: `Core.gameHost.javaExec`.
-        public static var javaExec: LocalizedMessage {
-            .init(key: "gameHost.javaExec", table: "Core", fallback: "无法启动所选 Java")
-        }
-        /// 游戏宿主启动通信失败
-        ///
-        /// Resource: `Core.gameHost.transport`.
-        public static var transport: LocalizedMessage {
-            .init(key: "gameHost.transport", table: "Core", fallback: "游戏宿主启动通信失败")
-        }
-        /// 游戏宿主无法处理启动请求
-        ///
-        /// Resource: `Core.gameHost.invalidRequest`.
-        public static var invalidRequest: LocalizedMessage {
-            .init(key: "gameHost.invalidRequest", table: "Core", fallback: "游戏宿主无法处理启动请求")
-        }
-        /// 无法保存游戏宿主状态
-        ///
-        /// Resource: `Core.gameHost.statusWriteFailed`.
-        public static var statusWriteFailed: LocalizedMessage {
-            .init(key: "gameHost.statusWriteFailed", table: "Core", fallback: "无法保存游戏宿主状态")
-        }
-        /// 游戏宿主启动失败：%@
-        ///
-        /// Resource: `Core.gameHost.failed`.
-        public static func failed(_ value0: String) -> LocalizedMessage {
-            .init(key: "gameHost.failed", table: "Core", fallback: "游戏宿主启动失败：%@", arguments: [.text(value0)])
+            .init(key: "GameHost.architecture", table: "Core", fallback: "Java 架构不受宿主支持")
         }
         /// 使用常规 Java 启动：%@
         ///
-        /// Resource: `Core.gameHost.compatibility`.
+        /// Resource: `Core.GameHost.compatibility`.
         public static func compatibility(_ value0: String) -> LocalizedMessage {
-            .init(key: "gameHost.compatibility", table: "Core", fallback: "使用常规 Java 启动：%@", arguments: [.text(value0)])
+            .init(key: "GameHost.compatibility", table: "Core", fallback: "使用常规 Java 启动：%@", arguments: [.text(value0)])
+        }
+        /// 无法进入游戏运行目录
+        ///
+        /// Resource: `Core.GameHost.directory`.
+        public static var directory: LocalizedMessage {
+            .init(key: "GameHost.directory", table: "Core", fallback: "无法进入游戏运行目录")
+        }
+        /// macOS 游戏集成未启用
+        ///
+        /// Resource: `Core.GameHost.disabled`.
+        public static var disabled: LocalizedMessage {
+            .init(key: "GameHost.disabled", table: "Core", fallback: "macOS 游戏集成未启用")
+        }
+        /// 启用 macOS 游戏集成
+        ///
+        /// Resource: `Core.GameHost.enableIntegration`.
+        public static var enableIntegration: LocalizedMessage {
+            .init(key: "GameHost.enableIntegration", table: "Core", fallback: "启用 macOS 游戏集成")
+        }
+        /// 游戏宿主启动失败：%@
+        ///
+        /// Resource: `Core.GameHost.failed`.
+        public static func failed(_ value0: String) -> LocalizedMessage {
+            .init(key: "GameHost.failed", table: "Core", fallback: "游戏宿主启动失败：%@", arguments: [.text(value0)])
+        }
+        /// 游戏处于 macOS 原生全屏
+        ///
+        /// Resource: `Core.GameHost.fullscreen`.
+        public static var fullscreen: LocalizedMessage {
+            .init(key: "GameHost.fullscreen", table: "Core", fallback: "游戏处于 macOS 原生全屏")
+        }
+        /// 当前安装缺少游戏宿主
+        ///
+        /// Resource: `Core.GameHost.hostMissing`.
+        public static var hostMissing: LocalizedMessage {
+            .init(key: "GameHost.hostMissing", table: "Core", fallback: "当前安装缺少游戏宿主")
+        }
+        /// 使用实例图标和窗口名称
+        ///
+        /// Resource: `Core.GameHost.instanceAppearance`.
+        public static var instanceAppearance: LocalizedMessage {
+            .init(key: "GameHost.instanceAppearance", table: "Core", fallback: "使用实例图标和窗口名称")
+        }
+        /// 游戏宿主无法处理启动请求
+        ///
+        /// Resource: `Core.GameHost.invalidRequest`.
+        public static var invalidRequest: LocalizedMessage {
+            .init(key: "GameHost.invalidRequest", table: "Core", fallback: "游戏宿主无法处理启动请求")
+        }
+        /// 无法启动所选 Java
+        ///
+        /// Resource: `Core.GameHost.javaExec`.
+        public static var javaExec: LocalizedMessage {
+            .init(key: "GameHost.javaExec", table: "Core", fallback: "无法启动所选 Java")
+        }
+        /// 正在启动游戏 JVM
+        ///
+        /// Resource: `Core.GameHost.jvmStarting`.
+        public static var jvmStarting: LocalizedMessage {
+            .init(key: "GameHost.jvmStarting", table: "Core", fallback: "正在启动游戏 JVM")
+        }
+        /// 全屏启动时使用 macOS 原生全屏
+        ///
+        /// Resource: `Core.GameHost.nativeFullscreen`.
+        public static var nativeFullscreen: LocalizedMessage {
+            .init(key: "GameHost.nativeFullscreen", table: "Core", fallback: "全屏启动时使用 macOS 原生全屏")
+        }
+        /// 所选 Java 无法通过游戏宿主加载
+        ///
+        /// Resource: `Core.GameHost.runtimeUnavailable`.
+        public static var runtimeUnavailable: LocalizedMessage {
+            .init(key: "GameHost.runtimeUnavailable", table: "Core", fallback: "所选 Java 无法通过游戏宿主加载")
+        }
+        /// macOS 游戏集成
+        ///
+        /// Resource: `Core.GameHost.settings`.
+        public static var settings: LocalizedMessage {
+            .init(key: "GameHost.settings", table: "Core", fallback: "macOS 游戏集成")
+        }
+        /// 在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。
+        ///
+        /// Resource: `Core.GameHost.settingsHelp`.
+        public static var settingsHelp: LocalizedMessage {
+            .init(key: "GameHost.settingsHelp", table: "Core", fallback: "在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。")
+        }
+        /// 正在准备 macOS 游戏集成
+        ///
+        /// Resource: `Core.GameHost.starting`.
+        public static var starting: LocalizedMessage {
+            .init(key: "GameHost.starting", table: "Core", fallback: "正在准备 macOS 游戏集成")
+        }
+        /// 无法保存游戏宿主状态
+        ///
+        /// Resource: `Core.GameHost.statusWriteFailed`.
+        public static var statusWriteFailed: LocalizedMessage {
+            .init(key: "GameHost.statusWriteFailed", table: "Core", fallback: "无法保存游戏宿主状态")
+        }
+        /// 游戏宿主启动通信失败
+        ///
+        /// Resource: `Core.GameHost.transport`.
+        public static var transport: LocalizedMessage {
+            .init(key: "GameHost.transport", table: "Core", fallback: "游戏宿主启动通信失败")
+        }
+        /// 游戏窗口已就绪
+        ///
+        /// Resource: `Core.GameHost.windowReady`.
+        public static var windowReady: LocalizedMessage {
+            .init(key: "GameHost.windowReady", table: "Core", fallback: "游戏窗口已就绪")
+        }
+        /// 已配置自定义包装命令
+        ///
+        /// Resource: `Core.GameHost.wrapper`.
+        public static var wrapper: LocalizedMessage {
+            .init(key: "GameHost.wrapper", table: "Core", fallback: "已配置自定义包装命令")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:gameHost.settings": .init("macOS 游戏集成", []),
-            "Core:gameHost.settingsHelp": .init("在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。", []),
-            "Core:gameHost.enableIntegration": .init("启用 macOS 游戏集成", []),
-            "Core:gameHost.instanceAppearance": .init("使用实例图标和窗口名称", []),
-            "Core:gameHost.nativeFullscreen": .init("全屏启动时使用 macOS 原生全屏", []),
-            "Core:gameHost.starting": .init("正在准备 macOS 游戏集成", []),
-            "Core:gameHost.jvmStarting": .init("正在启动游戏 JVM", []),
-            "Core:gameHost.windowReady": .init("游戏窗口已就绪", []),
-            "Core:gameHost.fullscreen": .init("游戏处于 macOS 原生全屏", []),
-            "Core:gameHost.disabled": .init("macOS 游戏集成未启用", []),
-            "Core:gameHost.wrapper": .init("已配置自定义包装命令", []),
-            "Core:gameHost.architecture": .init("Java 架构不受宿主支持", []),
-            "Core:gameHost.hostMissing": .init("当前安装缺少游戏宿主", []),
-            "Core:gameHost.runtimeUnavailable": .init("所选 Java 无法通过游戏宿主加载", []),
-            "Core:gameHost.directory": .init("无法进入游戏运行目录", []),
-            "Core:gameHost.javaExec": .init("无法启动所选 Java", []),
-            "Core:gameHost.transport": .init("游戏宿主启动通信失败", []),
-            "Core:gameHost.invalidRequest": .init("游戏宿主无法处理启动请求", []),
-            "Core:gameHost.statusWriteFailed": .init("无法保存游戏宿主状态", []),
-            "Core:gameHost.failed": .init("游戏宿主启动失败：%@", [.text]),
-            "Core:gameHost.compatibility": .init("使用常规 Java 启动：%@", [.text]),
+            "Core:GameHost.architecture": .init("Java 架构不受宿主支持", []),
+            "Core:GameHost.compatibility": .init("使用常规 Java 启动：%@", [.text]),
+            "Core:GameHost.directory": .init("无法进入游戏运行目录", []),
+            "Core:GameHost.disabled": .init("macOS 游戏集成未启用", []),
+            "Core:GameHost.enableIntegration": .init("启用 macOS 游戏集成", []),
+            "Core:GameHost.failed": .init("游戏宿主启动失败：%@", [.text]),
+            "Core:GameHost.fullscreen": .init("游戏处于 macOS 原生全屏", []),
+            "Core:GameHost.hostMissing": .init("当前安装缺少游戏宿主", []),
+            "Core:GameHost.instanceAppearance": .init("使用实例图标和窗口名称", []),
+            "Core:GameHost.invalidRequest": .init("游戏宿主无法处理启动请求", []),
+            "Core:GameHost.javaExec": .init("无法启动所选 Java", []),
+            "Core:GameHost.jvmStarting": .init("正在启动游戏 JVM", []),
+            "Core:GameHost.nativeFullscreen": .init("全屏启动时使用 macOS 原生全屏", []),
+            "Core:GameHost.runtimeUnavailable": .init("所选 Java 无法通过游戏宿主加载", []),
+            "Core:GameHost.settings": .init("macOS 游戏集成", []),
+            "Core:GameHost.settingsHelp": .init("在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。", []),
+            "Core:GameHost.starting": .init("正在准备 macOS 游戏集成", []),
+            "Core:GameHost.statusWriteFailed": .init("无法保存游戏宿主状态", []),
+            "Core:GameHost.transport": .init("游戏宿主启动通信失败", []),
+            "Core:GameHost.windowReady": .init("游戏窗口已就绪", []),
+            "Core:GameHost.wrapper": .init("已配置自定义包装命令", []),
         ]
     }
 }

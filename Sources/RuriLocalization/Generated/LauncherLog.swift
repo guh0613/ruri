@@ -3,455 +3,455 @@ import Foundation
 
 extension Messages {
     public enum LauncherLog {
-        /// 日志
-        ///
-        /// Resource: `Interface.launcherLog.title`.
-        public static var title: LocalizedMessage {
-            .init(key: "launcherLog.title", table: "Interface", fallback: "日志")
-        }
         /// 全部
         ///
-        /// Resource: `Interface.launcherLog.all`.
+        /// Resource: `Interface.LauncherLog.all`.
         public static var all: LocalizedMessage {
-            .init(key: "launcherLog.all", table: "Interface", fallback: "全部")
-        }
-        /// 任务
-        ///
-        /// Resource: `Interface.launcherLog.tasks`.
-        public static var tasks: LocalizedMessage {
-            .init(key: "launcherLog.tasks", table: "Interface", fallback: "任务")
+            .init(key: "LauncherLog.all", table: "Interface", fallback: "全部")
         }
         /// 需关注
         ///
-        /// Resource: `Interface.launcherLog.attention`.
+        /// Resource: `Interface.LauncherLog.attention`.
         public static var attention: LocalizedMessage {
-            .init(key: "launcherLog.attention", table: "Interface", fallback: "需关注")
-        }
-        /// 文件传输
-        ///
-        /// Resource: `Interface.launcherLog.transfers`.
-        public static var transfers: LocalizedMessage {
-            .init(key: "launcherLog.transfers", table: "Interface", fallback: "文件传输")
-        }
-        /// 通知
-        ///
-        /// Resource: `Interface.launcherLog.notifications`.
-        public static var notifications: LocalizedMessage {
-            .init(key: "launcherLog.notifications", table: "Interface", fallback: "通知")
-        }
-        /// 未读
-        ///
-        /// Resource: `Interface.launcherLog.unread`.
-        public static var unread: LocalizedMessage {
-            .init(key: "launcherLog.unread", table: "Interface", fallback: "未读")
-        }
-        /// 全部标为已读
-        ///
-        /// Resource: `Interface.launcherLog.markAllRead`.
-        public static var markAllRead: LocalizedMessage {
-            .init(key: "launcherLog.markAllRead", table: "Interface", fallback: "全部标为已读")
-        }
-        /// 查看全部日志
-        ///
-        /// Resource: `Interface.launcherLog.showAll`.
-        public static var showAll: LocalizedMessage {
-            .init(key: "launcherLog.showAll", table: "Interface", fallback: "查看全部日志")
-        }
-        /// 暂无通知
-        ///
-        /// Resource: `Interface.launcherLog.noNotifications`.
-        public static var noNotifications: LocalizedMessage {
-            .init(key: "launcherLog.noNotifications", table: "Interface", fallback: "暂无通知")
-        }
-        /// 进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。
-        ///
-        /// Resource: `Interface.launcherLog.notificationHint`.
-        public static var notificationHint: LocalizedMessage {
-            .init(key: "launcherLog.notificationHint", table: "Interface", fallback: "进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。")
-        }
-        /// 暂无日志
-        ///
-        /// Resource: `Interface.launcherLog.noEntries`.
-        public static var noEntries: LocalizedMessage {
-            .init(key: "launcherLog.noEntries", table: "Interface", fallback: "暂无日志")
-        }
-        /// 启动器操作、任务进度和运行事件会记录在这里。
-        ///
-        /// Resource: `Interface.launcherLog.emptyHint`.
-        public static var emptyHint: LocalizedMessage {
-            .init(key: "launcherLog.emptyHint", table: "Interface", fallback: "启动器操作、任务进度和运行事件会记录在这里。")
-        }
-        /// 没有匹配的记录
-        ///
-        /// Resource: `Interface.launcherLog.noMatches`.
-        public static var noMatches: LocalizedMessage {
-            .init(key: "launcherLog.noMatches", table: "Interface", fallback: "没有匹配的记录")
-        }
-        /// 尝试其他关键词或切换筛选条件。
-        ///
-        /// Resource: `Interface.launcherLog.searchHint`.
-        public static var searchHint: LocalizedMessage {
-            .init(key: "launcherLog.searchHint", table: "Interface", fallback: "尝试其他关键词或切换筛选条件。")
-        }
-        /// 搜索日志
-        ///
-        /// Resource: `Interface.launcherLog.search`.
-        public static var search: LocalizedMessage {
-            .init(key: "launcherLog.search", table: "Interface", fallback: "搜索日志")
-        }
-        /// 事件
-        ///
-        /// Resource: `Interface.launcherLog.event`.
-        public static var event: LocalizedMessage {
-            .init(key: "launcherLog.event", table: "Interface", fallback: "事件")
-        }
-        /// 来源
-        ///
-        /// Resource: `Interface.launcherLog.category`.
-        public static var category: LocalizedMessage {
-            .init(key: "launcherLog.category", table: "Interface", fallback: "来源")
-        }
-        /// 时间
-        ///
-        /// Resource: `Interface.launcherLog.time`.
-        public static var time: LocalizedMessage {
-            .init(key: "launcherLog.time", table: "Interface", fallback: "时间")
-        }
-        /// 状态
-        ///
-        /// Resource: `Interface.launcherLog.status`.
-        public static var status: LocalizedMessage {
-            .init(key: "launcherLog.status", table: "Interface", fallback: "状态")
-        }
-        /// 启动器
-        ///
-        /// Resource: `Interface.launcherLog.launcher`.
-        public static var launcher: LocalizedMessage {
-            .init(key: "launcherLog.launcher", table: "Interface", fallback: "启动器")
-        }
-        /// 任务
-        ///
-        /// Resource: `Interface.launcherLog.task`.
-        public static var task: LocalizedMessage {
-            .init(key: "launcherLog.task", table: "Interface", fallback: "任务")
-        }
-        /// 游戏
-        ///
-        /// Resource: `Interface.launcherLog.game`.
-        public static var game: LocalizedMessage {
-            .init(key: "launcherLog.game", table: "Interface", fallback: "游戏")
-        }
-        /// 信息
-        ///
-        /// Resource: `Interface.launcherLog.info`.
-        public static var info: LocalizedMessage {
-            .init(key: "launcherLog.info", table: "Interface", fallback: "信息")
-        }
-        /// 成功
-        ///
-        /// Resource: `Interface.launcherLog.success`.
-        public static var success: LocalizedMessage {
-            .init(key: "launcherLog.success", table: "Interface", fallback: "成功")
-        }
-        /// 警告
-        ///
-        /// Resource: `Interface.launcherLog.warning`.
-        public static var warning: LocalizedMessage {
-            .init(key: "launcherLog.warning", table: "Interface", fallback: "警告")
-        }
-        /// 错误
-        ///
-        /// Resource: `Interface.launcherLog.error`.
-        public static var error: LocalizedMessage {
-            .init(key: "launcherLog.error", table: "Interface", fallback: "错误")
-        }
-        /// 进行中
-        ///
-        /// Resource: `Interface.launcherLog.running`.
-        public static var running: LocalizedMessage {
-            .init(key: "launcherLog.running", table: "Interface", fallback: "进行中")
-        }
-        /// 已完成
-        ///
-        /// Resource: `Interface.launcherLog.completed`.
-        public static var completed: LocalizedMessage {
-            .init(key: "launcherLog.completed", table: "Interface", fallback: "已完成")
-        }
-        /// 失败
-        ///
-        /// Resource: `Interface.launcherLog.failed`.
-        public static var failed: LocalizedMessage {
-            .init(key: "launcherLog.failed", table: "Interface", fallback: "失败")
-        }
-        /// 已取消
-        ///
-        /// Resource: `Interface.launcherLog.cancelled`.
-        public static var cancelled: LocalizedMessage {
-            .init(key: "launcherLog.cancelled", table: "Interface", fallback: "已取消")
-        }
-        /// 已中断
-        ///
-        /// Resource: `Interface.launcherLog.interrupted`.
-        public static var interrupted: LocalizedMessage {
-            .init(key: "launcherLog.interrupted", table: "Interface", fallback: "已中断")
-        }
-        /// 启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。
-        ///
-        /// Resource: `Interface.launcherLog.interruptedDetail`.
-        public static var interruptedDetail: LocalizedMessage {
-            .init(key: "launcherLog.interruptedDetail", table: "Interface", fallback: "启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。")
-        }
-        /// 此日志文件的版本暂不受支持。
-        ///
-        /// Resource: `Interface.launcherLog.unsupportedHistory`.
-        public static var unsupportedHistory: LocalizedMessage {
-            .init(key: "launcherLog.unsupportedHistory", table: "Interface", fallback: "此日志文件的版本暂不受支持。")
-        }
-        /// 无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。
-        ///
-        /// Resource: `Interface.launcherLog.historyUnavailable`.
-        public static var historyUnavailable: LocalizedMessage {
-            .init(key: "launcherLog.historyUnavailable", table: "Interface", fallback: "无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。")
-        }
-        /// 日志暂时无法保存到磁盘。
-        ///
-        /// Resource: `Interface.launcherLog.historyWriteFailed`.
-        public static var historyWriteFailed: LocalizedMessage {
-            .init(key: "launcherLog.historyWriteFailed", table: "Interface", fallback: "日志暂时无法保存到磁盘。")
-        }
-        /// 开始时间
-        ///
-        /// Resource: `Interface.launcherLog.started`.
-        public static var started: LocalizedMessage {
-            .init(key: "launcherLog.started", table: "Interface", fallback: "开始时间")
-        }
-        /// 更新时间
-        ///
-        /// Resource: `Interface.launcherLog.updated`.
-        public static var updated: LocalizedMessage {
-            .init(key: "launcherLog.updated", table: "Interface", fallback: "更新时间")
-        }
-        /// 详情
-        ///
-        /// Resource: `Interface.launcherLog.details`.
-        public static var details: LocalizedMessage {
-            .init(key: "launcherLog.details", table: "Interface", fallback: "详情")
-        }
-        /// 任务过程
-        ///
-        /// Resource: `Interface.launcherLog.stages`.
-        public static var stages: LocalizedMessage {
-            .init(key: "launcherLog.stages", table: "Interface", fallback: "任务过程")
-        }
-        /// 选择一条记录
-        ///
-        /// Resource: `Interface.launcherLog.selectEntry`.
-        public static var selectEntry: LocalizedMessage {
-            .init(key: "launcherLog.selectEntry", table: "Interface", fallback: "选择一条记录")
-        }
-        /// 查看完整信息、任务过程和相关操作。
-        ///
-        /// Resource: `Interface.launcherLog.selectHint`.
-        public static var selectHint: LocalizedMessage {
-            .init(key: "launcherLog.selectHint", table: "Interface", fallback: "查看完整信息、任务过程和相关操作。")
-        }
-        /// 复制记录
-        ///
-        /// Resource: `Interface.launcherLog.copy`.
-        public static var copy: LocalizedMessage {
-            .init(key: "launcherLog.copy", table: "Interface", fallback: "复制记录")
-        }
-        /// 导出日志…
-        ///
-        /// Resource: `Interface.launcherLog.export`.
-        public static var export: LocalizedMessage {
-            .init(key: "launcherLog.export", table: "Interface", fallback: "导出日志…")
-        }
-        /// 清除历史…
-        ///
-        /// Resource: `Interface.launcherLog.clear`.
-        public static var clear: LocalizedMessage {
-            .init(key: "launcherLog.clear", table: "Interface", fallback: "清除历史…")
-        }
-        /// 清除已结束的日志？
-        ///
-        /// Resource: `Interface.launcherLog.clearTitle`.
-        public static var clearTitle: LocalizedMessage {
-            .init(key: "launcherLog.clearTitle", table: "Interface", fallback: "清除已结束的日志？")
-        }
-        /// 这会移除已结束的任务、事件及对应通知。进行中的任务会保留。
-        ///
-        /// Resource: `Interface.launcherLog.clearDetail`.
-        public static var clearDetail: LocalizedMessage {
-            .init(key: "launcherLog.clearDetail", table: "Interface", fallback: "这会移除已结束的任务、事件及对应通知。进行中的任务会保留。")
-        }
-        /// 清除历史
-        ///
-        /// Resource: `Interface.launcherLog.clearConfirm`.
-        public static var clearConfirm: LocalizedMessage {
-            .init(key: "launcherLog.clearConfirm", table: "Interface", fallback: "清除历史")
-        }
-        /// 保留最近 500 条历史记录
-        ///
-        /// Resource: `Interface.launcherLog.retention`.
-        public static var retention: LocalizedMessage {
-            .init(key: "launcherLog.retention", table: "Interface", fallback: "保留最近 500 条历史记录")
-        }
-        /// %1$lld 条记录
-        ///
-        /// Resource: `Interface.launcherLog.entryCount`.
-        public static func entryCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "launcherLog.entryCount", table: "Interface", fallback: "%1$lld 条记录", arguments: [.integer(value0)])
-        }
-        /// %1$lld 条未读通知
-        ///
-        /// Resource: `Interface.launcherLog.unreadCount`.
-        public static func unreadCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "launcherLog.unreadCount", table: "Interface", fallback: "%1$lld 条未读通知", arguments: [.integer(value0)])
+            .init(key: "LauncherLog.attention", table: "Interface", fallback: "需关注")
         }
         /// 取消任务
         ///
-        /// Resource: `Interface.launcherLog.cancelTask`.
+        /// Resource: `Interface.LauncherLog.cancelTask`.
         public static var cancelTask: LocalizedMessage {
-            .init(key: "launcherLog.cancelTask", table: "Interface", fallback: "取消任务")
+            .init(key: "LauncherLog.cancelTask", table: "Interface", fallback: "取消任务")
         }
-        /// 暂无文件传输
+        /// 已取消
         ///
-        /// Resource: `Interface.launcherLog.noTransfers`.
-        public static var noTransfers: LocalizedMessage {
-            .init(key: "launcherLog.noTransfers", table: "Interface", fallback: "暂无文件传输")
-        }
-        /// 当前运行期间最近的文件传输会显示在这里。
-        ///
-        /// Resource: `Interface.launcherLog.transferHint`.
-        public static var transferHint: LocalizedMessage {
-            .init(key: "launcherLog.transferHint", table: "Interface", fallback: "当前运行期间最近的文件传输会显示在这里。")
-        }
-        /// 文件
-        ///
-        /// Resource: `Interface.launcherLog.filename`.
-        public static var filename: LocalizedMessage {
-            .init(key: "launcherLog.filename", table: "Interface", fallback: "文件")
-        }
-        /// 来源
-        ///
-        /// Resource: `Interface.launcherLog.source`.
-        public static var source: LocalizedMessage {
-            .init(key: "launcherLog.source", table: "Interface", fallback: "来源")
-        }
-        /// 已传输
-        ///
-        /// Resource: `Interface.launcherLog.transferred`.
-        public static var transferred: LocalizedMessage {
-            .init(key: "launcherLog.transferred", table: "Interface", fallback: "已传输")
-        }
-        /// 日志已导出
-        ///
-        /// Resource: `Interface.launcherLog.exported`.
-        public static var exported: LocalizedMessage {
-            .init(key: "launcherLog.exported", table: "Interface", fallback: "日志已导出")
-        }
-        /// 读取日志历史失败：%1$@
-        ///
-        /// Resource: `Interface.launcherLog.historyReadError`.
-        public static func historyReadError(_ value0: String) -> LocalizedMessage {
-            .init(key: "launcherLog.historyReadError", table: "Interface", fallback: "读取日志历史失败：%1$@", arguments: [.text(value0)])
+        /// Resource: `Interface.LauncherLog.cancelled`.
+        public static var cancelled: LocalizedMessage {
+            .init(key: "LauncherLog.cancelled", table: "Interface", fallback: "已取消")
         }
         /// 无法刷新游戏版本列表：%1$@
         ///
-        /// Resource: `Interface.launcherLog.catalogFailed`.
+        /// Resource: `Interface.LauncherLog.catalogFailed`.
         public static func catalogFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "launcherLog.catalogFailed", table: "Interface", fallback: "无法刷新游戏版本列表：%1$@", arguments: [.text(value0)])
+            .init(key: "LauncherLog.catalogFailed", table: "Interface", fallback: "无法刷新游戏版本列表：%1$@", arguments: [.text(value0)])
         }
-        /// 没有需要关注的记录
+        /// 来源
         ///
-        /// Resource: `Interface.launcherLog.noAttention`.
-        public static var noAttention: LocalizedMessage {
-            .init(key: "launcherLog.noAttention", table: "Interface", fallback: "没有需要关注的记录")
+        /// Resource: `Interface.LauncherLog.category`.
+        public static var category: LocalizedMessage {
+            .init(key: "LauncherLog.category", table: "Interface", fallback: "来源")
         }
-        /// 任务失败、警告和中断信息会集中显示在这里。
+        /// 清除历史…
         ///
-        /// Resource: `Interface.launcherLog.noAttentionHint`.
-        public static var noAttentionHint: LocalizedMessage {
-            .init(key: "launcherLog.noAttentionHint", table: "Interface", fallback: "任务失败、警告和中断信息会集中显示在这里。")
+        /// Resource: `Interface.LauncherLog.clear`.
+        public static var clear: LocalizedMessage {
+            .init(key: "LauncherLog.clear", table: "Interface", fallback: "清除历史…")
         }
-        /// %1$lld / %2$lld
+        /// 清除历史
         ///
-        /// Resource: `Interface.launcherLog.transferProgress`.
-        public static func transferProgress(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
-            .init(key: "launcherLog.transferProgress", table: "Interface", fallback: "%1$lld / %2$lld", arguments: [.integer(value0), .integer(value1)])
+        /// Resource: `Interface.LauncherLog.clearConfirm`.
+        public static var clearConfirm: LocalizedMessage {
+            .init(key: "LauncherLog.clearConfirm", table: "Interface", fallback: "清除历史")
+        }
+        /// 这会移除已结束的任务、事件及对应通知。进行中的任务会保留。
+        ///
+        /// Resource: `Interface.LauncherLog.clearDetail`.
+        public static var clearDetail: LocalizedMessage {
+            .init(key: "LauncherLog.clearDetail", table: "Interface", fallback: "这会移除已结束的任务、事件及对应通知。进行中的任务会保留。")
         }
         /// 清除搜索
         ///
-        /// Resource: `Interface.launcherLog.clearSearch`.
+        /// Resource: `Interface.LauncherLog.clearSearch`.
         public static var clearSearch: LocalizedMessage {
-            .init(key: "launcherLog.clearSearch", table: "Interface", fallback: "清除搜索")
+            .init(key: "LauncherLog.clearSearch", table: "Interface", fallback: "清除搜索")
+        }
+        /// 清除已结束的日志？
+        ///
+        /// Resource: `Interface.LauncherLog.clearTitle`.
+        public static var clearTitle: LocalizedMessage {
+            .init(key: "LauncherLog.clearTitle", table: "Interface", fallback: "清除已结束的日志？")
+        }
+        /// 已完成
+        ///
+        /// Resource: `Interface.LauncherLog.completed`.
+        public static var completed: LocalizedMessage {
+            .init(key: "LauncherLog.completed", table: "Interface", fallback: "已完成")
+        }
+        /// 复制记录
+        ///
+        /// Resource: `Interface.LauncherLog.copy`.
+        public static var copy: LocalizedMessage {
+            .init(key: "LauncherLog.copy", table: "Interface", fallback: "复制记录")
+        }
+        /// 详情
+        ///
+        /// Resource: `Interface.LauncherLog.details`.
+        public static var details: LocalizedMessage {
+            .init(key: "LauncherLog.details", table: "Interface", fallback: "详情")
+        }
+        /// 启动器操作、任务进度和运行事件会记录在这里。
+        ///
+        /// Resource: `Interface.LauncherLog.emptyHint`.
+        public static var emptyHint: LocalizedMessage {
+            .init(key: "LauncherLog.emptyHint", table: "Interface", fallback: "启动器操作、任务进度和运行事件会记录在这里。")
+        }
+        /// %1$lld 条记录
+        ///
+        /// Resource: `Interface.LauncherLog.entryCount`.
+        public static func entryCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "LauncherLog.entryCount", table: "Interface", fallback: "%1$lld 条记录", arguments: [.integer(value0)])
+        }
+        /// 错误
+        ///
+        /// Resource: `Interface.LauncherLog.error`.
+        public static var error: LocalizedMessage {
+            .init(key: "LauncherLog.error", table: "Interface", fallback: "错误")
+        }
+        /// 事件
+        ///
+        /// Resource: `Interface.LauncherLog.event`.
+        public static var event: LocalizedMessage {
+            .init(key: "LauncherLog.event", table: "Interface", fallback: "事件")
+        }
+        /// 导出日志…
+        ///
+        /// Resource: `Interface.LauncherLog.export`.
+        public static var export: LocalizedMessage {
+            .init(key: "LauncherLog.export", table: "Interface", fallback: "导出日志…")
+        }
+        /// 日志已导出
+        ///
+        /// Resource: `Interface.LauncherLog.exported`.
+        public static var exported: LocalizedMessage {
+            .init(key: "LauncherLog.exported", table: "Interface", fallback: "日志已导出")
+        }
+        /// 失败
+        ///
+        /// Resource: `Interface.LauncherLog.failed`.
+        public static var failed: LocalizedMessage {
+            .init(key: "LauncherLog.failed", table: "Interface", fallback: "失败")
+        }
+        /// 文件
+        ///
+        /// Resource: `Interface.LauncherLog.filename`.
+        public static var filename: LocalizedMessage {
+            .init(key: "LauncherLog.filename", table: "Interface", fallback: "文件")
+        }
+        /// 游戏
+        ///
+        /// Resource: `Interface.LauncherLog.game`.
+        public static var game: LocalizedMessage {
+            .init(key: "LauncherLog.game", table: "Interface", fallback: "游戏")
+        }
+        /// 读取日志历史失败：%1$@
+        ///
+        /// Resource: `Interface.LauncherLog.historyReadError`.
+        public static func historyReadError(_ value0: String) -> LocalizedMessage {
+            .init(key: "LauncherLog.historyReadError", table: "Interface", fallback: "读取日志历史失败：%1$@", arguments: [.text(value0)])
+        }
+        /// 无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。
+        ///
+        /// Resource: `Interface.LauncherLog.historyUnavailable`.
+        public static var historyUnavailable: LocalizedMessage {
+            .init(key: "LauncherLog.historyUnavailable", table: "Interface", fallback: "无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。")
+        }
+        /// 日志暂时无法保存到磁盘。
+        ///
+        /// Resource: `Interface.LauncherLog.historyWriteFailed`.
+        public static var historyWriteFailed: LocalizedMessage {
+            .init(key: "LauncherLog.historyWriteFailed", table: "Interface", fallback: "日志暂时无法保存到磁盘。")
+        }
+        /// 信息
+        ///
+        /// Resource: `Interface.LauncherLog.info`.
+        public static var info: LocalizedMessage {
+            .init(key: "LauncherLog.info", table: "Interface", fallback: "信息")
+        }
+        /// 已中断
+        ///
+        /// Resource: `Interface.LauncherLog.interrupted`.
+        public static var interrupted: LocalizedMessage {
+            .init(key: "LauncherLog.interrupted", table: "Interface", fallback: "已中断")
+        }
+        /// 启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。
+        ///
+        /// Resource: `Interface.LauncherLog.interruptedDetail`.
+        public static var interruptedDetail: LocalizedMessage {
+            .init(key: "LauncherLog.interruptedDetail", table: "Interface", fallback: "启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。")
+        }
+        /// 启动器
+        ///
+        /// Resource: `Interface.LauncherLog.launcher`.
+        public static var launcher: LocalizedMessage {
+            .init(key: "LauncherLog.launcher", table: "Interface", fallback: "启动器")
+        }
+        /// 全部标为已读
+        ///
+        /// Resource: `Interface.LauncherLog.markAllRead`.
+        public static var markAllRead: LocalizedMessage {
+            .init(key: "LauncherLog.markAllRead", table: "Interface", fallback: "全部标为已读")
+        }
+        /// 没有需要关注的记录
+        ///
+        /// Resource: `Interface.LauncherLog.noAttention`.
+        public static var noAttention: LocalizedMessage {
+            .init(key: "LauncherLog.noAttention", table: "Interface", fallback: "没有需要关注的记录")
+        }
+        /// 任务失败、警告和中断信息会集中显示在这里。
+        ///
+        /// Resource: `Interface.LauncherLog.noAttentionHint`.
+        public static var noAttentionHint: LocalizedMessage {
+            .init(key: "LauncherLog.noAttentionHint", table: "Interface", fallback: "任务失败、警告和中断信息会集中显示在这里。")
+        }
+        /// 暂无日志
+        ///
+        /// Resource: `Interface.LauncherLog.noEntries`.
+        public static var noEntries: LocalizedMessage {
+            .init(key: "LauncherLog.noEntries", table: "Interface", fallback: "暂无日志")
+        }
+        /// 没有匹配的记录
+        ///
+        /// Resource: `Interface.LauncherLog.noMatches`.
+        public static var noMatches: LocalizedMessage {
+            .init(key: "LauncherLog.noMatches", table: "Interface", fallback: "没有匹配的记录")
+        }
+        /// 暂无通知
+        ///
+        /// Resource: `Interface.LauncherLog.noNotifications`.
+        public static var noNotifications: LocalizedMessage {
+            .init(key: "LauncherLog.noNotifications", table: "Interface", fallback: "暂无通知")
+        }
+        /// 暂无文件传输
+        ///
+        /// Resource: `Interface.LauncherLog.noTransfers`.
+        public static var noTransfers: LocalizedMessage {
+            .init(key: "LauncherLog.noTransfers", table: "Interface", fallback: "暂无文件传输")
+        }
+        /// 进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。
+        ///
+        /// Resource: `Interface.LauncherLog.notificationHint`.
+        public static var notificationHint: LocalizedMessage {
+            .init(key: "LauncherLog.notificationHint", table: "Interface", fallback: "进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。")
+        }
+        /// 通知
+        ///
+        /// Resource: `Interface.LauncherLog.notifications`.
+        public static var notifications: LocalizedMessage {
+            .init(key: "LauncherLog.notifications", table: "Interface", fallback: "通知")
+        }
+        /// 保留最近 500 条历史记录
+        ///
+        /// Resource: `Interface.LauncherLog.retention`.
+        public static var retention: LocalizedMessage {
+            .init(key: "LauncherLog.retention", table: "Interface", fallback: "保留最近 500 条历史记录")
+        }
+        /// 进行中
+        ///
+        /// Resource: `Interface.LauncherLog.running`.
+        public static var running: LocalizedMessage {
+            .init(key: "LauncherLog.running", table: "Interface", fallback: "进行中")
+        }
+        /// 搜索日志
+        ///
+        /// Resource: `Interface.LauncherLog.search`.
+        public static var search: LocalizedMessage {
+            .init(key: "LauncherLog.search", table: "Interface", fallback: "搜索日志")
+        }
+        /// 尝试其他关键词或切换筛选条件。
+        ///
+        /// Resource: `Interface.LauncherLog.searchHint`.
+        public static var searchHint: LocalizedMessage {
+            .init(key: "LauncherLog.searchHint", table: "Interface", fallback: "尝试其他关键词或切换筛选条件。")
+        }
+        /// 选择一条记录
+        ///
+        /// Resource: `Interface.LauncherLog.selectEntry`.
+        public static var selectEntry: LocalizedMessage {
+            .init(key: "LauncherLog.selectEntry", table: "Interface", fallback: "选择一条记录")
+        }
+        /// 查看完整信息、任务过程和相关操作。
+        ///
+        /// Resource: `Interface.LauncherLog.selectHint`.
+        public static var selectHint: LocalizedMessage {
+            .init(key: "LauncherLog.selectHint", table: "Interface", fallback: "查看完整信息、任务过程和相关操作。")
+        }
+        /// 查看全部日志
+        ///
+        /// Resource: `Interface.LauncherLog.showAll`.
+        public static var showAll: LocalizedMessage {
+            .init(key: "LauncherLog.showAll", table: "Interface", fallback: "查看全部日志")
+        }
+        /// 来源
+        ///
+        /// Resource: `Interface.LauncherLog.source`.
+        public static var source: LocalizedMessage {
+            .init(key: "LauncherLog.source", table: "Interface", fallback: "来源")
+        }
+        /// 任务过程
+        ///
+        /// Resource: `Interface.LauncherLog.stages`.
+        public static var stages: LocalizedMessage {
+            .init(key: "LauncherLog.stages", table: "Interface", fallback: "任务过程")
+        }
+        /// 开始时间
+        ///
+        /// Resource: `Interface.LauncherLog.started`.
+        public static var started: LocalizedMessage {
+            .init(key: "LauncherLog.started", table: "Interface", fallback: "开始时间")
+        }
+        /// 状态
+        ///
+        /// Resource: `Interface.LauncherLog.status`.
+        public static var status: LocalizedMessage {
+            .init(key: "LauncherLog.status", table: "Interface", fallback: "状态")
+        }
+        /// 成功
+        ///
+        /// Resource: `Interface.LauncherLog.success`.
+        public static var success: LocalizedMessage {
+            .init(key: "LauncherLog.success", table: "Interface", fallback: "成功")
+        }
+        /// 任务
+        ///
+        /// Resource: `Interface.LauncherLog.task`.
+        public static var task: LocalizedMessage {
+            .init(key: "LauncherLog.task", table: "Interface", fallback: "任务")
+        }
+        /// 任务
+        ///
+        /// Resource: `Interface.LauncherLog.tasks`.
+        public static var tasks: LocalizedMessage {
+            .init(key: "LauncherLog.tasks", table: "Interface", fallback: "任务")
+        }
+        /// 时间
+        ///
+        /// Resource: `Interface.LauncherLog.time`.
+        public static var time: LocalizedMessage {
+            .init(key: "LauncherLog.time", table: "Interface", fallback: "时间")
+        }
+        /// 日志
+        ///
+        /// Resource: `Interface.LauncherLog.title`.
+        public static var title: LocalizedMessage {
+            .init(key: "LauncherLog.title", table: "Interface", fallback: "日志")
+        }
+        /// 当前运行期间最近的文件传输会显示在这里。
+        ///
+        /// Resource: `Interface.LauncherLog.transferHint`.
+        public static var transferHint: LocalizedMessage {
+            .init(key: "LauncherLog.transferHint", table: "Interface", fallback: "当前运行期间最近的文件传输会显示在这里。")
+        }
+        /// %1$lld / %2$lld
+        ///
+        /// Resource: `Interface.LauncherLog.transferProgress`.
+        public static func transferProgress(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
+            .init(key: "LauncherLog.transferProgress", table: "Interface", fallback: "%1$lld / %2$lld", arguments: [.integer(value0), .integer(value1)])
+        }
+        /// 已传输
+        ///
+        /// Resource: `Interface.LauncherLog.transferred`.
+        public static var transferred: LocalizedMessage {
+            .init(key: "LauncherLog.transferred", table: "Interface", fallback: "已传输")
+        }
+        /// 文件传输
+        ///
+        /// Resource: `Interface.LauncherLog.transfers`.
+        public static var transfers: LocalizedMessage {
+            .init(key: "LauncherLog.transfers", table: "Interface", fallback: "文件传输")
+        }
+        /// 未读
+        ///
+        /// Resource: `Interface.LauncherLog.unread`.
+        public static var unread: LocalizedMessage {
+            .init(key: "LauncherLog.unread", table: "Interface", fallback: "未读")
+        }
+        /// %1$lld 条未读通知
+        ///
+        /// Resource: `Interface.LauncherLog.unreadCount`.
+        public static func unreadCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "LauncherLog.unreadCount", table: "Interface", fallback: "%1$lld 条未读通知", arguments: [.integer(value0)])
+        }
+        /// 此日志文件的版本暂不受支持。
+        ///
+        /// Resource: `Interface.LauncherLog.unsupportedHistory`.
+        public static var unsupportedHistory: LocalizedMessage {
+            .init(key: "LauncherLog.unsupportedHistory", table: "Interface", fallback: "此日志文件的版本暂不受支持。")
+        }
+        /// 更新时间
+        ///
+        /// Resource: `Interface.LauncherLog.updated`.
+        public static var updated: LocalizedMessage {
+            .init(key: "LauncherLog.updated", table: "Interface", fallback: "更新时间")
+        }
+        /// 警告
+        ///
+        /// Resource: `Interface.LauncherLog.warning`.
+        public static var warning: LocalizedMessage {
+            .init(key: "LauncherLog.warning", table: "Interface", fallback: "警告")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:launcherLog.title": .init("日志", []),
-            "Interface:launcherLog.all": .init("全部", []),
-            "Interface:launcherLog.tasks": .init("任务", []),
-            "Interface:launcherLog.attention": .init("需关注", []),
-            "Interface:launcherLog.transfers": .init("文件传输", []),
-            "Interface:launcherLog.notifications": .init("通知", []),
-            "Interface:launcherLog.unread": .init("未读", []),
-            "Interface:launcherLog.markAllRead": .init("全部标为已读", []),
-            "Interface:launcherLog.showAll": .init("查看全部日志", []),
-            "Interface:launcherLog.noNotifications": .init("暂无通知", []),
-            "Interface:launcherLog.notificationHint": .init("进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。", []),
-            "Interface:launcherLog.noEntries": .init("暂无日志", []),
-            "Interface:launcherLog.emptyHint": .init("启动器操作、任务进度和运行事件会记录在这里。", []),
-            "Interface:launcherLog.noMatches": .init("没有匹配的记录", []),
-            "Interface:launcherLog.searchHint": .init("尝试其他关键词或切换筛选条件。", []),
-            "Interface:launcherLog.search": .init("搜索日志", []),
-            "Interface:launcherLog.event": .init("事件", []),
-            "Interface:launcherLog.category": .init("来源", []),
-            "Interface:launcherLog.time": .init("时间", []),
-            "Interface:launcherLog.status": .init("状态", []),
-            "Interface:launcherLog.launcher": .init("启动器", []),
-            "Interface:launcherLog.task": .init("任务", []),
-            "Interface:launcherLog.game": .init("游戏", []),
-            "Interface:launcherLog.info": .init("信息", []),
-            "Interface:launcherLog.success": .init("成功", []),
-            "Interface:launcherLog.warning": .init("警告", []),
-            "Interface:launcherLog.error": .init("错误", []),
-            "Interface:launcherLog.running": .init("进行中", []),
-            "Interface:launcherLog.completed": .init("已完成", []),
-            "Interface:launcherLog.failed": .init("失败", []),
-            "Interface:launcherLog.cancelled": .init("已取消", []),
-            "Interface:launcherLog.interrupted": .init("已中断", []),
-            "Interface:launcherLog.interruptedDetail": .init("启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。", []),
-            "Interface:launcherLog.unsupportedHistory": .init("此日志文件的版本暂不受支持。", []),
-            "Interface:launcherLog.historyUnavailable": .init("无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。", []),
-            "Interface:launcherLog.historyWriteFailed": .init("日志暂时无法保存到磁盘。", []),
-            "Interface:launcherLog.started": .init("开始时间", []),
-            "Interface:launcherLog.updated": .init("更新时间", []),
-            "Interface:launcherLog.details": .init("详情", []),
-            "Interface:launcherLog.stages": .init("任务过程", []),
-            "Interface:launcherLog.selectEntry": .init("选择一条记录", []),
-            "Interface:launcherLog.selectHint": .init("查看完整信息、任务过程和相关操作。", []),
-            "Interface:launcherLog.copy": .init("复制记录", []),
-            "Interface:launcherLog.export": .init("导出日志…", []),
-            "Interface:launcherLog.clear": .init("清除历史…", []),
-            "Interface:launcherLog.clearTitle": .init("清除已结束的日志？", []),
-            "Interface:launcherLog.clearDetail": .init("这会移除已结束的任务、事件及对应通知。进行中的任务会保留。", []),
-            "Interface:launcherLog.clearConfirm": .init("清除历史", []),
-            "Interface:launcherLog.retention": .init("保留最近 500 条历史记录", []),
-            "Interface:launcherLog.entryCount": .init("%1$lld 条记录", [.integer]),
-            "Interface:launcherLog.unreadCount": .init("%1$lld 条未读通知", [.integer]),
-            "Interface:launcherLog.cancelTask": .init("取消任务", []),
-            "Interface:launcherLog.noTransfers": .init("暂无文件传输", []),
-            "Interface:launcherLog.transferHint": .init("当前运行期间最近的文件传输会显示在这里。", []),
-            "Interface:launcherLog.filename": .init("文件", []),
-            "Interface:launcherLog.source": .init("来源", []),
-            "Interface:launcherLog.transferred": .init("已传输", []),
-            "Interface:launcherLog.exported": .init("日志已导出", []),
-            "Interface:launcherLog.historyReadError": .init("读取日志历史失败：%1$@", [.text]),
-            "Interface:launcherLog.catalogFailed": .init("无法刷新游戏版本列表：%1$@", [.text]),
-            "Interface:launcherLog.noAttention": .init("没有需要关注的记录", []),
-            "Interface:launcherLog.noAttentionHint": .init("任务失败、警告和中断信息会集中显示在这里。", []),
-            "Interface:launcherLog.transferProgress": .init("%1$lld / %2$lld", [.integer, .integer]),
-            "Interface:launcherLog.clearSearch": .init("清除搜索", []),
+            "Interface:LauncherLog.all": .init("全部", []),
+            "Interface:LauncherLog.attention": .init("需关注", []),
+            "Interface:LauncherLog.cancelTask": .init("取消任务", []),
+            "Interface:LauncherLog.cancelled": .init("已取消", []),
+            "Interface:LauncherLog.catalogFailed": .init("无法刷新游戏版本列表：%1$@", [.text]),
+            "Interface:LauncherLog.category": .init("来源", []),
+            "Interface:LauncherLog.clear": .init("清除历史…", []),
+            "Interface:LauncherLog.clearConfirm": .init("清除历史", []),
+            "Interface:LauncherLog.clearDetail": .init("这会移除已结束的任务、事件及对应通知。进行中的任务会保留。", []),
+            "Interface:LauncherLog.clearSearch": .init("清除搜索", []),
+            "Interface:LauncherLog.clearTitle": .init("清除已结束的日志？", []),
+            "Interface:LauncherLog.completed": .init("已完成", []),
+            "Interface:LauncherLog.copy": .init("复制记录", []),
+            "Interface:LauncherLog.details": .init("详情", []),
+            "Interface:LauncherLog.emptyHint": .init("启动器操作、任务进度和运行事件会记录在这里。", []),
+            "Interface:LauncherLog.entryCount": .init("%1$lld 条记录", [.integer]),
+            "Interface:LauncherLog.error": .init("错误", []),
+            "Interface:LauncherLog.event": .init("事件", []),
+            "Interface:LauncherLog.export": .init("导出日志…", []),
+            "Interface:LauncherLog.exported": .init("日志已导出", []),
+            "Interface:LauncherLog.failed": .init("失败", []),
+            "Interface:LauncherLog.filename": .init("文件", []),
+            "Interface:LauncherLog.game": .init("游戏", []),
+            "Interface:LauncherLog.historyReadError": .init("读取日志历史失败：%1$@", [.text]),
+            "Interface:LauncherLog.historyUnavailable": .init("无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。", []),
+            "Interface:LauncherLog.historyWriteFailed": .init("日志暂时无法保存到磁盘。", []),
+            "Interface:LauncherLog.info": .init("信息", []),
+            "Interface:LauncherLog.interrupted": .init("已中断", []),
+            "Interface:LauncherLog.interruptedDetail": .init("启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。", []),
+            "Interface:LauncherLog.launcher": .init("启动器", []),
+            "Interface:LauncherLog.markAllRead": .init("全部标为已读", []),
+            "Interface:LauncherLog.noAttention": .init("没有需要关注的记录", []),
+            "Interface:LauncherLog.noAttentionHint": .init("任务失败、警告和中断信息会集中显示在这里。", []),
+            "Interface:LauncherLog.noEntries": .init("暂无日志", []),
+            "Interface:LauncherLog.noMatches": .init("没有匹配的记录", []),
+            "Interface:LauncherLog.noNotifications": .init("暂无通知", []),
+            "Interface:LauncherLog.noTransfers": .init("暂无文件传输", []),
+            "Interface:LauncherLog.notificationHint": .init("进行中的任务、耗时较长的任务结果和需要关注的问题会出现在这里。", []),
+            "Interface:LauncherLog.notifications": .init("通知", []),
+            "Interface:LauncherLog.retention": .init("保留最近 500 条历史记录", []),
+            "Interface:LauncherLog.running": .init("进行中", []),
+            "Interface:LauncherLog.search": .init("搜索日志", []),
+            "Interface:LauncherLog.searchHint": .init("尝试其他关键词或切换筛选条件。", []),
+            "Interface:LauncherLog.selectEntry": .init("选择一条记录", []),
+            "Interface:LauncherLog.selectHint": .init("查看完整信息、任务过程和相关操作。", []),
+            "Interface:LauncherLog.showAll": .init("查看全部日志", []),
+            "Interface:LauncherLog.source": .init("来源", []),
+            "Interface:LauncherLog.stages": .init("任务过程", []),
+            "Interface:LauncherLog.started": .init("开始时间", []),
+            "Interface:LauncherLog.status": .init("状态", []),
+            "Interface:LauncherLog.success": .init("成功", []),
+            "Interface:LauncherLog.task": .init("任务", []),
+            "Interface:LauncherLog.tasks": .init("任务", []),
+            "Interface:LauncherLog.time": .init("时间", []),
+            "Interface:LauncherLog.title": .init("日志", []),
+            "Interface:LauncherLog.transferHint": .init("当前运行期间最近的文件传输会显示在这里。", []),
+            "Interface:LauncherLog.transferProgress": .init("%1$lld / %2$lld", [.integer, .integer]),
+            "Interface:LauncherLog.transferred": .init("已传输", []),
+            "Interface:LauncherLog.transfers": .init("文件传输", []),
+            "Interface:LauncherLog.unread": .init("未读", []),
+            "Interface:LauncherLog.unreadCount": .init("%1$lld 条未读通知", [.integer]),
+            "Interface:LauncherLog.unsupportedHistory": .init("此日志文件的版本暂不受支持。", []),
+            "Interface:LauncherLog.updated": .init("更新时间", []),
+            "Interface:LauncherLog.warning": .init("警告", []),
         ]
     }
 }

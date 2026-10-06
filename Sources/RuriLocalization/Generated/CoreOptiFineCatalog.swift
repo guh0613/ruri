@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreOptiFineCatalog {
         /// OptiFine 安装包的版本信息无效。
         ///
-        /// Resource: `Core.coreOptiFineCatalog.invalidText1`.
+        /// Resource: `Core.CoreOptiFineCatalog.invalidVersionInfo`.
         public static var invalidVersionInfo: LocalizedMessage {
-            .init(key: "coreOptiFineCatalog.invalidText1", table: "Core", fallback: "OptiFine 安装包的版本信息无效。")
+            .init(key: "CoreOptiFineCatalog.invalidVersionInfo", table: "Core", fallback: "OptiFine 安装包的版本信息无效。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreOptiFineCatalog.invalidText1": .init("OptiFine 安装包的版本信息无效。", []),
+            "Core:CoreOptiFineCatalog.invalidVersionInfo": .init("OptiFine 安装包的版本信息无效。", []),
         ]
     }
 }

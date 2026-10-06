@@ -3,189 +3,189 @@ import Foundation
 
 extension Messages {
     public enum AppGameDirectoriesView {
-        /// 实例文件夹
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText1`.
-        public static var instanceFolders: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText1", table: "Interface", fallback: "实例文件夹")
-        }
-        /// 默认实例文件夹
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText2`.
-        public static var defaultInstanceFolder: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText2", table: "Interface", fallback: "默认实例文件夹")
-        }
-        /// 刷新版本列表
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText3`.
-        public static var refreshVersions: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText3", table: "Interface", fallback: "刷新版本列表")
-        }
         /// 添加文件夹…
         ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText4`.
+        /// Resource: `Interface.AppGameDirectoriesView.addFolder`.
         public static var addFolder: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText4", table: "Interface", fallback: "添加文件夹…")
-        }
-        /// 管理文件夹…
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText5`.
-        public static var manageFolders: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText5", table: "Interface", fallback: "管理文件夹…")
-        }
-        /// 当前文件夹：%1$@
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText6`.
-        public static func currentFolder(_ value0: String) -> LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText6", table: "Interface", fallback: "当前文件夹：%1$@", arguments: [.text(value0)])
-        }
-        /// 添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText8`.
-        public static var folderUsage: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText8", table: "Interface", fallback: "添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。")
-        }
-        /// 从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText9`.
-        public static var removedFolderRecovery: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText9", table: "Interface", fallback: "从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。")
-        }
-        /// %1$lld 个实例
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText10`.
-        public static func instanceCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText10", table: "Interface", fallback: "%1$lld 个实例", arguments: [.integer(value0)])
-        }
-        /// 已选择
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText11`.
-        public static var selected: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText11", table: "Interface", fallback: "已选择")
-        }
-        /// 选择
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText12`.
-        public static var select: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText12", table: "Interface", fallback: "选择")
-        }
-        /// 已移除的文件夹
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.detachedText1`.
-        public static var removedFolders: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.detachedText1", table: "Interface", fallback: "已移除的文件夹")
-        }
-        /// 重新检查可用性
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.detachedText2`.
-        public static var checkAvailability: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.detachedText2", table: "Interface", fallback: "重新检查可用性")
-        }
-        /// 保留 %1$lld 个实例的设置和运行历史
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText13`.
-        public static func preserveDetachedSettings(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText13", table: "Interface", fallback: "保留 %1$lld 个实例的设置和运行历史", arguments: [.integer(value0)])
-        }
-        /// 重新添加
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText14`.
-        public static var readdFolder: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText14", table: "Interface", fallback: "重新添加")
-        }
-        /// 选择新位置并添加…
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText15`.
-        public static var chooseNewLocation: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText15", table: "Interface", fallback: "选择新位置并添加…")
-        }
-        /// 选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行历史。
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.panelText1`.
-        public static func relocateFolder(_ value0: String) -> LocalizedMessage {
-            .init(key: "appGameDirectoriesView.panelText1", table: "Interface", fallback: "选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行历史。", arguments: [.text(value0)])
-        }
-        /// 文件夹名称
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText16`.
-        public static var folderName: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText16", table: "Interface", fallback: "文件夹名称")
-        }
-        /// 保存名称
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText17`.
-        public static var saveName: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText17", table: "Interface", fallback: "保存名称")
+            .init(key: "AppGameDirectoriesView.addFolder", table: "Interface", fallback: "添加文件夹…")
         }
         /// %1$lld 个实例 · 可用
         ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText18`.
+        /// Resource: `Interface.AppGameDirectoriesView.availableInstanceCount`.
         public static func availableInstanceCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText18", table: "Interface", fallback: "%1$lld 个实例 · 可用", arguments: [.integer(value0)])
+            .init(key: "AppGameDirectoriesView.availableInstanceCount", table: "Interface", fallback: "%1$lld 个实例 · 可用", arguments: [.integer(value0)])
         }
-        /// %1$lld 个实例 · 无法访问
+        /// 重新检查可用性
         ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText19`.
-        public static func unavailableInstanceCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText19", table: "Interface", fallback: "%1$lld 个实例 · 无法访问", arguments: [.integer(value0)])
+        /// Resource: `Interface.AppGameDirectoriesView.checkAvailability`.
+        public static var checkAvailability: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.checkAvailability", table: "Interface", fallback: "重新检查可用性")
         }
-        /// 在 Finder 中显示
+        /// 选择新位置并添加…
         ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText20`.
-        public static var showInFinder: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText20", table: "Interface", fallback: "在 Finder 中显示")
-        }
-        /// 重新定位原文件夹…
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText21`.
-        public static var relocateOriginal: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText21", table: "Interface", fallback: "重新定位原文件夹…")
-        }
-        /// 从列表移除
-        ///
-        /// Resource: `Interface.appGameDirectoriesView.bodyText22`.
-        public static var removeFromList: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.bodyText22", table: "Interface", fallback: "从列表移除")
+        /// Resource: `Interface.AppGameDirectoriesView.chooseNewLocation`.
+        public static var chooseNewLocation: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.chooseNewLocation", table: "Interface", fallback: "选择新位置并添加…")
         }
         /// 选择“%1$@”文件夹的新位置。此操作仅更新路径，不移动文件。
         ///
-        /// Resource: `Interface.appGameDirectoriesView.panelText2`.
+        /// Resource: `Interface.AppGameDirectoriesView.chooseOriginalLocation`.
         public static func chooseOriginalLocation(_ value0: String) -> LocalizedMessage {
-            .init(key: "appGameDirectoriesView.panelText2", table: "Interface", fallback: "选择“%1$@”文件夹的新位置。此操作仅更新路径，不移动文件。", arguments: [.text(value0)])
+            .init(key: "AppGameDirectoriesView.chooseOriginalLocation", table: "Interface", fallback: "选择“%1$@”文件夹的新位置。此操作仅更新路径，不移动文件。", arguments: [.text(value0)])
+        }
+        /// 当前文件夹：%1$@
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.currentFolder`.
+        public static func currentFolder(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.currentFolder", table: "Interface", fallback: "当前文件夹：%1$@", arguments: [.text(value0)])
+        }
+        /// 默认实例文件夹
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.defaultInstanceFolder`.
+        public static var defaultInstanceFolder: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.defaultInstanceFolder", table: "Interface", fallback: "默认实例文件夹")
+        }
+        /// 文件夹名称
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.folderName`.
+        public static var folderName: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.folderName", table: "Interface", fallback: "文件夹名称")
+        }
+        /// 添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.folderUsage`.
+        public static var folderUsage: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.folderUsage", table: "Interface", fallback: "添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。")
+        }
+        /// %1$lld 个实例
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.instanceCount`.
+        public static func instanceCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.instanceCount", table: "Interface", fallback: "%1$lld 个实例", arguments: [.integer(value0)])
+        }
+        /// 实例文件夹
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.instanceFolders`.
+        public static var instanceFolders: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.instanceFolders", table: "Interface", fallback: "实例文件夹")
+        }
+        /// 管理文件夹…
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.manageFolders`.
+        public static var manageFolders: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.manageFolders", table: "Interface", fallback: "管理文件夹…")
+        }
+        /// 保留 %1$lld 个实例的设置和运行历史
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.preserveDetachedSettings`.
+        public static func preserveDetachedSettings(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.preserveDetachedSettings", table: "Interface", fallback: "保留 %1$lld 个实例的设置和运行历史", arguments: [.integer(value0)])
+        }
+        /// 重新添加
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.readdFolder`.
+        public static var readdFolder: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.readdFolder", table: "Interface", fallback: "重新添加")
+        }
+        /// 刷新版本列表
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.refreshVersions`.
+        public static var refreshVersions: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.refreshVersions", table: "Interface", fallback: "刷新版本列表")
         }
         /// 重新定位
         ///
-        /// Resource: `Interface.appGameDirectoriesView.panelText3`.
+        /// Resource: `Interface.AppGameDirectoriesView.relocate`.
         public static var relocate: LocalizedMessage {
-            .init(key: "appGameDirectoriesView.panelText3", table: "Interface", fallback: "重新定位")
+            .init(key: "AppGameDirectoriesView.relocate", table: "Interface", fallback: "重新定位")
+        }
+        /// 选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行历史。
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.relocateFolder`.
+        public static func relocateFolder(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.relocateFolder", table: "Interface", fallback: "选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行历史。", arguments: [.text(value0)])
+        }
+        /// 重新定位原文件夹…
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.relocateOriginal`.
+        public static var relocateOriginal: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.relocateOriginal", table: "Interface", fallback: "重新定位原文件夹…")
+        }
+        /// 从列表移除
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.removeFromList`.
+        public static var removeFromList: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.removeFromList", table: "Interface", fallback: "从列表移除")
+        }
+        /// 从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.removedFolderRecovery`.
+        public static var removedFolderRecovery: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.removedFolderRecovery", table: "Interface", fallback: "从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。")
+        }
+        /// 已移除的文件夹
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.removedFolders`.
+        public static var removedFolders: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.removedFolders", table: "Interface", fallback: "已移除的文件夹")
+        }
+        /// 保存名称
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.saveName`.
+        public static var saveName: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.saveName", table: "Interface", fallback: "保存名称")
+        }
+        /// 选择
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.select`.
+        public static var select: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.select", table: "Interface", fallback: "选择")
+        }
+        /// 已选择
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.selected`.
+        public static var selected: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.selected", table: "Interface", fallback: "已选择")
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.showInFinder`.
+        public static var showInFinder: LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
+        }
+        /// %1$lld 个实例 · 无法访问
+        ///
+        /// Resource: `Interface.AppGameDirectoriesView.unavailableInstanceCount`.
+        public static func unavailableInstanceCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AppGameDirectoriesView.unavailableInstanceCount", table: "Interface", fallback: "%1$lld 个实例 · 无法访问", arguments: [.integer(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appGameDirectoriesView.bodyText1": .init("实例文件夹", []),
-            "Interface:appGameDirectoriesView.bodyText2": .init("默认实例文件夹", []),
-            "Interface:appGameDirectoriesView.bodyText3": .init("刷新版本列表", []),
-            "Interface:appGameDirectoriesView.bodyText4": .init("添加文件夹…", []),
-            "Interface:appGameDirectoriesView.bodyText5": .init("管理文件夹…", []),
-            "Interface:appGameDirectoriesView.bodyText6": .init("当前文件夹：%1$@", [.text]),
-            "Interface:appGameDirectoriesView.bodyText8": .init("添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。", []),
-            "Interface:appGameDirectoriesView.bodyText9": .init("从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。", []),
-            "Interface:appGameDirectoriesView.bodyText10": .init("%1$lld 个实例", [.integer]),
-            "Interface:appGameDirectoriesView.bodyText11": .init("已选择", []),
-            "Interface:appGameDirectoriesView.bodyText12": .init("选择", []),
-            "Interface:appGameDirectoriesView.detachedText1": .init("已移除的文件夹", []),
-            "Interface:appGameDirectoriesView.detachedText2": .init("重新检查可用性", []),
-            "Interface:appGameDirectoriesView.bodyText13": .init("保留 %1$lld 个实例的设置和运行历史", [.integer]),
-            "Interface:appGameDirectoriesView.bodyText14": .init("重新添加", []),
-            "Interface:appGameDirectoriesView.bodyText15": .init("选择新位置并添加…", []),
-            "Interface:appGameDirectoriesView.panelText1": .init("选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行历史。", [.text]),
-            "Interface:appGameDirectoriesView.bodyText16": .init("文件夹名称", []),
-            "Interface:appGameDirectoriesView.bodyText17": .init("保存名称", []),
-            "Interface:appGameDirectoriesView.bodyText18": .init("%1$lld 个实例 · 可用", [.integer]),
-            "Interface:appGameDirectoriesView.bodyText19": .init("%1$lld 个实例 · 无法访问", [.integer]),
-            "Interface:appGameDirectoriesView.bodyText20": .init("在 Finder 中显示", []),
-            "Interface:appGameDirectoriesView.bodyText21": .init("重新定位原文件夹…", []),
-            "Interface:appGameDirectoriesView.bodyText22": .init("从列表移除", []),
-            "Interface:appGameDirectoriesView.panelText2": .init("选择“%1$@”文件夹的新位置。此操作仅更新路径，不移动文件。", [.text]),
-            "Interface:appGameDirectoriesView.panelText3": .init("重新定位", []),
+            "Interface:AppGameDirectoriesView.addFolder": .init("添加文件夹…", []),
+            "Interface:AppGameDirectoriesView.availableInstanceCount": .init("%1$lld 个实例 · 可用", [.integer]),
+            "Interface:AppGameDirectoriesView.checkAvailability": .init("重新检查可用性", []),
+            "Interface:AppGameDirectoriesView.chooseNewLocation": .init("选择新位置并添加…", []),
+            "Interface:AppGameDirectoriesView.chooseOriginalLocation": .init("选择“%1$@”文件夹的新位置。此操作仅更新路径，不移动文件。", [.text]),
+            "Interface:AppGameDirectoriesView.currentFolder": .init("当前文件夹：%1$@", [.text]),
+            "Interface:AppGameDirectoriesView.defaultInstanceFolder": .init("默认实例文件夹", []),
+            "Interface:AppGameDirectoriesView.folderName": .init("文件夹名称", []),
+            "Interface:AppGameDirectoriesView.folderUsage": .init("添加 Minecraft 文件夹以使用其中的版本。新建实例保存在当前选中的文件夹中。", []),
+            "Interface:AppGameDirectoriesView.instanceCount": .init("%1$lld 个实例", [.integer]),
+            "Interface:AppGameDirectoriesView.instanceFolders": .init("实例文件夹", []),
+            "Interface:AppGameDirectoriesView.manageFolders": .init("管理文件夹…", []),
+            "Interface:AppGameDirectoriesView.preserveDetachedSettings": .init("保留 %1$lld 个实例的设置和运行历史", [.integer]),
+            "Interface:AppGameDirectoriesView.readdFolder": .init("重新添加", []),
+            "Interface:AppGameDirectoriesView.refreshVersions": .init("刷新版本列表", []),
+            "Interface:AppGameDirectoriesView.relocate": .init("重新定位", []),
+            "Interface:AppGameDirectoriesView.relocateFolder": .init("选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行历史。", [.text]),
+            "Interface:AppGameDirectoriesView.relocateOriginal": .init("重新定位原文件夹…", []),
+            "Interface:AppGameDirectoriesView.removeFromList": .init("从列表移除", []),
+            "Interface:AppGameDirectoriesView.removedFolderRecovery": .init("从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。", []),
+            "Interface:AppGameDirectoriesView.removedFolders": .init("已移除的文件夹", []),
+            "Interface:AppGameDirectoriesView.saveName": .init("保存名称", []),
+            "Interface:AppGameDirectoriesView.select": .init("选择", []),
+            "Interface:AppGameDirectoriesView.selected": .init("已选择", []),
+            "Interface:AppGameDirectoriesView.showInFinder": .init("在 Finder 中显示", []),
+            "Interface:AppGameDirectoriesView.unavailableInstanceCount": .init("%1$lld 个实例 · 无法访问", [.integer]),
         ]
     }
 }

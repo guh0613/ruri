@@ -3,441 +3,441 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceIconPicker {
-        /// 颜色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.color`.
-        public static var color: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.color", table: "Interface", fallback: "颜色")
-        }
-        /// 加载器
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.loaders`.
-        public static var loaders: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.loaders", table: "Interface", fallback: "加载器")
-        }
-        /// 物品
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.items`.
-        public static var items: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.items", table: "Interface", fallback: "物品")
-        }
-        /// 符号
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.symbols`.
-        public static var symbols: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.symbols", table: "Interface", fallback: "符号")
-        }
-        /// 使用整合包图标
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.useModpackIcon`.
-        public static var useModpackIcon: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.useModpackIcon", table: "Interface", fallback: "使用整合包图标")
-        }
-        /// 无法获取整合包图标，请检查网络后重试。
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.modpackIconUnavailable`.
-        public static var modpackIconUnavailable: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.modpackIconUnavailable", table: "Interface", fallback: "无法获取整合包图标，请检查网络后重试。")
-        }
-        /// 蓝色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintBlue`.
-        public static var tintBlue: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintBlue", table: "Interface", fallback: "蓝色")
-        }
-        /// 靛蓝
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintIndigo`.
-        public static var tintIndigo: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintIndigo", table: "Interface", fallback: "靛蓝")
-        }
-        /// 紫色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintPurple`.
-        public static var tintPurple: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintPurple", table: "Interface", fallback: "紫色")
-        }
-        /// 粉色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintPink`.
-        public static var tintPink: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintPink", table: "Interface", fallback: "粉色")
-        }
-        /// 红色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintRed`.
-        public static var tintRed: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintRed", table: "Interface", fallback: "红色")
-        }
-        /// 橙色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintOrange`.
-        public static var tintOrange: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintOrange", table: "Interface", fallback: "橙色")
-        }
-        /// 沙色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintSand`.
-        public static var tintSand: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintSand", table: "Interface", fallback: "沙色")
-        }
-        /// 绿色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintGreen`.
-        public static var tintGreen: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintGreen", table: "Interface", fallback: "绿色")
-        }
-        /// 青色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintTeal`.
-        public static var tintTeal: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintTeal", table: "Interface", fallback: "青色")
-        }
-        /// 石板灰
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintSlate`.
-        public static var tintSlate: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintSlate", table: "Interface", fallback: "石板灰")
-        }
-        /// 石墨色
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.tintGraphite`.
-        public static var tintGraphite: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.tintGraphite", table: "Interface", fallback: "石墨色")
-        }
-        /// 镐
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphPickaxe`.
-        public static var glyphPickaxe: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphPickaxe", table: "Interface", fallback: "镐")
-        }
-        /// 剑
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphSword`.
-        public static var glyphSword: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphSword", table: "Interface", fallback: "剑")
-        }
-        /// 生命
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphHeart`.
-        public static var glyphHeart: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphHeart", table: "Interface", fallback: "生命")
-        }
-        /// 宝石
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphGem`.
-        public static var glyphGem: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphGem", table: "Interface", fallback: "宝石")
-        }
-        /// 药水
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphPotion`.
-        public static var glyphPotion: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphPotion", table: "Interface", fallback: "药水")
-        }
         /// 方块
         ///
-        /// Resource: `Interface.appInstanceIconPicker.blocks`.
+        /// Resource: `Interface.AppInstanceIconPicker.blocks`.
         public static var blocks: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.blocks", table: "Interface", fallback: "方块")
+            .init(key: "AppInstanceIconPicker.blocks", table: "Interface", fallback: "方块")
         }
-        /// 草方块
+        /// 颜色
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphGrassBlock`.
-        public static var glyphGrassBlock: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphGrassBlock", table: "Interface", fallback: "草方块")
-        }
-        /// 泥土
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphDirt`.
-        public static var glyphDirt: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphDirt", table: "Interface", fallback: "泥土")
-        }
-        /// 圆石
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphCobblestone`.
-        public static var glyphCobblestone: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphCobblestone", table: "Interface", fallback: "圆石")
-        }
-        /// 橡木原木
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphOakLog`.
-        public static var glyphOakLog: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphOakLog", table: "Interface", fallback: "橡木原木")
-        }
-        /// 橡木木板
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphOakPlanks`.
-        public static var glyphOakPlanks: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphOakPlanks", table: "Interface", fallback: "橡木木板")
-        }
-        /// 工作台
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphCraftingTable`.
-        public static var glyphCraftingTable: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphCraftingTable", table: "Interface", fallback: "工作台")
-        }
-        /// 熔炉
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphFurnace`.
-        public static var glyphFurnace: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphFurnace", table: "Interface", fallback: "熔炉")
-        }
-        /// 书架
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphBookshelf`.
-        public static var glyphBookshelf: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphBookshelf", table: "Interface", fallback: "书架")
-        }
-        /// TNT
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphTnt`.
-        public static var glyphTnt: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphTnt", table: "Interface", fallback: "TNT")
-        }
-        /// 钻石矿石
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphDiamondOre`.
-        public static var glyphDiamondOre: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphDiamondOre", table: "Interface", fallback: "钻石矿石")
-        }
-        /// 砖块
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphBricks`.
-        public static var glyphBricks: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphBricks", table: "Interface", fallback: "砖块")
-        }
-        /// 黑曜石
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphObsidian`.
-        public static var glyphObsidian: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphObsidian", table: "Interface", fallback: "黑曜石")
-        }
-        /// 下界岩
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphNetherrack`.
-        public static var glyphNetherrack: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphNetherrack", table: "Interface", fallback: "下界岩")
-        }
-        /// 荧石
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphGlowstone`.
-        public static var glyphGlowstone: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphGlowstone", table: "Interface", fallback: "荧石")
-        }
-        /// 南瓜灯
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphJackOLantern`.
-        public static var glyphJackOLantern: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphJackOLantern", table: "Interface", fallback: "南瓜灯")
-        }
-        /// 命令方块
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphCommandBlock`.
-        public static var glyphCommandBlock: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphCommandBlock", table: "Interface", fallback: "命令方块")
-        }
-        /// 房屋
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphHouse`.
-        public static var glyphHouse: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphHouse", table: "Interface", fallback: "房屋")
-        }
-        /// 建筑
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphColumns`.
-        public static var glyphColumns: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphColumns", table: "Interface", fallback: "建筑")
-        }
-        /// 山峰
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphMountain`.
-        public static var glyphMountain: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphMountain", table: "Interface", fallback: "山峰")
-        }
-        /// 树
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphTree`.
-        public static var glyphTree: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphTree", table: "Interface", fallback: "树")
-        }
-        /// 树叶
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphLeaf`.
-        public static var glyphLeaf: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphLeaf", table: "Interface", fallback: "树叶")
-        }
-        /// 火焰
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphFlame`.
-        public static var glyphFlame: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphFlame", table: "Interface", fallback: "火焰")
-        }
-        /// 水滴
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphDrop`.
-        public static var glyphDrop: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphDrop", table: "Interface", fallback: "水滴")
-        }
-        /// 雪花
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphSnowflake`.
-        public static var glyphSnowflake: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphSnowflake", table: "Interface", fallback: "雪花")
-        }
-        /// 夜空
-        ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphMoon`.
-        public static var glyphMoon: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphMoon", table: "Interface", fallback: "夜空")
+        /// Resource: `Interface.AppInstanceIconPicker.color`.
+        public static var color: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.color", table: "Interface", fallback: "颜色")
         }
         /// 闪电
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphBolt`.
+        /// Resource: `Interface.AppInstanceIconPicker.glyphBolt`.
         public static var glyphBolt: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphBolt", table: "Interface", fallback: "闪电")
+            .init(key: "AppInstanceIconPicker.glyphBolt", table: "Interface", fallback: "闪电")
         }
-        /// 星光
+        /// 书架
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphSparkles`.
-        public static var glyphSparkles: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphSparkles", table: "Interface", fallback: "星光")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphBookshelf`.
+        public static var glyphBookshelf: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphBookshelf", table: "Interface", fallback: "书架")
         }
-        /// 魔法
+        /// 砖块
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphWand`.
-        public static var glyphWand: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphWand", table: "Interface", fallback: "魔法")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphBricks`.
+        public static var glyphBricks: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphBricks", table: "Interface", fallback: "砖块")
         }
-        /// 盾牌
+        /// 圆石
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphShield`.
-        public static var glyphShield: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphShield", table: "Interface", fallback: "盾牌")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphCobblestone`.
+        public static var glyphCobblestone: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphCobblestone", table: "Interface", fallback: "圆石")
         }
-        /// 王冠
+        /// 建筑
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphCrown`.
-        public static var glyphCrown: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphCrown", table: "Interface", fallback: "王冠")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphColumns`.
+        public static var glyphColumns: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphColumns", table: "Interface", fallback: "建筑")
         }
-        /// 地图
+        /// 命令方块
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphMap`.
-        public static var glyphMap: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphMap", table: "Interface", fallback: "地图")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphCommandBlock`.
+        public static var glyphCommandBlock: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphCommandBlock", table: "Interface", fallback: "命令方块")
         }
         /// 手柄
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphController`.
+        /// Resource: `Interface.AppInstanceIconPicker.glyphController`.
         public static var glyphController: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphController", table: "Interface", fallback: "手柄")
+            .init(key: "AppInstanceIconPicker.glyphController", table: "Interface", fallback: "手柄")
         }
-        /// 工具
+        /// 工作台
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphWrench`.
-        public static var glyphWrench: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphWrench", table: "Interface", fallback: "工具")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphCraftingTable`.
+        public static var glyphCraftingTable: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphCraftingTable", table: "Interface", fallback: "工作台")
         }
-        /// 烧瓶
+        /// 王冠
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphFlask`.
-        public static var glyphFlask: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphFlask", table: "Interface", fallback: "烧瓶")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphCrown`.
+        public static var glyphCrown: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphCrown", table: "Interface", fallback: "王冠")
         }
-        /// 爪印
+        /// 钻石矿石
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphPaw`.
-        public static var glyphPaw: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphPaw", table: "Interface", fallback: "爪印")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphDiamondOre`.
+        public static var glyphDiamondOre: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphDiamondOre", table: "Interface", fallback: "钻石矿石")
+        }
+        /// 泥土
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphDirt`.
+        public static var glyphDirt: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphDirt", table: "Interface", fallback: "泥土")
+        }
+        /// 水滴
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphDrop`.
+        public static var glyphDrop: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphDrop", table: "Interface", fallback: "水滴")
         }
         /// 鱼
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphFish`.
+        /// Resource: `Interface.AppInstanceIconPicker.glyphFish`.
         public static var glyphFish: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphFish", table: "Interface", fallback: "鱼")
+            .init(key: "AppInstanceIconPicker.glyphFish", table: "Interface", fallback: "鱼")
         }
-        /// 帐篷
+        /// 火焰
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphTent`.
-        public static var glyphTent: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphTent", table: "Interface", fallback: "帐篷")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphFlame`.
+        public static var glyphFlame: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphFlame", table: "Interface", fallback: "火焰")
         }
-        /// 奖杯
+        /// 烧瓶
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphTrophy`.
-        public static var glyphTrophy: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphTrophy", table: "Interface", fallback: "奖杯")
+        /// Resource: `Interface.AppInstanceIconPicker.glyphFlask`.
+        public static var glyphFlask: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphFlask", table: "Interface", fallback: "烧瓶")
+        }
+        /// 熔炉
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphFurnace`.
+        public static var glyphFurnace: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphFurnace", table: "Interface", fallback: "熔炉")
+        }
+        /// 宝石
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphGem`.
+        public static var glyphGem: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphGem", table: "Interface", fallback: "宝石")
+        }
+        /// 荧石
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphGlowstone`.
+        public static var glyphGlowstone: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphGlowstone", table: "Interface", fallback: "荧石")
+        }
+        /// 草方块
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphGrassBlock`.
+        public static var glyphGrassBlock: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphGrassBlock", table: "Interface", fallback: "草方块")
+        }
+        /// 生命
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphHeart`.
+        public static var glyphHeart: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphHeart", table: "Interface", fallback: "生命")
+        }
+        /// 房屋
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphHouse`.
+        public static var glyphHouse: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphHouse", table: "Interface", fallback: "房屋")
+        }
+        /// 南瓜灯
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphJackOLantern`.
+        public static var glyphJackOLantern: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphJackOLantern", table: "Interface", fallback: "南瓜灯")
+        }
+        /// 树叶
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphLeaf`.
+        public static var glyphLeaf: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphLeaf", table: "Interface", fallback: "树叶")
+        }
+        /// 地图
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphMap`.
+        public static var glyphMap: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphMap", table: "Interface", fallback: "地图")
+        }
+        /// 夜空
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphMoon`.
+        public static var glyphMoon: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphMoon", table: "Interface", fallback: "夜空")
+        }
+        /// 山峰
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphMountain`.
+        public static var glyphMountain: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphMountain", table: "Interface", fallback: "山峰")
+        }
+        /// 下界岩
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphNetherrack`.
+        public static var glyphNetherrack: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphNetherrack", table: "Interface", fallback: "下界岩")
+        }
+        /// 橡木原木
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphOakLog`.
+        public static var glyphOakLog: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphOakLog", table: "Interface", fallback: "橡木原木")
+        }
+        /// 橡木木板
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphOakPlanks`.
+        public static var glyphOakPlanks: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphOakPlanks", table: "Interface", fallback: "橡木木板")
+        }
+        /// 黑曜石
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphObsidian`.
+        public static var glyphObsidian: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphObsidian", table: "Interface", fallback: "黑曜石")
         }
         /// 调色板
         ///
-        /// Resource: `Interface.appInstanceIconPicker.glyphPalette`.
+        /// Resource: `Interface.AppInstanceIconPicker.glyphPalette`.
         public static var glyphPalette: LocalizedMessage {
-            .init(key: "appInstanceIconPicker.glyphPalette", table: "Interface", fallback: "调色板")
+            .init(key: "AppInstanceIconPicker.glyphPalette", table: "Interface", fallback: "调色板")
+        }
+        /// 爪印
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphPaw`.
+        public static var glyphPaw: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphPaw", table: "Interface", fallback: "爪印")
+        }
+        /// 镐
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphPickaxe`.
+        public static var glyphPickaxe: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphPickaxe", table: "Interface", fallback: "镐")
+        }
+        /// 药水
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphPotion`.
+        public static var glyphPotion: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphPotion", table: "Interface", fallback: "药水")
+        }
+        /// 盾牌
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphShield`.
+        public static var glyphShield: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphShield", table: "Interface", fallback: "盾牌")
+        }
+        /// 雪花
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphSnowflake`.
+        public static var glyphSnowflake: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphSnowflake", table: "Interface", fallback: "雪花")
+        }
+        /// 星光
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphSparkles`.
+        public static var glyphSparkles: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphSparkles", table: "Interface", fallback: "星光")
+        }
+        /// 剑
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphSword`.
+        public static var glyphSword: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphSword", table: "Interface", fallback: "剑")
+        }
+        /// 帐篷
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphTent`.
+        public static var glyphTent: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphTent", table: "Interface", fallback: "帐篷")
+        }
+        /// TNT
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphTnt`.
+        public static var glyphTnt: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphTnt", table: "Interface", fallback: "TNT")
+        }
+        /// 树
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphTree`.
+        public static var glyphTree: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphTree", table: "Interface", fallback: "树")
+        }
+        /// 奖杯
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphTrophy`.
+        public static var glyphTrophy: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphTrophy", table: "Interface", fallback: "奖杯")
+        }
+        /// 魔法
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphWand`.
+        public static var glyphWand: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphWand", table: "Interface", fallback: "魔法")
+        }
+        /// 工具
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.glyphWrench`.
+        public static var glyphWrench: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.glyphWrench", table: "Interface", fallback: "工具")
+        }
+        /// 物品
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.items`.
+        public static var items: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.items", table: "Interface", fallback: "物品")
+        }
+        /// 加载器
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.loaders`.
+        public static var loaders: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.loaders", table: "Interface", fallback: "加载器")
+        }
+        /// 无法获取整合包图标，请检查网络后重试。
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.modpackIconUnavailable`.
+        public static var modpackIconUnavailable: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.modpackIconUnavailable", table: "Interface", fallback: "无法获取整合包图标，请检查网络后重试。")
+        }
+        /// 符号
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.symbols`.
+        public static var symbols: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.symbols", table: "Interface", fallback: "符号")
+        }
+        /// 蓝色
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintBlue`.
+        public static var tintBlue: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintBlue", table: "Interface", fallback: "蓝色")
+        }
+        /// 石墨色
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintGraphite`.
+        public static var tintGraphite: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintGraphite", table: "Interface", fallback: "石墨色")
+        }
+        /// 绿色
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintGreen`.
+        public static var tintGreen: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintGreen", table: "Interface", fallback: "绿色")
+        }
+        /// 靛蓝
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintIndigo`.
+        public static var tintIndigo: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintIndigo", table: "Interface", fallback: "靛蓝")
+        }
+        /// 橙色
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintOrange`.
+        public static var tintOrange: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintOrange", table: "Interface", fallback: "橙色")
+        }
+        /// 粉色
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintPink`.
+        public static var tintPink: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintPink", table: "Interface", fallback: "粉色")
+        }
+        /// 紫色
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintPurple`.
+        public static var tintPurple: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintPurple", table: "Interface", fallback: "紫色")
+        }
+        /// 红色
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintRed`.
+        public static var tintRed: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintRed", table: "Interface", fallback: "红色")
+        }
+        /// 沙色
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintSand`.
+        public static var tintSand: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintSand", table: "Interface", fallback: "沙色")
+        }
+        /// 石板灰
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintSlate`.
+        public static var tintSlate: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintSlate", table: "Interface", fallback: "石板灰")
+        }
+        /// 青色
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.tintTeal`.
+        public static var tintTeal: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.tintTeal", table: "Interface", fallback: "青色")
+        }
+        /// 使用整合包图标
+        ///
+        /// Resource: `Interface.AppInstanceIconPicker.useModpackIcon`.
+        public static var useModpackIcon: LocalizedMessage {
+            .init(key: "AppInstanceIconPicker.useModpackIcon", table: "Interface", fallback: "使用整合包图标")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appInstanceIconPicker.color": .init("颜色", []),
-            "Interface:appInstanceIconPicker.loaders": .init("加载器", []),
-            "Interface:appInstanceIconPicker.items": .init("物品", []),
-            "Interface:appInstanceIconPicker.symbols": .init("符号", []),
-            "Interface:appInstanceIconPicker.useModpackIcon": .init("使用整合包图标", []),
-            "Interface:appInstanceIconPicker.modpackIconUnavailable": .init("无法获取整合包图标，请检查网络后重试。", []),
-            "Interface:appInstanceIconPicker.tintBlue": .init("蓝色", []),
-            "Interface:appInstanceIconPicker.tintIndigo": .init("靛蓝", []),
-            "Interface:appInstanceIconPicker.tintPurple": .init("紫色", []),
-            "Interface:appInstanceIconPicker.tintPink": .init("粉色", []),
-            "Interface:appInstanceIconPicker.tintRed": .init("红色", []),
-            "Interface:appInstanceIconPicker.tintOrange": .init("橙色", []),
-            "Interface:appInstanceIconPicker.tintSand": .init("沙色", []),
-            "Interface:appInstanceIconPicker.tintGreen": .init("绿色", []),
-            "Interface:appInstanceIconPicker.tintTeal": .init("青色", []),
-            "Interface:appInstanceIconPicker.tintSlate": .init("石板灰", []),
-            "Interface:appInstanceIconPicker.tintGraphite": .init("石墨色", []),
-            "Interface:appInstanceIconPicker.glyphPickaxe": .init("镐", []),
-            "Interface:appInstanceIconPicker.glyphSword": .init("剑", []),
-            "Interface:appInstanceIconPicker.glyphHeart": .init("生命", []),
-            "Interface:appInstanceIconPicker.glyphGem": .init("宝石", []),
-            "Interface:appInstanceIconPicker.glyphPotion": .init("药水", []),
-            "Interface:appInstanceIconPicker.blocks": .init("方块", []),
-            "Interface:appInstanceIconPicker.glyphGrassBlock": .init("草方块", []),
-            "Interface:appInstanceIconPicker.glyphDirt": .init("泥土", []),
-            "Interface:appInstanceIconPicker.glyphCobblestone": .init("圆石", []),
-            "Interface:appInstanceIconPicker.glyphOakLog": .init("橡木原木", []),
-            "Interface:appInstanceIconPicker.glyphOakPlanks": .init("橡木木板", []),
-            "Interface:appInstanceIconPicker.glyphCraftingTable": .init("工作台", []),
-            "Interface:appInstanceIconPicker.glyphFurnace": .init("熔炉", []),
-            "Interface:appInstanceIconPicker.glyphBookshelf": .init("书架", []),
-            "Interface:appInstanceIconPicker.glyphTnt": .init("TNT", []),
-            "Interface:appInstanceIconPicker.glyphDiamondOre": .init("钻石矿石", []),
-            "Interface:appInstanceIconPicker.glyphBricks": .init("砖块", []),
-            "Interface:appInstanceIconPicker.glyphObsidian": .init("黑曜石", []),
-            "Interface:appInstanceIconPicker.glyphNetherrack": .init("下界岩", []),
-            "Interface:appInstanceIconPicker.glyphGlowstone": .init("荧石", []),
-            "Interface:appInstanceIconPicker.glyphJackOLantern": .init("南瓜灯", []),
-            "Interface:appInstanceIconPicker.glyphCommandBlock": .init("命令方块", []),
-            "Interface:appInstanceIconPicker.glyphHouse": .init("房屋", []),
-            "Interface:appInstanceIconPicker.glyphColumns": .init("建筑", []),
-            "Interface:appInstanceIconPicker.glyphMountain": .init("山峰", []),
-            "Interface:appInstanceIconPicker.glyphTree": .init("树", []),
-            "Interface:appInstanceIconPicker.glyphLeaf": .init("树叶", []),
-            "Interface:appInstanceIconPicker.glyphFlame": .init("火焰", []),
-            "Interface:appInstanceIconPicker.glyphDrop": .init("水滴", []),
-            "Interface:appInstanceIconPicker.glyphSnowflake": .init("雪花", []),
-            "Interface:appInstanceIconPicker.glyphMoon": .init("夜空", []),
-            "Interface:appInstanceIconPicker.glyphBolt": .init("闪电", []),
-            "Interface:appInstanceIconPicker.glyphSparkles": .init("星光", []),
-            "Interface:appInstanceIconPicker.glyphWand": .init("魔法", []),
-            "Interface:appInstanceIconPicker.glyphShield": .init("盾牌", []),
-            "Interface:appInstanceIconPicker.glyphCrown": .init("王冠", []),
-            "Interface:appInstanceIconPicker.glyphMap": .init("地图", []),
-            "Interface:appInstanceIconPicker.glyphController": .init("手柄", []),
-            "Interface:appInstanceIconPicker.glyphWrench": .init("工具", []),
-            "Interface:appInstanceIconPicker.glyphFlask": .init("烧瓶", []),
-            "Interface:appInstanceIconPicker.glyphPaw": .init("爪印", []),
-            "Interface:appInstanceIconPicker.glyphFish": .init("鱼", []),
-            "Interface:appInstanceIconPicker.glyphTent": .init("帐篷", []),
-            "Interface:appInstanceIconPicker.glyphTrophy": .init("奖杯", []),
-            "Interface:appInstanceIconPicker.glyphPalette": .init("调色板", []),
+            "Interface:AppInstanceIconPicker.blocks": .init("方块", []),
+            "Interface:AppInstanceIconPicker.color": .init("颜色", []),
+            "Interface:AppInstanceIconPicker.glyphBolt": .init("闪电", []),
+            "Interface:AppInstanceIconPicker.glyphBookshelf": .init("书架", []),
+            "Interface:AppInstanceIconPicker.glyphBricks": .init("砖块", []),
+            "Interface:AppInstanceIconPicker.glyphCobblestone": .init("圆石", []),
+            "Interface:AppInstanceIconPicker.glyphColumns": .init("建筑", []),
+            "Interface:AppInstanceIconPicker.glyphCommandBlock": .init("命令方块", []),
+            "Interface:AppInstanceIconPicker.glyphController": .init("手柄", []),
+            "Interface:AppInstanceIconPicker.glyphCraftingTable": .init("工作台", []),
+            "Interface:AppInstanceIconPicker.glyphCrown": .init("王冠", []),
+            "Interface:AppInstanceIconPicker.glyphDiamondOre": .init("钻石矿石", []),
+            "Interface:AppInstanceIconPicker.glyphDirt": .init("泥土", []),
+            "Interface:AppInstanceIconPicker.glyphDrop": .init("水滴", []),
+            "Interface:AppInstanceIconPicker.glyphFish": .init("鱼", []),
+            "Interface:AppInstanceIconPicker.glyphFlame": .init("火焰", []),
+            "Interface:AppInstanceIconPicker.glyphFlask": .init("烧瓶", []),
+            "Interface:AppInstanceIconPicker.glyphFurnace": .init("熔炉", []),
+            "Interface:AppInstanceIconPicker.glyphGem": .init("宝石", []),
+            "Interface:AppInstanceIconPicker.glyphGlowstone": .init("荧石", []),
+            "Interface:AppInstanceIconPicker.glyphGrassBlock": .init("草方块", []),
+            "Interface:AppInstanceIconPicker.glyphHeart": .init("生命", []),
+            "Interface:AppInstanceIconPicker.glyphHouse": .init("房屋", []),
+            "Interface:AppInstanceIconPicker.glyphJackOLantern": .init("南瓜灯", []),
+            "Interface:AppInstanceIconPicker.glyphLeaf": .init("树叶", []),
+            "Interface:AppInstanceIconPicker.glyphMap": .init("地图", []),
+            "Interface:AppInstanceIconPicker.glyphMoon": .init("夜空", []),
+            "Interface:AppInstanceIconPicker.glyphMountain": .init("山峰", []),
+            "Interface:AppInstanceIconPicker.glyphNetherrack": .init("下界岩", []),
+            "Interface:AppInstanceIconPicker.glyphOakLog": .init("橡木原木", []),
+            "Interface:AppInstanceIconPicker.glyphOakPlanks": .init("橡木木板", []),
+            "Interface:AppInstanceIconPicker.glyphObsidian": .init("黑曜石", []),
+            "Interface:AppInstanceIconPicker.glyphPalette": .init("调色板", []),
+            "Interface:AppInstanceIconPicker.glyphPaw": .init("爪印", []),
+            "Interface:AppInstanceIconPicker.glyphPickaxe": .init("镐", []),
+            "Interface:AppInstanceIconPicker.glyphPotion": .init("药水", []),
+            "Interface:AppInstanceIconPicker.glyphShield": .init("盾牌", []),
+            "Interface:AppInstanceIconPicker.glyphSnowflake": .init("雪花", []),
+            "Interface:AppInstanceIconPicker.glyphSparkles": .init("星光", []),
+            "Interface:AppInstanceIconPicker.glyphSword": .init("剑", []),
+            "Interface:AppInstanceIconPicker.glyphTent": .init("帐篷", []),
+            "Interface:AppInstanceIconPicker.glyphTnt": .init("TNT", []),
+            "Interface:AppInstanceIconPicker.glyphTree": .init("树", []),
+            "Interface:AppInstanceIconPicker.glyphTrophy": .init("奖杯", []),
+            "Interface:AppInstanceIconPicker.glyphWand": .init("魔法", []),
+            "Interface:AppInstanceIconPicker.glyphWrench": .init("工具", []),
+            "Interface:AppInstanceIconPicker.items": .init("物品", []),
+            "Interface:AppInstanceIconPicker.loaders": .init("加载器", []),
+            "Interface:AppInstanceIconPicker.modpackIconUnavailable": .init("无法获取整合包图标，请检查网络后重试。", []),
+            "Interface:AppInstanceIconPicker.symbols": .init("符号", []),
+            "Interface:AppInstanceIconPicker.tintBlue": .init("蓝色", []),
+            "Interface:AppInstanceIconPicker.tintGraphite": .init("石墨色", []),
+            "Interface:AppInstanceIconPicker.tintGreen": .init("绿色", []),
+            "Interface:AppInstanceIconPicker.tintIndigo": .init("靛蓝", []),
+            "Interface:AppInstanceIconPicker.tintOrange": .init("橙色", []),
+            "Interface:AppInstanceIconPicker.tintPink": .init("粉色", []),
+            "Interface:AppInstanceIconPicker.tintPurple": .init("紫色", []),
+            "Interface:AppInstanceIconPicker.tintRed": .init("红色", []),
+            "Interface:AppInstanceIconPicker.tintSand": .init("沙色", []),
+            "Interface:AppInstanceIconPicker.tintSlate": .init("石板灰", []),
+            "Interface:AppInstanceIconPicker.tintTeal": .init("青色", []),
+            "Interface:AppInstanceIconPicker.useModpackIcon": .init("使用整合包图标", []),
         ]
     }
 }

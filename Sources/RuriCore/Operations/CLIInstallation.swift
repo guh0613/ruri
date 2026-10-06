@@ -34,7 +34,7 @@ public struct CLIInstallation: Sendable {
     private var lockFile: URL { binDirectory.appendingPathComponent(".ruri-cli-install.lock") }
     public init(executable: URL? = RuriInstallation.cliExecutable, binDirectory: URL? = nil,
                 homeDirectory: URL = FileManager.default.homeDirectoryForCurrentUser) throws {
-        guard let executable else { throw OperationFailure("CLI_UNAVAILABLE", Messages.CLIInterface.t53102783ab6d.localized) }
+        guard let executable else { throw OperationFailure("CLI_UNAVAILABLE", Messages.CLIInterface.bundledCliNotFound.localized) }
         self.executable = executable.resolvingSymlinksInPath()
         self.binDirectory = (binDirectory ?? Self.defaultBinDirectory).standardizedFileURL
         self.homeDirectory = homeDirectory
@@ -67,7 +67,7 @@ public struct CLIInstallation: Sendable {
                  "onPath": .bool((environment["PATH"] ?? "").split(separator: ":").contains { URL(fileURLWithPath: String($0)).standardizedFileURL == binDirectory })])
     }
     private func validateOwnership() throws {
-        if exists && !owned { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.t93432f8e8264.localized, details: .object(["path": .string(link.path)])) }
+        if exists && !owned { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.cliLinkNotOwnedByRuri.localized, details: .object(["path": .string(link.path)])) }
     }
     private func requireWriteAccess() throws {
         guard !needsAuthorization else {
@@ -75,7 +75,7 @@ public struct CLIInstallation: Sendable {
         }
     }
     public func install(dryRun: Bool = false) throws -> OperationValue {
-        guard FileManager.default.isExecutableFile(atPath: executable.path) else { throw OperationFailure("CLI_UNAVAILABLE", Messages.CLIInterface.tcef88e8371f1.localized) }
+        guard FileManager.default.isExecutableFile(atPath: executable.path) else { throw OperationFailure("CLI_UNAVAILABLE", Messages.CLIInterface.cliExecutableNotFound.localized) }
         try validateOwnership()
         let needsLink = destination != executable.path, oldLink = legacy
         if dryRun { return .object(["dryRun": .bool(true), "changed": .bool(needsLink || oldLink != nil), "status": status()]) }
@@ -91,7 +91,7 @@ public struct CLIInstallation: Sendable {
                 let temporary = binDirectory.appendingPathComponent(".ruri-link-\(UUID())")
                 defer { try? FileManager.default.removeItem(at: temporary) }
                 try FileManager.default.createSymbolicLink(atPath: temporary.path, withDestinationPath: executable.path)
-                guard rename(temporary.path, link.path) == 0 else { throw OperationFailure("IO_ERROR", Messages.CLIInterface.t301c72c06b6d.localized) }
+                guard rename(temporary.path, link.path) == 0 else { throw OperationFailure("IO_ERROR", Messages.CLIInterface.cliLinkInstallFailed.localized) }
                 try JSONEncoder().encode(executable.path).write(to: receipt, options: .atomic)
                 changed = true
             }
@@ -107,7 +107,7 @@ public struct CLIInstallation: Sendable {
             try requireWriteAccess()
             let lease = try OperationLease.acquire(directory: binDirectory, name: lockFile.lastPathComponent)
             defer { withExtendedLifetime(lease) {} }
-            guard owned else { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.te99b33ffd7c8.localized) }
+            guard owned else { throw OperationFailure("PATH_CONFLICT", Messages.CLIInterface.cliLinkChangedDuringUninstall.localized) }
             try FileManager.default.removeItem(at: link)
             if FileManager.default.fileExists(atPath: receipt.path) { try FileManager.default.removeItem(at: receipt) }
         }

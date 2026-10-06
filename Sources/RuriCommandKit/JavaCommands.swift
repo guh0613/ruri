@@ -43,10 +43,10 @@ extension CLIApplication {
         case "install", "repair":
             var remote = action == "repair" ? JavaRuntimeStore.descriptor(target, paths: paths) : nil
             if remote == nil { remote = try await installer.available().first { $0.id == target } }
-            guard let remote else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.t33604425d94f.localized, nextActions: [.init(["java", "available", "--json"])]) }
+            guard let remote else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.javaCatalogEntryNotFound.localized, nextActions: [.init(["java", "available", "--json"])]) }
             if request.dryRun { return .object(["dryRun": .bool(true), "runtime": remoteJavaValue(remote)]) }
             return javaValue(try await installer.install(remote, downloader: downloader, repairing: action == "repair", progress: { output.progress($0) }))
-        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.tab6287c24a41.localized)
+        default: throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.unknownJavaAction.localized)
         }
     }
     static func javaValue(_ java: JavaRuntime) -> Value {

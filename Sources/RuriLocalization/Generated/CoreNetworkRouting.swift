@@ -5,26 +5,26 @@ extension Messages {
     public enum CoreNetworkRouting {
         /// 自动切换
         ///
-        /// Resource: `Core.coreNetworkRouting.titleText1`.
+        /// Resource: `Core.CoreNetworkRouting.automaticRouting`.
         public static var automaticRouting: LocalizedMessage {
-            .init(key: "coreNetworkRouting.titleText1", table: "Core", fallback: "自动切换")
-        }
-        /// 官方源
-        ///
-        /// Resource: `Core.coreNetworkRouting.titleText2`.
-        public static var officialSource: LocalizedMessage {
-            .init(key: "coreNetworkRouting.titleText2", table: "Core", fallback: "官方源")
+            .init(key: "CoreNetworkRouting.automaticRouting", table: "Core", fallback: "自动切换")
         }
         /// BMCLAPI 优先
         ///
-        /// Resource: `Core.coreNetworkRouting.titleText3`.
+        /// Resource: `Core.CoreNetworkRouting.bmclapiPreferred`.
         public static var bmclapiPreferred: LocalizedMessage {
-            .init(key: "coreNetworkRouting.titleText3", table: "Core", fallback: "BMCLAPI 优先")
+            .init(key: "CoreNetworkRouting.bmclapiPreferred", table: "Core", fallback: "BMCLAPI 优先")
+        }
+        /// 官方源
+        ///
+        /// Resource: `Core.CoreNetworkRouting.officialSource`.
+        public static var officialSource: LocalizedMessage {
+            .init(key: "CoreNetworkRouting.officialSource", table: "Core", fallback: "官方源")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreNetworkRouting.titleText1": .init("自动切换", []),
-            "Core:coreNetworkRouting.titleText2": .init("官方源", []),
-            "Core:coreNetworkRouting.titleText3": .init("BMCLAPI 优先", []),
+            "Core:CoreNetworkRouting.automaticRouting": .init("自动切换", []),
+            "Core:CoreNetworkRouting.bmclapiPreferred": .init("BMCLAPI 优先", []),
+            "Core:CoreNetworkRouting.officialSource": .init("官方源", []),
         ]
     }
 }

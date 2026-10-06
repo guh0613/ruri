@@ -3,35 +3,35 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceIconImage {
-        /// 请选择不超过 20 MB 的图片文件。
-        ///
-        /// Resource: `Errors.coreInstanceIconImage.sizeText1`.
-        public static var imageTooLarge: LocalizedMessage {
-            .init(key: "coreInstanceIconImage.sizeText1", table: "Errors", fallback: "请选择不超过 20 MB 的图片文件。")
-        }
-        /// 无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。
-        ///
-        /// Resource: `Errors.coreInstanceIconImage.imageText1`.
-        public static var unsupportedImageFormat: LocalizedMessage {
-            .init(key: "coreInstanceIconImage.imageText1", table: "Errors", fallback: "无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。")
-        }
         /// 无法保存实例图标。
         ///
-        /// Resource: `Errors.coreInstanceIconImage.destinationText1`.
+        /// Resource: `Errors.CoreInstanceIconImage.iconSaveFailed`.
         public static var iconSaveFailed: LocalizedMessage {
-            .init(key: "coreInstanceIconImage.destinationText1", table: "Errors", fallback: "无法保存实例图标。")
+            .init(key: "CoreInstanceIconImage.iconSaveFailed", table: "Errors", fallback: "无法保存实例图标。")
+        }
+        /// 请选择不超过 20 MB 的图片文件。
+        ///
+        /// Resource: `Errors.CoreInstanceIconImage.imageTooLarge`.
+        public static var imageTooLarge: LocalizedMessage {
+            .init(key: "CoreInstanceIconImage.imageTooLarge", table: "Errors", fallback: "请选择不超过 20 MB 的图片文件。")
         }
         /// 实例图标无效，请重新选择图片。
         ///
-        /// Resource: `Errors.coreInstanceIconImage.heightText1`.
+        /// Resource: `Errors.CoreInstanceIconImage.invalidIconImage`.
         public static var invalidIconImage: LocalizedMessage {
-            .init(key: "coreInstanceIconImage.heightText1", table: "Errors", fallback: "实例图标无效，请重新选择图片。")
+            .init(key: "CoreInstanceIconImage.invalidIconImage", table: "Errors", fallback: "实例图标无效，请重新选择图片。")
+        }
+        /// 无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。
+        ///
+        /// Resource: `Errors.CoreInstanceIconImage.unsupportedImageFormat`.
+        public static var unsupportedImageFormat: LocalizedMessage {
+            .init(key: "CoreInstanceIconImage.unsupportedImageFormat", table: "Errors", fallback: "无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstanceIconImage.sizeText1": .init("请选择不超过 20 MB 的图片文件。", []),
-            "Errors:coreInstanceIconImage.imageText1": .init("无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。", []),
-            "Errors:coreInstanceIconImage.destinationText1": .init("无法保存实例图标。", []),
-            "Errors:coreInstanceIconImage.heightText1": .init("实例图标无效，请重新选择图片。", []),
+            "Errors:CoreInstanceIconImage.iconSaveFailed": .init("无法保存实例图标。", []),
+            "Errors:CoreInstanceIconImage.imageTooLarge": .init("请选择不超过 20 MB 的图片文件。", []),
+            "Errors:CoreInstanceIconImage.invalidIconImage": .init("实例图标无效，请重新选择图片。", []),
+            "Errors:CoreInstanceIconImage.unsupportedImageFormat": .init("无法读取这张图片，请选择 PNG、JPEG 或其他受支持的图片。", []),
         ]
     }
 }

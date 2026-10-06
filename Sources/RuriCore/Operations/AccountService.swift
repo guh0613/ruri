@@ -54,7 +54,7 @@ public final class AuthenticatedAccount: Sendable {
     }
     func lock(_ id: UUID) throws -> OperationLease { try OperationLease.acquire(directory: lockDirectory, name: id.uuidString + ".lock") }
     public func account(_ id: UUID) throws -> Account {
-        guard let account = try StateStore.load(paths).accounts.first(where: { $0.id == id }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.te9b1e0403a1e.localized) }; return account
+        guard let account = try StateStore.load(paths).accounts.first(where: { $0.id == id }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.accountNotFound.localized) }; return account
     }
     @discardableResult public func addOffline(_ username: String, activate: Bool = true) throws -> Account {
         let created = try Account(username: username.trimmingCharacters(in: .whitespacesAndNewlines))
@@ -68,7 +68,7 @@ public final class AuthenticatedAccount: Sendable {
     }
     @discardableResult public func select(_ id: UUID) throws -> PersistentState {
         try StateStore.updateIfChanged(paths) { state in
-            guard state.accounts.contains(where: { $0.id == id }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.te9b1e0403a1e.localized) }
+            guard state.accounts.contains(where: { $0.id == id }) else { throw OperationFailure("NOT_FOUND", Messages.CLIInterface.accountNotFound.localized) }
             state.activeAccountID = id
         }
     }
@@ -83,17 +83,17 @@ public final class AuthenticatedAccount: Sendable {
     }
     private func commit(_ account: Account, microsoft: AccountCredentials?, external: ExternalAccountCredentials?, activate: Bool, requireExisting: Bool) throws {
         let existing = try StateStore.load(paths).accounts.first { $0.id == account.id }
-        guard !requireExisting || existing?.hasSameIdentity(as: account) == true else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.tb0b930baf0cc.localized) }
-        guard existing == nil || existing!.hasSameIdentity(as: account) else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.t9b5e04245098.localized) }
+        guard !requireExisting || existing?.hasSameIdentity(as: account) == true else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.accountRemovedOrReplaced.localized) }
+        guard existing == nil || existing!.hasSameIdentity(as: account) else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.accountIdentityChanged.localized) }
         if let microsoft { try vault.saveMicrosoft(microsoft, account.id) }
         if let external { try vault.saveExternal(external, account.id) }
         do {
             try StateStore.updateIfChanged(paths) { state in
                 if let index = state.accounts.firstIndex(where: { $0.id == account.id }) {
-                    guard state.accounts[index].hasSameIdentity(as: account) else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.t9b5e04245098.localized) }
+                    guard state.accounts[index].hasSameIdentity(as: account) else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.accountIdentityChanged.localized) }
                     state.accounts[index] = account
                 } else {
-                    guard !requireExisting else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.td9ca8e4b44c6.localized) }
+                    guard !requireExisting else { throw OperationFailure("ACCOUNT_CHANGED", Messages.CLIInterface.accountRemoved.localized) }
                     state.accounts.append(account)
                 }
                 if activate { state.activeAccountID = account.id }
@@ -146,7 +146,7 @@ public final class AuthenticatedAccount: Sendable {
             if removed?.kind != .offline { try vault.remove(id, kind: .microsoft); try vault.remove(id, kind: .external) }
             if let removed { try AccountAppearanceCache(paths: paths).remove(for: removed) }
             try SkinLibrary(paths: paths).setPreview(nil, for: id); try SkinLibrary(paths: paths).setCape(nil, for: id)
-        } catch { throw OperationFailure("CREDENTIAL_CLEANUP_REQUIRED", Messages.CLIInterface.tf4c5f25a3baf.localized, retryable: true, nextActions: [.init(["account", "remove", id.uuidString, "--yes"])]) }
+        } catch { throw OperationFailure("CREDENTIAL_CLEANUP_REQUIRED", Messages.CLIInterface.accountCleanupFailed.localized, retryable: true, nextActions: [.init(["account", "remove", id.uuidString, "--yes"])]) }
         return saved
     }
     @discardableResult public func logout(_ id: UUID) async throws -> PersistentState {

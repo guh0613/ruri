@@ -3,92 +3,92 @@ import Foundation
 
 extension Messages {
     public enum CoreRepositoryInstanceCopy {
-        /// 副本已创建，部分工作文件尚未清理，可在实例库完成清理。
-        ///
-        /// Resource: `Core.coreRepositoryInstanceCopy.latestText1`.
-        public static var copyCleanupPending: LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.latestText1", table: "Core", fallback: "副本已创建，部分工作文件尚未清理，可在实例库完成清理。")
-        }
         /// 实例复制已取消，原实例及其文件保留。
         ///
-        /// Resource: `Core.coreRepositoryInstanceCopy.reasonText1`.
+        /// Resource: `Core.CoreRepositoryInstanceCopy.copyCancelled`.
         public static var copyCancelled: LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.reasonText1", table: "Core", fallback: "实例复制已取消，原实例及其文件保留。")
+            .init(key: "CoreRepositoryInstanceCopy.copyCancelled", table: "Core", fallback: "实例复制已取消，原实例及其文件保留。")
+        }
+        /// 副本已创建，部分工作文件尚未清理，可在实例库完成清理。
+        ///
+        /// Resource: `Core.CoreRepositoryInstanceCopy.copyCleanupPending`.
+        public static var copyCleanupPending: LocalizedMessage {
+            .init(key: "CoreRepositoryInstanceCopy.copyCleanupPending", table: "Core", fallback: "副本已创建，部分工作文件尚未清理，可在实例库完成清理。")
         }
         /// 实例复制未完成：%1$@
         ///
-        /// Resource: `Core.coreRepositoryInstanceCopy.reasonText2`.
+        /// Resource: `Core.CoreRepositoryInstanceCopy.copyIncomplete`.
         public static func copyIncomplete(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.reasonText2", table: "Core", fallback: "实例复制未完成：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreRepositoryInstanceCopy.copyIncomplete", table: "Core", fallback: "实例复制未完成：%1$@", arguments: [.text(value0)])
         }
         /// %1$@
         /// 工作文件需要恢复，请在目标实例库处理未完成的复制。%2$@
         ///
-        /// Resource: `Core.coreRepositoryInstanceCopy.recoveryFailure`.
+        /// Resource: `Core.CoreRepositoryInstanceCopy.recoveryFailure`.
         public static func recoveryFailure(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.recoveryFailure", table: "Core", fallback: "%1$@\n工作文件需要恢复，请在目标实例库处理未完成的复制。%2$@", arguments: [.text(value0), .text(value1)])
-        }
-        /// 请先安装源实例，再将完整副本保存到 Minecraft 文件夹。
-        ///
-        /// Resource: `Errors.coreRepositoryInstanceCopy.repositoryPreviewText1`.
-        public static var sourceInstallationRequired: LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.repositoryPreviewText1", table: "Errors", fallback: "请先安装源实例，再将完整副本保存到 Minecraft 文件夹。")
-        }
-        /// 源文件在预览期间改变，请重新预览。
-        ///
-        /// Resource: `Errors.coreRepositoryInstanceCopy.manifestText1`.
-        public static var sourceManifestChangedDuringPreview: LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.manifestText1", table: "Errors", fallback: "源文件在预览期间改变，请重新预览。")
-        }
-        /// 复制预览缺少安装文件。
-        ///
-        /// Resource: `Errors.coreRepositoryInstanceCopy.installationText1`.
-        public static var installationFilesMissing: LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.installationText1", table: "Errors", fallback: "复制预览缺少安装文件。")
-        }
-        /// 源实例设置或目标文件夹在预览后改变，请重新预览。
-        ///
-        /// Resource: `Errors.coreRepositoryInstanceCopy.actualText1`.
-        public static var sourceOrTargetChanged: LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.actualText1", table: "Errors", fallback: "源实例设置或目标文件夹在预览后改变，请重新预览。")
-        }
-        /// 源实例文件在预览后改变，请刷新复制预览。
-        ///
-        /// Resource: `Errors.coreRepositoryInstanceCopy.entriesText1`.
-        public static var sourceFilesChanged: LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.entriesText1", table: "Errors", fallback: "源实例文件在预览后改变，请刷新复制预览。")
-        }
-        /// 目标版本位于源游戏内容里面，请选择其他 Minecraft 文件夹。
-        ///
-        /// Resource: `Errors.coreRepositoryInstanceCopy.sourcePathText1`.
-        public static var targetInsideSourceContent: LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.sourcePathText1", table: "Errors", fallback: "目标版本位于源游戏内容里面，请选择其他 Minecraft 文件夹。")
+            .init(key: "CoreRepositoryInstanceCopy.recoveryFailure", table: "Core", fallback: "%1$@\n工作文件需要恢复，请在目标实例库处理未完成的复制。%2$@", arguments: [.text(value0), .text(value1)])
         }
         /// 游戏内容与副本的安装文件重名：%1$@。请更换副本名称或检查源目录。
         ///
-        /// Resource: `Errors.coreRepositoryInstanceCopy.conflictText1`.
+        /// Resource: `Errors.CoreRepositoryInstanceCopy.installationFilenameConflict`.
         public static func installationFilenameConflict(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.conflictText1", table: "Errors", fallback: "游戏内容与副本的安装文件重名：%1$@。请更换副本名称或检查源目录。", arguments: [.text(value0)])
+            .init(key: "CoreRepositoryInstanceCopy.installationFilenameConflict", table: "Errors", fallback: "游戏内容与副本的安装文件重名：%1$@。请更换副本名称或检查源目录。", arguments: [.text(value0)])
+        }
+        /// 复制预览缺少安装文件。
+        ///
+        /// Resource: `Errors.CoreRepositoryInstanceCopy.installationFilesMissing`.
+        public static var installationFilesMissing: LocalizedMessage {
+            .init(key: "CoreRepositoryInstanceCopy.installationFilesMissing", table: "Errors", fallback: "复制预览缺少安装文件。")
+        }
+        /// 源实例文件在预览后改变，请刷新复制预览。
+        ///
+        /// Resource: `Errors.CoreRepositoryInstanceCopy.sourceFilesChanged`.
+        public static var sourceFilesChanged: LocalizedMessage {
+            .init(key: "CoreRepositoryInstanceCopy.sourceFilesChanged", table: "Errors", fallback: "源实例文件在预览后改变，请刷新复制预览。")
+        }
+        /// 请先安装源实例，再将完整副本保存到 Minecraft 文件夹。
+        ///
+        /// Resource: `Errors.CoreRepositoryInstanceCopy.sourceInstallationRequired`.
+        public static var sourceInstallationRequired: LocalizedMessage {
+            .init(key: "CoreRepositoryInstanceCopy.sourceInstallationRequired", table: "Errors", fallback: "请先安装源实例，再将完整副本保存到 Minecraft 文件夹。")
+        }
+        /// 源文件在预览期间改变，请重新预览。
+        ///
+        /// Resource: `Errors.CoreRepositoryInstanceCopy.sourceManifestChangedDuringPreview`.
+        public static var sourceManifestChangedDuringPreview: LocalizedMessage {
+            .init(key: "CoreRepositoryInstanceCopy.sourceManifestChangedDuringPreview", table: "Errors", fallback: "源文件在预览期间改变，请重新预览。")
+        }
+        /// 源实例设置或目标文件夹在预览后改变，请重新预览。
+        ///
+        /// Resource: `Errors.CoreRepositoryInstanceCopy.sourceOrTargetChanged`.
+        public static var sourceOrTargetChanged: LocalizedMessage {
+            .init(key: "CoreRepositoryInstanceCopy.sourceOrTargetChanged", table: "Errors", fallback: "源实例设置或目标文件夹在预览后改变，请重新预览。")
+        }
+        /// 目标版本位于源游戏内容里面，请选择其他 Minecraft 文件夹。
+        ///
+        /// Resource: `Errors.CoreRepositoryInstanceCopy.targetInsideSourceContent`.
+        public static var targetInsideSourceContent: LocalizedMessage {
+            .init(key: "CoreRepositoryInstanceCopy.targetInsideSourceContent", table: "Errors", fallback: "目标版本位于源游戏内容里面，请选择其他 Minecraft 文件夹。")
         }
         /// 实例元数据包含不支持的文件：%1$@
         ///
-        /// Resource: `Errors.coreRepositoryInstanceCopy.infoText1`.
+        /// Resource: `Errors.CoreRepositoryInstanceCopy.unsupportedInstanceFiles`.
         public static func unsupportedInstanceFiles(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreRepositoryInstanceCopy.infoText1", table: "Errors", fallback: "实例元数据包含不支持的文件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreRepositoryInstanceCopy.unsupportedInstanceFiles", table: "Errors", fallback: "实例元数据包含不支持的文件：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreRepositoryInstanceCopy.latestText1": .init("副本已创建，部分工作文件尚未清理，可在实例库完成清理。", []),
-            "Core:coreRepositoryInstanceCopy.reasonText1": .init("实例复制已取消，原实例及其文件保留。", []),
-            "Core:coreRepositoryInstanceCopy.reasonText2": .init("实例复制未完成：%1$@", [.text]),
-            "Core:coreRepositoryInstanceCopy.recoveryFailure": .init("%1$@\n工作文件需要恢复，请在目标实例库处理未完成的复制。%2$@", [.text, .text]),
-            "Errors:coreRepositoryInstanceCopy.repositoryPreviewText1": .init("请先安装源实例，再将完整副本保存到 Minecraft 文件夹。", []),
-            "Errors:coreRepositoryInstanceCopy.manifestText1": .init("源文件在预览期间改变，请重新预览。", []),
-            "Errors:coreRepositoryInstanceCopy.installationText1": .init("复制预览缺少安装文件。", []),
-            "Errors:coreRepositoryInstanceCopy.actualText1": .init("源实例设置或目标文件夹在预览后改变，请重新预览。", []),
-            "Errors:coreRepositoryInstanceCopy.entriesText1": .init("源实例文件在预览后改变，请刷新复制预览。", []),
-            "Errors:coreRepositoryInstanceCopy.sourcePathText1": .init("目标版本位于源游戏内容里面，请选择其他 Minecraft 文件夹。", []),
-            "Errors:coreRepositoryInstanceCopy.conflictText1": .init("游戏内容与副本的安装文件重名：%1$@。请更换副本名称或检查源目录。", [.text]),
-            "Errors:coreRepositoryInstanceCopy.infoText1": .init("实例元数据包含不支持的文件：%1$@", [.text]),
+            "Core:CoreRepositoryInstanceCopy.copyCancelled": .init("实例复制已取消，原实例及其文件保留。", []),
+            "Core:CoreRepositoryInstanceCopy.copyCleanupPending": .init("副本已创建，部分工作文件尚未清理，可在实例库完成清理。", []),
+            "Core:CoreRepositoryInstanceCopy.copyIncomplete": .init("实例复制未完成：%1$@", [.text]),
+            "Core:CoreRepositoryInstanceCopy.recoveryFailure": .init("%1$@\n工作文件需要恢复，请在目标实例库处理未完成的复制。%2$@", [.text, .text]),
+            "Errors:CoreRepositoryInstanceCopy.installationFilenameConflict": .init("游戏内容与副本的安装文件重名：%1$@。请更换副本名称或检查源目录。", [.text]),
+            "Errors:CoreRepositoryInstanceCopy.installationFilesMissing": .init("复制预览缺少安装文件。", []),
+            "Errors:CoreRepositoryInstanceCopy.sourceFilesChanged": .init("源实例文件在预览后改变，请刷新复制预览。", []),
+            "Errors:CoreRepositoryInstanceCopy.sourceInstallationRequired": .init("请先安装源实例，再将完整副本保存到 Minecraft 文件夹。", []),
+            "Errors:CoreRepositoryInstanceCopy.sourceManifestChangedDuringPreview": .init("源文件在预览期间改变，请重新预览。", []),
+            "Errors:CoreRepositoryInstanceCopy.sourceOrTargetChanged": .init("源实例设置或目标文件夹在预览后改变，请重新预览。", []),
+            "Errors:CoreRepositoryInstanceCopy.targetInsideSourceContent": .init("目标版本位于源游戏内容里面，请选择其他 Minecraft 文件夹。", []),
+            "Errors:CoreRepositoryInstanceCopy.unsupportedInstanceFiles": .init("实例元数据包含不支持的文件：%1$@", [.text]),
         ]
     }
 }

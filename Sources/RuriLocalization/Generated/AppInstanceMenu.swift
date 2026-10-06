@@ -3,112 +3,112 @@ import Foundation
 
 extension Messages {
     public enum AppInstanceMenu {
-        /// 取消固定
-        ///
-        /// Resource: `Interface.appInstanceMenu.bodyText2`.
-        public static var unfavorite: LocalizedMessage {
-            .init(key: "appInstanceMenu.bodyText2", table: "Interface", fallback: "取消固定")
-        }
-        /// 固定到主页
-        ///
-        /// Resource: `Interface.appInstanceMenu.bodyText3`.
-        public static var favorite: LocalizedMessage {
-            .init(key: "appInstanceMenu.bodyText3", table: "Interface", fallback: "固定到主页")
-        }
-        /// 实例设置
-        ///
-        /// Resource: `Interface.appInstanceMenu.valueText1`.
-        public static var instanceSettings: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText1", table: "Interface", fallback: "实例设置")
-        }
-        /// 管理模组与资源包
-        ///
-        /// Resource: `Interface.appInstanceMenu.valueText2`.
-        public static var manageModsAndResourcePacks: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText2", table: "Interface", fallback: "管理模组与资源包")
-        }
-        /// 管理存档与备份
-        ///
-        /// Resource: `Interface.appInstanceMenu.valueText3`.
-        public static var manageSavesAndBackups: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText3", table: "Interface", fallback: "管理存档与备份")
-        }
-        /// 管理原理图
-        ///
-        /// Resource: `Interface.appInstanceMenu.valueText4`.
-        public static var manageSchematics: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText4", table: "Interface", fallback: "管理原理图")
-        }
-        /// 在 Finder 中显示
-        ///
-        /// Resource: `Interface.appInstanceMenu.valueText5`.
-        public static var showInFinder: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText5", table: "Interface", fallback: "在 Finder 中显示")
-        }
-        /// 恢复实例复制…
-        ///
-        /// Resource: `Interface.appInstanceMenu.valueText6`.
-        public static var recoverInstanceCopy: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText6", table: "Interface", fallback: "恢复实例复制…")
-        }
         /// 复制实例…
         ///
-        /// Resource: `Interface.appInstanceMenu.valueText7`.
+        /// Resource: `Interface.AppInstanceMenu.copyInstance`.
         public static var copyInstance: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText7", table: "Interface", fallback: "复制实例…")
+            .init(key: "AppInstanceMenu.copyInstance", table: "Interface", fallback: "复制实例…")
         }
         /// 导出实例…
         ///
-        /// Resource: `Interface.appInstanceMenu.valueText8`.
+        /// Resource: `Interface.AppInstanceMenu.exportInstance`.
         public static var exportInstance: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText8", table: "Interface", fallback: "导出实例…")
+            .init(key: "AppInstanceMenu.exportInstance", table: "Interface", fallback: "导出实例…")
         }
-        /// 恢复实例移动…
+        /// 固定到主页
         ///
-        /// Resource: `Interface.appInstanceMenu.valueText9`.
-        public static var recoverInstanceMove: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText9", table: "Interface", fallback: "恢复实例移动…")
+        /// Resource: `Interface.AppInstanceMenu.favorite`.
+        public static var favorite: LocalizedMessage {
+            .init(key: "AppInstanceMenu.favorite", table: "Interface", fallback: "固定到主页")
         }
-        /// 移动到其他文件夹…
+        /// 实例设置
         ///
-        /// Resource: `Interface.appInstanceMenu.valueText10`.
-        public static var moveToOtherFolder: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText10", table: "Interface", fallback: "移动到其他文件夹…")
+        /// Resource: `Interface.AppInstanceMenu.instanceSettings`.
+        public static var instanceSettings: LocalizedMessage {
+            .init(key: "AppInstanceMenu.instanceSettings", table: "Interface", fallback: "实例设置")
         }
-        /// 修复游戏文件
+        /// 管理模组与资源包
         ///
-        /// Resource: `Interface.appInstanceMenu.valueText11`.
-        public static var repairGameFiles: LocalizedMessage {
-            .init(key: "appInstanceMenu.valueText11", table: "Interface", fallback: "修复游戏文件")
+        /// Resource: `Interface.AppInstanceMenu.manageModsAndResourcePacks`.
+        public static var manageModsAndResourcePacks: LocalizedMessage {
+            .init(key: "AppInstanceMenu.manageModsAndResourcePacks", table: "Interface", fallback: "管理模组与资源包")
         }
-        /// 移到废纸篓
+        /// 管理存档与备份
         ///
-        /// Resource: `Interface.appInstanceMenu.onTrashText1`.
-        public static var moveToTrash: LocalizedMessage {
-            .init(key: "appInstanceMenu.onTrashText1", table: "Interface", fallback: "移到废纸篓")
+        /// Resource: `Interface.AppInstanceMenu.manageSavesAndBackups`.
+        public static var manageSavesAndBackups: LocalizedMessage {
+            .init(key: "AppInstanceMenu.manageSavesAndBackups", table: "Interface", fallback: "管理存档与备份")
+        }
+        /// 管理原理图
+        ///
+        /// Resource: `Interface.AppInstanceMenu.manageSchematics`.
+        public static var manageSchematics: LocalizedMessage {
+            .init(key: "AppInstanceMenu.manageSchematics", table: "Interface", fallback: "管理原理图")
         }
         /// 更多操作
         ///
-        /// Resource: `Interface.appInstanceMenu.onTrashText2`.
+        /// Resource: `Interface.AppInstanceMenu.moreActions`.
         public static var moreActions: LocalizedMessage {
-            .init(key: "appInstanceMenu.onTrashText2", table: "Interface", fallback: "更多操作")
+            .init(key: "AppInstanceMenu.moreActions", table: "Interface", fallback: "更多操作")
+        }
+        /// 移动到其他文件夹…
+        ///
+        /// Resource: `Interface.AppInstanceMenu.moveToOtherFolder`.
+        public static var moveToOtherFolder: LocalizedMessage {
+            .init(key: "AppInstanceMenu.moveToOtherFolder", table: "Interface", fallback: "移动到其他文件夹…")
+        }
+        /// 移到废纸篓
+        ///
+        /// Resource: `Interface.AppInstanceMenu.moveToTrash`.
+        public static var moveToTrash: LocalizedMessage {
+            .init(key: "AppInstanceMenu.moveToTrash", table: "Interface", fallback: "移到废纸篓")
+        }
+        /// 恢复实例复制…
+        ///
+        /// Resource: `Interface.AppInstanceMenu.recoverInstanceCopy`.
+        public static var recoverInstanceCopy: LocalizedMessage {
+            .init(key: "AppInstanceMenu.recoverInstanceCopy", table: "Interface", fallback: "恢复实例复制…")
+        }
+        /// 恢复实例移动…
+        ///
+        /// Resource: `Interface.AppInstanceMenu.recoverInstanceMove`.
+        public static var recoverInstanceMove: LocalizedMessage {
+            .init(key: "AppInstanceMenu.recoverInstanceMove", table: "Interface", fallback: "恢复实例移动…")
+        }
+        /// 修复游戏文件
+        ///
+        /// Resource: `Interface.AppInstanceMenu.repairGameFiles`.
+        public static var repairGameFiles: LocalizedMessage {
+            .init(key: "AppInstanceMenu.repairGameFiles", table: "Interface", fallback: "修复游戏文件")
+        }
+        /// 在 Finder 中显示
+        ///
+        /// Resource: `Interface.AppInstanceMenu.showInFinder`.
+        public static var showInFinder: LocalizedMessage {
+            .init(key: "AppInstanceMenu.showInFinder", table: "Interface", fallback: "在 Finder 中显示")
+        }
+        /// 取消固定
+        ///
+        /// Resource: `Interface.AppInstanceMenu.unfavorite`.
+        public static var unfavorite: LocalizedMessage {
+            .init(key: "AppInstanceMenu.unfavorite", table: "Interface", fallback: "取消固定")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appInstanceMenu.bodyText2": .init("取消固定", []),
-            "Interface:appInstanceMenu.bodyText3": .init("固定到主页", []),
-            "Interface:appInstanceMenu.valueText1": .init("实例设置", []),
-            "Interface:appInstanceMenu.valueText2": .init("管理模组与资源包", []),
-            "Interface:appInstanceMenu.valueText3": .init("管理存档与备份", []),
-            "Interface:appInstanceMenu.valueText4": .init("管理原理图", []),
-            "Interface:appInstanceMenu.valueText5": .init("在 Finder 中显示", []),
-            "Interface:appInstanceMenu.valueText6": .init("恢复实例复制…", []),
-            "Interface:appInstanceMenu.valueText7": .init("复制实例…", []),
-            "Interface:appInstanceMenu.valueText8": .init("导出实例…", []),
-            "Interface:appInstanceMenu.valueText9": .init("恢复实例移动…", []),
-            "Interface:appInstanceMenu.valueText10": .init("移动到其他文件夹…", []),
-            "Interface:appInstanceMenu.valueText11": .init("修复游戏文件", []),
-            "Interface:appInstanceMenu.onTrashText1": .init("移到废纸篓", []),
-            "Interface:appInstanceMenu.onTrashText2": .init("更多操作", []),
+            "Interface:AppInstanceMenu.copyInstance": .init("复制实例…", []),
+            "Interface:AppInstanceMenu.exportInstance": .init("导出实例…", []),
+            "Interface:AppInstanceMenu.favorite": .init("固定到主页", []),
+            "Interface:AppInstanceMenu.instanceSettings": .init("实例设置", []),
+            "Interface:AppInstanceMenu.manageModsAndResourcePacks": .init("管理模组与资源包", []),
+            "Interface:AppInstanceMenu.manageSavesAndBackups": .init("管理存档与备份", []),
+            "Interface:AppInstanceMenu.manageSchematics": .init("管理原理图", []),
+            "Interface:AppInstanceMenu.moreActions": .init("更多操作", []),
+            "Interface:AppInstanceMenu.moveToOtherFolder": .init("移动到其他文件夹…", []),
+            "Interface:AppInstanceMenu.moveToTrash": .init("移到废纸篓", []),
+            "Interface:AppInstanceMenu.recoverInstanceCopy": .init("恢复实例复制…", []),
+            "Interface:AppInstanceMenu.recoverInstanceMove": .init("恢复实例移动…", []),
+            "Interface:AppInstanceMenu.repairGameFiles": .init("修复游戏文件", []),
+            "Interface:AppInstanceMenu.showInFinder": .init("在 Finder 中显示", []),
+            "Interface:AppInstanceMenu.unfavorite": .init("取消固定", []),
         ]
     }
 }

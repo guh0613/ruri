@@ -5,12 +5,12 @@ extension Messages {
     public enum CoreLoaderKind {
         /// 原版
         ///
-        /// Resource: `Core.coreLoaderKind.titleText1`.
+        /// Resource: `Core.CoreLoaderKind.vanilla`.
         public static var vanilla: LocalizedMessage {
-            .init(key: "coreLoaderKind.titleText1", table: "Core", fallback: "原版")
+            .init(key: "CoreLoaderKind.vanilla", table: "Core", fallback: "原版")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreLoaderKind.titleText1": .init("原版", []),
+            "Core:CoreLoaderKind.vanilla": .init("原版", []),
         ]
     }
 }

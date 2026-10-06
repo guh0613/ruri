@@ -3,63 +3,63 @@ import Foundation
 
 extension Messages {
     public enum AppCurseForgeFilePicker {
-        /// 已校验
-        ///
-        /// Resource: `Interface.appCurseForgeFilePicker.bodyText1`.
-        public static var verified: LocalizedMessage {
-            .init(key: "appCurseForgeFilePicker.bodyText1", table: "Interface", fallback: "已校验")
-        }
-        /// 手动下载
-        ///
-        /// Resource: `Interface.appCurseForgeFilePicker.bodyText2`.
-        public static var manualDownload: LocalizedMessage {
-            .init(key: "appCurseForgeFilePicker.bodyText2", table: "Interface", fallback: "手动下载")
-        }
         /// 自动下载
         ///
-        /// Resource: `Interface.appCurseForgeFilePicker.bodyText3`.
+        /// Resource: `Interface.AppCurseForgeFilePicker.automaticDownload`.
         public static var automaticDownload: LocalizedMessage {
-            .init(key: "appCurseForgeFilePicker.bodyText3", table: "Interface", fallback: "自动下载")
-        }
-        /// 打开下载页面
-        ///
-        /// Resource: `Interface.appCurseForgeFilePicker.bodyText4`.
-        public static var openDownloadPage: LocalizedMessage {
-            .init(key: "appCurseForgeFilePicker.bodyText4", table: "Interface", fallback: "打开下载页面")
-        }
-        /// 选择已下载文件…
-        ///
-        /// Resource: `Interface.appCurseForgeFilePicker.bodyText5`.
-        public static var chooseDownloadedFile: LocalizedMessage {
-            .init(key: "appCurseForgeFilePicker.bodyText5", table: "Interface", fallback: "选择已下载文件…")
+            .init(key: "AppCurseForgeFilePicker.automaticDownload", table: "Interface", fallback: "自动下载")
         }
         /// 重新选择…
         ///
-        /// Resource: `Interface.appCurseForgeFilePicker.bodyText6`.
+        /// Resource: `Interface.AppCurseForgeFilePicker.chooseAnotherFile`.
         public static var chooseAnotherFile: LocalizedMessage {
-            .init(key: "appCurseForgeFilePicker.bodyText6", table: "Interface", fallback: "重新选择…")
+            .init(key: "AppCurseForgeFilePicker.chooseAnotherFile", table: "Interface", fallback: "重新选择…")
         }
-        /// 选择 %1$@。Ruri 会核对版本、大小与校验值。
+        /// 选择已下载文件…
         ///
-        /// Resource: `Interface.appCurseForgeFilePicker.panelText1`.
-        public static func selectFile(_ value0: String) -> LocalizedMessage {
-            .init(key: "appCurseForgeFilePicker.panelText1", table: "Interface", fallback: "选择 %1$@。Ruri 会核对版本、大小与校验值。", arguments: [.text(value0)])
+        /// Resource: `Interface.AppCurseForgeFilePicker.chooseDownloadedFile`.
+        public static var chooseDownloadedFile: LocalizedMessage {
+            .init(key: "AppCurseForgeFilePicker.chooseDownloadedFile", table: "Interface", fallback: "选择已下载文件…")
+        }
+        /// 手动下载
+        ///
+        /// Resource: `Interface.AppCurseForgeFilePicker.manualDownload`.
+        public static var manualDownload: LocalizedMessage {
+            .init(key: "AppCurseForgeFilePicker.manualDownload", table: "Interface", fallback: "手动下载")
         }
         /// 部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。
         ///
-        /// Resource: `Interface.appCurseForgeFilePicker.bodyText7`.
+        /// Resource: `Interface.AppCurseForgeFilePicker.manualDownloadNotice`.
         public static var manualDownloadNotice: LocalizedMessage {
-            .init(key: "appCurseForgeFilePicker.bodyText7", table: "Interface", fallback: "部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。")
+            .init(key: "AppCurseForgeFilePicker.manualDownloadNotice", table: "Interface", fallback: "部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。")
+        }
+        /// 打开下载页面
+        ///
+        /// Resource: `Interface.AppCurseForgeFilePicker.openDownloadPage`.
+        public static var openDownloadPage: LocalizedMessage {
+            .init(key: "AppCurseForgeFilePicker.openDownloadPage", table: "Interface", fallback: "打开下载页面")
+        }
+        /// 选择 %1$@。Ruri 会核对版本、大小与校验值。
+        ///
+        /// Resource: `Interface.AppCurseForgeFilePicker.selectFile`.
+        public static func selectFile(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppCurseForgeFilePicker.selectFile", table: "Interface", fallback: "选择 %1$@。Ruri 会核对版本、大小与校验值。", arguments: [.text(value0)])
+        }
+        /// 已校验
+        ///
+        /// Resource: `Interface.AppCurseForgeFilePicker.verified`.
+        public static var verified: LocalizedMessage {
+            .init(key: "AppCurseForgeFilePicker.verified", table: "Interface", fallback: "已校验")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appCurseForgeFilePicker.bodyText1": .init("已校验", []),
-            "Interface:appCurseForgeFilePicker.bodyText2": .init("手动下载", []),
-            "Interface:appCurseForgeFilePicker.bodyText3": .init("自动下载", []),
-            "Interface:appCurseForgeFilePicker.bodyText4": .init("打开下载页面", []),
-            "Interface:appCurseForgeFilePicker.bodyText5": .init("选择已下载文件…", []),
-            "Interface:appCurseForgeFilePicker.bodyText6": .init("重新选择…", []),
-            "Interface:appCurseForgeFilePicker.panelText1": .init("选择 %1$@。Ruri 会核对版本、大小与校验值。", [.text]),
-            "Interface:appCurseForgeFilePicker.bodyText7": .init("部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。", []),
+            "Interface:AppCurseForgeFilePicker.automaticDownload": .init("自动下载", []),
+            "Interface:AppCurseForgeFilePicker.chooseAnotherFile": .init("重新选择…", []),
+            "Interface:AppCurseForgeFilePicker.chooseDownloadedFile": .init("选择已下载文件…", []),
+            "Interface:AppCurseForgeFilePicker.manualDownload": .init("手动下载", []),
+            "Interface:AppCurseForgeFilePicker.manualDownloadNotice": .init("部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。", []),
+            "Interface:AppCurseForgeFilePicker.openDownloadPage": .init("打开下载页面", []),
+            "Interface:AppCurseForgeFilePicker.selectFile": .init("选择 %1$@。Ruri 会核对版本、大小与校验值。", [.text]),
+            "Interface:AppCurseForgeFilePicker.verified": .init("已校验", []),
         ]
     }
 }

@@ -73,6 +73,6 @@ extension ConfigurationService {
         return desired
     }
     private static func editConflict(_ field: String) -> OperationFailure {
-        .init("STATE_CONFLICT", Messages.CLIInterface.te8a7227e2180.localized, retryable: true, details: .object(["field": .string(field)]))
+        .init("STATE_CONFLICT", Messages.CLIInterface.stateChangedSinceRead.localized, retryable: true, details: .object(["field": .string(field)]))
     }
 }

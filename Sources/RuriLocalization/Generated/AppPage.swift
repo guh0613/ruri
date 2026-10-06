@@ -3,49 +3,49 @@ import Foundation
 
 extension Messages {
     public enum AppPage {
-        /// 主页
+        /// 账号
         ///
-        /// Resource: `Interface.appPage.titleText1`.
-        public static var home: LocalizedMessage {
-            .init(key: "appPage.titleText1", table: "Interface", fallback: "主页")
-        }
-        /// 实例库
-        ///
-        /// Resource: `Interface.appPage.titleText2`.
-        public static var library: LocalizedMessage {
-            .init(key: "appPage.titleText2", table: "Interface", fallback: "实例库")
+        /// Resource: `Interface.AppPage.accounts`.
+        public static var accounts: LocalizedMessage {
+            .init(key: "AppPage.accounts", table: "Interface", fallback: "账号")
         }
         /// 发现
         ///
-        /// Resource: `Interface.appPage.titleText3`.
+        /// Resource: `Interface.AppPage.discover`.
         public static var discover: LocalizedMessage {
-            .init(key: "appPage.titleText3", table: "Interface", fallback: "发现")
+            .init(key: "AppPage.discover", table: "Interface", fallback: "发现")
         }
         /// 下载
         ///
-        /// Resource: `Interface.appPage.titleText4`.
+        /// Resource: `Interface.AppPage.downloads`.
         public static var downloads: LocalizedMessage {
-            .init(key: "appPage.titleText4", table: "Interface", fallback: "下载")
+            .init(key: "AppPage.downloads", table: "Interface", fallback: "下载")
         }
-        /// 账号
+        /// 主页
         ///
-        /// Resource: `Interface.appPage.titleText5`.
-        public static var accounts: LocalizedMessage {
-            .init(key: "appPage.titleText5", table: "Interface", fallback: "账号")
+        /// Resource: `Interface.AppPage.home`.
+        public static var home: LocalizedMessage {
+            .init(key: "AppPage.home", table: "Interface", fallback: "主页")
+        }
+        /// 实例库
+        ///
+        /// Resource: `Interface.AppPage.library`.
+        public static var library: LocalizedMessage {
+            .init(key: "AppPage.library", table: "Interface", fallback: "实例库")
         }
         /// 设置
         ///
-        /// Resource: `Interface.appPage.titleText6`.
+        /// Resource: `Interface.AppPage.settings`.
         public static var settings: LocalizedMessage {
-            .init(key: "appPage.titleText6", table: "Interface", fallback: "设置")
+            .init(key: "AppPage.settings", table: "Interface", fallback: "设置")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:appPage.titleText1": .init("主页", []),
-            "Interface:appPage.titleText2": .init("实例库", []),
-            "Interface:appPage.titleText3": .init("发现", []),
-            "Interface:appPage.titleText4": .init("下载", []),
-            "Interface:appPage.titleText5": .init("账号", []),
-            "Interface:appPage.titleText6": .init("设置", []),
+            "Interface:AppPage.accounts": .init("账号", []),
+            "Interface:AppPage.discover": .init("发现", []),
+            "Interface:AppPage.downloads": .init("下载", []),
+            "Interface:AppPage.home": .init("主页", []),
+            "Interface:AppPage.library": .init("实例库", []),
+            "Interface:AppPage.settings": .init("设置", []),
         ]
     }
 }

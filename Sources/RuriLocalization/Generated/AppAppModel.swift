@@ -5,64 +5,64 @@ extension Messages {
     public enum AppAppModel {
         /// 数据索引在外部被移除或替换，已暂停写入。请检查数据目录。
         ///
-        /// Resource: `Errors.appAppModel.remoteText1`.
+        /// Resource: `Errors.AppAppModel.externalIndexChanged`.
         public static var externalIndexChanged: LocalizedMessage {
-            .init(key: "appAppModel.remoteText1", table: "Errors", fallback: "数据索引在外部被移除或替换，已暂停写入。请检查数据目录。")
+            .init(key: "AppAppModel.externalIndexChanged", table: "Errors", fallback: "数据索引在外部被移除或替换，已暂停写入。请检查数据目录。")
         }
         /// 默认实例文件夹
         ///
-        /// Resource: `Interface.appAppModel.selectedDirectoryNameText1`.
+        /// Resource: `Interface.AppAppModel.defaultInstanceDirectory`.
         public static var defaultInstanceDirectory: LocalizedMessage {
-            .init(key: "appAppModel.selectedDirectoryNameText1", table: "Interface", fallback: "默认实例文件夹")
-        }
-        /// 无法读取 Ruri 数据，已暂停写入以保护原文件。
-        /// %1$@
-        ///
-        /// Resource: `Interface.appAppModel.rootText1`.
-        public static func unreadableData(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModel.rootText1", table: "Interface", fallback: "无法读取 Ruri 数据，已暂停写入以保护原文件。\n%1$@", arguments: [.text(value0)])
-        }
-        /// %1$@
-        /// 已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。
-        ///
-        /// Resource: `Interface.appAppModel.saveText1`.
-        public static func savePaused(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModel.saveText1", table: "Interface", fallback: "%1$@\n已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。", arguments: [.text(value0)])
+            .init(key: "AppAppModel.defaultInstanceDirectory", table: "Interface", fallback: "默认实例文件夹")
         }
         /// 无法恢复目录登记：%1$@
         ///
-        /// Resource: `Interface.appAppModel.basePathsText1`.
+        /// Resource: `Interface.AppAppModel.directoryRecoveryFailed`.
         public static func directoryRecoveryFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModel.basePathsText1", table: "Interface", fallback: "无法恢复目录登记：%1$@", arguments: [.text(value0)])
-        }
-        /// 任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。
-        ///
-        /// Resource: `Interface.appAppModel.iText2`.
-        public static var taskCancelled: LocalizedMessage {
-            .init(key: "appAppModel.iText2", table: "Interface", fallback: "任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。")
+            .init(key: "AppAppModel.directoryRecoveryFailed", table: "Interface", fallback: "无法恢复目录登记：%1$@", arguments: [.text(value0)])
         }
         /// 无法同步其他客户端的更改，已暂停写入以保留原数据。
         /// %1$@
         ///
-        /// Resource: `Interface.appAppModel.remoteText2`.
+        /// Resource: `Interface.AppAppModel.externalChangesDetected`.
         public static func externalChangesDetected(_ value0: String) -> LocalizedMessage {
-            .init(key: "appAppModel.remoteText2", table: "Interface", fallback: "无法同步其他客户端的更改，已暂停写入以保留原数据。\n%1$@", arguments: [.text(value0)])
+            .init(key: "AppAppModel.externalChangesDetected", table: "Interface", fallback: "无法同步其他客户端的更改，已暂停写入以保留原数据。\n%1$@", arguments: [.text(value0)])
+        }
+        /// %1$@
+        /// 已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。
+        ///
+        /// Resource: `Interface.AppAppModel.savePaused`.
+        public static func savePaused(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModel.savePaused", table: "Interface", fallback: "%1$@\n已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。", arguments: [.text(value0)])
+        }
+        /// 任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。
+        ///
+        /// Resource: `Interface.AppAppModel.taskCancelled`.
+        public static var taskCancelled: LocalizedMessage {
+            .init(key: "AppAppModel.taskCancelled", table: "Interface", fallback: "任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。")
+        }
+        /// 无法读取 Ruri 数据，已暂停写入以保护原文件。
+        /// %1$@
+        ///
+        /// Resource: `Interface.AppAppModel.unreadableData`.
+        public static func unreadableData(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppAppModel.unreadableData", table: "Interface", fallback: "无法读取 Ruri 数据，已暂停写入以保护原文件。\n%1$@", arguments: [.text(value0)])
         }
         /// 已完成
         ///
-        /// Resource: `Progress.appAppModel.iText1`.
+        /// Resource: `Progress.AppAppModel.taskCompleted`.
         public static var taskCompleted: LocalizedMessage {
-            .init(key: "appAppModel.iText1", table: "Progress", fallback: "已完成")
+            .init(key: "AppAppModel.taskCompleted", table: "Progress", fallback: "已完成")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:appAppModel.remoteText1": .init("数据索引在外部被移除或替换，已暂停写入。请检查数据目录。", []),
-            "Interface:appAppModel.selectedDirectoryNameText1": .init("默认实例文件夹", []),
-            "Interface:appAppModel.rootText1": .init("无法读取 Ruri 数据，已暂停写入以保护原文件。\n%1$@", [.text]),
-            "Interface:appAppModel.saveText1": .init("%1$@\n已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。", [.text]),
-            "Interface:appAppModel.basePathsText1": .init("无法恢复目录登记：%1$@", [.text]),
-            "Interface:appAppModel.iText2": .init("任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。", []),
-            "Interface:appAppModel.remoteText2": .init("无法同步其他客户端的更改，已暂停写入以保留原数据。\n%1$@", [.text]),
-            "Progress:appAppModel.iText1": .init("已完成", []),
+            "Errors:AppAppModel.externalIndexChanged": .init("数据索引在外部被移除或替换，已暂停写入。请检查数据目录。", []),
+            "Interface:AppAppModel.defaultInstanceDirectory": .init("默认实例文件夹", []),
+            "Interface:AppAppModel.directoryRecoveryFailed": .init("无法恢复目录登记：%1$@", [.text]),
+            "Interface:AppAppModel.externalChangesDetected": .init("无法同步其他客户端的更改，已暂停写入以保留原数据。\n%1$@", [.text]),
+            "Interface:AppAppModel.savePaused": .init("%1$@\n已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。", [.text]),
+            "Interface:AppAppModel.taskCancelled": .init("任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。", []),
+            "Interface:AppAppModel.unreadableData": .init("无法读取 Ruri 数据，已暂停写入以保护原文件。\n%1$@", [.text]),
+            "Progress:AppAppModel.taskCompleted": .init("已完成", []),
         ]
     }
 }

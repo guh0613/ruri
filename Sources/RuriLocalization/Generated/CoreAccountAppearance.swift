@@ -5,138 +5,138 @@ extension Messages {
     public enum CoreAccountAppearance {
         /// 披风
         ///
-        /// Resource: `Core.coreAccountAppearance.textureText1`.
+        /// Resource: `Core.CoreAccountAppearance.cape`.
         public static var cape: LocalizedMessage {
-            .init(key: "coreAccountAppearance.textureText1", table: "Core", fallback: "披风")
-        }
-        /// 当前皮肤
-        ///
-        /// Resource: `Core.coreAccountAppearance.textureText2`.
-        public static var currentSkin: LocalizedMessage {
-            .init(key: "coreAccountAppearance.textureText2", table: "Core", fallback: "当前皮肤")
+            .init(key: "CoreAccountAppearance.cape", table: "Core", fallback: "披风")
         }
         /// 当前披风
         ///
-        /// Resource: `Core.coreAccountAppearance.textureText3`.
+        /// Resource: `Core.CoreAccountAppearance.currentCape`.
         public static var currentCape: LocalizedMessage {
-            .init(key: "coreAccountAppearance.textureText3", table: "Core", fallback: "当前披风")
+            .init(key: "CoreAccountAppearance.currentCape", table: "Core", fallback: "当前披风")
         }
-        /// 离线账号没有在线皮肤资料。
+        /// 当前皮肤
         ///
-        /// Resource: `Errors.coreAccountAppearance.loadText1`.
-        public static var offlineAccountNoSkin: LocalizedMessage {
-            .init(key: "coreAccountAppearance.loadText1", table: "Errors", fallback: "离线账号没有在线皮肤资料。")
-        }
-        /// 认证站返回的外观信息无效。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.dataText1`.
-        public static var invalidAuthAppearance: LocalizedMessage {
-            .init(key: "coreAccountAppearance.dataText1", table: "Errors", fallback: "认证站返回的外观信息无效。")
-        }
-        /// 此账号不支持直接上传%1$@，请到认证站管理。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.uploadText1`.
-        public static func appearanceUploadUnsupported(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreAccountAppearance.uploadText1", table: "Errors", fallback: "此账号不支持直接上传%1$@，请到认证站管理。", arguments: [.text(value0)])
-        }
-        /// 此认证站不支持直接修改%1$@，请到认证站管理。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.resetText1`.
-        public static func appearanceResetUnsupported(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreAccountAppearance.resetText1", table: "Errors", fallback: "此认证站不支持直接修改%1$@，请到认证站管理。", arguments: [.text(value0)])
-        }
-        /// 请选择此 Microsoft 账号拥有的披风。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.selectCapeText1`.
-        public static var microsoftCapeSelectionRequired: LocalizedMessage {
-            .init(key: "coreAccountAppearance.selectCapeText1", table: "Errors", fallback: "请选择此 Microsoft 账号拥有的披风。")
-        }
-        /// 外观图片地址无效。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.urlText1`.
-        public static var invalidAppearanceURL: LocalizedMessage {
-            .init(key: "coreAccountAppearance.urlText1", table: "Errors", fallback: "外观图片地址无效。")
-        }
-        /// 无法下载外观图片，请重试。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.responseText1`.
-        public static var appearanceDownloadFailed: LocalizedMessage {
-            .init(key: "coreAccountAppearance.responseText1", table: "Errors", fallback: "无法下载外观图片，请重试。")
+        /// Resource: `Core.CoreAccountAppearance.currentSkin`.
+        public static var currentSkin: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.currentSkin", table: "Core", fallback: "当前皮肤")
         }
         /// 账号已变化，请重新打开外观管理。
         ///
-        /// Resource: `Errors.coreAccountAppearance.validateText1`.
+        /// Resource: `Errors.CoreAccountAppearance.accountChanged`.
         public static var accountChanged: LocalizedMessage {
-            .init(key: "coreAccountAppearance.validateText1", table: "Errors", fallback: "账号已变化，请重新打开外观管理。")
-        }
-        /// 外观资料与当前角色不匹配，请重新登录。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.normalizedText1`.
-        public static var appearanceRoleMismatch: LocalizedMessage {
-            .init(key: "coreAccountAppearance.normalizedText1", table: "Errors", fallback: "外观资料与当前角色不匹配，请重新登录。")
-        }
-        /// 账号缺少认证服务器，请重新登录。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.serverText1`.
-        public static var missingAuthServer: LocalizedMessage {
-            .init(key: "coreAccountAppearance.serverText1", table: "Errors", fallback: "账号缺少认证服务器，请重新登录。")
-        }
-        /// 外观服务响应无效。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.statusText1`.
-        public static var invalidAppearanceResponse: LocalizedMessage {
-            .init(key: "coreAccountAppearance.statusText1", table: "Errors", fallback: "外观服务响应无效。")
+            .init(key: "CoreAccountAppearance.accountChanged", table: "Errors", fallback: "账号已变化，请重新打开外观管理。")
         }
         /// 登录已失效，请重新登录账号后再试。
         ///
-        /// Resource: `Errors.coreAccountAppearance.statusText2`.
+        /// Resource: `Errors.CoreAccountAppearance.accountLoginExpired`.
         public static var accountLoginExpired: LocalizedMessage {
-            .init(key: "coreAccountAppearance.statusText2", table: "Errors", fallback: "登录已失效，请重新登录账号后再试。")
-        }
-        /// 服务器未允许此账号执行这项外观操作。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.statusText3`.
-        public static var appearanceOperationForbidden: LocalizedMessage {
-            .init(key: "coreAccountAppearance.statusText3", table: "Errors", fallback: "服务器未允许此账号执行这项外观操作。")
-        }
-        /// 操作过于频繁，请稍后再试。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.statusText4`.
-        public static var appearanceRateLimited: LocalizedMessage {
-            .init(key: "coreAccountAppearance.statusText4", table: "Errors", fallback: "操作过于频繁，请稍后再试。")
-        }
-        /// 外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。
-        ///
-        /// Resource: `Errors.coreAccountAppearance.statusText5`.
-        public static func appearanceHTTPError(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreAccountAppearance.statusText5", table: "Errors", fallback: "外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。", arguments: [.text(value0)])
+            .init(key: "CoreAccountAppearance.accountLoginExpired", table: "Errors", fallback: "登录已失效，请重新登录账号后再试。")
         }
         /// 外观资料过大，无法读取。
         ///
-        /// Resource: `Errors.coreAccountAppearance.statusText6`.
+        /// Resource: `Errors.CoreAccountAppearance.appearanceDataTooLarge`.
         public static var appearanceDataTooLarge: LocalizedMessage {
-            .init(key: "coreAccountAppearance.statusText6", table: "Errors", fallback: "外观资料过大，无法读取。")
+            .init(key: "CoreAccountAppearance.appearanceDataTooLarge", table: "Errors", fallback: "外观资料过大，无法读取。")
+        }
+        /// 无法下载外观图片，请重试。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.appearanceDownloadFailed`.
+        public static var appearanceDownloadFailed: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.appearanceDownloadFailed", table: "Errors", fallback: "无法下载外观图片，请重试。")
+        }
+        /// 外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.appearanceHTTPError`.
+        public static func appearanceHTTPError(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreAccountAppearance.appearanceHTTPError", table: "Errors", fallback: "外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。", arguments: [.text(value0)])
+        }
+        /// 服务器未允许此账号执行这项外观操作。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.appearanceOperationForbidden`.
+        public static var appearanceOperationForbidden: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.appearanceOperationForbidden", table: "Errors", fallback: "服务器未允许此账号执行这项外观操作。")
+        }
+        /// 操作过于频繁，请稍后再试。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.appearanceRateLimited`.
+        public static var appearanceRateLimited: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.appearanceRateLimited", table: "Errors", fallback: "操作过于频繁，请稍后再试。")
+        }
+        /// 此认证站不支持直接修改%1$@，请到认证站管理。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.appearanceResetUnsupported`.
+        public static func appearanceResetUnsupported(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreAccountAppearance.appearanceResetUnsupported", table: "Errors", fallback: "此认证站不支持直接修改%1$@，请到认证站管理。", arguments: [.text(value0)])
+        }
+        /// 外观资料与当前角色不匹配，请重新登录。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.appearanceRoleMismatch`.
+        public static var appearanceRoleMismatch: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.appearanceRoleMismatch", table: "Errors", fallback: "外观资料与当前角色不匹配，请重新登录。")
+        }
+        /// 此账号不支持直接上传%1$@，请到认证站管理。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.appearanceUploadUnsupported`.
+        public static func appearanceUploadUnsupported(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreAccountAppearance.appearanceUploadUnsupported", table: "Errors", fallback: "此账号不支持直接上传%1$@，请到认证站管理。", arguments: [.text(value0)])
+        }
+        /// 外观服务响应无效。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.invalidAppearanceResponse`.
+        public static var invalidAppearanceResponse: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.invalidAppearanceResponse", table: "Errors", fallback: "外观服务响应无效。")
+        }
+        /// 外观图片地址无效。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.invalidAppearanceURL`.
+        public static var invalidAppearanceURL: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.invalidAppearanceURL", table: "Errors", fallback: "外观图片地址无效。")
+        }
+        /// 认证站返回的外观信息无效。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.invalidAuthAppearance`.
+        public static var invalidAuthAppearance: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.invalidAuthAppearance", table: "Errors", fallback: "认证站返回的外观信息无效。")
+        }
+        /// 请选择此 Microsoft 账号拥有的披风。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.microsoftCapeSelectionRequired`.
+        public static var microsoftCapeSelectionRequired: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.microsoftCapeSelectionRequired", table: "Errors", fallback: "请选择此 Microsoft 账号拥有的披风。")
+        }
+        /// 账号缺少认证服务器，请重新登录。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.missingAuthServer`.
+        public static var missingAuthServer: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.missingAuthServer", table: "Errors", fallback: "账号缺少认证服务器，请重新登录。")
+        }
+        /// 离线账号没有在线皮肤资料。
+        ///
+        /// Resource: `Errors.CoreAccountAppearance.offlineAccountNoSkin`.
+        public static var offlineAccountNoSkin: LocalizedMessage {
+            .init(key: "CoreAccountAppearance.offlineAccountNoSkin", table: "Errors", fallback: "离线账号没有在线皮肤资料。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:coreAccountAppearance.textureText1": .init("披风", []),
-            "Core:coreAccountAppearance.textureText2": .init("当前皮肤", []),
-            "Core:coreAccountAppearance.textureText3": .init("当前披风", []),
-            "Errors:coreAccountAppearance.loadText1": .init("离线账号没有在线皮肤资料。", []),
-            "Errors:coreAccountAppearance.dataText1": .init("认证站返回的外观信息无效。", []),
-            "Errors:coreAccountAppearance.uploadText1": .init("此账号不支持直接上传%1$@，请到认证站管理。", [.text]),
-            "Errors:coreAccountAppearance.resetText1": .init("此认证站不支持直接修改%1$@，请到认证站管理。", [.text]),
-            "Errors:coreAccountAppearance.selectCapeText1": .init("请选择此 Microsoft 账号拥有的披风。", []),
-            "Errors:coreAccountAppearance.urlText1": .init("外观图片地址无效。", []),
-            "Errors:coreAccountAppearance.responseText1": .init("无法下载外观图片，请重试。", []),
-            "Errors:coreAccountAppearance.validateText1": .init("账号已变化，请重新打开外观管理。", []),
-            "Errors:coreAccountAppearance.normalizedText1": .init("外观资料与当前角色不匹配，请重新登录。", []),
-            "Errors:coreAccountAppearance.serverText1": .init("账号缺少认证服务器，请重新登录。", []),
-            "Errors:coreAccountAppearance.statusText1": .init("外观服务响应无效。", []),
-            "Errors:coreAccountAppearance.statusText2": .init("登录已失效，请重新登录账号后再试。", []),
-            "Errors:coreAccountAppearance.statusText3": .init("服务器未允许此账号执行这项外观操作。", []),
-            "Errors:coreAccountAppearance.statusText4": .init("操作过于频繁，请稍后再试。", []),
-            "Errors:coreAccountAppearance.statusText5": .init("外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。", [.text]),
-            "Errors:coreAccountAppearance.statusText6": .init("外观资料过大，无法读取。", []),
+            "Core:CoreAccountAppearance.cape": .init("披风", []),
+            "Core:CoreAccountAppearance.currentCape": .init("当前披风", []),
+            "Core:CoreAccountAppearance.currentSkin": .init("当前皮肤", []),
+            "Errors:CoreAccountAppearance.accountChanged": .init("账号已变化，请重新打开外观管理。", []),
+            "Errors:CoreAccountAppearance.accountLoginExpired": .init("登录已失效，请重新登录账号后再试。", []),
+            "Errors:CoreAccountAppearance.appearanceDataTooLarge": .init("外观资料过大，无法读取。", []),
+            "Errors:CoreAccountAppearance.appearanceDownloadFailed": .init("无法下载外观图片，请重试。", []),
+            "Errors:CoreAccountAppearance.appearanceHTTPError": .init("外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。", [.text]),
+            "Errors:CoreAccountAppearance.appearanceOperationForbidden": .init("服务器未允许此账号执行这项外观操作。", []),
+            "Errors:CoreAccountAppearance.appearanceRateLimited": .init("操作过于频繁，请稍后再试。", []),
+            "Errors:CoreAccountAppearance.appearanceResetUnsupported": .init("此认证站不支持直接修改%1$@，请到认证站管理。", [.text]),
+            "Errors:CoreAccountAppearance.appearanceRoleMismatch": .init("外观资料与当前角色不匹配，请重新登录。", []),
+            "Errors:CoreAccountAppearance.appearanceUploadUnsupported": .init("此账号不支持直接上传%1$@，请到认证站管理。", [.text]),
+            "Errors:CoreAccountAppearance.invalidAppearanceResponse": .init("外观服务响应无效。", []),
+            "Errors:CoreAccountAppearance.invalidAppearanceURL": .init("外观图片地址无效。", []),
+            "Errors:CoreAccountAppearance.invalidAuthAppearance": .init("认证站返回的外观信息无效。", []),
+            "Errors:CoreAccountAppearance.microsoftCapeSelectionRequired": .init("请选择此 Microsoft 账号拥有的披风。", []),
+            "Errors:CoreAccountAppearance.missingAuthServer": .init("账号缺少认证服务器，请重新登录。", []),
+            "Errors:CoreAccountAppearance.offlineAccountNoSkin": .init("离线账号没有在线皮肤资料。", []),
         ]
     }
 }

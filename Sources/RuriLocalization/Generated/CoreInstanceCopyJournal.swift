@@ -3,105 +3,105 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceCopyJournal {
-        /// 实例复制记录不属于所选实例。
+        /// 副本占用记录已经改变，未清除其他操作的记录。
         ///
-        /// Resource: `Errors.coreInstanceCopyJournal.recordText1`.
-        public static var copyRecordWrongInstance: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.recordText1", table: "Errors", fallback: "实例复制记录不属于所选实例。")
-        }
-        /// 实例复制信息无效，请检查源实例和副本设置。
-        ///
-        /// Resource: `Errors.coreInstanceCopyJournal.validateText1`.
-        public static var invalidCopyInfo: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.validateText1", table: "Errors", fallback: "实例复制信息无效，请检查源实例和副本设置。")
-        }
-        /// 实例副本缺少文件校验记录，工作副本已保留。
-        ///
-        /// Resource: `Errors.coreInstanceCopyJournal.validateText2`.
-        public static var missingCopyChecksums: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.validateText2", table: "Errors", fallback: "实例副本缺少文件校验记录，工作副本已保留。")
-        }
-        /// 实例副本的校验记录摘要无效。
-        ///
-        /// Resource: `Errors.coreInstanceCopyJournal.verificationDigestText1`.
-        public static var invalidCopyDigest: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.verificationDigestText1", table: "Errors", fallback: "实例副本的校验记录摘要无效。")
-        }
-        /// 复制目标的文件夹记录无效。
-        ///
-        /// Resource: `Errors.coreInstanceCopyJournal.collectionText1`.
-        public static var invalidDestinationFolderRecord: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.collectionText1", table: "Errors", fallback: "复制目标的文件夹记录无效。")
-        }
-        /// 实例副本的文件身份记录无效。
-        ///
-        /// Resource: `Errors.coreInstanceCopyJournal.collectionText2`.
-        public static var invalidCopyFileIdentity: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.collectionText2", table: "Errors", fallback: "实例副本的文件身份记录无效。")
+        /// Resource: `Errors.CoreInstanceCopyJournal.copyMarkerChanged`.
+        public static var copyMarkerChanged: LocalizedMessage {
+            .init(key: "CoreInstanceCopyJournal.copyMarkerChanged", table: "Errors", fallback: "副本占用记录已经改变，未清除其他操作的记录。")
         }
         /// 源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。
         ///
-        /// Resource: `Errors.coreInstanceCopyJournal.dataText1`.
+        /// Resource: `Errors.CoreInstanceCopyJournal.copyNameTooLong`.
         public static var copyNameTooLong: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.dataText1", table: "Errors", fallback: "源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。")
-        }
-        /// 目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。
-        ///
-        /// Resource: `Errors.coreInstanceCopyJournal.registeredText1`.
-        public static var destinationRegistrationChanged: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.registeredText1", table: "Errors", fallback: "目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。")
+            .init(key: "CoreInstanceCopyJournal.copyNameTooLong", table: "Errors", fallback: "源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。")
         }
         /// 实例复制记录超过大小限制。
         ///
-        /// Resource: `Errors.coreInstanceCopyJournal.dataText2`.
+        /// Resource: `Errors.CoreInstanceCopyJournal.copyRecordTooLarge`.
         public static var copyRecordTooLarge: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.dataText2", table: "Errors", fallback: "实例复制记录超过大小限制。")
+            .init(key: "CoreInstanceCopyJournal.copyRecordTooLarge", table: "Errors", fallback: "实例复制记录超过大小限制。")
+        }
+        /// 实例复制记录不属于所选实例。
+        ///
+        /// Resource: `Errors.CoreInstanceCopyJournal.copyRecordWrongInstance`.
+        public static var copyRecordWrongInstance: LocalizedMessage {
+            .init(key: "CoreInstanceCopyJournal.copyRecordWrongInstance", table: "Errors", fallback: "实例复制记录不属于所选实例。")
+        }
+        /// 目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。
+        ///
+        /// Resource: `Errors.CoreInstanceCopyJournal.destinationRegistrationChanged`.
+        public static var destinationRegistrationChanged: LocalizedMessage {
+            .init(key: "CoreInstanceCopyJournal.destinationRegistrationChanged", table: "Errors", fallback: "目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。")
+        }
+        /// 实例副本的校验记录摘要无效。
+        ///
+        /// Resource: `Errors.CoreInstanceCopyJournal.invalidCopyDigest`.
+        public static var invalidCopyDigest: LocalizedMessage {
+            .init(key: "CoreInstanceCopyJournal.invalidCopyDigest", table: "Errors", fallback: "实例副本的校验记录摘要无效。")
+        }
+        /// 实例副本的文件身份记录无效。
+        ///
+        /// Resource: `Errors.CoreInstanceCopyJournal.invalidCopyFileIdentity`.
+        public static var invalidCopyFileIdentity: LocalizedMessage {
+            .init(key: "CoreInstanceCopyJournal.invalidCopyFileIdentity", table: "Errors", fallback: "实例副本的文件身份记录无效。")
+        }
+        /// 实例复制信息无效，请检查源实例和副本设置。
+        ///
+        /// Resource: `Errors.CoreInstanceCopyJournal.invalidCopyInfo`.
+        public static var invalidCopyInfo: LocalizedMessage {
+            .init(key: "CoreInstanceCopyJournal.invalidCopyInfo", table: "Errors", fallback: "实例复制信息无效，请检查源实例和副本设置。")
         }
         /// 实例复制占用信息无效。
         ///
-        /// Resource: `Errors.coreInstanceCopyJournal.ownerText1`.
+        /// Resource: `Errors.CoreInstanceCopyJournal.invalidCopyOwnerInfo`.
         public static var invalidCopyOwnerInfo: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.ownerText1", table: "Errors", fallback: "实例复制占用信息无效。")
+            .init(key: "CoreInstanceCopyJournal.invalidCopyOwnerInfo", table: "Errors", fallback: "实例复制占用信息无效。")
         }
-        /// “%1$@”有未完成的实例复制，请先在实例菜单中恢复复制。
+        /// 复制目标的文件夹记录无效。
         ///
-        /// Resource: `Errors.coreInstanceCopyJournal.ownerText2`.
-        public static func unfinishedCopyExists(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.ownerText2", table: "Errors", fallback: "“%1$@”有未完成的实例复制，请先在实例菜单中恢复复制。", arguments: [.text(value0)])
+        /// Resource: `Errors.CoreInstanceCopyJournal.invalidDestinationFolderRecord`.
+        public static var invalidDestinationFolderRecord: LocalizedMessage {
+            .init(key: "CoreInstanceCopyJournal.invalidDestinationFolderRecord", table: "Errors", fallback: "复制目标的文件夹记录无效。")
         }
-        /// 副本占用记录已经改变，未清除其他操作的记录。
+        /// 实例副本缺少文件校验记录，工作副本已保留。
         ///
-        /// Resource: `Errors.coreInstanceCopyJournal.markerText1`.
-        public static var copyMarkerChanged: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.markerText1", table: "Errors", fallback: "副本占用记录已经改变，未清除其他操作的记录。")
+        /// Resource: `Errors.CoreInstanceCopyJournal.missingCopyChecksums`.
+        public static var missingCopyChecksums: LocalizedMessage {
+            .init(key: "CoreInstanceCopyJournal.missingCopyChecksums", table: "Errors", fallback: "实例副本缺少文件校验记录，工作副本已保留。")
         }
         /// 待处理的实例复制过多，请先恢复后再调整文件夹。
         ///
-        /// Resource: `Errors.coreInstanceCopyJournal.recordsText1`.
+        /// Resource: `Errors.CoreInstanceCopyJournal.tooManyPendingCopies`.
         public static var tooManyPendingCopies: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.recordsText1", table: "Errors", fallback: "待处理的实例复制过多，请先恢复后再调整文件夹。")
+            .init(key: "CoreInstanceCopyJournal.tooManyPendingCopies", table: "Errors", fallback: "待处理的实例复制过多，请先恢复后再调整文件夹。")
+        }
+        /// “%1$@”有未完成的实例复制，请先在实例菜单中恢复复制。
+        ///
+        /// Resource: `Errors.CoreInstanceCopyJournal.unfinishedCopyExists`.
+        public static func unfinishedCopyExists(_ value0: String) -> LocalizedMessage {
+            .init(key: "CoreInstanceCopyJournal.unfinishedCopyExists", table: "Errors", fallback: "“%1$@”有未完成的实例复制，请先在实例菜单中恢复复制。", arguments: [.text(value0)])
         }
         /// 此文件夹还有未完成的实例复制，请恢复原路径并处理后再重新定位。
         ///
-        /// Resource: `Errors.coreInstanceCopyJournal.journalText1`.
+        /// Resource: `Errors.CoreInstanceCopyJournal.unfinishedFolderCopy`.
         public static var unfinishedFolderCopy: LocalizedMessage {
-            .init(key: "coreInstanceCopyJournal.journalText1", table: "Errors", fallback: "此文件夹还有未完成的实例复制，请恢复原路径并处理后再重新定位。")
+            .init(key: "CoreInstanceCopyJournal.unfinishedFolderCopy", table: "Errors", fallback: "此文件夹还有未完成的实例复制，请恢复原路径并处理后再重新定位。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreInstanceCopyJournal.recordText1": .init("实例复制记录不属于所选实例。", []),
-            "Errors:coreInstanceCopyJournal.validateText1": .init("实例复制信息无效，请检查源实例和副本设置。", []),
-            "Errors:coreInstanceCopyJournal.validateText2": .init("实例副本缺少文件校验记录，工作副本已保留。", []),
-            "Errors:coreInstanceCopyJournal.verificationDigestText1": .init("实例副本的校验记录摘要无效。", []),
-            "Errors:coreInstanceCopyJournal.collectionText1": .init("复制目标的文件夹记录无效。", []),
-            "Errors:coreInstanceCopyJournal.collectionText2": .init("实例副本的文件身份记录无效。", []),
-            "Errors:coreInstanceCopyJournal.dataText1": .init("源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。", []),
-            "Errors:coreInstanceCopyJournal.registeredText1": .init("目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。", []),
-            "Errors:coreInstanceCopyJournal.dataText2": .init("实例复制记录超过大小限制。", []),
-            "Errors:coreInstanceCopyJournal.ownerText1": .init("实例复制占用信息无效。", []),
-            "Errors:coreInstanceCopyJournal.ownerText2": .init("“%1$@”有未完成的实例复制，请先在实例菜单中恢复复制。", [.text]),
-            "Errors:coreInstanceCopyJournal.markerText1": .init("副本占用记录已经改变，未清除其他操作的记录。", []),
-            "Errors:coreInstanceCopyJournal.recordsText1": .init("待处理的实例复制过多，请先恢复后再调整文件夹。", []),
-            "Errors:coreInstanceCopyJournal.journalText1": .init("此文件夹还有未完成的实例复制，请恢复原路径并处理后再重新定位。", []),
+            "Errors:CoreInstanceCopyJournal.copyMarkerChanged": .init("副本占用记录已经改变，未清除其他操作的记录。", []),
+            "Errors:CoreInstanceCopyJournal.copyNameTooLong": .init("源实例或副本名称过长，无法保存复制占用信息，请缩短名称后重试。", []),
+            "Errors:CoreInstanceCopyJournal.copyRecordTooLarge": .init("实例复制记录超过大小限制。", []),
+            "Errors:CoreInstanceCopyJournal.copyRecordWrongInstance": .init("实例复制记录不属于所选实例。", []),
+            "Errors:CoreInstanceCopyJournal.destinationRegistrationChanged": .init("目标实例文件夹的登记位置已经变化，请恢复原位置后处理复制。", []),
+            "Errors:CoreInstanceCopyJournal.invalidCopyDigest": .init("实例副本的校验记录摘要无效。", []),
+            "Errors:CoreInstanceCopyJournal.invalidCopyFileIdentity": .init("实例副本的文件身份记录无效。", []),
+            "Errors:CoreInstanceCopyJournal.invalidCopyInfo": .init("实例复制信息无效，请检查源实例和副本设置。", []),
+            "Errors:CoreInstanceCopyJournal.invalidCopyOwnerInfo": .init("实例复制占用信息无效。", []),
+            "Errors:CoreInstanceCopyJournal.invalidDestinationFolderRecord": .init("复制目标的文件夹记录无效。", []),
+            "Errors:CoreInstanceCopyJournal.missingCopyChecksums": .init("实例副本缺少文件校验记录，工作副本已保留。", []),
+            "Errors:CoreInstanceCopyJournal.tooManyPendingCopies": .init("待处理的实例复制过多，请先恢复后再调整文件夹。", []),
+            "Errors:CoreInstanceCopyJournal.unfinishedCopyExists": .init("“%1$@”有未完成的实例复制，请先在实例菜单中恢复复制。", [.text]),
+            "Errors:CoreInstanceCopyJournal.unfinishedFolderCopy": .init("此文件夹还有未完成的实例复制，请恢复原路径并处理后再重新定位。", []),
         ]
     }
 }

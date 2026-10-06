@@ -3,28 +3,28 @@ import Foundation
 
 extension Messages {
     public enum CoreGameRunLease {
-        /// 无法取得实例运行锁。
+        /// 这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。
         ///
-        /// Resource: `Errors.coreGameRunLease.fdText1`.
-        public static var runLockUnavailable: LocalizedMessage {
-            .init(key: "coreGameRunLease.fdText1", table: "Errors", fallback: "无法取得实例运行锁。")
+        /// Resource: `Errors.CoreGameRunLease.activeRunSession`.
+        public static var activeRunSession: LocalizedMessage {
+            .init(key: "CoreGameRunLease.activeRunSession", table: "Errors", fallback: "这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。")
         }
         /// 这个实例正在运行或准备启动，请先结束当前游戏。
         ///
-        /// Resource: `Errors.coreGameRunLease.lockText1`.
+        /// Resource: `Errors.CoreGameRunLease.instanceAlreadyRunning`.
         public static var instanceAlreadyRunning: LocalizedMessage {
-            .init(key: "coreGameRunLease.lockText1", table: "Errors", fallback: "这个实例正在运行或准备启动，请先结束当前游戏。")
+            .init(key: "CoreGameRunLease.instanceAlreadyRunning", table: "Errors", fallback: "这个实例正在运行或准备启动，请先结束当前游戏。")
         }
-        /// 这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。
+        /// 无法取得实例运行锁。
         ///
-        /// Resource: `Errors.coreGameRunLease.recordsText1`.
-        public static var activeRunSession: LocalizedMessage {
-            .init(key: "coreGameRunLease.recordsText1", table: "Errors", fallback: "这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。")
+        /// Resource: `Errors.CoreGameRunLease.runLockUnavailable`.
+        public static var runLockUnavailable: LocalizedMessage {
+            .init(key: "CoreGameRunLease.runLockUnavailable", table: "Errors", fallback: "无法取得实例运行锁。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreGameRunLease.fdText1": .init("无法取得实例运行锁。", []),
-            "Errors:coreGameRunLease.lockText1": .init("这个实例正在运行或准备启动，请先结束当前游戏。", []),
-            "Errors:coreGameRunLease.recordsText1": .init("这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。", []),
+            "Errors:CoreGameRunLease.activeRunSession": .init("这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。", []),
+            "Errors:CoreGameRunLease.instanceAlreadyRunning": .init("这个实例正在运行或准备启动，请先结束当前游戏。", []),
+            "Errors:CoreGameRunLease.runLockUnavailable": .init("无法取得实例运行锁。", []),
         ]
     }
 }

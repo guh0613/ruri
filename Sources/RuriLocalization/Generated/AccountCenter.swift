@@ -3,581 +3,581 @@ import Foundation
 
 extension Messages {
     public enum AccountCenter {
-        /// 皮肤名称需为 1–80 个字符。
+        /// 账号操作
         ///
-        /// Resource: `Accounts.accountCenter.invalidSkinName`.
-        public static var invalidSkinName: LocalizedMessage {
-            .init(key: "accountCenter.invalidSkinName", table: "Accounts", fallback: "皮肤名称需为 1–80 个字符。")
-        }
-        /// 无法读取保存的皮肤，文件可能已损坏。
-        ///
-        /// Resource: `Accounts.accountCenter.invalidSavedSkin`.
-        public static var invalidSavedSkin: LocalizedMessage {
-            .init(key: "accountCenter.invalidSavedSkin", table: "Accounts", fallback: "无法读取保存的皮肤，文件可能已损坏。")
-        }
-        /// 登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。
-        ///
-        /// Resource: `Accounts.accountCenter.wrongLoginAccount`.
-        public static var wrongLoginAccount: LocalizedMessage {
-            .init(key: "accountCenter.wrongLoginAccount", table: "Accounts", fallback: "登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。")
-        }
-        /// 可旋转的角色外观预览
-        ///
-        /// Resource: `Accounts.accountCenter.characterPreview`.
-        public static var characterPreview: LocalizedMessage {
-            .init(key: "accountCenter.characterPreview", table: "Accounts", fallback: "可旋转的角色外观预览")
-        }
-        /// 旋转角色
-        ///
-        /// Resource: `Accounts.accountCenter.rotation`.
-        public static var rotation: LocalizedMessage {
-            .init(key: "accountCenter.rotation", table: "Accounts", fallback: "旋转角色")
-        }
-        /// 重置视角
-        ///
-        /// Resource: `Accounts.accountCenter.resetView`.
-        public static var resetView: LocalizedMessage {
-            .init(key: "accountCenter.resetView", table: "Accounts", fallback: "重置视角")
-        }
-        /// 显示外层皮肤
-        ///
-        /// Resource: `Accounts.accountCenter.outerLayer`.
-        public static var outerLayer: LocalizedMessage {
-            .init(key: "accountCenter.outerLayer", table: "Accounts", fallback: "显示外层皮肤")
-        }
-        /// 添加你的 Minecraft 账号
-        ///
-        /// Resource: `Accounts.accountCenter.welcome`.
-        public static var welcome: LocalizedMessage {
-            .init(key: "accountCenter.welcome", table: "Accounts", fallback: "添加你的 Minecraft 账号")
-        }
-        /// 登录微软账号、连接第三方认证服务器，或创建一个离线角色。
-        ///
-        /// Resource: `Accounts.accountCenter.welcomeHelp`.
-        public static var welcomeHelp: LocalizedMessage {
-            .init(key: "accountCenter.welcomeHelp", table: "Accounts", fallback: "登录微软账号、连接第三方认证服务器，或创建一个离线角色。")
-        }
-        /// 选择一个账号
-        ///
-        /// Resource: `Accounts.accountCenter.selectAccount`.
-        public static var selectAccount: LocalizedMessage {
-            .init(key: "accountCenter.selectAccount", table: "Accounts", fallback: "选择一个账号")
-        }
-        /// 搜索账号
-        ///
-        /// Resource: `Accounts.accountCenter.searchAccounts`.
-        public static var searchAccounts: LocalizedMessage {
-            .init(key: "accountCenter.searchAccounts", table: "Accounts", fallback: "搜索账号")
-        }
-        /// 移除“%1$@”？
-        ///
-        /// Resource: `Accounts.accountCenter.removeAccountTitle`.
-        public static func removeAccountTitle(_ value0: String) -> LocalizedMessage {
-            .init(key: "accountCenter.removeAccountTitle", table: "Accounts", fallback: "移除“%1$@”？", arguments: [.text(value0)])
-        }
-        /// 这会移除 Ruri 中保存的账号及其登录凭据。游戏实例和皮肤库会保留。
-        ///
-        /// Resource: `Accounts.accountCenter.removeAccountHelp`.
-        public static var removeAccountHelp: LocalizedMessage {
-            .init(key: "accountCenter.removeAccountHelp", table: "Accounts", fallback: "这会移除 Ruri 中保存的账号及其登录凭据。游戏实例和皮肤库会保留。")
+        /// Resource: `Accounts.AccountCenter.accountActions`.
+        public static var accountActions: LocalizedMessage {
+            .init(key: "AccountCenter.accountActions", table: "Accounts", fallback: "账号操作")
         }
         /// %1$lld 个账号
         ///
-        /// Resource: `Accounts.accountCenter.accountCount`.
+        /// Resource: `Accounts.AccountCenter.accountCount`.
         public static func accountCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "accountCenter.accountCount", table: "Accounts", fallback: "%1$lld 个账号", arguments: [.integer(value0)])
-        }
-        /// 复制 UUID
-        ///
-        /// Resource: `Accounts.accountCenter.copyUUID`.
-        public static var copyUUID: LocalizedMessage {
-            .init(key: "accountCenter.copyUUID", table: "Accounts", fallback: "复制 UUID")
-        }
-        /// 账号操作
-        ///
-        /// Resource: `Accounts.accountCenter.accountActions`.
-        public static var accountActions: LocalizedMessage {
-            .init(key: "accountCenter.accountActions", table: "Accounts", fallback: "账号操作")
+            .init(key: "AccountCenter.accountCount", table: "Accounts", fallback: "%1$lld 个账号", arguments: [.integer(value0)])
         }
         /// 账号信息
         ///
-        /// Resource: `Accounts.accountCenter.accountDetails`.
+        /// Resource: `Accounts.AccountCenter.accountDetails`.
         public static var accountDetails: LocalizedMessage {
-            .init(key: "accountCenter.accountDetails", table: "Accounts", fallback: "账号信息")
-        }
-        /// 外观分类
-        ///
-        /// Resource: `Accounts.accountCenter.appearanceSection`.
-        public static var appearanceSection: LocalizedMessage {
-            .init(key: "accountCenter.appearanceSection", table: "Accounts", fallback: "外观分类")
-        }
-        /// 皮肤库
-        ///
-        /// Resource: `Accounts.accountCenter.skinLibrary`.
-        public static var skinLibrary: LocalizedMessage {
-            .init(key: "accountCenter.skinLibrary", table: "Accounts", fallback: "皮肤库")
-        }
-        /// 重新启动游戏后，所选皮肤将在本机生效。
-        ///
-        /// Resource: `Accounts.accountCenter.offlinePreviewHelp`.
-        public static var offlinePreviewHelp: LocalizedMessage {
-            .init(key: "accountCenter.offlinePreviewHelp", table: "Accounts", fallback: "重新启动游戏后，所选皮肤将在本机生效。")
-        }
-        /// 重试
-        ///
-        /// Resource: `Accounts.accountCenter.retry`.
-        public static var retry: LocalizedMessage {
-            .init(key: "accountCenter.retry", table: "Accounts", fallback: "重试")
-        }
-        /// 重命名皮肤
-        ///
-        /// Resource: `Accounts.accountCenter.renameSkin`.
-        public static var renameSkin: LocalizedMessage {
-            .init(key: "accountCenter.renameSkin", table: "Accounts", fallback: "重命名皮肤")
-        }
-        /// 皮肤名称
-        ///
-        /// Resource: `Accounts.accountCenter.skinName`.
-        public static var skinName: LocalizedMessage {
-            .init(key: "accountCenter.skinName", table: "Accounts", fallback: "皮肤名称")
-        }
-        /// 保存
-        ///
-        /// Resource: `Accounts.accountCenter.save`.
-        public static var save: LocalizedMessage {
-            .init(key: "accountCenter.save", table: "Accounts", fallback: "保存")
-        }
-        /// 从皮肤库移除这款皮肤？
-        ///
-        /// Resource: `Accounts.accountCenter.removeSkinTitle`.
-        public static var removeSkinTitle: LocalizedMessage {
-            .init(key: "accountCenter.removeSkinTitle", table: "Accounts", fallback: "从皮肤库移除这款皮肤？")
-        }
-        /// 移除皮肤
-        ///
-        /// Resource: `Accounts.accountCenter.removeSkin`.
-        public static var removeSkin: LocalizedMessage {
-            .init(key: "accountCenter.removeSkin", table: "Accounts", fallback: "移除皮肤")
-        }
-        /// 已应用的账号外观和原始 PNG 文件会保留。
-        ///
-        /// Resource: `Accounts.accountCenter.removeSkinHelp`.
-        public static var removeSkinHelp: LocalizedMessage {
-            .init(key: "accountCenter.removeSkinHelp", table: "Accounts", fallback: "已应用的账号外观和原始 PNG 文件会保留。")
-        }
-        /// 恢复默认外观？
-        ///
-        /// Resource: `Accounts.accountCenter.resetAppearance`.
-        public static var resetAppearance: LocalizedMessage {
-            .init(key: "accountCenter.resetAppearance", table: "Accounts", fallback: "恢复默认外观？")
-        }
-        /// 恢复默认
-        ///
-        /// Resource: `Accounts.accountCenter.confirmReset`.
-        public static var confirmReset: LocalizedMessage {
-            .init(key: "accountCenter.confirmReset", table: "Accounts", fallback: "恢复默认")
-        }
-        /// 已恢复默认外观。
-        ///
-        /// Resource: `Accounts.accountCenter.appearanceReset`.
-        public static var appearanceReset: LocalizedMessage {
-            .init(key: "accountCenter.appearanceReset", table: "Accounts", fallback: "已恢复默认外观。")
-        }
-        /// 预览 · 尚未应用
-        ///
-        /// Resource: `Accounts.accountCenter.draftPreview`.
-        public static var draftPreview: LocalizedMessage {
-            .init(key: "accountCenter.draftPreview", table: "Accounts", fallback: "预览 · 尚未应用")
-        }
-        /// 示意模型 · 未加载皮肤
-        ///
-        /// Resource: `Accounts.accountCenter.placeholderPreview`.
-        public static var placeholderPreview: LocalizedMessage {
-            .init(key: "accountCenter.placeholderPreview", table: "Accounts", fallback: "示意模型 · 未加载皮肤")
-        }
-        /// 当前外观
-        ///
-        /// Resource: `Accounts.accountCenter.currentAppearance`.
-        public static var currentAppearance: LocalizedMessage {
-            .init(key: "accountCenter.currentAppearance", table: "Accounts", fallback: "当前外观")
-        }
-        /// 导入一张皮肤 PNG，旋转查看角色并选择手臂模型。
-        ///
-        /// Resource: `Accounts.accountCenter.chooseSkinHelp`.
-        public static var chooseSkinHelp: LocalizedMessage {
-            .init(key: "accountCenter.chooseSkinHelp", table: "Accounts", fallback: "导入一张皮肤 PNG，旋转查看角色并选择手臂模型。")
-        }
-        /// 保存到皮肤库
-        ///
-        /// Resource: `Accounts.accountCenter.saveToLibrary`.
-        public static var saveToLibrary: LocalizedMessage {
-            .init(key: "accountCenter.saveToLibrary", table: "Accounts", fallback: "保存到皮肤库")
-        }
-        /// 已保存到皮肤库。
-        ///
-        /// Resource: `Accounts.accountCenter.savedToLibrary`.
-        public static var savedToLibrary: LocalizedMessage {
-            .init(key: "accountCenter.savedToLibrary", table: "Accounts", fallback: "已保存到皮肤库。")
-        }
-        /// 恢复默认皮肤
-        ///
-        /// Resource: `Accounts.accountCenter.clearLocalPreview`.
-        public static var clearLocalPreview: LocalizedMessage {
-            .init(key: "accountCenter.clearLocalPreview", table: "Accounts", fallback: "恢复默认皮肤")
-        }
-        /// 微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。
-        ///
-        /// Resource: `Accounts.accountCenter.microsoftSkinHelp`.
-        public static var microsoftSkinHelp: LocalizedMessage {
-            .init(key: "accountCenter.microsoftSkinHelp", table: "Accounts", fallback: "微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。")
-        }
-        /// 应用披风
-        ///
-        /// Resource: `Accounts.accountCenter.applyCape`.
-        public static var applyCape: LocalizedMessage {
-            .init(key: "accountCenter.applyCape", table: "Accounts", fallback: "应用披风")
-        }
-        /// 连接账号后即可管理披风。
-        ///
-        /// Resource: `Accounts.accountCenter.appearanceNotLoaded`.
-        public static var appearanceNotLoaded: LocalizedMessage {
-            .init(key: "accountCenter.appearanceNotLoaded", table: "Accounts", fallback: "连接账号后即可管理披风。")
-        }
-        /// 确认你的新外观
-        ///
-        /// Resource: `Accounts.accountCenter.previewBeforeApply`.
-        public static var previewBeforeApply: LocalizedMessage {
-            .init(key: "accountCenter.previewBeforeApply", table: "Accounts", fallback: "确认你的新外观")
-        }
-        /// 旧版皮肤使用经典手臂，预览会自动补全左右肢体。
-        ///
-        /// Resource: `Accounts.accountCenter.legacySkinHelp`.
-        public static var legacySkinHelp: LocalizedMessage {
-            .init(key: "accountCenter.legacySkinHelp", table: "Accounts", fallback: "旧版皮肤使用经典手臂，预览会自动补全左右肢体。")
-        }
-        /// 应用皮肤
-        ///
-        /// Resource: `Accounts.accountCenter.useLocalPreview`.
-        public static var useLocalPreview: LocalizedMessage {
-            .init(key: "accountCenter.useLocalPreview", table: "Accounts", fallback: "应用皮肤")
-        }
-        /// 收藏你喜欢的皮肤，随时预览和使用。
-        ///
-        /// Resource: `Accounts.accountCenter.libraryHelp`.
-        public static var libraryHelp: LocalizedMessage {
-            .init(key: "accountCenter.libraryHelp", table: "Accounts", fallback: "收藏你喜欢的皮肤，随时预览和使用。")
-        }
-        /// 导入皮肤…
-        ///
-        /// Resource: `Accounts.accountCenter.importSkin`.
-        public static var importSkin: LocalizedMessage {
-            .init(key: "accountCenter.importSkin", table: "Accounts", fallback: "导入皮肤…")
-        }
-        /// 皮肤库为空
-        ///
-        /// Resource: `Accounts.accountCenter.libraryEmpty`.
-        public static var libraryEmpty: LocalizedMessage {
-            .init(key: "accountCenter.libraryEmpty", table: "Accounts", fallback: "皮肤库为空")
-        }
-        /// 导入 PNG，或把账号当前皮肤保存到这里。
-        ///
-        /// Resource: `Accounts.accountCenter.libraryEmptyHelp`.
-        public static var libraryEmptyHelp: LocalizedMessage {
-            .init(key: "accountCenter.libraryEmptyHelp", table: "Accounts", fallback: "导入 PNG，或把账号当前皮肤保存到这里。")
-        }
-        /// 预览与使用
-        ///
-        /// Resource: `Accounts.accountCenter.previewAndUse`.
-        public static var previewAndUse: LocalizedMessage {
-            .init(key: "accountCenter.previewAndUse", table: "Accounts", fallback: "预览与使用")
-        }
-        /// 使用…
-        ///
-        /// Resource: `Accounts.accountCenter.useSkin`.
-        public static var useSkin: LocalizedMessage {
-            .init(key: "accountCenter.useSkin", table: "Accounts", fallback: "使用…")
-        }
-        /// 经典
-        ///
-        /// Resource: `Accounts.accountCenter.classicArms`.
-        public static var classicArms: LocalizedMessage {
-            .init(key: "accountCenter.classicArms", table: "Accounts", fallback: "经典")
-        }
-        /// 纤细
-        ///
-        /// Resource: `Accounts.accountCenter.slimArms`.
-        public static var slimArms: LocalizedMessage {
-            .init(key: "accountCenter.slimArms", table: "Accounts", fallback: "纤细")
-        }
-        /// 已切换手臂模型
-        ///
-        /// Resource: `Accounts.accountCenter.armsChanged`.
-        public static var armsChanged: LocalizedMessage {
-            .init(key: "accountCenter.armsChanged", table: "Accounts", fallback: "已切换手臂模型")
-        }
-        /// 皮肤操作
-        ///
-        /// Resource: `Accounts.accountCenter.skinActions`.
-        public static var skinActions: LocalizedMessage {
-            .init(key: "accountCenter.skinActions", table: "Accounts", fallback: "皮肤操作")
-        }
-        /// 皮肤已应用，下次启动游戏时生效。
-        ///
-        /// Resource: `Accounts.accountCenter.localPreviewSaved`.
-        public static var localPreviewSaved: LocalizedMessage {
-            .init(key: "accountCenter.localPreviewSaved", table: "Accounts", fallback: "皮肤已应用，下次启动游戏时生效。")
-        }
-        /// 重新登录
-        ///
-        /// Resource: `Accounts.accountCenter.reloginTitle`.
-        public static var reloginTitle: LocalizedMessage {
-            .init(key: "accountCenter.reloginTitle", table: "Accounts", fallback: "重新登录")
-        }
-        /// 重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。
-        ///
-        /// Resource: `Accounts.accountCenter.reloginHelp`.
-        public static func reloginHelp(_ value0: String) -> LocalizedMessage {
-            .init(key: "accountCenter.reloginHelp", table: "Accounts", fallback: "重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。", arguments: [.text(value0)])
-        }
-        /// 选择登录方式，开始你的下一段旅程。
-        ///
-        /// Resource: `Accounts.accountCenter.addAccountHelp`.
-        public static var addAccountHelp: LocalizedMessage {
-            .init(key: "accountCenter.addAccountHelp", table: "Accounts", fallback: "选择登录方式，开始你的下一段旅程。")
-        }
-        /// 离线账号可用于本地游戏，无法加入要求正版验证的服务器。
-        ///
-        /// Resource: `Accounts.accountCenter.offlineLoginHelp`.
-        public static var offlineLoginHelp: LocalizedMessage {
-            .init(key: "accountCenter.offlineLoginHelp", table: "Accounts", fallback: "离线账号可用于本地游戏，无法加入要求正版验证的服务器。")
-        }
-        /// 使用微软账号登录
-        ///
-        /// Resource: `Accounts.accountCenter.microsoftLogin`.
-        public static var microsoftLogin: LocalizedMessage {
-            .init(key: "accountCenter.microsoftLogin", table: "Accounts", fallback: "使用微软账号登录")
-        }
-        /// Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。
-        ///
-        /// Resource: `Accounts.accountCenter.browserLoginHelp`.
-        public static var browserLoginHelp: LocalizedMessage {
-            .init(key: "accountCenter.browserLoginHelp", table: "Accounts", fallback: "Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。")
-        }
-        /// 已连接
-        ///
-        /// Resource: `Accounts.accountCenter.connected`.
-        public static var connected: LocalizedMessage {
-            .init(key: "accountCenter.connected", table: "Accounts", fallback: "已连接")
-        }
-        /// 正在连接账号…
-        ///
-        /// Resource: `Accounts.accountCenter.connecting`.
-        public static var connecting: LocalizedMessage {
-            .init(key: "accountCenter.connecting", table: "Accounts", fallback: "正在连接账号…")
-        }
-        /// 尚未连接
-        ///
-        /// Resource: `Accounts.accountCenter.unverified`.
-        public static var unverified: LocalizedMessage {
-            .init(key: "accountCenter.unverified", table: "Accounts", fallback: "尚未连接")
-        }
-        /// 本地账号
-        ///
-        /// Resource: `Accounts.accountCenter.localAccount`.
-        public static var localAccount: LocalizedMessage {
-            .init(key: "accountCenter.localAccount", table: "Accounts", fallback: "本地账号")
-        }
-        /// %1$lld × %2$lld PNG
-        ///
-        /// Resource: `Accounts.accountCenter.textureSize`.
-        public static func textureSize(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
-            .init(key: "accountCenter.textureSize", table: "Accounts", fallback: "%1$lld × %2$lld PNG", arguments: [.integer(value0), .integer(value1)])
-        }
-        /// 有 %1$lld 份收藏无法读取，其他收藏仍可使用。
-        ///
-        /// Resource: `Accounts.accountCenter.unreadableSkins`.
-        public static func unreadableSkins(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "accountCenter.unreadableSkins", table: "Accounts", fallback: "有 %1$lld 份收藏无法读取，其他收藏仍可使用。", arguments: [.integer(value0)])
-        }
-        /// 查看皮肤文件夹
-        ///
-        /// Resource: `Accounts.accountCenter.showSkinFolder`.
-        public static var showSkinFolder: LocalizedMessage {
-            .init(key: "accountCenter.showSkinFolder", table: "Accounts", fallback: "查看皮肤文件夹")
-        }
-        /// 使用 LittleSkin
-        ///
-        /// Resource: `Accounts.accountCenter.useLittleSkin`.
-        public static var useLittleSkin: LocalizedMessage {
-            .init(key: "accountCenter.useLittleSkin", table: "Accounts", fallback: "使用 LittleSkin")
-        }
-        /// 退出此账号？
-        ///
-        /// Resource: `Accounts.accountCenter.logoutTitle`.
-        public static var logoutTitle: LocalizedMessage {
-            .init(key: "accountCenter.logoutTitle", table: "Accounts", fallback: "退出此账号？")
-        }
-        /// 这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。
-        ///
-        /// Resource: `Accounts.accountCenter.logoutHelp`.
-        public static var logoutHelp: LocalizedMessage {
-            .init(key: "accountCenter.logoutHelp", table: "Accounts", fallback: "这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。")
-        }
-        /// 默认皮肤
-        ///
-        /// Resource: `Accounts.accountCenter.defaultSkin`.
-        public static var defaultSkin: LocalizedMessage {
-            .init(key: "accountCenter.defaultSkin", table: "Accounts", fallback: "默认皮肤")
-        }
-        /// 尚未设置皮肤，游戏中会显示默认角色。
-        ///
-        /// Resource: `Accounts.accountCenter.defaultSkinHelp`.
-        public static var defaultSkinHelp: LocalizedMessage {
-            .init(key: "accountCenter.defaultSkinHelp", table: "Accounts", fallback: "尚未设置皮肤，游戏中会显示默认角色。")
-        }
-        /// 披风操作
-        ///
-        /// Resource: `Accounts.accountCenter.capeActions`.
-        public static var capeActions: LocalizedMessage {
-            .init(key: "accountCenter.capeActions", table: "Accounts", fallback: "披风操作")
-        }
-        /// 拖动角色查看各个角度，确认后应用到此账号。
-        ///
-        /// Resource: `Accounts.accountCenter.confirmAppearanceHelp`.
-        public static var confirmAppearanceHelp: LocalizedMessage {
-            .init(key: "accountCenter.confirmAppearanceHelp", table: "Accounts", fallback: "拖动角色查看各个角度，确认后应用到此账号。")
-        }
-        /// %1$lld 款皮肤
-        ///
-        /// Resource: `Accounts.accountCenter.skinCount`.
-        public static func skinCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "accountCenter.skinCount", table: "Accounts", fallback: "%1$lld 款皮肤", arguments: [.integer(value0)])
+            .init(key: "AccountCenter.accountDetails", table: "Accounts", fallback: "账号信息")
         }
         /// 账号类型
         ///
-        /// Resource: `Accounts.accountCenter.accountType`.
+        /// Resource: `Accounts.AccountCenter.accountType`.
         public static var accountType: LocalizedMessage {
-            .init(key: "accountCenter.accountType", table: "Accounts", fallback: "账号类型")
+            .init(key: "AccountCenter.accountType", table: "Accounts", fallback: "账号类型")
         }
-        /// 皮肤
+        /// 选择登录方式，开始你的下一段旅程。
         ///
-        /// Resource: `Accounts.accountCenter.skinSection`.
-        public static var skinSection: LocalizedMessage {
-            .init(key: "accountCenter.skinSection", table: "Accounts", fallback: "皮肤")
+        /// Resource: `Accounts.AccountCenter.addAccountHelp`.
+        public static var addAccountHelp: LocalizedMessage {
+            .init(key: "AccountCenter.addAccountHelp", table: "Accounts", fallback: "选择登录方式，开始你的下一段旅程。")
         }
-        /// 披风
+        /// 连接账号后即可管理披风。
         ///
-        /// Resource: `Accounts.accountCenter.capeSection`.
-        public static var capeSection: LocalizedMessage {
-            .init(key: "accountCenter.capeSection", table: "Accounts", fallback: "披风")
+        /// Resource: `Accounts.AccountCenter.appearanceNotLoaded`.
+        public static var appearanceNotLoaded: LocalizedMessage {
+            .init(key: "AccountCenter.appearanceNotLoaded", table: "Accounts", fallback: "连接账号后即可管理披风。")
         }
-        /// 更换…
+        /// 已恢复默认外观。
         ///
-        /// Resource: `Accounts.accountCenter.replaceSkin`.
-        public static var replaceSkin: LocalizedMessage {
-            .init(key: "accountCenter.replaceSkin", table: "Accounts", fallback: "更换…")
+        /// Resource: `Accounts.AccountCenter.appearanceReset`.
+        public static var appearanceReset: LocalizedMessage {
+            .init(key: "AccountCenter.appearanceReset", table: "Accounts", fallback: "已恢复默认外观。")
         }
-        /// 导入一张披风 PNG，或保持不使用披风。
+        /// 外观分类
         ///
-        /// Resource: `Accounts.accountCenter.chooseCapeHelp`.
-        public static var chooseCapeHelp: LocalizedMessage {
-            .init(key: "accountCenter.chooseCapeHelp", table: "Accounts", fallback: "导入一张披风 PNG，或保持不使用披风。")
-        }
-        /// 正在应用外观…
-        ///
-        /// Resource: `Accounts.accountCenter.applyingAppearance`.
-        public static var applyingAppearance: LocalizedMessage {
-            .init(key: "accountCenter.applyingAppearance", table: "Accounts", fallback: "正在应用外观…")
+        /// Resource: `Accounts.AccountCenter.appearanceSection`.
+        public static var appearanceSection: LocalizedMessage {
+            .init(key: "AccountCenter.appearanceSection", table: "Accounts", fallback: "外观分类")
         }
         /// 连接账号后即可管理皮肤和披风。
         ///
-        /// Resource: `Accounts.accountCenter.appearanceUnavailableOffline`.
+        /// Resource: `Accounts.AccountCenter.appearanceUnavailableOffline`.
         public static var appearanceUnavailableOffline: LocalizedMessage {
-            .init(key: "accountCenter.appearanceUnavailableOffline", table: "Accounts", fallback: "连接账号后即可管理皮肤和披风。")
+            .init(key: "AccountCenter.appearanceUnavailableOffline", table: "Accounts", fallback: "连接账号后即可管理皮肤和披风。")
+        }
+        /// 应用披风
+        ///
+        /// Resource: `Accounts.AccountCenter.applyCape`.
+        public static var applyCape: LocalizedMessage {
+            .init(key: "AccountCenter.applyCape", table: "Accounts", fallback: "应用披风")
+        }
+        /// 正在应用外观…
+        ///
+        /// Resource: `Accounts.AccountCenter.applyingAppearance`.
+        public static var applyingAppearance: LocalizedMessage {
+            .init(key: "AccountCenter.applyingAppearance", table: "Accounts", fallback: "正在应用外观…")
+        }
+        /// 已切换手臂模型
+        ///
+        /// Resource: `Accounts.AccountCenter.armsChanged`.
+        public static var armsChanged: LocalizedMessage {
+            .init(key: "AccountCenter.armsChanged", table: "Accounts", fallback: "已切换手臂模型")
+        }
+        /// Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。
+        ///
+        /// Resource: `Accounts.AccountCenter.browserLoginHelp`.
+        public static var browserLoginHelp: LocalizedMessage {
+            .init(key: "AccountCenter.browserLoginHelp", table: "Accounts", fallback: "Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。")
+        }
+        /// 披风操作
+        ///
+        /// Resource: `Accounts.AccountCenter.capeActions`.
+        public static var capeActions: LocalizedMessage {
+            .init(key: "AccountCenter.capeActions", table: "Accounts", fallback: "披风操作")
+        }
+        /// 披风
+        ///
+        /// Resource: `Accounts.AccountCenter.capeSection`.
+        public static var capeSection: LocalizedMessage {
+            .init(key: "AccountCenter.capeSection", table: "Accounts", fallback: "披风")
+        }
+        /// 可旋转的角色外观预览
+        ///
+        /// Resource: `Accounts.AccountCenter.characterPreview`.
+        public static var characterPreview: LocalizedMessage {
+            .init(key: "AccountCenter.characterPreview", table: "Accounts", fallback: "可旋转的角色外观预览")
+        }
+        /// 导入一张披风 PNG，或保持不使用披风。
+        ///
+        /// Resource: `Accounts.AccountCenter.chooseCapeHelp`.
+        public static var chooseCapeHelp: LocalizedMessage {
+            .init(key: "AccountCenter.chooseCapeHelp", table: "Accounts", fallback: "导入一张披风 PNG，或保持不使用披风。")
+        }
+        /// 导入一张皮肤 PNG，旋转查看角色并选择手臂模型。
+        ///
+        /// Resource: `Accounts.AccountCenter.chooseSkinHelp`.
+        public static var chooseSkinHelp: LocalizedMessage {
+            .init(key: "AccountCenter.chooseSkinHelp", table: "Accounts", fallback: "导入一张皮肤 PNG，旋转查看角色并选择手臂模型。")
+        }
+        /// 经典
+        ///
+        /// Resource: `Accounts.AccountCenter.classicArms`.
+        public static var classicArms: LocalizedMessage {
+            .init(key: "AccountCenter.classicArms", table: "Accounts", fallback: "经典")
+        }
+        /// 恢复默认皮肤
+        ///
+        /// Resource: `Accounts.AccountCenter.clearLocalPreview`.
+        public static var clearLocalPreview: LocalizedMessage {
+            .init(key: "AccountCenter.clearLocalPreview", table: "Accounts", fallback: "恢复默认皮肤")
+        }
+        /// 拖动角色查看各个角度，确认后应用到此账号。
+        ///
+        /// Resource: `Accounts.AccountCenter.confirmAppearanceHelp`.
+        public static var confirmAppearanceHelp: LocalizedMessage {
+            .init(key: "AccountCenter.confirmAppearanceHelp", table: "Accounts", fallback: "拖动角色查看各个角度，确认后应用到此账号。")
+        }
+        /// 恢复默认
+        ///
+        /// Resource: `Accounts.AccountCenter.confirmReset`.
+        public static var confirmReset: LocalizedMessage {
+            .init(key: "AccountCenter.confirmReset", table: "Accounts", fallback: "恢复默认")
+        }
+        /// 已连接
+        ///
+        /// Resource: `Accounts.AccountCenter.connected`.
+        public static var connected: LocalizedMessage {
+            .init(key: "AccountCenter.connected", table: "Accounts", fallback: "已连接")
+        }
+        /// 正在连接账号…
+        ///
+        /// Resource: `Accounts.AccountCenter.connecting`.
+        public static var connecting: LocalizedMessage {
+            .init(key: "AccountCenter.connecting", table: "Accounts", fallback: "正在连接账号…")
+        }
+        /// 复制 UUID
+        ///
+        /// Resource: `Accounts.AccountCenter.copyUUID`.
+        public static var copyUUID: LocalizedMessage {
+            .init(key: "AccountCenter.copyUUID", table: "Accounts", fallback: "复制 UUID")
+        }
+        /// 当前外观
+        ///
+        /// Resource: `Accounts.AccountCenter.currentAppearance`.
+        public static var currentAppearance: LocalizedMessage {
+            .init(key: "AccountCenter.currentAppearance", table: "Accounts", fallback: "当前外观")
+        }
+        /// 默认皮肤
+        ///
+        /// Resource: `Accounts.AccountCenter.defaultSkin`.
+        public static var defaultSkin: LocalizedMessage {
+            .init(key: "AccountCenter.defaultSkin", table: "Accounts", fallback: "默认皮肤")
+        }
+        /// 尚未设置皮肤，游戏中会显示默认角色。
+        ///
+        /// Resource: `Accounts.AccountCenter.defaultSkinHelp`.
+        public static var defaultSkinHelp: LocalizedMessage {
+            .init(key: "AccountCenter.defaultSkinHelp", table: "Accounts", fallback: "尚未设置皮肤，游戏中会显示默认角色。")
+        }
+        /// 预览 · 尚未应用
+        ///
+        /// Resource: `Accounts.AccountCenter.draftPreview`.
+        public static var draftPreview: LocalizedMessage {
+            .init(key: "AccountCenter.draftPreview", table: "Accounts", fallback: "预览 · 尚未应用")
+        }
+        /// 导入皮肤…
+        ///
+        /// Resource: `Accounts.AccountCenter.importSkin`.
+        public static var importSkin: LocalizedMessage {
+            .init(key: "AccountCenter.importSkin", table: "Accounts", fallback: "导入皮肤…")
+        }
+        /// 无法读取保存的皮肤，文件可能已损坏。
+        ///
+        /// Resource: `Accounts.AccountCenter.invalidSavedSkin`.
+        public static var invalidSavedSkin: LocalizedMessage {
+            .init(key: "AccountCenter.invalidSavedSkin", table: "Accounts", fallback: "无法读取保存的皮肤，文件可能已损坏。")
+        }
+        /// 皮肤名称需为 1–80 个字符。
+        ///
+        /// Resource: `Accounts.AccountCenter.invalidSkinName`.
+        public static var invalidSkinName: LocalizedMessage {
+            .init(key: "AccountCenter.invalidSkinName", table: "Accounts", fallback: "皮肤名称需为 1–80 个字符。")
+        }
+        /// 旧版皮肤使用经典手臂，预览会自动补全左右肢体。
+        ///
+        /// Resource: `Accounts.AccountCenter.legacySkinHelp`.
+        public static var legacySkinHelp: LocalizedMessage {
+            .init(key: "AccountCenter.legacySkinHelp", table: "Accounts", fallback: "旧版皮肤使用经典手臂，预览会自动补全左右肢体。")
+        }
+        /// 皮肤库为空
+        ///
+        /// Resource: `Accounts.AccountCenter.libraryEmpty`.
+        public static var libraryEmpty: LocalizedMessage {
+            .init(key: "AccountCenter.libraryEmpty", table: "Accounts", fallback: "皮肤库为空")
+        }
+        /// 导入 PNG，或把账号当前皮肤保存到这里。
+        ///
+        /// Resource: `Accounts.AccountCenter.libraryEmptyHelp`.
+        public static var libraryEmptyHelp: LocalizedMessage {
+            .init(key: "AccountCenter.libraryEmptyHelp", table: "Accounts", fallback: "导入 PNG，或把账号当前皮肤保存到这里。")
+        }
+        /// 收藏你喜欢的皮肤，随时预览和使用。
+        ///
+        /// Resource: `Accounts.AccountCenter.libraryHelp`.
+        public static var libraryHelp: LocalizedMessage {
+            .init(key: "AccountCenter.libraryHelp", table: "Accounts", fallback: "收藏你喜欢的皮肤，随时预览和使用。")
+        }
+        /// 本地账号
+        ///
+        /// Resource: `Accounts.AccountCenter.localAccount`.
+        public static var localAccount: LocalizedMessage {
+            .init(key: "AccountCenter.localAccount", table: "Accounts", fallback: "本地账号")
+        }
+        /// 皮肤已应用，下次启动游戏时生效。
+        ///
+        /// Resource: `Accounts.AccountCenter.localPreviewSaved`.
+        public static var localPreviewSaved: LocalizedMessage {
+            .init(key: "AccountCenter.localPreviewSaved", table: "Accounts", fallback: "皮肤已应用，下次启动游戏时生效。")
+        }
+        /// 这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。
+        ///
+        /// Resource: `Accounts.AccountCenter.logoutHelp`.
+        public static var logoutHelp: LocalizedMessage {
+            .init(key: "AccountCenter.logoutHelp", table: "Accounts", fallback: "这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。")
+        }
+        /// 退出此账号？
+        ///
+        /// Resource: `Accounts.AccountCenter.logoutTitle`.
+        public static var logoutTitle: LocalizedMessage {
+            .init(key: "AccountCenter.logoutTitle", table: "Accounts", fallback: "退出此账号？")
+        }
+        /// 使用微软账号登录
+        ///
+        /// Resource: `Accounts.AccountCenter.microsoftLogin`.
+        public static var microsoftLogin: LocalizedMessage {
+            .init(key: "AccountCenter.microsoftLogin", table: "Accounts", fallback: "使用微软账号登录")
+        }
+        /// 微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。
+        ///
+        /// Resource: `Accounts.AccountCenter.microsoftSkinHelp`.
+        public static var microsoftSkinHelp: LocalizedMessage {
+            .init(key: "AccountCenter.microsoftSkinHelp", table: "Accounts", fallback: "微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。")
+        }
+        /// 离线账号可用于本地游戏，无法加入要求正版验证的服务器。
+        ///
+        /// Resource: `Accounts.AccountCenter.offlineLoginHelp`.
+        public static var offlineLoginHelp: LocalizedMessage {
+            .init(key: "AccountCenter.offlineLoginHelp", table: "Accounts", fallback: "离线账号可用于本地游戏，无法加入要求正版验证的服务器。")
+        }
+        /// 重新启动游戏后，所选皮肤将在本机生效。
+        ///
+        /// Resource: `Accounts.AccountCenter.offlinePreviewHelp`.
+        public static var offlinePreviewHelp: LocalizedMessage {
+            .init(key: "AccountCenter.offlinePreviewHelp", table: "Accounts", fallback: "重新启动游戏后，所选皮肤将在本机生效。")
+        }
+        /// 显示外层皮肤
+        ///
+        /// Resource: `Accounts.AccountCenter.outerLayer`.
+        public static var outerLayer: LocalizedMessage {
+            .init(key: "AccountCenter.outerLayer", table: "Accounts", fallback: "显示外层皮肤")
+        }
+        /// 示意模型 · 未加载皮肤
+        ///
+        /// Resource: `Accounts.AccountCenter.placeholderPreview`.
+        public static var placeholderPreview: LocalizedMessage {
+            .init(key: "AccountCenter.placeholderPreview", table: "Accounts", fallback: "示意模型 · 未加载皮肤")
+        }
+        /// 预览与使用
+        ///
+        /// Resource: `Accounts.AccountCenter.previewAndUse`.
+        public static var previewAndUse: LocalizedMessage {
+            .init(key: "AccountCenter.previewAndUse", table: "Accounts", fallback: "预览与使用")
+        }
+        /// 确认你的新外观
+        ///
+        /// Resource: `Accounts.AccountCenter.previewBeforeApply`.
+        public static var previewBeforeApply: LocalizedMessage {
+            .init(key: "AccountCenter.previewBeforeApply", table: "Accounts", fallback: "确认你的新外观")
+        }
+        /// 重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。
+        ///
+        /// Resource: `Accounts.AccountCenter.reloginHelp`.
+        public static func reloginHelp(_ value0: String) -> LocalizedMessage {
+            .init(key: "AccountCenter.reloginHelp", table: "Accounts", fallback: "重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。", arguments: [.text(value0)])
+        }
+        /// 重新登录
+        ///
+        /// Resource: `Accounts.AccountCenter.reloginTitle`.
+        public static var reloginTitle: LocalizedMessage {
+            .init(key: "AccountCenter.reloginTitle", table: "Accounts", fallback: "重新登录")
+        }
+        /// 这会移除 Ruri 中保存的账号及其登录凭据。游戏实例和皮肤库会保留。
+        ///
+        /// Resource: `Accounts.AccountCenter.removeAccountHelp`.
+        public static var removeAccountHelp: LocalizedMessage {
+            .init(key: "AccountCenter.removeAccountHelp", table: "Accounts", fallback: "这会移除 Ruri 中保存的账号及其登录凭据。游戏实例和皮肤库会保留。")
+        }
+        /// 移除“%1$@”？
+        ///
+        /// Resource: `Accounts.AccountCenter.removeAccountTitle`.
+        public static func removeAccountTitle(_ value0: String) -> LocalizedMessage {
+            .init(key: "AccountCenter.removeAccountTitle", table: "Accounts", fallback: "移除“%1$@”？", arguments: [.text(value0)])
+        }
+        /// 移除皮肤
+        ///
+        /// Resource: `Accounts.AccountCenter.removeSkin`.
+        public static var removeSkin: LocalizedMessage {
+            .init(key: "AccountCenter.removeSkin", table: "Accounts", fallback: "移除皮肤")
+        }
+        /// 已应用的账号外观和原始 PNG 文件会保留。
+        ///
+        /// Resource: `Accounts.AccountCenter.removeSkinHelp`.
+        public static var removeSkinHelp: LocalizedMessage {
+            .init(key: "AccountCenter.removeSkinHelp", table: "Accounts", fallback: "已应用的账号外观和原始 PNG 文件会保留。")
+        }
+        /// 从皮肤库移除这款皮肤？
+        ///
+        /// Resource: `Accounts.AccountCenter.removeSkinTitle`.
+        public static var removeSkinTitle: LocalizedMessage {
+            .init(key: "AccountCenter.removeSkinTitle", table: "Accounts", fallback: "从皮肤库移除这款皮肤？")
+        }
+        /// 重命名皮肤
+        ///
+        /// Resource: `Accounts.AccountCenter.renameSkin`.
+        public static var renameSkin: LocalizedMessage {
+            .init(key: "AccountCenter.renameSkin", table: "Accounts", fallback: "重命名皮肤")
+        }
+        /// 更换…
+        ///
+        /// Resource: `Accounts.AccountCenter.replaceSkin`.
+        public static var replaceSkin: LocalizedMessage {
+            .init(key: "AccountCenter.replaceSkin", table: "Accounts", fallback: "更换…")
+        }
+        /// 恢复默认外观？
+        ///
+        /// Resource: `Accounts.AccountCenter.resetAppearance`.
+        public static var resetAppearance: LocalizedMessage {
+            .init(key: "AccountCenter.resetAppearance", table: "Accounts", fallback: "恢复默认外观？")
+        }
+        /// 重置视角
+        ///
+        /// Resource: `Accounts.AccountCenter.resetView`.
+        public static var resetView: LocalizedMessage {
+            .init(key: "AccountCenter.resetView", table: "Accounts", fallback: "重置视角")
+        }
+        /// 重试
+        ///
+        /// Resource: `Accounts.AccountCenter.retry`.
+        public static var retry: LocalizedMessage {
+            .init(key: "AccountCenter.retry", table: "Accounts", fallback: "重试")
+        }
+        /// 旋转角色
+        ///
+        /// Resource: `Accounts.AccountCenter.rotation`.
+        public static var rotation: LocalizedMessage {
+            .init(key: "AccountCenter.rotation", table: "Accounts", fallback: "旋转角色")
+        }
+        /// 保存
+        ///
+        /// Resource: `Accounts.AccountCenter.save`.
+        public static var save: LocalizedMessage {
+            .init(key: "AccountCenter.save", table: "Accounts", fallback: "保存")
+        }
+        /// 保存到皮肤库
+        ///
+        /// Resource: `Accounts.AccountCenter.saveToLibrary`.
+        public static var saveToLibrary: LocalizedMessage {
+            .init(key: "AccountCenter.saveToLibrary", table: "Accounts", fallback: "保存到皮肤库")
+        }
+        /// 已保存到皮肤库。
+        ///
+        /// Resource: `Accounts.AccountCenter.savedToLibrary`.
+        public static var savedToLibrary: LocalizedMessage {
+            .init(key: "AccountCenter.savedToLibrary", table: "Accounts", fallback: "已保存到皮肤库。")
+        }
+        /// 搜索账号
+        ///
+        /// Resource: `Accounts.AccountCenter.searchAccounts`.
+        public static var searchAccounts: LocalizedMessage {
+            .init(key: "AccountCenter.searchAccounts", table: "Accounts", fallback: "搜索账号")
+        }
+        /// 选择一个账号
+        ///
+        /// Resource: `Accounts.AccountCenter.selectAccount`.
+        public static var selectAccount: LocalizedMessage {
+            .init(key: "AccountCenter.selectAccount", table: "Accounts", fallback: "选择一个账号")
+        }
+        /// 查看皮肤文件夹
+        ///
+        /// Resource: `Accounts.AccountCenter.showSkinFolder`.
+        public static var showSkinFolder: LocalizedMessage {
+            .init(key: "AccountCenter.showSkinFolder", table: "Accounts", fallback: "查看皮肤文件夹")
+        }
+        /// 皮肤操作
+        ///
+        /// Resource: `Accounts.AccountCenter.skinActions`.
+        public static var skinActions: LocalizedMessage {
+            .init(key: "AccountCenter.skinActions", table: "Accounts", fallback: "皮肤操作")
+        }
+        /// %1$lld 款皮肤
+        ///
+        /// Resource: `Accounts.AccountCenter.skinCount`.
+        public static func skinCount(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AccountCenter.skinCount", table: "Accounts", fallback: "%1$lld 款皮肤", arguments: [.integer(value0)])
+        }
+        /// 皮肤库
+        ///
+        /// Resource: `Accounts.AccountCenter.skinLibrary`.
+        public static var skinLibrary: LocalizedMessage {
+            .init(key: "AccountCenter.skinLibrary", table: "Accounts", fallback: "皮肤库")
+        }
+        /// 皮肤名称
+        ///
+        /// Resource: `Accounts.AccountCenter.skinName`.
+        public static var skinName: LocalizedMessage {
+            .init(key: "AccountCenter.skinName", table: "Accounts", fallback: "皮肤名称")
+        }
+        /// 皮肤
+        ///
+        /// Resource: `Accounts.AccountCenter.skinSection`.
+        public static var skinSection: LocalizedMessage {
+            .init(key: "AccountCenter.skinSection", table: "Accounts", fallback: "皮肤")
+        }
+        /// 纤细
+        ///
+        /// Resource: `Accounts.AccountCenter.slimArms`.
+        public static var slimArms: LocalizedMessage {
+            .init(key: "AccountCenter.slimArms", table: "Accounts", fallback: "纤细")
+        }
+        /// %1$lld × %2$lld PNG
+        ///
+        /// Resource: `Accounts.AccountCenter.textureSize`.
+        public static func textureSize(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
+            .init(key: "AccountCenter.textureSize", table: "Accounts", fallback: "%1$lld × %2$lld PNG", arguments: [.integer(value0), .integer(value1)])
+        }
+        /// 有 %1$lld 份收藏无法读取，其他收藏仍可使用。
+        ///
+        /// Resource: `Accounts.AccountCenter.unreadableSkins`.
+        public static func unreadableSkins(_ value0: Int64) -> LocalizedMessage {
+            .init(key: "AccountCenter.unreadableSkins", table: "Accounts", fallback: "有 %1$lld 份收藏无法读取，其他收藏仍可使用。", arguments: [.integer(value0)])
+        }
+        /// 尚未连接
+        ///
+        /// Resource: `Accounts.AccountCenter.unverified`.
+        public static var unverified: LocalizedMessage {
+            .init(key: "AccountCenter.unverified", table: "Accounts", fallback: "尚未连接")
+        }
+        /// 使用 LittleSkin
+        ///
+        /// Resource: `Accounts.AccountCenter.useLittleSkin`.
+        public static var useLittleSkin: LocalizedMessage {
+            .init(key: "AccountCenter.useLittleSkin", table: "Accounts", fallback: "使用 LittleSkin")
+        }
+        /// 应用皮肤
+        ///
+        /// Resource: `Accounts.AccountCenter.useLocalPreview`.
+        public static var useLocalPreview: LocalizedMessage {
+            .init(key: "AccountCenter.useLocalPreview", table: "Accounts", fallback: "应用皮肤")
+        }
+        /// 使用…
+        ///
+        /// Resource: `Accounts.AccountCenter.useSkin`.
+        public static var useSkin: LocalizedMessage {
+            .init(key: "AccountCenter.useSkin", table: "Accounts", fallback: "使用…")
+        }
+        /// 添加你的 Minecraft 账号
+        ///
+        /// Resource: `Accounts.AccountCenter.welcome`.
+        public static var welcome: LocalizedMessage {
+            .init(key: "AccountCenter.welcome", table: "Accounts", fallback: "添加你的 Minecraft 账号")
+        }
+        /// 登录微软账号、连接第三方认证服务器，或创建一个离线角色。
+        ///
+        /// Resource: `Accounts.AccountCenter.welcomeHelp`.
+        public static var welcomeHelp: LocalizedMessage {
+            .init(key: "AccountCenter.welcomeHelp", table: "Accounts", fallback: "登录微软账号、连接第三方认证服务器，或创建一个离线角色。")
+        }
+        /// 登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。
+        ///
+        /// Resource: `Accounts.AccountCenter.wrongLoginAccount`.
+        public static var wrongLoginAccount: LocalizedMessage {
+            .init(key: "AccountCenter.wrongLoginAccount", table: "Accounts", fallback: "登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Accounts:accountCenter.invalidSkinName": .init("皮肤名称需为 1–80 个字符。", []),
-            "Accounts:accountCenter.invalidSavedSkin": .init("无法读取保存的皮肤，文件可能已损坏。", []),
-            "Accounts:accountCenter.wrongLoginAccount": .init("登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。", []),
-            "Accounts:accountCenter.characterPreview": .init("可旋转的角色外观预览", []),
-            "Accounts:accountCenter.rotation": .init("旋转角色", []),
-            "Accounts:accountCenter.resetView": .init("重置视角", []),
-            "Accounts:accountCenter.outerLayer": .init("显示外层皮肤", []),
-            "Accounts:accountCenter.welcome": .init("添加你的 Minecraft 账号", []),
-            "Accounts:accountCenter.welcomeHelp": .init("登录微软账号、连接第三方认证服务器，或创建一个离线角色。", []),
-            "Accounts:accountCenter.selectAccount": .init("选择一个账号", []),
-            "Accounts:accountCenter.searchAccounts": .init("搜索账号", []),
-            "Accounts:accountCenter.removeAccountTitle": .init("移除“%1$@”？", [.text]),
-            "Accounts:accountCenter.removeAccountHelp": .init("这会移除 Ruri 中保存的账号及其登录凭据。游戏实例和皮肤库会保留。", []),
-            "Accounts:accountCenter.accountCount": .init("%1$lld 个账号", [.integer]),
-            "Accounts:accountCenter.copyUUID": .init("复制 UUID", []),
-            "Accounts:accountCenter.accountActions": .init("账号操作", []),
-            "Accounts:accountCenter.accountDetails": .init("账号信息", []),
-            "Accounts:accountCenter.appearanceSection": .init("外观分类", []),
-            "Accounts:accountCenter.skinLibrary": .init("皮肤库", []),
-            "Accounts:accountCenter.offlinePreviewHelp": .init("重新启动游戏后，所选皮肤将在本机生效。", []),
-            "Accounts:accountCenter.retry": .init("重试", []),
-            "Accounts:accountCenter.renameSkin": .init("重命名皮肤", []),
-            "Accounts:accountCenter.skinName": .init("皮肤名称", []),
-            "Accounts:accountCenter.save": .init("保存", []),
-            "Accounts:accountCenter.removeSkinTitle": .init("从皮肤库移除这款皮肤？", []),
-            "Accounts:accountCenter.removeSkin": .init("移除皮肤", []),
-            "Accounts:accountCenter.removeSkinHelp": .init("已应用的账号外观和原始 PNG 文件会保留。", []),
-            "Accounts:accountCenter.resetAppearance": .init("恢复默认外观？", []),
-            "Accounts:accountCenter.confirmReset": .init("恢复默认", []),
-            "Accounts:accountCenter.appearanceReset": .init("已恢复默认外观。", []),
-            "Accounts:accountCenter.draftPreview": .init("预览 · 尚未应用", []),
-            "Accounts:accountCenter.placeholderPreview": .init("示意模型 · 未加载皮肤", []),
-            "Accounts:accountCenter.currentAppearance": .init("当前外观", []),
-            "Accounts:accountCenter.chooseSkinHelp": .init("导入一张皮肤 PNG，旋转查看角色并选择手臂模型。", []),
-            "Accounts:accountCenter.saveToLibrary": .init("保存到皮肤库", []),
-            "Accounts:accountCenter.savedToLibrary": .init("已保存到皮肤库。", []),
-            "Accounts:accountCenter.clearLocalPreview": .init("恢复默认皮肤", []),
-            "Accounts:accountCenter.microsoftSkinHelp": .init("微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。", []),
-            "Accounts:accountCenter.applyCape": .init("应用披风", []),
-            "Accounts:accountCenter.appearanceNotLoaded": .init("连接账号后即可管理披风。", []),
-            "Accounts:accountCenter.previewBeforeApply": .init("确认你的新外观", []),
-            "Accounts:accountCenter.legacySkinHelp": .init("旧版皮肤使用经典手臂，预览会自动补全左右肢体。", []),
-            "Accounts:accountCenter.useLocalPreview": .init("应用皮肤", []),
-            "Accounts:accountCenter.libraryHelp": .init("收藏你喜欢的皮肤，随时预览和使用。", []),
-            "Accounts:accountCenter.importSkin": .init("导入皮肤…", []),
-            "Accounts:accountCenter.libraryEmpty": .init("皮肤库为空", []),
-            "Accounts:accountCenter.libraryEmptyHelp": .init("导入 PNG，或把账号当前皮肤保存到这里。", []),
-            "Accounts:accountCenter.previewAndUse": .init("预览与使用", []),
-            "Accounts:accountCenter.useSkin": .init("使用…", []),
-            "Accounts:accountCenter.classicArms": .init("经典", []),
-            "Accounts:accountCenter.slimArms": .init("纤细", []),
-            "Accounts:accountCenter.armsChanged": .init("已切换手臂模型", []),
-            "Accounts:accountCenter.skinActions": .init("皮肤操作", []),
-            "Accounts:accountCenter.localPreviewSaved": .init("皮肤已应用，下次启动游戏时生效。", []),
-            "Accounts:accountCenter.reloginTitle": .init("重新登录", []),
-            "Accounts:accountCenter.reloginHelp": .init("重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。", [.text]),
-            "Accounts:accountCenter.addAccountHelp": .init("选择登录方式，开始你的下一段旅程。", []),
-            "Accounts:accountCenter.offlineLoginHelp": .init("离线账号可用于本地游戏，无法加入要求正版验证的服务器。", []),
-            "Accounts:accountCenter.microsoftLogin": .init("使用微软账号登录", []),
-            "Accounts:accountCenter.browserLoginHelp": .init("Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。", []),
-            "Accounts:accountCenter.connected": .init("已连接", []),
-            "Accounts:accountCenter.connecting": .init("正在连接账号…", []),
-            "Accounts:accountCenter.unverified": .init("尚未连接", []),
-            "Accounts:accountCenter.localAccount": .init("本地账号", []),
-            "Accounts:accountCenter.textureSize": .init("%1$lld × %2$lld PNG", [.integer, .integer]),
-            "Accounts:accountCenter.unreadableSkins": .init("有 %1$lld 份收藏无法读取，其他收藏仍可使用。", [.integer]),
-            "Accounts:accountCenter.showSkinFolder": .init("查看皮肤文件夹", []),
-            "Accounts:accountCenter.useLittleSkin": .init("使用 LittleSkin", []),
-            "Accounts:accountCenter.logoutTitle": .init("退出此账号？", []),
-            "Accounts:accountCenter.logoutHelp": .init("这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。", []),
-            "Accounts:accountCenter.defaultSkin": .init("默认皮肤", []),
-            "Accounts:accountCenter.defaultSkinHelp": .init("尚未设置皮肤，游戏中会显示默认角色。", []),
-            "Accounts:accountCenter.capeActions": .init("披风操作", []),
-            "Accounts:accountCenter.confirmAppearanceHelp": .init("拖动角色查看各个角度，确认后应用到此账号。", []),
-            "Accounts:accountCenter.skinCount": .init("%1$lld 款皮肤", [.integer]),
-            "Accounts:accountCenter.accountType": .init("账号类型", []),
-            "Accounts:accountCenter.skinSection": .init("皮肤", []),
-            "Accounts:accountCenter.capeSection": .init("披风", []),
-            "Accounts:accountCenter.replaceSkin": .init("更换…", []),
-            "Accounts:accountCenter.chooseCapeHelp": .init("导入一张披风 PNG，或保持不使用披风。", []),
-            "Accounts:accountCenter.applyingAppearance": .init("正在应用外观…", []),
-            "Accounts:accountCenter.appearanceUnavailableOffline": .init("连接账号后即可管理皮肤和披风。", []),
+            "Accounts:AccountCenter.accountActions": .init("账号操作", []),
+            "Accounts:AccountCenter.accountCount": .init("%1$lld 个账号", [.integer]),
+            "Accounts:AccountCenter.accountDetails": .init("账号信息", []),
+            "Accounts:AccountCenter.accountType": .init("账号类型", []),
+            "Accounts:AccountCenter.addAccountHelp": .init("选择登录方式，开始你的下一段旅程。", []),
+            "Accounts:AccountCenter.appearanceNotLoaded": .init("连接账号后即可管理披风。", []),
+            "Accounts:AccountCenter.appearanceReset": .init("已恢复默认外观。", []),
+            "Accounts:AccountCenter.appearanceSection": .init("外观分类", []),
+            "Accounts:AccountCenter.appearanceUnavailableOffline": .init("连接账号后即可管理皮肤和披风。", []),
+            "Accounts:AccountCenter.applyCape": .init("应用披风", []),
+            "Accounts:AccountCenter.applyingAppearance": .init("正在应用外观…", []),
+            "Accounts:AccountCenter.armsChanged": .init("已切换手臂模型", []),
+            "Accounts:AccountCenter.browserLoginHelp": .init("Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。", []),
+            "Accounts:AccountCenter.capeActions": .init("披风操作", []),
+            "Accounts:AccountCenter.capeSection": .init("披风", []),
+            "Accounts:AccountCenter.characterPreview": .init("可旋转的角色外观预览", []),
+            "Accounts:AccountCenter.chooseCapeHelp": .init("导入一张披风 PNG，或保持不使用披风。", []),
+            "Accounts:AccountCenter.chooseSkinHelp": .init("导入一张皮肤 PNG，旋转查看角色并选择手臂模型。", []),
+            "Accounts:AccountCenter.classicArms": .init("经典", []),
+            "Accounts:AccountCenter.clearLocalPreview": .init("恢复默认皮肤", []),
+            "Accounts:AccountCenter.confirmAppearanceHelp": .init("拖动角色查看各个角度，确认后应用到此账号。", []),
+            "Accounts:AccountCenter.confirmReset": .init("恢复默认", []),
+            "Accounts:AccountCenter.connected": .init("已连接", []),
+            "Accounts:AccountCenter.connecting": .init("正在连接账号…", []),
+            "Accounts:AccountCenter.copyUUID": .init("复制 UUID", []),
+            "Accounts:AccountCenter.currentAppearance": .init("当前外观", []),
+            "Accounts:AccountCenter.defaultSkin": .init("默认皮肤", []),
+            "Accounts:AccountCenter.defaultSkinHelp": .init("尚未设置皮肤，游戏中会显示默认角色。", []),
+            "Accounts:AccountCenter.draftPreview": .init("预览 · 尚未应用", []),
+            "Accounts:AccountCenter.importSkin": .init("导入皮肤…", []),
+            "Accounts:AccountCenter.invalidSavedSkin": .init("无法读取保存的皮肤，文件可能已损坏。", []),
+            "Accounts:AccountCenter.invalidSkinName": .init("皮肤名称需为 1–80 个字符。", []),
+            "Accounts:AccountCenter.legacySkinHelp": .init("旧版皮肤使用经典手臂，预览会自动补全左右肢体。", []),
+            "Accounts:AccountCenter.libraryEmpty": .init("皮肤库为空", []),
+            "Accounts:AccountCenter.libraryEmptyHelp": .init("导入 PNG，或把账号当前皮肤保存到这里。", []),
+            "Accounts:AccountCenter.libraryHelp": .init("收藏你喜欢的皮肤，随时预览和使用。", []),
+            "Accounts:AccountCenter.localAccount": .init("本地账号", []),
+            "Accounts:AccountCenter.localPreviewSaved": .init("皮肤已应用，下次启动游戏时生效。", []),
+            "Accounts:AccountCenter.logoutHelp": .init("这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。", []),
+            "Accounts:AccountCenter.logoutTitle": .init("退出此账号？", []),
+            "Accounts:AccountCenter.microsoftLogin": .init("使用微软账号登录", []),
+            "Accounts:AccountCenter.microsoftSkinHelp": .init("微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。", []),
+            "Accounts:AccountCenter.offlineLoginHelp": .init("离线账号可用于本地游戏，无法加入要求正版验证的服务器。", []),
+            "Accounts:AccountCenter.offlinePreviewHelp": .init("重新启动游戏后，所选皮肤将在本机生效。", []),
+            "Accounts:AccountCenter.outerLayer": .init("显示外层皮肤", []),
+            "Accounts:AccountCenter.placeholderPreview": .init("示意模型 · 未加载皮肤", []),
+            "Accounts:AccountCenter.previewAndUse": .init("预览与使用", []),
+            "Accounts:AccountCenter.previewBeforeApply": .init("确认你的新外观", []),
+            "Accounts:AccountCenter.reloginHelp": .init("重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。", [.text]),
+            "Accounts:AccountCenter.reloginTitle": .init("重新登录", []),
+            "Accounts:AccountCenter.removeAccountHelp": .init("这会移除 Ruri 中保存的账号及其登录凭据。游戏实例和皮肤库会保留。", []),
+            "Accounts:AccountCenter.removeAccountTitle": .init("移除“%1$@”？", [.text]),
+            "Accounts:AccountCenter.removeSkin": .init("移除皮肤", []),
+            "Accounts:AccountCenter.removeSkinHelp": .init("已应用的账号外观和原始 PNG 文件会保留。", []),
+            "Accounts:AccountCenter.removeSkinTitle": .init("从皮肤库移除这款皮肤？", []),
+            "Accounts:AccountCenter.renameSkin": .init("重命名皮肤", []),
+            "Accounts:AccountCenter.replaceSkin": .init("更换…", []),
+            "Accounts:AccountCenter.resetAppearance": .init("恢复默认外观？", []),
+            "Accounts:AccountCenter.resetView": .init("重置视角", []),
+            "Accounts:AccountCenter.retry": .init("重试", []),
+            "Accounts:AccountCenter.rotation": .init("旋转角色", []),
+            "Accounts:AccountCenter.save": .init("保存", []),
+            "Accounts:AccountCenter.saveToLibrary": .init("保存到皮肤库", []),
+            "Accounts:AccountCenter.savedToLibrary": .init("已保存到皮肤库。", []),
+            "Accounts:AccountCenter.searchAccounts": .init("搜索账号", []),
+            "Accounts:AccountCenter.selectAccount": .init("选择一个账号", []),
+            "Accounts:AccountCenter.showSkinFolder": .init("查看皮肤文件夹", []),
+            "Accounts:AccountCenter.skinActions": .init("皮肤操作", []),
+            "Accounts:AccountCenter.skinCount": .init("%1$lld 款皮肤", [.integer]),
+            "Accounts:AccountCenter.skinLibrary": .init("皮肤库", []),
+            "Accounts:AccountCenter.skinName": .init("皮肤名称", []),
+            "Accounts:AccountCenter.skinSection": .init("皮肤", []),
+            "Accounts:AccountCenter.slimArms": .init("纤细", []),
+            "Accounts:AccountCenter.textureSize": .init("%1$lld × %2$lld PNG", [.integer, .integer]),
+            "Accounts:AccountCenter.unreadableSkins": .init("有 %1$lld 份收藏无法读取，其他收藏仍可使用。", [.integer]),
+            "Accounts:AccountCenter.unverified": .init("尚未连接", []),
+            "Accounts:AccountCenter.useLittleSkin": .init("使用 LittleSkin", []),
+            "Accounts:AccountCenter.useLocalPreview": .init("应用皮肤", []),
+            "Accounts:AccountCenter.useSkin": .init("使用…", []),
+            "Accounts:AccountCenter.welcome": .init("添加你的 Minecraft 账号", []),
+            "Accounts:AccountCenter.welcomeHelp": .init("登录微软账号、连接第三方认证服务器，或创建一个离线角色。", []),
+            "Accounts:AccountCenter.wrongLoginAccount": .init("登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。", []),
         ]
     }
 }

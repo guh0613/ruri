@@ -3,21 +3,21 @@ import Foundation
 
 extension Messages {
     public enum CoreManifest {
-        /// 无效 Maven 扩展名
-        ///
-        /// Resource: `Errors.coreManifest.extPartsText1`.
-        public static var invalidExtension: LocalizedMessage {
-            .init(key: "coreManifest.extPartsText1", table: "Errors", fallback: "无效 Maven 扩展名")
-        }
         /// 无效 Maven 坐标：%1$@
         ///
-        /// Resource: `Errors.coreManifest.partsText1`.
+        /// Resource: `Errors.CoreManifest.invalidCoordinate`.
         public static func invalidCoordinate(_ value0: String) -> LocalizedMessage {
-            .init(key: "coreManifest.partsText1", table: "Errors", fallback: "无效 Maven 坐标：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreManifest.invalidCoordinate", table: "Errors", fallback: "无效 Maven 坐标：%1$@", arguments: [.text(value0)])
+        }
+        /// 无效 Maven 扩展名
+        ///
+        /// Resource: `Errors.CoreManifest.invalidExtension`.
+        public static var invalidExtension: LocalizedMessage {
+            .init(key: "CoreManifest.invalidExtension", table: "Errors", fallback: "无效 Maven 扩展名")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:coreManifest.extPartsText1": .init("无效 Maven 扩展名", []),
-            "Errors:coreManifest.partsText1": .init("无效 Maven 坐标：%1$@", [.text]),
+            "Errors:CoreManifest.invalidCoordinate": .init("无效 Maven 坐标：%1$@", [.text]),
+            "Errors:CoreManifest.invalidExtension": .init("无效 Maven 扩展名", []),
         ]
     }
 }
