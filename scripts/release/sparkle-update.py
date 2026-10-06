@@ -52,8 +52,9 @@ def sign(app, dmg):
     info = plistlib.loads((app / "Contents/Info.plist").read_bytes())
     if info.get("RuriVersion") != match[1]:
         raise UpdateError(f"{dmg.name} does not match the built app version {info.get('RuriVersion')}.")
-    # scripts/swift-build.sh keeps release builds in this subfolder of RURI_BUILD_DIR.
-    build_dir = Path(os.environ.get("RURI_BUILD_DIR", ".build")) / "release-scratch"
+    # scripts/swift-build.sh keeps release builds in this subfolder of RURI_BUILD_DIR,
+    # under a per-architecture folder when RURI_ARCH selects one.
+    build_dir = Path(os.environ.get("RURI_BUILD_DIR", ".build")) / os.environ.get("RURI_ARCH", "") / "release-scratch"
     tool = (build_dir if build_dir.is_absolute() else ROOT / build_dir) / "artifacts/sparkle/Sparkle/bin/sign_update"
     if not tool.is_file():
         raise UpdateError(f"Sparkle sign_update was not found at {tool}.")
