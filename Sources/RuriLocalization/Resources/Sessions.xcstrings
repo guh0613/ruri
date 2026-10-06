@@ -60,9 +60,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld 天"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$lld 天"
+                }
+              }
+            }
           }
         }
       }
@@ -280,9 +286,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "还有 %1$lld 个"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "还有 %1$lld 个"
+                }
+              }
+            }
           }
         }
       }
@@ -445,9 +457,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld 次"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$lld 次"
+                }
+              }
+            }
           }
         }
       }
@@ -577,9 +595,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "游玩了 %1$lld 天"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "游玩了 %1$lld 天"
+                }
+              }
+            }
           }
         }
       }
@@ -1567,9 +1591,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "包含 %1$lld 个文件 · %2$@"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "包含 %1$lld 个文件 · %2$@"
+                }
+              }
+            }
           }
         }
       }

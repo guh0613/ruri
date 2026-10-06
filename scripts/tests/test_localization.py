@@ -5,7 +5,9 @@ import tempfile
 import unittest
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from lib.localization_catalog import catalog_text, localization_value, read_catalogs, read_json, signature
+from lib.localization_catalog import (catalog_text, localization_value, read_catalogs, read_json, signature,
+                                      coverage, source_hash, accept_translations, read_baseline,
+                                      validate_policy, shipping_languages, check_completeness, REQUIRED_COMPLETE)
 
 
 def unit(value):
@@ -60,6 +62,93 @@ class CatalogTests(unittest.TestCase):
             path.write_text(catalog_text(catalog))
             with self.assertRaisesRegex(ValueError, 'without a source'):
                 read_catalogs(root)
+
+
+class CoverageTests(unittest.TestCase):
+    def setUp(self):
+        required = set(REQUIRED_COMPLETE)
+        REQUIRED_COMPLETE.clear()
+        self.addCleanup(lambda: REQUIRED_COMPLETE.update(required))
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.resources = self.root / 'Sources/RuriLocalization/Resources'
+        self.resources.mkdir(parents=True)
+        (self.root / 'scripts/lib').mkdir(parents=True)
+
+    def catalog(self, entries, table='Test'):
+        data = {'sourceLanguage': 'zh-Hans', 'version': '1.0', 'strings': {
+            key: {'extractionState': 'manual', 'localizations': localizations} for key, localizations in entries.items()
+        }}
+        (self.resources / (table + '.xcstrings')).write_text(catalog_text(data))
+        return read_catalogs(self.root)
+
+    def test_threshold_staleness_and_selective_acceptance(self):
+        entries = {f'Test.message{i}': {'zh-Hans': unit(f'Source {i}'), 'fr': unit(f'Translation {i}')} for i in range(20)}
+        del entries['Test.message19']['fr']
+        catalogs = self.catalog(entries)
+        before = coverage(catalogs, {})['fr']
+        self.assertEqual((len(before['missing']), len(before['stale'])), (1, 19))
+        self.assertEqual(shipping_languages(self.root), ['zh-Hans'])
+        self.assertEqual(accept_translations(self.root, catalogs, 'fr', accept_all=True), 19)
+        self.assertEqual(shipping_languages(self.root), ['fr', 'zh-Hans'])
+        entries['Test.message0']['zh-Hans'] = unit('Revised source')
+        catalogs = self.catalog(entries)
+        self.assertEqual(shipping_languages(self.root), ['zh-Hans'])
+        self.assertEqual(coverage(catalogs, read_baseline(self.root))['fr']['stale'], ['Test:Test.message0'])
+        accept_translations(self.root, catalogs, 'fr', keys=['Test.message0'])
+        self.assertEqual(shipping_languages(self.root), ['fr', 'zh-Hans'])
+        with self.assertRaisesRegex(ValueError, 'missing translation'):
+            accept_translations(self.root, catalogs, 'fr', keys=['Test.message19'])
+        with self.assertRaisesRegex(ValueError, 'missing translation'):
+            accept_translations(self.root, catalogs, 'fr', keys=['Unknown.key'])
+
+    def test_required_english_and_cli_are_checked_separately(self):
+        catalogs = self.catalog({'Test.title': {'zh-Hans': unit('Title')}})
+        status = validate_policy(self.root, catalogs)
+        check_completeness(catalogs, status)
+        REQUIRED_COMPLETE.add('en')
+        try:
+            with self.assertRaisesRegex(ValueError, 'required localization'):
+                check_completeness(catalogs, status)
+        finally:
+            REQUIRED_COMPLETE.discard('en')
+        catalogs = self.catalog({'CLISetup.title': {'zh-Hans': unit('CLI'), 'en': unit('CLI')}}, 'CLISetup')
+        with self.assertRaisesRegex(ValueError, 'stale CLI'):
+            check_completeness(catalogs, validate_policy(self.root, catalogs))
+        accept_translations(self.root, catalogs, 'en', keys=['CLISetup.title'])
+        check_completeness(catalogs, validate_policy(self.root, catalogs))
+
+    def test_integer_categories_and_other_only_languages(self):
+        entries = {'Test.files': {'zh-Hans': plural(other='%lld files'), 'fr': plural(one='%lld file', other='%lld files')}}
+        catalogs = self.catalog(entries)
+        with self.assertRaisesRegex(ValueError, 'missing plural categories'):
+            validate_policy(self.root, catalogs)
+        entries['Test.files']['fr'] = plural(one='%lld file', many='%lld files', other='%lld files')
+        entries['Test.files']['ja'] = unit('%lld files')
+        validate_policy(self.root, self.catalog(entries))
+        entries['Test.files']['fr'] = unit('%lld files')
+        with self.assertRaisesRegex(ValueError, 'must pluralize'):
+            validate_policy(self.root, self.catalog(entries))
+        del entries['Test.files']['fr']
+        entries['Test.files']['xx'] = unit('%lld files')
+        with self.assertRaisesRegex(ValueError, 'CLDR'):
+            validate_policy(self.root, self.catalog(entries))
+
+    def test_source_hash_tracks_structure_but_not_editor_state(self):
+        catalogs = self.catalog({'Test.files': {'zh-Hans': unit('%lld files')}})
+        item = catalogs['Test:Test.files']
+        original = source_hash(item)
+        item['entry']['localizations']['zh-Hans']['stringUnit']['state'] = 'needs_review'
+        self.assertEqual(source_hash(item), original)
+        item['entry']['localizations']['zh-Hans'] = plural(other='%lld files')
+        self.assertNotEqual(source_hash(item), original)
+        with self.assertRaisesRegex(ValueError, 'reviewed exemption'):
+            validate_policy(self.root, self.catalog({'Test.files': {'zh-Hans': unit('%lld files')}}))
+        path = self.root / 'scripts/lib/localization-plural-exempt.json'
+        path.write_text(json.dumps([{'key': 'Test:Test.files', 'reason': ''}]))
+        with self.assertRaisesRegex(ValueError, 'exemption'):
+            validate_policy(self.root, catalogs)
 
 
 if __name__ == '__main__':

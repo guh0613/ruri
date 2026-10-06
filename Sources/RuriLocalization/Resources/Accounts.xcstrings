@@ -16,9 +16,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld 个账号"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$lld 个账号"
+                }
+              }
+            }
           }
         }
       }
@@ -753,9 +759,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld 款皮肤"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$lld 款皮肤"
+                }
+              }
+            }
           }
         }
       }
@@ -819,9 +831,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "有 %1$lld 份收藏无法读取，其他收藏仍可使用。"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "有 %1$lld 份收藏无法读取，其他收藏仍可使用。"
+                }
+              }
+            }
           }
         }
       }

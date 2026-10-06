@@ -511,9 +511,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "找到 %lld 个游戏版本"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "找到 %lld 个游戏版本"
+                }
+              }
+            }
           }
         }
       }
@@ -522,9 +528,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "其中 %lld 个版本需要检查，添加后可在实例库中查看详情。"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "其中 %lld 个版本需要检查，添加后可在实例库中查看详情。"
+                }
+              }
+            }
           }
         }
       }

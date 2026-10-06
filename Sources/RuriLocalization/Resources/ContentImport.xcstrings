@@ -16,9 +16,15 @@
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "松开以导入 %1$lld 项%2$@"
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "松开以导入 %1$lld 项%2$@"
+                }
+              }
+            }
           }
         }
       }

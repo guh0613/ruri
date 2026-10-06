@@ -1,4 +1,5 @@
 """Read String Catalogs and validate the formats used by typed messages."""
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -8,6 +9,19 @@ sys.dont_write_bytecode = True
 BASE_LANGUAGE = 'zh-Hans'
 CLI_LANGUAGES = ['en', BASE_LANGUAGE]
 CLI_TABLES = {'CLIInterface', 'CLIExperience', 'CLISetup', 'Progress'}
+SHIP_THRESHOLD = 0.95
+REQUIRED_COMPLETE = set()
+# Integer cardinal categories from CLDR 48, common/supplemental/plurals.xml:
+# https://github.com/unicode-org/cldr/blob/release-48/common/supplemental/plurals.xml
+# Foundation also requires an `other` fallback, even for languages whose
+# integer values never select it (ru, uk and pl).
+INTEGER_PLURALS = {
+    'en': {'one', 'other'}, 'de': {'one', 'other'},
+    'fr': {'one', 'many', 'other'}, 'es': {'one', 'many', 'other'},
+    'it': {'one', 'many', 'other'}, 'pt-BR': {'one', 'many', 'other'},
+    'ja': {'other'}, 'ko': {'other'}, 'zh-Hans': {'other'}, 'zh-Hant': {'other'},
+    'ru': {'one', 'few', 'many'}, 'uk': {'one', 'few', 'many'}, 'pl': {'one', 'few', 'many'},
+}
 FORMAT = re.compile(r'%(?:(\d+)\$)?(lld|@|g|f|d|%)')
 SUBSTITUTION = re.compile(r'%(?:(\d+)\$)?#@([A-Za-z][A-Za-z0-9_]*)@')
 PLURAL_CATEGORIES = {'zero', 'one', 'two', 'few', 'many', 'other'}
@@ -163,12 +177,115 @@ def read_catalogs(root, check_format=False, format_files=False):
             catalogs[identity] = {'table': path.stem, 'key': key, 'group': group, 'name': name,
                                   'value': value, 'kinds': [expected[i + 1] for i in range(len(expected))],
                                   'plurals': plurals, 'entry': entry}
-    for identity, item in catalogs.items():
-        if item['table'] in CLI_TABLES and 'en' not in item['entry']['localizations']:
-            raise ValueError('Missing CLI English translation: ' + identity)
     return catalogs
 
 
-def shipping_languages(root):
-    # Partial English currently serves CLI messages only.
-    return [BASE_LANGUAGE]
+def source_hash(item):
+    def semantic(node):
+        if isinstance(node, dict):
+            return {key: semantic(value) for key, value in node.items() if key != 'state'}
+        return node
+    source = semantic(item['entry']['localizations'][BASE_LANGUAGE])
+    value = json.dumps(source, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+    return hashlib.sha256(value.encode()).hexdigest()[:12]
+
+
+def baseline_path(root):
+    return root / 'scripts/lib/localization-baseline.json'
+
+
+def read_baseline(root):
+    path = baseline_path(root)
+    baseline = read_json(path) if path.exists() else {}
+    if not isinstance(baseline, dict) or any(
+        not isinstance(items, dict) or any(not isinstance(value, str) or not re.fullmatch(r'[0-9a-f]{12}', value) for value in items.values())
+        for items in baseline.values()
+    ):
+        raise ValueError('Invalid translation baseline')
+    return baseline
+
+
+def coverage(catalogs, baseline):
+    languages = {BASE_LANGUAGE, 'en'} | set(baseline)
+    for item in catalogs.values():
+        languages.update(item['entry']['localizations'])
+    result = {}
+    for language in sorted(languages):
+        missing, stale, valid = [], [], []
+        for identity, item in catalogs.items():
+            if language not in item['entry']['localizations']:
+                missing.append(identity)
+            elif language != BASE_LANGUAGE and baseline.get(language, {}).get(identity) != source_hash(item):
+                stale.append(identity)
+            else:
+                valid.append(identity)
+        result[language] = {'missing': missing, 'stale': stale, 'valid': valid,
+                            'coverage': len(valid) / len(catalogs) if catalogs else 1.0}
+    return result
+
+
+def accept_translations(root, catalogs, language, keys=None, accept_all=False):
+    if language not in INTEGER_PLURALS or language == BASE_LANGUAGE:
+        raise ValueError('Choose a translation language listed in INTEGER_PLURALS')
+    if accept_all:
+        selected = [identity for identity, item in catalogs.items() if language in item['entry']['localizations']]
+    else:
+        aliases = {item['key']: identity for identity, item in catalogs.items()}
+        selected = [aliases.get(key, key) for key in keys or []]
+        if not selected:
+            raise ValueError('--accept requires --keys or --all')
+    for identity in selected:
+        if identity not in catalogs or language not in catalogs[identity]['entry']['localizations']:
+            raise ValueError('Cannot accept a missing translation: ' + identity)
+    baseline = read_baseline(root)
+    accepted = baseline.setdefault(language, {})
+    for identity in selected:
+        accepted[identity] = source_hash(catalogs[identity])
+    baseline_path(root).write_text(json.dumps(baseline, ensure_ascii=False, indent=2, sort_keys=True) + '\n')
+    return len(selected)
+
+
+def validate_policy(root, catalogs):
+    path = root / 'scripts/lib/localization-plural-exempt.json'
+    exemptions = read_json(path) if path.exists() else []
+    allowed = set()
+    for entry in exemptions:
+        key = entry.get('key')
+        if key in allowed or key not in catalogs or not entry.get('reason', '').strip():
+            raise ValueError('Invalid or duplicate plural exemption: ' + str(key))
+        if 'integer' not in catalogs[key]['kinds'] or catalogs[key]['plurals']:
+            raise ValueError('Unnecessary plural exemption: ' + key)
+        allowed.add(key)
+    for identity, item in catalogs.items():
+        if 'integer' in item['kinds'] and not item['plurals'] and identity not in allowed:
+            raise ValueError('Integer message needs a plural or a reviewed exemption: ' + identity)
+        for language, node in item['entry']['localizations'].items():
+            if language not in INTEGER_PLURALS:
+                raise ValueError(f'{language}: add its CLDR integer categories to INTEGER_PLURALS first')
+            required = INTEGER_PLURALS[language] | {'other'}
+            _, _, arguments = localization_value(node)
+            if item['plurals'] and required != {'other'} and arguments != item['plurals']:
+                raise ValueError(f'{identity} ({language}): translation must pluralize the source count arguments')
+            rules = [node] if 'variations' in node else list(node.get('substitutions', {}).values())
+            for rule in rules:
+                if not required <= set(plural_variants(rule)):
+                    raise ValueError(f'{identity} ({language}): missing plural categories {sorted(required - set(plural_variants(rule)))}')
+    return coverage(catalogs, read_baseline(root))
+
+
+def check_completeness(catalogs, status):
+    for language in REQUIRED_COMPLETE:
+        row = status.get(language)
+        if not row or row['missing'] or row['stale']:
+            raise ValueError(f'{language}: required localization has missing or stale translations')
+    row = status['en']
+    incomplete = [key for key in row['missing'] + row['stale'] if catalogs[key]['table'] in CLI_TABLES]
+    if incomplete:
+        raise ValueError('Missing or stale CLI English translations: ' + ', '.join(incomplete))
+
+
+def shipping_languages(root, catalogs=None, status=None):
+    catalogs = read_catalogs(root) if catalogs is None else catalogs
+    status = validate_policy(root, catalogs) if status is None else status
+    check_completeness(catalogs, status)
+    return sorted(language for language, row in status.items() if language == BASE_LANGUAGE or row['coverage'] >= SHIP_THRESHOLD)

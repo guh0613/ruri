@@ -1,0 +1,22 @@
+[
+  {
+    "key": "Accounts:AccountCenter.textureSize",
+    "reason": "Pixel width and height of a PNG image, not a count of images."
+  },
+  {
+    "key": "Interface:LauncherLog.transferProgress",
+    "reason": "Completed and total work units shown as a numeric ratio without a noun."
+  },
+  {
+    "key": "Servers:Servers.milliseconds",
+    "reason": "Latency measurement in the fixed SI unit ms, not a count of objects."
+  },
+  {
+    "key": "Servers:Servers.maximumPlayers",
+    "reason": "Numeric capacity limit; the label does not name counted players."
+  },
+  {
+    "key": "Servers:Servers.protocolVersion",
+    "reason": "Protocol version identifier, not a quantity."
+  }
+]
