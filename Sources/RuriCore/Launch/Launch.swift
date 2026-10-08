@@ -1,41 +1,11 @@
-import RuriLocalization
 import Foundation
-
-public struct LaunchPlan: Codable, Sendable {
-    public let executable: URL
-    public var arguments: [String]
-    public let directory: URL
-    public let environment: [String: String]
-    public var nativeQuitSupported: Bool?
-    public var memory: LaunchMemory?
-    public var tuning: JVMTuning? = nil
-    public var customEnvironmentNames: [String]?
-    public var commands: LaunchCommands?
-    public var wrapper: [String]?
-    public var offlineSkin: OfflineSkinLaunch? = nil
-    public var debugLogging: Bool? = nil
-    public var host: GameHostPlan? = nil
-    public var quickPlayLog: URL? = nil
-    public var destination: LaunchDestination? = nil
-    var processExecutable: URL { wrapper?.first.map { URL(fileURLWithPath: $0) } ?? executable }
-    var processArguments: [String] { wrapper?.isEmpty == false ? Array(wrapper!.dropFirst()) + [executable.path] + arguments : arguments }
-    public var environmentRedactions: [String] { (customEnvironmentNames ?? []).compactMap { environment[$0] }.filter { $0.count > 3 } }
-    public var redactedCommand: String {
-        var redactNext = false
-        return ([processExecutable.path] + processArguments).map { value in
-            if redactNext { redactNext = false; return "<redacted>" }
-            if ["--accessToken", "--clientId", "--xuid", "--session", "--userProperties"].contains(value) { redactNext = true }
-            if value.hasPrefix("-Dauthlibinjector.yggdrasil.prefetched=") { return "-Dauthlibinjector.yggdrasil.prefetched=<metadata>" }
-            return value.contains(" ") ? "\"\(value)\"" : value
-        }.joined(separator: " ")
-    }
-}
+import RuriLocalization
 
 public enum LaunchBuilder {
     public static func build(instance: GameInstance, manifest: VersionManifest, java: JavaRuntime, account: Account, accessToken: String = "0", paths: LauncherPaths, world: WorldSnapshot? = nil, destination: LaunchDestination = .normal, externalAuth: ExternalAuthLaunch? = nil, offlineSkin: OfflineSkinLaunch? = nil, capabilities: JavaCapabilities? = nil) throws -> LaunchPlan {
         guard (account.kind == .external) == (externalAuth != nil) else { throw RuriError.message(Messages.CoreLaunch.externalAuthRequired) }
         if let offlineSkin {
-            guard account.kind == .offline, offlineSkin.account == account else { throw RuriError.message(Messages.OfflineSkin.invalidConfiguration) }
+            guard account.kind == .offline, offlineSkin.account == .init(id: account.id, username: account.username, uuid: account.uuid) else { throw RuriError.message(Messages.OfflineSkin.invalidConfiguration) }
             try offlineSkin.validate()
         }
         guard paths.repositoryImportID == nil else { throw RuriError.message(Messages.CoreLaunch.packImportIncomplete) }

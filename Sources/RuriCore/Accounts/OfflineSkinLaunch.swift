@@ -4,43 +4,25 @@ import CoreGraphics
 import UniformTypeIdentifiers
 import RuriLocalization
 
-/// An immutable copy of the selected skin travels to the game monitor over its
-/// existing stdin pipe. Later account edits cannot affect an already running game.
-public struct OfflineSkinLaunch: Codable, Sendable {
-    public let account: Account
-    public let skin: SavedPlayerSkin?
-    public let capePNG: Data?
-    public let injector: URL
-    var argumentIndex: Int?
-
+extension OfflineSkinLaunch {
     public init(account: Account, skin: SavedPlayerSkin?, cape: PlayerTextureImage? = nil, injector: URL) throws {
         guard account.kind == .offline, injector.isFileURL,
               account.uuid.range(of: "^[0-9a-f]{32}$", options: .regularExpression) != nil else {
             throw RuriError.message(Messages.OfflineSkin.invalidConfiguration)
         }
         guard skin != nil || cape != nil else { throw RuriError.message(Messages.OfflineSkin.invalidConfiguration) }
-        self.account = account; self.injector = injector
+        let normalizedSkin: SavedPlayerSkin?
+        let normalizedCape: Data?
         if let skin {
             let image = try skin.image
             try image.validate(kind: .skin, accountKind: .offline, model: skin.model)
-            self.skin = try SavedPlayerSkin(id: skin.id, name: skin.name, image: Self.standardImage(image), model: skin.model, createdAt: skin.createdAt)
-        } else { self.skin = nil }
-        if let cape { try cape.validate(kind: .cape, accountKind: .offline); capePNG = try Self.standardCape(cape).png }
-        else { capePNG = nil }
-    }
-
-    func validate() throws {
-        guard account.kind == .offline, injector.isFileURL, FileManager.default.fileExists(atPath: injector.path),
-              account.uuid.range(of: "^[0-9a-f]{32}$", options: .regularExpression) != nil,
-              (try? Account(username: account.username)) != nil else {
-            throw RuriError.message(Messages.OfflineSkin.invalidConfiguration)
-        }
-        guard skin != nil || capePNG != nil else { throw RuriError.message(Messages.OfflineSkin.invalidConfiguration) }
-        if let skin { try skin.image.validate(kind: .skin, accountKind: .microsoft, model: skin.model) }
-        if let capePNG {
-            let cape = try PlayerTextureImage(data: capePNG)
-            guard cape.width == 64, cape.height == 32 else { throw RuriError.message(Messages.OfflineSkin.invalidConfiguration) }
-        }
+            normalizedSkin = try SavedPlayerSkin(id: skin.id, name: skin.name, image: Self.standardImage(image), model: skin.model, createdAt: skin.createdAt)
+        } else { normalizedSkin = nil }
+        if let cape { try cape.validate(kind: .cape, accountKind: .offline); normalizedCape = try Self.standardCape(cape).png }
+        else { normalizedCape = nil }
+        self.init(account: .init(id: account.id, username: account.username, uuid: account.uuid),
+                  skin: normalizedSkin.map { .init(id: $0.id, name: $0.name, model: $0.model, png: $0.png, createdAt: $0.createdAt) },
+                  capePNG: normalizedCape, injector: injector)
     }
 
     private static func standardCape(_ image: PlayerTextureImage) throws -> PlayerTextureImage {

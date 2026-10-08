@@ -4,14 +4,15 @@ import Security
 @testable import RuriCore
 
 struct OfflineSkinTests {
-    func fixture() throws -> (LauncherPaths, OfflineSkinLaunch) {
+    func fixture() throws -> (LauncherPaths, OfflineSkinLaunch, Account, SavedPlayerSkin) {
         let paths = try AccountTestFixtures.paths()
         let jar = paths.root.appendingPathComponent("injector.jar"); try Data().write(to: jar)
         let image = try PlayerTextureImage(data: AccountTestFixtures.png())
-        return (paths, try OfflineSkinLaunch(account: Account(username: "OfflineSkin"), skin: SavedPlayerSkin(name: "Skin", image: image, model: .slim), injector: jar))
+        let account = try Account(username: "OfflineSkin"), skin = try SavedPlayerSkin(name: "Skin", image: image, model: .slim)
+        return (paths, try OfflineSkinLaunch(account: account, skin: skin, injector: jar), account, skin)
     }
     @Test(.timeLimit(.minutes(1))) @MainActor func loopbackServiceReturnsSignedProfileAndExactPixelsAndStops() async throws {
-        let (paths, launch) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let (paths, launch, _, _) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let server = try await OfflineSkinServer.start(launch)
         defer { server.stop() }
         let root = try #require(server.root)
@@ -45,14 +46,14 @@ struct OfflineSkinTests {
         await #expect(throws: (any Error).self) { try await session.data(for: request) }
     }
     @Test(.timeLimit(.minutes(1))) @MainActor func lookupAndLaunchInjectionRespectOfflineIdentity() async throws {
-        let (paths, input) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let (paths, input, account, _) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let instance = GameInstance(name: "Offline", gameVersion: "1.0")
         let jar = paths.versions.appendingPathComponent("1.0/1.0.jar")
         try FileManager.default.createDirectory(at: jar.deletingLastPathComponent(), withIntermediateDirectories: true)
         try Data().write(to: jar)
         let manifest = try JSONDecoder().decode(VersionManifest.self, from: Data(#"{"id":"1.0","mainClass":"Main","libraries":[],"minecraftArguments":"--username ${auth_player_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --userType ${user_type}","javaVersion":{"majorVersion":8}}"#.utf8))
         let java = JavaRuntime(path: "/test/java", version: "8", major: 8, architecture: "x86_64", vendor: "Test")
-        let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: input.account, accessToken: "offline-token", paths: paths, offlineSkin: input)
+        let plan = try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: account, accessToken: "offline-token", paths: paths, offlineSkin: input)
         let launch = try #require(plan.offlineSkin)
         let server = try await OfflineSkinServer.start(launch); defer { server.stop() }
         let final = try server.applying(to: plan)
@@ -70,10 +71,10 @@ struct OfflineSkinTests {
         #expect(throws: (any Error).self) { try LaunchBuilder.build(instance: instance, manifest: manifest, java: java, account: Account(username: "Another"), paths: paths, offlineSkin: input) }
     }
     @Test func hdSkinIsNormalizedWithoutChangingTheSavedOriginal() throws {
-        let (paths, fixture) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let (paths, fixture, account, _) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let image = try PlayerTextureImage(data: AccountTestFixtures.png(width: 256, height: 256))
         let original = try SavedPlayerSkin(name: "HD", image: image, model: .slim)
-        let launch = try OfflineSkinLaunch(account: fixture.account, skin: original, injector: fixture.injector)
+        let launch = try OfflineSkinLaunch(account: account, skin: original, injector: fixture.injector)
         #expect(try launch.skin?.image.width == 64 && launch.skin?.image.height == 64)
         #expect(try original.image.width == 256)
     }
@@ -81,9 +82,9 @@ struct OfflineSkinTests {
 
 extension OfflineSkinTests {
     @Test(.timeLimit(.minutes(1))) @MainActor func capeOnlyAppearanceWorksAndCompactCapeIsPadded() async throws {
-        let (paths, fixture) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        let (paths, fixture, account, savedSkin) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let cape = try PlayerTextureImage(data: AccountTestFixtures.png(width: 22, height: 17))
-        let launch = try OfflineSkinLaunch(account: fixture.account, skin: nil, cape: cape, injector: fixture.injector)
+        let launch = try OfflineSkinLaunch(account: account, skin: nil, cape: cape, injector: fixture.injector)
         let normalized = try PlayerTextureImage(data: #require(launch.capePNG))
         #expect(normalized.width == 64 && normalized.height == 32 && launch.skin == nil)
         let server = try await OfflineSkinServer.start(launch); defer { server.stop() }
@@ -98,7 +99,7 @@ extension OfflineSkinTests {
         let store = SkinLibrary(paths: paths)
         try store.setCape(cape, for: fixture.account.id)
         #expect(try store.cape(for: fixture.account.id)?.png == cape.png)
-        try store.setPreview(fixture.skin, for: fixture.account.id)
+        try store.setPreview(savedSkin, for: fixture.account.id)
         try store.setPreview(nil, for: fixture.account.id)
         #expect(try store.cape(for: fixture.account.id) != nil)
         try store.setCape(nil, for: fixture.account.id)
