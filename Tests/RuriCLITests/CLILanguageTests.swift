@@ -18,7 +18,7 @@ import RuriLocalization
         let initial = await LocalizationContext.$current.withValue(chinese) { await run(["help", "config"]) }
         #expect(initial.0 == 0)
         let english = String(decoding: initial.1.output, as: UTF8.self)
-        #expect(english.contains("Read explicit and effective configuration"))
+        #expect(english.contains("Show saved and effective settings"))
         #expect(english.contains("Configuration fields"))
         #expect(!containsChinese(english))
         let explicit = await run(["--language", "zh-Hans", "help", "config"])

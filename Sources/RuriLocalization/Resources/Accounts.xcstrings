@@ -98,7 +98,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a login method to begin your next adventure."
+            "value" : "Choose how you'd like to sign in."
           }
         },
         "zh-Hans" : {
@@ -116,7 +116,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connect an account to manage capes."
+            "value" : "Sign in to manage your capes."
           }
         },
         "zh-Hans" : {
@@ -152,7 +152,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Appearance Categories"
+            "value" : "Appearance"
           }
         },
         "zh-Hans" : {
@@ -170,7 +170,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connect an account to manage skins and capes."
+            "value" : "Sign in to manage your skins and capes."
           }
         },
         "zh-Hans" : {
@@ -242,7 +242,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri will copy the authorization code and open the Microsoft sign-in page. Paste the code in your browser. Ruri will finish signing in automatically after authorization."
+            "value" : "Ruri will copy the code and open Microsoft's sign-in page. Paste the code in your browser and authorize access. Ruri will then finish signing you in."
           }
         },
         "zh-Hans" : {
@@ -296,7 +296,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rotatable character appearance preview"
+            "value" : "Character preview. Drag to rotate."
           }
         },
         "zh-Hans" : {
@@ -314,7 +314,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Import a cape PNG, or leave the cape unset."
+            "value" : "Import a PNG cape image, or continue without a cape."
           }
         },
         "zh-Hans" : {
@@ -332,7 +332,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Import a skin PNG, rotate the character, and choose an arm model."
+            "value" : "Import a PNG skin image, then rotate the preview and choose an arm model."
           }
         },
         "zh-Hans" : {
@@ -512,7 +512,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No skin is set. The default character will appear in the game."
+            "value" : "No skin selected. Your character will use the default skin."
           }
         },
         "zh-Hans" : {
@@ -566,7 +566,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read the saved skin. The file may be corrupted."
+            "value" : "Couldn't read the saved skin. The file may be corrupted."
           }
         },
         "zh-Hans" : {
@@ -602,7 +602,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Legacy skins use classic arms. The preview fills in both sets of limbs automatically."
+            "value" : "Legacy skins use classic arms. The preview automatically mirrors the limbs to complete the model."
           }
         },
         "zh-Hans" : {
@@ -620,7 +620,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skin Library Is Empty"
+            "value" : "No Saved Skins"
           }
         },
         "zh-Hans" : {
@@ -710,7 +710,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This will sign out of the current session and remove this account from Ruri. Game instances and the Skin Library will be kept."
+            "value" : "You'll be signed out, and this account will be removed from Ruri. Your game instances and saved skins will be kept."
           }
         },
         "zh-Hans" : {
@@ -746,7 +746,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign In with Microsoft Account"
+            "value" : "Sign In with Microsoft"
           }
         },
         "zh-Hans" : {
@@ -764,7 +764,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microsoft accounts support 64 × 64 or 64 × 32 skins. Choose a cape from those owned by this account."
+            "value" : "Use a 64 × 64 or 64 × 32 skin with your Microsoft account. You can choose from capes you already own."
           }
         },
         "zh-Hans" : {
@@ -782,7 +782,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Offline accounts can play locally but cannot join servers that require account authentication."
+            "value" : "Offline accounts work for local play and on servers that don't require Minecraft account verification."
           }
         },
         "zh-Hans" : {
@@ -800,7 +800,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The selected skin will take effect on this Mac after restarting the game."
+            "value" : "Your selected skin will appear on this Mac the next time you launch the game."
           }
         },
         "zh-Hans" : {
@@ -836,7 +836,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Placeholder Model · Skin Not Loaded"
+            "value" : "Placeholder · No Skin Loaded"
           }
         },
         "zh-Hans" : {
@@ -890,7 +890,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verify %1$@ again to update the login credentials stored in Keychain."
+            "value" : "Sign in to %1$@ again to update the credentials stored in your keychain."
           }
         },
         "zh-Hans" : {
@@ -926,7 +926,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This will remove the account and its saved login credentials from Ruri. Game instances and the Skin Library will be kept."
+            "value" : "The account and its saved sign-in credentials will be removed from Ruri. Your game instances and saved skins will be kept."
           }
         },
         "zh-Hans" : {
@@ -980,7 +980,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The applied account appearance and original PNG file will be kept."
+            "value" : "Your account's current appearance and the original PNG file won't change."
           }
         },
         "zh-Hans" : {
@@ -1379,13 +1379,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%1$lld saved skin could not be read. The others are still available."
+                  "value" : "%1$lld saved skin couldn't be read. The others are still available."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%1$lld saved skins could not be read. The others are still available."
+                  "value" : "%1$lld saved skins couldn't be read. The others are still available."
                 }
               }
             }
@@ -1502,7 +1502,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign in with a Microsoft account, connect a third-party authentication server, or create an offline player."
+            "value" : "Sign in with a Microsoft or third-party account, or create an offline profile."
           }
         },
         "zh-Hans" : {
@@ -1520,7 +1520,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The signed-in player does not match the original account. Sign in again with the original Microsoft account. Use “Add Account” to add other accounts."
+            "value" : "This Minecraft profile doesn't match the original account. Sign in with the original Microsoft account, or choose Add Account to add a different one."
           }
         },
         "zh-Hans" : {
@@ -1592,7 +1592,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The local skin service could not start. Please try again."
+            "value" : "The local skin service couldn't start. Please try again."
           }
         },
         "zh-Hans" : {
@@ -1610,7 +1610,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not sign the offline skin."
+            "value" : "Couldn't sign the offline skin."
           }
         },
         "zh-Hans" : {

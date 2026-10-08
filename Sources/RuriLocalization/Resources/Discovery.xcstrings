@@ -404,7 +404,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose an Instance to Install Into"
+            "value" : "Choose an Instance"
           }
         },
         "zh-Hans" : {
@@ -566,7 +566,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If you cannot find a version, enter the full version number and press Return."
+            "value" : "If you can't find a version, enter the full version number and press Return."
           }
         },
         "zh-Hans" : {
@@ -602,7 +602,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri automatically installs required dependencies and keeps compatible dependencies that are already installed."
+            "value" : "Ruri installs any required dependencies. Compatible dependencies already in the instance are kept."
           }
         },
         "zh-Hans" : {
@@ -620,7 +620,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The author provided the dependencies below. Ruri checks required dependencies during installation."
+            "value" : "These dependencies are listed by the author. Ruri checks the required dependencies during installation."
           }
         },
         "zh-Hans" : {
@@ -764,7 +764,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "When downloading files only, you must install dependencies yourself. Check the required dependencies in File Details."
+            "value" : "If you download the file without installing it, you'll need to install its dependencies yourself. See File Details for the requirements."
           }
         },
         "zh-Hans" : {
@@ -1412,7 +1412,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri reads the modpack first, then asks you to confirm the instance name and installation content."
+            "value" : "Ruri will read the modpack, then let you review the instance name and files to install."
           }
         },
         "zh-Hans" : {
@@ -1502,7 +1502,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The author has not provided a changelog for this version"
+            "value" : "No changelog provided for this version"
           }
         },
         "zh-Hans" : {
@@ -1520,7 +1520,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No instance is compatible with this version. Create an instance or download the file only."
+            "value" : "No compatible instances found. Create an instance or download the file to install it later."
           }
         },
         "zh-Hans" : {
@@ -1538,7 +1538,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The author has not listed dependencies for this version"
+            "value" : "No dependencies listed for this version"
           }
         },
         "zh-Hans" : {
@@ -1556,7 +1556,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The author has not provided a detailed description"
+            "value" : "No description provided"
           }
         },
         "zh-Hans" : {
@@ -1574,7 +1574,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The author has not uploaded screenshots"
+            "value" : "No screenshots yet"
           }
         },
         "zh-Hans" : {
@@ -1792,7 +1792,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Specified Version"
+            "value" : "Specific Version"
           }
         },
         "zh-Hans" : {
@@ -1828,7 +1828,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read Modpack"
+            "value" : "Review Modpack"
           }
         },
         "zh-Hans" : {
@@ -1975,13 +1975,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%1$lld project in total"
+                  "value" : "%1$lld project"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%1$lld projects in total"
+                  "value" : "%1$lld projects"
                 }
               }
             }
@@ -2008,7 +2008,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not save the file. Check permissions for the destination."
+            "value" : "Couldn't save the file. Check permissions for the destination."
           }
         },
         "zh-Hans" : {
@@ -2281,13 +2281,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Ruri cannot check dependencies for another %1$lld file. Check them manually."
+                  "value" : "Ruri can't check dependencies for %1$lld additional file. Check its requirements manually."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Ruri cannot check dependencies for another %1$lld files. Check them manually."
+                  "value" : "Ruri can't check dependencies for %1$lld additional files. Check their requirements manually."
                 }
               }
             }
@@ -2332,7 +2332,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri checks the file's integrity after downloading."
+            "value" : "Ruri verifies the file after downloading it."
           }
         },
         "zh-Hans" : {

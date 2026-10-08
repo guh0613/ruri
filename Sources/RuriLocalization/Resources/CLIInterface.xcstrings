@@ -80,7 +80,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remove a pending login flow."
+            "value" : "Cancel a pending sign-in."
           }
         },
         "zh-Hans" : {
@@ -116,7 +116,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wait for authorization and save the selected identity."
+            "value" : "Wait for authorization, then save the selected account."
           }
         },
         "zh-Hans" : {
@@ -134,7 +134,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start a two-step Microsoft or external login."
+            "value" : "Start a two-step sign-in with Microsoft or a third-party account."
           }
         },
         "zh-Hans" : {
@@ -152,7 +152,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalidate external credentials and remove the account."
+            "value" : "Sign out of the authentication service and remove the account."
           }
         },
         "zh-Hans" : {
@@ -314,7 +314,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read the active account ID."
+            "value" : "Show the active account's ID."
           }
         },
         "zh-Hans" : {
@@ -494,7 +494,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read the application's interface language."
+            "value" : "Show the app's interface language."
           }
         },
         "zh-Hans" : {
@@ -512,7 +512,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Set the application language; restart the app to apply."
+            "value" : "Set the app's interface language. Quit and reopen the app to apply it."
           }
         },
         "zh-Hans" : {
@@ -566,7 +566,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The bundled CLI executable could not be found."
+            "value" : "The bundled CLI executable couldn't be found."
           }
         },
         "zh-Hans" : {
@@ -638,7 +638,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read a project description and metadata."
+            "value" : "Show a project's description and metadata."
           }
         },
         "zh-Hans" : {
@@ -818,7 +818,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not install the CLI link."
+            "value" : "Couldn't install the CLI link."
           }
         },
         "zh-Hans" : {
@@ -908,7 +908,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Command line and automation"
+            "value" : "Command Line and Automation"
           }
         },
         "zh-Hans" : {
@@ -944,7 +944,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No compatible data-pack version found."
+            "value" : "No compatible data pack version found."
           }
         },
         "zh-Hans" : {
@@ -980,7 +980,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Provide the complete priority list exactly once."
+            "value" : "Provide the full priority list, with each data pack listed exactly once."
           }
         },
         "zh-Hans" : {
@@ -998,7 +998,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apply an atomic JSON configuration patch."
+            "value" : "Apply a JSON configuration patch as a single operation."
           }
         },
         "zh-Hans" : {
@@ -1070,7 +1070,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read explicit and effective configuration with inheritance sources."
+            "value" : "Show saved and effective settings, including where inherited values come from."
           }
         },
         "zh-Hans" : {
@@ -1088,7 +1088,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Restore an instance setting group's inheritance."
+            "value" : "Restore an instance setting group to its inherited values."
           }
         },
         "zh-Hans" : {
@@ -1340,7 +1340,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check compatible updates for installed content."
+            "value" : "Check for compatible updates to installed content."
           }
         },
         "zh-Hans" : {
@@ -1502,7 +1502,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Content kind."
+            "value" : "Content type."
           }
         },
         "zh-Hans" : {
@@ -1610,7 +1610,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exact provider version ID; otherwise latest stable."
+            "value" : "Use this exact provider version ID, or the latest stable version if omitted."
           }
         },
         "zh-Hans" : {
@@ -1898,7 +1898,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read data-pack priority from highest to lowest."
+            "value" : "Show data pack priority, highest first."
           }
         },
         "zh-Hans" : {
@@ -1916,7 +1916,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Replace the complete data-pack priority order."
+            "value" : "Set the full data pack priority order."
           }
         },
         "zh-Hans" : {
@@ -2006,7 +2006,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search compatible Modrinth data packs."
+            "value" : "Search for compatible data packs on Modrinth."
           }
         },
         "zh-Hans" : {
@@ -2042,7 +2042,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exact version ID; otherwise latest stable."
+            "value" : "Use this exact version ID, or the latest stable version if omitted."
           }
         },
         "zh-Hans" : {
@@ -2060,7 +2060,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "List compatible data-pack versions."
+            "value" : "List compatible data pack versions."
           }
         },
         "zh-Hans" : {
@@ -2186,7 +2186,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "List registered and detached game directories."
+            "value" : "List game directories, including those removed from the active list."
           }
         },
         "zh-Hans" : {
@@ -2258,7 +2258,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Restore a detached Minecraft directory."
+            "value" : "Restore a Minecraft directory removed from the active list."
           }
         },
         "zh-Hans" : {
@@ -2312,7 +2312,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unregister a directory while retaining its files."
+            "value" : "Remove a directory from the list and keep its files."
           }
         },
         "zh-Hans" : {
@@ -2366,7 +2366,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read the selected game directory."
+            "value" : "Show the selected game directory."
           }
         },
         "zh-Hans" : {
@@ -2582,7 +2582,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Directory name cannot be empty."
+            "value" : "Directory name can't be empty."
           }
         },
         "zh-Hans" : {
@@ -2636,7 +2636,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "External login identity."
+            "value" : "Account name or email for the authentication service."
           }
         },
         "zh-Hans" : {
@@ -2654,7 +2654,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "External login requires --password-stdin."
+            "value" : "Third-party sign-in requires --password-stdin."
           }
         },
         "zh-Hans" : {
@@ -2672,7 +2672,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "External profile ID returned by login start."
+            "value" : "Game profile ID returned by login start."
           }
         },
         "zh-Hans" : {
@@ -2690,7 +2690,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "External authentication server."
+            "value" : "Third-party authentication server."
           }
         },
         "zh-Hans" : {
@@ -2726,7 +2726,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Require the state revision read earlier."
+            "value" : "Proceed only if the state revision still matches this value."
           }
         },
         "zh-Hans" : {
@@ -2978,7 +2978,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copy an instance to a named destination."
+            "value" : "Create a named copy of an instance in the selected directory."
           }
         },
         "zh-Hans" : {
@@ -3230,7 +3230,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install an existing uninstalled instance."
+            "value" : "Install the game in an existing instance that hasn't been installed yet."
           }
         },
         "zh-Hans" : {
@@ -3662,7 +3662,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read the currently selected instance."
+            "value" : "Show the selected instance."
           }
         },
         "zh-Hans" : {
@@ -3806,7 +3806,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Provide an HTTP URL, nonnegative --size and a 40-digit --sha1."
+            "value" : "Provide an HTTP or HTTPS URL, a nonnegative --size, and a 40-character hexadecimal --sha1."
           }
         },
         "zh-Hans" : {
@@ -3896,7 +3896,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microsoft Client ID must be a UUID or an empty string."
+            "value" : "The Microsoft application client ID must be a UUID or an empty string."
           }
         },
         "zh-Hans" : {
@@ -3932,7 +3932,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use --output text|json|ndjson; --json cannot be combined with ndjson."
+            "value" : "Use --output text|json|ndjson; --json can't be combined with ndjson."
           }
         },
         "zh-Hans" : {
@@ -4112,7 +4112,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remove Java from the manual list, retaining files and references."
+            "value" : "Remove Java from the manually added list. Keep its files and any settings that use it."
           }
         },
         "zh-Hans" : {
@@ -4274,7 +4274,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset referencing settings to automatic Java."
+            "value" : "Switch settings that use this Java installation to automatic Java selection."
           }
         },
         "zh-Hans" : {
@@ -4328,7 +4328,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keep the original source after a committed move."
+            "value" : "Keep the original files after completing the move."
           }
         },
         "zh-Hans" : {
@@ -4418,7 +4418,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start the game and return after monitor handoff."
+            "value" : "Launch the game and return once the game monitor takes over."
           }
         },
         "zh-Hans" : {
@@ -4436,7 +4436,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Repository import recovery mode."
+            "value" : "Recovery mode for an incomplete instance import."
           }
         },
         "zh-Hans" : {
@@ -4562,7 +4562,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The login flow expired; start again."
+            "value" : "This sign-in attempt has expired. Start again."
           }
         },
         "zh-Hans" : {
@@ -4580,7 +4580,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The login already selected a different profile."
+            "value" : "A different profile was already selected for this sign-in."
           }
         },
         "zh-Hans" : {
@@ -4760,7 +4760,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Language for human messages."
+            "value" : "Language for messages shown to users."
           }
         },
         "zh-Hans" : {
@@ -4778,7 +4778,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microsoft login uses browser authorization, not a password."
+            "value" : "Sign in with Microsoft through your browser. A password isn't accepted here."
           }
         },
         "zh-Hans" : {
@@ -4958,7 +4958,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pack release not found."
+            "value" : "Modpack release not found."
           }
         },
         "zh-Hans" : {
@@ -4976,7 +4976,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Roll back the previous pack update while retaining later local edits."
+            "value" : "Roll back the last modpack update and keep local changes made since then."
           }
         },
         "zh-Hans" : {
@@ -5030,7 +5030,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No pack update backup is available."
+            "value" : "No modpack update backup is available."
           }
         },
         "zh-Hans" : {
@@ -5138,7 +5138,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "--offset cannot be negative."
+            "value" : "--offset can't be negative."
           }
         },
         "zh-Hans" : {
@@ -5174,7 +5174,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Operation cancelled."
+            "value" : "Operation canceled."
           }
         },
         "zh-Hans" : {
@@ -5192,7 +5192,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not open the operation lock."
+            "value" : "Couldn't open the operation lock."
           }
         },
         "zh-Hans" : {
@@ -5408,7 +5408,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "List unfinished data operations and sessions."
+            "value" : "List unfinished file operations and sessions that need recovery."
           }
         },
         "zh-Hans" : {
@@ -5570,7 +5570,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Discover commands and their machine interfaces."
+            "value" : "Show commands and their input and output schemas."
           }
         },
         "zh-Hans" : {
@@ -5840,7 +5840,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Analyze recorded launch and game evidence."
+            "value" : "Analyze the launch records and game logs for a session."
           }
         },
         "zh-Hans" : {
@@ -6002,7 +6002,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maximum tail lines (default 200)."
+            "value" : "Maximum number of lines from the end of the log (default 200)."
           }
         },
         "zh-Hans" : {
@@ -6074,7 +6074,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read a game session."
+            "value" : "Show a game session's details."
           }
         },
         "zh-Hans" : {
@@ -6092,7 +6092,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Request normal game exit."
+            "value" : "Ask the game to quit normally."
           }
         },
         "zh-Hans" : {
@@ -6344,7 +6344,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unknown data-pack action."
+            "value" : "Unknown data pack action."
           }
         },
         "zh-Hans" : {

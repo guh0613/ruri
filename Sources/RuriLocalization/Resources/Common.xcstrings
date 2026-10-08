@@ -116,7 +116,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Follow System"
+            "value" : "System Default"
           }
         },
         "zh-Hans" : {
@@ -188,7 +188,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Takes effect after reopening Ruri."
+            "value" : "Quit and reopen Ruri to apply the change."
           }
         },
         "zh-Hans" : {

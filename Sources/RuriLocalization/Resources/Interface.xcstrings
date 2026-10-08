@@ -26,7 +26,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to load preview: %1$@"
+            "value" : "Couldn't load the preview: %1$@"
           }
         },
         "zh-Hans" : {
@@ -116,7 +116,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This authentication service does not support cape uploads. Manage your cape on its website."
+            "value" : "This authentication service doesn't support cape uploads from Ruri. Manage your cape on its website."
           }
         },
         "zh-Hans" : {
@@ -242,7 +242,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unfolded PNG Texture"
+            "value" : "PNG Texture Layout"
           }
         },
         "zh-Hans" : {
@@ -350,7 +350,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Owned capes"
+            "value" : "Your Capes"
           }
         },
         "zh-Hans" : {
@@ -368,7 +368,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prepare to Upload %1$@"
+            "value" : "Upload %1$@"
           }
         },
         "zh-Hans" : {
@@ -422,7 +422,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Changes submitted, but failed to refresh appearance: %1$@"
+            "value" : "Your changes were submitted, but the appearance preview couldn't be refreshed: %1$@"
           }
         },
         "zh-Hans" : {
@@ -512,7 +512,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This authentication service does not support skin uploads. Manage your skin on its website."
+            "value" : "This authentication service doesn't support skin uploads from Ruri. Manage your skin on its website."
           }
         },
         "zh-Hans" : {
@@ -584,7 +584,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uploaded %1$@"
+            "value" : "%1$@ uploaded"
           }
         },
         "zh-Hans" : {
@@ -692,7 +692,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Login credentials are stored in macOS Keychain. External authentication works with servers supported by its authentication service; offline accounts cannot join servers that verify Minecraft ownership."
+            "value" : "Your sign-in credentials are stored in the macOS keychain. Third-party accounts work with servers that use their authentication service. Offline accounts can't join servers that verify Minecraft ownership."
           }
         },
         "zh-Hans" : {
@@ -728,7 +728,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add a Microsoft, external authentication, or offline account."
+            "value" : "Add a Microsoft, third-party, or offline account."
           }
         },
         "zh-Hans" : {
@@ -908,7 +908,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configure Microsoft App First"
+            "value" : "Set Up Microsoft Sign-In"
           }
         },
         "zh-Hans" : {
@@ -962,7 +962,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign in to Microsoft in your browser and enter this code:"
+            "value" : "Sign in to your Microsoft account in your browser, then enter this code:"
           }
         },
         "zh-Hans" : {
@@ -980,7 +980,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "External Authentication"
+            "value" : "Third-Party Account"
           }
         },
         "zh-Hans" : {
@@ -998,7 +998,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri needs its own Microsoft Client ID to sign in. Enter an app ID with public client flows and Xbox sign-in enabled in Settings."
+            "value" : "Ruri needs a Microsoft application client ID to sign you in. In Settings, enter the ID of an app with public client flows and Xbox sign-in enabled."
           }
         },
         "zh-Hans" : {
@@ -1016,7 +1016,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign in with the Microsoft account that owns Minecraft Java Edition."
+            "value" : "Sign in with the Microsoft account that owns Minecraft: Java Edition."
           }
         },
         "zh-Hans" : {
@@ -1052,7 +1052,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open Microsoft Sign-In Page"
+            "value" : "Open Microsoft Sign-In"
           }
         },
         "zh-Hans" : {
@@ -1106,7 +1106,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use 3–16 English letters, numbers, or underscores. Offline accounts work in single-player games and on servers that allow offline mode."
+            "value" : "Use 3–16 letters (A–Z), numbers, or underscores. Offline accounts work in single-player games and on servers that allow offline mode."
           }
         },
         "zh-Hans" : {
@@ -1178,7 +1178,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not restore directory registration: %1$@"
+            "value" : "Couldn't restore the saved folder information: %1$@"
           }
         },
         "zh-Hans" : {
@@ -1196,7 +1196,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not sync changes from other clients. Writes are paused to preserve the original data.\n%1$@"
+            "value" : "Couldn't sync changes from another client. Saving is paused to preserve your existing data.\n%1$@"
           }
         },
         "zh-Hans" : {
@@ -1214,7 +1214,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@\nFurther writes, installation, and launching in this window are paused. Reopen Ruri to load the latest state from disk."
+            "value" : "%1$@\nSaving, installation, and launching are paused in this window. Reopen Ruri to load the latest data from disk."
           }
         },
         "zh-Hans" : {
@@ -1250,7 +1250,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read Ruri data. Writes are paused to protect the original files.\n%1$@"
+            "value" : "Couldn't read Ruri's data. Saving is paused to protect your files.\n%1$@"
           }
         },
         "zh-Hans" : {
@@ -1394,7 +1394,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Completed copy record cleared; destination contents retained."
+            "value" : "Copy records cleared. The copied files have been kept."
           }
         },
         "zh-Hans" : {
@@ -1430,7 +1430,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@: %2$@ completed; original directory and backup retained."
+            "value" : "%1$@: %2$@ complete. The original directory and backup have been kept."
           }
         },
         "zh-Hans" : {
@@ -1448,7 +1448,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "State before the switch restored; copy workspace retained separately."
+            "value" : "The previous directory settings have been restored. The copied files have been kept separately."
           }
         },
         "zh-Hans" : {
@@ -1484,7 +1484,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Locate Custom Game Directory Again"
+            "value" : "Locate Custom Game Directory"
           }
         },
         "zh-Hans" : {
@@ -1538,7 +1538,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@: Run Directory for %2$@"
+            "value" : "%1$@: %2$@ Run Directory"
           }
         },
         "zh-Hans" : {
@@ -1610,7 +1610,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not save the run record's read status: %1$@"
+            "value" : "Couldn't mark the session record as read: %1$@"
           }
         },
         "zh-Hans" : {
@@ -1628,7 +1628,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not switch back to the game window. Select the game from the Dock or app switcher."
+            "value" : "Couldn't switch back to the game window. Select the game from the Dock or app switcher."
           }
         },
         "zh-Hans" : {
@@ -1736,7 +1736,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Normal exit requested. Waiting for the game to respond."
+            "value" : "Quit request sent. Waiting for the game to respond."
           }
         },
         "zh-Hans" : {
@@ -1754,7 +1754,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instance copy awaiting recovery"
+            "value" : "Instance copy needs recovery"
           }
         },
         "zh-Hans" : {
@@ -1772,7 +1772,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Directory copy awaiting recovery"
+            "value" : "Directory copy needs recovery"
           }
         },
         "zh-Hans" : {
@@ -1790,7 +1790,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instance move awaiting recovery"
+            "value" : "Instance move needs recovery"
           }
         },
         "zh-Hans" : {
@@ -1844,7 +1844,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Status needs confirmation"
+            "value" : "Game status needs confirmation"
           }
         },
         "zh-Hans" : {
@@ -1862,7 +1862,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Monitoring has stopped; run status needs confirmation"
+            "value" : "Monitoring stopped. Game status is unknown."
           }
         },
         "zh-Hans" : {
@@ -1916,7 +1916,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This may interrupt unfinished world saves. Use only when the game cannot exit normally. If the game still responds, return to it and exit first."
+            "value" : "This may interrupt a world save. Use this only if the game won't quit. If it still responds, return to the game and quit from its menu."
           }
         },
         "zh-Hans" : {
@@ -1952,7 +1952,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read the run log for %1$@: %2$@"
+            "value" : "Couldn't read the session log for %1$@: %2$@"
           }
         },
         "zh-Hans" : {
@@ -2060,7 +2060,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ switched to %2$@; takes effect on next launch"
+            "value" : "%1$@ now uses %2$@. This takes effect the next time you launch the game."
           }
         },
         "zh-Hans" : {
@@ -2114,7 +2114,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copy completed; copy record cleared."
+            "value" : "Copy complete. Temporary copy records have been cleared."
           }
         },
         "zh-Hans" : {
@@ -2168,7 +2168,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unfinished copy retained separately; the original instance is still usable."
+            "value" : "The incomplete copy has been kept separately. You can continue using the original instance."
           }
         },
         "zh-Hans" : {
@@ -2204,7 +2204,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instance move completed; original files and operation record cleared."
+            "value" : "Move complete. The original files and temporary operation records have been removed."
           }
         },
         "zh-Hans" : {
@@ -2258,7 +2258,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instance moved to the destination; cleanup still required."
+            "value" : "The instance has been moved. Cleanup is still needed."
           }
         },
         "zh-Hans" : {
@@ -2456,7 +2456,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Default Java updated; takes effect on next launch"
+            "value" : "Default Java updated. This takes effect the next time you launch the game."
           }
         },
         "zh-Hans" : {
@@ -2492,7 +2492,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java added; select it in launch settings"
+            "value" : "Java added. You can select it in launch settings."
           }
         },
         "zh-Hans" : {
@@ -2546,7 +2546,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a java executable, JDK bundle, or Java Home folder."
+            "value" : "Choose a java executable, a JDK bundle, or a Java home folder."
           }
         },
         "zh-Hans" : {
@@ -2564,7 +2564,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a new Java path. Instances and default settings that use the original path will also be updated."
+            "value" : "Choose the new location of this Java installation. Ruri will update any instances and default settings that use the old path."
           }
         },
         "zh-Hans" : {
@@ -2636,7 +2636,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This instance or shared directory is in use. Check the run records or instance settings."
+            "value" : "This instance or a directory it shares is in use. Check Session History or Instance Settings."
           }
         },
         "zh-Hans" : {
@@ -2654,7 +2654,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@. View details in the run records."
+            "value" : "%1$@. See Session History for details."
           }
         },
         "zh-Hans" : {
@@ -2690,7 +2690,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Run record could not be fully saved: %1$@"
+            "value" : "Session record couldn't be fully saved: %1$@"
           }
         },
         "zh-Hans" : {
@@ -2837,13 +2837,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Modpack rolled back; %1$lld local change made after the update retained"
+                  "value" : "Modpack rolled back. %1$lld local change made after the update was kept."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Modpack rolled back; %1$lld local changes made after the update retained"
+                  "value" : "Modpack rolled back. %1$lld local changes made after the update were kept."
                 }
               }
             }
@@ -2960,7 +2960,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Some run records cannot be read at this time: %1$@"
+            "value" : "Some session records can't be read at this time: %1$@"
           }
         },
         "zh-Hans" : {
@@ -2981,13 +2981,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Batch Update %1$lld Item"
+                  "value" : "Update %1$lld Item"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Batch Update %1$lld Items"
+                  "value" : "Update %1$lld Items"
                 }
               }
             }
@@ -3122,7 +3122,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Updates preserve disabled status. Original files are retained if canceled or unsuccessful."
+            "value" : "Disabled items stay disabled after updating. If an update is canceled or fails, the original files are kept."
           }
         },
         "zh-Hans" : {
@@ -3230,7 +3230,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select an installed game instance first."
+            "value" : "Choose an instance with the game installed."
           }
         },
         "zh-Hans" : {
@@ -3716,7 +3716,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No matching versions. Check prereleases or other pages."
+            "value" : "No matching versions. Try including prereleases or checking another page."
           }
         },
         "zh-Hans" : {
@@ -3896,7 +3896,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Required dependencies are installed automatically, and the current enabled or disabled state is retained."
+            "value" : "Required dependencies are installed automatically. The item stays enabled or disabled as it was before."
           }
         },
         "zh-Hans" : {
@@ -4490,7 +4490,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select an installed instance first; mods require the matching loader."
+            "value" : "Choose an instance with the game installed. Mods require a compatible loader."
           }
         },
         "zh-Hans" : {
@@ -4796,7 +4796,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your personal key is stored in macOS Keychain and is not included in instance exports."
+            "value" : "Your personal API key is stored in the macOS keychain and isn't included when you export an instance."
           }
         },
         "zh-Hans" : {
@@ -4940,7 +4940,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saved in Keychain"
+            "value" : "Saved in keychain"
           }
         },
         "zh-Hans" : {
@@ -5030,7 +5030,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Checking directory identity and run status…"
+            "value" : "Verifying the folder and checking for running games…"
           }
         },
         "zh-Hans" : {
@@ -5048,7 +5048,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose the new location of the original custom game folder."
+            "value" : "Select the current location of your custom game folder."
           }
         },
         "zh-Hans" : {
@@ -5102,7 +5102,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Only paths are updated; game files and run records stay in place."
+            "value" : "This updates the saved paths without moving game files or session records."
           }
         },
         "zh-Hans" : {
@@ -5228,7 +5228,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose the original folder's new location. Paths for all linked instances will be updated together, including instances currently using other run directories."
+            "value" : "Select the original folder in its current location. Ruri will update the paths for all linked instances, including those currently using a different run directory."
           }
         },
         "zh-Hans" : {
@@ -5246,7 +5246,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saved, not in use"
+            "value" : "Saved, but not in use"
           }
         },
         "zh-Hans" : {
@@ -5264,7 +5264,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No registered custom directory"
+            "value" : "No custom directory saved"
           }
         },
         "zh-Hans" : {
@@ -5336,7 +5336,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Used for launch options without individual settings"
+            "value" : "Applies to launch options that haven't been customized for an instance"
           }
         },
         "zh-Hans" : {
@@ -5372,7 +5372,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not save default settings."
+            "value" : "Couldn't save default settings."
           }
         },
         "zh-Hans" : {
@@ -5534,7 +5534,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Discovering content…"
+            "value" : "Loading content…"
           }
         },
         "zh-Hans" : {
@@ -5768,7 +5768,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search using an English name or a shorter keyword."
+            "value" : "Try an English project name or fewer search terms."
           }
         },
         "zh-Hans" : {
@@ -5930,7 +5930,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resumed %1$@"
+            "value" : "Resumed from %1$@"
           }
         },
         "zh-Hans" : {
@@ -5984,7 +5984,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete This Configuration"
+            "value" : "Delete Setting"
           }
         },
         "zh-Hans" : {
@@ -6020,7 +6020,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter a value; may be left blank"
+            "value" : "Enter a value or leave blank"
           }
         },
         "zh-Hans" : {
@@ -6056,7 +6056,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Names may contain only letters, numbers, and underscores, and cannot start with a number. Java-related variables are managed by Ruri; use the Java or JVM argument settings. Local environment settings are not included in exported modpacks."
+            "value" : "Names may contain only letters, numbers, and underscores, and can't start with a number. Java-related variables are managed by Ruri; use the Java or JVM argument settings. Local environment settings are not included in exported modpacks."
           }
         },
         "zh-Hans" : {
@@ -6182,7 +6182,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Values do not need quotes. “Remove” prevents that system variable from being passed to the game."
+            "value" : "Enter values without quotes. Choose Remove to prevent a system variable from being passed to the game."
           }
         },
         "zh-Hans" : {
@@ -6398,7 +6398,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Suitable for backups or migration to a Mac with the same game architecture. Excludes logs, accounts, Java, and play history."
+            "value" : "Use for backups or to move an instance to a Mac with the same game architecture. Logs, accounts, Java, and play history aren't included."
           }
         },
         "zh-Hans" : {
@@ -6434,7 +6434,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importable in HMCL; retains the game version, loader, memory requirements, and launch arguments."
+            "value" : "Works with HMCL. Preserves the game version, loader, memory requirements, and launch arguments."
           }
         },
         "zh-Hans" : {
@@ -6470,7 +6470,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The specified Java major version is retained only in Ruri format."
+            "value" : "Only the Ruri format preserves the specified Java major version."
           }
         },
         "zh-Hans" : {
@@ -6488,7 +6488,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Export mods, configuration, and game settings. Game dependencies are downloaded again on import; launch settings use the values from export."
+            "value" : "Export mods, configuration files, and game settings. Game dependencies are downloaded again on import. Launch settings are preserved as they are at the time of export."
           }
         },
         "zh-Hans" : {
@@ -6524,7 +6524,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recognized Modrinth files are referenced in the download manifest; other files are bundled. Memory settings, window settings, and extra launch arguments are not retained."
+            "value" : "Files recognized on Modrinth are linked in the download manifest. Other files are included in the archive. Memory settings, window settings, and additional launch arguments aren't included."
           }
         },
         "zh-Hans" : {
@@ -6560,7 +6560,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importable in Prism or MultiMC. Some mods may need reconfiguration after switching platforms."
+            "value" : "Works with Prism Launcher and MultiMC. Some mods may need to be reconfigured on a different platform."
           }
         },
         "zh-Hans" : {
@@ -6740,7 +6740,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use your account from the authentication service above. Your password is used only for this sign-in; login credentials are stored in macOS Keychain."
+            "value" : "Use your account for the authentication service shown above. Your password is used only for this sign-in. Sign-in credentials are stored in the macOS keychain."
           }
         },
         "zh-Hans" : {
@@ -6758,7 +6758,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Identify Server"
+            "value" : "Check Server"
           }
         },
         "zh-Hans" : {
@@ -6830,7 +6830,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign In Again to %1$@"
+            "value" : "Sign In to %1$@ Again"
           }
         },
         "zh-Hans" : {
@@ -6848,7 +6848,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Retains the original game profile and account selection."
+            "value" : "Your game profile and selected account will stay the same."
           }
         },
         "zh-Hans" : {
@@ -6902,7 +6902,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter the address provided by the authentication service, or paste an authlib-injector add link. Ruri identifies the server before displaying the sign-in form."
+            "value" : "Enter the address from your authentication service or paste its authlib-injector link. Ruri will check the server, then show the sign-in form."
           }
         },
         "zh-Hans" : {
@@ -7028,7 +7028,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Evidence scope"
+            "value" : "Sources Checked"
           }
         },
         "zh-Hans" : {
@@ -7136,7 +7136,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prepare Share Preview…"
+            "value" : "Prepare Preview…"
           }
         },
         "zh-Hans" : {
@@ -7154,7 +7154,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hidden text has changed. Update the preview before exporting."
+            "value" : "The list of text to hide has changed. Update the preview before exporting."
           }
         },
         "zh-Hans" : {
@@ -7190,7 +7190,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reading evidence from this run…"
+            "value" : "Collecting diagnostic information for this session…"
           }
         },
         "zh-Hans" : {
@@ -7208,7 +7208,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recorded Facts"
+            "value" : "Recorded Information"
           }
         },
         "zh-Hans" : {
@@ -7262,7 +7262,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Repair verifies and completes game and loader installation files online."
+            "value" : "Repair checks game and loader files online and downloads any missing or damaged files."
           }
         },
         "zh-Hans" : {
@@ -7334,7 +7334,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "View Run Files"
+            "value" : "View Session Files"
           }
         },
         "zh-Hans" : {
@@ -7424,7 +7424,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a New Location and Add…"
+            "value" : "Choose Another Folder…"
           }
         },
         "zh-Hans" : {
@@ -7442,7 +7442,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a new location for the “%1$@” folder. This only updates the path and does not move files."
+            "value" : "Select the current location of the “%1$@” folder. This updates its saved path without moving any files."
           }
         },
         "zh-Hans" : {
@@ -7514,7 +7514,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add Minecraft folders to use their versions. New instances are saved in the currently selected folder."
+            "value" : "Add a Minecraft folder to use the game versions it contains. New instances are saved in the selected folder."
           }
         },
         "zh-Hans" : {
@@ -7607,13 +7607,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Keep settings and run history for %1$lld instance"
+                  "value" : "Keep settings and session history for %1$lld instance"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Keep settings and run history for %1$lld instances"
+                  "value" : "Keep settings and session history for %1$lld instances"
                 }
               }
             }
@@ -7676,7 +7676,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Relocate"
+            "value" : "Locate Folder"
           }
         },
         "zh-Hans" : {
@@ -7694,7 +7694,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a new location for the original “%1$@” folder to restore its instances' settings and run history."
+            "value" : "Select the current location of the original “%1$@” folder to restore its instances' settings and session history."
           }
         },
         "zh-Hans" : {
@@ -7712,7 +7712,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Relocate Original Folder…"
+            "value" : "Locate Original Folder…"
           }
         },
         "zh-Hans" : {
@@ -7748,7 +7748,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Removing a folder from the list keeps its files, settings, and run history. Add the original folder again to restore them."
+            "value" : "Removing a folder from the list keeps its files, settings, and session history. Add the original folder again to restore them."
           }
         },
         "zh-Hans" : {
@@ -7928,7 +7928,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game has exited. You can cancel any post-exit command still running."
+            "value" : "The game has quit. You can cancel any post-exit command that's still running."
           }
         },
         "zh-Hans" : {
@@ -7946,7 +7946,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game has not exited. It may be saving or waiting for input. Return to the game to check."
+            "value" : "The game hasn't quit yet. It may be saving or waiting for input. Return to the game to check."
           }
         },
         "zh-Hans" : {
@@ -7964,7 +7964,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please exit normally through the game menu for this launch."
+            "value" : "For this session, quit from the game's menu."
           }
         },
         "zh-Hans" : {
@@ -7982,7 +7982,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Request Exit Again"
+            "value" : "Send Quit Request Again"
           }
         },
         "zh-Hans" : {
@@ -8000,7 +8000,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Request Normal Exit"
+            "value" : "Quit Game"
           }
         },
         "zh-Hans" : {
@@ -8396,7 +8396,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The target directory is empty. The game will use new worlds and settings. The original directory is kept, and you can switch back."
+            "value" : "This directory is empty. The game will start with no saved worlds and default settings. The original directory is kept, so you can switch back."
           }
         },
         "zh-Hans" : {
@@ -8468,7 +8468,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game files, dependencies, and launcher settings are not copied with the run directory."
+            "value" : "Game installation files, dependencies, and launcher settings aren't copied with the run directory."
           }
         },
         "zh-Hans" : {
@@ -8576,7 +8576,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recover and Keep Copy"
+            "value" : "Restore Settings and Keep Copy"
           }
         },
         "zh-Hans" : {
@@ -8630,7 +8630,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Restore the original directory settings and save the files copied during this operation as a separate copy. Files changed or replaced by other programs will be kept."
+            "value" : "Restore the original directory settings and keep the files copied so far as a separate copy. Files changed or replaced by other apps will be kept."
           }
         },
         "zh-Hans" : {
@@ -8774,7 +8774,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot switch yet"
+            "value" : "Can't switch yet"
           }
         },
         "zh-Hans" : {
@@ -8792,7 +8792,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The target already contains files or backups and cannot be overwritten by copying."
+            "value" : "The target already contains files or backups and can't be overwritten by copying."
           }
         },
         "zh-Hans" : {
@@ -8882,7 +8882,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Finalize Records and Resume Launching"
+            "value" : "Finish Session and Allow Launching"
           }
         },
         "zh-Hans" : {
@@ -8900,7 +8900,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I have confirmed that this instance's game has exited"
+            "value" : "I confirm that the game has quit"
           }
         },
         "zh-Hans" : {
@@ -8936,7 +8936,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recovery only updates run records. It does not stop processes or delete logs."
+            "value" : "This only updates the session records. It doesn't stop processes or delete logs."
           }
         },
         "zh-Hans" : {
@@ -9152,7 +9152,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Detect local Java or download an official runtime"
+            "value" : "Find installed Java or download an official runtime"
           }
         },
         "zh-Hans" : {
@@ -9224,7 +9224,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Already have the game on this Mac, or used another launcher?"
+            "value" : "Already have Minecraft on this Mac, or use another launcher?"
           }
         },
         "zh-Hans" : {
@@ -9476,7 +9476,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Play time"
+            "value" : "Playtime"
           }
         },
         "zh-Hans" : {
@@ -9566,7 +9566,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Run History"
+            "value" : "Session History"
           }
         },
         "zh-Hans" : {
@@ -9710,7 +9710,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Awaiting resolution"
+            "value" : "Not checked yet"
           }
         },
         "zh-Hans" : {
@@ -9800,7 +9800,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resolve the CurseForge file manifest before continuing."
+            "value" : "Check the CurseForge file list before continuing."
           }
         },
         "zh-Hans" : {
@@ -10070,7 +10070,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resolve File Manifest"
+            "value" : "Check File List"
           }
         },
         "zh-Hans" : {
@@ -10088,7 +10088,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resolving modpack files…"
+            "value" : "Checking modpack files…"
           }
         },
         "zh-Hans" : {
@@ -10466,7 +10466,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Removing the loader launches the game as vanilla. Mod files are kept."
+            "value" : "The game will launch as vanilla Minecraft after you remove the loader. Your mod files will be kept."
           }
         },
         "zh-Hans" : {
@@ -10754,7 +10754,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Disabling keeps the files. Updates are backed up automatically and can be restored if they fail."
+            "value" : "Disabling an item keeps its files. Files are backed up before updating so they can be restored if the update fails."
           }
         },
         "zh-Hans" : {
@@ -11186,7 +11186,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resolve Update for %1$@"
+            "value" : "Preparing Update for %1$@"
           }
         },
         "zh-Hans" : {
@@ -11690,7 +11690,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The copy stores game content and launch settings separately. Play time and run history are not inherited."
+            "value" : "The copy has its own game content and launch settings. Playtime and session history aren't copied."
           }
         },
         "zh-Hans" : {
@@ -11708,7 +11708,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copy incomplete; the original instance and its files are kept"
+            "value" : "Copy incomplete. The original instance and its files have been kept."
           }
         },
         "zh-Hans" : {
@@ -11780,7 +11780,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Validate the copy to finish. If files are missing or changed, the copy will be kept for inspection."
+            "value" : "Verify the copied files to finish. If any files are missing or have changed, the copy will be kept for you to check."
           }
         },
         "zh-Hans" : {
@@ -11888,7 +11888,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The source instance is not installed yet. The copy will also remain pending installation."
+            "value" : "The game isn't installed in the original instance yet. It won't be installed in the copy either."
           }
         },
         "zh-Hans" : {
@@ -12050,7 +12050,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Validate and Finish Copy"
+            "value" : "Verify and Finish Copy"
           }
         },
         "zh-Hans" : {
@@ -12932,7 +12932,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cannot retrieve the modpack icon. Check your connection and try again."
+            "value" : "Can't retrieve the modpack icon. Check your connection and try again."
           }
         },
         "zh-Hans" : {
@@ -13724,7 +13724,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Move incomplete; the original instance is kept"
+            "value" : "Move incomplete. The original instance has been kept."
           }
         },
         "zh-Hans" : {
@@ -13760,7 +13760,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Game content and backups in the shared directory will be copied to the target and run separately. The original shared directory is kept."
+            "value" : "Game content and backups from the shared directory will be copied to the destination. The instance will then use its own run directory. The original shared directory is kept."
           }
         },
         "zh-Hans" : {
@@ -13814,7 +13814,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Validate the files to clean up the original location. You can also choose “Keep Original Files and Finish”."
+            "value" : "Verify the copied files, then remove the originals. To keep the originals, choose Keep Original Files and Finish."
           }
         },
         "zh-Hans" : {
@@ -13904,7 +13904,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recover and Keep Copy"
+            "value" : "Undo Move and Keep Copy"
           }
         },
         "zh-Hans" : {
@@ -13940,7 +13940,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Undo this move and keep the incomplete copy. The original instance remains usable."
+            "value" : "Undo the move and keep the incomplete copy. You can continue using the original instance."
           }
         },
         "zh-Hans" : {
@@ -14120,7 +14120,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Validate and Clean Up Original Files"
+            "value" : "Verify and Remove Original Files"
           }
         },
         "zh-Hans" : {
@@ -14588,7 +14588,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "File operations take effect separately. You do not need to save instance settings."
+            "value" : "File operations take effect immediately. You don't need to save instance settings."
           }
         },
         "zh-Hans" : {
@@ -15056,7 +15056,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Relocate Saved Custom Directory…"
+            "value" : "Locate Saved Custom Directory…"
           }
         },
         "zh-Hans" : {
@@ -15074,7 +15074,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Relocate Original Game Directory…"
+            "value" : "Locate Original Game Directory…"
           }
         },
         "zh-Hans" : {
@@ -15380,7 +15380,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launching “%1$@” requires compatible Java, but no suitable local version was found (recommended: Java %2$@, %3$@). Download and continue? You can also choose existing Java."
+            "value" : "“%1$@” needs a compatible Java installation. None was found on your Mac (recommended: Java %2$@, %3$@). Download Java to continue, or choose an existing installation."
           }
         },
         "zh-Hans" : {
@@ -15398,7 +15398,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The installer for %1$@ requires Java %2$@ or later, but no local Java is available. Download and continue installing? This will not change the game's Java settings."
+            "value" : "The %1$@ installer needs Java %2$@ or later. No suitable installation was found on your Mac. Download Java to continue, or choose an existing installation. This won't change the game's Java settings."
           }
         },
         "zh-Hans" : {
@@ -15704,7 +15704,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No Java found. Add installed Java or download a game runtime below."
+            "value" : "No Java installations found. Add an existing installation or download a game runtime below."
           }
         },
         "zh-Hans" : {
@@ -15740,7 +15740,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Detect Again"
+            "value" : "Scan Again"
           }
         },
         "zh-Hans" : {
@@ -15758,7 +15758,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Detect Local Java Again"
+            "value" : "Scan for Java Again"
           }
         },
         "zh-Hans" : {
@@ -15776,7 +15776,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose Path Again…"
+            "value" : "Locate Java…"
           }
         },
         "zh-Hans" : {
@@ -15812,7 +15812,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remove from Manual List"
+            "value" : "Remove from List"
           }
         },
         "zh-Hans" : {
@@ -15938,7 +15938,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Files will be moved to Trash. Java cannot be removed while a game or installer is using it."
+            "value" : "Files will be moved to Trash. Java can't be removed while a game or installer is using it."
           }
         },
         "zh-Hans" : {
@@ -16046,7 +16046,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "View Run History"
+            "value" : "View Session History"
           }
         },
         "zh-Hans" : {
@@ -16460,7 +16460,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a java file, JDK bundle, or Java Home folder."
+            "value" : "Choose a java executable, a JDK bundle, or a Java home folder."
           }
         },
         "zh-Hans" : {
@@ -16748,7 +16748,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "When “Launch in Fullscreen” is off, the game's saved fullscreen state is used."
+            "value" : "When “Launch in fullscreen” is off, the game uses its saved fullscreen setting."
           }
         },
         "zh-Hans" : {
@@ -17072,7 +17072,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launch uses compatible local Java first. If none is available, you can download it or choose local Java. Specifying a major version restricts selection to that version."
+            "value" : "Ruri first looks for a compatible Java installation on your Mac. If none is found, you can download one or locate an existing installation. If you specify a major version, Ruri will use only that version."
           }
         },
         "zh-Hans" : {
@@ -17342,7 +17342,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estimate Explanation"
+            "value" : "How Memory Is Estimated"
           }
         },
         "zh-Hans" : {
@@ -17360,7 +17360,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Each instance's memory is estimated at launch from its Minecraft version, loader, mod count, and available system memory. This shows an example for an instance without mods."
+            "value" : "Ruri estimates memory for each instance at launch, using its Minecraft version, loader, mod count, and available system memory. The values shown here are an example for an instance without mods."
           }
         },
         "zh-Hans" : {
@@ -17378,7 +17378,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Minecraft version, loader, and mod count determine the basic requirement and recommended headroom. System memory and available memory determine an allocation between the two. Headroom covers in-game settings such as render distance, resource packs, and shader packs."
+            "value" : "Ruri estimates the basic memory requirement and a recommended allocation based on the Minecraft version, loader, and number of mods. It then chooses an amount between the two based on your Mac's total and available memory. The recommended allocation includes room for settings such as render distance, resource packs, and shaders."
           }
         },
         "zh-Hans" : {
@@ -17414,7 +17414,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Counting instance content…"
+            "value" : "Checking instance content…"
           }
         },
         "zh-Hans" : {
@@ -17432,7 +17432,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Insufficient system memory: content needs %1$@, but only %2$@ can be allocated. Close other apps, reduce mods, or set memory manually."
+            "value" : "Not enough memory: this instance needs %1$@, but only %2$@ is available. Close other apps, remove some mods, or set the memory allocation manually."
           }
         },
         "zh-Hans" : {
@@ -17450,7 +17450,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Available memory is limited. The basic requirement of %1$@ is met, but the full headroom (%2$@) is unavailable. Close other apps to estimate again."
+            "value" : "Available memory is limited. The basic requirement of %1$@ is met, but the recommended allocation of %2$@ isn't available. Close other apps, then estimate again."
           }
         },
         "zh-Hans" : {
@@ -17468,7 +17468,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Initial memory cannot exceed maximum memory. Metaspace loads classes and usually needs no limit."
+            "value" : "Initial memory can't exceed maximum memory. Metaspace loads classes and usually needs no limit."
           }
         },
         "zh-Hans" : {
@@ -18260,7 +18260,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This instance's version manifest and run history will be moved to Trash. Worlds, mods, backups, and game settings in the selected run directory will be kept."
+            "value" : "This instance's version manifest and session history will be moved to Trash. Worlds, mods, backups, and game settings in the selected run directory will be kept."
           }
         },
         "zh-Hans" : {
@@ -18350,7 +18350,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This version folder and its separate worlds and mods will be moved to Trash. Shared and custom game directories will be kept, and run history will remain in Ruri."
+            "value" : "This version folder and its separate worlds and mods will be moved to Trash. Shared and custom game directories will be kept, and session history will remain in Ruri."
           }
         },
         "zh-Hans" : {
@@ -18476,7 +18476,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No run history yet"
+            "value" : "No session history yet"
           }
         },
         "zh-Hans" : {
@@ -18800,7 +18800,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No run history"
+            "value" : "No session history"
           }
         },
         "zh-Hans" : {
@@ -18854,7 +18854,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Run History"
+            "value" : "Session History"
           }
         },
         "zh-Hans" : {
@@ -18872,7 +18872,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launch the game to view run logs here."
+            "value" : "Launch a game to see its session logs here."
           }
         },
         "zh-Hans" : {
@@ -18890,7 +18890,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Run Logs"
+            "value" : "Session Logs"
           }
         },
         "zh-Hans" : {
@@ -18944,7 +18944,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show This Run's Record in Finder"
+            "value" : "Show Session in Finder"
           }
         },
         "zh-Hans" : {
@@ -19232,7 +19232,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The previous update is incomplete. Recovery will keep a version that was successfully committed or restore the files from before the update."
+            "value" : "The previous update didn't finish. Recovery will keep the updated version if it was saved successfully, or restore the files from before the update."
           }
         },
         "zh-Hans" : {
@@ -19250,7 +19250,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keep local"
+            "value" : "Keep local changes"
           }
         },
         "zh-Hans" : {
@@ -19286,7 +19286,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Worlds and files you added will be kept. Locally modified settings are kept by default; you can change this for each file. You can roll back after updating."
+            "value" : "Your worlds and files you've added will be kept. Modified configuration files are kept by default; you can change this for each file. You can roll back the update later."
           }
         },
         "zh-Hans" : {
@@ -19340,7 +19340,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The modpack's original file records are missing, so modpack files cannot be distinguished from personal files."
+            "value" : "The modpack's original file records are missing, so modpack files can't be distinguished from personal files."
           }
         },
         "zh-Hans" : {
@@ -19412,7 +19412,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Processing Modpack…"
+            "value" : "Processing modpack…"
           }
         },
         "zh-Hans" : {
@@ -19646,7 +19646,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A Minecraft Java Edition launcher. Not affiliated with Mojang or Microsoft."
+            "value" : "A Minecraft: Java Edition launcher. Not affiliated with Mojang or Microsoft."
           }
         },
         "zh-Hans" : {
@@ -19700,7 +19700,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“Switch Automatically” tries official sources first, then the BMCLAPI mirror if the connection fails. Mod files fall back to the MCIM mirror."
+            "value" : "With Automatic Switching, Ruri tries official sources first, then the BMCLAPI mirror if the connection fails. Mod downloads use the MCIM mirror as a fallback."
           }
         },
         "zh-Hans" : {
@@ -19790,7 +19790,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Custom application Client ID"
+            "value" : "Custom application client ID"
           }
         },
         "zh-Hans" : {
@@ -19808,7 +19808,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A custom Client ID must enable public client login and be approved to access Minecraft services."
+            "value" : "Your app must allow public client sign-in and have permission to access Minecraft services."
           }
         },
         "zh-Hans" : {
@@ -19970,7 +19970,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter application Client ID"
+            "value" : "Enter application client ID"
           }
         },
         "zh-Hans" : {
@@ -20132,7 +20132,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microsoft Login"
+            "value" : "Microsoft Sign-In"
           }
         },
         "zh-Hans" : {
@@ -20240,7 +20240,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Applies only to new instances. Imported modpacks always use a separate directory. Instances in a shared directory share mods, worlds, and game settings and cannot run simultaneously."
+            "value" : "Applies only to new instances. Imported modpacks always use a separate directory. Instances in a shared directory share mods, worlds, and game settings and can't run simultaneously."
           }
         },
         "zh-Hans" : {
@@ -20492,7 +20492,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cancelled. Working files have been kept."
+            "value" : "Canceled. Working files have been kept."
           }
         },
         "zh-Hans" : {
@@ -21086,7 +21086,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Run History and Logs"
+            "value" : "Session History and Logs"
           }
         },
         "zh-Hans" : {
@@ -21644,7 +21644,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not preview information: %1$@"
+            "value" : "Couldn't preview information: %1$@"
           }
         },
         "zh-Hans" : {
@@ -22094,7 +22094,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Priority decreases from top to bottom. For content with the same name, the higher data pack takes precedence. Drag or use the arrows to reorder. Changes apply the next time you enter the world."
+            "value" : "Packs higher in the list take priority when multiple packs define the same content. Drag a pack or use the arrows to reorder. Changes take effect the next time you enter the world."
           }
         },
         "zh-Hans" : {
@@ -22202,7 +22202,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Data Pack installed in “%1$@”"
+            "value" : "Data pack installed in “%1$@”"
           }
         },
         "zh-Hans" : {
@@ -22616,7 +22616,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The previous world configuration backup will be kept before changes are made."
+            "value" : "The current world configuration is backed up before you make changes."
           }
         },
         "zh-Hans" : {
@@ -22670,7 +22670,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Import a ZIP or folder with pack.mcmeta in its root. Data Packs bundled with the game or mods are not listed here."
+            "value" : "Import a ZIP file or folder with pack.mcmeta at its top level. Data packs included with the game or mods aren't listed here."
           }
         },
         "zh-Hans" : {
@@ -22994,7 +22994,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Back Up and Restore Automatically"
+            "value" : "Back Up and Restore"
           }
         },
         "zh-Hans" : {
@@ -23066,7 +23066,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read backup information"
+            "value" : "Couldn't read backup information"
           }
         },
         "zh-Hans" : {
@@ -23822,7 +23822,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cancelled"
+            "value" : "Canceled"
           }
         },
         "zh-Hans" : {
@@ -23840,7 +23840,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not refresh the game version list: %1$@"
+            "value" : "Couldn't refresh the game version list: %1$@"
           }
         },
         "zh-Hans" : {
@@ -23948,7 +23948,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clear Finished Logs?"
+            "value" : "Clear Completed Activity?"
           }
         },
         "zh-Hans" : {
@@ -24200,7 +24200,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to read log history: %1$@"
+            "value" : "Couldn't load log history: %1$@"
           }
         },
         "zh-Hans" : {
@@ -24218,7 +24218,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read log history. The original file has been preserved; logs for this run are kept in memory."
+            "value" : "Couldn't read log history. The original file has been preserved; logs for this run are kept in memory."
           }
         },
         "zh-Hans" : {
@@ -24236,7 +24236,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Logs cannot be saved to disk right now."
+            "value" : "Logs can't be saved to disk right now."
           }
         },
         "zh-Hans" : {
@@ -24578,7 +24578,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "View complete details, task stages, and related actions."
+            "value" : "View the full message, task progress, and available actions."
           }
         },
         "zh-Hans" : {
@@ -25118,7 +25118,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Incompatible loaders cannot be selected together."
+            "value" : "Incompatible loaders can't be selected together."
           }
         },
         "zh-Hans" : {
@@ -25136,7 +25136,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "These loaders cannot be combined. Remove the conflicting loader first."
+            "value" : "These loaders can't be combined. Remove the conflicting loader first."
           }
         },
         "zh-Hans" : {
@@ -25406,7 +25406,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This version uses an unrecognized loader launch entry point and cannot be installed in combination."
+            "value" : "This version uses an unrecognized loader launch entry point and can't be installed in combination."
           }
         },
         "zh-Hans" : {
@@ -25496,7 +25496,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "By default, launch information and a bounded amount of recent output are retained, and game logs are saved on failure. Enable debug mode in launch settings for more detailed console logs."
+            "value" : "Ruri keeps launch information and a limited amount of recent output, and saves game logs if something goes wrong. For more detailed console logs, turn on debug mode in launch settings."
           }
         },
         "zh-Hans" : {
@@ -25604,7 +25604,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not verify which run the game logs belong to. The session's diagnostic records have been retained."
+            "value" : "Couldn't verify which run the game logs belong to. The session's diagnostic records have been retained."
           }
         },
         "zh-Hans" : {
@@ -25730,7 +25730,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read game log %1$@."
+            "value" : "Couldn't read game log %1$@."
           }
         },
         "zh-Hans" : {

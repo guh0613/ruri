@@ -8,7 +8,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add server"
+            "value" : "Add Server"
           }
         },
         "zh-Hans" : {
@@ -26,7 +26,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add to instance and launch"
+            "value" : "Add to Instance and Launch"
           }
         },
         "zh-Hans" : {
@@ -260,7 +260,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose instance"
+            "value" : "Choose Instance"
           }
         },
         "zh-Hans" : {
@@ -332,7 +332,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remove this entry from the instance? Ruri settings and history are retained."
+            "value" : "Remove this server from the instance's multiplayer list? Your Ruri settings and play history will be kept."
           }
         },
         "zh-Hans" : {
@@ -350,7 +350,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "World and server destinations are mutually exclusive."
+            "value" : "Choose either a world or a server to launch into, not both."
           }
         },
         "zh-Hans" : {
@@ -404,7 +404,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Edit server"
+            "value" : "Edit Server"
           }
         },
         "zh-Hans" : {
@@ -440,7 +440,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add an address or use an instance multiplayer list."
+            "value" : "Add a server address or choose one from an instance's multiplayer list."
           }
         },
         "zh-Hans" : {
@@ -494,7 +494,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Leave time unknown; may include menu time"
+            "value" : "The time you left couldn't be confirmed. This estimate may include time spent in menus."
           }
         },
         "zh-Hans" : {
@@ -710,7 +710,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launcher preferences"
+            "value" : "Server Settings"
           }
         },
         "zh-Hans" : {
@@ -818,7 +818,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid server address. Enter a host or host:port."
+            "value" : "Enter a valid server address, such as a domain name, IP address, or host:port."
           }
         },
         "zh-Hans" : {
@@ -854,7 +854,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A server name is required (up to 1024 bytes)."
+            "value" : "Enter a server name of up to 1024 bytes."
           }
         },
         "zh-Hans" : {
@@ -890,7 +890,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launch and join"
+            "value" : "Launch and Join"
           }
         },
         "zh-Hans" : {
@@ -980,7 +980,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Last successful query"
+            "value" : "Last checked successfully"
           }
         },
         "zh-Hans" : {
@@ -1016,7 +1016,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Legacy session attribution"
+            "value" : "Legacy session total"
           }
         },
         "zh-Hans" : {
@@ -1052,7 +1052,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Some instance lists could not be read"
+            "value" : "Some instance lists couldn't be read"
           }
         },
         "zh-Hans" : {
@@ -1088,7 +1088,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contains This Server"
+            "value" : "Instances with This Server"
           }
         },
         "zh-Hans" : {
@@ -1142,7 +1142,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Manage servers"
+            "value" : "Manage Servers"
           }
         },
         "zh-Hans" : {
@@ -1268,7 +1268,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Move down"
+            "value" : "Move Down"
           }
         },
         "zh-Hans" : {
@@ -1286,7 +1286,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Move up"
+            "value" : "Move Up"
           }
         },
         "zh-Hans" : {
@@ -1358,7 +1358,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No attributable play history"
+            "value" : "No play history available"
           }
         },
         "zh-Hans" : {
@@ -1394,7 +1394,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No servers match"
+            "value" : "No matching servers"
           }
         },
         "zh-Hans" : {
@@ -1430,7 +1430,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No play in the last 30 days"
+            "value" : "No playtime in the last 30 days"
           }
         },
         "zh-Hans" : {
@@ -1682,7 +1682,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Server status will be queried automatically after you enter an address."
+            "value" : "Ruri checks the server's status when you enter an address."
           }
         },
         "zh-Hans" : {
@@ -1700,7 +1700,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Query status"
+            "value" : "Check Status"
           }
         },
         "zh-Hans" : {
@@ -1736,7 +1736,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not query the server status."
+            "value" : "Couldn't check the server's status."
           }
         },
         "zh-Hans" : {
@@ -1754,7 +1754,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can save or join even if querying fails. Version and player counts are supplied by the server."
+            "value" : "If the status check fails, you can still save the server or try joining. The server provides its version and player count."
           }
         },
         "zh-Hans" : {
@@ -1772,7 +1772,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Querying"
+            "value" : "Checking…"
           }
         },
         "zh-Hans" : {
@@ -1790,7 +1790,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reachable"
+            "value" : "Online"
           }
         },
         "zh-Hans" : {
@@ -1844,7 +1844,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The list is not loaded. Please retry."
+            "value" : "The list hasn't loaded yet. Try again in a moment."
           }
         },
         "zh-Hans" : {
@@ -1880,7 +1880,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remove from instance"
+            "value" : "Remove from Instance"
           }
         },
         "zh-Hans" : {
@@ -2006,7 +2006,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Game running; server list is read-only"
+            "value" : "The game is running. The server list can't be edited."
           }
         },
         "zh-Hans" : {
@@ -2060,7 +2060,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adding to an instance writes to its multiplayer list, so the server is also visible in the game."
+            "value" : "The server will appear in the selected instance's in-game multiplayer list."
           }
         },
         "zh-Hans" : {
@@ -2078,7 +2078,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keep in Ruri even when no instance lists it"
+            "value" : "Keep in Ruri even if no instance includes it"
           }
         },
         "zh-Hans" : {
@@ -2096,7 +2096,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search name or address"
+            "value" : "Search by name or address"
           }
         },
         "zh-Hans" : {
@@ -2150,7 +2150,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The alias, notes, and preferred instance are saved only in Ruri and do not change the in-game server list."
+            "value" : "These settings are saved only in Ruri. They don't change the server's entry in the game's multiplayer list."
           }
         },
         "zh-Hans" : {
@@ -2330,7 +2330,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This game version does not support launching into a server."
+            "value" : "This game version doesn't support joining a server directly from the launcher."
           }
         },
         "zh-Hans" : {

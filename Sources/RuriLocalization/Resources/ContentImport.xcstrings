@@ -29,13 +29,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Release to Import %1$lld Item (%2$@)"
+                  "value" : "Drop to Import %1$lld Item (%2$@)"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Release to Import %1$lld Items (%2$@)"
+                  "value" : "Drop to Import %1$lld Items (%2$@)"
                 }
               }
             }
@@ -62,7 +62,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drag content from Finder, or use “Import…” above."
+            "value" : "Drag files from Finder, or click Import above."
           }
         },
         "zh-Hans" : {
@@ -98,7 +98,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read the dropped files. Drag them from Finder again, or use “Import…”."
+            "value" : "Couldn't read the dropped files. Drag them from Finder again, or click Import."
           }
         },
         "zh-Hans" : {
@@ -116,7 +116,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "JAR or LITEMOD Files"
+            "value" : "JAR or LITEMOD files"
           }
         },
         "zh-Hans" : {
@@ -134,7 +134,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resource Pack ZIP or Folder"
+            "value" : "Resource pack ZIP file or folder"
           }
         },
         "zh-Hans" : {
@@ -152,7 +152,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Shader Pack ZIP or Folder"
+            "value" : "Shader pack ZIP file or folder"
           }
         },
         "zh-Hans" : {
@@ -170,7 +170,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Content Import Is Currently Unavailable"
+            "value" : "Can't Import Content Right Now"
           }
         },
         "zh-Hans" : {

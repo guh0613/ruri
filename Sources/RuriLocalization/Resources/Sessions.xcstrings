@@ -134,7 +134,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Play Sessions That Day"
+            "value" : "Sessions on This Day"
           }
         },
         "zh-Hans" : {
@@ -152,7 +152,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Most visited world"
+            "value" : "Most Played World"
           }
         },
         "zh-Hans" : {
@@ -278,7 +278,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Less than %1$@ by %2$@"
+            "value" : "%2$@ less than in the %1$@"
           }
         },
         "zh-Hans" : {
@@ -368,7 +368,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "More than %1$@ by %2$@"
+            "value" : "%2$@ more than in the %1$@"
           }
         },
         "zh-Hans" : {
@@ -476,7 +476,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Original log output."
+            "value" : "View the original log output."
           }
         },
         "zh-Hans" : {
@@ -530,7 +530,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Previous 30 Days"
+            "value" : "previous 30 days"
           }
         },
         "zh-Hans" : {
@@ -548,7 +548,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Previous 7 Days"
+            "value" : "previous 7 days"
           }
         },
         "zh-Hans" : {
@@ -566,7 +566,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Previous 12 Months"
+            "value" : "previous 12 months"
           }
         },
         "zh-Hans" : {
@@ -764,7 +764,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Same as %1$@"
+            "value" : "Same as in the %1$@"
           }
         },
         "zh-Hans" : {
@@ -1214,7 +1214,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Statistics mode"
+            "value" : "Activity display"
           }
         },
         "zh-Hans" : {
@@ -1358,7 +1358,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diagnostic attachments have been cleared; play history is still retained."
+            "value" : "Diagnostic files have been removed. Your play history is still available."
           }
         },
         "zh-Hans" : {
@@ -1394,7 +1394,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Debug output exceeded the processing budget. Detailed recording has stopped; recent output is still retained."
+            "value" : "Debug output is arriving too quickly to process. Detailed logging has stopped, but recent output is still available."
           }
         },
         "zh-Hans" : {
@@ -1412,7 +1412,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read or write play history: %1$@"
+            "value" : "Couldn't read or write play history: %1$@"
           }
         },
         "zh-Hans" : {
@@ -1430,7 +1430,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Game monitoring did not confirm launch in time. Check this session's record and avoid launching again."
+            "value" : "The game monitor didn't confirm that the game started in time. Check this session's details before launching again."
           }
         },
         "zh-Hans" : {
@@ -1556,7 +1556,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Duration includes loading and background runtime, but excludes sleep."
+            "value" : "Playtime includes loading and time spent in the background. It excludes time when your Mac is asleep."
           }
         },
         "zh-Hans" : {
@@ -1592,7 +1592,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not connect to game monitoring. Refresh the running status and try again."
+            "value" : "Couldn't connect to the game monitor. Refresh the game status and try again."
           }
         },
         "zh-Hans" : {
@@ -1628,7 +1628,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game has ended, but the post-exit command failed. Check launch settings."
+            "value" : "The game has quit, but the post-exit command failed. Check your launch settings."
           }
         },
         "zh-Hans" : {
@@ -1664,7 +1664,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cancelled"
+            "value" : "Canceled"
           }
         },
         "zh-Hans" : {
@@ -1934,7 +1934,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game did not end normally. See the suggestions below or export a diagnostic report."
+            "value" : "The game quit unexpectedly. Try the suggestions below or export a diagnostic report."
           }
         },
         "zh-Hans" : {
@@ -1988,7 +1988,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game has exited. Post-exit actions are running."
+            "value" : "The game has quit. Post-exit tasks are still running."
           }
         },
         "zh-Hans" : {
@@ -2024,7 +2024,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not prepare the complete file for %1$@: %2$@. Other logs can still be exported."
+            "value" : "Couldn't prepare the complete file for %1$@: %2$@. Other logs can still be exported."
           }
         },
         "zh-Hans" : {
@@ -2114,7 +2114,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Complete exit information was not received. Only confirmed duration and logs are retained."
+            "value" : "The complete exit information wasn't received. Only confirmed playtime and logs have been kept."
           }
         },
         "zh-Hans" : {
@@ -2348,7 +2348,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No logs for this play session were found. The files may have been rotated or cleared."
+            "value" : "No logs found for this session. They may have been replaced by newer logs or removed."
           }
         },
         "zh-Hans" : {
@@ -2366,7 +2366,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not determine the cause"
+            "value" : "Couldn't determine the cause"
           }
         },
         "zh-Hans" : {
@@ -2384,7 +2384,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "There is not enough information to determine the cause. Export the report for further inspection."
+            "value" : "There isn't enough information to identify the cause. Export a report for further investigation."
           }
         },
         "zh-Hans" : {
@@ -2438,7 +2438,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The live connection has closed. Content already displayed can still be saved."
+            "value" : "The live connection was lost. You can still save the content already shown."
           }
         },
         "zh-Hans" : {
@@ -2474,7 +2474,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game ended normally."
+            "value" : "The game quit normally."
           }
         },
         "zh-Hans" : {
@@ -2618,7 +2618,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Process Output (Supplementary)"
+            "value" : "Process Output (Additional)"
           }
         },
         "zh-Hans" : {
@@ -2636,7 +2636,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This record could not be found."
+            "value" : "This record couldn't be found."
           }
         },
         "zh-Hans" : {
@@ -2708,7 +2708,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Packages logs after hiding common private information, ready to share with a modpack author or support staff."
+            "value" : "Collects logs and hides common sensitive information so you can share them with the modpack author or support team."
           }
         },
         "zh-Hans" : {
@@ -2762,7 +2762,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The report is saved locally and is not uploaded. Automatic redaction may be incomplete; check before sharing."
+            "value" : "Reports are saved on your Mac and aren't uploaded. Some private information may remain, so review the report before sharing it."
           }
         },
         "zh-Hans" : {
@@ -3122,7 +3122,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A log line exceeds 1 MiB, so sensitive information cannot be safely hidden. Only an excerpt is provided. View the original file in the game directory."
+            "value" : "A log line exceeds 1 MiB, so sensitive information can't be safely hidden. Only an excerpt is provided. View the original file in the game directory."
           }
         },
         "zh-Hans" : {

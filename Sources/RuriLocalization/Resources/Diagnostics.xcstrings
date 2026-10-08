@@ -8,7 +8,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Failed"
+            "value" : "%1$@: Failed"
           }
         },
         "zh-Hans" : {
@@ -80,7 +80,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The system explicitly reports an incompatible binary architecture. Java and the game's native libraries need matching architectures."
+            "value" : "Java and the game's native libraries use incompatible architectures. Choose matching ARM64 or Intel versions."
           }
         },
         "zh-Hans" : {
@@ -98,7 +98,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check whether mods providing native libraries support the current architecture, then repair the instance to prepare the native libraries again."
+            "value" : "Check that mods with native libraries support the selected architecture, then repair the instance to restore the required libraries."
           }
         },
         "zh-Hans" : {
@@ -206,7 +206,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java Cannot Read the Required Class Version"
+            "value" : "Java Can't Read the Required Class Version"
           }
         },
         "zh-Hans" : {
@@ -224,7 +224,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java explicitly reports an unsupported class file version. The game, loader, and mods may each have Java requirements."
+            "value" : "Java can't read a class file used by the game, loader, or a mod. Check which Java version each one requires."
           }
         },
         "zh-Hans" : {
@@ -242,7 +242,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clues to Verify"
+            "value" : "Possible Causes to Check"
           }
         },
         "zh-Hans" : {
@@ -278,7 +278,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check the filename and underlying error in the original text first. Copy the configuration elsewhere as a backup before editing."
+            "value" : "Check the filename and underlying error in the log. Back up the configuration file before editing it."
           }
         },
         "zh-Hans" : {
@@ -296,7 +296,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The loader reports an unreadable configuration in the error context. This may involve content format, version differences, or file access."
+            "value" : "The loader couldn't read a configuration file. Its format may be invalid, it may belong to another version, or there may be a file access problem."
           }
         },
         "zh-Hans" : {
@@ -314,7 +314,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to Read a Configuration File"
+            "value" : "Couldn't Read a Configuration File"
           }
         },
         "zh-Hans" : {
@@ -332,7 +332,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fix the configuration using the mod's instructions. If it needs regeneration, handle only that file to avoid clearing all configurations."
+            "value" : "Follow the mod's instructions to fix its configuration. If you need to regenerate a file, replace only that file rather than deleting all configuration files."
           }
         },
         "zh-Hans" : {
@@ -350,7 +350,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game exited abnormally. The cause is currently unknown."
+            "value" : "The game quit unexpectedly. The cause is unknown."
           }
         },
         "zh-Hans" : {
@@ -368,7 +368,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Report Identifies a Manually Triggered Debug Crash"
+            "value" : "Manually Triggered Debug Crash"
           }
         },
         "zh-Hans" : {
@@ -386,7 +386,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Minecraft describes a manual debug crash. This does not establish mod incompatibility."
+            "value" : "Minecraft reports that this crash was triggered manually for debugging. This doesn't indicate a mod conflict."
           }
         },
         "zh-Hans" : {
@@ -440,7 +440,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check the files and versions listed in the original text in mod management."
+            "value" : "In Game Content, check the mod files and versions named in the log."
           }
         },
         "zh-Hans" : {
@@ -458,7 +458,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The same mod was loaded multiple times, possibly from different versions or duplicate sources."
+            "value" : "The loader found more than one copy or version of the same mod."
           }
         },
         "zh-Hans" : {
@@ -548,7 +548,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check the original errors below and their corresponding settings, then restart after resolving them."
+            "value" : "Review the errors and related settings below. Make any needed changes, then try launching again."
           }
         },
         "zh-Hans" : {
@@ -566,7 +566,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If it still fails, collect this run's records to compare the errors before and after retrying."
+            "value" : "If the problem continues, collect a report for the new session so you can compare the errors."
           }
         },
         "zh-Hans" : {
@@ -674,7 +674,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The virtual machine reports a fatal error. The Problematic frame only identifies the crash location; native libraries, Java, and the system environment must also be considered."
+            "value" : "Java reported a fatal error. “Problematic frame” shows where it crashed, but doesn't explain why on its own. The native libraries, Java version, and system environment also need to be checked."
           }
         },
         "zh-Hans" : {
@@ -728,7 +728,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check the instance's additional JVM arguments. Keep a copy, then undo recently added arguments one at a time."
+            "value" : "Review the instance's additional JVM arguments. Save a copy, then remove recently added arguments one at a time."
           }
         },
         "zh-Hans" : {
@@ -746,7 +746,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The virtual machine reports invalid arguments or memory limits. The game has not started normally."
+            "value" : "Java rejected the launch arguments or memory limits before the game could start."
           }
         },
         "zh-Hans" : {
@@ -782,7 +782,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirm that the memory limit suits the selected Java, then retry."
+            "value" : "Check that the memory limit is suitable for your Java installation, then try again."
           }
         },
         "zh-Hans" : {
@@ -800,7 +800,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launching was cancelled. There is no evidence that the game crashed."
+            "value" : "Launching was canceled. There is no evidence that the game crashed."
           }
         },
         "zh-Hans" : {
@@ -818,7 +818,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launching failed during “%1$@”. The game has not produced an exit record. Check the error at that stage first."
+            "value" : "Launch failed during “%1$@”. No game exit was recorded. Check the error for that stage first."
           }
         },
         "zh-Hans" : {
@@ -836,7 +836,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loader Rejected the Mod Combination"
+            "value" : "Mod Requirements or Conflicts"
           }
         },
         "zh-Hans" : {
@@ -854,7 +854,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check dependencies against the mod IDs and version ranges in the evidence, and confirm the Minecraft and loader versions."
+            "value" : "Check the mod IDs and required version ranges in the log against your installed dependencies, Minecraft version, and loader."
           }
         },
         "zh-Hans" : {
@@ -890,7 +890,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Review recent changes in mod management. Change one group of related dependencies at a time, keeping recovery possible, then retry."
+            "value" : "Review recent mod changes in Game Content. Change one set of related dependencies at a time, and keep copies so you can undo the changes before trying again."
           }
         },
         "zh-Hans" : {
@@ -908,7 +908,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Explicitly Reported in the Log"
+            "value" : "Reported in the Log"
           }
         },
         "zh-Hans" : {
@@ -944,7 +944,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Preserve the Java version, macOS version, and original error text from the report to help determine whether the launcher's launch method needs a fix."
+            "value" : "Keep the Java version, macOS version, and original error in the report. These help determine whether the launcher needs to change how it starts the game."
           }
         },
         "zh-Hans" : {
@@ -962,7 +962,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Window Initialization Violated macOS Main-Thread Requirements"
+            "value" : "Game Window Couldn't Start on the Main Thread"
           }
         },
         "zh-Hans" : {
@@ -1070,7 +1070,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check the game's and loader's versions in the instance, then use instance repair to restore the installation files."
+            "value" : "Check the instance's Minecraft and loader versions, then repair the instance to restore its installation files."
           }
         },
         "zh-Hans" : {
@@ -1106,7 +1106,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java explicitly reports that it cannot load the main class. Check version files, the loader installation, and the launch entry point."
+            "value" : "Java explicitly reports that it can't load the main class. Check version files, the loader installation, and the launch entry point."
           }
         },
         "zh-Hans" : {
@@ -1124,7 +1124,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Preserve existing configurations and worlds. If repair does not resolve the failure, include this report."
+            "value" : "Keep your current configuration files and worlds. If repair doesn't help, include this report when asking for support."
           }
         },
         "zh-Hans" : {
@@ -1142,7 +1142,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This indicates a failure while a mod modifies game code. A mod named in a filename or stack trace cannot be assumed to be the sole cause."
+            "value" : "A mod couldn't apply a change to the game's code. A mod named in the error or stack trace isn't necessarily the only cause."
           }
         },
         "zh-Hans" : {
@@ -1160,7 +1160,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error Context Includes a Mixin Application Failure"
+            "value" : "Mixin Failed to Apply"
           }
         },
         "zh-Hans" : {
@@ -1196,7 +1196,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verify by gradually disabling recently changed mods in mod management; you can re-enable them later. Do not delete mods in bulk based on a single warning."
+            "value" : "In Game Content, disable recently changed mods one at a time to test whether they're involved. You can enable them again later. Don't remove multiple mods based on a single warning."
           }
         },
         "zh-Hans" : {
@@ -1268,7 +1268,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If the error appeared immediately after an update, check the previous version first. You can disable recently added mods in mod management to verify, then re-enable them later."
+            "value" : "If this started after an update, compare the previous versions. You can also disable recently added mods in Game Content to test whether they're involved, then enable them again later."
           }
         },
         "zh-Hans" : {
@@ -1286,7 +1286,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Monitoring was interrupted. The game's exit result was not obtained."
+            "value" : "Monitoring stopped before the game's exit status could be recorded."
           }
         },
         "zh-Hans" : {
@@ -1322,7 +1322,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Virtual Machine Cannot Allocate the Required Memory"
+            "value" : "Java Couldn't Allocate Enough Memory"
           }
         },
         "zh-Hans" : {
@@ -1340,7 +1340,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check system memory pressure and memory used by other applications, and whether the Java heap is set too large."
+            "value" : "Check your Mac's memory pressure and other apps' memory use. Make sure the Java heap limit isn't too high."
           }
         },
         "zh-Hans" : {
@@ -1358,7 +1358,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Restart after adjusting. Preserve the allocation size and failure location in the JVM report for troubleshooting."
+            "value" : "Make adjustments, then try launching again. Keep the requested allocation size and failure location from the JVM report for troubleshooting."
           }
         },
         "zh-Hans" : {
@@ -1412,7 +1412,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java Reported Running Out of Memory"
+            "value" : "Java Ran Out of Memory"
           }
         },
         "zh-Hans" : {
@@ -1430,7 +1430,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Consider adjusting instance memory only for insufficient heap memory, leaving enough for macOS. Also check recently added mods or high-resolution resources."
+            "value" : "Increase the instance's memory allocation only if the Java heap is too small, and leave enough memory for macOS. Also check any recently added mods or high-resolution resources."
           }
         },
         "zh-Hans" : {
@@ -1448,7 +1448,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The error context includes OutOfMemoryError. This error type alone does not identify which kind of memory should be increased."
+            "value" : "The log contains an OutOfMemoryError. This alone doesn't tell you which memory limit, if any, needs to increase."
           }
         },
         "zh-Hans" : {
@@ -1484,7 +1484,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This is a preparation error recorded by the launcher. It cannot yet be classified as a game crash."
+            "value" : "The launcher recorded this error while preparing to launch. It doesn't establish that the game crashed."
           }
         },
         "zh-Hans" : {
@@ -1520,7 +1520,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The records indicate that the process was terminated, but do not identify the request's source or establish insufficient memory or a mod conflict."
+            "value" : "The game process was terminated, but the records don't show who requested it. This alone doesn't establish that memory or a mod conflict caused the problem."
           }
         },
         "zh-Hans" : {
@@ -1577,13 +1577,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Found %1$lld type of related error. The original text and resolution steps are preserved below; mods mentioned in an error may not be its sole cause."
+                  "value" : "Found %1$lld type of related error. The original messages and suggested steps are shown below. A mod named in an error isn't necessarily the only cause."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Found %1$lld types of related errors. The original text and resolution steps are preserved below; mods mentioned in an error may not be its sole cause."
+                  "value" : "Found %1$lld types of related errors. The original messages and suggested steps are shown below. A mod named in an error isn't necessarily the only cause."
                 }
               }
             }
@@ -1664,7 +1664,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This run has ended. No crash handling is needed."
+            "value" : "This session has ended. No crash investigation is needed."
           }
         },
         "zh-Hans" : {
@@ -1682,7 +1682,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This run has no final exit record yet, so the crash cause cannot be assessed. You can continue checking live logs and process status."
+            "value" : "This session has no final exit record yet, so it's too early to identify a crash cause. You can still view live logs and check whether the game is running."
           }
         },
         "zh-Hans" : {
@@ -1700,7 +1700,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read the session log: %1$@"
+            "value" : "Couldn't read the session log: %1$@"
           }
         },
         "zh-Hans" : {
@@ -1718,7 +1718,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ (Tail)"
+            "value" : "%1$@ (End of File)"
           }
         },
         "zh-Hans" : {
@@ -1754,7 +1754,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not read %1$@: %2$@"
+            "value" : "Couldn't read %1$@: %2$@"
           }
         },
         "zh-Hans" : {
@@ -1790,7 +1790,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "View Run Files"
+            "value" : "View Session Files"
           }
         },
         "zh-Hans" : {
@@ -1826,7 +1826,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Complete file read"
+            "value" : "Complete file"
           }
         },
         "zh-Hans" : {
@@ -1844,7 +1844,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not save the diagnostic bundle."
+            "value" : "Couldn't save the diagnostic bundle."
           }
         },
         "zh-Hans" : {
@@ -1862,7 +1862,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diagnostic Conclusions and Resolution Steps"
+            "value" : "Findings and Suggested Steps"
           }
         },
         "zh-Hans" : {
@@ -1898,7 +1898,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The diagnosis does not match the run record. Analyze it again."
+            "value" : "The diagnosis does not match the session record. Analyze it again."
           }
         },
         "zh-Hans" : {
@@ -2132,7 +2132,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nRead scope and missing information\n%1$@"
+            "value" : "\nSources Checked and Missing Information\n%1$@"
           }
         },
         "zh-Hans" : {
@@ -2150,7 +2150,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nRead Scope and Missing Information\n"
+            "value" : "\nSources Checked and Missing Information\n"
           }
         },
         "zh-Hans" : {
@@ -2204,7 +2204,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Numbered from 1 within the tail, not the original file's line numbers"
+            "value" : "Line numbers start at 1 within this excerpt and don't match the original file"
           }
         },
         "zh-Hans" : {

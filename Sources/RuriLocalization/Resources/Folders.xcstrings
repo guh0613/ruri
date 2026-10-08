@@ -170,7 +170,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The search area is too large. Select the game folder or its parent directory."
+            "value" : "There are too many folders to search. Select the game folder or its parent folder."
           }
         },
         "zh-Hans" : {
@@ -188,7 +188,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select a Folder."
+            "value" : "Select a folder."
           }
         },
         "zh-Hans" : {
@@ -224,7 +224,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose game folder to add"
+            "value" : "Choose a Game Folder to Add"
           }
         },
         "zh-Hans" : {
@@ -350,7 +350,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No game versions"
+            "value" : "No game versions found"
           }
         },
         "zh-Hans" : {
@@ -458,7 +458,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a game folder containing versions, usually named .minecraft or minecraft. Its parent folder can also be detected automatically."
+            "value" : "Choose a game folder containing a versions folder, usually named .minecraft or minecraft. You can also select its parent folder, and Ruri will find the game folder automatically."
           }
         },
         "zh-Hans" : {
@@ -584,7 +584,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "An empty folder can be used for a new game."
+            "value" : "Choose an empty folder to install a new game."
           }
         },
         "zh-Hans" : {
@@ -602,7 +602,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No game folder found. Choose a .minecraft or minecraft folder containing versions, or its parent folder. To store a new game, choose an empty folder."
+            "value" : "No game folder found. Choose a .minecraft or minecraft folder containing a versions folder, or select its parent folder. To install a new game, choose an empty folder."
           }
         },
         "zh-Hans" : {
@@ -638,7 +638,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No game folders detected within the automatic search locations. Choose a location manually."
+            "value" : "No game folders found in the usual locations. Choose a folder manually."
           }
         },
         "zh-Hans" : {
@@ -674,7 +674,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If the folder has moved or is on an external drive, connect the drive or locate the original folder again."
+            "value" : "If the folder is on an external drive, connect the drive. If it has moved, locate the original folder again."
           }
         },
         "zh-Hans" : {
@@ -710,7 +710,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Removing this folder from the list keeps the game files in place and retains instance settings for when it is added again."
+            "value" : "Removing this folder from the list leaves its game files in place. Ruri keeps the instance settings so you can restore them by adding the folder again."
           }
         },
         "zh-Hans" : {
@@ -764,7 +764,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Retained instance settings"
+            "value" : "Saved instance settings"
           }
         },
         "zh-Hans" : {
@@ -875,13 +875,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld of these versions needs checking. View details in the Library after adding the folder."
+                  "value" : "%lld version needs attention. Add the folder, then check the details in the Library."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld of these versions need checking. View details in the Library after adding the folder."
+                  "value" : "%lld versions need attention. Add the folder, then check the details in the Library."
                 }
               }
             }

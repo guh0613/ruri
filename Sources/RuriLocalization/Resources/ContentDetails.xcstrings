@@ -134,7 +134,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The following files belong to duplicate projects and were excluded from updates: %1$@"
+            "value" : "These files are copies or versions of the same projects and weren't included in the update: %1$@"
           }
         },
         "zh-Hans" : {
@@ -224,7 +224,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Folders support local details. Online identification and updates support ZIP files."
+            "value" : "You can view local details for folders. Online identification and updates are available for ZIP files."
           }
         },
         "zh-Hans" : {
@@ -422,7 +422,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Identifying online projects…"
+            "value" : "Finding matching projects…"
           }
         },
         "zh-Hans" : {
@@ -512,7 +512,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This file has no description."
+            "value" : "No description is available for this file."
           }
         },
         "zh-Hans" : {
@@ -530,7 +530,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No Updates for Identified Content"
+            "value" : "No Updates Available for Recognized Content"
           }
         },
         "zh-Hans" : {
@@ -656,7 +656,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not load the matched project's details. Please try again later."
+            "value" : "Couldn't load the matched project's details. Please try again later."
           }
         },
         "zh-Hans" : {
@@ -728,7 +728,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Identify Again"
+            "value" : "Check Again"
           }
         },
         "zh-Hans" : {
@@ -818,7 +818,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not determine compatibility"
+            "value" : "Couldn't determine compatibility"
           }
         },
         "zh-Hans" : {

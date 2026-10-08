@@ -62,7 +62,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scopes: app, defaults, instance:<uuid>. set accepts a JSON literal (retain double quotes around strings); apply --file - reads a patch from stdin. inherit restores group inheritance; --if-revision guards concurrent changes."
+            "value" : "Scopes: app, defaults, instance:<uuid>. set accepts a JSON value; include double quotes around strings. apply --file - reads a patch from stdin. inherit restores inherited values for a whole group. --if-revision prevents overwriting changes made by another client."
           }
         },
         "zh-Hans" : {
@@ -116,7 +116,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Discovery: ruri help <resource> shows a whole command group; ruri help --all shows the complete cheat sheet."
+            "value" : "Find commands: ruri help <resource> shows a command group's usage. ruri help --all lists all commands."
           }
         },
         "zh-Hans" : {
@@ -170,7 +170,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use --json for all fields."
+            "value" : "Use --json to see all fields."
           }
         },
         "zh-Hans" : {
@@ -188,7 +188,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Expand every matching command's full schema; output may be large."
+            "value" : "Show the full schema for every matching command. Output may be long."
           }
         },
         "zh-Hans" : {
@@ -224,7 +224,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Changes are hidden by redaction."
+            "value" : "No differences can be shown after sensitive information is hidden."
           }
         },
         "zh-Hans" : {
@@ -442,7 +442,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use complete IDs from list results. Mutations require explicit targets; selected reads the current selection. Use --dry-run where supported. Deletion requires --yes; replacement also requires --replace."
+            "value" : "Use the full IDs returned by list commands. Commands that make changes require an explicit target; selected shows the current selection. Preview with --dry-run where supported. Deletion requires --yes, and replacement also requires --replace."
           }
         },
         "zh-Hans" : {

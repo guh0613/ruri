@@ -8,7 +8,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not complete system authorization: %@"
+            "value" : "Couldn't complete system authorization: %@"
           }
         },
         "zh-Hans" : {
@@ -26,7 +26,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Installing or uninstalling may require administrator authorization."
+            "value" : "macOS may ask for an administrator's permission to install or uninstall the tool."
           }
         },
         "zh-Hans" : {
@@ -44,7 +44,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The installation directory requires administrator permission. Open Command line and automation in Ruri settings to authorize installation or removal, or choose an existing writable directory with --bin-dir."
+            "value" : "This installation directory requires administrator permission. Open Command Line and Automation in Ruri Settings to install or uninstall with authorization, or use --bin-dir to choose an existing folder you can write to."
           }
         },
         "zh-Hans" : {
@@ -62,7 +62,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri needs to install the CLI in /usr/local/bin. You can then use ruri in a terminal without configuring PATH."
+            "value" : "Ruri needs permission to install its command-line tool in /usr/local/bin. You can then run ruri in Terminal without setting up PATH."
           }
         },
         "zh-Hans" : {
@@ -80,7 +80,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri needs to remove the installed CLI link. This does not delete the application or game data."
+            "value" : "Ruri needs permission to remove its command-line link. The app and your game data will be kept."
           }
         },
         "zh-Hans" : {
@@ -116,7 +116,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copy command"
+            "value" : "Copy Command"
           }
         },
         "zh-Hans" : {
@@ -134,7 +134,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copy full command"
+            "value" : "Copy Full Command"
           }
         },
         "zh-Hans" : {
@@ -152,7 +152,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Installation details"
+            "value" : "Installation Details"
           }
         },
         "zh-Hans" : {
@@ -188,7 +188,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install CLI"
+            "value" : "Install Command-Line Tool"
           }
         },
         "zh-Hans" : {
@@ -224,7 +224,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install Ruri CLI to use it in a terminal without configuring PATH."
+            "value" : "Install the command-line tool to run ruri in Terminal without setting up PATH."
           }
         },
         "zh-Hans" : {
@@ -278,7 +278,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Installation may require administrator authorization.\nYou can also install later in Settings → Command Line & Automation."
+            "value" : "Installation may require administrator permission.\nYou can also install it later in Settings → Command Line and Automation."
           }
         },
         "zh-Hans" : {
@@ -296,7 +296,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use Ruri in the terminal"
+            "value" : "Use Ruri in Terminal"
           }
         },
         "zh-Hans" : {
@@ -368,7 +368,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Repair installation"
+            "value" : "Repair Installation"
           }
         },
         "zh-Hans" : {
@@ -386,7 +386,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Update the link to use this version of Ruri."
+            "value" : "Update the command-line link so Terminal uses this version of Ruri."
           }
         },
         "zh-Hans" : {
@@ -440,7 +440,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Command-line tool"
+            "value" : "Command-Line Tool"
           }
         },
         "zh-Hans" : {
