@@ -9,6 +9,7 @@ package protocol SessionLocationPaths: SessionPaths {
     var instanceCustomDirectories: [UUID: CustomRunDirectory]? { get }
     var instanceRepositoryVersions: [UUID: String]? { get }
     var repositoryImportID: UUID? { get }
+    func versionDirectory(_ id: UUID) -> URL
 }
 
 extension SessionLocationPaths {
@@ -21,6 +22,29 @@ extension SessionLocationPaths {
         if id == GameDirectory.defaultID { return root }
         // Invalid references must never silently become the default directory.
         return directories.first(where: { $0.id == id })?.url ?? root.appendingPathComponent("unavailable-directories/\(id.uuidString)")
+    }
+    // Concrete paths expose these through their own access levels. Only Core
+    // overrides instance/version directories while an import is unpublished.
+    package func resolvedInstanceDirectory(_ id: UUID) -> URL {
+        directoryRoot(directoryID(for: id))
+            .appendingPathComponent(isMinecraftDirectory(directoryID(for: id)) ? ".ruri/instances" : "instances")
+            .appendingPathComponent(id.uuidString)
+    }
+    package func resolvedVersionDirectory(_ id: UUID) -> URL {
+        directoryRoot(directoryID(for: id)).appendingPathComponent("versions")
+            .appendingPathComponent(instanceRepositoryVersions?[id] ?? "unavailable-\(id.uuidString)")
+    }
+    package func resolvedGameDirectory(_ id: UUID) -> URL {
+        if runDirectory(for: id) == .custom {
+            return instanceCustomDirectories?[id]?.url ?? root.appendingPathComponent("unavailable-run-directories/\(id.uuidString)")
+        }
+        if isMinecraftDirectory(directoryID(for: id)) {
+            return runDirectory(for: id) == .isolated ? versionDirectory(id) : directoryRoot(directoryID(for: id))
+        }
+        return (runDirectory(for: id) == .isolated ? instance(id) : directoryRoot(directoryID(for: id))).appendingPathComponent("minecraft")
+    }
+    package func resolvedGameDataState(_ id: UUID) -> URL {
+        runDirectory(for: id) == .isolated ? instance(id) : game(id).appendingPathComponent(".ruri")
     }
     package func validateDirectoryConfiguration() throws {
         let ids = directories.map(\.id)

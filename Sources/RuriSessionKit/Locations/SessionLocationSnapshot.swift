@@ -40,23 +40,8 @@ public struct SessionLocationSnapshot: Codable, Sendable, SessionLocationPaths {
         return self
     }
 
-    public func instance(_ id: UUID) -> URL {
-        directoryRoot(directoryID(for: id))
-            .appendingPathComponent(isMinecraftDirectory(directoryID(for: id)) ? ".ruri/instances" : "instances")
-            .appendingPathComponent(id.uuidString)
-    }
-    public func game(_ id: UUID) -> URL {
-        if runDirectory(for: id) == .custom {
-            return instanceCustomDirectories?[id]?.url ?? root.appendingPathComponent("unavailable-run-directories/\(id.uuidString)")
-        }
-        if isMinecraftDirectory(directoryID(for: id)) {
-            return runDirectory(for: id) == .isolated
-                ? directoryRoot(directoryID(for: id)).appendingPathComponent("versions").appendingPathComponent(instanceRepositoryVersions?[id] ?? "unavailable-\(id.uuidString)")
-                : directoryRoot(directoryID(for: id))
-        }
-        return (runDirectory(for: id) == .isolated ? instance(id) : directoryRoot(directoryID(for: id))).appendingPathComponent("minecraft")
-    }
-    package func gameDataState(_ id: UUID) -> URL {
-        runDirectory(for: id) == .isolated ? instance(id) : game(id).appendingPathComponent(".ruri")
-    }
+    public func instance(_ id: UUID) -> URL { resolvedInstanceDirectory(id) }
+    package func versionDirectory(_ id: UUID) -> URL { resolvedVersionDirectory(id) }
+    public func game(_ id: UUID) -> URL { resolvedGameDirectory(id) }
+    package func gameDataState(_ id: UUID) -> URL { resolvedGameDataState(id) }
 }

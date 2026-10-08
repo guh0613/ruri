@@ -27,13 +27,12 @@ public struct LauncherPaths: Codable, Sendable, SessionLocationPaths {
     public var state: URL { root.appendingPathComponent("state.json") }
     public func instance(_ id: UUID) -> URL {
         if repositoryImportID == id { return repositoryImportWorkspace(id).appendingPathComponent("metadata") }
-        return directoryRoot(directoryID(for: id)).appendingPathComponent(isMinecraftDirectory(directoryID(for: id)) ? ".ruri/instances" : "instances").appendingPathComponent(id.uuidString)
+        return resolvedInstanceDirectory(id)
     }
     public func versionDirectory(_ id: UUID) -> URL {
         if repositoryImportID == id { return repositoryImportWorkspace(id).appendingPathComponent("version") }
-        return directoryRoot(directoryID(for: id)).appendingPathComponent("versions").appendingPathComponent(instanceRepositoryVersions?[id] ?? "unavailable-\(id.uuidString)")
+        return resolvedVersionDirectory(id)
     }
-    func repositoryImportWorkspace(_ id: UUID) -> URL { directoryRoot(directoryID(for: id)).appendingPathComponent(".ruri/imports/\(id.uuidString)") }
     func stagingRepositoryImport(_ instance: GameInstance) -> LauncherPaths {
         var result = including(instance); result.repositoryImportID = instance.id; return result
     }
@@ -43,11 +42,7 @@ public struct LauncherPaths: Codable, Sendable, SessionLocationPaths {
         }
         return try Self.safePath("\(jarID)/\(jarID).jar", within: resources(for: instance).versions)
     }
-    public func game(_ id: UUID) -> URL {
-        if runDirectory(for: id) == .custom { return instanceCustomDirectories?[id]?.url ?? root.appendingPathComponent("unavailable-run-directories/\(id.uuidString)") }
-        if isMinecraftDirectory(directoryID(for: id)) { return runDirectory(for: id) == .isolated ? versionDirectory(id) : directoryRoot(directoryID(for: id)) }
-        return (runDirectory(for: id) == .isolated ? instance(id) : directoryRoot(directoryID(for: id))).appendingPathComponent("minecraft")
-    }
+    public func game(_ id: UUID) -> URL { resolvedGameDirectory(id) }
     public func manifest(_ id: UUID) -> URL {
         if let version = instanceRepositoryVersions?[id] { return versionDirectory(id).appendingPathComponent(version + ".json") }
         return instance(id).appendingPathComponent("version.json")

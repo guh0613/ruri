@@ -3,6 +3,43 @@ import Testing
 @testable import RuriCore
 
 struct GameDirectoryTests {
+    @Test(arguments: ["default", "external", "repository"], [GameRunDirectory.isolated, .shared, .custom])
+    func launcherAndMonitorResolvePublishedLocations(layout: String, mode: GameRunDirectory) throws {
+        let root = URL(fileURLWithPath: "/tmp/ruri location fixture/data")
+        let collection = URL(fileURLWithPath: "/tmp/ruri location fixture/collection")
+        let custom = CustomRunDirectory(id: UUID(), url: URL(fileURLWithPath: "/tmp/ruri location fixture/custom"), createdAt: .distantPast)
+        let directory = GameDirectory(id: UUID(), name: "Collection", url: collection, createdAt: .distantPast,
+                                      layout: layout == "repository" ? .minecraft : .managed)
+        var instance = GameInstance(name: "Location", gameVersion: "1.21.1")
+        instance.directoryID = layout == "default" ? nil : directory.id
+        instance.runDirectory = mode; instance.customRunDirectory = mode == .custom ? custom : nil
+        instance.repositoryVersionID = layout == "repository" ? "local-version" : nil
+        let paths = LauncherPaths(root: root, directories: layout == "default" ? [] : [directory]).including(instance)
+        let frozen = try JSONDecoder().decode(SessionLocationSnapshot.self, from: JSONEncoder().encode(SessionLocationSnapshot(paths: paths, instanceID: instance.id)))
+        let base = layout == "default" ? root : collection
+        let metadata = base.appendingPathComponent("\(layout == "repository" ? ".ruri/instances" : "instances")/\(instance.id)")
+        let game: URL
+        switch mode {
+        case .custom: game = custom.url
+        case .shared: game = layout == "repository" ? base : base.appendingPathComponent("minecraft")
+        case .isolated: game = layout == "repository" ? base.appendingPathComponent("versions/local-version") : metadata.appendingPathComponent("minecraft")
+        }
+        let data = mode == .isolated ? metadata : game.appendingPathComponent(".ruri")
+        for location in [paths.instance(instance.id), frozen.instance(instance.id)] { #expect(location.path == metadata.path) }
+        for location in [paths.game(instance.id), frozen.game(instance.id)] { #expect(location.path == game.path) }
+        for location in [paths.gameDataState(instance.id), frozen.gameDataState(instance.id)] { #expect(location.path == data.path) }
+        if layout == "repository" {
+            let staging = paths.stagingRepositoryImport(instance)
+            let workspace = base.appendingPathComponent(".ruri/imports/\(instance.id)")
+            #expect(staging.instance(instance.id).path == workspace.appendingPathComponent("metadata").path)
+            #expect(staging.versionDirectory(instance.id).path == workspace.appendingPathComponent("version").path)
+            #expect(staging.game(instance.id).path == (mode == .isolated ? workspace.appendingPathComponent("version") : game).path)
+            #expect(staging.gameDataState(instance.id).path == (mode == .isolated ? workspace.appendingPathComponent("metadata") : data).path)
+            let published = SessionLocationSnapshot(paths: staging, instanceID: instance.id)
+            #expect(published.instance(instance.id).path == metadata.path && published.game(instance.id).path == game.path)
+        }
+    }
+
     private func fixture() throws -> (URL, LauncherPaths, GameDirectory) {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("ruri-directories-\(UUID())")
         let external = root.appendingPathComponent("external")

@@ -25,7 +25,7 @@ extension LauncherPaths {
     /// Metadata that describes the game files must follow the run directory.
     /// Old isolated instances retain their existing metadata and backup paths.
     public func gameDataState(_ instanceID: UUID) -> URL {
-        runDirectory(for: instanceID) == .isolated ? instance(instanceID) : game(instanceID).appendingPathComponent(".ruri")
+        resolvedGameDataState(instanceID)
     }
     public func including(_ instance: GameInstance) -> LauncherPaths {
         var versions = instanceRepositoryVersions ?? [:]
