@@ -2,6 +2,7 @@
 .swiftpm/
 .DS_Store
 build/
+.dev-data/
 references/
 .verification/
 *.xcuserstate

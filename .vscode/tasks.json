@@ -16,17 +16,32 @@
             "group": { "kind": "build", "isDefault": true }
         },
         {
+            "label": "Ruri: Build Debug App",
+            "type": "process",
+            "command": "${workspaceFolder}/scripts/build-app.sh",
+            "args": ["debug"],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "RURI_BUILD_DIR": "${config:swift.buildPath}",
+                    "RURI_APP_PATH": "build/Debug/Ruri.app"
+                }
+            },
+            "group": "build"
+        },
+        {
+            // Ruri starts games through ruri-monitor beside its executable.
             "label": "swift: Build Debug Ruri",
             "type": "process",
             "command": "${workspaceFolder}/scripts/swift-build.sh",
-            "args": ["-c", "debug", "--product", "Ruri"],
+            "args": ["-c", "debug"],
             "group": "build"
         },
         {
             "label": "swift: Build Release Ruri",
             "type": "process",
             "command": "${workspaceFolder}/scripts/swift-build.sh",
-            "args": ["-c", "release", "--product", "Ruri"],
+            "args": ["-c", "release"],
             "group": "build"
         },
         {

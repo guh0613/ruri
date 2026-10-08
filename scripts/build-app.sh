@@ -56,7 +56,9 @@ codesign --verify --deep --strict "$app"
 python3 scripts/release/signing.py verify "$app"
 python3 scripts/localization.py --bundle "$app"
 python3 scripts/validate-cli.py "$app"
-destination="$(pwd)/build/Ruri.app"
+# RURI_APP_PATH (relative to the repository) keeps debugger builds apart from packages.
+destination="$(pwd)/${RURI_APP_PATH:-build/Ruri.app}"
+mkdir -p "${destination:h}"
 if [[ -e "$destination" ]]; then
   mv "$destination" "$stage_dir/previous.app"
 fi
