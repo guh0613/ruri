@@ -15,7 +15,10 @@ public struct MacOSGameSettings: Codable, Equatable, Sendable {
 }
 
 public struct GameHostPlan: Codable, Sendable {
-    package init(instanceID: UUID, name: String, iconPNG: Data? = nil, javaVersion: String, architecture: String, settings: MacOSGameSettings, fullscreen: Bool) {
+    package init(
+        instanceID: UUID, name: String, iconPNG: Data? = nil, javaVersion: String, architecture: String, settings: MacOSGameSettings,
+        fullscreen: Bool
+    ) {
         self.instanceID = instanceID
         self.name = name
         self.iconPNG = iconPNG
@@ -35,7 +38,10 @@ public struct GameHostPlan: Codable, Sendable {
 }
 
 public struct GameHostStatus: Codable, Equatable, Sendable {
-    package init(backend: Backend, fallback: String? = nil, jvmStarted: Bool = false, windowReadyAt: Date? = nil, fullscreen: Bool = false, failure: String? = nil) {
+    package init(
+        backend: Backend, fallback: String? = nil, jvmStarted: Bool = false, windowReadyAt: Date? = nil, fullscreen: Bool = false,
+        failure: String? = nil
+    ) {
         self.backend = backend
         self.fallback = fallback
         self.jvmStarted = jvmStarted

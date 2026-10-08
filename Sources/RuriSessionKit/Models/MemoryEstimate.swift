@@ -19,7 +19,10 @@ public struct MemoryWorkload: Codable, Equatable, Sendable {
 }
 
 public struct MemoryEstimate: Codable, Equatable, Sendable {
-    package init(workload: MemoryWorkload, availability: MemoryAvailability, demandMB: Int, generousMB: Int, ceilingMB: Int, maximumMB: Int, initialMB: Int) {
+    package init(
+        workload: MemoryWorkload, availability: MemoryAvailability, demandMB: Int, generousMB: Int, ceilingMB: Int, maximumMB: Int,
+        initialMB: Int
+    ) {
         self.workload = workload
         self.availability = availability
         self.demandMB = demandMB
@@ -53,4 +56,3 @@ public struct MemoryEstimate: Codable, Equatable, Sendable {
         return parts.joined(separator: " · ")
     }
 }
-

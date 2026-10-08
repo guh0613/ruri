@@ -31,6 +31,7 @@ let package = Package(
         .target(name: "RuriCommandKit", dependencies: ["RuriCore", "RuriLocalization", .product(name: "ArgumentParser", package: "swift-argument-parser")]),
         .executableTarget(name: "RuriCLI", dependencies: ["RuriCommandKit", "RuriLocalization"]),
         .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore", "RuriLocalization"]),
+        .testTarget(name: "RuriSessionKitTests", dependencies: ["RuriSessionKit"]),
         .testTarget(name: "RuriCoreTests", dependencies: ["RuriCore", "RuriLocalization"]),
         .testTarget(name: "RuriLocalizationTests", dependencies: ["RuriLocalization"]),
         .testTarget(name: "RuriCLITests", dependencies: ["RuriCommandKit", "RuriCore"])

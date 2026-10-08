@@ -2,16 +2,6 @@ import RuriLocalization
 import Foundation
 import Darwin
 
-public struct GameSessionInterruption: Codable, Equatable, Sendable {
-    public enum Resolution: String, Codable, Sendable { case knownProcessEnded, userConfirmedEnded }
-    public let resolution: Resolution
-    public let observedAt: Date
-    public let previousStage: GameSession.Stage
-    public let explanation: String
-    public var explanationMessage: LocalizedMessage? = nil
-    public var displayExplanation: String { explanationMessage?.localized ?? explanation }
-}
-
 public enum GameSessionRecovery {
     public enum Status: Equatable, Sendable {
         case finished, monitoring, monitorUnconfirmed, gameRunning, commandRunning, processEnded, confirmationRequired

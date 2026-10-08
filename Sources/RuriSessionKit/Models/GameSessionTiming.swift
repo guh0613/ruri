@@ -3,7 +3,26 @@ import Foundation
 /// Persisted measurements, not a wall-clock subtraction. Checkpoints remain a
 /// lower bound after an unobserved exit; recovery never invents the missing time.
 public struct GameSessionTiming: Codable, Equatable, Sendable {
+    package init(
+        version: Int, startedAt: Date, observedAt: Date, awakeSeconds: Double, elapsedSeconds: Double, quality: Quality,
+        timeZoneIdentifier: String, days: [Day]
+    ) {
+        self.version = version
+        self.startedAt = startedAt
+        self.observedAt = observedAt
+        self.awakeSeconds = awakeSeconds
+        self.elapsedSeconds = elapsedSeconds
+        self.quality = quality
+        self.timeZoneIdentifier = timeZoneIdentifier
+        self.days = days
+    }
+
     public struct Day: Codable, Equatable, Sendable {
+        package init(date: Date, seconds: Double) {
+            self.date = date
+            self.seconds = seconds
+        }
+
         public let date: Date
         public var seconds: Double
     }
@@ -17,7 +36,7 @@ public struct GameSessionTiming: Codable, Equatable, Sendable {
     public let timeZoneIdentifier: String
     public var days: [Day]
 
-    var isValid: Bool {
+    package var isValid: Bool {
         version == 1 && awakeSeconds.isFinite && awakeSeconds >= 0 && elapsedSeconds.isFinite && elapsedSeconds >= 0 &&
         awakeSeconds <= elapsedSeconds + 1 && days.count <= 4096 && days.reduce(0, { $0 + $1.seconds }).isFinite && days.allSatisfy { $0.seconds.isFinite && $0.seconds >= 0 }
     }
@@ -25,18 +44,18 @@ public struct GameSessionTiming: Codable, Equatable, Sendable {
 
 /// Pure accumulation makes clock changes and day boundaries testable without
 /// putting the test machine to sleep. A sleeping interval contributes no time.
-struct GameTimingAccumulator {
-    private(set) var timing: GameSessionTiming
+package struct GameTimingAccumulator {
+    package private(set) var timing: GameSessionTiming
     private let calendar: Calendar
 
-    init(startedAt: Date, timeZone: TimeZone = .current) {
+    package init(startedAt: Date, timeZone: TimeZone = .current) {
         var calendar = Calendar(identifier: .gregorian); calendar.timeZone = timeZone
         self.calendar = calendar
         timing = .init(version: 1, startedAt: startedAt, observedAt: startedAt, awakeSeconds: 0, elapsedSeconds: 0,
                        quality: .checkpoint, timeZoneIdentifier: timeZone.identifier, days: [])
     }
 
-    mutating func sample(at date: Date, awakeSeconds: Double, elapsedSeconds: Double, final: Bool = false) -> GameSessionTiming {
+    package mutating func sample(at date: Date, awakeSeconds: Double, elapsedSeconds: Double, final: Bool = false) -> GameSessionTiming {
         let awake = max(timing.awakeSeconds, awakeSeconds.isFinite ? awakeSeconds : timing.awakeSeconds)
         let delta = awake - timing.awakeSeconds
         let wall = date.timeIntervalSince(timing.observedAt)
@@ -65,7 +84,7 @@ struct GameTimingAccumulator {
 }
 
 extension Duration {
-    var gameSeconds: Double { Double(components.seconds) + Double(components.attoseconds) / 1e18 }
+    package var gameSeconds: Double { Double(components.seconds) + Double(components.attoseconds) / 1e18 }
 }
 
 extension GameSession {

@@ -44,7 +44,10 @@ public struct LaunchCommands: Codable, Equatable, Sendable {
 }
 
 public struct GameCommandResult: Codable, Equatable, Sendable {
-    package init(phase: Phase, startedAt: Date, endedAt: Date, status: Int32? = nil, cancelled: Bool, timedOut: Bool, error: String? = nil, errorMessage: LocalizedMessage? = nil) {
+    package init(
+        phase: Phase, startedAt: Date, endedAt: Date, status: Int32? = nil, cancelled: Bool, timedOut: Bool, error: String? = nil,
+        errorMessage: LocalizedMessage? = nil
+    ) {
         self.phase = phase
         self.startedAt = startedAt
         self.endedAt = endedAt

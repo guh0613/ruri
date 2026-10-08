@@ -1,18 +1,6 @@
 import RuriLocalization
 import Foundation
 
-public struct GameDiagnosticDocument: Identifiable, Sendable {
-    public enum Kind: String, Sendable { case preparation, output, gameReport, jvmReport, launcher, systemReport }
-    public let id: String
-    public let relativePath: String?
-    public let title: String
-    public let kind: Kind
-    public let text: String
-    public var isTail = false
-    public var truncated = false
-    public var gameRelativePath: String? = nil
-}
-
 public struct GameDiagnosis: Sendable {
     public struct Evidence: Identifiable, Sendable {
         public let documentID: String

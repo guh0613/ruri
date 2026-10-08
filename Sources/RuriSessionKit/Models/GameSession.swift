@@ -2,6 +2,69 @@ import RuriLocalization
 import Foundation
 
 public struct GameSession: Codable, Identifiable, Equatable, Sendable {
+    package init(
+        schema: Int = 1, gameDirectory: URL? = nil, nativeLogs: [GameLogReference]? = nil, logBaseline: [GameLogReference]? = nil,
+        id: UUID, instanceID: UUID, instanceName: String, gameVersion: String, loader: String, loaderVersion: String? = nil,
+        memoryMB: Int, memory: LaunchMemory? = nil, tuning: JVMTuning? = nil, operatingSystem: String, hostArchitecture: String,
+        accountMode: String, ownerPID: Int32, createdAt: Date, updatedAt: Date, state: State, stage: Stage, java: String? = nil,
+        processID: Int32? = nil, monitorIdentity: ProcessIdentity? = nil, gameIdentity: ProcessIdentity? = nil,
+        commandIdentity: ProcessIdentity? = nil, commandResults: [GameCommandResult]? = nil, failure: String? = nil,
+        failureMessage: LocalizedMessage? = nil, exit: GameExit? = nil, interruption: GameSessionInterruption? = nil,
+        nativeQuitSupported: Bool? = nil, normalQuitAttempt: GameNormalQuitAttempt? = nil, debugLogging: Bool = false,
+        host: GameHostStatus? = nil, world: GameWorldPlay? = nil, destination: LaunchDestination? = nil,
+        activity: GameActivityTracking? = nil, revision: UInt64 = 0, finalSnapshot: Bool = false, timing: GameSessionTiming? = nil,
+        controlEndpoint: String? = nil, launcherVersion: String? = nil, artifactState: ArtifactState? = nil,
+        outputTruncated: Bool? = nil, events: [Event], evidence: [Evidence]
+    ) {
+        self.schema = schema
+        self.gameDirectory = gameDirectory
+        self.nativeLogs = nativeLogs
+        self.logBaseline = logBaseline
+        self.id = id
+        self.instanceID = instanceID
+        self.instanceName = instanceName
+        self.gameVersion = gameVersion
+        self.loader = loader
+        self.loaderVersion = loaderVersion
+        self.memoryMB = memoryMB
+        self.memory = memory
+        self.tuning = tuning
+        self.operatingSystem = operatingSystem
+        self.hostArchitecture = hostArchitecture
+        self.accountMode = accountMode
+        self.ownerPID = ownerPID
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.state = state
+        self.stage = stage
+        self.java = java
+        self.processID = processID
+        self.monitorIdentity = monitorIdentity
+        self.gameIdentity = gameIdentity
+        self.commandIdentity = commandIdentity
+        self.commandResults = commandResults
+        self.failure = failure
+        self.failureMessage = failureMessage
+        self.exit = exit
+        self.interruption = interruption
+        self.nativeQuitSupported = nativeQuitSupported
+        self.normalQuitAttempt = normalQuitAttempt
+        self.debugLogging = debugLogging
+        self.host = host
+        self.world = world
+        self.destination = destination
+        self.activity = activity
+        self.revision = revision
+        self.finalSnapshot = finalSnapshot
+        self.timing = timing
+        self.controlEndpoint = controlEndpoint
+        self.launcherVersion = launcherVersion
+        self.artifactState = artifactState
+        self.outputTruncated = outputTruncated
+        self.events = events
+        self.evidence = evidence
+    }
+
     public enum State: String, Codable, Sendable {
         case preparing, running, succeeded, stopped, failed, cancelled, interrupted
         public var isFinished: Bool { self != .preparing && self != .running }
@@ -30,6 +93,14 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
         }
     }
     public struct Event: Codable, Identifiable, Equatable, Sendable {
+        package init(id: UUID, date: Date, stage: Stage, message: String, localizedMessage: LocalizedMessage? = nil) {
+            self.id = id
+            self.date = date
+            self.stage = stage
+            self.message = message
+            self.localizedMessage = localizedMessage
+        }
+
         public let id: UUID
         public let date: Date
         public let stage: Stage
@@ -38,6 +109,12 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
         public var displayMessage: String { localizedMessage?.localized ?? message }
     }
     public struct Evidence: Codable, Identifiable, Equatable, Sendable {
+        package init(relativePath: String, name: String, truncated: Bool) {
+            self.relativePath = relativePath
+            self.name = name
+            self.truncated = truncated
+        }
+
         public let relativePath: String
         public let name: String
         public let truncated: Bool
@@ -97,7 +174,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
         let left = revision, right = other.revision
         return left == right ? updatedAt >= other.updatedAt : left > right
     }
-    func validate() throws {
+    package func validate() throws {
         guard schema == 1,
               events.count <= 512, evidence.count <= 100, instanceName.count <= 1024,
               (failure?.count ?? 0) <= 32768, timing?.isValid != false,
@@ -120,7 +197,7 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
             }
         }
     }
-    static func safeRelativePath(_ path: String) -> Bool {
+    package static func safeRelativePath(_ path: String) -> Bool {
         !path.isEmpty && !path.hasPrefix("/") && !path.utf8.contains(92) && !path.utf8.contains(0) &&
         !path.split(separator: "/", omittingEmptySubsequences: false).contains(where: { $0.isEmpty || $0 == ".." || $0 == "." })
     }

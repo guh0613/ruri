@@ -22,7 +22,10 @@ public struct MemoryAvailability: Equatable, Sendable {
 }
 
 public struct LaunchMemory: Codable, Equatable, Sendable {
-    package init(maximumBytes: Int64, minimumBytes: Int64, initialBytes: Int64, metaspaceBytes: Int64? = nil, maximumSource: Source, initialSource: Source, metaspaceSource: Source, availability: MemoryAvailability? = nil, estimate: MemoryEstimate? = nil) {
+    package init(
+        maximumBytes: Int64, minimumBytes: Int64, initialBytes: Int64, metaspaceBytes: Int64? = nil, maximumSource: Source,
+        initialSource: Source, metaspaceSource: Source, availability: MemoryAvailability? = nil, estimate: MemoryEstimate? = nil
+    ) {
         self.maximumBytes = maximumBytes
         self.minimumBytes = minimumBytes
         self.initialBytes = initialBytes
@@ -70,4 +73,3 @@ public struct LaunchMemory: Codable, Equatable, Sendable {
 }
 
 extension MemoryAvailability: Codable {}
-

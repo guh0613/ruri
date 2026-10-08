@@ -12,4 +12,3 @@ public enum LaunchDestination: Equatable, Codable, Sendable {
         return .normal
     }
 }
-

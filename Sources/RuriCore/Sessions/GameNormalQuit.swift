@@ -2,18 +2,6 @@ import RuriLocalization
 import Foundation
 import AppKit
 
-public struct GameNormalQuitAttempt: Codable, Equatable, Sendable {
-    public let requestID: UUID
-    public let requestedAt: Date
-    public let processedAt: Date
-    public let accepted: Bool
-    public var explanation: String { explanationMessage.localized }
-    public var explanationMessage: LocalizedMessage {
-        accepted ? Messages.CoreGameNormalQuit.normalExitRequestPending
-                 : Messages.CoreGameNormalQuit.normalExitRequestFailed
-    }
-}
-
 public enum NativeGameQuit {
     /// An accepted request is not an exit acknowledgement. Cocoa/GLFW may
     /// decline or defer it; only the process owner records the eventual exit.

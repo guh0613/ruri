@@ -92,14 +92,6 @@ struct GameOutputDecoder {
     }
 }
 
-public struct GameOutputSnapshot: Codable, Equatable, Sendable {
-    public let revision: UInt64
-    public let text: String
-    public let truncated: Bool
-    public let finished: Bool
-    public var isReplacement = true
-}
-
 /// The hot path only copies bytes into fixed buffers. Formatting, disk IO and
 /// subscribers never hold the capture lock and cannot back up the pipe reader.
 final class GameOutputCapture: @unchecked Sendable {

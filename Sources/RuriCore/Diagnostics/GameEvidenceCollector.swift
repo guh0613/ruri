@@ -1,11 +1,6 @@
 import Foundation
 import RuriLocalization
 
-public struct GameEvidenceSnapshot: Sendable {
-    public let documents: [GameDiagnosticDocument]
-    public let limitations: [String]
-}
-
 /// Explicit collection/analysis, never a periodic in-game activity. Native logs
 /// are primary; database events and bounded process output cover their gaps.
 public enum GameEvidenceCollector {
