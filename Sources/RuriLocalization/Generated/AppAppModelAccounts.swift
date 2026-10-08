@@ -15,17 +15,17 @@ extension Messages {
         public static var accountSaveFailed: LocalizedMessage {
             .init(key: "AppAppModelAccounts.accountSaveFailed", table: "Errors", fallback: "账号信息未能保存，请重新打开 Ruri。")
         }
-        /// 当前窗口已暂停写入，请重新打开 Ruri。
+        /// 此窗口已暂停保存，请重新打开 Ruri。
         ///
         /// Resource: `Errors.AppAppModelAccounts.accountWritePaused`.
         public static var accountWritePaused: LocalizedMessage {
-            .init(key: "AppAppModelAccounts.accountWritePaused", table: "Errors", fallback: "当前窗口已暂停写入，请重新打开 Ruri。")
+            .init(key: "AppAppModelAccounts.accountWritePaused", table: "Errors", fallback: "此窗口已暂停保存，请重新打开 Ruri。")
         }
-        /// 账号已变化，请重新打开外观管理。
+        /// 账号信息已更改，请重新打开外观管理。
         ///
         /// Resource: `Errors.AppAppModelAccounts.appearanceAccountChanged`.
         public static var appearanceAccountChanged: LocalizedMessage {
-            .init(key: "AppAppModelAccounts.appearanceAccountChanged", table: "Errors", fallback: "账号已变化，请重新打开外观管理。")
+            .init(key: "AppAppModelAccounts.appearanceAccountChanged", table: "Errors", fallback: "账号信息已更改，请重新打开外观管理。")
         }
         /// 此账号已被移除。
         ///
@@ -54,8 +54,8 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Errors:AppAppModelAccounts.accountChanged": .init("此账号已被移除或发生变化。", []),
             "Errors:AppAppModelAccounts.accountSaveFailed": .init("账号信息未能保存，请重新打开 Ruri。", []),
-            "Errors:AppAppModelAccounts.accountWritePaused": .init("当前窗口已暂停写入，请重新打开 Ruri。", []),
-            "Errors:AppAppModelAccounts.appearanceAccountChanged": .init("账号已变化，请重新打开外观管理。", []),
+            "Errors:AppAppModelAccounts.accountWritePaused": .init("此窗口已暂停保存，请重新打开 Ruri。", []),
+            "Errors:AppAppModelAccounts.appearanceAccountChanged": .init("账号信息已更改，请重新打开外观管理。", []),
             "Errors:AppAppModelAccounts.externalAccountRemoved": .init("此账号已被移除。", []),
             "Errors:AppAppModelAccounts.offlineAccountExists": .init("这个离线账号已存在。", []),
             "Errors:AppAppModelAccounts.offlineAppearanceUnavailable": .init("离线账号没有在线外观资料。", []),

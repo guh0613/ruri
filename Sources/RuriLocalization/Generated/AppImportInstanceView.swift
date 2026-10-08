@@ -15,11 +15,11 @@ extension Messages {
         public static var allContent: LocalizedMessage {
             .init(key: "AppImportInstanceView.allContent", table: "Interface", fallback: "全部")
         }
-        /// 待解析
+        /// 待检查
         ///
         /// Resource: `Interface.AppImportInstanceView.awaitingResolution`.
         public static var awaitingResolution: LocalizedMessage {
-            .init(key: "AppImportInstanceView.awaitingResolution", table: "Interface", fallback: "待解析")
+            .init(key: "AppImportInstanceView.awaitingResolution", table: "Interface", fallback: "待检查")
         }
         /// 查看
         ///
@@ -45,11 +45,11 @@ extension Messages {
         public static var curseForgeFiles: LocalizedMessage {
             .init(key: "AppImportInstanceView.curseForgeFiles", table: "Interface", fallback: "CurseForge 文件")
         }
-        /// 继续前需要解析 CurseForge 文件清单。
+        /// 请先解析 CurseForge 文件清单，再继续导入。
         ///
         /// Resource: `Interface.AppImportInstanceView.curseforgeManifestRequired`.
         public static var curseforgeManifestRequired: LocalizedMessage {
-            .init(key: "AppImportInstanceView.curseforgeManifestRequired", table: "Interface", fallback: "继续前需要解析 CurseForge 文件清单。")
+            .init(key: "AppImportInstanceView.curseforgeManifestRequired", table: "Interface", fallback: "请先解析 CurseForge 文件清单，再继续导入。")
         }
         /// 游戏参数
         ///
@@ -159,11 +159,11 @@ extension Messages {
         public static var searchContent: LocalizedMessage {
             .init(key: "AppImportInstanceView.searchContent", table: "Interface", fallback: "搜索内容")
         }
-        /// 支持 Java
+        /// 支持的 Java 版本
         ///
         /// Resource: `Interface.AppImportInstanceView.supportedJava`.
         public static var supportedJava: LocalizedMessage {
-            .init(key: "AppImportInstanceView.supportedJava", table: "Interface", fallback: "支持 Java")
+            .init(key: "AppImportInstanceView.supportedJava", table: "Interface", fallback: "支持的 Java 版本")
         }
         /// 更新实例
         ///
@@ -192,12 +192,12 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppImportInstanceView.advanced": .init("高级", []),
             "Interface:AppImportInstanceView.allContent": .init("全部", []),
-            "Interface:AppImportInstanceView.awaitingResolution": .init("待解析", []),
+            "Interface:AppImportInstanceView.awaitingResolution": .init("待检查", []),
             "Interface:AppImportInstanceView.browseContent": .init("查看", []),
             "Interface:AppImportInstanceView.bundledInPack": .init("包内附带", []),
             "Interface:AppImportInstanceView.configureAPIKeyInstruction": .init("可在设置中配置 API Key，再重新导入此整合包。", []),
             "Interface:AppImportInstanceView.curseForgeFiles": .init("CurseForge 文件", []),
-            "Interface:AppImportInstanceView.curseforgeManifestRequired": .init("继续前需要解析 CurseForge 文件清单。", []),
+            "Interface:AppImportInstanceView.curseforgeManifestRequired": .init("请先解析 CurseForge 文件清单，再继续导入。", []),
             "Interface:AppImportInstanceView.gameArguments": .init("游戏参数", []),
             "Interface:AppImportInstanceView.importGameInstance": .init("导入游戏实例", []),
             "Interface:AppImportInstanceView.importInstance": .init("导入实例", []),
@@ -216,7 +216,7 @@ extension Messages {
             "Interface:AppImportInstanceView.resolvingModpackFiles": .init("正在解析整合包文件…", []),
             "Interface:AppImportInstanceView.saveTo": .init("保存到", []),
             "Interface:AppImportInstanceView.searchContent": .init("搜索内容", []),
-            "Interface:AppImportInstanceView.supportedJava": .init("支持 Java", []),
+            "Interface:AppImportInstanceView.supportedJava": .init("支持的 Java 版本", []),
             "Interface:AppImportInstanceView.updatingInstance": .init("更新实例", []),
             "Interface:AppImportInstanceView.usePackLaunchSettings": .init("使用整合包的启动设置", []),
             "Interface:AppImportInstanceView.viewUpdateDiff": .init("查看更新差异", []),

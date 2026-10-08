@@ -15,11 +15,11 @@ extension Messages {
         public static var folderLocationChanged: LocalizedMessage {
             .init(key: "CoreRepositoryMoveJournal.folderLocationChanged", table: "Errors", fallback: "移动涉及的文件夹位置已改变，请恢复原位置后重试。")
         }
-        /// 移动中的实例已被移除，请先核对文件。
+        /// 移动中的实例已被移除，请先检查文件。
         ///
         /// Resource: `Errors.CoreRepositoryMoveJournal.instanceRemoved`.
         public static var instanceRemoved: LocalizedMessage {
-            .init(key: "CoreRepositoryMoveJournal.instanceRemoved", table: "Errors", fallback: "移动中的实例已被移除，请先核对文件。")
+            .init(key: "CoreRepositoryMoveJournal.instanceRemoved", table: "Errors", fallback: "移动中的实例已被移除，请先检查文件。")
         }
         /// Minecraft 实例移动记录无效，文件已保留。
         ///
@@ -54,7 +54,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreRepositoryMoveJournal.credentialMismatch": .init("移动凭据与实例位置不一致。", []),
             "Errors:CoreRepositoryMoveJournal.folderLocationChanged": .init("移动涉及的文件夹位置已改变，请恢复原位置后重试。", []),
-            "Errors:CoreRepositoryMoveJournal.instanceRemoved": .init("移动中的实例已被移除，请先核对文件。", []),
+            "Errors:CoreRepositoryMoveJournal.instanceRemoved": .init("移动中的实例已被移除，请先检查文件。", []),
             "Errors:CoreRepositoryMoveJournal.invalidMoveRecord": .init("Minecraft 实例移动记录无效，文件已保留。", []),
             "Errors:CoreRepositoryMoveJournal.invalidReservation": .init("实例移动占用记录无效。", []),
             "Errors:CoreRepositoryMoveJournal.locationMismatch": .init("实例位置与移动记录不一致。", []),

@@ -45,11 +45,11 @@ extension Messages {
         public static var copyCreated: LocalizedMessage {
             .init(key: "AppInstanceCopyView.copyCreated", table: "Interface", fallback: "副本已创建，等待清理")
         }
-        /// 副本独立保存游戏内容和启动设置，不继承游玩时长和运行历史。
+        /// 副本独立保存游戏内容和启动设置，不包含原实例的游玩时长和运行记录。
         ///
         /// Resource: `Interface.AppInstanceCopyView.copyDescription`.
         public static var copyDescription: LocalizedMessage {
-            .init(key: "AppInstanceCopyView.copyDescription", table: "Interface", fallback: "副本独立保存游戏内容和启动设置，不继承游玩时长和运行历史。")
+            .init(key: "AppInstanceCopyView.copyDescription", table: "Interface", fallback: "副本独立保存游戏内容和启动设置，不包含原实例的游玩时长和运行记录。")
         }
         /// 复制尚未完成，原实例及其文件保留
         ///
@@ -153,11 +153,11 @@ extension Messages {
         public static var saveTo: LocalizedMessage {
             .init(key: "AppInstanceCopyView.saveTo", table: "Interface", fallback: "保存到")
         }
-        /// 在 Finder 中查看工作区
+        /// 在 Finder 中查看工作文件
         ///
         /// Resource: `Interface.AppInstanceCopyView.showWorkspace`.
         public static var showWorkspace: LocalizedMessage {
-            .init(key: "AppInstanceCopyView.showWorkspace", table: "Interface", fallback: "在 Finder 中查看工作区")
+            .init(key: "AppInstanceCopyView.showWorkspace", table: "Interface", fallback: "在 Finder 中查看工作文件")
         }
         /// 目标：%1$@
         ///
@@ -179,7 +179,7 @@ extension Messages {
             "Interface:AppInstanceCopyView.close": .init("关闭", []),
             "Interface:AppInstanceCopyView.copyBackups": .init("复制存档备份", []),
             "Interface:AppInstanceCopyView.copyCreated": .init("副本已创建，等待清理", []),
-            "Interface:AppInstanceCopyView.copyDescription": .init("副本独立保存游戏内容和启动设置，不继承游玩时长和运行历史。", []),
+            "Interface:AppInstanceCopyView.copyDescription": .init("副本独立保存游戏内容和启动设置，不包含原实例的游玩时长和运行记录。", []),
             "Interface:AppInstanceCopyView.copyIncomplete": .init("复制尚未完成，原实例及其文件保留", []),
             "Interface:AppInstanceCopyView.copyInstance": .init("复制实例", []),
             "Interface:AppInstanceCopyView.copyName": .init("%1$@ 副本", [.text]),
@@ -197,7 +197,7 @@ extension Messages {
             "Interface:AppInstanceCopyView.recoverCopyHelp": .init("将本次已复制的文件另存为副本，之后可重新复制。", []),
             "Interface:AppInstanceCopyView.refreshPreview": .init("刷新预览", []),
             "Interface:AppInstanceCopyView.saveTo": .init("保存到", []),
-            "Interface:AppInstanceCopyView.showWorkspace": .init("在 Finder 中查看工作区", []),
+            "Interface:AppInstanceCopyView.showWorkspace": .init("在 Finder 中查看工作文件", []),
             "Interface:AppInstanceCopyView.targetLabel": .init("目标：%1$@", [.text]),
             "Interface:AppInstanceCopyView.validateAndComplete": .init("校验并完成复制", []),
         ]

@@ -9,11 +9,11 @@ extension Messages {
         public static var accountType: LocalizedMessage {
             .init(key: "AppAddAccountView.accountType", table: "Interface", fallback: "账号类型")
         }
-        /// 添加玩家账号
+        /// 添加账号
         ///
         /// Resource: `Interface.AppAddAccountView.addAccount`.
         public static var addAccount: LocalizedMessage {
-            .init(key: "AppAddAccountView.addAccount", table: "Interface", fallback: "添加玩家账号")
+            .init(key: "AppAddAccountView.addAccount", table: "Interface", fallback: "添加账号")
         }
         /// 添加账号
         ///
@@ -33,23 +33,23 @@ extension Messages {
         public static var continueLogin: LocalizedMessage {
             .init(key: "AppAddAccountView.continueLogin", table: "Interface", fallback: "继续登录")
         }
-        /// 复制代码
+        /// 复制授权码
         ///
         /// Resource: `Interface.AppAddAccountView.copyCode`.
         public static var copyCode: LocalizedMessage {
-            .init(key: "AppAddAccountView.copyCode", table: "Interface", fallback: "复制代码")
+            .init(key: "AppAddAccountView.copyCode", table: "Interface", fallback: "复制授权码")
         }
-        /// 在浏览器中登录 Microsoft，并输入此代码：
+        /// 在浏览器中登录 Microsoft 账号，并输入此授权码：
         ///
         /// Resource: `Interface.AppAddAccountView.enterMicrosoftCode`.
         public static var enterMicrosoftCode: LocalizedMessage {
-            .init(key: "AppAddAccountView.enterMicrosoftCode", table: "Interface", fallback: "在浏览器中登录 Microsoft，并输入此代码：")
+            .init(key: "AppAddAccountView.enterMicrosoftCode", table: "Interface", fallback: "在浏览器中登录 Microsoft 账号，并输入此授权码：")
         }
-        /// 外置认证
+        /// 第三方认证
         ///
         /// Resource: `Interface.AppAddAccountView.externalAuth`.
         public static var externalAuth: LocalizedMessage {
-            .init(key: "AppAddAccountView.externalAuth", table: "Interface", fallback: "外置认证")
+            .init(key: "AppAddAccountView.externalAuth", table: "Interface", fallback: "第三方认证")
         }
         /// Ruri 需要自己的 Microsoft Client ID 才能发起登录。请在设置中填写已启用公共客户端与 Xbox 登录的应用 ID。
         ///
@@ -57,11 +57,11 @@ extension Messages {
         public static var microsoftHelp: LocalizedMessage {
             .init(key: "AppAddAccountView.microsoftHelp", table: "Interface", fallback: "Ruri 需要自己的 Microsoft Client ID 才能发起登录。请在设置中填写已启用公共客户端与 Xbox 登录的应用 ID。")
         }
-        /// 使用你拥有 Minecraft Java 版的 Microsoft 账号登录。
+        /// 使用拥有 Minecraft Java 版的 Microsoft 账号登录。
         ///
         /// Resource: `Interface.AppAddAccountView.minecraftOwnership`.
         public static var minecraftOwnership: LocalizedMessage {
-            .init(key: "AppAddAccountView.minecraftOwnership", table: "Interface", fallback: "使用你拥有 Minecraft Java 版的 Microsoft 账号登录。")
+            .init(key: "AppAddAccountView.minecraftOwnership", table: "Interface", fallback: "使用拥有 Minecraft Java 版的 Microsoft 账号登录。")
         }
         /// 离线账号
         ///
@@ -87,42 +87,42 @@ extension Messages {
         public static var playerName: LocalizedMessage {
             .init(key: "AppAddAccountView.playerName", table: "Interface", fallback: "玩家名")
         }
-        /// 使用 3–16 位英文字母、数字或下划线。离线账号用于单人游戏与允许离线模式的服务器。
+        /// 玩家名需为 3–16 个英文字母、数字或下划线。离线账号可用于单人游戏和允许离线模式的服务器。
         ///
         /// Resource: `Interface.AppAddAccountView.playerNameHelp`.
         public static var playerNameHelp: LocalizedMessage {
-            .init(key: "AppAddAccountView.playerNameHelp", table: "Interface", fallback: "使用 3–16 位英文字母、数字或下划线。离线账号用于单人游戏与允许离线模式的服务器。")
+            .init(key: "AppAddAccountView.playerNameHelp", table: "Interface", fallback: "玩家名需为 3–16 个英文字母、数字或下划线。离线账号可用于单人游戏和允许离线模式的服务器。")
         }
-        /// 正在请求登录代码…
+        /// 正在获取授权码…
         ///
         /// Resource: `Interface.AppAddAccountView.requestLoginCode`.
         public static var requestLoginCode: LocalizedMessage {
-            .init(key: "AppAddAccountView.requestLoginCode", table: "Interface", fallback: "正在请求登录代码…")
+            .init(key: "AppAddAccountView.requestLoginCode", table: "Interface", fallback: "正在获取授权码…")
         }
-        /// 等待浏览器中完成登录…
+        /// 等待在浏览器中完成登录…
         ///
         /// Resource: `Interface.AppAddAccountView.waitingMicrosoftLogin`.
         public static var waitingMicrosoftLogin: LocalizedMessage {
-            .init(key: "AppAddAccountView.waitingMicrosoftLogin", table: "Interface", fallback: "等待浏览器中完成登录…")
+            .init(key: "AppAddAccountView.waitingMicrosoftLogin", table: "Interface", fallback: "等待在浏览器中完成登录…")
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppAddAccountView.accountType": .init("账号类型", []),
-            "Interface:AppAddAccountView.addAccount": .init("添加玩家账号", []),
+            "Interface:AppAddAccountView.addAccount": .init("添加账号", []),
             "Interface:AppAddAccountView.addAccountAction": .init("添加账号", []),
             "Interface:AppAddAccountView.configureMicrosoft": .init("先配置 Microsoft 应用", []),
             "Interface:AppAddAccountView.continueLogin": .init("继续登录", []),
-            "Interface:AppAddAccountView.copyCode": .init("复制代码", []),
-            "Interface:AppAddAccountView.enterMicrosoftCode": .init("在浏览器中登录 Microsoft，并输入此代码：", []),
-            "Interface:AppAddAccountView.externalAuth": .init("外置认证", []),
+            "Interface:AppAddAccountView.copyCode": .init("复制授权码", []),
+            "Interface:AppAddAccountView.enterMicrosoftCode": .init("在浏览器中登录 Microsoft 账号，并输入此授权码：", []),
+            "Interface:AppAddAccountView.externalAuth": .init("第三方认证", []),
             "Interface:AppAddAccountView.microsoftHelp": .init("Ruri 需要自己的 Microsoft Client ID 才能发起登录。请在设置中填写已启用公共客户端与 Xbox 登录的应用 ID。", []),
-            "Interface:AppAddAccountView.minecraftOwnership": .init("使用你拥有 Minecraft Java 版的 Microsoft 账号登录。", []),
+            "Interface:AppAddAccountView.minecraftOwnership": .init("使用拥有 Minecraft Java 版的 Microsoft 账号登录。", []),
             "Interface:AppAddAccountView.offlineAccount": .init("离线账号", []),
             "Interface:AppAddAccountView.openMicrosoftLogin": .init("打开 Microsoft 登录页面", []),
             "Interface:AppAddAccountView.openSettings": .init("前往设置", []),
             "Interface:AppAddAccountView.playerName": .init("玩家名", []),
-            "Interface:AppAddAccountView.playerNameHelp": .init("使用 3–16 位英文字母、数字或下划线。离线账号用于单人游戏与允许离线模式的服务器。", []),
-            "Interface:AppAddAccountView.requestLoginCode": .init("正在请求登录代码…", []),
-            "Interface:AppAddAccountView.waitingMicrosoftLogin": .init("等待浏览器中完成登录…", []),
+            "Interface:AppAddAccountView.playerNameHelp": .init("玩家名需为 3–16 个英文字母、数字或下划线。离线账号可用于单人游戏和允许离线模式的服务器。", []),
+            "Interface:AppAddAccountView.requestLoginCode": .init("正在获取授权码…", []),
+            "Interface:AppAddAccountView.waitingMicrosoftLogin": .init("等待在浏览器中完成登录…", []),
         ]
     }
 }

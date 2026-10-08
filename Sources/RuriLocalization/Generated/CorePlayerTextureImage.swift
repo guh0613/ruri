@@ -15,11 +15,11 @@ extension Messages {
         public static var classicArmsTitle: LocalizedMessage {
             .init(key: "CorePlayerTextureImage.classicArmsTitle", table: "Core", fallback: "经典（宽手臂）")
         }
-        /// Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。
+        /// Microsoft 账号的皮肤需为 64 × 64 或 64 × 32 像素的 PNG 图片。
         ///
         /// Resource: `Core.CorePlayerTextureImage.invalidMicrosoftSkinSize`.
         public static var invalidMicrosoftSkinSize: LocalizedMessage {
-            .init(key: "CorePlayerTextureImage.invalidMicrosoftSkinSize", table: "Core", fallback: "Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。")
+            .init(key: "CorePlayerTextureImage.invalidMicrosoftSkinSize", table: "Core", fallback: "Microsoft 账号的皮肤需为 64 × 64 或 64 × 32 像素的 PNG 图片。")
         }
         /// 皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。
         ///
@@ -27,11 +27,11 @@ extension Messages {
         public static var invalidSkinDimensions: LocalizedMessage {
             .init(key: "CorePlayerTextureImage.invalidSkinDimensions", table: "Core", fallback: "皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。")
         }
-        /// 请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。
+        /// 请选择单张 PNG 图片，文件大小不超过 4 MB，尺寸不超过 2048 × 2048 像素。
         ///
         /// Resource: `Core.CorePlayerTextureImage.invalidSkinImage`.
         public static var invalidSkinImage: LocalizedMessage {
-            .init(key: "CorePlayerTextureImage.invalidSkinImage", table: "Core", fallback: "请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。")
+            .init(key: "CorePlayerTextureImage.invalidSkinImage", table: "Core", fallback: "请选择单张 PNG 图片，文件大小不超过 4 MB，尺寸不超过 2048 × 2048 像素。")
         }
         /// 皮肤
         ///
@@ -60,9 +60,9 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Core:CorePlayerTextureImage.capeTitle": .init("披风", []),
             "Core:CorePlayerTextureImage.classicArmsTitle": .init("经典（宽手臂）", []),
-            "Core:CorePlayerTextureImage.invalidMicrosoftSkinSize": .init("Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。", []),
+            "Core:CorePlayerTextureImage.invalidMicrosoftSkinSize": .init("Microsoft 账号的皮肤需为 64 × 64 或 64 × 32 像素的 PNG 图片。", []),
             "Core:CorePlayerTextureImage.invalidSkinDimensions": .init("皮肤尺寸需要是 64 × 64 或 64 × 32 的整数倍。", []),
-            "Core:CorePlayerTextureImage.invalidSkinImage": .init("请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。", []),
+            "Core:CorePlayerTextureImage.invalidSkinImage": .init("请选择单张 PNG 图片，文件大小不超过 4 MB，尺寸不超过 2048 × 2048 像素。", []),
             "Core:CorePlayerTextureImage.skinTitle": .init("皮肤", []),
             "Core:CorePlayerTextureImage.slimArmsTitle": .init("纤细（窄手臂）", []),
             "Errors:CorePlayerTextureImage.invalidCapeDimensions": .init("披风尺寸需要是 64 × 32 或 22 × 17 的整数倍。", []),

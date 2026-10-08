@@ -45,11 +45,11 @@ extension Messages {
         public static func exportInstance(_ value0: String) -> LocalizedMessage {
             .init(key: "AppExportInstanceView.exportInstance", table: "Interface", fallback: "导出 %1$@", arguments: [.text(value0)])
         }
-        /// 适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。
+        /// 适合备份，或迁移到使用相同游戏架构的 Mac。不包含日志、账号、Java 和游玩记录。
         ///
         /// Resource: `Interface.AppExportInstanceView.fullBackupDescription`.
         public static var fullBackupDescription: LocalizedMessage {
-            .init(key: "AppExportInstanceView.fullBackupDescription", table: "Interface", fallback: "适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。")
+            .init(key: "AppExportInstanceView.fullBackupDescription", table: "Interface", fallback: "适合备份，或迁移到使用相同游戏架构的 Mac。不包含日志、账号、Java 和游玩记录。")
         }
         /// 导出游戏安装文件、模组和配置，保留本地修改。
         ///
@@ -87,11 +87,11 @@ extension Messages {
         public static var modrinthFiles: LocalizedMessage {
             .init(key: "AppExportInstanceView.modrinthFiles", table: "Interface", fallback: "从 Modrinth 引用可下载文件")
         }
-        /// 已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。
+        /// 已识别的 Modrinth 文件会记录在下载清单中，其余文件直接包含在整合包中。不保留内存、窗口设置和附加启动参数。
         ///
         /// Resource: `Interface.AppExportInstanceView.mrpackFormatDescription`.
         public static var mrpackFormatDescription: LocalizedMessage {
-            .init(key: "AppExportInstanceView.mrpackFormatDescription", table: "Interface", fallback: "已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。")
+            .init(key: "AppExportInstanceView.mrpackFormatDescription", table: "Interface", fallback: "已识别的 Modrinth 文件会记录在下载清单中，其余文件直接包含在整合包中。不保留内存、窗口设置和附加启动参数。")
         }
         /// 整合包版本
         ///
@@ -125,14 +125,14 @@ extension Messages {
             "Interface:AppExportInstanceView.excludeEnvironment": .init("本机环境变量不包含在导出文件中。", []),
             "Interface:AppExportInstanceView.exportFormat": .init("导出格式", []),
             "Interface:AppExportInstanceView.exportInstance": .init("导出 %1$@", [.text]),
-            "Interface:AppExportInstanceView.fullBackupDescription": .init("适合备份，或迁移到相同游戏架构的 Mac。不包含日志、账号、Java 和游玩历史。", []),
+            "Interface:AppExportInstanceView.fullBackupDescription": .init("适合备份，或迁移到使用相同游戏架构的 Mac。不包含日志、账号、Java 和游玩记录。", []),
             "Interface:AppExportInstanceView.fullExportDescription": .init("导出游戏安装文件、模组和配置，保留本地修改。", []),
             "Interface:AppExportInstanceView.hmclFormatDescription": .init("可在 HMCL 中导入，保留游戏版本、加载器、内存要求和启动参数。", []),
             "Interface:AppExportInstanceView.includeWorlds": .init("包含存档", []),
             "Interface:AppExportInstanceView.javaMajorVersion": .init("指定的 Java 主版本仅在 Ruri 格式中保留。", []),
             "Interface:AppExportInstanceView.lightExportDescription": .init("导出模组、配置和游戏设置。导入时重新下载游戏依赖，启动设置使用导出时的值。", []),
             "Interface:AppExportInstanceView.modrinthFiles": .init("从 Modrinth 引用可下载文件", []),
-            "Interface:AppExportInstanceView.mrpackFormatDescription": .init("已识别的 Modrinth 文件通过下载清单引用，其余文件内附。不保留内存、窗口设置和附加启动参数。", []),
+            "Interface:AppExportInstanceView.mrpackFormatDescription": .init("已识别的 Modrinth 文件会记录在下载清单中，其余文件直接包含在整合包中。不保留内存、窗口设置和附加启动参数。", []),
             "Interface:AppExportInstanceView.packVersion": .init("整合包版本", []),
             "Interface:AppExportInstanceView.prismFormatDescription": .init("可在 Prism 或 MultiMC 中导入。跨平台后，部分模组可能需要重新配置。", []),
             "Interface:AppExportInstanceView.ruriFormatDescription": .init("保留模组来源和版本记录，支持后续检查更新。", []),

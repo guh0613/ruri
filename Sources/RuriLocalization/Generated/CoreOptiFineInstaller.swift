@@ -57,11 +57,11 @@ extension Messages {
         public static var invalidZipStructure: LocalizedMessage {
             .init(key: "CoreOptiFineInstaller.invalidZipStructure", table: "Errors", fallback: "OptiFine ZIP 文件结构无效。")
         }
-        /// 生成 OptiFine 需要 Java %1$@，请先添加运行时。
+        /// 生成 OptiFine 安装文件需要 Java %1$@，请先添加此版本的 Java。
         ///
         /// Resource: `Errors.CoreOptiFineInstaller.javaRequiredForGeneration`.
         public static func javaRequiredForGeneration(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreOptiFineInstaller.javaRequiredForGeneration", table: "Errors", fallback: "生成 OptiFine 需要 Java %1$@，请先添加运行时。", arguments: [.text(value0)])
+            .init(key: "CoreOptiFineInstaller.javaRequiredForGeneration", table: "Errors", fallback: "生成 OptiFine 安装文件需要 Java %1$@，请先添加此版本的 Java。", arguments: [.text(value0)])
         }
         /// 找不到对应的 OptiFine 版本。
         ///
@@ -163,7 +163,7 @@ extension Messages {
             "Errors:CoreOptiFineInstaller.invalidZipEntry": .init("OptiFine ZIP 条目无效。", []),
             "Errors:CoreOptiFineInstaller.invalidZipHeader": .init("OptiFine ZIP 文件头无效。", []),
             "Errors:CoreOptiFineInstaller.invalidZipStructure": .init("OptiFine ZIP 文件结构无效。", []),
-            "Errors:CoreOptiFineInstaller.javaRequiredForGeneration": .init("生成 OptiFine 需要 Java %1$@，请先添加运行时。", [.text]),
+            "Errors:CoreOptiFineInstaller.javaRequiredForGeneration": .init("生成 OptiFine 安装文件需要 Java %1$@，请先添加此版本的 Java。", [.text]),
             "Errors:CoreOptiFineInstaller.matchingOptiFineVersionMissing": .init("找不到对应的 OptiFine 版本。", []),
             "Errors:CoreOptiFineInstaller.missingInstallSource": .init("OptiFine 安装来源缺失，请重新安装此组件。", []),
             "Errors:CoreOptiFineInstaller.missingPackageField": .init("OptiFine 安装包缺少有效的 %1$@。", [.text]),

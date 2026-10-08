@@ -32,7 +32,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "外置认证 · %1$@"
+            "value" : "第三方认证 · %1$@"
           }
         }
       }
@@ -176,7 +176,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "钥匙串访问失败（%1$@），请重新登录或检查系统授权。"
+            "value" : "无法访问钥匙串（%1$@）。请重新登录，或检查系统是否已允许访问。"
           }
         }
       }
@@ -284,7 +284,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此账号尚未建立 Xbox 资料，请先登录 xbox.com 完成设置。"
+            "value" : "此账号尚未设置 Xbox 个人资料，请先登录 xbox.com 完成设置。"
           }
         }
       }
@@ -410,7 +410,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "光影"
+            "value" : "光影包"
           }
         }
       }
@@ -428,7 +428,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请先在设置中配置 Ruri 的 CurseForge API Key。"
+            "value" : "请先在 Ruri 设置中填写 CurseForge API Key。"
           }
         }
       }
@@ -464,7 +464,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "批量内容更新"
+            "value" : "批量更新资源"
           }
         }
       }
@@ -572,7 +572,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下载提前结束，可以继续重试"
+            "value" : "下载意外中断，可以重试"
           }
         }
       }
@@ -590,7 +590,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下载数据超过清单大小"
+            "value" : "下载的数据超过清单中记录的大小"
           }
         }
       }
@@ -644,7 +644,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "服务器文件大小与清单不一致"
+            "value" : "服务器上的文件大小与清单不一致"
           }
         }
       }
@@ -806,7 +806,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法核对文件附加信息：%1$@"
+            "value" : "无法校验文件附加信息：%1$@"
           }
         }
       }
@@ -878,7 +878,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "退出状态不能单独说明原因，请查看本次运行日志和生成的崩溃报告。"
+            "value" : "仅凭退出状态无法确定原因，请查看本次运行的日志和崩溃报告。"
           }
         }
       }
@@ -896,7 +896,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java 收到结束信号后可能返回 143；当前没有 Ruri 主动结束的记录，需要结合日志判断。"
+            "value" : "Java 收到终止信号后可能返回退出码 143。本次没有通过 Ruri 请求终止的记录，需要查看日志进一步判断。"
           }
         }
       }
@@ -968,7 +968,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri 曾发送正常退出请求，游戏进程随后返回成功状态。"
+            "value" : "Ruri 已发送正常退出请求，游戏随后正常退出。"
           }
         }
       }
@@ -1004,7 +1004,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏进程返回成功状态。"
+            "value" : "游戏已正常退出。"
           }
         }
       }
@@ -1040,7 +1040,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri 发送了结束请求，本次退出不作为游戏崩溃处理。"
+            "value" : "游戏已在 Ruri 发出终止请求后退出，本次退出不计为崩溃。"
           }
         }
       }
@@ -1094,7 +1094,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "进程收到了终止信号；当前记录无法确定发送者，单凭信号不能判断是游戏崩溃。"
+            "value" : "游戏进程收到了终止信号。现有记录无法确定信号来源，也无法确认是否发生了崩溃。"
           }
         }
       }
@@ -1202,7 +1202,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。"
+            "value" : "无法发送退出请求。游戏窗口可能尚未准备好，或不支持这种退出方式。请返回游戏，通过游戏菜单退出。"
           }
         }
       }
@@ -1220,7 +1220,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "系统已接收正常退出请求，正在等待游戏处理；Ruri 会继续采集日志，不会自动升级为终止进程。"
+            "value" : "系统已接收退出请求，正在等待游戏退出。Ruri 会继续记录日志，不会自动强制终止游戏。"
           }
         }
       }
@@ -1238,7 +1238,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "所有新实例独立"
+            "value" : "所有新实例使用独立目录"
           }
         }
       }
@@ -1328,7 +1328,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "有模组加载器的实例独立"
+            "value" : "有模组加载器的新实例使用独立目录"
           }
         }
       }
@@ -1415,7 +1415,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "目标目录中有 %1$lld 项内容的文件身份已改变，已留在原位置，请在 Finder 中核对：%2$@。"
+                  "value" : "目标文件夹中有 %1$lld 项内容已被替换，已保留这些内容。请在 Finder 中检查：%2$@。"
                 }
               }
             }
@@ -1526,7 +1526,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法确认目录设置是否已提交，工作区和占用记录已保留。请在实例设置中恢复：%1$@"
+            "value" : "无法确认目录设置是否已保存，工作文件和占用记录已保留。请在实例设置中恢复未完成的操作：%1$@"
           }
         }
       }
@@ -1544,7 +1544,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目录已切换，复制记录尚未清理。请在实例设置中完成恢复清理：%1$@"
+            "value" : "运行目录已切换，复制记录尚未清理。请在实例设置中恢复未完成的操作，完成清理：%1$@"
           }
         }
       }
@@ -1580,7 +1580,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@\n自动恢复尚未完成，请在实例设置中恢复复制。%2$@"
+            "value" : "%1$@\n自动恢复未完成，请在实例设置中恢复运行目录复制。%2$@"
           }
         }
       }
@@ -1598,7 +1598,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看保留的工作区。"
+            "value" : "运行目录已切换，占用记录已清除。部分临时文件未能删除，可在 Finder 中查看。"
           }
         }
       }
@@ -1724,7 +1724,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏进程运行"
+            "value" : "游戏正在运行"
           }
         }
       }
@@ -1796,7 +1796,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "监控记录已收尾 · 退出结果未知"
+            "value" : "运行记录已结束 · 退出结果未知"
           }
         }
       }
@@ -1904,7 +1904,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "恢复中断记录"
+            "value" : "恢复中断的运行记录"
           }
         }
       }
@@ -2138,7 +2138,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n%1$@"
+            "value" : "[Ruri] 当前仅显示日志末尾，完整内容保存在本次运行的记录文件夹中。\n%1$@"
           }
         }
       }
@@ -2156,7 +2156,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n"
+            "value" : "[Ruri] 当前仅显示日志末尾，完整内容保存在本次运行的记录文件夹中。\n"
           }
         }
       }
@@ -2210,7 +2210,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "暂时无法核对监控进程"
+            "value" : "暂时无法确认监控状态"
           }
         }
       }
@@ -2228,7 +2228,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏进程已消失，缺少退出结果"
+            "value" : "游戏已不再运行，但缺少退出结果"
           }
         }
       }
@@ -2264,7 +2264,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "系统没有提供足够的进程信息，当前不能确认监控是否已经退出。请稍后刷新；这时不会收尾仍可能被写入的记录。"
+            "value" : "系统提供的进程信息不足，无法确认游戏监控是否已退出。请稍后刷新；确认前会保留当前运行记录。"
           }
         }
       }
@@ -2282,7 +2282,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "监控已中断，核对记录中的身份后确认原游戏进程已消失。没有取得实际退出码或退出时间。"
+            "value" : "游戏监控已中断，已确认原游戏进程不再运行。退出码和退出时间未知。"
           }
         }
       }
@@ -2318,7 +2318,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "监控已中断且缺少游戏进程身份，由用户确认游戏已退出后收尾。没有取得实际退出码或退出时间。"
+            "value" : "游戏监控已中断，无法确认原游戏进程的状态。用户确认游戏已退出后，已结束本次运行记录。退出码和退出时间未知。"
           }
         }
       }
@@ -2354,7 +2354,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。"
+            "value" : "启动命令仍在运行。请先在“活动监视器”中结束该命令，再恢复运行记录。恢复时不会重新执行命令。"
           }
         }
       }
@@ -2372,7 +2372,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "进程身份仍然匹配。请先返回游戏，通过游戏菜单退出；这期间控制台输出可能无法继续保存。"
+            "value" : "游戏仍在运行。请返回游戏，通过游戏菜单退出。这期间可能无法继续保存控制台输出。"
           }
         }
       }
@@ -2390,7 +2390,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。"
+            "value" : "游戏退出后，监控在处理后续操作时中断。已保留退出码和游玩时长，不会重新执行退出后命令。"
           }
         }
       }
@@ -2444,7 +2444,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无需再恢复这条记录。"
+            "value" : "这条运行记录无需恢复。"
           }
         }
       }
@@ -2462,7 +2462,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "原游戏进程已不存在，可以恢复实例的启动入口。退出码和结束时间未知。"
+            "value" : "游戏已不再运行。恢复这条记录后，即可重新启动实例。上次退出的退出码和时间未知。"
           }
         }
       }
@@ -2498,7 +2498,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法确认游戏进程。请先在游戏、Dock 或活动监视器中确认游戏已退出，再恢复启动入口。"
+            "value" : "无法确认游戏是否仍在运行。请先通过游戏窗口、Dock 或“活动监视器”确认游戏已退出，再恢复运行记录。"
           }
         }
       }
@@ -2516,7 +2516,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请等待监控完成收尾，或返回游戏查看当前状态。"
+            "value" : "请等待游戏监控完成后续操作，或返回游戏查看当前状态。"
           }
         }
       }
@@ -2570,7 +2570,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此实例同时使用多个加载器，暂不支持保留组合的更换操作。"
+            "value" : "此实例使用多个加载器，暂时无法在更换加载器时保留当前组合。"
           }
         }
       }
@@ -2588,7 +2588,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此实例还有 %1$@，暂不支持保留这些组件的更换操作。"
+            "value" : "此实例还安装了 %1$@，暂时无法在更换加载器时保留这些组件。"
           }
         }
       }
@@ -2642,7 +2642,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法确认实例复制是否已提交，请通过恢复入口检查。%1$@"
+            "value" : "无法确认实例副本是否已保存，请恢复未完成的复制并检查结果。%1$@"
           }
         }
       }
@@ -2660,7 +2660,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例已复制，工作记录尚未清理，请通过恢复入口完成清理。%1$@"
+            "value" : "实例已复制，操作记录尚未清理。请恢复未完成的复制以完成清理。%1$@"
           }
         }
       }
@@ -2732,7 +2732,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目标位置出现身份不明的文件夹，已原地保留，请在 Finder 中核对：%1$@"
+            "value" : "目标位置出现了无法确认来源的文件夹，已将其保留。请在 Finder 中检查：%1$@"
           }
         }
       }
@@ -2768,7 +2768,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在清理已核验的原文件…"
+            "value" : "正在清理已校验的原文件…"
           }
         }
       }
@@ -2840,7 +2840,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例已移动，正在核对原文件…"
+            "value" : "实例已移动，正在检查原文件…"
           }
         }
       }
@@ -2894,7 +2894,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法确认实例移动是否已经提交，请通过恢复入口检查。%1$@"
+            "value" : "无法确认实例是否已移至目标位置，请恢复未完成的移动并检查结果。%1$@"
           }
         }
       }
@@ -2912,7 +2912,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例已移动，原文件或工作记录还需检查。请恢复实例移动。%1$@"
+            "value" : "实例已移动，原文件或操作记录还需要检查。请恢复未完成的移动。%1$@"
           }
         }
       }
@@ -3002,7 +3002,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@"
+            "value" : "整合包导入已中断，请在实例库中恢复未完成的导入。\n%1$@\n%2$@"
           }
         }
       }
@@ -3020,7 +3020,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目录包含多个实例，请选择其中一个实例目录。"
+            "value" : "此文件夹包含多个实例，请选择其中一个实例的文件夹。"
           }
         }
       }
@@ -3074,7 +3074,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。"
+            "value" : "已保留原实例的启动命令并将其停用。请在实例设置中检查命令、变量及其 macOS 兼容性，再决定是否启用。"
           }
         }
       }
@@ -3884,7 +3884,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。"
+            "value" : "缺失的文件将从整合包指定的 fileApi 下载。本次安装所选清单中的版本，暂不支持在线更新此类整合包。"
           }
         }
       }
@@ -3920,7 +3920,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "内容需要 %1$@，受本机内存限制为 %2$@"
+            "value" : "估算需要 %1$@，根据本机可用内存调整为 %2$@"
           }
         }
       }
@@ -3953,7 +3953,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%1$lld 个 Mod"
+                  "value" : "%1$lld 个模组"
                 }
               }
             }
@@ -3992,7 +3992,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "由 JVM 自动决定"
+            "value" : "由 Java 自动决定"
           }
         }
       }
@@ -4010,7 +4010,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "JVM 参数覆盖"
+            "value" : "由 JVM 参数指定"
           }
         }
       }
@@ -4046,7 +4046,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "堆上限 %1$@ · 初始 %2$@ · %3$@"
+            "value" : "堆内存上限 %1$@ · 初始大小 %2$@ · %3$@"
           }
         }
       }
@@ -4082,7 +4082,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导入或复制尚需完成，请处理实例库中的工作文件。"
+            "value" : "导入或复制尚未完成，请在实例库中恢复未完成的操作。"
           }
         }
       }
@@ -4136,7 +4136,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "源目录与目标目录互相包含，无法复制。请选择互不嵌套的游戏目录。"
+            "value" : "源文件夹与目标文件夹不能互相包含，请选择其他游戏文件夹。"
           }
         }
       }
@@ -4190,7 +4190,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "旧版 HMCL 的自定义目录无法定位，请手动确认。"
+            "value" : "无法找到旧版 HMCL 指定的自定义文件夹，请手动确认游戏数据的位置。"
           }
         }
       }
@@ -4208,7 +4208,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HMCL 的自定义目录不是可直接使用的 macOS 绝对路径，请手动确认游戏数据位置。"
+            "value" : "HMCL 指定的自定义路径无法在 macOS 上直接使用，请手动确认游戏数据的位置。"
           }
         }
       }
@@ -4226,7 +4226,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法读取旧版 HMCL 的目录策略，请确认游戏数据位置。"
+            "value" : "无法读取旧版 HMCL 的目录设置，请确认游戏数据的位置。"
           }
         }
       }
@@ -4334,7 +4334,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此版本有多个启动配置，使用不同游戏目录；请选择本次要接入的内容。"
+            "value" : "此版本有多个启动配置，分别使用不同的游戏文件夹。请选择要导入的内容。"
           }
         }
       }
@@ -4352,7 +4352,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "没有找到明确的运行目录设置，请选择存档、模组实际所在的位置。"
+            "value" : "未找到运行目录设置，请选择实际存放存档和模组的位置。"
           }
         }
       }
@@ -4388,7 +4388,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "一个官方启动器配置使用了无法定位的游戏目录，请确认要接入哪个配置。"
+            "value" : "无法找到某个官方启动器配置使用的游戏文件夹，请确认要导入的配置。"
           }
         }
       }
@@ -4424,7 +4424,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "光影"
+            "value" : "光影包"
           }
         }
       }
@@ -4604,7 +4604,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法确定实际 Minecraft 版本，不能仅按文件夹名称判断。"
+            "value" : "无法确定实际的 Minecraft 版本，文件夹名称不足以确认版本。"
           }
         }
       }
@@ -4622,7 +4622,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏 JAR 与清单声明的版本不同，需要在接入前核对。"
+            "value" : "游戏 JAR 的版本与清单不同，请在导入前检查。"
           }
         }
       }
@@ -4658,7 +4658,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本地游戏 JAR 缺失，接入时需要补齐游戏文件。"
+            "value" : "缺少本地游戏 JAR，导入时需要补全游戏文件。"
           }
         }
       }
@@ -4676,7 +4676,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此版本使用尚未识别的启动入口：%1$@"
+            "value" : "无法识别此版本的启动方式：%1$@"
           }
         }
       }
@@ -5018,7 +5018,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microsoft 皮肤需要 64 × 64 或 64 × 32 的 PNG。"
+            "value" : "Microsoft 账号的皮肤需为 64 × 64 或 64 × 32 像素的 PNG 图片。"
           }
         }
       }
@@ -5054,7 +5054,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请选择不超过 4 MB、尺寸不超过 2048 × 2048 的单张 PNG 图片。"
+            "value" : "请选择单张 PNG 图片，文件大小不超过 4 MB，尺寸不超过 2048 × 2048 像素。"
           }
         }
       }
@@ -5126,7 +5126,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "副本已创建，部分工作文件尚未清理，可在实例库完成清理。"
+            "value" : "副本已创建，部分工作文件尚未清理。请在实例库中完成清理。"
           }
         }
       }
@@ -5162,7 +5162,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@\n工作文件需要恢复，请在目标实例库处理未完成的复制。%2$@"
+            "value" : "%1$@\n请在目标实例库中恢复未完成的复制。工作文件已保留。%2$@"
           }
         }
       }
@@ -5198,7 +5198,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例已移动，原文件与工作记录尚需处理，请恢复实例移动。%1$@"
+            "value" : "实例已移动，原文件和操作记录还需处理。请恢复未完成的移动。%1$@"
           }
         }
       }
@@ -5306,7 +5306,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "数据已由另一个 Ruri 更新"
+            "value" : "另一个 Ruri 进程已更新数据"
           }
         }
       }
@@ -5378,7 +5378,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@的修改与另一窗口冲突（%2$@）"
+            "value" : "另一窗口也修改了%1$@，无法同时保存（%2$@）"
           }
         }
       }
@@ -5630,7 +5630,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保存冲突：%1$@。原文件已保留，请重新载入后再修改。"
+            "value" : "无法保存，修改发生冲突：%1$@。原文件已保留，请重新加载后再修改。"
           }
         }
       }
@@ -5666,7 +5666,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@的修改与另一窗口冲突"
+            "value" : "另一窗口也修改了%1$@，无法同时保存"
           }
         }
       }
@@ -5684,7 +5684,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@与另一窗口冲突"
+            "value" : "%1$@与另一窗口的修改冲突"
           }
         }
       }
@@ -5810,7 +5810,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导入的世界"
+            "value" : "导入的存档"
           }
         }
       }
@@ -5918,7 +5918,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java 架构不受宿主支持"
+            "value" : "macOS 游戏集成不支持此 Java 架构"
           }
         }
       }
@@ -6008,7 +6008,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏宿主启动失败：%@"
+            "value" : "macOS 游戏集成启动失败：%@"
           }
         }
       }
@@ -6044,7 +6044,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当前安装缺少游戏宿主"
+            "value" : "当前安装缺少 macOS 游戏集成组件"
           }
         }
       }
@@ -6080,7 +6080,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏宿主无法处理启动请求"
+            "value" : "macOS 游戏集成无法处理此启动请求"
           }
         }
       }
@@ -6116,7 +6116,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在启动游戏 JVM"
+            "value" : "正在启动 Java"
           }
         }
       }
@@ -6152,7 +6152,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "所选 Java 无法通过游戏宿主加载"
+            "value" : "macOS 游戏集成无法加载所选 Java"
           }
         }
       }
@@ -6188,7 +6188,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。"
+            "value" : "使用兼容的 Java 时，可启用 macOS 游戏集成，支持游戏模式和实例图标。游戏模式由系统在符合条件时启用，可在系统的游戏菜单中关闭。使用自定义包装命令或运行环境不兼容时，Ruri 会按常规方式启动游戏。"
           }
         }
       }
@@ -6224,7 +6224,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法保存游戏宿主状态"
+            "value" : "无法保存 macOS 游戏集成的状态"
           }
         }
       }
@@ -6242,7 +6242,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏宿主启动通信失败"
+            "value" : "无法与 macOS 游戏集成组件通信"
           }
         }
       }

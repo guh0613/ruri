@@ -33,11 +33,11 @@ extension Messages {
         public static func loaderNotFound(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "CoreLiteLoaderCatalog.loaderNotFound", table: "Errors", fallback: "找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。", arguments: [.text(value0), .text(value1)])
         }
-        /// LiteLoader 清单的启动入口无法识别。
+        /// 无法识别 LiteLoader 清单中的启动方式。
         ///
         /// Resource: `Errors.CoreLiteLoaderCatalog.unrecognizedLaunchEntry`.
         public static var unrecognizedLaunchEntry: LocalizedMessage {
-            .init(key: "CoreLiteLoaderCatalog.unrecognizedLaunchEntry", table: "Errors", fallback: "LiteLoader 清单的启动入口无法识别。")
+            .init(key: "CoreLiteLoaderCatalog.unrecognizedLaunchEntry", table: "Errors", fallback: "无法识别 LiteLoader 清单中的启动方式。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreLiteLoaderCatalog.invalidDependencyURL": .init("LiteLoader 依赖下载地址无效。", []),
@@ -45,7 +45,7 @@ extension Messages {
             "Errors:CoreLiteLoaderCatalog.invalidSnapshotChecksum": .init("LiteLoader 快照缺少有效的 SHA-1 校验信息。", []),
             "Errors:CoreLiteLoaderCatalog.invalidSnapshotVersion": .init("LiteLoader 快照版本信息无效。", []),
             "Errors:CoreLiteLoaderCatalog.loaderNotFound": .init("找不到 Minecraft %1$@ 对应的 LiteLoader %2$@。", [.text, .text]),
-            "Errors:CoreLiteLoaderCatalog.unrecognizedLaunchEntry": .init("LiteLoader 清单的启动入口无法识别。", []),
+            "Errors:CoreLiteLoaderCatalog.unrecognizedLaunchEntry": .init("无法识别 LiteLoader 清单中的启动方式。", []),
         ]
     }
 }

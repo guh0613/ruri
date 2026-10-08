@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum GameHost {
-        /// Java 架构不受宿主支持
+        /// macOS 游戏集成不支持此 Java 架构
         ///
         /// Resource: `Core.GameHost.architecture`.
         public static var architecture: LocalizedMessage {
-            .init(key: "GameHost.architecture", table: "Core", fallback: "Java 架构不受宿主支持")
+            .init(key: "GameHost.architecture", table: "Core", fallback: "macOS 游戏集成不支持此 Java 架构")
         }
         /// 使用常规 Java 启动：%@
         ///
@@ -33,11 +33,11 @@ extension Messages {
         public static var enableIntegration: LocalizedMessage {
             .init(key: "GameHost.enableIntegration", table: "Core", fallback: "启用 macOS 游戏集成")
         }
-        /// 游戏宿主启动失败：%@
+        /// macOS 游戏集成启动失败：%@
         ///
         /// Resource: `Core.GameHost.failed`.
         public static func failed(_ value0: String) -> LocalizedMessage {
-            .init(key: "GameHost.failed", table: "Core", fallback: "游戏宿主启动失败：%@", arguments: [.text(value0)])
+            .init(key: "GameHost.failed", table: "Core", fallback: "macOS 游戏集成启动失败：%@", arguments: [.text(value0)])
         }
         /// 游戏处于 macOS 原生全屏
         ///
@@ -45,11 +45,11 @@ extension Messages {
         public static var fullscreen: LocalizedMessage {
             .init(key: "GameHost.fullscreen", table: "Core", fallback: "游戏处于 macOS 原生全屏")
         }
-        /// 当前安装缺少游戏宿主
+        /// 当前安装缺少 macOS 游戏集成组件
         ///
         /// Resource: `Core.GameHost.hostMissing`.
         public static var hostMissing: LocalizedMessage {
-            .init(key: "GameHost.hostMissing", table: "Core", fallback: "当前安装缺少游戏宿主")
+            .init(key: "GameHost.hostMissing", table: "Core", fallback: "当前安装缺少 macOS 游戏集成组件")
         }
         /// 使用实例图标和窗口名称
         ///
@@ -57,11 +57,11 @@ extension Messages {
         public static var instanceAppearance: LocalizedMessage {
             .init(key: "GameHost.instanceAppearance", table: "Core", fallback: "使用实例图标和窗口名称")
         }
-        /// 游戏宿主无法处理启动请求
+        /// macOS 游戏集成无法处理此启动请求
         ///
         /// Resource: `Core.GameHost.invalidRequest`.
         public static var invalidRequest: LocalizedMessage {
-            .init(key: "GameHost.invalidRequest", table: "Core", fallback: "游戏宿主无法处理启动请求")
+            .init(key: "GameHost.invalidRequest", table: "Core", fallback: "macOS 游戏集成无法处理此启动请求")
         }
         /// 无法启动所选 Java
         ///
@@ -69,11 +69,11 @@ extension Messages {
         public static var javaExec: LocalizedMessage {
             .init(key: "GameHost.javaExec", table: "Core", fallback: "无法启动所选 Java")
         }
-        /// 正在启动游戏 JVM
+        /// 正在启动 Java
         ///
         /// Resource: `Core.GameHost.jvmStarting`.
         public static var jvmStarting: LocalizedMessage {
-            .init(key: "GameHost.jvmStarting", table: "Core", fallback: "正在启动游戏 JVM")
+            .init(key: "GameHost.jvmStarting", table: "Core", fallback: "正在启动 Java")
         }
         /// 全屏启动时使用 macOS 原生全屏
         ///
@@ -81,11 +81,11 @@ extension Messages {
         public static var nativeFullscreen: LocalizedMessage {
             .init(key: "GameHost.nativeFullscreen", table: "Core", fallback: "全屏启动时使用 macOS 原生全屏")
         }
-        /// 所选 Java 无法通过游戏宿主加载
+        /// macOS 游戏集成无法加载所选 Java
         ///
         /// Resource: `Core.GameHost.runtimeUnavailable`.
         public static var runtimeUnavailable: LocalizedMessage {
-            .init(key: "GameHost.runtimeUnavailable", table: "Core", fallback: "所选 Java 无法通过游戏宿主加载")
+            .init(key: "GameHost.runtimeUnavailable", table: "Core", fallback: "macOS 游戏集成无法加载所选 Java")
         }
         /// macOS 游戏集成
         ///
@@ -93,11 +93,11 @@ extension Messages {
         public static var settings: LocalizedMessage {
             .init(key: "GameHost.settings", table: "Core", fallback: "macOS 游戏集成")
         }
-        /// 在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。
+        /// 使用兼容的 Java 时，可启用 macOS 游戏集成，支持游戏模式和实例图标。游戏模式由系统在符合条件时启用，可在系统的游戏菜单中关闭。使用自定义包装命令或运行环境不兼容时，Ruri 会按常规方式启动游戏。
         ///
         /// Resource: `Core.GameHost.settingsHelp`.
         public static var settingsHelp: LocalizedMessage {
-            .init(key: "GameHost.settingsHelp", table: "Core", fallback: "在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。")
+            .init(key: "GameHost.settingsHelp", table: "Core", fallback: "使用兼容的 Java 时，可启用 macOS 游戏集成，支持游戏模式和实例图标。游戏模式由系统在符合条件时启用，可在系统的游戏菜单中关闭。使用自定义包装命令或运行环境不兼容时，Ruri 会按常规方式启动游戏。")
         }
         /// 正在准备 macOS 游戏集成
         ///
@@ -105,17 +105,17 @@ extension Messages {
         public static var starting: LocalizedMessage {
             .init(key: "GameHost.starting", table: "Core", fallback: "正在准备 macOS 游戏集成")
         }
-        /// 无法保存游戏宿主状态
+        /// 无法保存 macOS 游戏集成的状态
         ///
         /// Resource: `Core.GameHost.statusWriteFailed`.
         public static var statusWriteFailed: LocalizedMessage {
-            .init(key: "GameHost.statusWriteFailed", table: "Core", fallback: "无法保存游戏宿主状态")
+            .init(key: "GameHost.statusWriteFailed", table: "Core", fallback: "无法保存 macOS 游戏集成的状态")
         }
-        /// 游戏宿主启动通信失败
+        /// 无法与 macOS 游戏集成组件通信
         ///
         /// Resource: `Core.GameHost.transport`.
         public static var transport: LocalizedMessage {
-            .init(key: "GameHost.transport", table: "Core", fallback: "游戏宿主启动通信失败")
+            .init(key: "GameHost.transport", table: "Core", fallback: "无法与 macOS 游戏集成组件通信")
         }
         /// 游戏窗口已就绪
         ///
@@ -130,25 +130,25 @@ extension Messages {
             .init(key: "GameHost.wrapper", table: "Core", fallback: "已配置自定义包装命令")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:GameHost.architecture": .init("Java 架构不受宿主支持", []),
+            "Core:GameHost.architecture": .init("macOS 游戏集成不支持此 Java 架构", []),
             "Core:GameHost.compatibility": .init("使用常规 Java 启动：%@", [.text]),
             "Core:GameHost.directory": .init("无法进入游戏运行目录", []),
             "Core:GameHost.disabled": .init("macOS 游戏集成未启用", []),
             "Core:GameHost.enableIntegration": .init("启用 macOS 游戏集成", []),
-            "Core:GameHost.failed": .init("游戏宿主启动失败：%@", [.text]),
+            "Core:GameHost.failed": .init("macOS 游戏集成启动失败：%@", [.text]),
             "Core:GameHost.fullscreen": .init("游戏处于 macOS 原生全屏", []),
-            "Core:GameHost.hostMissing": .init("当前安装缺少游戏宿主", []),
+            "Core:GameHost.hostMissing": .init("当前安装缺少 macOS 游戏集成组件", []),
             "Core:GameHost.instanceAppearance": .init("使用实例图标和窗口名称", []),
-            "Core:GameHost.invalidRequest": .init("游戏宿主无法处理启动请求", []),
+            "Core:GameHost.invalidRequest": .init("macOS 游戏集成无法处理此启动请求", []),
             "Core:GameHost.javaExec": .init("无法启动所选 Java", []),
-            "Core:GameHost.jvmStarting": .init("正在启动游戏 JVM", []),
+            "Core:GameHost.jvmStarting": .init("正在启动 Java", []),
             "Core:GameHost.nativeFullscreen": .init("全屏启动时使用 macOS 原生全屏", []),
-            "Core:GameHost.runtimeUnavailable": .init("所选 Java 无法通过游戏宿主加载", []),
+            "Core:GameHost.runtimeUnavailable": .init("macOS 游戏集成无法加载所选 Java", []),
             "Core:GameHost.settings": .init("macOS 游戏集成", []),
-            "Core:GameHost.settingsHelp": .init("在兼容的 Java 上使用 macOS 游戏集成，支持系统游戏模式与实例图标。游戏模式由系统在满足条件时启用；可在系统游戏菜单中关闭。使用自定义包装命令或不兼容的运行环境时，会使用常规启动方式。", []),
+            "Core:GameHost.settingsHelp": .init("使用兼容的 Java 时，可启用 macOS 游戏集成，支持游戏模式和实例图标。游戏模式由系统在符合条件时启用，可在系统的游戏菜单中关闭。使用自定义包装命令或运行环境不兼容时，Ruri 会按常规方式启动游戏。", []),
             "Core:GameHost.starting": .init("正在准备 macOS 游戏集成", []),
-            "Core:GameHost.statusWriteFailed": .init("无法保存游戏宿主状态", []),
-            "Core:GameHost.transport": .init("游戏宿主启动通信失败", []),
+            "Core:GameHost.statusWriteFailed": .init("无法保存 macOS 游戏集成的状态", []),
+            "Core:GameHost.transport": .init("无法与 macOS 游戏集成组件通信", []),
             "Core:GameHost.windowReady": .init("游戏窗口已就绪", []),
             "Core:GameHost.wrapper": .init("已配置自定义包装命令", []),
         ]

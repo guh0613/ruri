@@ -3,17 +3,17 @@ import Foundation
 
 extension Messages {
     public enum CoreDownloadStream {
-        /// 下载提前结束，可以继续重试
+        /// 下载意外中断，可以重试
         ///
         /// Resource: `Core.CoreDownloadStream.downloadEndedEarly`.
         public static var downloadEndedEarly: LocalizedMessage {
-            .init(key: "CoreDownloadStream.downloadEndedEarly", table: "Core", fallback: "下载提前结束，可以继续重试")
+            .init(key: "CoreDownloadStream.downloadEndedEarly", table: "Core", fallback: "下载意外中断，可以重试")
         }
-        /// 下载数据超过清单大小
+        /// 下载的数据超过清单中记录的大小
         ///
         /// Resource: `Core.CoreDownloadStream.downloadExceedsExpectedSize`.
         public static var downloadExceedsExpectedSize: LocalizedMessage {
-            .init(key: "CoreDownloadStream.downloadExceedsExpectedSize", table: "Core", fallback: "下载数据超过清单大小")
+            .init(key: "CoreDownloadStream.downloadExceedsExpectedSize", table: "Core", fallback: "下载的数据超过清单中记录的大小")
         }
         /// 下载服务返回 HTTP %1$@
         ///
@@ -27,11 +27,11 @@ extension Messages {
         public static var downloadSaveFailed: LocalizedMessage {
             .init(key: "CoreDownloadStream.downloadSaveFailed", table: "Core", fallback: "无法保存下载文件")
         }
-        /// 服务器文件大小与清单不一致
+        /// 服务器上的文件大小与清单不一致
         ///
         /// Resource: `Core.CoreDownloadStream.downloadSizeMismatch`.
         public static var downloadSizeMismatch: LocalizedMessage {
-            .init(key: "CoreDownloadStream.downloadSizeMismatch", table: "Core", fallback: "服务器文件大小与清单不一致")
+            .init(key: "CoreDownloadStream.downloadSizeMismatch", table: "Core", fallback: "服务器上的文件大小与清单不一致")
         }
         /// 下载服务重定向到了非 HTTPS 地址
         ///
@@ -76,11 +76,11 @@ extension Messages {
             .init(key: "CoreDownloadStream.resumeRangeMismatch", table: "Core", fallback: "服务器续传范围与本地文件不一致")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreDownloadStream.downloadEndedEarly": .init("下载提前结束，可以继续重试", []),
-            "Core:CoreDownloadStream.downloadExceedsExpectedSize": .init("下载数据超过清单大小", []),
+            "Core:CoreDownloadStream.downloadEndedEarly": .init("下载意外中断，可以重试", []),
+            "Core:CoreDownloadStream.downloadExceedsExpectedSize": .init("下载的数据超过清单中记录的大小", []),
             "Core:CoreDownloadStream.downloadHTTPError": .init("下载服务返回 HTTP %1$@", [.text]),
             "Core:CoreDownloadStream.downloadSaveFailed": .init("无法保存下载文件", []),
-            "Core:CoreDownloadStream.downloadSizeMismatch": .init("服务器文件大小与清单不一致", []),
+            "Core:CoreDownloadStream.downloadSizeMismatch": .init("服务器上的文件大小与清单不一致", []),
             "Core:CoreDownloadStream.insecureDownloadRedirect": .init("下载服务重定向到了非 HTTPS 地址", []),
             "Core:CoreDownloadStream.invalidDownloadRange": .init("服务器返回了无效的下载范围", []),
             "Core:CoreDownloadStream.invalidDownloadResponse": .init("下载服务响应无效", []),

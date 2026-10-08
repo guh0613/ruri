@@ -60,7 +60,11 @@ def validate(app):
         assert "ruri instance component set <id>" in grouped and "--component" in grouped
         assert not re.search(r"[\u3400-\u9fff]", grouped), "CLI help must default to English"
         chinese = command([executable, "help", "instance", "--language", "zh-Hans"], env=environment).decode()
-        assert "列出托管及已注册的实例" in chinese
+        assert re.search(r"[\u3400-\u9fff]", chinese), "Explicit zh-Hans help must contain Chinese"
+        catalog_path = Path(__file__).resolve().parents[1] / "Sources/RuriLocalization/Resources/CLIInterface.xcstrings"
+        catalog = json.loads(catalog_path.read_text())
+        expected = catalog["strings"]["CLIInterface.instanceListHelp"]["localizations"]["zh-Hans"]["stringUnit"]["value"]
+        assert expected in chinese, chinese
         complete = command([executable, "help", "--all"], env=environment)
         assert len(complete) < 35_000
         index = invoke(executable, "schema")

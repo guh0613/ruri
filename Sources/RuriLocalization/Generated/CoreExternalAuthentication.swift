@@ -33,17 +33,17 @@ extension Messages {
         public static var credentialsRequired: LocalizedMessage {
             .init(key: "CoreExternalAuthentication.credentialsRequired", table: "Errors", fallback: "请填写认证站账号和密码。")
         }
-        /// 此地址没有提供外置认证信息，请检查认证站给出的 API 地址。
+        /// 此地址没有提供第三方认证信息，请检查认证站给出的 API 地址。
         ///
         /// Resource: `Errors.CoreExternalAuthentication.externalAuthInfoMissing`.
         public static var externalAuthInfoMissing: LocalizedMessage {
-            .init(key: "CoreExternalAuthentication.externalAuthInfoMissing", table: "Errors", fallback: "此地址没有提供外置认证信息，请检查认证站给出的 API 地址。")
+            .init(key: "CoreExternalAuthentication.externalAuthInfoMissing", table: "Errors", fallback: "此地址没有提供第三方认证信息，请检查认证站给出的 API 地址。")
         }
-        /// 此地址没有提供有效的外置认证元数据。
+        /// 此地址未提供有效的第三方认证信息。
         ///
         /// Resource: `Errors.CoreExternalAuthentication.externalAuthMetadataMissing`.
         public static var externalAuthMetadataMissing: LocalizedMessage {
-            .init(key: "CoreExternalAuthentication.externalAuthMetadataMissing", table: "Errors", fallback: "此地址没有提供有效的外置认证元数据。")
+            .init(key: "CoreExternalAuthentication.externalAuthMetadataMissing", table: "Errors", fallback: "此地址未提供有效的第三方认证信息。")
         }
         /// 认证服务器返回的数据无效或过大。
         ///
@@ -123,8 +123,8 @@ extension Messages {
             "Errors:CoreExternalAuthentication.authenticationHTTPError": .init("认证服务器返回 HTTP %1$@，请稍后重试。", [.text]),
             "Errors:CoreExternalAuthentication.authenticationServerChanged": .init("认证服务器地址已变更，请重新添加账号。", []),
             "Errors:CoreExternalAuthentication.credentialsRequired": .init("请填写认证站账号和密码。", []),
-            "Errors:CoreExternalAuthentication.externalAuthInfoMissing": .init("此地址没有提供外置认证信息，请检查认证站给出的 API 地址。", []),
-            "Errors:CoreExternalAuthentication.externalAuthMetadataMissing": .init("此地址没有提供有效的外置认证元数据。", []),
+            "Errors:CoreExternalAuthentication.externalAuthInfoMissing": .init("此地址没有提供第三方认证信息，请检查认证站给出的 API 地址。", []),
+            "Errors:CoreExternalAuthentication.externalAuthMetadataMissing": .init("此地址未提供有效的第三方认证信息。", []),
             "Errors:CoreExternalAuthentication.invalidAuthenticationResponse": .init("认证服务器返回的数据无效或过大。", []),
             "Errors:CoreExternalAuthentication.invalidAuthenticationServerURL": .init("认证服务器地址无效。", []),
             "Errors:CoreExternalAuthentication.invalidAuthenticationServerURLInput": .init("请输入不含账号、查询参数或片段的 HTTPS 认证服务器地址。", []),

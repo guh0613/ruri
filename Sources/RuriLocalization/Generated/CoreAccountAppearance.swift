@@ -21,11 +21,11 @@ extension Messages {
         public static var currentSkin: LocalizedMessage {
             .init(key: "CoreAccountAppearance.currentSkin", table: "Core", fallback: "当前皮肤")
         }
-        /// 账号已变化，请重新打开外观管理。
+        /// 账号信息已更改，请重新打开外观管理。
         ///
         /// Resource: `Errors.CoreAccountAppearance.accountChanged`.
         public static var accountChanged: LocalizedMessage {
-            .init(key: "CoreAccountAppearance.accountChanged", table: "Errors", fallback: "账号已变化，请重新打开外观管理。")
+            .init(key: "CoreAccountAppearance.accountChanged", table: "Errors", fallback: "账号信息已更改，请重新打开外观管理。")
         }
         /// 登录已失效，请重新登录账号后再试。
         ///
@@ -51,11 +51,11 @@ extension Messages {
         public static func appearanceHTTPError(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreAccountAppearance.appearanceHTTPError", table: "Errors", fallback: "外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。", arguments: [.text(value0)])
         }
-        /// 服务器未允许此账号执行这项外观操作。
+        /// 服务器未允许此账号更改外观。
         ///
         /// Resource: `Errors.CoreAccountAppearance.appearanceOperationForbidden`.
         public static var appearanceOperationForbidden: LocalizedMessage {
-            .init(key: "CoreAccountAppearance.appearanceOperationForbidden", table: "Errors", fallback: "服务器未允许此账号执行这项外观操作。")
+            .init(key: "CoreAccountAppearance.appearanceOperationForbidden", table: "Errors", fallback: "服务器未允许此账号更改外观。")
         }
         /// 操作过于频繁，请稍后再试。
         ///
@@ -63,11 +63,11 @@ extension Messages {
         public static var appearanceRateLimited: LocalizedMessage {
             .init(key: "CoreAccountAppearance.appearanceRateLimited", table: "Errors", fallback: "操作过于频繁，请稍后再试。")
         }
-        /// 此认证站不支持直接修改%1$@，请到认证站管理。
+        /// 此认证站不支持在 Ruri 中直接修改%1$@，请前往认证站管理。
         ///
         /// Resource: `Errors.CoreAccountAppearance.appearanceResetUnsupported`.
         public static func appearanceResetUnsupported(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreAccountAppearance.appearanceResetUnsupported", table: "Errors", fallback: "此认证站不支持直接修改%1$@，请到认证站管理。", arguments: [.text(value0)])
+            .init(key: "CoreAccountAppearance.appearanceResetUnsupported", table: "Errors", fallback: "此认证站不支持在 Ruri 中直接修改%1$@，请前往认证站管理。", arguments: [.text(value0)])
         }
         /// 外观资料与当前角色不匹配，请重新登录。
         ///
@@ -75,11 +75,11 @@ extension Messages {
         public static var appearanceRoleMismatch: LocalizedMessage {
             .init(key: "CoreAccountAppearance.appearanceRoleMismatch", table: "Errors", fallback: "外观资料与当前角色不匹配，请重新登录。")
         }
-        /// 此账号不支持直接上传%1$@，请到认证站管理。
+        /// 此账号不支持在 Ruri 中直接上传%1$@，请前往认证站管理。
         ///
         /// Resource: `Errors.CoreAccountAppearance.appearanceUploadUnsupported`.
         public static func appearanceUploadUnsupported(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreAccountAppearance.appearanceUploadUnsupported", table: "Errors", fallback: "此账号不支持直接上传%1$@，请到认证站管理。", arguments: [.text(value0)])
+            .init(key: "CoreAccountAppearance.appearanceUploadUnsupported", table: "Errors", fallback: "此账号不支持在 Ruri 中直接上传%1$@，请前往认证站管理。", arguments: [.text(value0)])
         }
         /// 外观服务响应无效。
         ///
@@ -121,16 +121,16 @@ extension Messages {
             "Core:CoreAccountAppearance.cape": .init("披风", []),
             "Core:CoreAccountAppearance.currentCape": .init("当前披风", []),
             "Core:CoreAccountAppearance.currentSkin": .init("当前皮肤", []),
-            "Errors:CoreAccountAppearance.accountChanged": .init("账号已变化，请重新打开外观管理。", []),
+            "Errors:CoreAccountAppearance.accountChanged": .init("账号信息已更改，请重新打开外观管理。", []),
             "Errors:CoreAccountAppearance.accountLoginExpired": .init("登录已失效，请重新登录账号后再试。", []),
             "Errors:CoreAccountAppearance.appearanceDataTooLarge": .init("外观资料过大，无法读取。", []),
             "Errors:CoreAccountAppearance.appearanceDownloadFailed": .init("无法下载外观图片，请重试。", []),
             "Errors:CoreAccountAppearance.appearanceHTTPError": .init("外观服务返回 HTTP %1$@，请检查图片格式或稍后重试。", [.text]),
-            "Errors:CoreAccountAppearance.appearanceOperationForbidden": .init("服务器未允许此账号执行这项外观操作。", []),
+            "Errors:CoreAccountAppearance.appearanceOperationForbidden": .init("服务器未允许此账号更改外观。", []),
             "Errors:CoreAccountAppearance.appearanceRateLimited": .init("操作过于频繁，请稍后再试。", []),
-            "Errors:CoreAccountAppearance.appearanceResetUnsupported": .init("此认证站不支持直接修改%1$@，请到认证站管理。", [.text]),
+            "Errors:CoreAccountAppearance.appearanceResetUnsupported": .init("此认证站不支持在 Ruri 中直接修改%1$@，请前往认证站管理。", [.text]),
             "Errors:CoreAccountAppearance.appearanceRoleMismatch": .init("外观资料与当前角色不匹配，请重新登录。", []),
-            "Errors:CoreAccountAppearance.appearanceUploadUnsupported": .init("此账号不支持直接上传%1$@，请到认证站管理。", [.text]),
+            "Errors:CoreAccountAppearance.appearanceUploadUnsupported": .init("此账号不支持在 Ruri 中直接上传%1$@，请前往认证站管理。", [.text]),
             "Errors:CoreAccountAppearance.invalidAppearanceResponse": .init("外观服务响应无效。", []),
             "Errors:CoreAccountAppearance.invalidAppearanceURL": .init("外观图片地址无效。", []),
             "Errors:CoreAccountAppearance.invalidAuthAppearance": .init("认证站返回的外观信息无效。", []),

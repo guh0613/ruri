@@ -135,11 +135,11 @@ extension Messages {
         public static var checkingDependencies: LocalizedMessage {
             .init(key: "Discovery.checkingDependencies", table: "Discovery", fallback: "正在检查依赖…")
         }
-        /// 选择安装实例
+        /// 选择要安装到的实例
         ///
         /// Resource: `Discovery.Discovery.chooseInstance`.
         public static var chooseInstance: LocalizedMessage {
-            .init(key: "Discovery.chooseInstance", table: "Discovery", fallback: "选择安装实例")
+            .init(key: "Discovery.chooseInstance", table: "Discovery", fallback: "选择要安装到的实例")
         }
         /// 选择保存位置…
         ///
@@ -189,11 +189,11 @@ extension Messages {
         public static var createCompatibleInstance: LocalizedMessage {
             .init(key: "Discovery.createCompatibleInstance", table: "Discovery", fallback: "创建新实例")
         }
-        /// 找不到版本时，可输入完整版本号并按回车。
+        /// 找不到所需版本时，可输入完整版本号并按回车键。
         ///
         /// Resource: `Discovery.Discovery.customVersionHint`.
         public static var customVersionHint: LocalizedMessage {
-            .init(key: "Discovery.customVersionHint", table: "Discovery", fallback: "找不到版本时，可输入完整版本号并按回车。")
+            .init(key: "Discovery.customVersionHint", table: "Discovery", fallback: "找不到所需版本时，可输入完整版本号并按回车键。")
         }
         /// 依赖关系
         ///
@@ -207,11 +207,11 @@ extension Messages {
         public static var dependencyPreviewNotice: LocalizedMessage {
             .init(key: "Discovery.dependencyPreviewNotice", table: "Discovery", fallback: "Ruri 会自动安装所需的依赖，已安装的兼容依赖会保留。")
         }
-        /// 以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。
+        /// 以下是作者列出的依赖。安装时，Ruri 会检查所需的依赖是否可用。
         ///
         /// Resource: `Discovery.Discovery.dependencyVersionNotice`.
         public static var dependencyVersionNotice: LocalizedMessage {
-            .init(key: "Discovery.dependencyVersionNotice", table: "Discovery", fallback: "以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。")
+            .init(key: "Discovery.dependencyVersionNotice", table: "Discovery", fallback: "以下是作者列出的依赖。安装时，Ruri 会检查所需的依赖是否可用。")
         }
         /// 下载到
         ///
@@ -273,11 +273,11 @@ extension Messages {
         public static var filterByInstance: LocalizedMessage {
             .init(key: "Discovery.filterByInstance", table: "Discovery", fallback: "按实例筛选")
         }
-        /// 正在为「%1$@」筛选
+        /// 正在为“%1$@”筛选
         ///
         /// Resource: `Discovery.Discovery.filteringForInstance`.
         public static func filteringForInstance(_ value0: String) -> LocalizedMessage {
-            .init(key: "Discovery.filteringForInstance", table: "Discovery", fallback: "正在为「%1$@」筛选", arguments: [.text(value0)])
+            .init(key: "Discovery.filteringForInstance", table: "Discovery", fallback: "正在为“%1$@”筛选", arguments: [.text(value0)])
         }
         /// 搜索或输入游戏版本
         ///
@@ -327,11 +327,11 @@ extension Messages {
         public static var incompatibleTarget: LocalizedMessage {
             .init(key: "Discovery.incompatibleTarget", table: "Discovery", fallback: "游戏版本或加载器不兼容")
         }
-        /// 已完成 %1$@ 的资源安装。
+        /// 已为 %1$@ 安装资源。
         ///
         /// Resource: `Discovery.Discovery.installComplete`.
         public static func installComplete(_ value0: String) -> LocalizedMessage {
-            .init(key: "Discovery.installComplete", table: "Discovery", fallback: "已完成 %1$@ 的资源安装。", arguments: [.text(value0)])
+            .init(key: "Discovery.installComplete", table: "Discovery", fallback: "已为 %1$@ 安装资源。", arguments: [.text(value0)])
         }
         /// 安装或下载…
         ///
@@ -363,11 +363,11 @@ extension Messages {
         public static var instanceChanged: LocalizedMessage {
             .init(key: "Discovery.instanceChanged", table: "Discovery", fallback: "实例的游戏版本或加载器已更改，请重新选择实例。")
         }
-        /// 选择实例后，按它的游戏版本和加载器筛选。
+        /// 按所选实例的游戏版本和加载器筛选资源。
         ///
         /// Resource: `Discovery.Discovery.instanceFilterHint`.
         public static var instanceFilterHint: LocalizedMessage {
-            .init(key: "Discovery.instanceFilterHint", table: "Discovery", fallback: "选择实例后，按它的游戏版本和加载器筛选。")
+            .init(key: "Discovery.instanceFilterHint", table: "Discovery", fallback: "按所选实例的游戏版本和加载器筛选资源。")
         }
         /// 正在使用
         ///
@@ -387,17 +387,17 @@ extension Messages {
         public static var layout: LocalizedMessage {
             .init(key: "Discovery.layout", table: "Discovery", fallback: "显示方式")
         }
-        /// 载入更多
+        /// 加载更多
         ///
         /// Resource: `Discovery.Discovery.loadMore`.
         public static var loadMore: LocalizedMessage {
-            .init(key: "Discovery.loadMore", table: "Discovery", fallback: "载入更多")
+            .init(key: "Discovery.loadMore", table: "Discovery", fallback: "加载更多")
         }
-        /// 已载入 %1$lld / %2$lld 个文件
+        /// 已加载 %1$lld / %2$lld 个文件
         ///
         /// Resource: `Discovery.Discovery.loadedVersions`.
         public static func loadedVersions(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
-            .init(key: "Discovery.loadedVersions", table: "Discovery", fallback: "已载入 %1$lld / %2$lld 个文件", arguments: [.integer(value0), .integer(value1)])
+            .init(key: "Discovery.loadedVersions", table: "Discovery", fallback: "已加载 %1$lld / %2$lld 个文件", arguments: [.integer(value0), .integer(value1)])
         }
         /// 加载器
         ///
@@ -411,23 +411,23 @@ extension Messages {
         public static var loadersUnknown: LocalizedMessage {
             .init(key: "Discovery.loadersUnknown", table: "Discovery", fallback: "未提供加载器")
         }
-        /// 正在载入更新日志…
+        /// 正在加载更新日志…
         ///
         /// Resource: `Discovery.Discovery.loadingChangelog`.
         public static var loadingChangelog: LocalizedMessage {
-            .init(key: "Discovery.loadingChangelog", table: "Discovery", fallback: "正在载入更新日志…")
+            .init(key: "Discovery.loadingChangelog", table: "Discovery", fallback: "正在加载更新日志…")
         }
-        /// 正在载入项目详情…
+        /// 正在加载项目详情…
         ///
         /// Resource: `Discovery.Discovery.loadingDetail`.
         public static var loadingDetail: LocalizedMessage {
-            .init(key: "Discovery.loadingDetail", table: "Discovery", fallback: "正在载入项目详情…")
+            .init(key: "Discovery.loadingDetail", table: "Discovery", fallback: "正在加载项目详情…")
         }
-        /// 正在载入版本…
+        /// 正在加载版本…
         ///
         /// Resource: `Discovery.Discovery.loadingVersions`.
         public static var loadingVersions: LocalizedMessage {
-            .init(key: "Discovery.loadingVersions", table: "Discovery", fallback: "正在载入版本…")
+            .init(key: "Discovery.loadingVersions", table: "Discovery", fallback: "正在加载版本…")
         }
         /// 匹配当前实例
         ///
@@ -513,11 +513,11 @@ extension Messages {
         public static var noVersions: LocalizedMessage {
             .init(key: "Discovery.noVersions", table: "Discovery", fallback: "没有符合条件的版本")
         }
-        /// 尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。
+        /// 尝试更改游戏版本、加载器或发布类型，或继续加载更多文件。
         ///
         /// Resource: `Discovery.Discovery.noVersionsHint`.
         public static var noVersionsHint: LocalizedMessage {
-            .init(key: "Discovery.noVersionsHint", table: "Discovery", fallback: "尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。")
+            .init(key: "Discovery.noVersionsHint", table: "Discovery", fallback: "尝试更改游戏版本、加载器或发布类型，或继续加载更多文件。")
         }
         /// 查看原图
         ///
@@ -645,11 +645,11 @@ extension Messages {
         public static func savedFile(_ value0: String) -> LocalizedMessage {
             .init(key: "Discovery.savedFile", table: "Discovery", fallback: "已保存 %1$@。", arguments: [.text(value0)])
         }
-        /// 搜索已载入的版本或文件名
+        /// 搜索已加载的版本或文件名
         ///
         /// Resource: `Discovery.Discovery.searchLoadedVersions`.
         public static var searchLoadedVersions: LocalizedMessage {
-            .init(key: "Discovery.searchLoadedVersions", table: "Discovery", fallback: "搜索已载入的版本或文件名")
+            .init(key: "Discovery.searchLoadedVersions", table: "Discovery", fallback: "搜索已加载的版本或文件名")
         }
         /// 正在搜索…
         ///
@@ -663,11 +663,11 @@ extension Messages {
         public static var showIncompatible: LocalizedMessage {
             .init(key: "Discovery.showIncompatible", table: "Discovery", fallback: "显示不兼容实例")
         }
-        /// 当前显示上次成功载入的结果。
+        /// 当前显示上次成功加载的结果。
         ///
         /// Resource: `Discovery.Discovery.showingPreviousResults`.
         public static var showingPreviousResults: LocalizedMessage {
-            .init(key: "Discovery.showingPreviousResults", table: "Discovery", fallback: "当前显示上次成功载入的结果。")
+            .init(key: "Discovery.showingPreviousResults", table: "Discovery", fallback: "当前显示上次成功加载的结果。")
         }
         /// 排序
         ///
@@ -711,11 +711,11 @@ extension Messages {
         public static var unrestricted: LocalizedMessage {
             .init(key: "Discovery.unrestricted", table: "Discovery", fallback: "不限")
         }
-        /// Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。
+        /// 还有 %1$lld 个文件无法检查依赖，请手动确认它们的要求。
         ///
         /// Resource: `Discovery.Discovery.untrackedNotice`.
         public static func untrackedNotice(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "Discovery.untrackedNotice", table: "Discovery", fallback: "Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。", arguments: [.integer(value0)])
+            .init(key: "Discovery.untrackedNotice", table: "Discovery", fallback: "还有 %1$lld 个文件无法检查依赖，请手动确认它们的要求。", arguments: [.integer(value0)])
         }
         /// 更新于 %1$@
         ///
@@ -729,11 +729,11 @@ extension Messages {
         public static var verifiedDownload: LocalizedMessage {
             .init(key: "Discovery.verifiedDownload", table: "Discovery", fallback: "Ruri 会在下载完成后检查文件是否完整。")
         }
-        /// 所选文件不属于当前项目，请重新载入版本列表。
+        /// 所选文件不属于当前项目，请重新加载版本列表。
         ///
         /// Resource: `Discovery.Discovery.versionProjectMismatch`.
         public static var versionProjectMismatch: LocalizedMessage {
-            .init(key: "Discovery.versionProjectMismatch", table: "Discovery", fallback: "所选文件不属于当前项目，请重新载入版本列表。")
+            .init(key: "Discovery.versionProjectMismatch", table: "Discovery", fallback: "所选文件不属于当前项目，请重新加载版本列表。")
         }
         /// 版本
         ///
@@ -812,7 +812,7 @@ extension Messages {
             "Discovery:Discovery.categoryWorldgen": .init("世界生成", []),
             "Discovery:Discovery.changelog": .init("更新日志", []),
             "Discovery:Discovery.checkingDependencies": .init("正在检查依赖…", []),
-            "Discovery:Discovery.chooseInstance": .init("选择安装实例", []),
+            "Discovery:Discovery.chooseInstance": .init("选择要安装到的实例", []),
             "Discovery:Discovery.chooseSaveLocation": .init("选择保存位置…", []),
             "Discovery:Discovery.clearFilters": .init("清除筛选", []),
             "Discovery:Discovery.clearInstanceFilter": .init("取消实例筛选", []),
@@ -821,10 +821,10 @@ extension Messages {
             "Discovery:Discovery.contentChanged": .init("实例中的资源已更改，请重新检查后再安装。", []),
             "Discovery:Discovery.createAndInstall": .init("创建并安装", []),
             "Discovery:Discovery.createCompatibleInstance": .init("创建新实例", []),
-            "Discovery:Discovery.customVersionHint": .init("找不到版本时，可输入完整版本号并按回车。", []),
+            "Discovery:Discovery.customVersionHint": .init("找不到所需版本时，可输入完整版本号并按回车键。", []),
             "Discovery:Discovery.dependencies": .init("依赖关系", []),
             "Discovery:Discovery.dependencyPreviewNotice": .init("Ruri 会自动安装所需的依赖，已安装的兼容依赖会保留。", []),
-            "Discovery:Discovery.dependencyVersionNotice": .init("以下依赖由作者提供。Ruri 会在安装时检查所需的依赖。", []),
+            "Discovery:Discovery.dependencyVersionNotice": .init("以下是作者列出的依赖。安装时，Ruri 会检查所需的依赖是否可用。", []),
             "Discovery:Discovery.destination": .init("下载到", []),
             "Discovery:Discovery.done": .init("完成", []),
             "Discovery:Discovery.downloadGame": .init("下载游戏", []),
@@ -835,7 +835,7 @@ extension Messages {
             "Discovery:Discovery.fileDependenciesNotice": .init("仅下载文件时，依赖需自行安装。你可以在“文件详情”中查看所需的依赖。", []),
             "Discovery:Discovery.fileDetails": .init("文件详情", []),
             "Discovery:Discovery.filterByInstance": .init("按实例筛选", []),
-            "Discovery:Discovery.filteringForInstance": .init("正在为「%1$@」筛选", [.text]),
+            "Discovery:Discovery.filteringForInstance": .init("正在为“%1$@”筛选", [.text]),
             "Discovery:Discovery.findGameVersion": .init("搜索或输入游戏版本", []),
             "Discovery:Discovery.gallery": .init("图库", []),
             "Discovery:Discovery.gameVersion": .init("游戏版本", []),
@@ -844,23 +844,23 @@ extension Messages {
             "Discovery:Discovery.groupExpanded": .init("已展开", []),
             "Discovery:Discovery.incompatible": .init("不兼容", []),
             "Discovery:Discovery.incompatibleTarget": .init("游戏版本或加载器不兼容", []),
-            "Discovery:Discovery.installComplete": .init("已完成 %1$@ 的资源安装。", [.text]),
+            "Discovery:Discovery.installComplete": .init("已为 %1$@ 安装资源。", [.text]),
             "Discovery:Discovery.installOrSave": .init("安装或下载…", []),
             "Discovery:Discovery.installPreview": .init("依赖检查", []),
             "Discovery:Discovery.installSummary": .init("%1$lld 个文件 · 需下载 %2$@", [.integer, .text]),
             "Discovery:Discovery.installingInto": .init("正在安装到 %1$@", [.text]),
             "Discovery:Discovery.instanceChanged": .init("实例的游戏版本或加载器已更改，请重新选择实例。", []),
-            "Discovery:Discovery.instanceFilterHint": .init("选择实例后，按它的游戏版本和加载器筛选。", []),
+            "Discovery:Discovery.instanceFilterHint": .init("按所选实例的游戏版本和加载器筛选资源。", []),
             "Discovery:Discovery.instanceInUse": .init("正在使用", []),
             "Discovery:Discovery.issues": .init("问题反馈", []),
             "Discovery:Discovery.layout": .init("显示方式", []),
-            "Discovery:Discovery.loadMore": .init("载入更多", []),
-            "Discovery:Discovery.loadedVersions": .init("已载入 %1$lld / %2$lld 个文件", [.integer, .integer]),
+            "Discovery:Discovery.loadMore": .init("加载更多", []),
+            "Discovery:Discovery.loadedVersions": .init("已加载 %1$lld / %2$lld 个文件", [.integer, .integer]),
             "Discovery:Discovery.loader": .init("加载器", []),
             "Discovery:Discovery.loadersUnknown": .init("未提供加载器", []),
-            "Discovery:Discovery.loadingChangelog": .init("正在载入更新日志…", []),
-            "Discovery:Discovery.loadingDetail": .init("正在载入项目详情…", []),
-            "Discovery:Discovery.loadingVersions": .init("正在载入版本…", []),
+            "Discovery:Discovery.loadingChangelog": .init("正在加载更新日志…", []),
+            "Discovery:Discovery.loadingDetail": .init("正在加载项目详情…", []),
+            "Discovery:Discovery.loadingVersions": .init("正在加载版本…", []),
             "Discovery:Discovery.matchInstance": .init("匹配当前实例", []),
             "Discovery:Discovery.minecraftVersion": .init("Minecraft %1$@", [.text]),
             "Discovery:Discovery.modpackImportNotice": .init("Ruri 会先读取整合包，再让你确认实例名称和安装内容。", []),
@@ -875,7 +875,7 @@ extension Messages {
             "Discovery:Discovery.noGallery": .init("作者尚未上传截图", []),
             "Discovery:Discovery.noInstanceFilter": .init("不按实例筛选", []),
             "Discovery:Discovery.noVersions": .init("没有符合条件的版本", []),
-            "Discovery:Discovery.noVersionsHint": .init("尝试更改游戏版本、加载器或发布类型；也可继续载入更多文件。", []),
+            "Discovery:Discovery.noVersionsHint": .init("尝试更改游戏版本、加载器或发布类型，或继续加载更多文件。", []),
             "Discovery:Discovery.openImage": .init("查看原图", []),
             "Discovery:Discovery.openProviderWebsite": .init("在默认浏览器中打开 %1$@ 项目页面", [.text]),
             "Discovery:Discovery.openWebsite": .init("在网站查看", []),
@@ -897,10 +897,10 @@ extension Messages {
             "Discovery:Discovery.saveFile": .init("仅下载文件", []),
             "Discovery:Discovery.saveFileNotice": .init("选择文件的保存位置，之后可以手动安装。", []),
             "Discovery:Discovery.savedFile": .init("已保存 %1$@。", [.text]),
-            "Discovery:Discovery.searchLoadedVersions": .init("搜索已载入的版本或文件名", []),
+            "Discovery:Discovery.searchLoadedVersions": .init("搜索已加载的版本或文件名", []),
             "Discovery:Discovery.searching": .init("正在搜索…", []),
             "Discovery:Discovery.showIncompatible": .init("显示不兼容实例", []),
-            "Discovery:Discovery.showingPreviousResults": .init("当前显示上次成功载入的结果。", []),
+            "Discovery:Discovery.showingPreviousResults": .init("当前显示上次成功加载的结果。", []),
             "Discovery:Discovery.sort": .init("排序", []),
             "Discovery:Discovery.sourceCode": .init("源代码", []),
             "Discovery:Discovery.supportedGameVersions": .init("支持的游戏版本：%1$@", [.text]),
@@ -908,10 +908,10 @@ extension Messages {
             "Discovery:Discovery.tool": .init("工具", []),
             "Discovery:Discovery.unknownDependency": .init("未知依赖", []),
             "Discovery:Discovery.unrestricted": .init("不限", []),
-            "Discovery:Discovery.untrackedNotice": .init("Ruri 无法检查另外 %1$lld 个文件的依赖，请手动确认。", [.integer]),
+            "Discovery:Discovery.untrackedNotice": .init("还有 %1$lld 个文件无法检查依赖，请手动确认它们的要求。", [.integer]),
             "Discovery:Discovery.updatedOn": .init("更新于 %1$@", [.text]),
             "Discovery:Discovery.verifiedDownload": .init("Ruri 会在下载完成后检查文件是否完整。", []),
-            "Discovery:Discovery.versionProjectMismatch": .init("所选文件不属于当前项目，请重新载入版本列表。", []),
+            "Discovery:Discovery.versionProjectMismatch": .init("所选文件不属于当前项目，请重新加载版本列表。", []),
             "Discovery:Discovery.versions": .init("版本", []),
             "Discovery:Discovery.versionsUnknown": .init("未提供游戏版本", []),
             "Discovery:Discovery.viewDownloads": .init("查看下载", []),

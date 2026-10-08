@@ -3,35 +3,35 @@ import Foundation
 
 extension Messages {
     public enum SessionRuntime {
-        /// 诊断附件已清理，游玩记录仍保留。
+        /// 诊断文件已清理，游玩记录仍保留。
         ///
         /// Resource: `Sessions.SessionRuntime.artifactsExpired`.
         public static var artifactsExpired: LocalizedMessage {
-            .init(key: "SessionRuntime.artifactsExpired", table: "Sessions", fallback: "诊断附件已清理，游玩记录仍保留。")
+            .init(key: "SessionRuntime.artifactsExpired", table: "Sessions", fallback: "诊断文件已清理，游玩记录仍保留。")
         }
-        /// 已收集日志，自动分析未完成，仍可导出报告。
+        /// 日志已收集，但自动分析未完成。仍可导出报告。
         ///
         /// Resource: `Sessions.SessionRuntime.collectedWithoutAnalysis`.
         public static var collectedWithoutAnalysis: LocalizedMessage {
-            .init(key: "SessionRuntime.collectedWithoutAnalysis", table: "Sessions", fallback: "已收集日志，自动分析未完成，仍可导出报告。")
+            .init(key: "SessionRuntime.collectedWithoutAnalysis", table: "Sessions", fallback: "日志已收集，但自动分析未完成。仍可导出报告。")
         }
-        /// 调试输出超过处理预算，详细记录已停止；仍保留近期输出。
+        /// 调试输出过多，已停止保存详细记录。近期输出仍会保留。
         ///
         /// Resource: `Sessions.SessionRuntime.debugOverload`.
         public static var debugOverload: LocalizedMessage {
-            .init(key: "SessionRuntime.debugOverload", table: "Sessions", fallback: "调试输出超过处理预算，详细记录已停止；仍保留近期输出。")
+            .init(key: "SessionRuntime.debugOverload", table: "Sessions", fallback: "调试输出过多，已停止保存详细记录。近期输出仍会保留。")
         }
-        /// 无法读写游玩历史：%1$@
+        /// 无法读写游玩记录：%1$@
         ///
         /// Resource: `Sessions.SessionRuntime.historyError`.
         public static func historyError(_ value0: String) -> LocalizedMessage {
-            .init(key: "SessionRuntime.historyError", table: "Sessions", fallback: "无法读写游玩历史：%1$@", arguments: [.text(value0)])
+            .init(key: "SessionRuntime.historyError", table: "Sessions", fallback: "无法读写游玩记录：%1$@", arguments: [.text(value0)])
         }
-        /// 游戏监控未及时确认启动，请查看本次记录，不要重复启动。
+        /// 暂时无法确认游戏是否已启动。请先查看本次运行记录，避免重复启动。
         ///
         /// Resource: `Sessions.SessionRuntime.launchTimeout`.
         public static var launchTimeout: LocalizedMessage {
-            .init(key: "SessionRuntime.launchTimeout", table: "Sessions", fallback: "游戏监控未及时确认启动，请查看本次记录，不要重复启动。")
+            .init(key: "SessionRuntime.launchTimeout", table: "Sessions", fallback: "暂时无法确认游戏是否已启动。请先查看本次运行记录，避免重复启动。")
         }
         /// 启动器相关事件
         ///
@@ -63,23 +63,23 @@ extension Messages {
         public static var reportUnavailable: LocalizedMessage {
             .init(key: "SessionRuntime.reportUnavailable", table: "Sessions", fallback: "未找到属于本次运行的 macOS 崩溃报告。")
         }
-        /// [Ruri] 记录保存遇到问题：%1$@
+        /// [Ruri] 无法保存运行记录：%1$@
         ///
         /// Resource: `Sessions.SessionRuntime.storageWarning`.
         public static func storageWarning(_ value0: String) -> LocalizedMessage {
-            .init(key: "SessionRuntime.storageWarning", table: "Sessions", fallback: "[Ruri] 记录保存遇到问题：%1$@", arguments: [.text(value0)])
+            .init(key: "SessionRuntime.storageWarning", table: "Sessions", fallback: "[Ruri] 无法保存运行记录：%1$@", arguments: [.text(value0)])
         }
-        /// 时长包含加载与后台运行，不含睡眠时间。
+        /// 游玩时长包含加载和后台运行的时间，不含 Mac 睡眠的时间。
         ///
         /// Resource: `Sessions.SessionRuntime.timingHelp`.
         public static var timingHelp: LocalizedMessage {
-            .init(key: "SessionRuntime.timingHelp", table: "Sessions", fallback: "时长包含加载与后台运行，不含睡眠时间。")
+            .init(key: "SessionRuntime.timingHelp", table: "Sessions", fallback: "游玩时长包含加载和后台运行的时间，不含 Mac 睡眠的时间。")
         }
-        /// 计时不完整，仅统计已确认的时间。
+        /// 计时曾中断，仅统计已记录的时间。
         ///
         /// Resource: `Sessions.SessionRuntime.timingPartial`.
         public static var timingPartial: LocalizedMessage {
-            .init(key: "SessionRuntime.timingPartial", table: "Sessions", fallback: "计时不完整，仅统计已确认的时间。")
+            .init(key: "SessionRuntime.timingPartial", table: "Sessions", fallback: "计时曾中断，仅统计已记录的时间。")
         }
         /// 无法连接游戏监控。请刷新运行状态后重试。
         ///
@@ -88,19 +88,19 @@ extension Messages {
             .init(key: "SessionRuntime.transportFailed", table: "Sessions", fallback: "无法连接游戏监控。请刷新运行状态后重试。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Sessions:SessionRuntime.artifactsExpired": .init("诊断附件已清理，游玩记录仍保留。", []),
-            "Sessions:SessionRuntime.collectedWithoutAnalysis": .init("已收集日志，自动分析未完成，仍可导出报告。", []),
-            "Sessions:SessionRuntime.debugOverload": .init("调试输出超过处理预算，详细记录已停止；仍保留近期输出。", []),
-            "Sessions:SessionRuntime.historyError": .init("无法读写游玩历史：%1$@", [.text]),
-            "Sessions:SessionRuntime.launchTimeout": .init("游戏监控未及时确认启动，请查看本次记录，不要重复启动。", []),
+            "Sessions:SessionRuntime.artifactsExpired": .init("诊断文件已清理，游玩记录仍保留。", []),
+            "Sessions:SessionRuntime.collectedWithoutAnalysis": .init("日志已收集，但自动分析未完成。仍可导出报告。", []),
+            "Sessions:SessionRuntime.debugOverload": .init("调试输出过多，已停止保存详细记录。近期输出仍会保留。", []),
+            "Sessions:SessionRuntime.historyError": .init("无法读写游玩记录：%1$@", [.text]),
+            "Sessions:SessionRuntime.launchTimeout": .init("暂时无法确认游戏是否已启动。请先查看本次运行记录，避免重复启动。", []),
             "Sessions:SessionRuntime.launcherEvents": .init("启动器相关事件", []),
             "Sessions:SessionRuntime.loggingHelp": .init("在 Finder 中查看游戏日志文件。", []),
             "Sessions:SessionRuntime.outputHead": .init("—— 启动输出（节选）——", []),
             "Sessions:SessionRuntime.outputTail": .init("—— 近期输出（节选，中间内容可能已省略）——", []),
             "Sessions:SessionRuntime.reportUnavailable": .init("未找到属于本次运行的 macOS 崩溃报告。", []),
-            "Sessions:SessionRuntime.storageWarning": .init("[Ruri] 记录保存遇到问题：%1$@", [.text]),
-            "Sessions:SessionRuntime.timingHelp": .init("时长包含加载与后台运行，不含睡眠时间。", []),
-            "Sessions:SessionRuntime.timingPartial": .init("计时不完整，仅统计已确认的时间。", []),
+            "Sessions:SessionRuntime.storageWarning": .init("[Ruri] 无法保存运行记录：%1$@", [.text]),
+            "Sessions:SessionRuntime.timingHelp": .init("游玩时长包含加载和后台运行的时间，不含 Mac 睡眠的时间。", []),
+            "Sessions:SessionRuntime.timingPartial": .init("计时曾中断，仅统计已记录的时间。", []),
             "Sessions:SessionRuntime.transportFailed": .init("无法连接游戏监控。请刷新运行状态后重试。", []),
         ]
     }

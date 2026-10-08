@@ -57,11 +57,11 @@ extension Messages {
         public static var checking: LocalizedMessage {
             .init(key: "FolderExperience.checking", table: "Folders", fallback: "正在查找游戏文件夹…")
         }
-        /// 搜索范围过大。请选择游戏文件夹或其上一级目录。
+        /// 搜索范围过大。请选择游戏文件夹或它的上一级文件夹。
         ///
         /// Resource: `Folders.FolderExperience.chooseCloserFolder`.
         public static var chooseCloserFolder: LocalizedMessage {
-            .init(key: "FolderExperience.chooseCloserFolder", table: "Folders", fallback: "搜索范围过大。请选择游戏文件夹或其上一级目录。")
+            .init(key: "FolderExperience.chooseCloserFolder", table: "Folders", fallback: "搜索范围过大。请选择游戏文件夹或它的上一级文件夹。")
         }
         /// 请选择一个文件夹。
         ///
@@ -99,17 +99,17 @@ extension Messages {
         public static var currentFolder: LocalizedMessage {
             .init(key: "FolderExperience.currentFolder", table: "Folders", fallback: "当前使用")
         }
-        /// 由 Ruri 管理，用于存放新安装和导入的实例。
+        /// 由 Ruri 管理，用于存放新安装或导入的实例。
         ///
         /// Resource: `Folders.FolderExperience.defaultHelp`.
         public static var defaultHelp: LocalizedMessage {
-            .init(key: "FolderExperience.defaultHelp", table: "Folders", fallback: "由 Ruri 管理，用于存放新安装和导入的实例。")
+            .init(key: "FolderExperience.defaultHelp", table: "Folders", fallback: "由 Ruri 管理，用于存放新安装或导入的实例。")
         }
-        /// 已自动定位到游戏文件夹
+        /// 已找到游戏文件夹
         ///
         /// Resource: `Folders.FolderExperience.detectedInside`.
         public static var detectedInside: LocalizedMessage {
-            .init(key: "FolderExperience.detectedInside", table: "Folders", fallback: "已自动定位到游戏文件夹")
+            .init(key: "FolderExperience.detectedInside", table: "Folders", fallback: "已找到游戏文件夹")
         }
         /// 此名称已被其他文件夹使用。
         ///
@@ -117,11 +117,11 @@ extension Messages {
         public static var duplicateName: LocalizedMessage {
             .init(key: "FolderExperience.duplicateName", table: "Folders", fallback: "此名称已被其他文件夹使用。")
         }
-        /// 未包含游戏版本
+        /// 没有游戏版本
         ///
         /// Resource: `Folders.FolderExperience.emptyFolder`.
         public static var emptyFolder: LocalizedMessage {
-            .init(key: "FolderExperience.emptyFolder", table: "Folders", fallback: "未包含游戏版本")
+            .init(key: "FolderExperience.emptyFolder", table: "Folders", fallback: "没有游戏版本")
         }
         /// 可用于安装游戏或导入整合包。
         ///
@@ -153,11 +153,11 @@ extension Messages {
         public static var localMinecraft: LocalizedMessage {
             .init(key: "FolderExperience.localMinecraft", table: "Folders", fallback: "本机 Minecraft")
         }
-        /// 选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。
+        /// 选择包含 versions 文件夹的游戏文件夹，通常名为 .minecraft 或 minecraft。也可以选择它的上一级文件夹，让 Ruri 自动查找。
         ///
         /// Resource: `Folders.FolderExperience.locationHelp`.
         public static var locationHelp: LocalizedMessage {
-            .init(key: "FolderExperience.locationHelp", table: "Folders", fallback: "选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。")
+            .init(key: "FolderExperience.locationHelp", table: "Folders", fallback: "选择包含 versions 文件夹的游戏文件夹，通常名为 .minecraft 或 minecraft。也可以选择它的上一级文件夹，让 Ruri 自动查找。")
         }
         /// 此文件夹由 Ruri 管理。请先移走其中的实例，再从列表中移除。
         ///
@@ -195,17 +195,17 @@ extension Messages {
         public static var newFolder: LocalizedMessage {
             .init(key: "FolderExperience.newFolder", table: "Folders", fallback: "新游戏文件夹")
         }
-        /// 新游戏可使用空文件夹。
+        /// 选择空文件夹，用于安装新游戏。
         ///
         /// Resource: `Folders.FolderExperience.newFolderHelp`.
         public static var newFolderHelp: LocalizedMessage {
-            .init(key: "FolderExperience.newFolderHelp", table: "Folders", fallback: "新游戏可使用空文件夹。")
+            .init(key: "FolderExperience.newFolderHelp", table: "Folders", fallback: "选择空文件夹，用于安装新游戏。")
         }
-        /// 没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。
+        /// 未找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可选择它的上一级文件夹。安装新游戏时可以选择空文件夹。
         ///
         /// Resource: `Folders.FolderExperience.noFolderFound`.
         public static var noFolderFound: LocalizedMessage {
-            .init(key: "FolderExperience.noFolderFound", table: "Folders", fallback: "没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。")
+            .init(key: "FolderExperience.noFolderFound", table: "Folders", fallback: "未找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可选择它的上一级文件夹。安装新游戏时可以选择空文件夹。")
         }
         /// 选择一个文件夹以查看详情
         ///
@@ -213,11 +213,11 @@ extension Messages {
         public static var noSelection: LocalizedMessage {
             .init(key: "FolderExperience.noSelection", table: "Folders", fallback: "选择一个文件夹以查看详情")
         }
-        /// 未在自动查找范围内检测到游戏文件夹，请手动选择位置。
+        /// 未自动找到游戏文件夹，请手动选择位置。
         ///
         /// Resource: `Folders.FolderExperience.noSuggestions`.
         public static var noSuggestions: LocalizedMessage {
-            .init(key: "FolderExperience.noSuggestions", table: "Folders", fallback: "未在自动查找范围内检测到游戏文件夹，请手动选择位置。")
+            .init(key: "FolderExperience.noSuggestions", table: "Folders", fallback: "未自动找到游戏文件夹，请手动选择位置。")
         }
         /// 使用此文件夹
         ///
@@ -237,11 +237,11 @@ extension Messages {
         public static var refreshDiscovery: LocalizedMessage {
             .init(key: "FolderExperience.refreshDiscovery", table: "Folders", fallback: "刷新检测结果")
         }
-        /// 从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。
+        /// 从列表移除后，游戏文件仍留在原位置。实例设置也会保留，重新添加文件夹后可以恢复。
         ///
         /// Resource: `Folders.FolderExperience.removeHelp`.
         public static var removeHelp: LocalizedMessage {
-            .init(key: "FolderExperience.removeHelp", table: "Folders", fallback: "从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。")
+            .init(key: "FolderExperience.removeHelp", table: "Folders", fallback: "从列表移除后，游戏文件仍留在原位置。实例设置也会保留，重新添加文件夹后可以恢复。")
         }
         /// 已移除
         ///
@@ -301,37 +301,37 @@ extension Messages {
             "Folders:FolderExperience.back": .init("返回", []),
             "Folders:FolderExperience.changeLocation": .init("更换…", []),
             "Folders:FolderExperience.checking": .init("正在查找游戏文件夹…", []),
-            "Folders:FolderExperience.chooseCloserFolder": .init("搜索范围过大。请选择游戏文件夹或其上一级目录。", []),
+            "Folders:FolderExperience.chooseCloserFolder": .init("搜索范围过大。请选择游戏文件夹或它的上一级文件夹。", []),
             "Folders:FolderExperience.chooseFolder": .init("请选择一个文件夹。", []),
             "Folders:FolderExperience.chooseLocation": .init("选择文件夹…", []),
             "Folders:FolderExperience.chooseResult": .init("选择要添加的游戏文件夹", []),
             "Folders:FolderExperience.commonLocations": .init("检测到的游戏文件夹", []),
             "Folders:FolderExperience.contents": .init("实例数量", []),
             "Folders:FolderExperience.currentFolder": .init("当前使用", []),
-            "Folders:FolderExperience.defaultHelp": .init("由 Ruri 管理，用于存放新安装和导入的实例。", []),
-            "Folders:FolderExperience.detectedInside": .init("已自动定位到游戏文件夹", []),
+            "Folders:FolderExperience.defaultHelp": .init("由 Ruri 管理，用于存放新安装或导入的实例。", []),
+            "Folders:FolderExperience.detectedInside": .init("已找到游戏文件夹", []),
             "Folders:FolderExperience.duplicateName": .init("此名称已被其他文件夹使用。", []),
-            "Folders:FolderExperience.emptyFolder": .init("未包含游戏版本", []),
+            "Folders:FolderExperience.emptyFolder": .init("没有游戏版本", []),
             "Folders:FolderExperience.emptyFolderHelp": .init("可用于安装游戏或导入整合包。", []),
             "Folders:FolderExperience.folderLocation": .init("文件夹位置", []),
             "Folders:FolderExperience.invalidName": .init("请输入 1–100 个字符的名称，不要包含换行等控制字符。", []),
             "Folders:FolderExperience.libraryName": .init("显示名称", []),
             "Folders:FolderExperience.localMinecraft": .init("本机 Minecraft", []),
-            "Folders:FolderExperience.locationHelp": .init("选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。", []),
+            "Folders:FolderExperience.locationHelp": .init("选择包含 versions 文件夹的游戏文件夹，通常名为 .minecraft 或 minecraft。也可以选择它的上一级文件夹，让 Ruri 自动查找。", []),
             "Folders:FolderExperience.managedRemoveHelp": .init("此文件夹由 Ruri 管理。请先移走其中的实例，再从列表中移除。", []),
             "Folders:FolderExperience.multipleResults": .init("此位置包含多个游戏文件夹。", []),
             "Folders:FolderExperience.name": .init("名称", []),
             "Folders:FolderExperience.nameHelp": .init("仅用于 Ruri 中的显示，不修改文件夹名称。", []),
             "Folders:FolderExperience.namePlaceholder": .init("例如：日常生存、HMCL 整合包", []),
             "Folders:FolderExperience.newFolder": .init("新游戏文件夹", []),
-            "Folders:FolderExperience.newFolderHelp": .init("新游戏可使用空文件夹。", []),
-            "Folders:FolderExperience.noFolderFound": .init("没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。", []),
+            "Folders:FolderExperience.newFolderHelp": .init("选择空文件夹，用于安装新游戏。", []),
+            "Folders:FolderExperience.noFolderFound": .init("未找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可选择它的上一级文件夹。安装新游戏时可以选择空文件夹。", []),
             "Folders:FolderExperience.noSelection": .init("选择一个文件夹以查看详情", []),
-            "Folders:FolderExperience.noSuggestions": .init("未在自动查找范围内检测到游戏文件夹，请手动选择位置。", []),
+            "Folders:FolderExperience.noSuggestions": .init("未自动找到游戏文件夹，请手动选择位置。", []),
             "Folders:FolderExperience.openExisting": .init("使用此文件夹", []),
             "Folders:FolderExperience.reconnectHelp": .init("如果文件夹已移动或位于外置磁盘，请连接磁盘，或重新定位原文件夹。", []),
             "Folders:FolderExperience.refreshDiscovery": .init("刷新检测结果", []),
-            "Folders:FolderExperience.removeHelp": .init("从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。", []),
+            "Folders:FolderExperience.removeHelp": .init("从列表移除后，游戏文件仍留在原位置。实例设置也会保留，重新添加文件夹后可以恢复。", []),
             "Folders:FolderExperience.removedFolder": .init("已移除", []),
             "Folders:FolderExperience.retainedFolder": .init("已从实例库移除", []),
             "Folders:FolderExperience.savedSettings": .init("保留的实例设置", []),

@@ -21,11 +21,11 @@ extension Messages {
         public static var addAndJoinButton: LocalizedMessage {
             .init(key: "Servers.addAndJoinButton", table: "Servers", fallback: "添加并加入")
         }
-        /// 把服务器添加到所选实例的多人游戏列表，然后启动并连接
+        /// 将服务器添加到所选实例的多人游戏列表，再启动游戏并连接。
         ///
         /// Resource: `Servers.Servers.addAndJoinHelp`.
         public static var addAndJoinHelp: LocalizedMessage {
-            .init(key: "Servers.addAndJoinHelp", table: "Servers", fallback: "把服务器添加到所选实例的多人游戏列表，然后启动并连接")
+            .init(key: "Servers.addAndJoinHelp", table: "Servers", fallback: "将服务器添加到所选实例的多人游戏列表，再启动游戏并连接。")
         }
         /// 地址
         ///
@@ -105,23 +105,23 @@ extension Messages {
         public static var connectionFailed: LocalizedMessage {
             .init(key: "Servers.connectionFailed", table: "Servers", fallback: "连接失败")
         }
-        /// 拷贝地址
+        /// 复制地址
         ///
         /// Resource: `Servers.Servers.copyAddress`.
         public static var copyAddress: LocalizedMessage {
-            .init(key: "Servers.copyAddress", table: "Servers", fallback: "拷贝地址")
+            .init(key: "Servers.copyAddress", table: "Servers", fallback: "复制地址")
         }
-        /// 从此实例的游戏列表移除服务器？Ruri 中的设置和历史记录会保留。
+        /// 从此实例的多人游戏列表中移除此服务器？Ruri 中的设置和游玩记录会保留。
         ///
         /// Resource: `Servers.Servers.deleteConfirm`.
         public static var deleteConfirm: LocalizedMessage {
-            .init(key: "Servers.deleteConfirm", table: "Servers", fallback: "从此实例的游戏列表移除服务器？Ruri 中的设置和历史记录会保留。")
+            .init(key: "Servers.deleteConfirm", table: "Servers", fallback: "从此实例的多人游戏列表中移除此服务器？Ruri 中的设置和游玩记录会保留。")
         }
-        /// 存档和服务器启动目标不能同时指定。
+        /// 一次只能选择进入存档或加入服务器。
         ///
         /// Resource: `Servers.Servers.destinationConflict`.
         public static var destinationConflict: LocalizedMessage {
-            .init(key: "Servers.destinationConflict", table: "Servers", fallback: "存档和服务器启动目标不能同时指定。")
+            .init(key: "Servers.destinationConflict", table: "Servers", fallback: "一次只能选择进入存档或加入服务器。")
         }
         /// 显示名称
         ///
@@ -147,11 +147,11 @@ extension Messages {
         public static var empty: LocalizedMessage {
             .init(key: "Servers.empty", table: "Servers", fallback: "尚未添加服务器")
         }
-        /// 添加一个地址，或从实例的多人游戏列表开始。
+        /// 添加服务器地址，或查看实例中已有的多人游戏列表。
         ///
         /// Resource: `Servers.Servers.emptyDescription`.
         public static var emptyDescription: LocalizedMessage {
-            .init(key: "Servers.emptyDescription", table: "Servers", fallback: "添加一个地址，或从实例的多人游戏列表开始。")
+            .init(key: "Servers.emptyDescription", table: "Servers", fallback: "添加服务器地址，或查看实例中已有的多人游戏列表。")
         }
         /// 多人游戏列表为空
         ///
@@ -165,11 +165,11 @@ extension Messages {
         public static var emptyInstanceListDescription: LocalizedMessage {
             .init(key: "Servers.emptyInstanceListDescription", table: "Servers", fallback: "添加的服务器会出现在游戏的多人游戏列表中。")
         }
-        /// 未能确认离开时间，可能包含菜单停留
+        /// 离开时间未知，估算时长可能包含停留在菜单的时间。
         ///
         /// Resource: `Servers.Servers.estimateHint`.
         public static var estimateHint: LocalizedMessage {
-            .init(key: "Servers.estimateHint", table: "Servers", fallback: "未能确认离开时间，可能包含菜单停留")
+            .init(key: "Servers.estimateHint", table: "Servers", fallback: "离开时间未知，估算时长可能包含停留在菜单的时间。")
         }
         /// 估算
         ///
@@ -189,11 +189,11 @@ extension Messages {
         public static var favorite: LocalizedMessage {
             .init(key: "Servers.favorite", table: "Servers", fallback: "固定到主页")
         }
-        /// 服务器只显示在 Ruri 的服务器页面中，加入时会添加到所选实例。
+        /// 服务器会保存在 Ruri 的服务器页面中，加入时再添加到所选实例的多人游戏列表。
         ///
         /// Resource: `Servers.Servers.favoriteOnlyFooter`.
         public static var favoriteOnlyFooter: LocalizedMessage {
-            .init(key: "Servers.favoriteOnlyFooter", table: "Servers", fallback: "服务器只显示在 Ruri 的服务器页面中，加入时会添加到所选实例。")
+            .init(key: "Servers.favoriteOnlyFooter", table: "Servers", fallback: "服务器会保存在 Ruri 的服务器页面中，加入时再添加到所选实例的多人游戏列表。")
         }
         /// 已固定
         ///
@@ -249,11 +249,11 @@ extension Messages {
         public static var instances: LocalizedMessage {
             .init(key: "Servers.instances", table: "Servers", fallback: "所在实例")
         }
-        /// 服务器地址无效，请输入域名、IP 或主机:端口。
+        /// 请输入有效的服务器地址，例如域名、IP 地址或“主机:端口”。
         ///
         /// Resource: `Servers.Servers.invalidAddress`.
         public static var invalidAddress: LocalizedMessage {
-            .init(key: "Servers.invalidAddress", table: "Servers", fallback: "服务器地址无效，请输入域名、IP 或主机:端口。")
+            .init(key: "Servers.invalidAddress", table: "Servers", fallback: "请输入有效的服务器地址，例如域名、IP 地址或“主机:端口”。")
         }
         /// 服务器列表格式无效，原文件已保留。
         ///
@@ -285,11 +285,11 @@ extension Messages {
         public static var joinButton: LocalizedMessage {
             .init(key: "Servers.joinButton", table: "Servers", fallback: "加入")
         }
-        /// 使用所选实例启动游戏并直接连接到此服务器
+        /// 使用所选实例启动游戏并连接到此服务器。
         ///
         /// Resource: `Servers.Servers.joinHelp`.
         public static var joinHelp: LocalizedMessage {
-            .init(key: "Servers.joinHelp", table: "Servers", fallback: "使用所选实例启动游戏并直接连接到此服务器")
+            .init(key: "Servers.joinHelp", table: "Servers", fallback: "使用所选实例启动游戏并连接到此服务器。")
         }
         /// 最近 30 天
         ///
@@ -303,11 +303,11 @@ extension Messages {
         public static var lastPlayed: LocalizedMessage {
             .init(key: "Servers.lastPlayed", table: "Servers", fallback: "最近游玩")
         }
-        /// 最近成功查询
+        /// 上次成功查询
         ///
         /// Resource: `Servers.Servers.lastUpdated`.
         public static var lastUpdated: LocalizedMessage {
-            .init(key: "Servers.lastUpdated", table: "Servers", fallback: "最近成功查询")
+            .init(key: "Servers.lastUpdated", table: "Servers", fallback: "上次成功查询")
         }
         /// 延迟
         ///
@@ -315,11 +315,11 @@ extension Messages {
         public static var latency: LocalizedMessage {
             .init(key: "Servers.latency", table: "Servers", fallback: "延迟")
         }
-        /// 旧版整次归属
+        /// 旧版记录按整次游玩统计
         ///
         /// Resource: `Servers.Servers.legacyTime`.
         public static var legacyTime: LocalizedMessage {
-            .init(key: "Servers.legacyTime", table: "Servers", fallback: "旧版整次归属")
+            .init(key: "Servers.legacyTime", table: "Servers", fallback: "旧版记录按整次游玩统计")
         }
         /// 服务器列表或游戏目录已变化，请刷新后重试。
         ///
@@ -327,17 +327,17 @@ extension Messages {
         public static var listChanged: LocalizedMessage {
             .init(key: "Servers.listChanged", table: "Servers", fallback: "服务器列表或游戏目录已变化，请刷新后重试。")
         }
-        /// 部分实例列表无法读取
+        /// 部分实例的服务器列表无法读取
         ///
         /// Resource: `Servers.Servers.listErrors`.
         public static var listErrors: LocalizedMessage {
-            .init(key: "Servers.listErrors", table: "Servers", fallback: "部分实例列表无法读取")
+            .init(key: "Servers.listErrors", table: "Servers", fallback: "部分实例的服务器列表无法读取")
         }
-        /// 服务器条目数量超过限制。
+        /// 服务器数量超过限制。
         ///
         /// Resource: `Servers.Servers.listLimit`.
         public static var listLimit: LocalizedMessage {
-            .init(key: "Servers.listLimit", table: "Servers", fallback: "服务器条目数量超过限制。")
+            .init(key: "Servers.listLimit", table: "Servers", fallback: "服务器数量超过限制。")
         }
         /// 已添加此服务器
         ///
@@ -345,17 +345,17 @@ extension Messages {
         public static var listedInstances: LocalizedMessage {
             .init(key: "Servers.listedInstances", table: "Servers", fallback: "已添加此服务器")
         }
-        /// 正在读取服务器
+        /// 正在读取服务器列表…
         ///
         /// Resource: `Servers.Servers.loading`.
         public static var loading: LocalizedMessage {
-            .init(key: "Servers.loading", table: "Servers", fallback: "正在读取服务器")
+            .init(key: "Servers.loading", table: "Servers", fallback: "正在读取服务器列表…")
         }
-        /// 实例中的服务器条目
+        /// 实例中的服务器
         ///
         /// Resource: `Servers.Servers.localEntries`.
         public static var localEntries: LocalizedMessage {
-            .init(key: "Servers.localEntries", table: "Servers", fallback: "实例中的服务器条目")
+            .init(key: "Servers.localEntries", table: "Servers", fallback: "实例中的服务器")
         }
         /// 管理服务器
         ///
@@ -423,11 +423,11 @@ extension Messages {
         public static var noDescription: LocalizedMessage {
             .init(key: "Servers.noDescription", table: "Servers", fallback: "服务器没有提供简介。")
         }
-        /// 暂无可统计的游玩记录
+        /// 暂无游玩记录
         ///
         /// Resource: `Servers.Servers.noHistory`.
         public static var noHistory: LocalizedMessage {
-            .init(key: "Servers.noHistory", table: "Servers", fallback: "暂无可统计的游玩记录")
+            .init(key: "Servers.noHistory", table: "Servers", fallback: "暂无游玩记录")
         }
         /// 先创建或导入一个实例。
         ///
@@ -459,11 +459,11 @@ extension Messages {
         public static var noSelection: LocalizedMessage {
             .init(key: "Servers.noSelection", table: "Servers", fallback: "选择一个服务器查看详情")
         }
-        /// 找不到服务器条目，请刷新后重试。
+        /// 找不到此服务器，请刷新列表后重试。
         ///
         /// Resource: `Servers.Servers.notFound`.
         public static var notFound: LocalizedMessage {
-            .init(key: "Servers.notFound", table: "Servers", fallback: "找不到服务器条目，请刷新后重试。")
+            .init(key: "Servers.notFound", table: "Servers", fallback: "找不到此服务器，请刷新列表后重试。")
         }
         /// 尚未添加到任何实例的多人游戏列表。加入时会自动添加到所选实例。
         ///
@@ -555,17 +555,17 @@ extension Messages {
         public static var queryFailed: LocalizedMessage {
             .init(key: "Servers.queryFailed", table: "Servers", fallback: "无法查询服务器状态。")
         }
-        /// 查询失败仍可保存或尝试加入。返回的版本和人数由服务器提供。
+        /// 查询失败后仍可保存服务器或尝试加入。版本和在线人数由服务器提供。
         ///
         /// Resource: `Servers.Servers.queryHint`.
         public static var queryHint: LocalizedMessage {
-            .init(key: "Servers.queryHint", table: "Servers", fallback: "查询失败仍可保存或尝试加入。返回的版本和人数由服务器提供。")
+            .init(key: "Servers.queryHint", table: "Servers", fallback: "查询失败后仍可保存服务器或尝试加入。版本和在线人数由服务器提供。")
         }
-        /// 查询中
+        /// 正在查询…
         ///
         /// Resource: `Servers.Servers.querying`.
         public static var querying: LocalizedMessage {
-            .init(key: "Servers.querying", table: "Servers", fallback: "查询中")
+            .init(key: "Servers.querying", table: "Servers", fallback: "正在查询…")
         }
         /// 在线
         ///
@@ -621,11 +621,11 @@ extension Messages {
         public static var removeFromLibraryDetail: LocalizedMessage {
             .init(key: "Servers.removeFromLibraryDetail", table: "Servers", fallback: "Ruri 中保存的别名、备注和首选实例会被清除。实例的多人游戏列表和游玩记录不受影响。")
         }
-        /// 拖移以调整顺序，与游戏内多人游戏列表一致。
+        /// 拖动以调整服务器顺序，游戏中的多人游戏列表会同步更新。
         ///
         /// Resource: `Servers.Servers.reorderHint`.
         public static var reorderHint: LocalizedMessage {
-            .init(key: "Servers.reorderHint", table: "Servers", fallback: "拖移以调整顺序，与游戏内多人游戏列表一致。")
+            .init(key: "Servers.reorderHint", table: "Servers", fallback: "拖动以调整服务器顺序，游戏中的多人游戏列表会同步更新。")
         }
         /// 服务器资源包
         ///
@@ -639,11 +639,11 @@ extension Messages {
         public static var retry: LocalizedMessage {
             .init(key: "Servers.retry", table: "Servers", fallback: "重试")
         }
-        /// 游戏运行中，列表只读
+        /// 游戏正在运行，暂时无法修改列表
         ///
         /// Resource: `Servers.Servers.running`.
         public static var running: LocalizedMessage {
-            .init(key: "Servers.running", table: "Servers", fallback: "游戏运行中，列表只读")
+            .init(key: "Servers.running", table: "Servers", fallback: "游戏正在运行，暂时无法修改列表")
         }
         /// 保存
         ///
@@ -657,17 +657,17 @@ extension Messages {
         public static var saveTo: LocalizedMessage {
             .init(key: "Servers.saveTo", table: "Servers", fallback: "保存到")
         }
-        /// 添加到实例会写入该实例的多人游戏列表，在游戏内同样可见。
+        /// 添加后，此服务器会显示在该实例的多人游戏列表中。
         ///
         /// Resource: `Servers.Servers.saveToFooter`.
         public static var saveToFooter: LocalizedMessage {
-            .init(key: "Servers.saveToFooter", table: "Servers", fallback: "添加到实例会写入该实例的多人游戏列表，在游戏内同样可见。")
+            .init(key: "Servers.saveToFooter", table: "Servers", fallback: "添加后，此服务器会显示在该实例的多人游戏列表中。")
         }
-        /// 即使没有实例列出，也保存在 Ruri 中
+        /// 未添加到任何实例时，仍保存在 Ruri 中
         ///
         /// Resource: `Servers.Servers.savedInLibrary`.
         public static var savedInLibrary: LocalizedMessage {
-            .init(key: "Servers.savedInLibrary", table: "Servers", fallback: "即使没有实例列出，也保存在 Ruri 中")
+            .init(key: "Servers.savedInLibrary", table: "Servers", fallback: "未添加到任何实例时，仍保存在 Ruri 中")
         }
         /// 搜索名称或地址
         ///
@@ -681,17 +681,17 @@ extension Messages {
         public static func serverCount(_ value0: Int64) -> LocalizedMessage {
             .init(key: "Servers.serverCount", table: "Servers", fallback: "%1$lld 个服务器", arguments: [.integer(value0)])
         }
-        /// 别名、备注和首选实例只保存在 Ruri 中，不会修改游戏内的服务器列表。
+        /// 别名、备注和首选实例仅保存在 Ruri 中，不影响游戏中的服务器列表。
         ///
         /// Resource: `Servers.Servers.settingsFooter`.
         public static var settingsFooter: LocalizedMessage {
-            .init(key: "Servers.settingsFooter", table: "Servers", fallback: "别名、备注和首选实例只保存在 Ruri 中，不会修改游戏内的服务器列表。")
+            .init(key: "Servers.settingsFooter", table: "Servers", fallback: "别名、备注和首选实例仅保存在 Ruri 中，不影响游戏中的服务器列表。")
         }
-        /// 列表由共用此游戏目录的实例共享。
+        /// 使用同一游戏文件夹的实例共用此列表。
         ///
         /// Resource: `Servers.Servers.sharedDirectory`.
         public static var sharedDirectory: LocalizedMessage {
-            .init(key: "Servers.sharedDirectory", table: "Servers", fallback: "列表由共用此游戏目录的实例共享。")
+            .init(key: "Servers.sharedDirectory", table: "Servers", fallback: "使用同一游戏文件夹的实例共用此列表。")
         }
         /// 显示全部服务器
         ///
@@ -775,7 +775,7 @@ extension Messages {
             "Servers:Servers.add": .init("添加服务器", []),
             "Servers:Servers.addAndJoin": .init("添加到此实例并启动", []),
             "Servers:Servers.addAndJoinButton": .init("添加并加入", []),
-            "Servers:Servers.addAndJoinHelp": .init("把服务器添加到所选实例的多人游戏列表，然后启动并连接", []),
+            "Servers:Servers.addAndJoinHelp": .init("将服务器添加到所选实例的多人游戏列表，再启动游戏并连接。", []),
             "Servers:Servers.address": .init("地址", []),
             "Servers:Servers.addressPlaceholder": .init("play.example.com", []),
             "Servers:Servers.alias": .init("显示别名", []),
@@ -789,21 +789,21 @@ extension Messages {
             "Servers:Servers.chooseInstance": .init("选择实例", []),
             "Servers:Servers.confirmRemove": .init("移除", []),
             "Servers:Servers.connectionFailed": .init("连接失败", []),
-            "Servers:Servers.copyAddress": .init("拷贝地址", []),
-            "Servers:Servers.deleteConfirm": .init("从此实例的游戏列表移除服务器？Ruri 中的设置和历史记录会保留。", []),
-            "Servers:Servers.destinationConflict": .init("存档和服务器启动目标不能同时指定。", []),
+            "Servers:Servers.copyAddress": .init("复制地址", []),
+            "Servers:Servers.deleteConfirm": .init("从此实例的多人游戏列表中移除此服务器？Ruri 中的设置和游玩记录会保留。", []),
+            "Servers:Servers.destinationConflict": .init("一次只能选择进入存档或加入服务器。", []),
             "Servers:Servers.displayName": .init("显示名称", []),
             "Servers:Servers.dnsFailed": .init("地址解析失败", []),
             "Servers:Servers.edit": .init("编辑服务器", []),
             "Servers:Servers.empty": .init("尚未添加服务器", []),
-            "Servers:Servers.emptyDescription": .init("添加一个地址，或从实例的多人游戏列表开始。", []),
+            "Servers:Servers.emptyDescription": .init("添加服务器地址，或查看实例中已有的多人游戏列表。", []),
             "Servers:Servers.emptyInstanceList": .init("多人游戏列表为空", []),
             "Servers:Servers.emptyInstanceListDescription": .init("添加的服务器会出现在游戏的多人游戏列表中。", []),
-            "Servers:Servers.estimateHint": .init("未能确认离开时间，可能包含菜单停留", []),
+            "Servers:Servers.estimateHint": .init("离开时间未知，估算时长可能包含停留在菜单的时间。", []),
             "Servers:Servers.estimated": .init("估算", []),
             "Servers:Servers.estimatedPortion": .init("其中估算 %1$@", [.text]),
             "Servers:Servers.favorite": .init("固定到主页", []),
-            "Servers:Servers.favoriteOnlyFooter": .init("服务器只显示在 Ruri 的服务器页面中，加入时会添加到所选实例。", []),
+            "Servers:Servers.favoriteOnlyFooter": .init("服务器会保存在 Ruri 的服务器页面中，加入时再添加到所选实例的多人游戏列表。", []),
             "Servers:Servers.favorites": .init("已固定", []),
             "Servers:Servers.filter": .init("筛选", []),
             "Servers:Servers.filteredServerCount": .init("%1$lld / %2$lld 个服务器", [.integer, .integer]),
@@ -813,24 +813,24 @@ extension Messages {
             "Servers:Servers.instanceMenuHelp": .init("选择用于加入服务器的实例", []),
             "Servers:Servers.instanceName": .init("实例", []),
             "Servers:Servers.instances": .init("所在实例", []),
-            "Servers:Servers.invalidAddress": .init("服务器地址无效，请输入域名、IP 或主机:端口。", []),
+            "Servers:Servers.invalidAddress": .init("请输入有效的服务器地址，例如域名、IP 地址或“主机:端口”。", []),
             "Servers:Servers.invalidList": .init("服务器列表格式无效，原文件已保留。", []),
             "Servers:Servers.invalidName": .init("服务器名称不能为空，且不能超过 1024 字节。", []),
             "Servers:Servers.invalidResponse": .init("服务器返回了无效或过大的响应。", []),
             "Servers:Servers.join": .init("启动并加入", []),
             "Servers:Servers.joinButton": .init("加入", []),
-            "Servers:Servers.joinHelp": .init("使用所选实例启动游戏并直接连接到此服务器", []),
+            "Servers:Servers.joinHelp": .init("使用所选实例启动游戏并连接到此服务器。", []),
             "Servers:Servers.last30Days": .init("最近 30 天", []),
             "Servers:Servers.lastPlayed": .init("最近游玩", []),
-            "Servers:Servers.lastUpdated": .init("最近成功查询", []),
+            "Servers:Servers.lastUpdated": .init("上次成功查询", []),
             "Servers:Servers.latency": .init("延迟", []),
-            "Servers:Servers.legacyTime": .init("旧版整次归属", []),
+            "Servers:Servers.legacyTime": .init("旧版记录按整次游玩统计", []),
             "Servers:Servers.listChanged": .init("服务器列表或游戏目录已变化，请刷新后重试。", []),
-            "Servers:Servers.listErrors": .init("部分实例列表无法读取", []),
-            "Servers:Servers.listLimit": .init("服务器条目数量超过限制。", []),
+            "Servers:Servers.listErrors": .init("部分实例的服务器列表无法读取", []),
+            "Servers:Servers.listLimit": .init("服务器数量超过限制。", []),
             "Servers:Servers.listedInstances": .init("已添加此服务器", []),
-            "Servers:Servers.loading": .init("正在读取服务器", []),
-            "Servers:Servers.localEntries": .init("实例中的服务器条目", []),
+            "Servers:Servers.loading": .init("正在读取服务器列表…", []),
+            "Servers:Servers.localEntries": .init("实例中的服务器", []),
             "Servers:Servers.manage": .init("管理服务器", []),
             "Servers:Servers.manageList": .init("管理列表", []),
             "Servers:Servers.maximumPlayers": .init("上限 %1$lld", [.integer]),
@@ -842,13 +842,13 @@ extension Messages {
             "Servers:Servers.name": .init("名称", []),
             "Servers:Servers.never": .init("拒绝", []),
             "Servers:Servers.noDescription": .init("服务器没有提供简介。", []),
-            "Servers:Servers.noHistory": .init("暂无可统计的游玩记录", []),
+            "Servers:Servers.noHistory": .init("暂无游玩记录", []),
             "Servers:Servers.noInstance": .init("先创建或导入一个实例。", []),
             "Servers:Servers.noMatches": .init("没有符合条件的服务器", []),
             "Servers:Servers.noMatchesDescription": .init("换个筛选条件，或显示全部服务器。", []),
             "Servers:Servers.noRecentPlay": .init("最近 30 天没有游玩", []),
             "Servers:Servers.noSelection": .init("选择一个服务器查看详情", []),
-            "Servers:Servers.notFound": .init("找不到服务器条目，请刷新后重试。", []),
+            "Servers:Servers.notFound": .init("找不到此服务器，请刷新列表后重试。", []),
             "Servers:Servers.notInInstances": .init("尚未添加到任何实例的多人游戏列表。加入时会自动添加到所选实例。", []),
             "Servers:Servers.notPlayed": .init("尚未游玩", []),
             "Servers:Servers.notes": .init("备注", []),
@@ -864,8 +864,8 @@ extension Messages {
             "Servers:Servers.probe": .init("查询状态", []),
             "Servers:Servers.protocolVersion": .init("协议 %1$lld", [.integer]),
             "Servers:Servers.queryFailed": .init("无法查询服务器状态。", []),
-            "Servers:Servers.queryHint": .init("查询失败仍可保存或尝试加入。返回的版本和人数由服务器提供。", []),
-            "Servers:Servers.querying": .init("查询中", []),
+            "Servers:Servers.queryHint": .init("查询失败后仍可保存服务器或尝试加入。版本和在线人数由服务器提供。", []),
+            "Servers:Servers.querying": .init("正在查询…", []),
             "Servers:Servers.reachable": .init("在线", []),
             "Servers:Servers.recent": .init("最近游玩", []),
             "Servers:Servers.refresh": .init("刷新", []),
@@ -875,18 +875,18 @@ extension Messages {
             "Servers:Servers.removeFromLibrary": .init("从 Ruri 中移除", []),
             "Servers:Servers.removeFromLibraryConfirm": .init("从 Ruri 中移除此服务器？", []),
             "Servers:Servers.removeFromLibraryDetail": .init("Ruri 中保存的别名、备注和首选实例会被清除。实例的多人游戏列表和游玩记录不受影响。", []),
-            "Servers:Servers.reorderHint": .init("拖移以调整顺序，与游戏内多人游戏列表一致。", []),
+            "Servers:Servers.reorderHint": .init("拖动以调整服务器顺序，游戏中的多人游戏列表会同步更新。", []),
             "Servers:Servers.resourcePacks": .init("服务器资源包", []),
             "Servers:Servers.retry": .init("重试", []),
-            "Servers:Servers.running": .init("游戏运行中，列表只读", []),
+            "Servers:Servers.running": .init("游戏正在运行，暂时无法修改列表", []),
             "Servers:Servers.save": .init("保存", []),
             "Servers:Servers.saveTo": .init("保存到", []),
-            "Servers:Servers.saveToFooter": .init("添加到实例会写入该实例的多人游戏列表，在游戏内同样可见。", []),
-            "Servers:Servers.savedInLibrary": .init("即使没有实例列出，也保存在 Ruri 中", []),
+            "Servers:Servers.saveToFooter": .init("添加后，此服务器会显示在该实例的多人游戏列表中。", []),
+            "Servers:Servers.savedInLibrary": .init("未添加到任何实例时，仍保存在 Ruri 中", []),
             "Servers:Servers.search": .init("搜索名称或地址", []),
             "Servers:Servers.serverCount": .init("%1$lld 个服务器", [.integer]),
-            "Servers:Servers.settingsFooter": .init("别名、备注和首选实例只保存在 Ruri 中，不会修改游戏内的服务器列表。", []),
-            "Servers:Servers.sharedDirectory": .init("列表由共用此游戏目录的实例共享。", []),
+            "Servers:Servers.settingsFooter": .init("别名、备注和首选实例仅保存在 Ruri 中，不影响游戏中的服务器列表。", []),
+            "Servers:Servers.sharedDirectory": .init("使用同一游戏文件夹的实例共用此列表。", []),
             "Servers:Servers.showAll": .init("显示全部服务器", []),
             "Servers:Servers.showInServers": .init("在服务器页面中查看", []),
             "Servers:Servers.statusSection": .init("服务器状态", []),

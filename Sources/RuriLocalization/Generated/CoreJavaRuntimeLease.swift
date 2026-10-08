@@ -15,11 +15,11 @@ extension Messages {
         public static var invalidJavaRuntimeName: LocalizedMessage {
             .init(key: "CoreJavaRuntimeLease.invalidJavaRuntimeName", table: "Errors", fallback: "Java 运行时名称无效。")
         }
-        /// 此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。
+        /// 游戏、安装程序或其他操作正在使用此 Java，请稍后再试。
         ///
         /// Resource: `Errors.CoreJavaRuntimeLease.javaRuntimeInUse`.
         public static var javaRuntimeInUse: LocalizedMessage {
-            .init(key: "CoreJavaRuntimeLease.javaRuntimeInUse", table: "Errors", fallback: "此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。")
+            .init(key: "CoreJavaRuntimeLease.javaRuntimeInUse", table: "Errors", fallback: "游戏、安装程序或其他操作正在使用此 Java，请稍后再试。")
         }
         /// 无法锁定 Java 运行时。
         ///
@@ -36,7 +36,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreJavaRuntimeLease.invalidJavaRuntimeLock": .init("Java 运行时锁文件无效。", []),
             "Errors:CoreJavaRuntimeLease.invalidJavaRuntimeName": .init("Java 运行时名称无效。", []),
-            "Errors:CoreJavaRuntimeLease.javaRuntimeInUse": .init("此 Java 正被游戏、安装器或另一个操作使用，请稍后再试。", []),
+            "Errors:CoreJavaRuntimeLease.javaRuntimeInUse": .init("游戏、安装程序或其他操作正在使用此 Java，请稍后再试。", []),
             "Errors:CoreJavaRuntimeLease.javaRuntimeLockFailed": .init("无法锁定 Java 运行时。", []),
             "Errors:CoreJavaRuntimeLease.javaRuntimeUsedByProcess": .init("此 Java 正被进程 %1$@ 使用，请先结束对应游戏或安装程序。", [.text]),
         ]

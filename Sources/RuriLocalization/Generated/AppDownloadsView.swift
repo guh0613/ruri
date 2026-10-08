@@ -21,11 +21,11 @@ extension Messages {
         public static var completed: LocalizedMessage {
             .init(key: "AppDownloadsView.completed", table: "Interface", fallback: "已完成")
         }
-        /// 游戏安装和内容下载的进度会显示在此处。
+        /// 游戏安装和资源下载的进度会显示在这里。
         ///
         /// Resource: `Interface.AppDownloadsView.downloadProgressDetails`.
         public static var downloadProgressDetails: LocalizedMessage {
-            .init(key: "AppDownloadsView.downloadProgressDetails", table: "Interface", fallback: "游戏安装和内容下载的进度会显示在此处。")
+            .init(key: "AppDownloadsView.downloadProgressDetails", table: "Interface", fallback: "游戏安装和资源下载的进度会显示在这里。")
         }
         /// 失败
         ///
@@ -55,7 +55,7 @@ extension Messages {
             "Interface:AppDownloadsView.attemptNumber": .init("第 %1$lld 次尝试", [.integer]),
             "Interface:AppDownloadsView.cancelled": .init("已取消", []),
             "Interface:AppDownloadsView.completed": .init("已完成", []),
-            "Interface:AppDownloadsView.downloadProgressDetails": .init("游戏安装和内容下载的进度会显示在此处。", []),
+            "Interface:AppDownloadsView.downloadProgressDetails": .init("游戏安装和资源下载的进度会显示在这里。", []),
             "Interface:AppDownloadsView.failed": .init("失败", []),
             "Interface:AppDownloadsView.noDownloadTasks": .init("没有下载任务", []),
             "Interface:AppDownloadsView.recentFileTransfers": .init("最近的文件传输", []),

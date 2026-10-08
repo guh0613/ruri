@@ -3,47 +3,47 @@ import Foundation
 
 extension Messages {
     public enum CoreGameDirectory {
-        /// 自定义目录与实例策略不一致。
+        /// 自定义文件夹与实例的运行目录设置不一致。
         ///
         /// Resource: `Errors.CoreGameDirectory.customDirectoryMismatch`.
         public static var customDirectoryMismatch: LocalizedMessage {
-            .init(key: "CoreGameDirectory.customDirectoryMismatch", table: "Errors", fallback: "自定义目录与实例策略不一致。")
+            .init(key: "CoreGameDirectory.customDirectoryMismatch", table: "Errors", fallback: "自定义文件夹与实例的运行目录设置不一致。")
         }
-        /// 此实例文件夹已经登记，不能重复添加其副本。
+        /// 此实例文件夹已添加，无法重复添加它的副本。
         ///
         /// Resource: `Errors.CoreGameDirectory.directoryAlreadyRegistered`.
         public static var directoryAlreadyRegistered: LocalizedMessage {
-            .init(key: "CoreGameDirectory.directoryAlreadyRegistered", table: "Errors", fallback: "此实例文件夹已经登记，不能重复添加其副本。")
+            .init(key: "CoreGameDirectory.directoryAlreadyRegistered", table: "Errors", fallback: "此实例文件夹已添加，无法重复添加它的副本。")
         }
-        /// 此文件夹已有数据，请通过实例导入入口处理。
+        /// 此文件夹已有数据，请使用“导入实例”添加。
         ///
         /// Resource: `Errors.CoreGameDirectory.directoryHasData`.
         public static var directoryHasData: LocalizedMessage {
-            .init(key: "CoreGameDirectory.directoryHasData", table: "Errors", fallback: "此文件夹已有数据，请通过实例导入入口处理。")
+            .init(key: "CoreGameDirectory.directoryHasData", table: "Errors", fallback: "此文件夹已有数据，请使用“导入实例”添加。")
         }
-        /// 此文件夹仍有实例文件，请通过导入入口预览后导入。
+        /// 此文件夹已有实例文件，请使用“导入实例”预览并添加。
         ///
         /// Resource: `Errors.CoreGameDirectory.directoryHasInstances`.
         public static var directoryHasInstances: LocalizedMessage {
-            .init(key: "CoreGameDirectory.directoryHasInstances", table: "Errors", fallback: "此文件夹仍有实例文件，请通过导入入口预览后导入。")
+            .init(key: "CoreGameDirectory.directoryHasInstances", table: "Errors", fallback: "此文件夹已有实例文件，请使用“导入实例”预览并添加。")
         }
-        /// 请选择空文件夹作为新的实例文件夹。已有启动器目录请通过导入入口预览后导入，原文件不会被覆盖。
+        /// 请选择空文件夹。已有游戏文件的文件夹请使用“导入实例”预览并添加，原文件会保留。
         ///
         /// Resource: `Errors.CoreGameDirectory.directoryMustBeEmpty`.
         public static var directoryMustBeEmpty: LocalizedMessage {
-            .init(key: "CoreGameDirectory.directoryMustBeEmpty", table: "Errors", fallback: "请选择空文件夹作为新的实例文件夹。已有启动器目录请通过导入入口预览后导入，原文件不会被覆盖。")
+            .init(key: "CoreGameDirectory.directoryMustBeEmpty", table: "Errors", fallback: "请选择空文件夹。已有游戏文件的文件夹请使用“导入实例”预览并添加，原文件会保留。")
         }
-        /// 同一自定义路径保存了不同的目录身份。
+        /// 同一个自定义路径对应多个不同的文件夹记录。
         ///
         /// Resource: `Errors.CoreGameDirectory.duplicateCustomDirectory`.
         public static var duplicateCustomDirectory: LocalizedMessage {
-            .init(key: "CoreGameDirectory.duplicateCustomDirectory", table: "Errors", fallback: "同一自定义路径保存了不同的目录身份。")
+            .init(key: "CoreGameDirectory.duplicateCustomDirectory", table: "Errors", fallback: "同一个自定义路径对应多个不同的文件夹记录。")
         }
-        /// 目录身份与登记信息不一致
+        /// 此文件夹与添加时的记录不一致。
         ///
         /// Resource: `Errors.CoreGameDirectory.identityMismatch`.
         public static var identityMismatch: LocalizedMessage {
-            .init(key: "CoreGameDirectory.identityMismatch", table: "Errors", fallback: "目录身份与登记信息不一致")
+            .init(key: "CoreGameDirectory.identityMismatch", table: "Errors", fallback: "此文件夹与添加时的记录不一致。")
         }
         /// 无法访问实例文件夹“%1$@”：%2$@
         /// 请连接磁盘、检查访问权限或重新定位原文件夹。
@@ -65,17 +65,17 @@ extension Messages {
         public static var invalidMarker: LocalizedMessage {
             .init(key: "CoreGameDirectory.invalidMarker", table: "Errors", fallback: "目录标记无效")
         }
-        /// 文件夹名称需为 1–100 个字符。
+        /// 请输入 1–100 个字符的文件夹名称。
         ///
         /// Resource: `Errors.CoreGameDirectory.invalidName`.
         public static var invalidName: LocalizedMessage {
-            .init(key: "CoreGameDirectory.invalidName", table: "Errors", fallback: "文件夹名称需为 1–100 个字符。")
+            .init(key: "CoreGameDirectory.invalidName", table: "Errors", fallback: "请输入 1–100 个字符的文件夹名称。")
         }
-        /// 实例文件夹登记信息无效，已暂停操作以保护原数据。
+        /// 保存的实例文件夹信息无效，已暂停操作以保留原数据。
         ///
         /// Resource: `Errors.CoreGameDirectory.invalidRegistration`.
         public static var invalidRegistration: LocalizedMessage {
-            .init(key: "CoreGameDirectory.invalidRegistration", table: "Errors", fallback: "实例文件夹登记信息无效，已暂停操作以保护原数据。")
+            .init(key: "CoreGameDirectory.invalidRegistration", table: "Errors", fallback: "保存的实例文件夹信息无效，已暂停操作以保留原数据。")
         }
         /// 实例缺少自定义运行目录信息。
         ///
@@ -89,11 +89,11 @@ extension Messages {
         public static var missingMinecraftFolder: LocalizedMessage {
             .init(key: "CoreGameDirectory.missingMinecraftFolder", table: "Errors", fallback: "本地版本缺少所属 Minecraft 文件夹。")
         }
-        /// 找不到实例所属文件夹，请恢复目录登记后重试。
+        /// 找不到实例所属的文件夹，请恢复该文件夹的位置和记录后重试。
         ///
         /// Resource: `Errors.CoreGameDirectory.missingParentDirectory`.
         public static var missingParentDirectory: LocalizedMessage {
-            .init(key: "CoreGameDirectory.missingParentDirectory", table: "Errors", fallback: "找不到实例所属文件夹，请恢复目录登记后重试。")
+            .init(key: "CoreGameDirectory.missingParentDirectory", table: "Errors", fallback: "找不到实例所属的文件夹，请恢复该文件夹的位置和记录后重试。")
         }
         /// Minecraft 文件夹中的实例缺少版本目录名称。
         ///
@@ -107,11 +107,11 @@ extension Messages {
         public static var missingVersionFolder: LocalizedMessage {
             .init(key: "CoreGameDirectory.missingVersionFolder", table: "Errors", fallback: "实例缺少版本文件夹。")
         }
-        /// 实例文件夹不能与已登记文件夹或公共数据目录重叠。
+        /// 实例文件夹不能与已添加的文件夹或公共数据文件夹重叠。
         ///
         /// Resource: `Errors.CoreGameDirectory.overlappingDirectory`.
         public static var overlappingDirectory: LocalizedMessage {
-            .init(key: "CoreGameDirectory.overlappingDirectory", table: "Errors", fallback: "实例文件夹不能与已登记文件夹或公共数据目录重叠。")
+            .init(key: "CoreGameDirectory.overlappingDirectory", table: "Errors", fallback: "实例文件夹不能与已添加的文件夹或公共数据文件夹重叠。")
         }
         /// 路径不是文件夹
         ///
@@ -132,24 +132,24 @@ extension Messages {
             .init(key: "CoreGameDirectory.requireExistingDirectory", table: "Errors", fallback: "请选择已存在的本地文件夹。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:CoreGameDirectory.customDirectoryMismatch": .init("自定义目录与实例策略不一致。", []),
-            "Errors:CoreGameDirectory.directoryAlreadyRegistered": .init("此实例文件夹已经登记，不能重复添加其副本。", []),
-            "Errors:CoreGameDirectory.directoryHasData": .init("此文件夹已有数据，请通过实例导入入口处理。", []),
-            "Errors:CoreGameDirectory.directoryHasInstances": .init("此文件夹仍有实例文件，请通过导入入口预览后导入。", []),
-            "Errors:CoreGameDirectory.directoryMustBeEmpty": .init("请选择空文件夹作为新的实例文件夹。已有启动器目录请通过导入入口预览后导入，原文件不会被覆盖。", []),
-            "Errors:CoreGameDirectory.duplicateCustomDirectory": .init("同一自定义路径保存了不同的目录身份。", []),
-            "Errors:CoreGameDirectory.identityMismatch": .init("目录身份与登记信息不一致", []),
+            "Errors:CoreGameDirectory.customDirectoryMismatch": .init("自定义文件夹与实例的运行目录设置不一致。", []),
+            "Errors:CoreGameDirectory.directoryAlreadyRegistered": .init("此实例文件夹已添加，无法重复添加它的副本。", []),
+            "Errors:CoreGameDirectory.directoryHasData": .init("此文件夹已有数据，请使用“导入实例”添加。", []),
+            "Errors:CoreGameDirectory.directoryHasInstances": .init("此文件夹已有实例文件，请使用“导入实例”预览并添加。", []),
+            "Errors:CoreGameDirectory.directoryMustBeEmpty": .init("请选择空文件夹。已有游戏文件的文件夹请使用“导入实例”预览并添加，原文件会保留。", []),
+            "Errors:CoreGameDirectory.duplicateCustomDirectory": .init("同一个自定义路径对应多个不同的文件夹记录。", []),
+            "Errors:CoreGameDirectory.identityMismatch": .init("此文件夹与添加时的记录不一致。", []),
             "Errors:CoreGameDirectory.inaccessibleDirectory": .init("无法访问实例文件夹“%1$@”：%2$@\n请连接磁盘、检查访问权限或重新定位原文件夹。\n%3$@", [.text, .text, .text]),
             "Errors:CoreGameDirectory.invalidLocation": .init("实例文件夹位置无效。", []),
             "Errors:CoreGameDirectory.invalidMarker": .init("目录标记无效", []),
-            "Errors:CoreGameDirectory.invalidName": .init("文件夹名称需为 1–100 个字符。", []),
-            "Errors:CoreGameDirectory.invalidRegistration": .init("实例文件夹登记信息无效，已暂停操作以保护原数据。", []),
+            "Errors:CoreGameDirectory.invalidName": .init("请输入 1–100 个字符的文件夹名称。", []),
+            "Errors:CoreGameDirectory.invalidRegistration": .init("保存的实例文件夹信息无效，已暂停操作以保留原数据。", []),
             "Errors:CoreGameDirectory.missingCustomRunDirectory": .init("实例缺少自定义运行目录信息。", []),
             "Errors:CoreGameDirectory.missingMinecraftFolder": .init("本地版本缺少所属 Minecraft 文件夹。", []),
-            "Errors:CoreGameDirectory.missingParentDirectory": .init("找不到实例所属文件夹，请恢复目录登记后重试。", []),
+            "Errors:CoreGameDirectory.missingParentDirectory": .init("找不到实例所属的文件夹，请恢复该文件夹的位置和记录后重试。", []),
             "Errors:CoreGameDirectory.missingVersionDirectory": .init("Minecraft 文件夹中的实例缺少版本目录名称。", []),
             "Errors:CoreGameDirectory.missingVersionFolder": .init("实例缺少版本文件夹。", []),
-            "Errors:CoreGameDirectory.overlappingDirectory": .init("实例文件夹不能与已登记文件夹或公共数据目录重叠。", []),
+            "Errors:CoreGameDirectory.overlappingDirectory": .init("实例文件夹不能与已添加的文件夹或公共数据文件夹重叠。", []),
             "Errors:CoreGameDirectory.pathNotDirectory": .init("路径不是文件夹", []),
             "Errors:CoreGameDirectory.requireCustomDirectory": .init("请先选择自定义运行目录。", []),
             "Errors:CoreGameDirectory.requireExistingDirectory": .init("请选择已存在的本地文件夹。", []),

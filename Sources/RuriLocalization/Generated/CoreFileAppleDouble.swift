@@ -3,14 +3,14 @@ import Foundation
 
 extension Messages {
     public enum CoreFileAppleDouble {
-        /// 文件附加信息在枚举期间改变，请重试。
+        /// 读取文件列表时，文件附加信息发生变化，请重试。
         ///
         /// Resource: `Errors.CoreFileAppleDouble.fileChangedDuringEnumeration`.
         public static var fileChangedDuringEnumeration: LocalizedMessage {
-            .init(key: "CoreFileAppleDouble.fileChangedDuringEnumeration", table: "Errors", fallback: "文件附加信息在枚举期间改变，请重试。")
+            .init(key: "CoreFileAppleDouble.fileChangedDuringEnumeration", table: "Errors", fallback: "读取文件列表时，文件附加信息发生变化，请重试。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:CoreFileAppleDouble.fileChangedDuringEnumeration": .init("文件附加信息在枚举期间改变，请重试。", []),
+            "Errors:CoreFileAppleDouble.fileChangedDuringEnumeration": .init("读取文件列表时，文件附加信息发生变化，请重试。", []),
         ]
     }
 }

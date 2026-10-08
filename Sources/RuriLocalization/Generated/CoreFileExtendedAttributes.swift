@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreFileExtendedAttributes {
-        /// 无法核对文件附加信息：%1$@
+        /// 无法校验文件附加信息：%1$@
         ///
         /// Resource: `Core.CoreFileExtendedAttributes.attributeVerificationFailed`.
         public static func attributeVerificationFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreFileExtendedAttributes.attributeVerificationFailed", table: "Core", fallback: "无法核对文件附加信息：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreFileExtendedAttributes.attributeVerificationFailed", table: "Core", fallback: "无法校验文件附加信息：%1$@", arguments: [.text(value0)])
         }
         /// 文件附加信息列表在读取期间改变。
         ///
@@ -57,11 +57,11 @@ extension Messages {
         public static var metadataAttributesChanged: LocalizedMessage {
             .init(key: "CoreFileExtendedAttributes.metadataAttributesChanged", table: "Errors", fallback: "实例元数据的附加信息在更新期间改变。")
         }
-        /// 无法更新实例元数据。
+        /// 无法更新实例信息。
         ///
         /// Resource: `Errors.CoreFileExtendedAttributes.metadataUpdateFailed`.
         public static var metadataUpdateFailed: LocalizedMessage {
-            .init(key: "CoreFileExtendedAttributes.metadataUpdateFailed", table: "Errors", fallback: "无法更新实例元数据。")
+            .init(key: "CoreFileExtendedAttributes.metadataUpdateFailed", table: "Errors", fallback: "无法更新实例信息。")
         }
         /// 单个文件的附加信息超过大小限制。
         ///
@@ -76,7 +76,7 @@ extension Messages {
             .init(key: "CoreFileExtendedAttributes.tooManyAttributes", table: "Errors", fallback: "文件附加信息数量超过限制。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreFileExtendedAttributes.attributeVerificationFailed": .init("无法核对文件附加信息：%1$@", [.text]),
+            "Core:CoreFileExtendedAttributes.attributeVerificationFailed": .init("无法校验文件附加信息：%1$@", [.text]),
             "Errors:CoreFileExtendedAttributes.attributeListChangedDuringRead": .init("文件附加信息列表在读取期间改变。", []),
             "Errors:CoreFileExtendedAttributes.attributeListReadFailed": .init("无法读取文件附加信息列表。", []),
             "Errors:CoreFileExtendedAttributes.attributesChangedDuringVerification": .init("文件附加信息在校验期间改变，请重试。", []),
@@ -85,7 +85,7 @@ extension Messages {
             "Errors:CoreFileExtendedAttributes.invalidAttributeDigest": .init("文件附加信息的校验记录无效。", []),
             "Errors:CoreFileExtendedAttributes.invalidAttributeName": .init("文件附加信息名称无效。", []),
             "Errors:CoreFileExtendedAttributes.metadataAttributesChanged": .init("实例元数据的附加信息在更新期间改变。", []),
-            "Errors:CoreFileExtendedAttributes.metadataUpdateFailed": .init("无法更新实例元数据。", []),
+            "Errors:CoreFileExtendedAttributes.metadataUpdateFailed": .init("无法更新实例信息。", []),
             "Errors:CoreFileExtendedAttributes.singleAttributeTooLarge": .init("单个文件的附加信息超过大小限制。", []),
             "Errors:CoreFileExtendedAttributes.tooManyAttributes": .init("文件附加信息数量超过限制。", []),
         ]

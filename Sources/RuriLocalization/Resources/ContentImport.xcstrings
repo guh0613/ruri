@@ -68,7 +68,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "从 Finder 拖入资源，或使用上方的“导入…”。"
+            "value" : "从 Finder 拖入文件，或点按上方的“导入…”。"
           }
         }
       }
@@ -104,7 +104,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未能读取拖入的文件，请从 Finder 重新拖入，或使用“导入…”。"
+            "value" : "无法读取拖入的文件。请从 Finder 重新拖入，或点按“导入…”。"
           }
         }
       }
@@ -140,7 +140,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "资源包 ZIP 或文件夹"
+            "value" : "资源包 ZIP 文件或文件夹"
           }
         }
       }
@@ -158,7 +158,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "光影 ZIP 或文件夹"
+            "value" : "光影包 ZIP 文件或文件夹"
           }
         }
       }
@@ -176,7 +176,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当前暂不能导入资源"
+            "value" : "暂时无法导入资源"
           }
         }
       }

@@ -15,29 +15,29 @@ extension Messages {
         public static var collectAgain: LocalizedMessage {
             .init(key: "NativeGameLogs.collectAgain", table: "Interface", fallback: "重新收集")
         }
-        /// 无法确认游戏日志的归属，已保留会话中的诊断记录。
+        /// 无法确认哪些游戏日志属于本次运行，已保留此前保存的诊断记录。
         ///
         /// Resource: `Interface.NativeGameLogs.collectionFailed`.
         public static var collectionFailed: LocalizedMessage {
-            .init(key: "NativeGameLogs.collectionFailed", table: "Interface", fallback: "无法确认游戏日志的归属，已保留会话中的诊断记录。")
+            .init(key: "NativeGameLogs.collectionFailed", table: "Interface", fallback: "无法确认哪些游戏日志属于本次运行，已保留此前保存的诊断记录。")
         }
-        /// 按需读取游戏的 latest.log、debug.log 和本次崩溃报告，脱敏后供预览和导出。过大的日志仅收集开头和末尾；游戏运行时不会为此持续复制日志。
+        /// 需要时会读取游戏的 latest.log、debug.log 和本次崩溃报告，隐藏敏感信息后供预览和导出。过大的日志仅收集开头和末尾；游戏运行时不会持续复制这些日志。
         ///
         /// Resource: `Interface.NativeGameLogs.collectionHelp`.
         public static var collectionHelp: LocalizedMessage {
-            .init(key: "NativeGameLogs.collectionHelp", table: "Interface", fallback: "按需读取游戏的 latest.log、debug.log 和本次崩溃报告，脱敏后供预览和导出。过大的日志仅收集开头和末尾；游戏运行时不会为此持续复制日志。")
+            .init(key: "NativeGameLogs.collectionHelp", table: "Interface", fallback: "需要时会读取游戏的 latest.log、debug.log 和本次崩溃报告，隐藏敏感信息后供预览和导出。过大的日志仅收集开头和末尾；游戏运行时不会持续复制这些日志。")
         }
-        /// 本次运行没有可确认的游戏启动时间，未收集游戏目录中的日志。
+        /// 无法确认本次游戏的启动时间，未收集游戏文件夹中的日志。
         ///
         /// Resource: `Interface.NativeGameLogs.gameNotStarted`.
         public static var gameNotStarted: LocalizedMessage {
-            .init(key: "NativeGameLogs.gameNotStarted", table: "Interface", fallback: "本次运行没有可确认的游戏启动时间，未收集游戏目录中的日志。")
+            .init(key: "NativeGameLogs.gameNotStarted", table: "Interface", fallback: "无法确认本次游戏的启动时间，未收集游戏文件夹中的日志。")
         }
-        /// 游戏目录中没有找到可归属于本次运行的日志，已保留会话中的诊断记录。
+        /// 游戏文件夹中未找到属于本次运行的日志，已保留此前保存的诊断记录。
         ///
         /// Resource: `Interface.NativeGameLogs.noMatchingLogs`.
         public static var noMatchingLogs: LocalizedMessage {
-            .init(key: "NativeGameLogs.noMatchingLogs", table: "Interface", fallback: "游戏目录中没有找到可归属于本次运行的日志，已保留会话中的诊断记录。")
+            .init(key: "NativeGameLogs.noMatchingLogs", table: "Interface", fallback: "游戏文件夹中未找到属于本次运行的日志，已保留此前保存的诊断记录。")
         }
         /// 已跳过 %1$@：文件时间不属于本次运行。
         ///
@@ -45,11 +45,11 @@ extension Messages {
         public static func otherRun(_ value0: String) -> LocalizedMessage {
             .init(key: "NativeGameLogs.otherRun", table: "Interface", fallback: "已跳过 %1$@：文件时间不属于本次运行。", arguments: [.text(value0)])
         }
-        /// 此游戏目录已有后续运行，日志可能已被覆盖。本次仅使用会话中保存的诊断记录。
+        /// 此游戏文件夹已用于后续运行，日志可能已被覆盖。本次仅使用此前保存的诊断记录。
         ///
         /// Resource: `Interface.NativeGameLogs.replacedByLaterRun`.
         public static var replacedByLaterRun: LocalizedMessage {
-            .init(key: "NativeGameLogs.replacedByLaterRun", table: "Interface", fallback: "此游戏目录已有后续运行，日志可能已被覆盖。本次仅使用会话中保存的诊断记录。")
+            .init(key: "NativeGameLogs.replacedByLaterRun", table: "Interface", fallback: "此游戏文件夹已用于后续运行，日志可能已被覆盖。本次仅使用此前保存的诊断记录。")
         }
         /// 游戏日志 · %1$@
         ///
@@ -57,11 +57,11 @@ extension Messages {
         public static func sourceTitle(_ value0: String) -> LocalizedMessage {
             .init(key: "NativeGameLogs.sourceTitle", table: "Interface", fallback: "游戏日志 · %1$@", arguments: [.text(value0)])
         }
-        /// 未能读取游戏日志 %1$@。
+        /// 无法读取游戏日志 %1$@。
         ///
         /// Resource: `Interface.NativeGameLogs.unreadable`.
         public static func unreadable(_ value0: String) -> LocalizedMessage {
-            .init(key: "NativeGameLogs.unreadable", table: "Interface", fallback: "未能读取游戏日志 %1$@。", arguments: [.text(value0)])
+            .init(key: "NativeGameLogs.unreadable", table: "Interface", fallback: "无法读取游戏日志 %1$@。", arguments: [.text(value0)])
         }
         /// 已跳过 %1$@：日志路径包含符号链接，或文件不是普通文件。
         ///
@@ -72,14 +72,14 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Interface:NativeGameLogs.changedDuringRead": .init("读取 %1$@ 时文件发生变化，请重新收集。", [.text]),
             "Interface:NativeGameLogs.collectAgain": .init("重新收集", []),
-            "Interface:NativeGameLogs.collectionFailed": .init("无法确认游戏日志的归属，已保留会话中的诊断记录。", []),
-            "Interface:NativeGameLogs.collectionHelp": .init("按需读取游戏的 latest.log、debug.log 和本次崩溃报告，脱敏后供预览和导出。过大的日志仅收集开头和末尾；游戏运行时不会为此持续复制日志。", []),
-            "Interface:NativeGameLogs.gameNotStarted": .init("本次运行没有可确认的游戏启动时间，未收集游戏目录中的日志。", []),
-            "Interface:NativeGameLogs.noMatchingLogs": .init("游戏目录中没有找到可归属于本次运行的日志，已保留会话中的诊断记录。", []),
+            "Interface:NativeGameLogs.collectionFailed": .init("无法确认哪些游戏日志属于本次运行，已保留此前保存的诊断记录。", []),
+            "Interface:NativeGameLogs.collectionHelp": .init("需要时会读取游戏的 latest.log、debug.log 和本次崩溃报告，隐藏敏感信息后供预览和导出。过大的日志仅收集开头和末尾；游戏运行时不会持续复制这些日志。", []),
+            "Interface:NativeGameLogs.gameNotStarted": .init("无法确认本次游戏的启动时间，未收集游戏文件夹中的日志。", []),
+            "Interface:NativeGameLogs.noMatchingLogs": .init("游戏文件夹中未找到属于本次运行的日志，已保留此前保存的诊断记录。", []),
             "Interface:NativeGameLogs.otherRun": .init("已跳过 %1$@：文件时间不属于本次运行。", [.text]),
-            "Interface:NativeGameLogs.replacedByLaterRun": .init("此游戏目录已有后续运行，日志可能已被覆盖。本次仅使用会话中保存的诊断记录。", []),
+            "Interface:NativeGameLogs.replacedByLaterRun": .init("此游戏文件夹已用于后续运行，日志可能已被覆盖。本次仅使用此前保存的诊断记录。", []),
             "Interface:NativeGameLogs.sourceTitle": .init("游戏日志 · %1$@", [.text]),
-            "Interface:NativeGameLogs.unreadable": .init("未能读取游戏日志 %1$@。", [.text]),
+            "Interface:NativeGameLogs.unreadable": .init("无法读取游戏日志 %1$@。", [.text]),
             "Interface:NativeGameLogs.unsafeSource": .init("已跳过 %1$@：日志路径包含符号链接，或文件不是普通文件。", [.text]),
         ]
     }

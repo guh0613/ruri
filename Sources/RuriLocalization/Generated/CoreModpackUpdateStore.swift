@@ -27,11 +27,11 @@ extension Messages {
         public static var incompleteRecoveryBackup: LocalizedMessage {
             .init(key: "CoreModpackUpdateStore.incompleteRecoveryBackup", table: "Errors", fallback: "更新恢复备份不完整，尚未覆盖现有文件。")
         }
-        /// 实例设置在提交前改变，请重新打开更新预览。
+        /// 应用更新前，实例设置发生变化，请重新打开更新预览。
         ///
         /// Resource: `Errors.CoreModpackUpdateStore.instanceSettingsChangedBeforeCommit`.
         public static var instanceSettingsChangedBeforeCommit: LocalizedMessage {
-            .init(key: "CoreModpackUpdateStore.instanceSettingsChangedBeforeCommit", table: "Errors", fallback: "实例设置在提交前改变，请重新打开更新预览。")
+            .init(key: "CoreModpackUpdateStore.instanceSettingsChangedBeforeCommit", table: "Errors", fallback: "应用更新前，实例设置发生变化，请重新打开更新预览。")
         }
         /// 启动配置在更新后已修改，未覆盖这些修改。
         ///
@@ -51,12 +51,12 @@ extension Messages {
         public static func sharedDirectoryUpdatePending(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreModpackUpdateStore.sharedDirectoryUpdatePending", table: "Errors", fallback: "“%1$@”与此实例共用运行目录，请先在它的整合包管理中恢复未完成的更新。", arguments: [.text(value0)])
         }
-        /// 更新需要恢复，原文件备份已保留。请在整合包管理中点击恢复。
+        /// 更新未完成，原文件备份已保留。请在整合包更新页面点按“恢复未完成的更新”。
         /// %1$@
         ///
         /// Resource: `Errors.CoreModpackUpdateStore.updateFailedRecoveryRequired`.
         public static func updateFailedRecoveryRequired(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreModpackUpdateStore.updateFailedRecoveryRequired", table: "Errors", fallback: "更新需要恢复，原文件备份已保留。请在整合包管理中点击恢复。\n%1$@", arguments: [.text(value0)])
+            .init(key: "CoreModpackUpdateStore.updateFailedRecoveryRequired", table: "Errors", fallback: "更新未完成，原文件备份已保留。请在整合包更新页面点按“恢复未完成的更新”。\n%1$@", arguments: [.text(value0)])
         }
         /// 无法保存更新文件：%1$@
         ///
@@ -70,25 +70,25 @@ extension Messages {
         public static var updateInstanceMissing: LocalizedMessage {
             .init(key: "CoreModpackUpdateStore.updateInstanceMissing", table: "Errors", fallback: "更新对应的实例已不存在，请保留更新备份。")
         }
-        /// 整合包更新尚需恢复，请在实例设置的整合包管理中完成恢复。
+        /// 整合包更新尚未完成。请打开实例设置中的“整合包更新”，恢复未完成的更新。
         ///
         /// Resource: `Errors.CoreModpackUpdateStore.updateRecoveryRequired`.
         public static var updateRecoveryRequired: LocalizedMessage {
-            .init(key: "CoreModpackUpdateStore.updateRecoveryRequired", table: "Errors", fallback: "整合包更新尚需恢复，请在实例设置的整合包管理中完成恢复。")
+            .init(key: "CoreModpackUpdateStore.updateRecoveryRequired", table: "Errors", fallback: "整合包更新尚未完成。请打开实例设置中的“整合包更新”，恢复未完成的更新。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreModpackUpdateStore.backupCorrupted": .init("上次更新的备份文件已损坏。", []),
             "Errors:CoreModpackUpdateStore.componentsChangedSinceUpdate": .init("游戏组件在更新后已改变，请先恢复组件配置后再回退整合包。", []),
             "Errors:CoreModpackUpdateStore.duplicateUpdateDestinations": .init("更新计划包含重复目标文件。", []),
             "Errors:CoreModpackUpdateStore.incompleteRecoveryBackup": .init("更新恢复备份不完整，尚未覆盖现有文件。", []),
-            "Errors:CoreModpackUpdateStore.instanceSettingsChangedBeforeCommit": .init("实例设置在提交前改变，请重新打开更新预览。", []),
+            "Errors:CoreModpackUpdateStore.instanceSettingsChangedBeforeCommit": .init("应用更新前，实例设置发生变化，请重新打开更新预览。", []),
             "Errors:CoreModpackUpdateStore.modifiedLaunchSettingsPreserved": .init("启动配置在更新后已修改，未覆盖这些修改。", []),
             "Errors:CoreModpackUpdateStore.previousUpdateRecoveryRequired": .init("请先恢复上次未完成的更新。", []),
             "Errors:CoreModpackUpdateStore.sharedDirectoryUpdatePending": .init("“%1$@”与此实例共用运行目录，请先在它的整合包管理中恢复未完成的更新。", [.text]),
-            "Errors:CoreModpackUpdateStore.updateFailedRecoveryRequired": .init("更新需要恢复，原文件备份已保留。请在整合包管理中点击恢复。\n%1$@", [.text]),
+            "Errors:CoreModpackUpdateStore.updateFailedRecoveryRequired": .init("更新未完成，原文件备份已保留。请在整合包更新页面点按“恢复未完成的更新”。\n%1$@", [.text]),
             "Errors:CoreModpackUpdateStore.updateFileSaveFailed": .init("无法保存更新文件：%1$@", [.text]),
             "Errors:CoreModpackUpdateStore.updateInstanceMissing": .init("更新对应的实例已不存在，请保留更新备份。", []),
-            "Errors:CoreModpackUpdateStore.updateRecoveryRequired": .init("整合包更新尚需恢复，请在实例设置的整合包管理中完成恢复。", []),
+            "Errors:CoreModpackUpdateStore.updateRecoveryRequired": .init("整合包更新尚未完成。请打开实例设置中的“整合包更新”，恢复未完成的更新。", []),
         ]
     }
 }

@@ -27,23 +27,23 @@ extension Messages {
         public static func containsFile(_ value0: String) -> LocalizedMessage {
             .init(key: "AppGameDiagnosticView.containsFile", table: "Interface", fallback: "包含 %1$@", arguments: [.text(value0)])
         }
-        /// %1$@ · 命中%2$@第 %3$@ 行
+        /// %1$@ · %2$@第 %3$@ 行
         ///
         /// Resource: `Interface.AppGameDiagnosticView.evidenceLine`.
         public static func evidenceLine(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.evidenceLine", table: "Interface", fallback: "%1$@ · 命中%2$@第 %3$@ 行", arguments: [.text(value0), .text(value1), .text(value2)])
+            .init(key: "AppGameDiagnosticView.evidenceLine", table: "Interface", fallback: "%1$@ · %2$@第 %3$@ 行", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        /// 证据范围
+        /// 分析范围
         ///
         /// Resource: `Interface.AppGameDiagnosticView.evidenceScope`.
         public static var evidenceScope: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.evidenceScope", table: "Interface", fallback: "证据范围")
+            .init(key: "AppGameDiagnosticView.evidenceScope", table: "Interface", fallback: "分析范围")
         }
-        /// 导出诊断包…
+        /// 导出诊断报告…
         ///
         /// Resource: `Interface.AppGameDiagnosticView.exportBundle`.
         public static var exportBundle: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.exportBundle", table: "Interface", fallback: "导出诊断包…")
+            .init(key: "AppGameDiagnosticView.exportBundle", table: "Interface", fallback: "导出诊断报告…")
         }
         /// 仅将所选内容保存到本地。
         ///
@@ -57,11 +57,11 @@ extension Messages {
         public static var extraHiddenText: LocalizedMessage {
             .init(key: "AppGameDiagnosticView.extraHiddenText", table: "Interface", fallback: "额外隐藏的文字，每行一项")
         }
-        /// 末段
+        /// 末尾片段
         ///
         /// Resource: `Interface.AppGameDiagnosticView.lastSection`.
         public static var lastSection: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.lastSection", table: "Interface", fallback: "末段")
+            .init(key: "AppGameDiagnosticView.lastSection", table: "Interface", fallback: "末尾片段")
         }
         /// 下一页
         ///
@@ -69,17 +69,17 @@ extension Messages {
         public static var nextPage: LocalizedMessage {
             .init(key: "AppGameDiagnosticView.nextPage", table: "Interface", fallback: "下一页")
         }
-        /// 准备分享预览…
+        /// 正在准备报告预览…
         ///
         /// Resource: `Interface.AppGameDiagnosticView.prepareSharePreview`.
         public static var prepareSharePreview: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.prepareSharePreview", table: "Interface", fallback: "准备分享预览…")
+            .init(key: "AppGameDiagnosticView.prepareSharePreview", table: "Interface", fallback: "正在准备报告预览…")
         }
-        /// 隐藏文字已修改，请更新预览后导出。
+        /// 需要隐藏的文字已更改，请更新预览后再导出。
         ///
         /// Resource: `Interface.AppGameDiagnosticView.previewChanged`.
         public static var previewChanged: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.previewChanged", table: "Interface", fallback: "隐藏文字已修改，请更新预览后导出。")
+            .init(key: "AppGameDiagnosticView.previewChanged", table: "Interface", fallback: "需要隐藏的文字已更改，请更新预览后再导出。")
         }
         /// 上一页
         ///
@@ -87,35 +87,35 @@ extension Messages {
         public static var previousPage: LocalizedMessage {
             .init(key: "AppGameDiagnosticView.previousPage", table: "Interface", fallback: "上一页")
         }
-        /// 读取本次运行的证据…
+        /// 正在分析本次运行的日志…
         ///
         /// Resource: `Interface.AppGameDiagnosticView.readingEvidence`.
         public static var readingEvidence: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.readingEvidence", table: "Interface", fallback: "读取本次运行的证据…")
+            .init(key: "AppGameDiagnosticView.readingEvidence", table: "Interface", fallback: "正在分析本次运行的日志…")
         }
-        /// 已记录的事实
+        /// 运行信息
         ///
         /// Resource: `Interface.AppGameDiagnosticView.recordedFacts`.
         public static var recordedFacts: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.recordedFacts", table: "Interface", fallback: "已记录的事实")
+            .init(key: "AppGameDiagnosticView.recordedFacts", table: "Interface", fallback: "运行信息")
         }
-        ///  · 已遮盖
+        ///  · 已隐藏敏感信息
         ///
         /// Resource: `Interface.AppGameDiagnosticView.redacted`.
         public static var redacted: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.redacted", table: "Interface", fallback: " · 已遮盖")
+            .init(key: "AppGameDiagnosticView.redacted", table: "Interface", fallback: " · 已隐藏敏感信息")
         }
-        /// 已遮盖常见凭据、用户路径、邮箱和连接地址。聊天、坐标及模组自定义字段仍可能包含私人信息；可在下方添加需要隐藏的文字。
+        /// 已隐藏常见的登录凭据、用户路径、邮箱和连接地址。聊天内容、坐标或模组添加的信息仍可能包含隐私，可在下方填写还需要隐藏的文字。
         ///
         /// Resource: `Interface.AppGameDiagnosticView.redactionNotice`.
         public static var redactionNotice: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.redactionNotice", table: "Interface", fallback: "已遮盖常见凭据、用户路径、邮箱和连接地址。聊天、坐标及模组自定义字段仍可能包含私人信息；可在下方添加需要隐藏的文字。")
+            .init(key: "AppGameDiagnosticView.redactionNotice", table: "Interface", fallback: "已隐藏常见的登录凭据、用户路径、邮箱和连接地址。聊天内容、坐标或模组添加的信息仍可能包含隐私，可在下方填写还需要隐藏的文字。")
         }
-        /// 修复会联网校验并补全游戏与加载器安装文件。
+        /// 修复时会联网校验并补全游戏和加载器的安装文件。
         ///
         /// Resource: `Interface.AppGameDiagnosticView.repairNotice`.
         public static var repairNotice: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.repairNotice", table: "Interface", fallback: "修复会联网校验并补全游戏与加载器安装文件。")
+            .init(key: "AppGameDiagnosticView.repairNotice", table: "Interface", fallback: "修复时会联网校验并补全游戏和加载器的安装文件。")
         }
         /// 在 Finder 中显示文件
         ///
@@ -123,11 +123,11 @@ extension Messages {
         public static var showEvidenceInFinder: LocalizedMessage {
             .init(key: "AppGameDiagnosticView.showEvidenceInFinder", table: "Interface", fallback: "在 Finder 中显示文件")
         }
-        /// 显示已导出的诊断包
+        /// 查看已导出的诊断报告
         ///
         /// Resource: `Interface.AppGameDiagnosticView.showExportedBundle`.
         public static var showExportedBundle: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.showExportedBundle", table: "Interface", fallback: "显示已导出的诊断包")
+            .init(key: "AppGameDiagnosticView.showExportedBundle", table: "Interface", fallback: "查看已导出的诊断报告")
         }
         /// 更新预览
         ///
@@ -135,36 +135,36 @@ extension Messages {
         public static var updatePreview: LocalizedMessage {
             .init(key: "AppGameDiagnosticView.updatePreview", table: "Interface", fallback: "更新预览")
         }
-        /// 查看运行文件
+        /// 查看运行记录文件
         ///
         /// Resource: `Interface.AppGameDiagnosticView.viewRunFiles`.
         public static var viewRunFiles: LocalizedMessage {
-            .init(key: "AppGameDiagnosticView.viewRunFiles", table: "Interface", fallback: "查看运行文件")
+            .init(key: "AppGameDiagnosticView.viewRunFiles", table: "Interface", fallback: "查看运行记录文件")
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppGameDiagnosticView.choosePreview": .init("选择一项预览", []),
             "Interface:AppGameDiagnosticView.collectReport": .init("收集诊断报告…", []),
             "Interface:AppGameDiagnosticView.collectionInstructions": .init("选择内容，检查预览，然后保存到本地。", []),
             "Interface:AppGameDiagnosticView.containsFile": .init("包含 %1$@", [.text]),
-            "Interface:AppGameDiagnosticView.evidenceLine": .init("%1$@ · 命中%2$@第 %3$@ 行", [.text, .text, .text]),
-            "Interface:AppGameDiagnosticView.evidenceScope": .init("证据范围", []),
-            "Interface:AppGameDiagnosticView.exportBundle": .init("导出诊断包…", []),
+            "Interface:AppGameDiagnosticView.evidenceLine": .init("%1$@ · %2$@第 %3$@ 行", [.text, .text, .text]),
+            "Interface:AppGameDiagnosticView.evidenceScope": .init("分析范围", []),
+            "Interface:AppGameDiagnosticView.exportBundle": .init("导出诊断报告…", []),
             "Interface:AppGameDiagnosticView.exportNotice": .init("仅将所选内容保存到本地。", []),
             "Interface:AppGameDiagnosticView.extraHiddenText": .init("额外隐藏的文字，每行一项", []),
-            "Interface:AppGameDiagnosticView.lastSection": .init("末段", []),
+            "Interface:AppGameDiagnosticView.lastSection": .init("末尾片段", []),
             "Interface:AppGameDiagnosticView.nextPage": .init("下一页", []),
-            "Interface:AppGameDiagnosticView.prepareSharePreview": .init("准备分享预览…", []),
-            "Interface:AppGameDiagnosticView.previewChanged": .init("隐藏文字已修改，请更新预览后导出。", []),
+            "Interface:AppGameDiagnosticView.prepareSharePreview": .init("正在准备报告预览…", []),
+            "Interface:AppGameDiagnosticView.previewChanged": .init("需要隐藏的文字已更改，请更新预览后再导出。", []),
             "Interface:AppGameDiagnosticView.previousPage": .init("上一页", []),
-            "Interface:AppGameDiagnosticView.readingEvidence": .init("读取本次运行的证据…", []),
-            "Interface:AppGameDiagnosticView.recordedFacts": .init("已记录的事实", []),
-            "Interface:AppGameDiagnosticView.redacted": .init(" · 已遮盖", []),
-            "Interface:AppGameDiagnosticView.redactionNotice": .init("已遮盖常见凭据、用户路径、邮箱和连接地址。聊天、坐标及模组自定义字段仍可能包含私人信息；可在下方添加需要隐藏的文字。", []),
-            "Interface:AppGameDiagnosticView.repairNotice": .init("修复会联网校验并补全游戏与加载器安装文件。", []),
+            "Interface:AppGameDiagnosticView.readingEvidence": .init("正在分析本次运行的日志…", []),
+            "Interface:AppGameDiagnosticView.recordedFacts": .init("运行信息", []),
+            "Interface:AppGameDiagnosticView.redacted": .init(" · 已隐藏敏感信息", []),
+            "Interface:AppGameDiagnosticView.redactionNotice": .init("已隐藏常见的登录凭据、用户路径、邮箱和连接地址。聊天内容、坐标或模组添加的信息仍可能包含隐私，可在下方填写还需要隐藏的文字。", []),
+            "Interface:AppGameDiagnosticView.repairNotice": .init("修复时会联网校验并补全游戏和加载器的安装文件。", []),
             "Interface:AppGameDiagnosticView.showEvidenceInFinder": .init("在 Finder 中显示文件", []),
-            "Interface:AppGameDiagnosticView.showExportedBundle": .init("显示已导出的诊断包", []),
+            "Interface:AppGameDiagnosticView.showExportedBundle": .init("查看已导出的诊断报告", []),
             "Interface:AppGameDiagnosticView.updatePreview": .init("更新预览", []),
-            "Interface:AppGameDiagnosticView.viewRunFiles": .init("查看运行文件", []),
+            "Interface:AppGameDiagnosticView.viewRunFiles": .init("查看运行记录文件", []),
         ]
     }
 }

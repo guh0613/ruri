@@ -63,11 +63,11 @@ extension Messages {
         public static var clearSearch: LocalizedMessage {
             .init(key: "LauncherLog.clearSearch", table: "Interface", fallback: "清除搜索")
         }
-        /// 清除已结束的日志？
+        /// 清除已结束任务的日志？
         ///
         /// Resource: `Interface.LauncherLog.clearTitle`.
         public static var clearTitle: LocalizedMessage {
-            .init(key: "LauncherLog.clearTitle", table: "Interface", fallback: "清除已结束的日志？")
+            .init(key: "LauncherLog.clearTitle", table: "Interface", fallback: "清除已结束任务的日志？")
         }
         /// 已完成
         ///
@@ -141,17 +141,17 @@ extension Messages {
         public static var game: LocalizedMessage {
             .init(key: "LauncherLog.game", table: "Interface", fallback: "游戏")
         }
-        /// 读取日志历史失败：%1$@
+        /// 无法读取历史日志：%1$@
         ///
         /// Resource: `Interface.LauncherLog.historyReadError`.
         public static func historyReadError(_ value0: String) -> LocalizedMessage {
-            .init(key: "LauncherLog.historyReadError", table: "Interface", fallback: "读取日志历史失败：%1$@", arguments: [.text(value0)])
+            .init(key: "LauncherLog.historyReadError", table: "Interface", fallback: "无法读取历史日志：%1$@", arguments: [.text(value0)])
         }
-        /// 无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。
+        /// 无法读取历史日志，原文件已保留。本次运行的日志暂时保存在内存中。
         ///
         /// Resource: `Interface.LauncherLog.historyUnavailable`.
         public static var historyUnavailable: LocalizedMessage {
-            .init(key: "LauncherLog.historyUnavailable", table: "Interface", fallback: "无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。")
+            .init(key: "LauncherLog.historyUnavailable", table: "Interface", fallback: "无法读取历史日志，原文件已保留。本次运行的日志暂时保存在内存中。")
         }
         /// 日志暂时无法保存到磁盘。
         ///
@@ -171,11 +171,11 @@ extension Messages {
         public static var interrupted: LocalizedMessage {
             .init(key: "LauncherLog.interrupted", table: "Interface", fallback: "已中断")
         }
-        /// 启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。
+        /// 启动器在记录任务结果前已退出。请检查相关实例的当前状态，必要时恢复未完成的操作。
         ///
         /// Resource: `Interface.LauncherLog.interruptedDetail`.
         public static var interruptedDetail: LocalizedMessage {
-            .init(key: "LauncherLog.interruptedDetail", table: "Interface", fallback: "启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。")
+            .init(key: "LauncherLog.interruptedDetail", table: "Interface", fallback: "启动器在记录任务结果前已退出。请检查相关实例的当前状态，必要时恢复未完成的操作。")
         }
         /// 启动器
         ///
@@ -398,7 +398,7 @@ extension Messages {
             "Interface:LauncherLog.clearConfirm": .init("清除历史", []),
             "Interface:LauncherLog.clearDetail": .init("这会移除已结束的任务、事件及对应通知。进行中的任务会保留。", []),
             "Interface:LauncherLog.clearSearch": .init("清除搜索", []),
-            "Interface:LauncherLog.clearTitle": .init("清除已结束的日志？", []),
+            "Interface:LauncherLog.clearTitle": .init("清除已结束任务的日志？", []),
             "Interface:LauncherLog.completed": .init("已完成", []),
             "Interface:LauncherLog.copy": .init("复制记录", []),
             "Interface:LauncherLog.details": .init("详情", []),
@@ -411,12 +411,12 @@ extension Messages {
             "Interface:LauncherLog.failed": .init("失败", []),
             "Interface:LauncherLog.filename": .init("文件", []),
             "Interface:LauncherLog.game": .init("游戏", []),
-            "Interface:LauncherLog.historyReadError": .init("读取日志历史失败：%1$@", [.text]),
-            "Interface:LauncherLog.historyUnavailable": .init("无法读取日志历史，原文件已保留；本次运行的日志暂存于内存。", []),
+            "Interface:LauncherLog.historyReadError": .init("无法读取历史日志：%1$@", [.text]),
+            "Interface:LauncherLog.historyUnavailable": .init("无法读取历史日志，原文件已保留。本次运行的日志暂时保存在内存中。", []),
             "Interface:LauncherLog.historyWriteFailed": .init("日志暂时无法保存到磁盘。", []),
             "Interface:LauncherLog.info": .init("信息", []),
             "Interface:LauncherLog.interrupted": .init("已中断", []),
-            "Interface:LauncherLog.interruptedDetail": .init("启动器在记录任务结果前退出了。请检查相关实例的当前状态，必要时使用恢复操作。", []),
+            "Interface:LauncherLog.interruptedDetail": .init("启动器在记录任务结果前已退出。请检查相关实例的当前状态，必要时恢复未完成的操作。", []),
             "Interface:LauncherLog.launcher": .init("启动器", []),
             "Interface:LauncherLog.markAllRead": .init("全部标为已读", []),
             "Interface:LauncherLog.noAttention": .init("没有需要关注的记录", []),

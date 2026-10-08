@@ -15,17 +15,17 @@ extension Messages {
         public static var downloadAndContinue: LocalizedMessage {
             .init(key: "AppJavaSetup.downloadAndContinue", table: "Interface", fallback: "下载并继续")
         }
-        /// 启动“%1$@”需要兼容的 Java，目前没有找到满足要求的本地版本（推荐 Java %2$@，%3$@）。是否下载并继续？也可以选择已有的 Java。
+        /// 启动“%1$@”需要兼容的 Java，当前未找到可用版本。推荐使用 Java %2$@（%3$@）。可以下载并继续，或选择本机已安装的 Java。
         ///
         /// Resource: `Interface.AppJavaSetup.gameRequirement`.
         public static func gameRequirement(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
-            .init(key: "AppJavaSetup.gameRequirement", table: "Interface", fallback: "启动“%1$@”需要兼容的 Java，目前没有找到满足要求的本地版本（推荐 Java %2$@，%3$@）。是否下载并继续？也可以选择已有的 Java。", arguments: [.text(value0), .text(value1), .text(value2)])
+            .init(key: "AppJavaSetup.gameRequirement", table: "Interface", fallback: "启动“%1$@”需要兼容的 Java，当前未找到可用版本。推荐使用 Java %2$@（%3$@）。可以下载并继续，或选择本机已安装的 Java。", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        /// %1$@ 的安装处理程序需要 Java %2$@ 或更高版本，目前没有找到可用的本地 Java。是否下载并继续安装？这不会更改游戏的 Java 设置。
+        /// 安装 %1$@ 需要 Java %2$@ 或更高版本，当前未找到可用版本。可以下载 Java 后继续安装，游戏使用的 Java 设置会保留。
         ///
         /// Resource: `Interface.AppJavaSetup.installerRequirement`.
         public static func installerRequirement(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "AppJavaSetup.installerRequirement", table: "Interface", fallback: "%1$@ 的安装处理程序需要 Java %2$@ 或更高版本，目前没有找到可用的本地 Java。是否下载并继续安装？这不会更改游戏的 Java 设置。", arguments: [.text(value0), .text(value1)])
+            .init(key: "AppJavaSetup.installerRequirement", table: "Interface", fallback: "安装 %1$@ 需要 Java %2$@ 或更高版本，当前未找到可用版本。可以下载 Java 后继续安装，游戏使用的 Java 设置会保留。", arguments: [.text(value0), .text(value1)])
         }
         /// 需要 Java
         ///
@@ -42,8 +42,8 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppJavaSetup.chooseLocal": .init("选择本地 Java…", []),
             "Interface:AppJavaSetup.downloadAndContinue": .init("下载并继续", []),
-            "Interface:AppJavaSetup.gameRequirement": .init("启动“%1$@”需要兼容的 Java，目前没有找到满足要求的本地版本（推荐 Java %2$@，%3$@）。是否下载并继续？也可以选择已有的 Java。", [.text, .text, .text]),
-            "Interface:AppJavaSetup.installerRequirement": .init("%1$@ 的安装处理程序需要 Java %2$@ 或更高版本，目前没有找到可用的本地 Java。是否下载并继续安装？这不会更改游戏的 Java 设置。", [.text, .text]),
+            "Interface:AppJavaSetup.gameRequirement": .init("启动“%1$@”需要兼容的 Java，当前未找到可用版本。推荐使用 Java %2$@（%3$@）。可以下载并继续，或选择本机已安装的 Java。", [.text, .text, .text]),
+            "Interface:AppJavaSetup.installerRequirement": .init("安装 %1$@ 需要 Java %2$@ 或更高版本，当前未找到可用版本。可以下载 Java 后继续安装，游戏使用的 Java 设置会保留。", [.text, .text]),
             "Interface:AppJavaSetup.javaRequired": .init("需要 Java", []),
             "Interface:AppJavaSetup.waitingForChoice": .init("等待选择 Java", []),
         ]

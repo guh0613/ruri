@@ -57,11 +57,11 @@ extension Messages {
         public static var createInstance: LocalizedMessage {
             .init(key: "AppHomeView.createInstance", table: "Interface", fallback: "新建实例")
         }
-        /// 检测本机 Java 或下载官方运行时
+        /// 查找本机 Java 或下载官方运行时
         ///
         /// Resource: `Interface.AppHomeView.detectOrDownloadJava`.
         public static var detectOrDownloadJava: LocalizedMessage {
-            .init(key: "AppHomeView.detectOrDownloadJava", table: "Interface", fallback: "检测本机 Java 或下载官方运行时")
+            .init(key: "AppHomeView.detectOrDownloadJava", table: "Interface", fallback: "查找本机 Java 或下载官方运行时")
         }
         /// 发现内容
         ///
@@ -241,7 +241,7 @@ extension Messages {
             "Interface:AppHomeView.chooseVersionAndLoader": .init("选择游戏版本和加载器", []),
             "Interface:AppHomeView.continuePlaying": .init("继续游戏", []),
             "Interface:AppHomeView.createInstance": .init("新建实例", []),
-            "Interface:AppHomeView.detectOrDownloadJava": .init("检测本机 Java 或下载官方运行时", []),
+            "Interface:AppHomeView.detectOrDownloadJava": .init("查找本机 Java 或下载官方运行时", []),
             "Interface:AppHomeView.discoverContent": .init("发现内容", []),
             "Interface:AppHomeView.editInstance": .init("更换图标或编辑实例设置", []),
             "Interface:AppHomeView.emptyStateDescription": .init("新建一个实例，或导入整合包开始游戏。", []),

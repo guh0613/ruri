@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum OfflineSkin {
-        /// 离线皮肤配置无效，请重新应用皮肤后再启动游戏。
+        /// 离线皮肤配置无效。请重新应用皮肤，再启动游戏。
         ///
         /// Resource: `Accounts.OfflineSkin.invalidConfiguration`.
         public static var invalidConfiguration: LocalizedMessage {
-            .init(key: "OfflineSkin.invalidConfiguration", table: "Accounts", fallback: "离线皮肤配置无效，请重新应用皮肤后再启动游戏。")
+            .init(key: "OfflineSkin.invalidConfiguration", table: "Accounts", fallback: "离线皮肤配置无效。请重新应用皮肤，再启动游戏。")
         }
         /// 正在准备离线皮肤…
         ///
@@ -34,7 +34,7 @@ extension Messages {
             .init(key: "OfflineSkin.signingFailed", table: "Accounts", fallback: "无法为离线皮肤生成签名。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Accounts:OfflineSkin.invalidConfiguration": .init("离线皮肤配置无效，请重新应用皮肤后再启动游戏。", []),
+            "Accounts:OfflineSkin.invalidConfiguration": .init("离线皮肤配置无效。请重新应用皮肤，再启动游戏。", []),
             "Accounts:OfflineSkin.preparing": .init("正在准备离线皮肤…", []),
             "Accounts:OfflineSkin.ready": .init("[Ruri] 离线皮肤服务已就绪。", []),
             "Accounts:OfflineSkin.serviceFailed": .init("本地皮肤服务未能启动，请重试。", []),

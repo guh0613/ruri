@@ -51,17 +51,17 @@ extension Messages {
         public static var unknownPackGameVersion: LocalizedMessage {
             .init(key: "CoreHMCLPack.unknownPackGameVersion", table: "Errors", fallback: "无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。")
         }
-        /// HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。
+        /// HMCL 整合包包含尚不支持的组件，或 LiteLoader 启动参数中缺少可识别的版本信息。
         ///
         /// Resource: `Errors.CoreHMCLPack.unsupportedLiteLoaderArguments`.
         public static var unsupportedLiteLoaderArguments: LocalizedMessage {
-            .init(key: "CoreHMCLPack.unsupportedLiteLoaderArguments", table: "Errors", fallback: "HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。")
+            .init(key: "CoreHMCLPack.unsupportedLiteLoaderArguments", table: "Errors", fallback: "HMCL 整合包包含尚不支持的组件，或 LiteLoader 启动参数中缺少可识别的版本信息。")
         }
-        /// HMCL 整合包需要尚未接入的组件：%1$@:%2$@
+        /// HMCL 整合包需要尚不支持的组件：%1$@:%2$@
         ///
         /// Resource: `Errors.CoreHMCLPack.unsupportedPackComponent`.
         public static func unsupportedPackComponent(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreHMCLPack.unsupportedPackComponent", table: "Errors", fallback: "HMCL 整合包需要尚未接入的组件：%1$@:%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreHMCLPack.unsupportedPackComponent", table: "Errors", fallback: "HMCL 整合包需要尚不支持的组件：%1$@:%2$@", arguments: [.text(value0), .text(value1)])
         }
         /// HMCL 整合包包含尚未支持的组件：%1$@
         ///
@@ -78,8 +78,8 @@ extension Messages {
             "Errors:CoreHMCLPack.unknownLaunchMethod": .init("HMCL 整合包使用未识别的游戏启动方式：%1$@", [.text]),
             "Errors:CoreHMCLPack.unknownLaunchWrapper": .init("HMCL 整合包需要未识别的 LaunchWrapper 组件。", []),
             "Errors:CoreHMCLPack.unknownPackGameVersion": .init("无法确定 HMCL 整合包的 Minecraft 版本。清单需要提供 gameVersion、jar 或 game 补丁。", []),
-            "Errors:CoreHMCLPack.unsupportedLiteLoaderArguments": .init("HMCL 整合包包含尚未接入的组件或无法确定版本的 LiteLoader 启动参数。", []),
-            "Errors:CoreHMCLPack.unsupportedPackComponent": .init("HMCL 整合包需要尚未接入的组件：%1$@:%2$@", [.text, .text]),
+            "Errors:CoreHMCLPack.unsupportedLiteLoaderArguments": .init("HMCL 整合包包含尚不支持的组件，或 LiteLoader 启动参数中缺少可识别的版本信息。", []),
+            "Errors:CoreHMCLPack.unsupportedPackComponent": .init("HMCL 整合包需要尚不支持的组件：%1$@:%2$@", [.text, .text]),
             "Errors:CoreHMCLPack.unsupportedPackComponents": .init("HMCL 整合包包含尚未支持的组件：%1$@", [.text]),
         ]
     }

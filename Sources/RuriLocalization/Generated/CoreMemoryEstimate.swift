@@ -9,22 +9,22 @@ extension Messages {
         public static func availableMemory(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreMemoryEstimate.availableMemory", table: "Core", fallback: "剩余内存 %1$@", arguments: [.text(value0)])
         }
-        /// 内容需要 %1$@，受本机内存限制为 %2$@
+        /// 估算需要 %1$@，根据本机可用内存调整为 %2$@
         ///
         /// Resource: `Core.CoreMemoryEstimate.constrained`.
         public static func constrained(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreMemoryEstimate.constrained", table: "Core", fallback: "内容需要 %1$@，受本机内存限制为 %2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreMemoryEstimate.constrained", table: "Core", fallback: "估算需要 %1$@，根据本机可用内存调整为 %2$@", arguments: [.text(value0), .text(value1)])
         }
-        /// %1$lld 个 Mod
+        /// %1$lld 个模组
         ///
         /// Resource: `Core.CoreMemoryEstimate.modCount`.
         public static func modCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "CoreMemoryEstimate.modCount", table: "Core", fallback: "%1$lld 个 Mod", arguments: [.integer(value0)])
+            .init(key: "CoreMemoryEstimate.modCount", table: "Core", fallback: "%1$lld 个模组", arguments: [.integer(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreMemoryEstimate.availableMemory": .init("剩余内存 %1$@", [.text]),
-            "Core:CoreMemoryEstimate.constrained": .init("内容需要 %1$@，受本机内存限制为 %2$@", [.text, .text]),
-            "Core:CoreMemoryEstimate.modCount": .init("%1$lld 个 Mod", [.integer]),
+            "Core:CoreMemoryEstimate.constrained": .init("估算需要 %1$@，根据本机可用内存调整为 %2$@", [.text, .text]),
+            "Core:CoreMemoryEstimate.modCount": .init("%1$lld 个模组", [.integer]),
         ]
     }
 }

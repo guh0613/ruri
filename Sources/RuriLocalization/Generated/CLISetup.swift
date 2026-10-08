@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CLISetup {
-        /// 未能完成系统授权操作：%@
+        /// 无法完成需要系统授权的操作：%@
         ///
         /// Resource: `CLISetup.CLISetup.authorizationFailed`.
         public static func authorizationFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "CLISetup.authorizationFailed", table: "CLISetup", fallback: "未能完成系统授权操作：%@", arguments: [.text(value0)])
+            .init(key: "CLISetup.authorizationFailed", table: "CLISetup", fallback: "无法完成需要系统授权的操作：%@", arguments: [.text(value0)])
         }
         /// 安装或卸载时，系统可能请求管理员授权。
         ///
@@ -15,17 +15,17 @@ extension Messages {
         public static var authorizationHint: LocalizedMessage {
             .init(key: "CLISetup.authorizationHint", table: "CLISetup", fallback: "安装或卸载时，系统可能请求管理员授权。")
         }
-        /// 安装目录需要管理员权限。请打开 Ruri 设置中的“命令行与自动化”，由系统授权完成安装或卸载；也可用 --bin-dir 指定已有的可写命令目录。
+        /// 安装目录需要管理员权限。请打开 Ruri“设置”中的“命令行与自动化”，完成系统授权后安装或卸载。也可用 --bin-dir 指定已有且可写入的命令目录。
         ///
         /// Resource: `CLISetup.CLISetup.authorizationRequired`.
         public static var authorizationRequired: LocalizedMessage {
-            .init(key: "CLISetup.authorizationRequired", table: "CLISetup", fallback: "安装目录需要管理员权限。请打开 Ruri 设置中的“命令行与自动化”，由系统授权完成安装或卸载；也可用 --bin-dir 指定已有的可写命令目录。")
+            .init(key: "CLISetup.authorizationRequired", table: "CLISetup", fallback: "安装目录需要管理员权限。请打开 Ruri“设置”中的“命令行与自动化”，完成系统授权后安装或卸载。也可用 --bin-dir 指定已有且可写入的命令目录。")
         }
-        /// Ruri 需要安装命令行工具到 /usr/local/bin。完成后即可在终端使用 ruri，无需手动配置 PATH。
+        /// Ruri 将在 /usr/local/bin 安装命令行工具。安装后即可在终端使用 ruri，无需手动配置 PATH。
         ///
         /// Resource: `CLISetup.CLISetup.authorizeInstall`.
         public static var authorizeInstall: LocalizedMessage {
-            .init(key: "CLISetup.authorizeInstall", table: "CLISetup", fallback: "Ruri 需要安装命令行工具到 /usr/local/bin。完成后即可在终端使用 ruri，无需手动配置 PATH。")
+            .init(key: "CLISetup.authorizeInstall", table: "CLISetup", fallback: "Ruri 将在 /usr/local/bin 安装命令行工具。安装后即可在终端使用 ruri，无需手动配置 PATH。")
         }
         /// Ruri 需要移除已安装的命令行链接。这不会删除应用或游戏数据。
         ///
@@ -57,11 +57,11 @@ extension Messages {
         public static var details: LocalizedMessage {
             .init(key: "CLISetup.details", table: "CLISetup", fallback: "安装详情")
         }
-        /// 通过 Ruri CLI 管理实例、账户和配置，也可供 AI agent 调用。
+        /// 通过 Ruri CLI 管理实例、账号和配置，也可供 AI 智能体调用。
         ///
         /// Resource: `CLISetup.CLISetup.footer`.
         public static var footer: LocalizedMessage {
-            .init(key: "CLISetup.footer", table: "CLISetup", fallback: "通过 Ruri CLI 管理实例、账户和配置，也可供 AI agent 调用。")
+            .init(key: "CLISetup.footer", table: "CLISetup", fallback: "通过 Ruri CLI 管理实例、账号和配置，也可供 AI 智能体调用。")
         }
         /// 安装到终端
         ///
@@ -87,18 +87,18 @@ extension Messages {
         public static var location: LocalizedMessage {
             .init(key: "CLISetup.location", table: "CLISetup", fallback: "命令位置")
         }
-        /// 通过命令行管理实例、账户和配置，也可供 AI agent 调用。
+        /// 通过命令行管理实例、账号和配置，也可供 AI 智能体调用。
         ///
         /// Resource: `CLISetup.CLISetup.onboardingDetail`.
         public static var onboardingDetail: LocalizedMessage {
-            .init(key: "CLISetup.onboardingDetail", table: "CLISetup", fallback: "通过命令行管理实例、账户和配置，也可供 AI agent 调用。")
+            .init(key: "CLISetup.onboardingDetail", table: "CLISetup", fallback: "通过命令行管理实例、账号和配置，也可供 AI 智能体调用。")
         }
         /// 安装时可能需要管理员授权。
-        /// 也可稍后前往「设置 → 命令行与自动化」安装。
+        /// 也可稍后在“设置”的“命令行与自动化”中安装。
         ///
         /// Resource: `CLISetup.CLISetup.onboardingHint`.
         public static var onboardingHint: LocalizedMessage {
-            .init(key: "CLISetup.onboardingHint", table: "CLISetup", fallback: "安装时可能需要管理员授权。\n也可稍后前往「设置 → 命令行与自动化」安装。")
+            .init(key: "CLISetup.onboardingHint", table: "CLISetup", fallback: "安装时可能需要管理员授权。\n也可稍后在“设置”的“命令行与自动化”中安装。")
         }
         /// 在终端中使用 Ruri
         ///
@@ -112,11 +112,11 @@ extension Messages {
         public static var ready: LocalizedMessage {
             .init(key: "CLISetup.ready", table: "CLISetup", fallback: "命令行工具已安装")
         }
-        /// 打开新的终端窗口，运行下方命令即可开始。
+        /// 打开新的终端窗口，运行下方命令即可开始使用。
         ///
         /// Resource: `CLISetup.CLISetup.readyDetail`.
         public static var readyDetail: LocalizedMessage {
-            .init(key: "CLISetup.readyDetail", table: "CLISetup", fallback: "打开新的终端窗口，运行下方命令即可开始。")
+            .init(key: "CLISetup.readyDetail", table: "CLISetup", fallback: "打开新的终端窗口，运行下方命令即可开始使用。")
         }
         /// 重新安装
         ///
@@ -155,25 +155,25 @@ extension Messages {
             .init(key: "CLISetup.title", table: "CLISetup", fallback: "命令行工具")
         }
         static let definitions: [String: MessageDefinition] = [
-            "CLISetup:CLISetup.authorizationFailed": .init("未能完成系统授权操作：%@", [.text]),
+            "CLISetup:CLISetup.authorizationFailed": .init("无法完成需要系统授权的操作：%@", [.text]),
             "CLISetup:CLISetup.authorizationHint": .init("安装或卸载时，系统可能请求管理员授权。", []),
-            "CLISetup:CLISetup.authorizationRequired": .init("安装目录需要管理员权限。请打开 Ruri 设置中的“命令行与自动化”，由系统授权完成安装或卸载；也可用 --bin-dir 指定已有的可写命令目录。", []),
-            "CLISetup:CLISetup.authorizeInstall": .init("Ruri 需要安装命令行工具到 /usr/local/bin。完成后即可在终端使用 ruri，无需手动配置 PATH。", []),
+            "CLISetup:CLISetup.authorizationRequired": .init("安装目录需要管理员权限。请打开 Ruri“设置”中的“命令行与自动化”，完成系统授权后安装或卸载。也可用 --bin-dir 指定已有且可写入的命令目录。", []),
+            "CLISetup:CLISetup.authorizeInstall": .init("Ruri 将在 /usr/local/bin 安装命令行工具。安装后即可在终端使用 ruri，无需手动配置 PATH。", []),
             "CLISetup:CLISetup.authorizeUninstall": .init("Ruri 需要移除已安装的命令行链接。这不会删除应用或游戏数据。", []),
             "CLISetup:CLISetup.copied": .init("已复制", []),
             "CLISetup:CLISetup.copyCommand": .init("复制命令", []),
             "CLISetup:CLISetup.copyDirectCommand": .init("复制完整命令", []),
             "CLISetup:CLISetup.details": .init("安装详情", []),
-            "CLISetup:CLISetup.footer": .init("通过 Ruri CLI 管理实例、账户和配置，也可供 AI agent 调用。", []),
+            "CLISetup:CLISetup.footer": .init("通过 Ruri CLI 管理实例、账号和配置，也可供 AI 智能体调用。", []),
             "CLISetup:CLISetup.install": .init("安装到终端", []),
             "CLISetup:CLISetup.installing": .init("正在安装…", []),
             "CLISetup:CLISetup.introduction": .init("安装后即可在终端使用 Ruri CLI，无需配置 PATH。", []),
             "CLISetup:CLISetup.location": .init("命令位置", []),
-            "CLISetup:CLISetup.onboardingDetail": .init("通过命令行管理实例、账户和配置，也可供 AI agent 调用。", []),
-            "CLISetup:CLISetup.onboardingHint": .init("安装时可能需要管理员授权。\n也可稍后前往「设置 → 命令行与自动化」安装。", []),
+            "CLISetup:CLISetup.onboardingDetail": .init("通过命令行管理实例、账号和配置，也可供 AI 智能体调用。", []),
+            "CLISetup:CLISetup.onboardingHint": .init("安装时可能需要管理员授权。\n也可稍后在“设置”的“命令行与自动化”中安装。", []),
             "CLISetup:CLISetup.onboardingTitle": .init("在终端中使用 Ruri", []),
             "CLISetup:CLISetup.ready": .init("命令行工具已安装", []),
-            "CLISetup:CLISetup.readyDetail": .init("打开新的终端窗口，运行下方命令即可开始。", []),
+            "CLISetup:CLISetup.readyDetail": .init("打开新的终端窗口，运行下方命令即可开始使用。", []),
             "CLISetup:CLISetup.reinstall": .init("重新安装", []),
             "CLISetup:CLISetup.repair": .init("修复安装", []),
             "CLISetup:CLISetup.repairDetail": .init("更新链接，让终端使用当前版本的 Ruri。", []),

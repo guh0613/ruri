@@ -21,11 +21,11 @@ extension Messages {
         public static var communityContent: LocalizedMessage {
             .init(key: "AppCurseForgeInstallView.communityContent", table: "Interface", fallback: "社区创作")
         }
-        /// 内容版本
+        /// 资源版本
         ///
         /// Resource: `Interface.AppCurseForgeInstallView.contentVersion`.
         public static var contentVersion: LocalizedMessage {
-            .init(key: "AppCurseForgeInstallView.contentVersion", table: "Interface", fallback: "内容版本")
+            .init(key: "AppCurseForgeInstallView.contentVersion", table: "Interface", fallback: "资源版本")
         }
         /// 查找兼容版本…
         ///
@@ -51,11 +51,11 @@ extension Messages {
         public static var installToInstance: LocalizedMessage {
             .init(key: "AppCurseForgeInstallView.installToInstance", table: "Interface", fallback: "安装到实例")
         }
-        /// 请先选择已安装的实例；模组需要相应加载器。
+        /// 请先选择已安装的实例。安装模组时，实例需要使用对应的加载器。
         ///
         /// Resource: `Interface.AppCurseForgeInstallView.instanceSelectionNotice`.
         public static var instanceSelectionNotice: LocalizedMessage {
-            .init(key: "AppCurseForgeInstallView.instanceSelectionNotice", table: "Interface", fallback: "请先选择已安装的实例；模组需要相应加载器。")
+            .init(key: "AppCurseForgeInstallView.instanceSelectionNotice", table: "Interface", fallback: "请先选择已安装的实例。安装模组时，实例需要使用对应的加载器。")
         }
         /// 下一页
         ///
@@ -93,11 +93,11 @@ extension Messages {
         public static var readPack: LocalizedMessage {
             .init(key: "AppCurseForgeInstallView.readPack", table: "Interface", fallback: "读取整合包")
         }
-        /// 正在解析必需依赖…
+        /// 正在检查所需的依赖…
         ///
         /// Resource: `Interface.AppCurseForgeInstallView.resolveDependencies`.
         public static var resolveDependencies: LocalizedMessage {
-            .init(key: "AppCurseForgeInstallView.resolveDependencies", table: "Interface", fallback: "正在解析必需依赖…")
+            .init(key: "AppCurseForgeInstallView.resolveDependencies", table: "Interface", fallback: "正在检查所需的依赖…")
         }
         /// 使用光影需要安装 Iris 或其他兼容的光影模组。
         ///
@@ -133,19 +133,19 @@ extension Messages {
             "Interface:AppCurseForgeInstallView.back": .init("返回", []),
             "Interface:AppCurseForgeInstallView.chooseInstance": .init("选择实例", []),
             "Interface:AppCurseForgeInstallView.communityContent": .init("社区创作", []),
-            "Interface:AppCurseForgeInstallView.contentVersion": .init("内容版本", []),
+            "Interface:AppCurseForgeInstallView.contentVersion": .init("资源版本", []),
             "Interface:AppCurseForgeInstallView.findCompatibleVersions": .init("查找兼容版本…", []),
             "Interface:AppCurseForgeInstallView.install": .init("安装", []),
             "Interface:AppCurseForgeInstallView.installPlan": .init("将为 %1$@ 安装 %2$lld 个文件，包含必需依赖。", [.text, .integer]),
             "Interface:AppCurseForgeInstallView.installToInstance": .init("安装到实例", []),
-            "Interface:AppCurseForgeInstallView.instanceSelectionNotice": .init("请先选择已安装的实例；模组需要相应加载器。", []),
+            "Interface:AppCurseForgeInstallView.instanceSelectionNotice": .init("请先选择已安装的实例。安装模组时，实例需要使用对应的加载器。", []),
             "Interface:AppCurseForgeInstallView.nextPage": .init("下一页", []),
             "Interface:AppCurseForgeInstallView.noCompatibleVersions": .init("这一页没有兼容版本。", []),
             "Interface:AppCurseForgeInstallView.packManifest": .init("整合包清单", []),
             "Interface:AppCurseForgeInstallView.pageNumber": .init("第 %1$lld 页", [.integer]),
             "Interface:AppCurseForgeInstallView.previousPage": .init("上一页", []),
             "Interface:AppCurseForgeInstallView.readPack": .init("读取整合包", []),
-            "Interface:AppCurseForgeInstallView.resolveDependencies": .init("正在解析必需依赖…", []),
+            "Interface:AppCurseForgeInstallView.resolveDependencies": .init("正在检查所需的依赖…", []),
             "Interface:AppCurseForgeInstallView.shaderpackNotice": .init("使用光影需要安装 Iris 或其他兼容的光影模组。", []),
             "Interface:AppCurseForgeInstallView.update": .init("更新", []),
             "Interface:AppCurseForgeInstallView.updatePack": .init("更新 %1$@", [.text]),

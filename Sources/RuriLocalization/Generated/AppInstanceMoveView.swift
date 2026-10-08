@@ -195,11 +195,11 @@ extension Messages {
         public static var showTarget: LocalizedMessage {
             .init(key: "AppInstanceMoveView.showTarget", table: "Interface", fallback: "查看目标")
         }
-        /// 查看工作区
+        /// 查看工作文件
         ///
         /// Resource: `Interface.AppInstanceMoveView.showWorkspace`.
         public static var showWorkspace: LocalizedMessage {
-            .init(key: "AppInstanceMoveView.showWorkspace", table: "Interface", fallback: "查看工作区")
+            .init(key: "AppInstanceMoveView.showWorkspace", table: "Interface", fallback: "查看工作文件")
         }
         /// 目标文件校验通过后，原位置的实例文件会被删除。
         ///
@@ -219,11 +219,11 @@ extension Messages {
         public static var targetLocation: LocalizedMessage {
             .init(key: "AppInstanceMoveView.targetLocation", table: "Interface", fallback: "目标位置")
         }
-        /// 目标实例已就绪，等待清理
+        /// 实例已移至目标位置，等待清理
         ///
         /// Resource: `Interface.AppInstanceMoveView.targetReady`.
         public static var targetReady: LocalizedMessage {
-            .init(key: "AppInstanceMoveView.targetReady", table: "Interface", fallback: "目标实例已就绪，等待清理")
+            .init(key: "AppInstanceMoveView.targetReady", table: "Interface", fallback: "实例已移至目标位置，等待清理")
         }
         /// 校验并清理原文件
         ///
@@ -264,11 +264,11 @@ extension Messages {
             "Interface:AppInstanceMoveView.savedLocation": .init("保存位置", []),
             "Interface:AppInstanceMoveView.showSource": .init("查看原文件", []),
             "Interface:AppInstanceMoveView.showTarget": .init("查看目标", []),
-            "Interface:AppInstanceMoveView.showWorkspace": .init("查看工作区", []),
+            "Interface:AppInstanceMoveView.showWorkspace": .init("查看工作文件", []),
             "Interface:AppInstanceMoveView.sourceCleanupNotice": .init("目标文件校验通过后，原位置的实例文件会被删除。", []),
             "Interface:AppInstanceMoveView.sourceLocation": .init("原位置", []),
             "Interface:AppInstanceMoveView.targetLocation": .init("目标位置", []),
-            "Interface:AppInstanceMoveView.targetReady": .init("目标实例已就绪，等待清理", []),
+            "Interface:AppInstanceMoveView.targetReady": .init("实例已移至目标位置，等待清理", []),
             "Interface:AppInstanceMoveView.validateAndClean": .init("校验并清理原文件", []),
         ]
     }

@@ -111,11 +111,11 @@ extension Messages {
         public static var directoryType: LocalizedMessage {
             .init(key: "AppGameRunDirectoryChangeView.directoryType", table: "Interface", fallback: "目录类型")
         }
-        /// 目标目录为空，游戏将使用新的存档和设置。原目录保留，可再次切回。
+        /// 目标文件夹为空，游戏将从空的存档列表和默认设置开始。原文件夹会保留，之后可以切换回来。
         ///
         /// Resource: `Interface.AppGameRunDirectoryChangeView.emptyTargetDetails`.
         public static var emptyTargetDetails: LocalizedMessage {
-            .init(key: "AppGameRunDirectoryChangeView.emptyTargetDetails", table: "Interface", fallback: "目标目录为空，游戏将使用新的存档和设置。原目录保留，可再次切回。")
+            .init(key: "AppGameRunDirectoryChangeView.emptyTargetDetails", table: "Interface", fallback: "目标文件夹为空，游戏将从空的存档列表和默认设置开始。原文件夹会保留，之后可以切换回来。")
         }
         /// %1$lld 个文件 · %2$@
         ///
@@ -129,11 +129,11 @@ extension Messages {
         public static var fileDetails: LocalizedMessage {
             .init(key: "AppGameRunDirectoryChangeView.fileDetails", table: "Interface", fallback: "文件详情")
         }
-        /// 游戏本体、依赖和启动器设置不随运行目录复制。
+        /// 复制运行目录时，不包含游戏本体、依赖库和启动器设置。
         ///
         /// Resource: `Interface.AppGameRunDirectoryChangeView.gameFilesStayInPlace`.
         public static var gameFilesStayInPlace: LocalizedMessage {
-            .init(key: "AppGameRunDirectoryChangeView.gameFilesStayInPlace", table: "Interface", fallback: "游戏本体、依赖和启动器设置不随运行目录复制。")
+            .init(key: "AppGameRunDirectoryChangeView.gameFilesStayInPlace", table: "Interface", fallback: "复制运行目录时，不包含游戏本体、依赖库和启动器设置。")
         }
         /// 独立目录
         ///
@@ -238,11 +238,11 @@ extension Messages {
         public static var switchUnavailable: LocalizedMessage {
             .init(key: "AppGameRunDirectoryChangeView.switchUnavailable", table: "Interface", fallback: "暂时无法切换")
         }
-        /// 目标已有文件或备份，不能用复制覆盖。
+        /// 目标文件夹已有文件或备份，无法复制到此位置。
         ///
         /// Resource: `Interface.AppGameRunDirectoryChangeView.targetContainsFiles`.
         public static var targetContainsFiles: LocalizedMessage {
-            .init(key: "AppGameRunDirectoryChangeView.targetContainsFiles", table: "Interface", fallback: "目标已有文件或备份，不能用复制覆盖。")
+            .init(key: "AppGameRunDirectoryChangeView.targetContainsFiles", table: "Interface", fallback: "目标文件夹已有文件或备份，无法复制到此位置。")
         }
         /// 目标目录
         ///
@@ -287,10 +287,10 @@ extension Messages {
             "Interface:AppGameRunDirectoryChangeView.customOption": .init("自定义文件夹", []),
             "Interface:AppGameRunDirectoryChangeView.directoryPurpose": .init("选择保存模组、存档和游戏设置的文件夹。", []),
             "Interface:AppGameRunDirectoryChangeView.directoryType": .init("目录类型", []),
-            "Interface:AppGameRunDirectoryChangeView.emptyTargetDetails": .init("目标目录为空，游戏将使用新的存档和设置。原目录保留，可再次切回。", []),
+            "Interface:AppGameRunDirectoryChangeView.emptyTargetDetails": .init("目标文件夹为空，游戏将从空的存档列表和默认设置开始。原文件夹会保留，之后可以切换回来。", []),
             "Interface:AppGameRunDirectoryChangeView.fileCountAndSize": .init("%1$lld 个文件 · %2$@", [.integer, .text]),
             "Interface:AppGameRunDirectoryChangeView.fileDetails": .init("文件详情", []),
-            "Interface:AppGameRunDirectoryChangeView.gameFilesStayInPlace": .init("游戏本体、依赖和启动器设置不随运行目录复制。", []),
+            "Interface:AppGameRunDirectoryChangeView.gameFilesStayInPlace": .init("复制运行目录时，不包含游戏本体、依赖库和启动器设置。", []),
             "Interface:AppGameRunDirectoryChangeView.isolatedOption": .init("独立目录", []),
             "Interface:AppGameRunDirectoryChangeView.noFolderSelected": .init("尚未选择文件夹", []),
             "Interface:AppGameRunDirectoryChangeView.preparingSelectedDirectory": .init("正在准备所选目录…", []),
@@ -308,7 +308,7 @@ extension Messages {
             "Interface:AppGameRunDirectoryChangeView.sourceDirectory": .init("原目录", []),
             "Interface:AppGameRunDirectoryChangeView.switchDirectory": .init("切换目录", []),
             "Interface:AppGameRunDirectoryChangeView.switchUnavailable": .init("暂时无法切换", []),
-            "Interface:AppGameRunDirectoryChangeView.targetContainsFiles": .init("目标已有文件或备份，不能用复制覆盖。", []),
+            "Interface:AppGameRunDirectoryChangeView.targetContainsFiles": .init("目标文件夹已有文件或备份，无法复制到此位置。", []),
             "Interface:AppGameRunDirectoryChangeView.targetDirectory": .init("目标目录", []),
             "Interface:AppGameRunDirectoryChangeView.useExistingContent": .init("使用目标目录的内容", []),
             "Interface:AppGameRunDirectoryChangeView.useExistingTargetDetails": .init("使用目标目录已有的模组、存档和设置。原目录保留，可再次切回。", []),

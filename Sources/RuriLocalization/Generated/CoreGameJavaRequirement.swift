@@ -3,14 +3,14 @@ import Foundation
 
 extension Messages {
     public enum CoreGameJavaRequirement {
-        /// 没有找到满足要求的 Java（推荐 Java %1$@，%2$@）。请前往 Java 页面安装或选择本地 Java。
+        /// 未找到符合要求的 Java。推荐 Java %1$@（%2$@），请前往“Java 运行时”页面下载或添加本机 Java。
         ///
         /// Resource: `Errors.CoreGameJavaRequirement.missingCompatibleJava`.
         public static func missingCompatibleJava(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreGameJavaRequirement.missingCompatibleJava", table: "Errors", fallback: "没有找到满足要求的 Java（推荐 Java %1$@，%2$@）。请前往 Java 页面安装或选择本地 Java。", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreGameJavaRequirement.missingCompatibleJava", table: "Errors", fallback: "未找到符合要求的 Java。推荐 Java %1$@（%2$@），请前往“Java 运行时”页面下载或添加本机 Java。", arguments: [.text(value0), .text(value1)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:CoreGameJavaRequirement.missingCompatibleJava": .init("没有找到满足要求的 Java（推荐 Java %1$@，%2$@）。请前往 Java 页面安装或选择本地 Java。", [.text, .text]),
+            "Errors:CoreGameJavaRequirement.missingCompatibleJava": .init("未找到符合要求的 Java。推荐 Java %1$@（%2$@），请前往“Java 运行时”页面下载或添加本机 Java。", [.text, .text]),
         ]
     }
 }

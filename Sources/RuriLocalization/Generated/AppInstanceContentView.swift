@@ -57,11 +57,11 @@ extension Messages {
         public static var contentChangesUnavailableWhileRunning: LocalizedMessage {
             .init(key: "AppInstanceContentView.contentChangesUnavailableWhileRunning", table: "Interface", fallback: "请退出游戏后再修改内容。")
         }
-        /// 已将 %1$lld 项内容移到废纸篓
+        /// 已将 %1$lld 项资源移到废纸篓
         ///
         /// Resource: `Interface.AppInstanceContentView.contentMovedToTrash`.
         public static func contentMovedToTrash(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AppInstanceContentView.contentMovedToTrash", table: "Interface", fallback: "已将 %1$lld 项内容移到废纸篓", arguments: [.integer(value0)])
+            .init(key: "AppInstanceContentView.contentMovedToTrash", table: "Interface", fallback: "已将 %1$lld 项资源移到废纸篓", arguments: [.integer(value0)])
         }
         /// 还没有安装%1$@
         ///
@@ -69,11 +69,11 @@ extension Messages {
         public static func contentNotInstalled(_ value0: String) -> LocalizedMessage {
             .init(key: "AppInstanceContentView.contentNotInstalled", table: "Interface", fallback: "还没有安装%1$@", arguments: [.text(value0)])
         }
-        /// 停用会保留文件；更新前自动备份，失败可恢复。
+        /// 停用时会保留文件。更新前会自动备份，以便在更新失败时恢复。
         ///
         /// Resource: `Interface.AppInstanceContentView.contentUpdateNotes`.
         public static var contentUpdateNotes: LocalizedMessage {
-            .init(key: "AppInstanceContentView.contentUpdateNotes", table: "Interface", fallback: "停用会保留文件；更新前自动备份，失败可恢复。")
+            .init(key: "AppInstanceContentView.contentUpdateNotes", table: "Interface", fallback: "停用时会保留文件。更新前会自动备份，以便在更新失败时恢复。")
         }
         /// 取消选择
         ///
@@ -93,11 +93,11 @@ extension Messages {
         public static var disableSelected: LocalizedMessage {
             .init(key: "AppInstanceContentView.disableSelected", table: "Interface", fallback: "停用所选")
         }
-        /// 发现更多内容
+        /// 发现更多资源
         ///
         /// Resource: `Interface.AppInstanceContentView.discoverMoreContent`.
         public static var discoverMoreContent: LocalizedMessage {
-            .init(key: "AppInstanceContentView.discoverMoreContent", table: "Interface", fallback: "发现更多内容")
+            .init(key: "AppInstanceContentView.discoverMoreContent", table: "Interface", fallback: "发现更多资源")
         }
         /// 启用
         ///
@@ -147,11 +147,11 @@ extension Messages {
         public static var importOrDiscoverContent: LocalizedMessage {
             .init(key: "AppInstanceContentView.importOrDiscoverContent", table: "Interface", fallback: "从本地导入文件，或在“发现”中安装。")
         }
-        /// 已是最新兼容正式版
+        /// 已是兼容的最新正式版
         ///
         /// Resource: `Interface.AppInstanceContentView.latestCompatibleRelease`.
         public static var latestCompatibleRelease: LocalizedMessage {
-            .init(key: "AppInstanceContentView.latestCompatibleRelease", table: "Interface", fallback: "已是最新兼容正式版")
+            .init(key: "AppInstanceContentView.latestCompatibleRelease", table: "Interface", fallback: "已是兼容的最新正式版")
         }
         /// 游戏内容
         ///
@@ -159,11 +159,11 @@ extension Messages {
         public static var manageGameContent: LocalizedMessage {
             .init(key: "AppInstanceContentView.manageGameContent", table: "Interface", fallback: "游戏内容")
         }
-        /// 将此内容移到废纸篓？
+        /// 将此资源移到废纸篓？
         ///
         /// Resource: `Interface.AppInstanceContentView.moveContentToTrashConfirmation`.
         public static var moveContentToTrashConfirmation: LocalizedMessage {
-            .init(key: "AppInstanceContentView.moveContentToTrashConfirmation", table: "Interface", fallback: "将此内容移到废纸篓？")
+            .init(key: "AppInstanceContentView.moveContentToTrashConfirmation", table: "Interface", fallback: "将此资源移到废纸篓？")
         }
         /// 移到废纸篓
         ///
@@ -171,11 +171,11 @@ extension Messages {
         public static var moveToTrash: LocalizedMessage {
             .init(key: "AppInstanceContentView.moveToTrash", table: "Interface", fallback: "移到废纸篓")
         }
-        /// 按住 ⌘ 多选，⇧ 连续选择
+        /// 按住 ⌘ 键选择多项，按住 ⇧ 键连续选择
         ///
         /// Resource: `Interface.AppInstanceContentView.multiSelectHint`.
         public static var multiSelectHint: LocalizedMessage {
-            .init(key: "AppInstanceContentView.multiSelectHint", table: "Interface", fallback: "按住 ⌘ 多选，⇧ 连续选择")
+            .init(key: "AppInstanceContentView.multiSelectHint", table: "Interface", fallback: "按住 ⌘ 键选择多项，按住 ⇧ 键连续选择")
         }
         /// 名称
         ///
@@ -183,17 +183,17 @@ extension Messages {
         public static var nameColumn: LocalizedMessage {
             .init(key: "AppInstanceContentView.nameColumn", table: "Interface", fallback: "名称")
         }
-        /// 没有匹配内容
+        /// 没有匹配的资源
         ///
         /// Resource: `Interface.AppInstanceContentView.noMatchingContent`.
         public static var noMatchingContent: LocalizedMessage {
-            .init(key: "AppInstanceContentView.noMatchingContent", table: "Interface", fallback: "没有匹配内容")
+            .init(key: "AppInstanceContentView.noMatchingContent", table: "Interface", fallback: "没有匹配的资源")
         }
-        /// 在 Finder 中打开内容文件夹
+        /// 在 Finder 中打开资源文件夹
         ///
         /// Resource: `Interface.AppInstanceContentView.openContentFolder`.
         public static var openContentFolder: LocalizedMessage {
-            .init(key: "AppInstanceContentView.openContentFolder", table: "Interface", fallback: "在 Finder 中打开内容文件夹")
+            .init(key: "AppInstanceContentView.openContentFolder", table: "Interface", fallback: "在 Finder 中打开资源文件夹")
         }
         /// 准备批量更新
         ///
@@ -201,11 +201,11 @@ extension Messages {
         public static var prepareBatchUpdate: LocalizedMessage {
             .init(key: "AppInstanceContentView.prepareBatchUpdate", table: "Interface", fallback: "准备批量更新")
         }
-        /// 解析 %1$@ 更新
+        /// 检查 %1$@ 的更新
         ///
         /// Resource: `Interface.AppInstanceContentView.prepareContentUpdate`.
         public static func prepareContentUpdate(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppInstanceContentView.prepareContentUpdate", table: "Interface", fallback: "解析 %1$@ 更新", arguments: [.text(value0)])
+            .init(key: "AppInstanceContentView.prepareContentUpdate", table: "Interface", fallback: "检查 %1$@ 的更新", arguments: [.text(value0)])
         }
         /// 移除 %1$@
         ///
@@ -213,11 +213,11 @@ extension Messages {
         public static func removeContent(_ value0: String) -> LocalizedMessage {
             .init(key: "AppInstanceContentView.removeContent", table: "Interface", fallback: "移除 %1$@", arguments: [.text(value0)])
         }
-        /// 移除 %1$lld 项内容
+        /// 移除 %1$lld 项资源
         ///
         /// Resource: `Interface.AppInstanceContentView.removeContentCount`.
         public static func removeContentCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AppInstanceContentView.removeContentCount", table: "Interface", fallback: "移除 %1$lld 项内容", arguments: [.integer(value0)])
+            .init(key: "AppInstanceContentView.removeContentCount", table: "Interface", fallback: "移除 %1$lld 项资源", arguments: [.integer(value0)])
         }
         /// 移除所选…
         ///
@@ -225,11 +225,11 @@ extension Messages {
         public static var removeSelected: LocalizedMessage {
             .init(key: "AppInstanceContentView.removeSelected", table: "Interface", fallback: "移除所选…")
         }
-        /// 搜索已安装内容
+        /// 搜索已安装的资源
         ///
         /// Resource: `Interface.AppInstanceContentView.searchInstalledContent`.
         public static var searchInstalledContent: LocalizedMessage {
-            .init(key: "AppInstanceContentView.searchInstalledContent", table: "Interface", fallback: "搜索已安装内容")
+            .init(key: "AppInstanceContentView.searchInstalledContent", table: "Interface", fallback: "搜索已安装的资源")
         }
         /// 全选当前结果
         ///
@@ -237,11 +237,11 @@ extension Messages {
         public static var selectAllCurrentResults: LocalizedMessage {
             .init(key: "AppInstanceContentView.selectAllCurrentResults", table: "Interface", fallback: "全选当前结果")
         }
-        /// %1$@ %2$lld 项内容
+        /// %1$@ %2$lld 项资源
         ///
         /// Resource: `Interface.AppInstanceContentView.selectedContentCount`.
         public static func selectedContentCount(_ value0: String, _ value1: Int64) -> LocalizedMessage {
-            .init(key: "AppInstanceContentView.selectedContentCount", table: "Interface", fallback: "%1$@ %2$lld 项内容", arguments: [.text(value0), .integer(value1)])
+            .init(key: "AppInstanceContentView.selectedContentCount", table: "Interface", fallback: "%1$@ %2$lld 项资源", arguments: [.text(value0), .integer(value1)])
         }
         /// 已选 %1$lld 项
         ///
@@ -285,11 +285,11 @@ extension Messages {
         public static var updateCurrentResults: LocalizedMessage {
             .init(key: "AppInstanceContentView.updateCurrentResults", table: "Interface", fallback: "更新当前结果…")
         }
-        /// 更新所选内容…
+        /// 更新所选资源…
         ///
         /// Resource: `Interface.AppInstanceContentView.updateSelectedContent`.
         public static var updateSelectedContent: LocalizedMessage {
-            .init(key: "AppInstanceContentView.updateSelectedContent", table: "Interface", fallback: "更新所选内容…")
+            .init(key: "AppInstanceContentView.updateSelectedContent", table: "Interface", fallback: "更新所选资源…")
         }
         /// 更新至 %1$@
         ///
@@ -319,13 +319,13 @@ extension Messages {
             "Interface:AppInstanceContentView.checkingCompatibleReleases": .init("正在检查兼容的正式版本…", []),
             "Interface:AppInstanceContentView.content": .init("内容", []),
             "Interface:AppInstanceContentView.contentChangesUnavailableWhileRunning": .init("请退出游戏后再修改内容。", []),
-            "Interface:AppInstanceContentView.contentMovedToTrash": .init("已将 %1$lld 项内容移到废纸篓", [.integer]),
+            "Interface:AppInstanceContentView.contentMovedToTrash": .init("已将 %1$lld 项资源移到废纸篓", [.integer]),
             "Interface:AppInstanceContentView.contentNotInstalled": .init("还没有安装%1$@", [.text]),
-            "Interface:AppInstanceContentView.contentUpdateNotes": .init("停用会保留文件；更新前自动备份，失败可恢复。", []),
+            "Interface:AppInstanceContentView.contentUpdateNotes": .init("停用时会保留文件。更新前会自动备份，以便在更新失败时恢复。", []),
             "Interface:AppInstanceContentView.deselect": .init("取消选择", []),
             "Interface:AppInstanceContentView.disable": .init("停用", []),
             "Interface:AppInstanceContentView.disableSelected": .init("停用所选", []),
-            "Interface:AppInstanceContentView.discoverMoreContent": .init("发现更多内容", []),
+            "Interface:AppInstanceContentView.discoverMoreContent": .init("发现更多资源", []),
             "Interface:AppInstanceContentView.enable": .init("启用", []),
             "Interface:AppInstanceContentView.enableContent": .init("启用 %1$@", [.text]),
             "Interface:AppInstanceContentView.enableSelected": .init("启用所选", []),
@@ -334,22 +334,22 @@ extension Messages {
             "Interface:AppInstanceContentView.importContent": .init("导入…", []),
             "Interface:AppInstanceContentView.importContentCount": .init("导入 %1$lld 个%2$@", [.integer, .text]),
             "Interface:AppInstanceContentView.importOrDiscoverContent": .init("从本地导入文件，或在“发现”中安装。", []),
-            "Interface:AppInstanceContentView.latestCompatibleRelease": .init("已是最新兼容正式版", []),
+            "Interface:AppInstanceContentView.latestCompatibleRelease": .init("已是兼容的最新正式版", []),
             "Interface:AppInstanceContentView.manageGameContent": .init("游戏内容", []),
-            "Interface:AppInstanceContentView.moveContentToTrashConfirmation": .init("将此内容移到废纸篓？", []),
+            "Interface:AppInstanceContentView.moveContentToTrashConfirmation": .init("将此资源移到废纸篓？", []),
             "Interface:AppInstanceContentView.moveToTrash": .init("移到废纸篓", []),
-            "Interface:AppInstanceContentView.multiSelectHint": .init("按住 ⌘ 多选，⇧ 连续选择", []),
+            "Interface:AppInstanceContentView.multiSelectHint": .init("按住 ⌘ 键选择多项，按住 ⇧ 键连续选择", []),
             "Interface:AppInstanceContentView.nameColumn": .init("名称", []),
-            "Interface:AppInstanceContentView.noMatchingContent": .init("没有匹配内容", []),
-            "Interface:AppInstanceContentView.openContentFolder": .init("在 Finder 中打开内容文件夹", []),
+            "Interface:AppInstanceContentView.noMatchingContent": .init("没有匹配的资源", []),
+            "Interface:AppInstanceContentView.openContentFolder": .init("在 Finder 中打开资源文件夹", []),
             "Interface:AppInstanceContentView.prepareBatchUpdate": .init("准备批量更新", []),
-            "Interface:AppInstanceContentView.prepareContentUpdate": .init("解析 %1$@ 更新", [.text]),
+            "Interface:AppInstanceContentView.prepareContentUpdate": .init("检查 %1$@ 的更新", [.text]),
             "Interface:AppInstanceContentView.removeContent": .init("移除 %1$@", [.text]),
-            "Interface:AppInstanceContentView.removeContentCount": .init("移除 %1$lld 项内容", [.integer]),
+            "Interface:AppInstanceContentView.removeContentCount": .init("移除 %1$lld 项资源", [.integer]),
             "Interface:AppInstanceContentView.removeSelected": .init("移除所选…", []),
-            "Interface:AppInstanceContentView.searchInstalledContent": .init("搜索已安装内容", []),
+            "Interface:AppInstanceContentView.searchInstalledContent": .init("搜索已安装的资源", []),
             "Interface:AppInstanceContentView.selectAllCurrentResults": .init("全选当前结果", []),
-            "Interface:AppInstanceContentView.selectedContentCount": .init("%1$@ %2$lld 项内容", [.text, .integer]),
+            "Interface:AppInstanceContentView.selectedContentCount": .init("%1$@ %2$lld 项资源", [.text, .integer]),
             "Interface:AppInstanceContentView.selectedCount": .init("已选 %1$lld 项", [.integer]),
             "Interface:AppInstanceContentView.selectionActions": .init("选择与批量操作", []),
             "Interface:AppInstanceContentView.showInFinder": .init("在 Finder 中显示", []),
@@ -357,7 +357,7 @@ extension Messages {
             "Interface:AppInstanceContentView.status": .init("状态", []),
             "Interface:AppInstanceContentView.update": .init("更新", []),
             "Interface:AppInstanceContentView.updateCurrentResults": .init("更新当前结果…", []),
-            "Interface:AppInstanceContentView.updateSelectedContent": .init("更新所选内容…", []),
+            "Interface:AppInstanceContentView.updateSelectedContent": .init("更新所选资源…", []),
             "Interface:AppInstanceContentView.updateTo": .init("更新至 %1$@", [.text]),
             "Interface:AppInstanceContentView.versionColumn": .init("版本", []),
             "Interface:AppInstanceContentView.viewOnModrinth": .init("在 Modrinth 查看", []),

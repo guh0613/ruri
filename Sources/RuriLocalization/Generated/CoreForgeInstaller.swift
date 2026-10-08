@@ -46,12 +46,12 @@ extension Messages {
         public static var installerChecksumMissing: LocalizedMessage {
             .init(key: "CoreForgeInstaller.installerChecksumMissing", table: "Errors", fallback: "加载器安装包没有有效的 SHA-1 校验值")
         }
-        /// %1$@ 安装程序退出（%2$@）。日志：%3$@
+        /// %1$@ 安装程序已退出，退出码为 %2$@。日志：%3$@
         /// %4$@
         ///
         /// Resource: `Errors.CoreForgeInstaller.installerExited`.
         public static func installerExited(_ value0: String, _ value1: String, _ value2: String, _ value3: String) -> LocalizedMessage {
-            .init(key: "CoreForgeInstaller.installerExited", table: "Errors", fallback: "%1$@ 安装程序退出（%2$@）。日志：%3$@\n%4$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3)])
+            .init(key: "CoreForgeInstaller.installerExited", table: "Errors", fallback: "%1$@ 安装程序已退出，退出码为 %2$@。日志：%3$@\n%4$@", arguments: [.text(value0), .text(value1), .text(value2), .text(value3)])
         }
         /// 安装加载器需要 Java %1$@
         ///
@@ -143,11 +143,11 @@ extension Messages {
         public static func runInstaller(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreForgeInstaller.runInstaller", table: "Progress", fallback: "运行 %1$@ 安装程序", arguments: [.text(value0)])
         }
-        /// 校验加载器生成文件
+        /// 校验加载器生成的文件
         ///
         /// Resource: `Progress.CoreForgeInstaller.verifyGeneratedFiles`.
         public static var verifyGeneratedFiles: LocalizedMessage {
-            .init(key: "CoreForgeInstaller.verifyGeneratedFiles", table: "Progress", fallback: "校验加载器生成文件")
+            .init(key: "CoreForgeInstaller.verifyGeneratedFiles", table: "Progress", fallback: "校验加载器生成的文件")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreForgeInstaller.dependencyConflict": .init("已有加载器依赖与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或选择另一个 Minecraft 文件夹。", [.text]),
@@ -157,7 +157,7 @@ extension Messages {
             "Errors:CoreForgeInstaller.generatedFileChecksumFailed": .init("加载器生成文件校验失败：%1$@", [.text]),
             "Errors:CoreForgeInstaller.generatedManifestMismatch": .init("安装器生成的版本清单不一致", []),
             "Errors:CoreForgeInstaller.installerChecksumMissing": .init("加载器安装包没有有效的 SHA-1 校验值", []),
-            "Errors:CoreForgeInstaller.installerExited": .init("%1$@ 安装程序退出（%2$@）。日志：%3$@\n%4$@", [.text, .text, .text, .text]),
+            "Errors:CoreForgeInstaller.installerExited": .init("%1$@ 安装程序已退出，退出码为 %2$@。日志：%3$@\n%4$@", [.text, .text, .text, .text]),
             "Errors:CoreForgeInstaller.javaRequired": .init("安装加载器需要 Java %1$@", [.text]),
             "Errors:CoreForgeInstaller.legacyClientMissing": .init("旧版 Forge 安装包缺少内嵌客户端", []),
             "Errors:CoreForgeInstaller.legacyFileChecksumFailed": .init("旧版 Forge 文件校验失败", []),
@@ -173,7 +173,7 @@ extension Messages {
             "Progress:CoreForgeInstaller.downloadInstaller": .init("下载 %1$@ 安装程序", [.text]),
             "Progress:CoreForgeInstaller.prepareDependencies": .init("准备加载器依赖", []),
             "Progress:CoreForgeInstaller.runInstaller": .init("运行 %1$@ 安装程序", [.text]),
-            "Progress:CoreForgeInstaller.verifyGeneratedFiles": .init("校验加载器生成文件", []),
+            "Progress:CoreForgeInstaller.verifyGeneratedFiles": .init("校验加载器生成的文件", []),
         ]
     }
 }

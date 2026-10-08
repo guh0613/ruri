@@ -27,11 +27,11 @@ extension Messages {
         public static var automaticEstimate: LocalizedMessage {
             .init(key: "AppPreferencesView.automaticEstimate", table: "Interface", fallback: "自动估算")
         }
-        /// “自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。
+        /// “自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；模组文件则尝试 MCIM 镜像。
         ///
         /// Resource: `Interface.AppPreferencesView.automaticMirrorDetails`.
         public static var automaticMirrorDetails: LocalizedMessage {
-            .init(key: "AppPreferencesView.automaticMirrorDetails", table: "Interface", fallback: "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。")
+            .init(key: "AppPreferencesView.automaticMirrorDetails", table: "Interface", fallback: "“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；模组文件则尝试 MCIM 镜像。")
         }
         /// 自动检查更新
         ///
@@ -141,11 +141,11 @@ extension Messages {
         public static var globalGameSettingsDescription: LocalizedMessage {
             .init(key: "AppPreferencesView.globalGameSettingsDescription", table: "Interface", fallback: "设置 Java、内存、窗口和启动参数的默认值。")
         }
-        /// 未单独设置的实例将使用这些选项；保存后用于下一次启动。
+        /// 未单独设置的实例将使用这些默认值，下次启动时生效。
         ///
         /// Resource: `Interface.AppPreferencesView.inheritedLaunchSettingsDetails`.
         public static var inheritedLaunchSettingsDetails: LocalizedMessage {
-            .init(key: "AppPreferencesView.inheritedLaunchSettingsDetails", table: "Interface", fallback: "未单独设置的实例将使用这些选项；保存后用于下一次启动。")
+            .init(key: "AppPreferencesView.inheritedLaunchSettingsDetails", table: "Interface", fallback: "未单独设置的实例将使用这些默认值，下次启动时生效。")
         }
         /// 实例文件夹
         ///
@@ -296,7 +296,7 @@ extension Messages {
             "Interface:AppPreferencesView.aboutRuriDescription": .init("Minecraft Java 版启动器。与 Mojang、Microsoft 无隶属关系。", []),
             "Interface:AppPreferencesView.appearance": .init("外观", []),
             "Interface:AppPreferencesView.automaticEstimate": .init("自动估算", []),
-            "Interface:AppPreferencesView.automaticMirrorDetails": .init("“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；Mod 文件则回退到 MCIM 镜像。", []),
+            "Interface:AppPreferencesView.automaticMirrorDetails": .init("“自动切换”优先使用官方源，连接失败后尝试 BMCLAPI 镜像；模组文件则尝试 MCIM 镜像。", []),
             "Interface:AppPreferencesView.automaticallyCheckForUpdates": .init("自动检查更新", []),
             "Interface:AppPreferencesView.automaticallyInstallUpdates": .init("自动下载并安装更新", []),
             "Interface:AppPreferencesView.bmclapiMirror": .init("BMCLAPI 镜像服务", []),
@@ -315,7 +315,7 @@ extension Messages {
             "Interface:AppPreferencesView.general": .init("通用", []),
             "Interface:AppPreferencesView.globalGameSettings": .init("全局游戏设置", []),
             "Interface:AppPreferencesView.globalGameSettingsDescription": .init("设置 Java、内存、窗口和启动参数的默认值。", []),
-            "Interface:AppPreferencesView.inheritedLaunchSettingsDetails": .init("未单独设置的实例将使用这些选项；保存后用于下一次启动。", []),
+            "Interface:AppPreferencesView.inheritedLaunchSettingsDetails": .init("未单独设置的实例将使用这些默认值，下次启动时生效。", []),
             "Interface:AppPreferencesView.instanceFolders": .init("实例文件夹", []),
             "Interface:AppPreferencesView.lastUpdateCheck": .init("上次检查：%1$@", [.text]),
             "Interface:AppPreferencesView.light": .init("浅色", []),

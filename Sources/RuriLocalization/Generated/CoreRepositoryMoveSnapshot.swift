@@ -27,11 +27,11 @@ extension Messages {
         public static var missingTargetFolder: LocalizedMessage {
             .init(key: "CoreRepositoryMoveSnapshot.missingTargetFolder", table: "Errors", fallback: "找不到目标文件夹。")
         }
-        /// 源实例目录身份改变，请重新预览。
+        /// 原实例文件夹已被替换，请重新预览。
         ///
         /// Resource: `Errors.CoreRepositoryMoveSnapshot.sourceDirectoryChanged`.
         public static var sourceDirectoryChanged: LocalizedMessage {
-            .init(key: "CoreRepositoryMoveSnapshot.sourceDirectoryChanged", table: "Errors", fallback: "源实例目录身份改变，请重新预览。")
+            .init(key: "CoreRepositoryMoveSnapshot.sourceDirectoryChanged", table: "Errors", fallback: "原实例文件夹已被替换，请重新预览。")
         }
         /// 源版本文件夹已被替换，请重新预览。
         ///
@@ -68,7 +68,7 @@ extension Messages {
             "Errors:CoreRepositoryMoveSnapshot.instanceAlreadyInTargetFolder": .init("实例已位于所选文件夹中。", []),
             "Errors:CoreRepositoryMoveSnapshot.instanceNotInstalled": .init("请先安装实例，再移动到 Minecraft 文件夹。", []),
             "Errors:CoreRepositoryMoveSnapshot.missingTargetFolder": .init("找不到目标文件夹。", []),
-            "Errors:CoreRepositoryMoveSnapshot.sourceDirectoryChanged": .init("源实例目录身份改变，请重新预览。", []),
+            "Errors:CoreRepositoryMoveSnapshot.sourceDirectoryChanged": .init("原实例文件夹已被替换，请重新预览。", []),
             "Errors:CoreRepositoryMoveSnapshot.sourceVersionReplaced": .init("源版本文件夹已被替换，请重新预览。", []),
             "Errors:CoreRepositoryMoveSnapshot.stillHasDependentFiles": .init("“%1$@”仍依赖此版本的清单或游戏文件。请先移动依赖它的版本，或使用复制实例。", [.text]),
             "Errors:CoreRepositoryMoveSnapshot.stillReferencedVersion": .init("“%1$@”仍引用此版本，请先处理该版本。", [.text]),

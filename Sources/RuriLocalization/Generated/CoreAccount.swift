@@ -9,11 +9,11 @@ extension Messages {
         public static var externalAuth: LocalizedMessage {
             .init(key: "CoreAccount.externalAuth", table: "Core", fallback: "认证服务器")
         }
-        /// 外置认证 · %1$@
+        /// 第三方认证 · %1$@
         ///
         /// Resource: `Core.CoreAccount.externalServer`.
         public static func externalServer(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreAccount.externalServer", table: "Core", fallback: "外置认证 · %1$@", arguments: [.text(value0)])
+            .init(key: "CoreAccount.externalServer", table: "Core", fallback: "第三方认证 · %1$@", arguments: [.text(value0)])
         }
         /// Microsoft 账号
         ///
@@ -27,18 +27,18 @@ extension Messages {
         public static var offlineAccount: LocalizedMessage {
             .init(key: "CoreAccount.offlineAccount", table: "Core", fallback: "离线账号")
         }
-        /// 玩家名需为 3–16 位英文字母、数字或下划线。
+        /// 玩家名需为 3–16 个英文字母、数字或下划线。
         ///
         /// Resource: `Errors.CoreAccount.playerNameRule`.
         public static var playerNameRule: LocalizedMessage {
-            .init(key: "CoreAccount.playerNameRule", table: "Errors", fallback: "玩家名需为 3–16 位英文字母、数字或下划线。")
+            .init(key: "CoreAccount.playerNameRule", table: "Errors", fallback: "玩家名需为 3–16 个英文字母、数字或下划线。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreAccount.externalAuth": .init("认证服务器", []),
-            "Core:CoreAccount.externalServer": .init("外置认证 · %1$@", [.text]),
+            "Core:CoreAccount.externalServer": .init("第三方认证 · %1$@", [.text]),
             "Core:CoreAccount.microsoftAccount": .init("Microsoft 账号", []),
             "Core:CoreAccount.offlineAccount": .init("离线账号", []),
-            "Errors:CoreAccount.playerNameRule": .init("玩家名需为 3–16 位英文字母、数字或下划线。", []),
+            "Errors:CoreAccount.playerNameRule": .init("玩家名需为 3–16 个英文字母、数字或下划线。", []),
         ]
     }
 }

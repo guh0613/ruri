@@ -27,11 +27,11 @@ extension Messages {
         public static var accountType: LocalizedMessage {
             .init(key: "AccountCenter.accountType", table: "Accounts", fallback: "账号类型")
         }
-        /// 选择登录方式，开始你的下一段旅程。
+        /// 选择登录方式，添加用于游玩 Minecraft 的账号。
         ///
         /// Resource: `Accounts.AccountCenter.addAccountHelp`.
         public static var addAccountHelp: LocalizedMessage {
-            .init(key: "AccountCenter.addAccountHelp", table: "Accounts", fallback: "选择登录方式，开始你的下一段旅程。")
+            .init(key: "AccountCenter.addAccountHelp", table: "Accounts", fallback: "选择登录方式，添加用于游玩 Minecraft 的账号。")
         }
         /// 连接账号后即可管理披风。
         ///
@@ -45,11 +45,11 @@ extension Messages {
         public static var appearanceReset: LocalizedMessage {
             .init(key: "AccountCenter.appearanceReset", table: "Accounts", fallback: "已恢复默认外观。")
         }
-        /// 外观分类
+        /// 外观
         ///
         /// Resource: `Accounts.AccountCenter.appearanceSection`.
         public static var appearanceSection: LocalizedMessage {
-            .init(key: "AccountCenter.appearanceSection", table: "Accounts", fallback: "外观分类")
+            .init(key: "AccountCenter.appearanceSection", table: "Accounts", fallback: "外观")
         }
         /// 连接账号后即可管理皮肤和披风。
         ///
@@ -75,11 +75,11 @@ extension Messages {
         public static var armsChanged: LocalizedMessage {
             .init(key: "AccountCenter.armsChanged", table: "Accounts", fallback: "已切换手臂模型")
         }
-        /// Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。
+        /// Ruri 会复制授权码并打开 Microsoft 登录页面。粘贴授权码并完成授权后，Ruri 会自动登录。
         ///
         /// Resource: `Accounts.AccountCenter.browserLoginHelp`.
         public static var browserLoginHelp: LocalizedMessage {
-            .init(key: "AccountCenter.browserLoginHelp", table: "Accounts", fallback: "Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。")
+            .init(key: "AccountCenter.browserLoginHelp", table: "Accounts", fallback: "Ruri 会复制授权码并打开 Microsoft 登录页面。粘贴授权码并完成授权后，Ruri 会自动登录。")
         }
         /// 披风操作
         ///
@@ -99,17 +99,17 @@ extension Messages {
         public static var characterPreview: LocalizedMessage {
             .init(key: "AccountCenter.characterPreview", table: "Accounts", fallback: "可旋转的角色外观预览")
         }
-        /// 导入一张披风 PNG，或保持不使用披风。
+        /// 导入 PNG 披风文件，或选择不使用披风。
         ///
         /// Resource: `Accounts.AccountCenter.chooseCapeHelp`.
         public static var chooseCapeHelp: LocalizedMessage {
-            .init(key: "AccountCenter.chooseCapeHelp", table: "Accounts", fallback: "导入一张披风 PNG，或保持不使用披风。")
+            .init(key: "AccountCenter.chooseCapeHelp", table: "Accounts", fallback: "导入 PNG 披风文件，或选择不使用披风。")
         }
-        /// 导入一张皮肤 PNG，旋转查看角色并选择手臂模型。
+        /// 导入 PNG 皮肤文件，旋转角色查看效果，并选择手臂模型。
         ///
         /// Resource: `Accounts.AccountCenter.chooseSkinHelp`.
         public static var chooseSkinHelp: LocalizedMessage {
-            .init(key: "AccountCenter.chooseSkinHelp", table: "Accounts", fallback: "导入一张皮肤 PNG，旋转查看角色并选择手臂模型。")
+            .init(key: "AccountCenter.chooseSkinHelp", table: "Accounts", fallback: "导入 PNG 皮肤文件，旋转角色查看效果，并选择手臂模型。")
         }
         /// 经典
         ///
@@ -123,11 +123,11 @@ extension Messages {
         public static var clearLocalPreview: LocalizedMessage {
             .init(key: "AccountCenter.clearLocalPreview", table: "Accounts", fallback: "恢复默认皮肤")
         }
-        /// 拖动角色查看各个角度，确认后应用到此账号。
+        /// 拖动角色查看不同角度，确认后将外观应用到此账号。
         ///
         /// Resource: `Accounts.AccountCenter.confirmAppearanceHelp`.
         public static var confirmAppearanceHelp: LocalizedMessage {
-            .init(key: "AccountCenter.confirmAppearanceHelp", table: "Accounts", fallback: "拖动角色查看各个角度，确认后应用到此账号。")
+            .init(key: "AccountCenter.confirmAppearanceHelp", table: "Accounts", fallback: "拖动角色查看不同角度，确认后将外观应用到此账号。")
         }
         /// 恢复默认
         ///
@@ -189,11 +189,11 @@ extension Messages {
         public static var invalidSavedSkin: LocalizedMessage {
             .init(key: "AccountCenter.invalidSavedSkin", table: "Accounts", fallback: "无法读取保存的皮肤，文件可能已损坏。")
         }
-        /// 皮肤名称需为 1–80 个字符。
+        /// 请输入 1–80 个字符的皮肤名称。
         ///
         /// Resource: `Accounts.AccountCenter.invalidSkinName`.
         public static var invalidSkinName: LocalizedMessage {
-            .init(key: "AccountCenter.invalidSkinName", table: "Accounts", fallback: "皮肤名称需为 1–80 个字符。")
+            .init(key: "AccountCenter.invalidSkinName", table: "Accounts", fallback: "请输入 1–80 个字符的皮肤名称。")
         }
         /// 旧版皮肤使用经典手臂，预览会自动补全左右肢体。
         ///
@@ -207,11 +207,11 @@ extension Messages {
         public static var libraryEmpty: LocalizedMessage {
             .init(key: "AccountCenter.libraryEmpty", table: "Accounts", fallback: "皮肤库为空")
         }
-        /// 导入 PNG，或把账号当前皮肤保存到这里。
+        /// 导入 PNG 皮肤文件，或保存账号当前使用的皮肤。
         ///
         /// Resource: `Accounts.AccountCenter.libraryEmptyHelp`.
         public static var libraryEmptyHelp: LocalizedMessage {
-            .init(key: "AccountCenter.libraryEmptyHelp", table: "Accounts", fallback: "导入 PNG，或把账号当前皮肤保存到这里。")
+            .init(key: "AccountCenter.libraryEmptyHelp", table: "Accounts", fallback: "导入 PNG 皮肤文件，或保存账号当前使用的皮肤。")
         }
         /// 收藏你喜欢的皮肤，随时预览和使用。
         ///
@@ -231,11 +231,11 @@ extension Messages {
         public static var localPreviewSaved: LocalizedMessage {
             .init(key: "AccountCenter.localPreviewSaved", table: "Accounts", fallback: "皮肤已应用，下次启动游戏时生效。")
         }
-        /// 这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。
+        /// 退出登录并从 Ruri 中移除此账号。游戏实例和皮肤库会保留。
         ///
         /// Resource: `Accounts.AccountCenter.logoutHelp`.
         public static var logoutHelp: LocalizedMessage {
-            .init(key: "AccountCenter.logoutHelp", table: "Accounts", fallback: "这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。")
+            .init(key: "AccountCenter.logoutHelp", table: "Accounts", fallback: "退出登录并从 Ruri 中移除此账号。游戏实例和皮肤库会保留。")
         }
         /// 退出此账号？
         ///
@@ -243,17 +243,17 @@ extension Messages {
         public static var logoutTitle: LocalizedMessage {
             .init(key: "AccountCenter.logoutTitle", table: "Accounts", fallback: "退出此账号？")
         }
-        /// 使用微软账号登录
+        /// 使用 Microsoft 账号登录
         ///
         /// Resource: `Accounts.AccountCenter.microsoftLogin`.
         public static var microsoftLogin: LocalizedMessage {
-            .init(key: "AccountCenter.microsoftLogin", table: "Accounts", fallback: "使用微软账号登录")
+            .init(key: "AccountCenter.microsoftLogin", table: "Accounts", fallback: "使用 Microsoft 账号登录")
         }
-        /// 微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。
+        /// Microsoft 账号支持 64 × 64 或 64 × 32 像素的皮肤。披风可从账号已拥有的款式中选择。
         ///
         /// Resource: `Accounts.AccountCenter.microsoftSkinHelp`.
         public static var microsoftSkinHelp: LocalizedMessage {
-            .init(key: "AccountCenter.microsoftSkinHelp", table: "Accounts", fallback: "微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。")
+            .init(key: "AccountCenter.microsoftSkinHelp", table: "Accounts", fallback: "Microsoft 账号支持 64 × 64 或 64 × 32 像素的皮肤。披风可从账号已拥有的款式中选择。")
         }
         /// 离线账号可用于本地游戏，无法加入要求正版验证的服务器。
         ///
@@ -291,11 +291,11 @@ extension Messages {
         public static var previewBeforeApply: LocalizedMessage {
             .init(key: "AccountCenter.previewBeforeApply", table: "Accounts", fallback: "确认你的新外观")
         }
-        /// 重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。
+        /// 重新登录 %1$@，更新保存在钥匙串中的登录凭据。
         ///
         /// Resource: `Accounts.AccountCenter.reloginHelp`.
         public static func reloginHelp(_ value0: String) -> LocalizedMessage {
-            .init(key: "AccountCenter.reloginHelp", table: "Accounts", fallback: "重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。", arguments: [.text(value0)])
+            .init(key: "AccountCenter.reloginHelp", table: "Accounts", fallback: "重新登录 %1$@，更新保存在钥匙串中的登录凭据。", arguments: [.text(value0)])
         }
         /// 重新登录
         ///
@@ -447,11 +447,11 @@ extension Messages {
         public static func textureSize(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
             .init(key: "AccountCenter.textureSize", table: "Accounts", fallback: "%1$lld × %2$lld PNG", arguments: [.integer(value0), .integer(value1)])
         }
-        /// 有 %1$lld 份收藏无法读取，其他收藏仍可使用。
+        /// 有 %1$lld 款已收藏的皮肤无法读取，其他皮肤仍可使用。
         ///
         /// Resource: `Accounts.AccountCenter.unreadableSkins`.
         public static func unreadableSkins(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AccountCenter.unreadableSkins", table: "Accounts", fallback: "有 %1$lld 份收藏无法读取，其他收藏仍可使用。", arguments: [.integer(value0)])
+            .init(key: "AccountCenter.unreadableSkins", table: "Accounts", fallback: "有 %1$lld 款已收藏的皮肤无法读取，其他皮肤仍可使用。", arguments: [.integer(value0)])
         }
         /// 尚未连接
         ///
@@ -483,40 +483,40 @@ extension Messages {
         public static var welcome: LocalizedMessage {
             .init(key: "AccountCenter.welcome", table: "Accounts", fallback: "添加你的 Minecraft 账号")
         }
-        /// 登录微软账号、连接第三方认证服务器，或创建一个离线角色。
+        /// 登录 Microsoft 账号、连接第三方认证服务器，或添加离线账号。
         ///
         /// Resource: `Accounts.AccountCenter.welcomeHelp`.
         public static var welcomeHelp: LocalizedMessage {
-            .init(key: "AccountCenter.welcomeHelp", table: "Accounts", fallback: "登录微软账号、连接第三方认证服务器，或创建一个离线角色。")
+            .init(key: "AccountCenter.welcomeHelp", table: "Accounts", fallback: "登录 Microsoft 账号、连接第三方认证服务器，或添加离线账号。")
         }
-        /// 登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。
+        /// 登录的角色与原账号不一致。请使用原来的 Microsoft 账号重新登录，或通过“添加账号”添加其他账号。
         ///
         /// Resource: `Accounts.AccountCenter.wrongLoginAccount`.
         public static var wrongLoginAccount: LocalizedMessage {
-            .init(key: "AccountCenter.wrongLoginAccount", table: "Accounts", fallback: "登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。")
+            .init(key: "AccountCenter.wrongLoginAccount", table: "Accounts", fallback: "登录的角色与原账号不一致。请使用原来的 Microsoft 账号重新登录，或通过“添加账号”添加其他账号。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Accounts:AccountCenter.accountActions": .init("账号操作", []),
             "Accounts:AccountCenter.accountCount": .init("%1$lld 个账号", [.integer]),
             "Accounts:AccountCenter.accountDetails": .init("账号信息", []),
             "Accounts:AccountCenter.accountType": .init("账号类型", []),
-            "Accounts:AccountCenter.addAccountHelp": .init("选择登录方式，开始你的下一段旅程。", []),
+            "Accounts:AccountCenter.addAccountHelp": .init("选择登录方式，添加用于游玩 Minecraft 的账号。", []),
             "Accounts:AccountCenter.appearanceNotLoaded": .init("连接账号后即可管理披风。", []),
             "Accounts:AccountCenter.appearanceReset": .init("已恢复默认外观。", []),
-            "Accounts:AccountCenter.appearanceSection": .init("外观分类", []),
+            "Accounts:AccountCenter.appearanceSection": .init("外观", []),
             "Accounts:AccountCenter.appearanceUnavailableOffline": .init("连接账号后即可管理皮肤和披风。", []),
             "Accounts:AccountCenter.applyCape": .init("应用披风", []),
             "Accounts:AccountCenter.applyingAppearance": .init("正在应用外观…", []),
             "Accounts:AccountCenter.armsChanged": .init("已切换手臂模型", []),
-            "Accounts:AccountCenter.browserLoginHelp": .init("Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。", []),
+            "Accounts:AccountCenter.browserLoginHelp": .init("Ruri 会复制授权码并打开 Microsoft 登录页面。粘贴授权码并完成授权后，Ruri 会自动登录。", []),
             "Accounts:AccountCenter.capeActions": .init("披风操作", []),
             "Accounts:AccountCenter.capeSection": .init("披风", []),
             "Accounts:AccountCenter.characterPreview": .init("可旋转的角色外观预览", []),
-            "Accounts:AccountCenter.chooseCapeHelp": .init("导入一张披风 PNG，或保持不使用披风。", []),
-            "Accounts:AccountCenter.chooseSkinHelp": .init("导入一张皮肤 PNG，旋转查看角色并选择手臂模型。", []),
+            "Accounts:AccountCenter.chooseCapeHelp": .init("导入 PNG 披风文件，或选择不使用披风。", []),
+            "Accounts:AccountCenter.chooseSkinHelp": .init("导入 PNG 皮肤文件，旋转角色查看效果，并选择手臂模型。", []),
             "Accounts:AccountCenter.classicArms": .init("经典", []),
             "Accounts:AccountCenter.clearLocalPreview": .init("恢复默认皮肤", []),
-            "Accounts:AccountCenter.confirmAppearanceHelp": .init("拖动角色查看各个角度，确认后应用到此账号。", []),
+            "Accounts:AccountCenter.confirmAppearanceHelp": .init("拖动角色查看不同角度，确认后将外观应用到此账号。", []),
             "Accounts:AccountCenter.confirmReset": .init("恢复默认", []),
             "Accounts:AccountCenter.connected": .init("已连接", []),
             "Accounts:AccountCenter.connecting": .init("正在连接账号…", []),
@@ -527,24 +527,24 @@ extension Messages {
             "Accounts:AccountCenter.draftPreview": .init("预览 · 尚未应用", []),
             "Accounts:AccountCenter.importSkin": .init("导入皮肤…", []),
             "Accounts:AccountCenter.invalidSavedSkin": .init("无法读取保存的皮肤，文件可能已损坏。", []),
-            "Accounts:AccountCenter.invalidSkinName": .init("皮肤名称需为 1–80 个字符。", []),
+            "Accounts:AccountCenter.invalidSkinName": .init("请输入 1–80 个字符的皮肤名称。", []),
             "Accounts:AccountCenter.legacySkinHelp": .init("旧版皮肤使用经典手臂，预览会自动补全左右肢体。", []),
             "Accounts:AccountCenter.libraryEmpty": .init("皮肤库为空", []),
-            "Accounts:AccountCenter.libraryEmptyHelp": .init("导入 PNG，或把账号当前皮肤保存到这里。", []),
+            "Accounts:AccountCenter.libraryEmptyHelp": .init("导入 PNG 皮肤文件，或保存账号当前使用的皮肤。", []),
             "Accounts:AccountCenter.libraryHelp": .init("收藏你喜欢的皮肤，随时预览和使用。", []),
             "Accounts:AccountCenter.localAccount": .init("本地账号", []),
             "Accounts:AccountCenter.localPreviewSaved": .init("皮肤已应用，下次启动游戏时生效。", []),
-            "Accounts:AccountCenter.logoutHelp": .init("这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。", []),
+            "Accounts:AccountCenter.logoutHelp": .init("退出登录并从 Ruri 中移除此账号。游戏实例和皮肤库会保留。", []),
             "Accounts:AccountCenter.logoutTitle": .init("退出此账号？", []),
-            "Accounts:AccountCenter.microsoftLogin": .init("使用微软账号登录", []),
-            "Accounts:AccountCenter.microsoftSkinHelp": .init("微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。", []),
+            "Accounts:AccountCenter.microsoftLogin": .init("使用 Microsoft 账号登录", []),
+            "Accounts:AccountCenter.microsoftSkinHelp": .init("Microsoft 账号支持 64 × 64 或 64 × 32 像素的皮肤。披风可从账号已拥有的款式中选择。", []),
             "Accounts:AccountCenter.offlineLoginHelp": .init("离线账号可用于本地游戏，无法加入要求正版验证的服务器。", []),
             "Accounts:AccountCenter.offlinePreviewHelp": .init("重新启动游戏后，所选皮肤将在本机生效。", []),
             "Accounts:AccountCenter.outerLayer": .init("显示外层皮肤", []),
             "Accounts:AccountCenter.placeholderPreview": .init("示意模型 · 未加载皮肤", []),
             "Accounts:AccountCenter.previewAndUse": .init("预览与使用", []),
             "Accounts:AccountCenter.previewBeforeApply": .init("确认你的新外观", []),
-            "Accounts:AccountCenter.reloginHelp": .init("重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。", [.text]),
+            "Accounts:AccountCenter.reloginHelp": .init("重新登录 %1$@，更新保存在钥匙串中的登录凭据。", [.text]),
             "Accounts:AccountCenter.reloginTitle": .init("重新登录", []),
             "Accounts:AccountCenter.removeAccountHelp": .init("这会移除 Ruri 中保存的账号及其登录凭据。游戏实例和皮肤库会保留。", []),
             "Accounts:AccountCenter.removeAccountTitle": .init("移除“%1$@”？", [.text]),
@@ -570,14 +570,14 @@ extension Messages {
             "Accounts:AccountCenter.skinSection": .init("皮肤", []),
             "Accounts:AccountCenter.slimArms": .init("纤细", []),
             "Accounts:AccountCenter.textureSize": .init("%1$lld × %2$lld PNG", [.integer, .integer]),
-            "Accounts:AccountCenter.unreadableSkins": .init("有 %1$lld 份收藏无法读取，其他收藏仍可使用。", [.integer]),
+            "Accounts:AccountCenter.unreadableSkins": .init("有 %1$lld 款已收藏的皮肤无法读取，其他皮肤仍可使用。", [.integer]),
             "Accounts:AccountCenter.unverified": .init("尚未连接", []),
             "Accounts:AccountCenter.useLittleSkin": .init("使用 LittleSkin", []),
             "Accounts:AccountCenter.useLocalPreview": .init("应用皮肤", []),
             "Accounts:AccountCenter.useSkin": .init("使用…", []),
             "Accounts:AccountCenter.welcome": .init("添加你的 Minecraft 账号", []),
-            "Accounts:AccountCenter.welcomeHelp": .init("登录微软账号、连接第三方认证服务器，或创建一个离线角色。", []),
-            "Accounts:AccountCenter.wrongLoginAccount": .init("登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。", []),
+            "Accounts:AccountCenter.welcomeHelp": .init("登录 Microsoft 账号、连接第三方认证服务器，或添加离线账号。", []),
+            "Accounts:AccountCenter.wrongLoginAccount": .init("登录的角色与原账号不一致。请使用原来的 Microsoft 账号重新登录，或通过“添加账号”添加其他账号。", []),
         ]
     }
 }

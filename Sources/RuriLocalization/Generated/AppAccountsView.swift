@@ -21,11 +21,11 @@ extension Messages {
         public static var appearance: LocalizedMessage {
             .init(key: "AppAccountsView.appearance", table: "Interface", fallback: "皮肤与披风…")
         }
-        /// 登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。
+        /// 登录凭据保存在 macOS 钥匙串中。第三方账号可用于支持该认证服务的服务器；离线账号无法加入要求正版验证的服务器。
         ///
         /// Resource: `Interface.AppAccountsView.credentials`.
         public static var credentials: LocalizedMessage {
-            .init(key: "AppAccountsView.credentials", table: "Interface", fallback: "登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。")
+            .init(key: "AppAccountsView.credentials", table: "Interface", fallback: "登录凭据保存在 macOS 钥匙串中。第三方账号可用于支持该认证服务的服务器；离线账号无法加入要求正版验证的服务器。")
         }
         /// 当前使用
         ///
@@ -33,11 +33,11 @@ extension Messages {
         public static var currentAccount: LocalizedMessage {
             .init(key: "AppAccountsView.currentAccount", table: "Interface", fallback: "当前使用")
         }
-        /// 添加 Microsoft、外置认证或离线账号。
+        /// 添加 Microsoft、第三方认证或离线账号。
         ///
         /// Resource: `Interface.AppAccountsView.emptyState`.
         public static var emptyState: LocalizedMessage {
-            .init(key: "AppAccountsView.emptyState", table: "Interface", fallback: "添加 Microsoft、外置认证或离线账号。")
+            .init(key: "AppAccountsView.emptyState", table: "Interface", fallback: "添加 Microsoft、第三方认证或离线账号。")
         }
         /// 刷新登录状态
         ///
@@ -79,9 +79,9 @@ extension Messages {
             "Interface:AppAccountsView.account": .init("账号", []),
             "Interface:AppAccountsView.addAccount": .init("添加账号", []),
             "Interface:AppAccountsView.appearance": .init("皮肤与披风…", []),
-            "Interface:AppAccountsView.credentials": .init("登录凭据保存在 macOS 钥匙串中。外置认证用于对应认证站支持的服务器；离线身份不支持正版验证服务器。", []),
+            "Interface:AppAccountsView.credentials": .init("登录凭据保存在 macOS 钥匙串中。第三方账号可用于支持该认证服务的服务器；离线账号无法加入要求正版验证的服务器。", []),
             "Interface:AppAccountsView.currentAccount": .init("当前使用", []),
-            "Interface:AppAccountsView.emptyState": .init("添加 Microsoft、外置认证或离线账号。", []),
+            "Interface:AppAccountsView.emptyState": .init("添加 Microsoft、第三方认证或离线账号。", []),
             "Interface:AppAccountsView.refreshLogin": .init("刷新登录状态", []),
             "Interface:AppAccountsView.relogin": .init("重新登录", []),
             "Interface:AppAccountsView.removeFromRuri": .init("从 Ruri 移除账号", []),

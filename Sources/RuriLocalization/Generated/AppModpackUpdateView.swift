@@ -69,11 +69,11 @@ extension Messages {
         public static var downloadsPage: LocalizedMessage {
             .init(key: "AppModpackUpdateView.downloadsPage", table: "Interface", fallback: "下载页面")
         }
-        /// 上次更新尚未完成。恢复后会保留已成功提交的版本，或还原更新前的文件。
+        /// 上次更新尚未完成。恢复时会保留已成功安装的版本，或还原更新前的文件。
         ///
         /// Resource: `Interface.AppModpackUpdateView.incompleteUpdate`.
         public static var incompleteUpdate: LocalizedMessage {
-            .init(key: "AppModpackUpdateView.incompleteUpdate", table: "Interface", fallback: "上次更新尚未完成。恢复后会保留已成功提交的版本，或还原更新前的文件。")
+            .init(key: "AppModpackUpdateView.incompleteUpdate", table: "Interface", fallback: "上次更新尚未完成。恢复时会保留已成功安装的版本，或还原更新前的文件。")
         }
         /// 保留本地
         ///
@@ -87,11 +87,11 @@ extension Messages {
         public static var loadingVersions: LocalizedMessage {
             .init(key: "AppModpackUpdateView.loadingVersions", table: "Interface", fallback: "正在获取版本列表…")
         }
-        /// 存档和个人新增文件保留。本地修改的配置默认保留，可逐项更改。更新后可回退。
+        /// 存档和个人添加的文件会保留。本地修改的配置默认保留，也可逐项选择是否替换。更新后可以回退。
         ///
         /// Resource: `Interface.AppModpackUpdateView.localChangesHelp`.
         public static var localChangesHelp: LocalizedMessage {
-            .init(key: "AppModpackUpdateView.localChangesHelp", table: "Interface", fallback: "存档和个人新增文件保留。本地修改的配置默认保留，可逐项更改。更新后可回退。")
+            .init(key: "AppModpackUpdateView.localChangesHelp", table: "Interface", fallback: "存档和个人添加的文件会保留。本地修改的配置默认保留，也可逐项选择是否替换。更新后可以回退。")
         }
         /// 可选择下载好的 Modrinth、CurseForge、HMCL 或 MCBBS 整合包文件。
         ///
@@ -177,10 +177,10 @@ extension Messages {
             "Interface:AppModpackUpdateView.currentVersion": .init("当前版本", []),
             "Interface:AppModpackUpdateView.downloadModpackVersion": .init("下载整合包版本", []),
             "Interface:AppModpackUpdateView.downloadsPage": .init("下载页面", []),
-            "Interface:AppModpackUpdateView.incompleteUpdate": .init("上次更新尚未完成。恢复后会保留已成功提交的版本，或还原更新前的文件。", []),
+            "Interface:AppModpackUpdateView.incompleteUpdate": .init("上次更新尚未完成。恢复时会保留已成功安装的版本，或还原更新前的文件。", []),
             "Interface:AppModpackUpdateView.keepLocalChanges": .init("保留本地", []),
             "Interface:AppModpackUpdateView.loadingVersions": .init("正在获取版本列表…", []),
-            "Interface:AppModpackUpdateView.localChangesHelp": .init("存档和个人新增文件保留。本地修改的配置默认保留，可逐项更改。更新后可回退。", []),
+            "Interface:AppModpackUpdateView.localChangesHelp": .init("存档和个人添加的文件会保留。本地修改的配置默认保留，也可逐项选择是否替换。更新后可以回退。", []),
             "Interface:AppModpackUpdateView.localPackHelp": .init("可选择下载好的 Modrinth、CurseForge、HMCL 或 MCBBS 整合包文件。", []),
             "Interface:AppModpackUpdateView.minecraftVersionWarning": .init("此次更新会更换 Minecraft 版本。回退不还原存档，进入新版游戏前请先备份。", []),
             "Interface:AppModpackUpdateView.missingOriginalFiles": .init("缺少整合包原始文件记录，无法区分整合包文件和个人文件。", []),

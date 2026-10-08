@@ -9,11 +9,11 @@ extension Messages {
         public static var adjustPriority: LocalizedMessage {
             .init(key: "AppWorldDataPacksView.adjustPriority", table: "Interface", fallback: "调整优先级…")
         }
-        /// 修改前会保留上一份世界配置备份。
+        /// 修改前会备份当前的存档配置。
         ///
         /// Resource: `Interface.AppWorldDataPacksView.backupBeforeEditing`.
         public static var backupBeforeEditing: LocalizedMessage {
-            .init(key: "AppWorldDataPacksView.backupBeforeEditing", table: "Interface", fallback: "修改前会保留上一份世界配置备份。")
+            .init(key: "AppWorldDataPacksView.backupBeforeEditing", table: "Interface", fallback: "修改前会备份当前的存档配置。")
         }
         /// 移到废纸篓
         ///
@@ -137,7 +137,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppWorldDataPacksView.adjustPriority": .init("调整优先级…", []),
-            "Interface:AppWorldDataPacksView.backupBeforeEditing": .init("修改前会保留上一份世界配置备份。", []),
+            "Interface:AppWorldDataPacksView.backupBeforeEditing": .init("修改前会备份当前的存档配置。", []),
             "Interface:AppWorldDataPacksView.confirmMoveToTrash": .init("移到废纸篓", []),
             "Interface:AppWorldDataPacksView.dataPackAvailability": .init("适用于 Minecraft 1.13 及以后版本，下次进入世界时生效。移除涉及世界生成的数据包前，建议先备份存档。", []),
             "Interface:AppWorldDataPacksView.dataPackImportInstructions": .init("导入根目录包含 pack.mcmeta 的 ZIP 或文件夹。游戏与模组自带的数据包不在此列表中。", []),

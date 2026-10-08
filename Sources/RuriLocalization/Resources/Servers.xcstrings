@@ -68,7 +68,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "把服务器添加到所选实例的多人游戏列表，然后启动并连接"
+            "value" : "将服务器添加到所选实例的多人游戏列表，再启动游戏并连接。"
           }
         }
       }
@@ -320,7 +320,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "拷贝地址"
+            "value" : "复制地址"
           }
         }
       }
@@ -338,7 +338,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "从此实例的游戏列表移除服务器？Ruri 中的设置和历史记录会保留。"
+            "value" : "从此实例的多人游戏列表中移除此服务器？Ruri 中的设置和游玩记录会保留。"
           }
         }
       }
@@ -356,7 +356,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "存档和服务器启动目标不能同时指定。"
+            "value" : "一次只能选择进入存档或加入服务器。"
           }
         }
       }
@@ -446,7 +446,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "添加一个地址，或从实例的多人游戏列表开始。"
+            "value" : "添加服务器地址，或查看实例中已有的多人游戏列表。"
           }
         }
       }
@@ -500,7 +500,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未能确认离开时间，可能包含菜单停留"
+            "value" : "离开时间未知，估算时长可能包含停留在菜单的时间。"
           }
         }
       }
@@ -572,7 +572,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "服务器只显示在 Ruri 的服务器页面中，加入时会添加到所选实例。"
+            "value" : "服务器会保存在 Ruri 的服务器页面中，加入时再添加到所选实例的多人游戏列表。"
           }
         }
       }
@@ -824,7 +824,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "服务器地址无效，请输入域名、IP 或主机:端口。"
+            "value" : "请输入有效的服务器地址，例如域名、IP 地址或“主机:端口”。"
           }
         }
       }
@@ -932,7 +932,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用所选实例启动游戏并直接连接到此服务器"
+            "value" : "使用所选实例启动游戏并连接到此服务器。"
           }
         }
       }
@@ -986,7 +986,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最近成功查询"
+            "value" : "上次成功查询"
           }
         }
       }
@@ -1022,7 +1022,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "旧版整次归属"
+            "value" : "旧版记录按整次游玩统计"
           }
         }
       }
@@ -1058,7 +1058,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "部分实例列表无法读取"
+            "value" : "部分实例的服务器列表无法读取"
           }
         }
       }
@@ -1076,7 +1076,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "服务器条目数量超过限制。"
+            "value" : "服务器数量超过限制。"
           }
         }
       }
@@ -1112,7 +1112,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在读取服务器"
+            "value" : "正在读取服务器列表…"
           }
         }
       }
@@ -1130,7 +1130,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例中的服务器条目"
+            "value" : "实例中的服务器"
           }
         }
       }
@@ -1364,7 +1364,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "暂无可统计的游玩记录"
+            "value" : "暂无游玩记录"
           }
         }
       }
@@ -1472,7 +1472,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "找不到服务器条目，请刷新后重试。"
+            "value" : "找不到此服务器，请刷新列表后重试。"
           }
         }
       }
@@ -1760,7 +1760,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询失败仍可保存或尝试加入。返回的版本和人数由服务器提供。"
+            "value" : "查询失败后仍可保存服务器或尝试加入。版本和在线人数由服务器提供。"
           }
         }
       }
@@ -1778,7 +1778,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询中"
+            "value" : "正在查询…"
           }
         }
       }
@@ -1958,7 +1958,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "拖移以调整顺序，与游戏内多人游戏列表一致。"
+            "value" : "拖动以调整服务器顺序，游戏中的多人游戏列表会同步更新。"
           }
         }
       }
@@ -2012,7 +2012,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏运行中，列表只读"
+            "value" : "游戏正在运行，暂时无法修改列表"
           }
         }
       }
@@ -2066,7 +2066,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "添加到实例会写入该实例的多人游戏列表，在游戏内同样可见。"
+            "value" : "添加后，此服务器会显示在该实例的多人游戏列表中。"
           }
         }
       }
@@ -2084,7 +2084,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "即使没有实例列出，也保存在 Ruri 中"
+            "value" : "未添加到任何实例时，仍保存在 Ruri 中"
           }
         }
       }
@@ -2156,7 +2156,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "别名、备注和首选实例只保存在 Ruri 中，不会修改游戏内的服务器列表。"
+            "value" : "别名、备注和首选实例仅保存在 Ruri 中，不影响游戏中的服务器列表。"
           }
         }
       }
@@ -2174,7 +2174,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列表由共用此游戏目录的实例共享。"
+            "value" : "使用同一游戏文件夹的实例共用此列表。"
           }
         }
       }

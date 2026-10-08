@@ -3,29 +3,29 @@ import Foundation
 
 extension Messages {
     public enum CLIInterface {
-        /// 账户已移除，但凭据或外观数据清理失败。
+        /// 账号已移除，但凭据或外观数据清理失败。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountCleanupFailed`.
         public static var accountCleanupFailed: LocalizedMessage {
-            .init(key: "CLIInterface.accountCleanupFailed", table: "CLIInterface", fallback: "账户已移除，但凭据或外观数据清理失败。")
+            .init(key: "CLIInterface.accountCleanupFailed", table: "CLIInterface", fallback: "账号已移除，但凭据或外观数据清理失败。")
         }
-        /// 账户管理与登录
+        /// 账号管理与登录
         ///
         /// Resource: `CLIInterface.CLIInterface.accountCommands`.
         public static var accountCommands: LocalizedMessage {
-            .init(key: "CLIInterface.accountCommands", table: "CLIInterface", fallback: "账户管理与登录")
+            .init(key: "CLIInterface.accountCommands", table: "CLIInterface", fallback: "账号管理与登录")
         }
-        /// 账户身份已发生变化。
+        /// 账号身份已发生变化。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountIdentityChanged`.
         public static var accountIdentityChanged: LocalizedMessage {
-            .init(key: "CLIInterface.accountIdentityChanged", table: "CLIInterface", fallback: "账户身份已发生变化。")
+            .init(key: "CLIInterface.accountIdentityChanged", table: "CLIInterface", fallback: "账号身份已发生变化。")
         }
-        /// 列出账户，不显示凭据。
+        /// 列出账号，不显示凭据。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountListHelp`.
         public static var accountListHelp: LocalizedMessage {
-            .init(key: "CLIInterface.accountListHelp", table: "CLIInterface", fallback: "列出账户，不显示凭据。")
+            .init(key: "CLIInterface.accountListHelp", table: "CLIInterface", fallback: "列出账号，不显示凭据。")
         }
         /// 取消待完成的登录流程。
         ///
@@ -33,11 +33,11 @@ extension Messages {
         public static var accountLoginCancelHelp: LocalizedMessage {
             .init(key: "CLIInterface.accountLoginCancelHelp", table: "CLIInterface", fallback: "取消待完成的登录流程。")
         }
-        /// Microsoft 与外置登录
+        /// Microsoft 与第三方账号登录
         ///
         /// Resource: `CLIInterface.CLIInterface.accountLoginCommands`.
         public static var accountLoginCommands: LocalizedMessage {
-            .init(key: "CLIInterface.accountLoginCommands", table: "CLIInterface", fallback: "Microsoft 与外置登录")
+            .init(key: "CLIInterface.accountLoginCommands", table: "CLIInterface", fallback: "Microsoft 与第三方账号登录")
         }
         /// 等待授权完成并保存所选角色。
         ///
@@ -45,71 +45,71 @@ extension Messages {
         public static var accountLoginCompleteHelp: LocalizedMessage {
             .init(key: "CLIInterface.accountLoginCompleteHelp", table: "CLIInterface", fallback: "等待授权完成并保存所选角色。")
         }
-        /// 开始分步完成的 Microsoft 或外置登录。
+        /// 开始 Microsoft 或第三方账号登录流程，稍后完成授权。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountLoginStartHelp`.
         public static var accountLoginStartHelp: LocalizedMessage {
-            .init(key: "CLIInterface.accountLoginStartHelp", table: "CLIInterface", fallback: "开始分步完成的 Microsoft 或外置登录。")
+            .init(key: "CLIInterface.accountLoginStartHelp", table: "CLIInterface", fallback: "开始 Microsoft 或第三方账号登录流程，稍后完成授权。")
         }
-        /// 注销外置登录凭据并移除账户。
+        /// 注销第三方登录凭据并移除账号。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountLogoutHelp`.
         public static var accountLogoutHelp: LocalizedMessage {
-            .init(key: "CLIInterface.accountLogoutHelp", table: "CLIInterface", fallback: "注销外置登录凭据并移除账户。")
+            .init(key: "CLIInterface.accountLogoutHelp", table: "CLIInterface", fallback: "注销第三方登录凭据并移除账号。")
         }
-        /// 找不到账户。
+        /// 找不到账号。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountNotFound`.
         public static var accountNotFound: LocalizedMessage {
-            .init(key: "CLIInterface.accountNotFound", table: "CLIInterface", fallback: "找不到账户。")
+            .init(key: "CLIInterface.accountNotFound", table: "CLIInterface", fallback: "找不到账号。")
         }
-        /// 添加或复用离线账户。
+        /// 添加或复用离线账号。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountOfflineHelp`.
         public static var accountOfflineHelp: LocalizedMessage {
-            .init(key: "CLIInterface.accountOfflineHelp", table: "CLIInterface", fallback: "添加或复用离线账户。")
+            .init(key: "CLIInterface.accountOfflineHelp", table: "CLIInterface", fallback: "添加或复用离线账号。")
         }
-        /// 账户的登录服务类型不匹配。
+        /// 账号的登录服务类型不匹配。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountProviderMismatch`.
         public static var accountProviderMismatch: LocalizedMessage {
-            .init(key: "CLIInterface.accountProviderMismatch", table: "CLIInterface", fallback: "账户的登录服务类型不匹配。")
+            .init(key: "CLIInterface.accountProviderMismatch", table: "CLIInterface", fallback: "账号的登录服务类型不匹配。")
         }
-        /// 刷新已保存账户的凭据。
+        /// 刷新已保存账号的凭据。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountRefreshHelp`.
         public static var accountRefreshHelp: LocalizedMessage {
-            .init(key: "CLIInterface.accountRefreshHelp", table: "CLIInterface", fallback: "刷新已保存账户的凭据。")
+            .init(key: "CLIInterface.accountRefreshHelp", table: "CLIInterface", fallback: "刷新已保存账号的凭据。")
         }
-        /// 移除账户及其本地凭据。
+        /// 移除账号及其本地凭据。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountRemoveHelp`.
         public static var accountRemoveHelp: LocalizedMessage {
-            .init(key: "CLIInterface.accountRemoveHelp", table: "CLIInterface", fallback: "移除账户及其本地凭据。")
+            .init(key: "CLIInterface.accountRemoveHelp", table: "CLIInterface", fallback: "移除账号及其本地凭据。")
         }
-        /// 账户已被移除。
+        /// 账号已被移除。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountRemoved`.
         public static var accountRemoved: LocalizedMessage {
-            .init(key: "CLIInterface.accountRemoved", table: "CLIInterface", fallback: "账户已被移除。")
+            .init(key: "CLIInterface.accountRemoved", table: "CLIInterface", fallback: "账号已被移除。")
         }
-        /// 账户已被移除或替换。
+        /// 账号已被移除或替换。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountRemovedOrReplaced`.
         public static var accountRemovedOrReplaced: LocalizedMessage {
-            .init(key: "CLIInterface.accountRemovedOrReplaced", table: "CLIInterface", fallback: "账户已被移除或替换。")
+            .init(key: "CLIInterface.accountRemovedOrReplaced", table: "CLIInterface", fallback: "账号已被移除或替换。")
         }
-        /// 选择当前使用的账户。
+        /// 选择当前使用的账号。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountSelectHelp`.
         public static var accountSelectHelp: LocalizedMessage {
-            .init(key: "CLIInterface.accountSelectHelp", table: "CLIInterface", fallback: "选择当前使用的账户。")
+            .init(key: "CLIInterface.accountSelectHelp", table: "CLIInterface", fallback: "选择当前使用的账号。")
         }
-        /// 查询当前账户 ID。
+        /// 查询当前账号 ID。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountSelectedHelp`.
         public static var accountSelectedHelp: LocalizedMessage {
-            .init(key: "CLIInterface.accountSelectedHelp", table: "CLIInterface", fallback: "查询当前账户 ID。")
+            .init(key: "CLIInterface.accountSelectedHelp", table: "CLIInterface", fallback: "查询当前账号 ID。")
         }
         /// 平台服务凭据
         ///
@@ -117,11 +117,11 @@ extension Messages {
         public static var accountServiceKeyCommands: LocalizedMessage {
             .init(key: "CLIInterface.accountServiceKeyCommands", table: "CLIInterface", fallback: "平台服务凭据")
         }
-        /// 查询账户详情。
+        /// 查询账号详情。
         ///
         /// Resource: `CLIInterface.CLIInterface.accountShowHelp`.
         public static var accountShowHelp: LocalizedMessage {
-            .init(key: "CLIInterface.accountShowHelp", table: "CLIInterface", fallback: "查询账户详情。")
+            .init(key: "CLIInterface.accountShowHelp", table: "CLIInterface", fallback: "查询账号详情。")
         }
         /// 选择该类型的全部文件。
         ///
@@ -171,11 +171,11 @@ extension Messages {
         public static var appLanguageGetHelp: LocalizedMessage {
             .init(key: "CLIInterface.appLanguageGetHelp", table: "CLIInterface", fallback: "读取应用的界面语言。")
         }
-        /// 设置应用语言，重启后生效。
+        /// 设置界面语言，重新启动 Ruri 后生效。
         ///
         /// Resource: `CLIInterface.CLIInterface.appLanguageSetHelp`.
         public static var appLanguageSetHelp: LocalizedMessage {
-            .init(key: "CLIInterface.appLanguageSetHelp", table: "CLIInterface", fallback: "设置应用语言，重启后生效。")
+            .init(key: "CLIInterface.appLanguageSetHelp", table: "CLIInterface", fallback: "设置界面语言，重新启动 Ruri 后生效。")
         }
         /// 显示应用及命令行工具的版本和路径。
         ///
@@ -213,11 +213,11 @@ extension Messages {
         public static var catalogCommands: LocalizedMessage {
             .init(key: "CLIInterface.catalogCommands", table: "CLIInterface", fallback: "内容搜索与版本查询")
         }
-        /// 查询项目描述及元数据。
+        /// 查询项目简介及详细信息。
         ///
         /// Resource: `CLIInterface.CLIInterface.catalogProjectShowHelp`.
         public static var catalogProjectShowHelp: LocalizedMessage {
-            .init(key: "CLIInterface.catalogProjectShowHelp", table: "CLIInterface", fallback: "查询项目描述及元数据。")
+            .init(key: "CLIInterface.catalogProjectShowHelp", table: "CLIInterface", fallback: "查询项目简介及详细信息。")
         }
         /// 项目类型。
         ///
@@ -321,11 +321,11 @@ extension Messages {
         public static var compatibleDataPackVersionNotFound: LocalizedMessage {
             .init(key: "CLIInterface.compatibleDataPackVersionNotFound", table: "CLIInterface", fallback: "找不到兼容的数据包版本。")
         }
-        /// 找不到匹配的兼容版本。
+        /// 找不到符合条件的兼容版本。
         ///
         /// Resource: `CLIInterface.CLIInterface.compatibleVersionNotFound`.
         public static var compatibleVersionNotFound: LocalizedMessage {
-            .init(key: "CLIInterface.compatibleVersionNotFound", table: "CLIInterface", fallback: "找不到匹配的兼容版本。")
+            .init(key: "CLIInterface.compatibleVersionNotFound", table: "CLIInterface", fallback: "找不到符合条件的兼容版本。")
         }
         /// 请提供完整的优先级列表，每项只能出现一次。
         ///
@@ -333,17 +333,17 @@ extension Messages {
         public static var completeUniqueDataPackOrderRequired: LocalizedMessage {
             .init(key: "CLIInterface.completeUniqueDataPackOrderRequired", table: "CLIInterface", fallback: "请提供完整的优先级列表，每项只能出现一次。")
         }
-        /// 原子应用 JSON 配置补丁。
+        /// 将 JSON 配置补丁作为一次完整操作应用。
         ///
         /// Resource: `CLIInterface.CLIInterface.configApplyHelp`.
         public static var configApplyHelp: LocalizedMessage {
-            .init(key: "CLIInterface.configApplyHelp", table: "CLIInterface", fallback: "原子应用 JSON 配置补丁。")
+            .init(key: "CLIInterface.configApplyHelp", table: "CLIInterface", fallback: "将 JSON 配置补丁作为一次完整操作应用。")
         }
-        /// 全局设置、默认配置与实例覆盖
+        /// 全局设置、默认配置与实例独立配置
         ///
         /// Resource: `CLIInterface.CLIInterface.configCommands`.
         public static var configCommands: LocalizedMessage {
-            .init(key: "CLIInterface.configCommands", table: "CLIInterface", fallback: "全局设置、默认配置与实例覆盖")
+            .init(key: "CLIInterface.configCommands", table: "CLIInterface", fallback: "全局设置、默认配置与实例独立配置")
         }
         /// 配置字段或组的名称
         ///
@@ -357,17 +357,17 @@ extension Messages {
         public static var configFieldValueArgumentsHelp: LocalizedMessage {
             .init(key: "CLIInterface.configFieldValueArgumentsHelp", table: "CLIInterface", fallback: "配置字段及 JSON 值。")
         }
-        /// 查询显式配置、有效配置及继承来源。
+        /// 查询已设置的配置、实际生效的配置及继承来源。
         ///
         /// Resource: `CLIInterface.CLIInterface.configGetHelp`.
         public static var configGetHelp: LocalizedMessage {
-            .init(key: "CLIInterface.configGetHelp", table: "CLIInterface", fallback: "查询显式配置、有效配置及继承来源。")
+            .init(key: "CLIInterface.configGetHelp", table: "CLIInterface", fallback: "查询已设置的配置、实际生效的配置及继承来源。")
         }
-        /// 恢复实例配置组的继承。
+        /// 让指定实例配置组重新使用默认配置。
         ///
         /// Resource: `CLIInterface.CLIInterface.configInheritHelp`.
         public static var configInheritHelp: LocalizedMessage {
-            .init(key: "CLIInterface.configInheritHelp", table: "CLIInterface", fallback: "恢复实例配置组的继承。")
+            .init(key: "CLIInterface.configInheritHelp", table: "CLIInterface", fallback: "让指定实例配置组重新使用默认配置。")
         }
         /// inherit 仅适用于完整的实例配置组。
         ///
@@ -429,11 +429,11 @@ extension Messages {
         public static var confirmLocalModificationsReplacementHelp: LocalizedMessage {
             .init(key: "CLIInterface.confirmLocalModificationsReplacementHelp", table: "CLIInterface", fallback: "确认覆盖本地修改。")
         }
-        /// 确认失去监控的游戏已结束。
+        /// 确认已与监控断开连接的游戏已经退出。
         ///
         /// Resource: `CLIInterface.CLIInterface.confirmUnmonitoredGameExitHelp`.
         public static var confirmUnmonitoredGameExitHelp: LocalizedMessage {
-            .init(key: "CLIInterface.confirmUnmonitoredGameExitHelp", table: "CLIInterface", fallback: "确认失去监控的游戏已结束。")
+            .init(key: "CLIInterface.confirmUnmonitoredGameExitHelp", table: "CLIInterface", fallback: "确认已与监控断开连接的游戏已经退出。")
         }
         /// 此操作需要 --yes，可先使用 --dry-run 预览。
         ///
@@ -447,29 +447,29 @@ extension Messages {
         public static func conflictingConfigPatchOperations(_ value0: String) -> LocalizedMessage {
             .init(key: "CLIInterface.conflictingConfigPatchOperations", table: "CLIInterface", fallback: "针对 %1$@ 的补丁操作相互冲突。", arguments: [.text(value0)])
         }
-        /// 检查已安装内容的兼容更新。
+        /// 检查已安装资源的兼容更新。
         ///
         /// Resource: `CLIInterface.CLIInterface.contentCheckUpdatesHelp`.
         public static var contentCheckUpdatesHelp: LocalizedMessage {
-            .init(key: "CLIInterface.contentCheckUpdatesHelp", table: "CLIInterface", fallback: "检查已安装内容的兼容更新。")
+            .init(key: "CLIInterface.contentCheckUpdatesHelp", table: "CLIInterface", fallback: "检查已安装资源的兼容更新。")
         }
-        /// 模组、资源包与光影管理
+        /// 模组、资源包与光影包管理
         ///
         /// Resource: `CLIInterface.CLIInterface.contentCommands`.
         public static var contentCommands: LocalizedMessage {
-            .init(key: "CLIInterface.contentCommands", table: "CLIInterface", fallback: "模组、资源包与光影管理")
+            .init(key: "CLIInterface.contentCommands", table: "CLIInterface", fallback: "模组、资源包与光影包管理")
         }
-        /// 禁用所选内容。
+        /// 停用所选资源。
         ///
         /// Resource: `CLIInterface.CLIInterface.contentDisableHelp`.
         public static var contentDisableHelp: LocalizedMessage {
-            .init(key: "CLIInterface.contentDisableHelp", table: "CLIInterface", fallback: "禁用所选内容。")
+            .init(key: "CLIInterface.contentDisableHelp", table: "CLIInterface", fallback: "停用所选资源。")
         }
-        /// 启用所选内容。
+        /// 启用所选资源。
         ///
         /// Resource: `CLIInterface.CLIInterface.contentEnableHelp`.
         public static var contentEnableHelp: LocalizedMessage {
-            .init(key: "CLIInterface.contentEnableHelp", table: "CLIInterface", fallback: "启用所选内容。")
+            .init(key: "CLIInterface.contentEnableHelp", table: "CLIInterface", fallback: "启用所选资源。")
         }
         /// 已安装文件的完整名称，可重复传入以选择多个文件。
         ///
@@ -489,11 +489,11 @@ extension Messages {
         public static var contentImportArgumentsHelp: LocalizedMessage {
             .init(key: "CLIInterface.contentImportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和文件路径。")
         }
-        /// 导入本地内容文件。
+        /// 导入本地资源文件。
         ///
         /// Resource: `CLIInterface.CLIInterface.contentImportHelp`.
         public static var contentImportHelp: LocalizedMessage {
-            .init(key: "CLIInterface.contentImportHelp", table: "CLIInterface", fallback: "导入本地内容文件。")
+            .init(key: "CLIInterface.contentImportHelp", table: "CLIInterface", fallback: "导入本地资源文件。")
         }
         /// 安装兼容的项目及其必需依赖。
         ///
@@ -501,17 +501,17 @@ extension Messages {
         public static var contentInstallHelp: LocalizedMessage {
             .init(key: "CLIInterface.contentInstallHelp", table: "CLIInterface", fallback: "安装兼容的项目及其必需依赖。")
         }
-        /// 内容类型。
+        /// 资源类型。
         ///
         /// Resource: `CLIInterface.CLIInterface.contentKindHelp`.
         public static var contentKindHelp: LocalizedMessage {
-            .init(key: "CLIInterface.contentKindHelp", table: "CLIInterface", fallback: "内容类型。")
+            .init(key: "CLIInterface.contentKindHelp", table: "CLIInterface", fallback: "资源类型。")
         }
-        /// 列出已安装的模组、资源包或光影。
+        /// 列出已安装的模组、资源包或光影包。
         ///
         /// Resource: `CLIInterface.CLIInterface.contentListHelp`.
         public static var contentListHelp: LocalizedMessage {
-            .init(key: "CLIInterface.contentListHelp", table: "CLIInterface", fallback: "列出已安装的模组、资源包或光影。")
+            .init(key: "CLIInterface.contentListHelp", table: "CLIInterface", fallback: "列出已安装的模组、资源包或光影包。")
         }
         /// 实例 ID 和项目 ID。
         ///
@@ -525,17 +525,17 @@ extension Messages {
         public static var contentProviderHelp: LocalizedMessage {
             .init(key: "CLIInterface.contentProviderHelp", table: "CLIInterface", fallback: "内容平台。")
         }
-        /// 将所选内容移到废纸篓。
+        /// 将所选资源移到废纸篓。
         ///
         /// Resource: `CLIInterface.CLIInterface.contentRemoveHelp`.
         public static var contentRemoveHelp: LocalizedMessage {
-            .init(key: "CLIInterface.contentRemoveHelp", table: "CLIInterface", fallback: "将所选内容移到废纸篓。")
+            .init(key: "CLIInterface.contentRemoveHelp", table: "CLIInterface", fallback: "将所选资源移到废纸篓。")
         }
-        /// 更新所选内容及依赖。
+        /// 更新所选资源及其依赖。
         ///
         /// Resource: `CLIInterface.CLIInterface.contentUpdateHelp`.
         public static var contentUpdateHelp: LocalizedMessage {
-            .init(key: "CLIInterface.contentUpdateHelp", table: "CLIInterface", fallback: "更新所选内容及依赖。")
+            .init(key: "CLIInterface.contentUpdateHelp", table: "CLIInterface", fallback: "更新所选资源及其依赖。")
         }
         /// 指定平台版本 ID，默认选择最新稳定版。
         ///
@@ -585,29 +585,29 @@ extension Messages {
         public static var dataPackCommands: LocalizedMessage {
             .init(key: "CLIInterface.dataPackCommands", table: "CLIInterface", fallback: "数据包管理与排序")
         }
-        /// 禁用世界的数据包。
+        /// 停用存档中的数据包。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackDisableHelp`.
         public static var dataPackDisableHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackDisableHelp", table: "CLIInterface", fallback: "禁用世界的数据包。")
+            .init(key: "CLIInterface.dataPackDisableHelp", table: "CLIInterface", fallback: "停用存档中的数据包。")
         }
-        /// 启用世界的数据包。
+        /// 启用存档中的数据包。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackEnableHelp`.
         public static var dataPackEnableHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackEnableHelp", table: "CLIInterface", fallback: "启用世界的数据包。")
+            .init(key: "CLIInterface.dataPackEnableHelp", table: "CLIInterface", fallback: "启用存档中的数据包。")
         }
-        /// 实例 ID、世界名称和文件路径。
+        /// 实例 ID、存档名称和文件路径。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackImportArgumentsHelp`.
         public static var dataPackImportArgumentsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackImportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、世界名称和文件路径。")
+            .init(key: "CLIInterface.dataPackImportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、存档名称和文件路径。")
         }
-        /// 将数据包导入世界。
+        /// 将数据包导入存档。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackImportHelp`.
         public static var dataPackImportHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackImportHelp", table: "CLIInterface", fallback: "将数据包导入世界。")
+            .init(key: "CLIInterface.dataPackImportHelp", table: "CLIInterface", fallback: "将数据包导入存档。")
         }
         /// 安装数据包及其依赖。
         ///
@@ -615,11 +615,11 @@ extension Messages {
         public static var dataPackInstallHelp: LocalizedMessage {
             .init(key: "CLIInterface.dataPackInstallHelp", table: "CLIInterface", fallback: "安装数据包及其依赖。")
         }
-        /// 列出世界的数据包。
+        /// 列出存档中的数据包。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackListHelp`.
         public static var dataPackListHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackListHelp", table: "CLIInterface", fallback: "列出世界的数据包。")
+            .init(key: "CLIInterface.dataPackListHelp", table: "CLIInterface", fallback: "列出存档中的数据包。")
         }
         /// 找不到数据包。
         ///
@@ -639,11 +639,11 @@ extension Messages {
         public static var dataPackOrderGetHelp: LocalizedMessage {
             .init(key: "CLIInterface.dataPackOrderGetHelp", table: "CLIInterface", fallback: "按优先级从高到低查询数据包顺序。")
         }
-        /// 替换完整的数据包优先级顺序。
+        /// 设置完整的数据包优先级顺序。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackOrderSetHelp`.
         public static var dataPackOrderSetHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackOrderSetHelp", table: "CLIInterface", fallback: "替换完整的数据包优先级顺序。")
+            .init(key: "CLIInterface.dataPackOrderSetHelp", table: "CLIInterface", fallback: "设置完整的数据包优先级顺序。")
         }
         /// 完整优先级列表，优先级最高的在前。
         ///
@@ -651,17 +651,17 @@ extension Messages {
         public static var dataPackPriorityListHelp: LocalizedMessage {
             .init(key: "CLIInterface.dataPackPriorityListHelp", table: "CLIInterface", fallback: "完整优先级列表，优先级最高的在前。")
         }
-        /// 实例 ID、世界名称和项目 ID。
+        /// 实例 ID、存档名称和项目 ID。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackProjectArgumentsHelp`.
         public static var dataPackProjectArgumentsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackProjectArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、世界名称和项目 ID。")
+            .init(key: "CLIInterface.dataPackProjectArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、存档名称和项目 ID。")
         }
-        /// 移除世界的数据包。
+        /// 移除存档中的数据包。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackRemoveHelp`.
         public static var dataPackRemoveHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackRemoveHelp", table: "CLIInterface", fallback: "移除世界的数据包。")
+            .init(key: "CLIInterface.dataPackRemoveHelp", table: "CLIInterface", fallback: "移除存档中的数据包。")
         }
         /// 实例 ID 和搜索关键词。
         ///
@@ -675,11 +675,11 @@ extension Messages {
         public static var dataPackSearchHelp: LocalizedMessage {
             .init(key: "CLIInterface.dataPackSearchHelp", table: "CLIInterface", fallback: "搜索兼容的 Modrinth 数据包。")
         }
-        /// 实例 ID、世界名称和数据包名称。
+        /// 实例 ID、存档名称和数据包名称。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackTargetArgumentsHelp`.
         public static var dataPackTargetArgumentsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackTargetArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、世界名称和数据包名称。")
+            .init(key: "CLIInterface.dataPackTargetArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、存档名称和数据包名称。")
         }
         /// 指定版本 ID，默认选择最新稳定版。
         ///
@@ -693,23 +693,23 @@ extension Messages {
         public static var dataPackVersionsHelp: LocalizedMessage {
             .init(key: "CLIInterface.dataPackVersionsHelp", table: "CLIInterface", fallback: "列出兼容的数据包版本。")
         }
-        /// 实例 ID 和世界名称。
+        /// 实例 ID 和存档名称。
         ///
         /// Resource: `CLIInterface.CLIInterface.dataPackWorldArgumentsHelp`.
         public static var dataPackWorldArgumentsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.dataPackWorldArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和世界名称。")
+            .init(key: "CLIInterface.dataPackWorldArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和存档名称。")
         }
-        /// 注册已有目录。
+        /// 添加已有的游戏目录。
         ///
         /// Resource: `CLIInterface.CLIInterface.directoryAddHelp`.
         public static var directoryAddHelp: LocalizedMessage {
-            .init(key: "CLIInterface.directoryAddHelp", table: "CLIInterface", fallback: "注册已有目录。")
+            .init(key: "CLIInterface.directoryAddHelp", table: "CLIInterface", fallback: "添加已有的游戏目录。")
         }
-        /// 游戏目录的注册、迁移与恢复
+        /// 游戏目录的添加、移动与恢复
         ///
         /// Resource: `CLIInterface.CLIInterface.directoryCommands`.
         public static var directoryCommands: LocalizedMessage {
-            .init(key: "CLIInterface.directoryCommands", table: "CLIInterface", fallback: "游戏目录的注册、迁移与恢复")
+            .init(key: "CLIInterface.directoryCommands", table: "CLIInterface", fallback: "游戏目录的添加、移动与恢复")
         }
         /// 按目录 UUID 或 default 筛选。
         ///
@@ -717,11 +717,11 @@ extension Messages {
         public static var directoryFilterHelp: LocalizedMessage {
             .init(key: "CLIInterface.directoryFilterHelp", table: "CLIInterface", fallback: "按目录 UUID 或 default 筛选。")
         }
-        /// 检查已有 Minecraft 文件夹，不注册目录。
+        /// 检查已有的 Minecraft 文件夹，不添加到 Ruri。
         ///
         /// Resource: `CLIInterface.CLIInterface.directoryInspectHelp`.
         public static var directoryInspectHelp: LocalizedMessage {
-            .init(key: "CLIInterface.directoryInspectHelp", table: "CLIInterface", fallback: "检查已有 Minecraft 文件夹，不注册目录。")
+            .init(key: "CLIInterface.directoryInspectHelp", table: "CLIInterface", fallback: "检查已有的 Minecraft 文件夹，不添加到 Ruri。")
         }
         /// 目录布局。
         ///
@@ -729,11 +729,11 @@ extension Messages {
         public static var directoryLayoutHelp: LocalizedMessage {
             .init(key: "CLIInterface.directoryLayoutHelp", table: "CLIInterface", fallback: "目录布局。")
         }
-        /// 列出已注册和已断开连接的游戏目录。
+        /// 列出已添加的游戏目录，包括暂时无法访问的目录。
         ///
         /// Resource: `CLIInterface.CLIInterface.directoryListHelp`.
         public static var directoryListHelp: LocalizedMessage {
-            .init(key: "CLIInterface.directoryListHelp", table: "CLIInterface", fallback: "列出已注册和已断开连接的游戏目录。")
+            .init(key: "CLIInterface.directoryListHelp", table: "CLIInterface", fallback: "列出已添加的游戏目录，包括暂时无法访问的目录。")
         }
         /// 目录显示名称。
         ///
@@ -753,11 +753,11 @@ extension Messages {
         public static var directoryPathArgumentsHelp: LocalizedMessage {
             .init(key: "CLIInterface.directoryPathArgumentsHelp", table: "CLIInterface", fallback: "目录 ID 和文件路径。")
         }
-        /// 恢复已断开连接的 Minecraft 目录。
+        /// 恢复暂时无法访问的 Minecraft 目录。
         ///
         /// Resource: `CLIInterface.CLIInterface.directoryRecoverHelp`.
         public static var directoryRecoverHelp: LocalizedMessage {
-            .init(key: "CLIInterface.directoryRecoverHelp", table: "CLIInterface", fallback: "恢复已断开连接的 Minecraft 目录。")
+            .init(key: "CLIInterface.directoryRecoverHelp", table: "CLIInterface", fallback: "恢复暂时无法访问的 Minecraft 目录。")
         }
         /// 刷新 Minecraft 目录中的版本。
         ///
@@ -765,29 +765,29 @@ extension Messages {
         public static var directoryRefreshHelp: LocalizedMessage {
             .init(key: "CLIInterface.directoryRefreshHelp", table: "CLIInterface", fallback: "刷新 Minecraft 目录中的版本。")
         }
-        /// 重新关联已移动的注册目录。
+        /// 重新指定已移动的游戏目录的位置。
         ///
         /// Resource: `CLIInterface.CLIInterface.directoryRelocateHelp`.
         public static var directoryRelocateHelp: LocalizedMessage {
-            .init(key: "CLIInterface.directoryRelocateHelp", table: "CLIInterface", fallback: "重新关联已移动的注册目录。")
+            .init(key: "CLIInterface.directoryRelocateHelp", table: "CLIInterface", fallback: "重新指定已移动的游戏目录的位置。")
         }
-        /// 移除目录注册，保留文件。
+        /// 从 Ruri 中移除目录，保留文件。
         ///
         /// Resource: `CLIInterface.CLIInterface.directoryRemoveHelp`.
         public static var directoryRemoveHelp: LocalizedMessage {
-            .init(key: "CLIInterface.directoryRemoveHelp", table: "CLIInterface", fallback: "移除目录注册，保留文件。")
+            .init(key: "CLIInterface.directoryRemoveHelp", table: "CLIInterface", fallback: "从 Ruri 中移除目录，保留文件。")
         }
-        /// 重命名已注册的目录。
+        /// 更改已添加目录的显示名称。
         ///
         /// Resource: `CLIInterface.CLIInterface.directoryRenameHelp`.
         public static var directoryRenameHelp: LocalizedMessage {
-            .init(key: "CLIInterface.directoryRenameHelp", table: "CLIInterface", fallback: "重命名已注册的目录。")
+            .init(key: "CLIInterface.directoryRenameHelp", table: "CLIInterface", fallback: "更改已添加目录的显示名称。")
         }
-        /// 选择已注册的目录。
+        /// 选择已添加的游戏目录。
         ///
         /// Resource: `CLIInterface.CLIInterface.directorySelectHelp`.
         public static var directorySelectHelp: LocalizedMessage {
-            .init(key: "CLIInterface.directorySelectHelp", table: "CLIInterface", fallback: "选择已注册的目录。")
+            .init(key: "CLIInterface.directorySelectHelp", table: "CLIInterface", fallback: "选择已添加的游戏目录。")
         }
         /// 查询当前选中的游戏目录。
         ///
@@ -801,11 +801,11 @@ extension Messages {
         public static var doctorChecksFailed: LocalizedMessage {
             .init(key: "CLIInterface.doctorChecksFailed", table: "CLIInterface", fallback: "一项或多项检查未通过。")
         }
-        /// 检查状态、路径、Java、账户凭据及内置辅助程序。
+        /// 检查状态、路径、Java、账号凭据及内置辅助程序。
         ///
         /// Resource: `CLIInterface.CLIInterface.doctorCommandHelp`.
         public static var doctorCommandHelp: LocalizedMessage {
-            .init(key: "CLIInterface.doctorCommandHelp", table: "CLIInterface", fallback: "检查状态、路径、Java、账户凭据及内置辅助程序。")
+            .init(key: "CLIInterface.doctorCommandHelp", table: "CLIInterface", fallback: "检查状态、路径、Java、账号凭据及内置辅助程序。")
         }
         /// 检查指定实例。
         ///
@@ -873,35 +873,35 @@ extension Messages {
         public static var exactNameFilterHelp: LocalizedMessage {
             .init(key: "CLIInterface.exactNameFilterHelp", table: "CLIInterface", fallback: "按完整名称筛选。")
         }
-        /// 不包含世界存档。
+        /// 不包含游戏存档。
         ///
         /// Resource: `CLIInterface.CLIInterface.excludeWorldsHelp`.
         public static var excludeWorldsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.excludeWorldsHelp", table: "CLIInterface", fallback: "不包含世界存档。")
+            .init(key: "CLIInterface.excludeWorldsHelp", table: "CLIInterface", fallback: "不包含游戏存档。")
         }
-        /// 外置登录的用户名或邮箱。
+        /// 第三方登录的用户名或邮箱。
         ///
         /// Resource: `CLIInterface.CLIInterface.externalLoginIdentityHelp`.
         public static var externalLoginIdentityHelp: LocalizedMessage {
-            .init(key: "CLIInterface.externalLoginIdentityHelp", table: "CLIInterface", fallback: "外置登录的用户名或邮箱。")
+            .init(key: "CLIInterface.externalLoginIdentityHelp", table: "CLIInterface", fallback: "第三方登录的用户名或邮箱。")
         }
-        /// 外置登录需要 --password-stdin。
+        /// 第三方登录需要 --password-stdin。
         ///
         /// Resource: `CLIInterface.CLIInterface.externalLoginPasswordStdinRequired`.
         public static var externalLoginPasswordStdinRequired: LocalizedMessage {
-            .init(key: "CLIInterface.externalLoginPasswordStdinRequired", table: "CLIInterface", fallback: "外置登录需要 --password-stdin。")
+            .init(key: "CLIInterface.externalLoginPasswordStdinRequired", table: "CLIInterface", fallback: "第三方登录需要 --password-stdin。")
         }
-        /// login start 返回的外置登录角色 ID。
+        /// login start 返回的第三方登录角色 ID。
         ///
         /// Resource: `CLIInterface.CLIInterface.externalLoginProfileIdHelp`.
         public static var externalLoginProfileIdHelp: LocalizedMessage {
-            .init(key: "CLIInterface.externalLoginProfileIdHelp", table: "CLIInterface", fallback: "login start 返回的外置登录角色 ID。")
+            .init(key: "CLIInterface.externalLoginProfileIdHelp", table: "CLIInterface", fallback: "login start 返回的第三方登录角色 ID。")
         }
-        /// 外置登录服务器。
+        /// 第三方登录服务器。
         ///
         /// Resource: `CLIInterface.CLIInterface.externalLoginServerHelp`.
         public static var externalLoginServerHelp: LocalizedMessage {
-            .init(key: "CLIInterface.externalLoginServerHelp", table: "CLIInterface", fallback: "外置登录服务器。")
+            .init(key: "CLIInterface.externalLoginServerHelp", table: "CLIInterface", fallback: "第三方登录服务器。")
         }
         /// 游戏未正常退出。
         ///
@@ -927,11 +927,11 @@ extension Messages {
         public static var includeSnapshotsHelp: LocalizedMessage {
             .init(key: "CLIInterface.includeSnapshotsHelp", table: "CLIInterface", fallback: "包含快照版本。")
         }
-        /// 包含世界备份。
+        /// 包含存档备份。
         ///
         /// Resource: `CLIInterface.CLIInterface.includeWorldBackupsHelp`.
         public static var includeWorldBackupsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.includeWorldBackupsHelp", table: "CLIInterface", fallback: "包含世界备份。")
+            .init(key: "CLIInterface.includeWorldBackupsHelp", table: "CLIInterface", fallback: "包含存档备份。")
         }
         /// 找不到输入文件。
         ///
@@ -1077,11 +1077,11 @@ extension Messages {
         public static var instanceImportHelp: LocalizedMessage {
             .init(key: "CLIInterface.instanceImportHelp", table: "CLIInterface", fallback: "将实例归档导入指定目录。")
         }
-        /// 安装尚未完成安装的实例。
+        /// 完成实例的安装。
         ///
         /// Resource: `CLIInterface.CLIInterface.instanceInstallHelp`.
         public static var instanceInstallHelp: LocalizedMessage {
-            .init(key: "CLIInterface.instanceInstallHelp", table: "CLIInterface", fallback: "安装尚未完成安装的实例。")
+            .init(key: "CLIInterface.instanceInstallHelp", table: "CLIInterface", fallback: "完成实例的安装。")
         }
         /// 请先安装此实例，再启动游戏。
         ///
@@ -1089,11 +1089,11 @@ extension Messages {
         public static var instanceInstallRequiredBeforeLaunch: LocalizedMessage {
             .init(key: "CLIInterface.instanceInstallRequiredBeforeLaunch", table: "CLIInterface", fallback: "请先安装此实例，再启动游戏。")
         }
-        /// 列出托管及已注册的实例。
+        /// 列出由 Ruri 管理和从其他位置添加的实例。
         ///
         /// Resource: `CLIInterface.CLIInterface.instanceListHelp`.
         public static var instanceListHelp: LocalizedMessage {
-            .init(key: "CLIInterface.instanceListHelp", table: "CLIInterface", fallback: "列出托管及已注册的实例。")
+            .init(key: "CLIInterface.instanceListHelp", table: "CLIInterface", fallback: "列出由 Ruri 管理和从其他位置添加的实例。")
         }
         /// 实例 ID 和加载器类型。
         ///
@@ -1131,11 +1131,11 @@ extension Messages {
         public static var instanceNotFound: LocalizedMessage {
             .init(key: "CLIInterface.instanceNotFound", table: "CLIInterface", fallback: "找不到实例。")
         }
-        /// 实例 ID 和收藏状态，状态为 true 或 false。
+        /// 实例 ID 和固定状态，状态为 true 或 false。
         ///
         /// Resource: `CLIInterface.CLIInterface.instancePinArgumentsHelp`.
         public static var instancePinArgumentsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.instancePinArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和收藏状态，状态为 true 或 false。")
+            .init(key: "CLIInterface.instancePinArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和固定状态，状态为 true 或 false。")
         }
         /// 设置实例是否固定到主页。
         ///
@@ -1197,11 +1197,11 @@ extension Messages {
         public static var instanceRunDirectoryPathArgumentsHelp: LocalizedMessage {
             .init(key: "CLIInterface.instanceRunDirectoryPathArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和目录路径。")
         }
-        /// 重新关联已移动的自定义游戏目录。
+        /// 重新指定已移动的自定义游戏目录的位置。
         ///
         /// Resource: `CLIInterface.CLIInterface.instanceRunDirectoryRelocateHelp`.
         public static var instanceRunDirectoryRelocateHelp: LocalizedMessage {
-            .init(key: "CLIInterface.instanceRunDirectoryRelocateHelp", table: "CLIInterface", fallback: "重新关联已移动的自定义游戏目录。")
+            .init(key: "CLIInterface.instanceRunDirectoryRelocateHelp", table: "CLIInterface", fallback: "重新指定已移动的自定义游戏目录的位置。")
         }
         /// 切换实例的运行目录。
         ///
@@ -1323,11 +1323,11 @@ extension Messages {
         public static var invalidRunDirectoryModeOrPath: LocalizedMessage {
             .init(key: "CLIInterface.invalidRunDirectoryModeOrPath", table: "CLIInterface", fallback: "目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。")
         }
-        /// 注册已安装的 Java 运行时。
+        /// 添加已安装的 Java。
         ///
         /// Resource: `CLIInterface.CLIInterface.javaAddHelp`.
         public static var javaAddHelp: LocalizedMessage {
-            .init(key: "CLIInterface.javaAddHelp", table: "CLIInterface", fallback: "注册已安装的 Java 运行时。")
+            .init(key: "CLIInterface.javaAddHelp", table: "CLIInterface", fallback: "添加已安装的 Java。")
         }
         /// 按架构筛选。
         ///
@@ -1359,29 +1359,29 @@ extension Messages {
         public static var javaCleanIncompleteInstallationHelp: LocalizedMessage {
             .init(key: "CLIInterface.javaCleanIncompleteInstallationHelp", table: "CLIInterface", fallback: "移除未完成的安装。")
         }
-        /// Java 发现、安装与管理
+        /// Java 查找、安装与管理
         ///
         /// Resource: `CLIInterface.CLIInterface.javaCommands`.
         public static var javaCommands: LocalizedMessage {
-            .init(key: "CLIInterface.javaCommands", table: "CLIInterface", fallback: "Java 发现、安装与管理")
+            .init(key: "CLIInterface.javaCommands", table: "CLIInterface", fallback: "Java 查找、安装与管理")
         }
-        /// 设置默认 Java 选择。
+        /// 设置默认使用的 Java。
         ///
         /// Resource: `CLIInterface.CLIInterface.javaDefaultHelp`.
         public static var javaDefaultHelp: LocalizedMessage {
-            .init(key: "CLIInterface.javaDefaultHelp", table: "CLIInterface", fallback: "设置默认 Java 选择。")
+            .init(key: "CLIInterface.javaDefaultHelp", table: "CLIInterface", fallback: "设置默认使用的 Java。")
         }
-        /// 从手动列表中移除 Java，保留文件及配置引用。
+        /// 从手动添加的列表中移除 Java，保留文件和使用它的配置。
         ///
         /// Resource: `CLIInterface.CLIInterface.javaForgetHelp`.
         public static var javaForgetHelp: LocalizedMessage {
-            .init(key: "CLIInterface.javaForgetHelp", table: "CLIInterface", fallback: "从手动列表中移除 Java，保留文件及配置引用。")
+            .init(key: "CLIInterface.javaForgetHelp", table: "CLIInterface", fallback: "从手动添加的列表中移除 Java，保留文件和使用它的配置。")
         }
-        /// 按目录中的 ID 安装 Java 运行时。
+        /// 使用 java catalog 返回的 ID 安装 Java。
         ///
         /// Resource: `CLIInterface.CLIInterface.javaInstallHelp`.
         public static var javaInstallHelp: LocalizedMessage {
-            .init(key: "CLIInterface.javaInstallHelp", table: "CLIInterface", fallback: "按目录中的 ID 安装 Java 运行时。")
+            .init(key: "CLIInterface.javaInstallHelp", table: "CLIInterface", fallback: "使用 java catalog 返回的 ID 安装 Java。")
         }
         /// 列出本地 Java 运行时及其来源。
         ///
@@ -1407,11 +1407,11 @@ extension Messages {
         public static var javaPathRequiredForPathMode: LocalizedMessage {
             .init(key: "CLIInterface.javaPathRequiredForPathMode", table: "CLIInterface", fallback: "path 模式需要设置 java.path。")
         }
-        /// 列出引用指定托管 Java 的配置。
+        /// 列出使用指定托管 Java 的配置。
         ///
         /// Resource: `CLIInterface.CLIInterface.javaReferencesHelp`.
         public static var javaReferencesHelp: LocalizedMessage {
-            .init(key: "CLIInterface.javaReferencesHelp", table: "CLIInterface", fallback: "列出引用指定托管 Java 的配置。")
+            .init(key: "CLIInterface.javaReferencesHelp", table: "CLIInterface", fallback: "列出使用指定托管 Java 的配置。")
         }
         /// 将托管的 Java 移到废纸篓。
         ///
@@ -1425,11 +1425,11 @@ extension Messages {
         public static var javaRepairHelp: LocalizedMessage {
             .init(key: "CLIInterface.javaRepairHelp", table: "CLIInterface", fallback: "修复托管的 Java 运行时。")
         }
-        /// 将引用此 Java 的配置重置为自动选择。
+        /// 将使用此 Java 的配置重置为自动选择。
         ///
         /// Resource: `CLIInterface.CLIInterface.javaResetReferencesHelp`.
         public static var javaResetReferencesHelp: LocalizedMessage {
-            .init(key: "CLIInterface.javaResetReferencesHelp", table: "CLIInterface", fallback: "将引用此 Java 的配置重置为自动选择。")
+            .init(key: "CLIInterface.javaResetReferencesHelp", table: "CLIInterface", fallback: "将使用此 Java 的配置重置为自动选择。")
         }
         /// 在标准输出返回一个 JSON 结果。
         ///
@@ -1437,29 +1437,29 @@ extension Messages {
         public static var jsonOutputHelp: LocalizedMessage {
             .init(key: "CLIInterface.jsonOutputHelp", table: "CLIInterface", fallback: "在标准输出返回一个 JSON 结果。")
         }
-        /// 保留当前选中的账户。
+        /// 保留当前选中的账号。
         ///
         /// Resource: `CLIInterface.CLIInterface.keepCurrentAccountHelp`.
         public static var keepCurrentAccountHelp: LocalizedMessage {
-            .init(key: "CLIInterface.keepCurrentAccountHelp", table: "CLIInterface", fallback: "保留当前选中的账户。")
+            .init(key: "CLIInterface.keepCurrentAccountHelp", table: "CLIInterface", fallback: "保留当前选中的账号。")
         }
-        /// 移动已提交后保留原始文件。
+        /// 实例移至目标位置后，保留原位置的文件。
         ///
         /// Resource: `CLIInterface.CLIInterface.keepSourceAfterMoveHelp`.
         public static var keepSourceAfterMoveHelp: LocalizedMessage {
-            .init(key: "CLIInterface.keepSourceAfterMoveHelp", table: "CLIInterface", fallback: "移动已提交后保留原始文件。")
+            .init(key: "CLIInterface.keepSourceAfterMoveHelp", table: "CLIInterface", fallback: "实例移至目标位置后，保留原位置的文件。")
         }
-        /// 账户 UUID，默认使用当前账户。
+        /// 账号 UUID，默认使用当前账号。
         ///
         /// Resource: `CLIInterface.CLIInterface.launchAccountHelp`.
         public static var launchAccountHelp: LocalizedMessage {
-            .init(key: "CLIInterface.launchAccountHelp", table: "CLIInterface", fallback: "账户 UUID，默认使用当前账户。")
+            .init(key: "CLIInterface.launchAccountHelp", table: "CLIInterface", fallback: "账号 UUID，默认使用当前账号。")
         }
-        /// 请选择账户，或通过 --account 指定账户。
+        /// 请选择账号，或通过 --account 指定账号。
         ///
         /// Resource: `CLIInterface.CLIInterface.launchAccountRequired`.
         public static var launchAccountRequired: LocalizedMessage {
-            .init(key: "CLIInterface.launchAccountRequired", table: "CLIInterface", fallback: "请选择账户，或通过 --account 指定账户。")
+            .init(key: "CLIInterface.launchAccountRequired", table: "CLIInterface", fallback: "请选择账号，或通过 --account 指定账号。")
         }
         /// 检查实例启动配置，不启动游戏。
         ///
@@ -1473,11 +1473,11 @@ extension Messages {
         public static var launchCommands: LocalizedMessage {
             .init(key: "CLIInterface.launchCommands", table: "CLIInterface", fallback: "启动检查与游戏启动")
         }
-        /// 启动游戏，监控接管后返回。
+        /// 启动游戏，并在监控组件开始接管运行后返回。
         ///
         /// Resource: `CLIInterface.CLIInterface.launchStartHelp`.
         public static var launchStartHelp: LocalizedMessage {
-            .init(key: "CLIInterface.launchStartHelp", table: "CLIInterface", fallback: "启动游戏，监控接管后返回。")
+            .init(key: "CLIInterface.launchStartHelp", table: "CLIInterface", fallback: "启动游戏，并在监控组件开始接管运行后返回。")
         }
         /// 游戏库导入的恢复方式。
         ///
@@ -1647,11 +1647,11 @@ extension Messages {
         public static var modpackInstallHelp: LocalizedMessage {
             .init(key: "CLIInterface.modpackInstallHelp", table: "CLIInterface", fallback: "下载并安装内容平台上的整合包。")
         }
-        /// 此实例没有已安装整合包的元数据。
+        /// 此实例没有已安装整合包的信息。
         ///
         /// Resource: `CLIInterface.CLIInterface.modpackMetadataNotFound`.
         public static var modpackMetadataNotFound: LocalizedMessage {
-            .init(key: "CLIInterface.modpackMetadataNotFound", table: "CLIInterface", fallback: "此实例没有已安装整合包的元数据。")
+            .init(key: "CLIInterface.modpackMetadataNotFound", table: "CLIInterface", fallback: "此实例没有已安装整合包的信息。")
         }
         /// 找不到整合包发布版本。
         ///
@@ -1665,11 +1665,11 @@ extension Messages {
         public static var modpackRollbackHelp: LocalizedMessage {
             .init(key: "CLIInterface.modpackRollbackHelp", table: "CLIInterface", fallback: "回退上一次整合包更新，保留更新后的本地修改。")
         }
-        /// 查询已安装整合包的元数据。
+        /// 查询已安装整合包的信息。
         ///
         /// Resource: `CLIInterface.CLIInterface.modpackShowHelp`.
         public static var modpackShowHelp: LocalizedMessage {
-            .init(key: "CLIInterface.modpackShowHelp", table: "CLIInterface", fallback: "查询已安装整合包的元数据。")
+            .init(key: "CLIInterface.modpackShowHelp", table: "CLIInterface", fallback: "查询已安装整合包的信息。")
         }
         /// 找不到目标目录。
         ///
@@ -1761,17 +1761,17 @@ extension Messages {
         public static func positionalArgumentCountMismatch(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "CLIInterface.positionalArgumentCountMismatch", table: "CLIInterface", fallback: "需要位置参数 %1$@，实际收到 %2$@ 个。", arguments: [.text(value0), .text(value1)])
         }
-        /// 仅显示存在问题的会话。
+        /// 仅显示需要关注的运行记录。
         ///
         /// Resource: `CLIInterface.CLIInterface.problemSessionsOnlyHelp`.
         public static var problemSessionsOnlyHelp: LocalizedMessage {
-            .init(key: "CLIInterface.problemSessionsOnlyHelp", table: "CLIInterface", fallback: "仅显示存在问题的会话。")
+            .init(key: "CLIInterface.problemSessionsOnlyHelp", table: "CLIInterface", fallback: "仅显示需要关注的运行记录。")
         }
-        /// 用于快速游玩的世界文件夹。
+        /// 启动后直接进入的存档文件夹。
         ///
         /// Resource: `CLIInterface.CLIInterface.quickPlayWorldHelp`.
         public static var quickPlayWorldHelp: LocalizedMessage {
-            .init(key: "CLIInterface.quickPlayWorldHelp", table: "CLIInterface", fallback: "用于快速游玩的世界文件夹。")
+            .init(key: "CLIInterface.quickPlayWorldHelp", table: "CLIInterface", fallback: "启动后直接进入的存档文件夹。")
         }
         /// 不在标准错误输出显示进度。
         ///
@@ -1779,11 +1779,11 @@ extension Messages {
         public static var quietProgressHelp: LocalizedMessage {
             .init(key: "CLIInterface.quietProgressHelp", table: "CLIInterface", fallback: "不在标准错误输出显示进度。")
         }
-        /// 需要重新登录的已有账户。
+        /// 需要重新登录的已有账号。
         ///
         /// Resource: `CLIInterface.CLIInterface.reauthenticateAccountHelp`.
         public static var reauthenticateAccountHelp: LocalizedMessage {
-            .init(key: "CLIInterface.reauthenticateAccountHelp", table: "CLIInterface", fallback: "需要重新登录的已有账户。")
+            .init(key: "CLIInterface.reauthenticateAccountHelp", table: "CLIInterface", fallback: "需要重新登录的已有账号。")
         }
         /// 恢复指定的未完成操作。
         ///
@@ -1803,11 +1803,11 @@ extension Messages {
         public static var recoveryInstanceFilterHelp: LocalizedMessage {
             .init(key: "CLIInterface.recoveryInstanceFilterHelp", table: "CLIInterface", fallback: "仅检查指定实例。")
         }
-        /// 列出未完成的数据操作及会话。
+        /// 列出未完成的数据操作和运行记录。
         ///
         /// Resource: `CLIInterface.CLIInterface.recoveryListHelp`.
         public static var recoveryListHelp: LocalizedMessage {
-            .init(key: "CLIInterface.recoveryListHelp", table: "CLIInterface", fallback: "列出未完成的数据操作及会话。")
+            .init(key: "CLIInterface.recoveryListHelp", table: "CLIInterface", fallback: "列出未完成的数据操作和运行记录。")
         }
         /// 恢复类型和目标 ID。
         ///
@@ -1815,11 +1815,11 @@ extension Messages {
         public static var recoveryTargetArgumentsHelp: LocalizedMessage {
             .init(key: "CLIInterface.recoveryTargetArgumentsHelp", table: "CLIInterface", fallback: "恢复类型和目标 ID。")
         }
-        /// 事务 UUID 或会话 UUID。
+        /// 事务 UUID 或运行记录 UUID。
         ///
         /// Resource: `CLIInterface.CLIInterface.recoveryTransactionHelp`.
         public static var recoveryTransactionHelp: LocalizedMessage {
-            .init(key: "CLIInterface.recoveryTransactionHelp", table: "CLIInterface", fallback: "事务 UUID 或会话 UUID。")
+            .init(key: "CLIInterface.recoveryTransactionHelp", table: "CLIInterface", fallback: "事务 UUID 或运行记录 UUID。")
         }
         /// 此恢复操作需要指定 recovery list 返回的 --transaction。
         ///
@@ -1857,11 +1857,11 @@ extension Messages {
         public static var rootCommandHelp: LocalizedMessage {
             .init(key: "CLIInterface.rootCommandHelp", table: "CLIInterface", fallback: "Ruri 启动器命令行接口。")
         }
-        /// 查询命令及其机器接口。
+        /// 查询命令的输入和输出结构。
         ///
         /// Resource: `CLIInterface.CLIInterface.schemaCommandHelp`.
         public static var schemaCommandHelp: LocalizedMessage {
-            .init(key: "CLIInterface.schemaCommandHelp", table: "CLIInterface", fallback: "查询命令及其机器接口。")
+            .init(key: "CLIInterface.schemaCommandHelp", table: "CLIInterface", fallback: "查询命令的输入和输出结构。")
         }
         /// 投影文件管理
         ///
@@ -1929,11 +1929,11 @@ extension Messages {
         public static var schematicRemoveHelp: LocalizedMessage {
             .init(key: "CLIInterface.schematicRemoveHelp", table: "CLIInterface", fallback: "将投影文件或文件夹移到废纸篓。")
         }
-        /// 查询投影文件的元数据。
+        /// 查询投影文件的详细信息。
         ///
         /// Resource: `CLIInterface.CLIInterface.schematicShowHelp`.
         public static var schematicShowHelp: LocalizedMessage {
-            .init(key: "CLIInterface.schematicShowHelp", table: "CLIInterface", fallback: "查询投影文件的元数据。")
+            .init(key: "CLIInterface.schematicShowHelp", table: "CLIInterface", fallback: "查询投影文件的详细信息。")
         }
         /// 找不到部分所选文件。
         ///
@@ -1947,29 +1947,29 @@ extension Messages {
         public static var selectedVersionIncompatible: LocalizedMessage {
             .init(key: "CLIInterface.selectedVersionIncompatible", table: "CLIInterface", fallback: "所选版本与实例不兼容。")
         }
-        /// 分析已记录的启动与游戏诊断信息。
+        /// 分析已记录的启动信息和游戏日志。
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionAnalyzeHelp`.
         public static var sessionAnalyzeHelp: LocalizedMessage {
-            .init(key: "CLIInterface.sessionAnalyzeHelp", table: "CLIInterface", fallback: "分析已记录的启动与游戏诊断信息。")
+            .init(key: "CLIInterface.sessionAnalyzeHelp", table: "CLIInterface", fallback: "分析已记录的启动信息和游戏日志。")
         }
-        /// 游戏会话、日志与诊断
+        /// 游戏运行记录、日志与诊断
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionCommands`.
         public static var sessionCommands: LocalizedMessage {
-            .init(key: "CLIInterface.sessionCommands", table: "CLIInterface", fallback: "游戏会话、日志与诊断")
+            .init(key: "CLIInterface.sessionCommands", table: "CLIInterface", fallback: "游戏运行记录、日志与诊断")
         }
-        /// 实例 ID、会话 ID 和文件路径。
+        /// 实例 ID、运行记录 ID 和文件路径。
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionExportArgumentsHelp`.
         public static var sessionExportArgumentsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.sessionExportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、会话 ID 和文件路径。")
+            .init(key: "CLIInterface.sessionExportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、运行记录 ID 和文件路径。")
         }
-        /// 导出脱敏后的诊断包。
+        /// 隐藏敏感信息后导出诊断报告。
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionExportHelp`.
         public static var sessionExportHelp: LocalizedMessage {
-            .init(key: "CLIInterface.sessionExportHelp", table: "CLIInterface", fallback: "导出脱敏后的诊断包。")
+            .init(key: "CLIInterface.sessionExportHelp", table: "CLIInterface", fallback: "隐藏敏感信息后导出诊断报告。")
         }
         /// 按实例 UUID 筛选。
         ///
@@ -1983,23 +1983,23 @@ extension Messages {
         public static var sessionInstanceNameFilterHelp: LocalizedMessage {
             .init(key: "CLIInterface.sessionInstanceNameFilterHelp", table: "CLIInterface", fallback: "按实例名称筛选。")
         }
-        /// 强制停止游戏进程。
+        /// 强制终止游戏进程。
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionKillHelp`.
         public static var sessionKillHelp: LocalizedMessage {
-            .init(key: "CLIInterface.sessionKillHelp", table: "CLIInterface", fallback: "强制停止游戏进程。")
+            .init(key: "CLIInterface.sessionKillHelp", table: "CLIInterface", fallback: "强制终止游戏进程。")
         }
-        /// 列出游戏会话。
+        /// 列出游戏运行记录。
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionListHelp`.
         public static var sessionListHelp: LocalizedMessage {
-            .init(key: "CLIInterface.sessionListHelp", table: "CLIInterface", fallback: "列出游戏会话。")
+            .init(key: "CLIInterface.sessionListHelp", table: "CLIInterface", fallback: "列出游戏运行记录。")
         }
-        /// 跟随日志直到会话结束，使用 text 或 ndjson 格式。
+        /// 使用 text 或 ndjson 格式持续输出日志，直到本次运行结束。
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionLogFollowHelp`.
         public static var sessionLogFollowHelp: LocalizedMessage {
-            .init(key: "CLIInterface.sessionLogFollowHelp", table: "CLIInterface", fallback: "跟随日志直到会话结束，使用 text 或 ndjson 格式。")
+            .init(key: "CLIInterface.sessionLogFollowHelp", table: "CLIInterface", fallback: "使用 text 或 ndjson 格式持续输出日志，直到本次运行结束。")
         }
         /// 最多读取的末尾行数，默认 200。
         ///
@@ -2013,11 +2013,11 @@ extension Messages {
         public static var sessionLogSourceHelp: LocalizedMessage {
             .init(key: "CLIInterface.sessionLogSourceHelp", table: "CLIInterface", fallback: "日志来源。")
         }
-        /// 读取或持续跟随会话日志。
+        /// 读取本次运行的日志，或持续输出新日志。
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionLogsHelp`.
         public static var sessionLogsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.sessionLogsHelp", table: "CLIInterface", fallback: "读取或持续跟随会话日志。")
+            .init(key: "CLIInterface.sessionLogsHelp", table: "CLIInterface", fallback: "读取本次运行的日志，或持续输出新日志。")
         }
         /// 监控进程已不可用。
         ///
@@ -2025,11 +2025,11 @@ extension Messages {
         public static var sessionMonitorUnavailable: LocalizedMessage {
             .init(key: "CLIInterface.sessionMonitorUnavailable", table: "CLIInterface", fallback: "监控进程已不可用。")
         }
-        /// 查询游戏会话详情。
+        /// 查询游戏运行详情。
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionShowHelp`.
         public static var sessionShowHelp: LocalizedMessage {
-            .init(key: "CLIInterface.sessionShowHelp", table: "CLIInterface", fallback: "查询游戏会话详情。")
+            .init(key: "CLIInterface.sessionShowHelp", table: "CLIInterface", fallback: "查询游戏运行详情。")
         }
         /// 请求游戏正常退出。
         ///
@@ -2037,11 +2037,11 @@ extension Messages {
         public static var sessionStopHelp: LocalizedMessage {
             .init(key: "CLIInterface.sessionStopHelp", table: "CLIInterface", fallback: "请求游戏正常退出。")
         }
-        /// 实例 ID 和会话 ID。
+        /// 实例 ID 和运行记录 ID。
         ///
         /// Resource: `CLIInterface.CLIInterface.sessionTargetArgumentsHelp`.
         public static var sessionTargetArgumentsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.sessionTargetArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和会话 ID。")
+            .init(key: "CLIInterface.sessionTargetArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和运行记录 ID。")
         }
         /// 等待监控记录游戏退出。
         ///
@@ -2079,11 +2079,11 @@ extension Messages {
         public static var uninstallAction: LocalizedMessage {
             .init(key: "CLIInterface.uninstallAction", table: "CLIInterface", fallback: "卸载")
         }
-        /// 未知账户操作。
+        /// 未知账号操作。
         ///
         /// Resource: `CLIInterface.CLIInterface.unknownAccountAction`.
         public static var unknownAccountAction: LocalizedMessage {
-            .init(key: "CLIInterface.unknownAccountAction", table: "CLIInterface", fallback: "未知账户操作。")
+            .init(key: "CLIInterface.unknownAccountAction", table: "CLIInterface", fallback: "未知账号操作。")
         }
         /// 未知命令。
         ///
@@ -2175,17 +2175,17 @@ extension Messages {
         public static var unknownRecoveryKind: LocalizedMessage {
             .init(key: "CLIInterface.unknownRecoveryKind", table: "CLIInterface", fallback: "未知恢复类型。")
         }
-        /// 未知会话操作。
+        /// 未知运行记录操作。
         ///
         /// Resource: `CLIInterface.CLIInterface.unknownSessionAction`.
         public static var unknownSessionAction: LocalizedMessage {
-            .init(key: "CLIInterface.unknownSessionAction", table: "CLIInterface", fallback: "未知会话操作。")
+            .init(key: "CLIInterface.unknownSessionAction", table: "CLIInterface", fallback: "未知运行记录操作。")
         }
-        /// 未知世界操作。
+        /// 未知存档操作。
         ///
         /// Resource: `CLIInterface.CLIInterface.unknownWorldAction`.
         public static var unknownWorldAction: LocalizedMessage {
-            .init(key: "CLIInterface.unknownWorldAction", table: "CLIInterface", fallback: "未知世界操作。")
+            .init(key: "CLIInterface.unknownWorldAction", table: "CLIInterface", fallback: "未知存档操作。")
         }
         /// 不支持此语言。
         ///
@@ -2211,23 +2211,23 @@ extension Messages {
         public static var worldBackupArgumentsHelp: LocalizedMessage {
             .init(key: "CLIInterface.worldBackupArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和备份 ID。")
         }
-        /// 世界备份与恢复
+        /// 存档备份与恢复
         ///
         /// Resource: `CLIInterface.CLIInterface.worldBackupCommands`.
         public static var worldBackupCommands: LocalizedMessage {
-            .init(key: "CLIInterface.worldBackupCommands", table: "CLIInterface", fallback: "世界备份与恢复")
+            .init(key: "CLIInterface.worldBackupCommands", table: "CLIInterface", fallback: "存档备份与恢复")
         }
-        /// 备份世界。
+        /// 备份存档。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldBackupCreateHelp`.
         public static var worldBackupCreateHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldBackupCreateHelp", table: "CLIInterface", fallback: "备份世界。")
+            .init(key: "CLIInterface.worldBackupCreateHelp", table: "CLIInterface", fallback: "备份存档。")
         }
-        /// 列出世界备份。
+        /// 列出存档备份。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldBackupListHelp`.
         public static var worldBackupListHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldBackupListHelp", table: "CLIInterface", fallback: "列出世界备份。")
+            .init(key: "CLIInterface.worldBackupListHelp", table: "CLIInterface", fallback: "列出存档备份。")
         }
         /// 找不到备份。
         ///
@@ -2241,99 +2241,99 @@ extension Messages {
         public static var worldBackupReasonHelp: LocalizedMessage {
             .init(key: "CLIInterface.worldBackupReasonHelp", table: "CLIInterface", fallback: "可选的备份原因。")
         }
-        /// 将世界备份移到废纸篓。
+        /// 将存档备份移到废纸篓。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldBackupRemoveHelp`.
         public static var worldBackupRemoveHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldBackupRemoveHelp", table: "CLIInterface", fallback: "将世界备份移到废纸篓。")
+            .init(key: "CLIInterface.worldBackupRemoveHelp", table: "CLIInterface", fallback: "将存档备份移到废纸篓。")
         }
-        /// 覆盖已有世界。
+        /// 覆盖已有存档。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldBackupReplaceHelp`.
         public static var worldBackupReplaceHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldBackupReplaceHelp", table: "CLIInterface", fallback: "覆盖已有世界。")
+            .init(key: "CLIInterface.worldBackupReplaceHelp", table: "CLIInterface", fallback: "覆盖已有存档。")
         }
-        /// 恢复备份，覆盖已有世界时需要明确确认。
+        /// 恢复备份，覆盖已有存档时需要确认。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldBackupRestoreHelp`.
         public static var worldBackupRestoreHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldBackupRestoreHelp", table: "CLIInterface", fallback: "恢复备份，覆盖已有世界时需要明确确认。")
+            .init(key: "CLIInterface.worldBackupRestoreHelp", table: "CLIInterface", fallback: "恢复备份，覆盖已有存档时需要确认。")
         }
-        /// 世界管理、导入导出与备份
+        /// 存档管理、导入导出与备份
         ///
         /// Resource: `CLIInterface.CLIInterface.worldCommands`.
         public static var worldCommands: LocalizedMessage {
-            .init(key: "CLIInterface.worldCommands", table: "CLIInterface", fallback: "世界管理、导入导出与备份")
+            .init(key: "CLIInterface.worldCommands", table: "CLIInterface", fallback: "存档管理、导入导出与备份")
         }
-        /// 实例 ID、世界文件夹和文件路径。
+        /// 实例 ID、存档文件夹和文件路径。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldExportArgumentsHelp`.
         public static var worldExportArgumentsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldExportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、世界文件夹和文件路径。")
+            .init(key: "CLIInterface.worldExportArgumentsHelp", table: "CLIInterface", fallback: "实例 ID、存档文件夹和文件路径。")
         }
-        /// 导出世界归档。
+        /// 导出存档压缩包。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldExportHelp`.
         public static var worldExportHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldExportHelp", table: "CLIInterface", fallback: "导出世界归档。")
+            .init(key: "CLIInterface.worldExportHelp", table: "CLIInterface", fallback: "导出存档压缩包。")
         }
-        /// 实例 ID 和世界文件夹。
+        /// 实例 ID 和存档文件夹。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldFolderArgumentsHelp`.
         public static var worldFolderArgumentsHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldFolderArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和世界文件夹。")
+            .init(key: "CLIInterface.worldFolderArgumentsHelp", table: "CLIInterface", fallback: "实例 ID 和存档文件夹。")
         }
-        /// 导入世界归档或目录。
+        /// 导入存档压缩包或文件夹。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldImportHelp`.
         public static var worldImportHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldImportHelp", table: "CLIInterface", fallback: "导入世界归档或目录。")
+            .init(key: "CLIInterface.worldImportHelp", table: "CLIInterface", fallback: "导入存档压缩包或文件夹。")
         }
-        /// 列出实例中的世界。
+        /// 列出实例中的存档。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldListHelp`.
         public static var worldListHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldListHelp", table: "CLIInterface", fallback: "列出实例中的世界。")
+            .init(key: "CLIInterface.worldListHelp", table: "CLIInterface", fallback: "列出实例中的存档。")
         }
-        /// 找不到世界。
+        /// 找不到存档。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldNotFound`.
         public static var worldNotFound: LocalizedMessage {
-            .init(key: "CLIInterface.worldNotFound", table: "CLIInterface", fallback: "找不到世界。")
+            .init(key: "CLIInterface.worldNotFound", table: "CLIInterface", fallback: "找不到存档。")
         }
-        /// 将世界移到废纸篓。
+        /// 将存档移到废纸篓。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldRemoveHelp`.
         public static var worldRemoveHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldRemoveHelp", table: "CLIInterface", fallback: "将世界移到废纸篓。")
+            .init(key: "CLIInterface.worldRemoveHelp", table: "CLIInterface", fallback: "将存档移到废纸篓。")
         }
-        /// 查询世界详情。
+        /// 查询存档详情。
         ///
         /// Resource: `CLIInterface.CLIInterface.worldShowHelp`.
         public static var worldShowHelp: LocalizedMessage {
-            .init(key: "CLIInterface.worldShowHelp", table: "CLIInterface", fallback: "查询世界详情。")
+            .init(key: "CLIInterface.worldShowHelp", table: "CLIInterface", fallback: "查询存档详情。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "CLIInterface:CLIInterface.accountCleanupFailed": .init("账户已移除，但凭据或外观数据清理失败。", []),
-            "CLIInterface:CLIInterface.accountCommands": .init("账户管理与登录", []),
-            "CLIInterface:CLIInterface.accountIdentityChanged": .init("账户身份已发生变化。", []),
-            "CLIInterface:CLIInterface.accountListHelp": .init("列出账户，不显示凭据。", []),
+            "CLIInterface:CLIInterface.accountCleanupFailed": .init("账号已移除，但凭据或外观数据清理失败。", []),
+            "CLIInterface:CLIInterface.accountCommands": .init("账号管理与登录", []),
+            "CLIInterface:CLIInterface.accountIdentityChanged": .init("账号身份已发生变化。", []),
+            "CLIInterface:CLIInterface.accountListHelp": .init("列出账号，不显示凭据。", []),
             "CLIInterface:CLIInterface.accountLoginCancelHelp": .init("取消待完成的登录流程。", []),
-            "CLIInterface:CLIInterface.accountLoginCommands": .init("Microsoft 与外置登录", []),
+            "CLIInterface:CLIInterface.accountLoginCommands": .init("Microsoft 与第三方账号登录", []),
             "CLIInterface:CLIInterface.accountLoginCompleteHelp": .init("等待授权完成并保存所选角色。", []),
-            "CLIInterface:CLIInterface.accountLoginStartHelp": .init("开始分步完成的 Microsoft 或外置登录。", []),
-            "CLIInterface:CLIInterface.accountLogoutHelp": .init("注销外置登录凭据并移除账户。", []),
-            "CLIInterface:CLIInterface.accountNotFound": .init("找不到账户。", []),
-            "CLIInterface:CLIInterface.accountOfflineHelp": .init("添加或复用离线账户。", []),
-            "CLIInterface:CLIInterface.accountProviderMismatch": .init("账户的登录服务类型不匹配。", []),
-            "CLIInterface:CLIInterface.accountRefreshHelp": .init("刷新已保存账户的凭据。", []),
-            "CLIInterface:CLIInterface.accountRemoveHelp": .init("移除账户及其本地凭据。", []),
-            "CLIInterface:CLIInterface.accountRemoved": .init("账户已被移除。", []),
-            "CLIInterface:CLIInterface.accountRemovedOrReplaced": .init("账户已被移除或替换。", []),
-            "CLIInterface:CLIInterface.accountSelectHelp": .init("选择当前使用的账户。", []),
-            "CLIInterface:CLIInterface.accountSelectedHelp": .init("查询当前账户 ID。", []),
+            "CLIInterface:CLIInterface.accountLoginStartHelp": .init("开始 Microsoft 或第三方账号登录流程，稍后完成授权。", []),
+            "CLIInterface:CLIInterface.accountLogoutHelp": .init("注销第三方登录凭据并移除账号。", []),
+            "CLIInterface:CLIInterface.accountNotFound": .init("找不到账号。", []),
+            "CLIInterface:CLIInterface.accountOfflineHelp": .init("添加或复用离线账号。", []),
+            "CLIInterface:CLIInterface.accountProviderMismatch": .init("账号的登录服务类型不匹配。", []),
+            "CLIInterface:CLIInterface.accountRefreshHelp": .init("刷新已保存账号的凭据。", []),
+            "CLIInterface:CLIInterface.accountRemoveHelp": .init("移除账号及其本地凭据。", []),
+            "CLIInterface:CLIInterface.accountRemoved": .init("账号已被移除。", []),
+            "CLIInterface:CLIInterface.accountRemovedOrReplaced": .init("账号已被移除或替换。", []),
+            "CLIInterface:CLIInterface.accountSelectHelp": .init("选择当前使用的账号。", []),
+            "CLIInterface:CLIInterface.accountSelectedHelp": .init("查询当前账号 ID。", []),
             "CLIInterface:CLIInterface.accountServiceKeyCommands": .init("平台服务凭据", []),
-            "CLIInterface:CLIInterface.accountShowHelp": .init("查询账户详情。", []),
+            "CLIInterface:CLIInterface.accountShowHelp": .init("查询账号详情。", []),
             "CLIInterface:CLIInterface.allContentFilesHelp": .init("选择该类型的全部文件。", []),
             "CLIInterface:CLIInterface.allResultsHelp": .init("返回全部结果。", []),
             "CLIInterface:CLIInterface.ambiguousInstanceName": .init("有多个实例使用此名称。", []),
@@ -2342,14 +2342,14 @@ extension Messages {
             "CLIInterface:CLIInterface.appCommands": .init("应用信息与语言设置", []),
             "CLIInterface:CLIInterface.appLanguageCommands": .init("应用界面语言", []),
             "CLIInterface:CLIInterface.appLanguageGetHelp": .init("读取应用的界面语言。", []),
-            "CLIInterface:CLIInterface.appLanguageSetHelp": .init("设置应用语言，重启后生效。", []),
+            "CLIInterface:CLIInterface.appLanguageSetHelp": .init("设置界面语言，重新启动 Ruri 后生效。", []),
             "CLIInterface:CLIInterface.appVersionHelp": .init("显示应用及命令行工具的版本和路径。", []),
             "CLIInterface:CLIInterface.booleanValueRequired": .init("请使用 true 或 false。", []),
             "CLIInterface:CLIInterface.bundledCliNotFound": .init("找不到应用内的命令行工具。", []),
             "CLIInterface:CLIInterface.catalogCategoriesHelp": .init("列出内容平台的分类。", []),
             "CLIInterface:CLIInterface.catalogCategoryHelp": .init("内容平台的分类。", []),
             "CLIInterface:CLIInterface.catalogCommands": .init("内容搜索与版本查询", []),
-            "CLIInterface:CLIInterface.catalogProjectShowHelp": .init("查询项目描述及元数据。", []),
+            "CLIInterface:CLIInterface.catalogProjectShowHelp": .init("查询项目简介及详细信息。", []),
             "CLIInterface:CLIInterface.catalogProjectTypeHelp": .init("项目类型。", []),
             "CLIInterface:CLIInterface.catalogSearchHelp": .init("搜索 Modrinth 或 CurseForge。", []),
             "CLIInterface:CLIInterface.catalogSortHelp": .init("排序方式。", []),
@@ -2367,14 +2367,14 @@ extension Messages {
             "CLIInterface:CLIInterface.commandLineAndAutomationTitle": .init("命令行与自动化", []),
             "CLIInterface:CLIInterface.commandPathArgumentsHelp": .init("可选的资源、动作和子动作。", []),
             "CLIInterface:CLIInterface.compatibleDataPackVersionNotFound": .init("找不到兼容的数据包版本。", []),
-            "CLIInterface:CLIInterface.compatibleVersionNotFound": .init("找不到匹配的兼容版本。", []),
+            "CLIInterface:CLIInterface.compatibleVersionNotFound": .init("找不到符合条件的兼容版本。", []),
             "CLIInterface:CLIInterface.completeUniqueDataPackOrderRequired": .init("请提供完整的优先级列表，每项只能出现一次。", []),
-            "CLIInterface:CLIInterface.configApplyHelp": .init("原子应用 JSON 配置补丁。", []),
-            "CLIInterface:CLIInterface.configCommands": .init("全局设置、默认配置与实例覆盖", []),
+            "CLIInterface:CLIInterface.configApplyHelp": .init("将 JSON 配置补丁作为一次完整操作应用。", []),
+            "CLIInterface:CLIInterface.configCommands": .init("全局设置、默认配置与实例独立配置", []),
             "CLIInterface:CLIInterface.configFieldOrGroupNamesHelp": .init("配置字段或组的名称", []),
             "CLIInterface:CLIInterface.configFieldValueArgumentsHelp": .init("配置字段及 JSON 值。", []),
-            "CLIInterface:CLIInterface.configGetHelp": .init("查询显式配置、有效配置及继承来源。", []),
-            "CLIInterface:CLIInterface.configInheritHelp": .init("恢复实例配置组的继承。", []),
+            "CLIInterface:CLIInterface.configGetHelp": .init("查询已设置的配置、实际生效的配置及继承来源。", []),
+            "CLIInterface:CLIInterface.configInheritHelp": .init("让指定实例配置组重新使用默认配置。", []),
             "CLIInterface:CLIInterface.configInheritanceRequiresCompleteGroups": .init("inherit 仅适用于完整的实例配置组。", []),
             "CLIInterface:CLIInterface.configInstanceGroupNamesHelp": .init("实例配置组的名称，仅适用于实例", []),
             "CLIInterface:CLIInterface.configPatchFileHelp": .init("JSON 补丁文件；使用 - 从标准输入读取。", []),
@@ -2385,24 +2385,24 @@ extension Messages {
             "CLIInterface:CLIInterface.configValueMustBeJson": .init("配置值必须是 JSON；字符串值需要保留双引号。", []),
             "CLIInterface:CLIInterface.confirmDeleteOrReplaceHelp": .init("确认删除或覆盖操作。", []),
             "CLIInterface:CLIInterface.confirmLocalModificationsReplacementHelp": .init("确认覆盖本地修改。", []),
-            "CLIInterface:CLIInterface.confirmUnmonitoredGameExitHelp": .init("确认失去监控的游戏已结束。", []),
+            "CLIInterface:CLIInterface.confirmUnmonitoredGameExitHelp": .init("确认已与监控断开连接的游戏已经退出。", []),
             "CLIInterface:CLIInterface.confirmationRequired": .init("此操作需要 --yes，可先使用 --dry-run 预览。", []),
             "CLIInterface:CLIInterface.conflictingConfigPatchOperations": .init("针对 %1$@ 的补丁操作相互冲突。", [.text]),
-            "CLIInterface:CLIInterface.contentCheckUpdatesHelp": .init("检查已安装内容的兼容更新。", []),
-            "CLIInterface:CLIInterface.contentCommands": .init("模组、资源包与光影管理", []),
-            "CLIInterface:CLIInterface.contentDisableHelp": .init("禁用所选内容。", []),
-            "CLIInterface:CLIInterface.contentEnableHelp": .init("启用所选内容。", []),
+            "CLIInterface:CLIInterface.contentCheckUpdatesHelp": .init("检查已安装资源的兼容更新。", []),
+            "CLIInterface:CLIInterface.contentCommands": .init("模组、资源包与光影包管理", []),
+            "CLIInterface:CLIInterface.contentDisableHelp": .init("停用所选资源。", []),
+            "CLIInterface:CLIInterface.contentEnableHelp": .init("启用所选资源。", []),
             "CLIInterface:CLIInterface.contentFileSelectionHelp": .init("已安装文件的完整名称，可重复传入以选择多个文件。", []),
             "CLIInterface:CLIInterface.contentFileSelectionRequired": .init("请使用 --file 选择文件，或明确指定 --all。", []),
             "CLIInterface:CLIInterface.contentImportArgumentsHelp": .init("实例 ID 和文件路径。", []),
-            "CLIInterface:CLIInterface.contentImportHelp": .init("导入本地内容文件。", []),
+            "CLIInterface:CLIInterface.contentImportHelp": .init("导入本地资源文件。", []),
             "CLIInterface:CLIInterface.contentInstallHelp": .init("安装兼容的项目及其必需依赖。", []),
-            "CLIInterface:CLIInterface.contentKindHelp": .init("内容类型。", []),
-            "CLIInterface:CLIInterface.contentListHelp": .init("列出已安装的模组、资源包或光影。", []),
+            "CLIInterface:CLIInterface.contentKindHelp": .init("资源类型。", []),
+            "CLIInterface:CLIInterface.contentListHelp": .init("列出已安装的模组、资源包或光影包。", []),
             "CLIInterface:CLIInterface.contentProjectArgumentsHelp": .init("实例 ID 和项目 ID。", []),
             "CLIInterface:CLIInterface.contentProviderHelp": .init("内容平台。", []),
-            "CLIInterface:CLIInterface.contentRemoveHelp": .init("将所选内容移到废纸篓。", []),
-            "CLIInterface:CLIInterface.contentUpdateHelp": .init("更新所选内容及依赖。", []),
+            "CLIInterface:CLIInterface.contentRemoveHelp": .init("将所选资源移到废纸篓。", []),
+            "CLIInterface:CLIInterface.contentUpdateHelp": .init("更新所选资源及其依赖。", []),
             "CLIInterface:CLIInterface.contentVersionIdHelp": .init("指定平台版本 ID，默认选择最新稳定版。", []),
             "CLIInterface:CLIInterface.copyGameFilesHelp": .init("将游戏文件复制到空的目标目录。", []),
             "CLIInterface:CLIInterface.curseForgeKeyClearHelp": .init("移除自定义 CurseForge API Key。", []),
@@ -2411,43 +2411,43 @@ extension Messages {
             "CLIInterface:CLIInterface.customRunDirectoryPathHelp": .init("已有的自定义游戏目录。", []),
             "CLIInterface:CLIInterface.dataDirectoryHelp": .init("启动器数据目录，优先于 RURI_DATA_DIR。", []),
             "CLIInterface:CLIInterface.dataPackCommands": .init("数据包管理与排序", []),
-            "CLIInterface:CLIInterface.dataPackDisableHelp": .init("禁用世界的数据包。", []),
-            "CLIInterface:CLIInterface.dataPackEnableHelp": .init("启用世界的数据包。", []),
-            "CLIInterface:CLIInterface.dataPackImportArgumentsHelp": .init("实例 ID、世界名称和文件路径。", []),
-            "CLIInterface:CLIInterface.dataPackImportHelp": .init("将数据包导入世界。", []),
+            "CLIInterface:CLIInterface.dataPackDisableHelp": .init("停用存档中的数据包。", []),
+            "CLIInterface:CLIInterface.dataPackEnableHelp": .init("启用存档中的数据包。", []),
+            "CLIInterface:CLIInterface.dataPackImportArgumentsHelp": .init("实例 ID、存档名称和文件路径。", []),
+            "CLIInterface:CLIInterface.dataPackImportHelp": .init("将数据包导入存档。", []),
             "CLIInterface:CLIInterface.dataPackInstallHelp": .init("安装数据包及其依赖。", []),
-            "CLIInterface:CLIInterface.dataPackListHelp": .init("列出世界的数据包。", []),
+            "CLIInterface:CLIInterface.dataPackListHelp": .init("列出存档中的数据包。", []),
             "CLIInterface:CLIInterface.dataPackNotFound": .init("找不到数据包。", []),
             "CLIInterface:CLIInterface.dataPackOrderCommands": .init("数据包优先级", []),
             "CLIInterface:CLIInterface.dataPackOrderGetHelp": .init("按优先级从高到低查询数据包顺序。", []),
-            "CLIInterface:CLIInterface.dataPackOrderSetHelp": .init("替换完整的数据包优先级顺序。", []),
+            "CLIInterface:CLIInterface.dataPackOrderSetHelp": .init("设置完整的数据包优先级顺序。", []),
             "CLIInterface:CLIInterface.dataPackPriorityListHelp": .init("完整优先级列表，优先级最高的在前。", []),
-            "CLIInterface:CLIInterface.dataPackProjectArgumentsHelp": .init("实例 ID、世界名称和项目 ID。", []),
-            "CLIInterface:CLIInterface.dataPackRemoveHelp": .init("移除世界的数据包。", []),
+            "CLIInterface:CLIInterface.dataPackProjectArgumentsHelp": .init("实例 ID、存档名称和项目 ID。", []),
+            "CLIInterface:CLIInterface.dataPackRemoveHelp": .init("移除存档中的数据包。", []),
             "CLIInterface:CLIInterface.dataPackSearchArgumentsHelp": .init("实例 ID 和搜索关键词。", []),
             "CLIInterface:CLIInterface.dataPackSearchHelp": .init("搜索兼容的 Modrinth 数据包。", []),
-            "CLIInterface:CLIInterface.dataPackTargetArgumentsHelp": .init("实例 ID、世界名称和数据包名称。", []),
+            "CLIInterface:CLIInterface.dataPackTargetArgumentsHelp": .init("实例 ID、存档名称和数据包名称。", []),
             "CLIInterface:CLIInterface.dataPackVersionIdHelp": .init("指定版本 ID，默认选择最新稳定版。", []),
             "CLIInterface:CLIInterface.dataPackVersionsHelp": .init("列出兼容的数据包版本。", []),
-            "CLIInterface:CLIInterface.dataPackWorldArgumentsHelp": .init("实例 ID 和世界名称。", []),
-            "CLIInterface:CLIInterface.directoryAddHelp": .init("注册已有目录。", []),
-            "CLIInterface:CLIInterface.directoryCommands": .init("游戏目录的注册、迁移与恢复", []),
+            "CLIInterface:CLIInterface.dataPackWorldArgumentsHelp": .init("实例 ID 和存档名称。", []),
+            "CLIInterface:CLIInterface.directoryAddHelp": .init("添加已有的游戏目录。", []),
+            "CLIInterface:CLIInterface.directoryCommands": .init("游戏目录的添加、移动与恢复", []),
             "CLIInterface:CLIInterface.directoryFilterHelp": .init("按目录 UUID 或 default 筛选。", []),
-            "CLIInterface:CLIInterface.directoryInspectHelp": .init("检查已有 Minecraft 文件夹，不注册目录。", []),
+            "CLIInterface:CLIInterface.directoryInspectHelp": .init("检查已有的 Minecraft 文件夹，不添加到 Ruri。", []),
             "CLIInterface:CLIInterface.directoryLayoutHelp": .init("目录布局。", []),
-            "CLIInterface:CLIInterface.directoryListHelp": .init("列出已注册和已断开连接的游戏目录。", []),
+            "CLIInterface:CLIInterface.directoryListHelp": .init("列出已添加的游戏目录，包括暂时无法访问的目录。", []),
             "CLIInterface:CLIInterface.directoryNameHelp": .init("目录显示名称。", []),
             "CLIInterface:CLIInterface.directoryNotFound": .init("找不到目录。", []),
             "CLIInterface:CLIInterface.directoryPathArgumentsHelp": .init("目录 ID 和文件路径。", []),
-            "CLIInterface:CLIInterface.directoryRecoverHelp": .init("恢复已断开连接的 Minecraft 目录。", []),
+            "CLIInterface:CLIInterface.directoryRecoverHelp": .init("恢复暂时无法访问的 Minecraft 目录。", []),
             "CLIInterface:CLIInterface.directoryRefreshHelp": .init("刷新 Minecraft 目录中的版本。", []),
-            "CLIInterface:CLIInterface.directoryRelocateHelp": .init("重新关联已移动的注册目录。", []),
-            "CLIInterface:CLIInterface.directoryRemoveHelp": .init("移除目录注册，保留文件。", []),
-            "CLIInterface:CLIInterface.directoryRenameHelp": .init("重命名已注册的目录。", []),
-            "CLIInterface:CLIInterface.directorySelectHelp": .init("选择已注册的目录。", []),
+            "CLIInterface:CLIInterface.directoryRelocateHelp": .init("重新指定已移动的游戏目录的位置。", []),
+            "CLIInterface:CLIInterface.directoryRemoveHelp": .init("从 Ruri 中移除目录，保留文件。", []),
+            "CLIInterface:CLIInterface.directoryRenameHelp": .init("更改已添加目录的显示名称。", []),
+            "CLIInterface:CLIInterface.directorySelectHelp": .init("选择已添加的游戏目录。", []),
             "CLIInterface:CLIInterface.directorySelectedHelp": .init("查询当前选中的游戏目录。", []),
             "CLIInterface:CLIInterface.doctorChecksFailed": .init("一项或多项检查未通过。", []),
-            "CLIInterface:CLIInterface.doctorCommandHelp": .init("检查状态、路径、Java、账户凭据及内置辅助程序。", []),
+            "CLIInterface:CLIInterface.doctorCommandHelp": .init("检查状态、路径、Java、账号凭据及内置辅助程序。", []),
             "CLIInterface:CLIInterface.doctorInstanceHelp": .init("检查指定实例。", []),
             "CLIInterface:CLIInterface.downloadCommands": .init("文件下载与校验", []),
             "CLIInterface:CLIInterface.downloadFetchHelp": .init("下载文件并校验 SHA-1 和大小。", []),
@@ -2459,16 +2459,16 @@ extension Messages {
             "CLIInterface:CLIInterface.duplicateLoaderSelection": .init("重复指定了加载器。", []),
             "CLIInterface:CLIInterface.emptyDirectoryName": .init("目录名称不能为空。", []),
             "CLIInterface:CLIInterface.exactNameFilterHelp": .init("按完整名称筛选。", []),
-            "CLIInterface:CLIInterface.excludeWorldsHelp": .init("不包含世界存档。", []),
-            "CLIInterface:CLIInterface.externalLoginIdentityHelp": .init("外置登录的用户名或邮箱。", []),
-            "CLIInterface:CLIInterface.externalLoginPasswordStdinRequired": .init("外置登录需要 --password-stdin。", []),
-            "CLIInterface:CLIInterface.externalLoginProfileIdHelp": .init("login start 返回的外置登录角色 ID。", []),
-            "CLIInterface:CLIInterface.externalLoginServerHelp": .init("外置登录服务器。", []),
+            "CLIInterface:CLIInterface.excludeWorldsHelp": .init("不包含游戏存档。", []),
+            "CLIInterface:CLIInterface.externalLoginIdentityHelp": .init("第三方登录的用户名或邮箱。", []),
+            "CLIInterface:CLIInterface.externalLoginPasswordStdinRequired": .init("第三方登录需要 --password-stdin。", []),
+            "CLIInterface:CLIInterface.externalLoginProfileIdHelp": .init("login start 返回的第三方登录角色 ID。", []),
+            "CLIInterface:CLIInterface.externalLoginServerHelp": .init("第三方登录服务器。", []),
             "CLIInterface:CLIInterface.gameExitUnsuccessful": .init("游戏未正常退出。", []),
             "CLIInterface:CLIInterface.ifRevisionHelp": .init("仅当状态版本与此前读取的一致时提交。", []),
             "CLIInterface:CLIInterface.importModpackJvmArgumentsHelp": .init("导入整合包提供的 JVM 参数。", []),
             "CLIInterface:CLIInterface.includeSnapshotsHelp": .init("包含快照版本。", []),
-            "CLIInterface:CLIInterface.includeWorldBackupsHelp": .init("包含世界备份。", []),
+            "CLIInterface:CLIInterface.includeWorldBackupsHelp": .init("包含存档备份。", []),
             "CLIInterface:CLIInterface.inputFileNotFound": .init("找不到输入文件。", []),
             "CLIInterface:CLIInterface.inputSizeLimitExceeded": .init("输入超过允许的大小。", []),
             "CLIInterface:CLIInterface.instanceArchiveFormatHelp": .init("归档格式：ruri、complete、multimc、mcbbs 或 mrpack。", []),
@@ -2493,16 +2493,16 @@ extension Messages {
             "CLIInterface:CLIInterface.instanceIdOrNameRequired": .init("请指定实例 UUID 或 --name，两者只能选一个。", []),
             "CLIInterface:CLIInterface.instanceImportDirectoryHelp": .init("目标目录 UUID 或 default。", []),
             "CLIInterface:CLIInterface.instanceImportHelp": .init("将实例归档导入指定目录。", []),
-            "CLIInterface:CLIInterface.instanceInstallHelp": .init("安装尚未完成安装的实例。", []),
+            "CLIInterface:CLIInterface.instanceInstallHelp": .init("完成实例的安装。", []),
             "CLIInterface:CLIInterface.instanceInstallRequiredBeforeLaunch": .init("请先安装此实例，再启动游戏。", []),
-            "CLIInterface:CLIInterface.instanceListHelp": .init("列出托管及已注册的实例。", []),
+            "CLIInterface:CLIInterface.instanceListHelp": .init("列出由 Ruri 管理和从其他位置添加的实例。", []),
             "CLIInterface:CLIInterface.instanceLoaderArgumentsHelp": .init("实例 ID 和加载器类型。", []),
             "CLIInterface:CLIInterface.instanceLocationChanged": .init("实例位置已发生变化。", []),
             "CLIInterface:CLIInterface.instanceMoveHelp": .init("将实例移动到另一目录。", []),
             "CLIInterface:CLIInterface.instanceNameHelp": .init("实例名称。", []),
             "CLIInterface:CLIInterface.instanceNameLookupHelp": .init("通过完整名称查找实例，代替 UUID。", []),
             "CLIInterface:CLIInterface.instanceNotFound": .init("找不到实例。", []),
-            "CLIInterface:CLIInterface.instancePinArgumentsHelp": .init("实例 ID 和收藏状态，状态为 true 或 false。", []),
+            "CLIInterface:CLIInterface.instancePinArgumentsHelp": .init("实例 ID 和固定状态，状态为 true 或 false。", []),
             "CLIInterface:CLIInterface.instancePinHelp": .init("设置实例是否固定到主页。", []),
             "CLIInterface:CLIInterface.instanceRecordOnlyHelp": .init("仅创建实例记录，不下载文件。", []),
             "CLIInterface:CLIInterface.instanceRemoveHelp": .init("将实例自有文件移到废纸篓，并移除实例记录。", []),
@@ -2513,7 +2513,7 @@ extension Messages {
             "CLIInterface:CLIInterface.instanceRunDirectoryCommands": .init("实例运行目录", []),
             "CLIInterface:CLIInterface.instanceRunDirectoryModeArgumentsHelp": .init("实例 ID 和目录模式。", []),
             "CLIInterface:CLIInterface.instanceRunDirectoryPathArgumentsHelp": .init("实例 ID 和目录路径。", []),
-            "CLIInterface:CLIInterface.instanceRunDirectoryRelocateHelp": .init("重新关联已移动的自定义游戏目录。", []),
+            "CLIInterface:CLIInterface.instanceRunDirectoryRelocateHelp": .init("重新指定已移动的自定义游戏目录的位置。", []),
             "CLIInterface:CLIInterface.instanceRunDirectorySetHelp": .init("切换实例的运行目录。", []),
             "CLIInterface:CLIInterface.instanceRunDirectoryShowHelp": .init("查询实例的游戏目录。", []),
             "CLIInterface:CLIInterface.instanceSelectHelp": .init("选择实例。", []),
@@ -2534,32 +2534,32 @@ extension Messages {
             "CLIInterface:CLIInterface.invalidOptionChoice": .init("--%1$@ 必须为以下值之一：%2$@。", [.text, .text]),
             "CLIInterface:CLIInterface.invalidOutputFormatCombination": .init("请使用 --output text|json|ndjson；--json 不能与 ndjson 同时使用。", []),
             "CLIInterface:CLIInterface.invalidRunDirectoryModeOrPath": .init("目录模式必须为 isolated、shared 或 custom；--path 仅适用于 custom。", []),
-            "CLIInterface:CLIInterface.javaAddHelp": .init("注册已安装的 Java 运行时。", []),
+            "CLIInterface:CLIInterface.javaAddHelp": .init("添加已安装的 Java。", []),
             "CLIInterface:CLIInterface.javaArchitectureFilterHelp": .init("按架构筛选。", []),
             "CLIInterface:CLIInterface.javaCatalogEntryNotFound": .init("找不到指定的 Java 版本条目。", []),
             "CLIInterface:CLIInterface.javaCatalogHelp": .init("列出可安装的 Java 运行时。", []),
             "CLIInterface:CLIInterface.javaCheckIncompleteInstallationsHelp": .init("检查未完成的安装。", []),
             "CLIInterface:CLIInterface.javaCleanIncompleteInstallationHelp": .init("移除未完成的安装。", []),
-            "CLIInterface:CLIInterface.javaCommands": .init("Java 发现、安装与管理", []),
-            "CLIInterface:CLIInterface.javaDefaultHelp": .init("设置默认 Java 选择。", []),
-            "CLIInterface:CLIInterface.javaForgetHelp": .init("从手动列表中移除 Java，保留文件及配置引用。", []),
-            "CLIInterface:CLIInterface.javaInstallHelp": .init("按目录中的 ID 安装 Java 运行时。", []),
+            "CLIInterface:CLIInterface.javaCommands": .init("Java 查找、安装与管理", []),
+            "CLIInterface:CLIInterface.javaDefaultHelp": .init("设置默认使用的 Java。", []),
+            "CLIInterface:CLIInterface.javaForgetHelp": .init("从手动添加的列表中移除 Java，保留文件和使用它的配置。", []),
+            "CLIInterface:CLIInterface.javaInstallHelp": .init("使用 java catalog 返回的 ID 安装 Java。", []),
             "CLIInterface:CLIInterface.javaListHelp": .init("列出本地 Java 运行时及其来源。", []),
             "CLIInterface:CLIInterface.javaMajorFilterHelp": .init("按 Java 主版本筛选。", []),
             "CLIInterface:CLIInterface.javaMajorRequiredForMajorMode": .init("major 模式需要设置 java.major。", []),
             "CLIInterface:CLIInterface.javaPathRequiredForPathMode": .init("path 模式需要设置 java.path。", []),
-            "CLIInterface:CLIInterface.javaReferencesHelp": .init("列出引用指定托管 Java 的配置。", []),
+            "CLIInterface:CLIInterface.javaReferencesHelp": .init("列出使用指定托管 Java 的配置。", []),
             "CLIInterface:CLIInterface.javaRemoveHelp": .init("将托管的 Java 移到废纸篓。", []),
             "CLIInterface:CLIInterface.javaRepairHelp": .init("修复托管的 Java 运行时。", []),
-            "CLIInterface:CLIInterface.javaResetReferencesHelp": .init("将引用此 Java 的配置重置为自动选择。", []),
+            "CLIInterface:CLIInterface.javaResetReferencesHelp": .init("将使用此 Java 的配置重置为自动选择。", []),
             "CLIInterface:CLIInterface.jsonOutputHelp": .init("在标准输出返回一个 JSON 结果。", []),
-            "CLIInterface:CLIInterface.keepCurrentAccountHelp": .init("保留当前选中的账户。", []),
-            "CLIInterface:CLIInterface.keepSourceAfterMoveHelp": .init("移动已提交后保留原始文件。", []),
-            "CLIInterface:CLIInterface.launchAccountHelp": .init("账户 UUID，默认使用当前账户。", []),
-            "CLIInterface:CLIInterface.launchAccountRequired": .init("请选择账户，或通过 --account 指定账户。", []),
+            "CLIInterface:CLIInterface.keepCurrentAccountHelp": .init("保留当前选中的账号。", []),
+            "CLIInterface:CLIInterface.keepSourceAfterMoveHelp": .init("实例移至目标位置后，保留原位置的文件。", []),
+            "CLIInterface:CLIInterface.launchAccountHelp": .init("账号 UUID，默认使用当前账号。", []),
+            "CLIInterface:CLIInterface.launchAccountRequired": .init("请选择账号，或通过 --account 指定账号。", []),
             "CLIInterface:CLIInterface.launchCheckHelp": .init("检查实例启动配置，不启动游戏。", []),
             "CLIInterface:CLIInterface.launchCommands": .init("启动检查与游戏启动", []),
-            "CLIInterface:CLIInterface.launchStartHelp": .init("启动游戏，监控接管后返回。", []),
+            "CLIInterface:CLIInterface.launchStartHelp": .init("启动游戏，并在监控组件开始接管运行后返回。", []),
             "CLIInterface:CLIInterface.libraryImportRecoveryModeHelp": .init("游戏库导入的恢复方式。", []),
             "CLIInterface:CLIInterface.limitOutOfRange": .init("--limit 必须介于 1 和 1000 之间。", []),
             "CLIInterface:CLIInterface.loaderFilterHelp": .init("按加载器筛选。", []),
@@ -2588,10 +2588,10 @@ extension Messages {
             "CLIInterface:CLIInterface.modpackCommands": .init("整合包安装、更新与回退", []),
             "CLIInterface:CLIInterface.modpackImportHelp": .init("导入本地整合包归档。", []),
             "CLIInterface:CLIInterface.modpackInstallHelp": .init("下载并安装内容平台上的整合包。", []),
-            "CLIInterface:CLIInterface.modpackMetadataNotFound": .init("此实例没有已安装整合包的元数据。", []),
+            "CLIInterface:CLIInterface.modpackMetadataNotFound": .init("此实例没有已安装整合包的信息。", []),
             "CLIInterface:CLIInterface.modpackReleaseNotFound": .init("找不到整合包发布版本。", []),
             "CLIInterface:CLIInterface.modpackRollbackHelp": .init("回退上一次整合包更新，保留更新后的本地修改。", []),
-            "CLIInterface:CLIInterface.modpackShowHelp": .init("查询已安装整合包的元数据。", []),
+            "CLIInterface:CLIInterface.modpackShowHelp": .init("查询已安装整合包的信息。", []),
             "CLIInterface:CLIInterface.modpackTargetDirectoryNotFound": .init("找不到目标目录。", []),
             "CLIInterface:CLIInterface.modpackUpdateBackupNotFound": .init("没有可用于回退的整合包更新备份。", []),
             "CLIInterface:CLIInterface.modpackUpdateFileHelp": .init("本地更新归档。", []),
@@ -2607,23 +2607,23 @@ extension Messages {
             "CLIInterface:CLIInterface.outputFormatHelp": .init("输出格式：text、json 或 ndjson。", []),
             "CLIInterface:CLIInterface.passwordStdinHelp": .init("从标准输入读取密码。", []),
             "CLIInterface:CLIInterface.positionalArgumentCountMismatch": .init("需要位置参数 %1$@，实际收到 %2$@ 个。", [.text, .text]),
-            "CLIInterface:CLIInterface.problemSessionsOnlyHelp": .init("仅显示存在问题的会话。", []),
-            "CLIInterface:CLIInterface.quickPlayWorldHelp": .init("用于快速游玩的世界文件夹。", []),
+            "CLIInterface:CLIInterface.problemSessionsOnlyHelp": .init("仅显示需要关注的运行记录。", []),
+            "CLIInterface:CLIInterface.quickPlayWorldHelp": .init("启动后直接进入的存档文件夹。", []),
             "CLIInterface:CLIInterface.quietProgressHelp": .init("不在标准错误输出显示进度。", []),
-            "CLIInterface:CLIInterface.reauthenticateAccountHelp": .init("需要重新登录的已有账户。", []),
+            "CLIInterface:CLIInterface.reauthenticateAccountHelp": .init("需要重新登录的已有账号。", []),
             "CLIInterface:CLIInterface.recoveryApplyHelp": .init("恢复指定的未完成操作。", []),
             "CLIInterface:CLIInterface.recoveryCommands": .init("未完成操作的查询与恢复", []),
             "CLIInterface:CLIInterface.recoveryInstanceFilterHelp": .init("仅检查指定实例。", []),
-            "CLIInterface:CLIInterface.recoveryListHelp": .init("列出未完成的数据操作及会话。", []),
+            "CLIInterface:CLIInterface.recoveryListHelp": .init("列出未完成的数据操作和运行记录。", []),
             "CLIInterface:CLIInterface.recoveryTargetArgumentsHelp": .init("恢复类型和目标 ID。", []),
-            "CLIInterface:CLIInterface.recoveryTransactionHelp": .init("事务 UUID 或会话 UUID。", []),
+            "CLIInterface:CLIInterface.recoveryTransactionHelp": .init("事务 UUID 或运行记录 UUID。", []),
             "CLIInterface:CLIInterface.recoveryTransactionRequired": .init("此恢复操作需要指定 recovery list 返回的 --transaction。", []),
             "CLIInterface:CLIInterface.replaceLocalModificationsHelp": .init("覆盖本地修改过的文件，不保留本地修改。", []),
             "CLIInterface:CLIInterface.resourceInUseByAnotherProcess": .init("另一个进程正在使用此资源。", []),
             "CLIInterface:CLIInterface.resultLimitHelp": .init("最多返回的数量，范围为 1 至 1000，默认 50。", []),
             "CLIInterface:CLIInterface.resultOffsetHelp": .init("跳过的结果数量，默认 0。", []),
             "CLIInterface:CLIInterface.rootCommandHelp": .init("Ruri 启动器命令行接口。", []),
-            "CLIInterface:CLIInterface.schemaCommandHelp": .init("查询命令及其机器接口。", []),
+            "CLIInterface:CLIInterface.schemaCommandHelp": .init("查询命令的输入和输出结构。", []),
             "CLIInterface:CLIInterface.schematicCommands": .init("投影文件管理", []),
             "CLIInterface:CLIInterface.schematicCreateFolderHelp": .init("创建投影文件夹。", []),
             "CLIInterface:CLIInterface.schematicExportArgumentsHelp": .init("实例 ID、投影路径和导出文件路径。", []),
@@ -2635,32 +2635,32 @@ extension Messages {
             "CLIInterface:CLIInterface.schematicParentDirectoryHelp": .init("父目录的相对路径。", []),
             "CLIInterface:CLIInterface.schematicRelativePathHelp": .init("投影目录的相对路径。", []),
             "CLIInterface:CLIInterface.schematicRemoveHelp": .init("将投影文件或文件夹移到废纸篓。", []),
-            "CLIInterface:CLIInterface.schematicShowHelp": .init("查询投影文件的元数据。", []),
+            "CLIInterface:CLIInterface.schematicShowHelp": .init("查询投影文件的详细信息。", []),
             "CLIInterface:CLIInterface.selectedContentFilesNotFound": .init("找不到部分所选文件。", []),
             "CLIInterface:CLIInterface.selectedVersionIncompatible": .init("所选版本与实例不兼容。", []),
-            "CLIInterface:CLIInterface.sessionAnalyzeHelp": .init("分析已记录的启动与游戏诊断信息。", []),
-            "CLIInterface:CLIInterface.sessionCommands": .init("游戏会话、日志与诊断", []),
-            "CLIInterface:CLIInterface.sessionExportArgumentsHelp": .init("实例 ID、会话 ID 和文件路径。", []),
-            "CLIInterface:CLIInterface.sessionExportHelp": .init("导出脱敏后的诊断包。", []),
+            "CLIInterface:CLIInterface.sessionAnalyzeHelp": .init("分析已记录的启动信息和游戏日志。", []),
+            "CLIInterface:CLIInterface.sessionCommands": .init("游戏运行记录、日志与诊断", []),
+            "CLIInterface:CLIInterface.sessionExportArgumentsHelp": .init("实例 ID、运行记录 ID 和文件路径。", []),
+            "CLIInterface:CLIInterface.sessionExportHelp": .init("隐藏敏感信息后导出诊断报告。", []),
             "CLIInterface:CLIInterface.sessionInstanceIdFilterHelp": .init("按实例 UUID 筛选。", []),
             "CLIInterface:CLIInterface.sessionInstanceNameFilterHelp": .init("按实例名称筛选。", []),
-            "CLIInterface:CLIInterface.sessionKillHelp": .init("强制停止游戏进程。", []),
-            "CLIInterface:CLIInterface.sessionListHelp": .init("列出游戏会话。", []),
-            "CLIInterface:CLIInterface.sessionLogFollowHelp": .init("跟随日志直到会话结束，使用 text 或 ndjson 格式。", []),
+            "CLIInterface:CLIInterface.sessionKillHelp": .init("强制终止游戏进程。", []),
+            "CLIInterface:CLIInterface.sessionListHelp": .init("列出游戏运行记录。", []),
+            "CLIInterface:CLIInterface.sessionLogFollowHelp": .init("使用 text 或 ndjson 格式持续输出日志，直到本次运行结束。", []),
             "CLIInterface:CLIInterface.sessionLogLineLimitHelp": .init("最多读取的末尾行数，默认 200。", []),
             "CLIInterface:CLIInterface.sessionLogSourceHelp": .init("日志来源。", []),
-            "CLIInterface:CLIInterface.sessionLogsHelp": .init("读取或持续跟随会话日志。", []),
+            "CLIInterface:CLIInterface.sessionLogsHelp": .init("读取本次运行的日志，或持续输出新日志。", []),
             "CLIInterface:CLIInterface.sessionMonitorUnavailable": .init("监控进程已不可用。", []),
-            "CLIInterface:CLIInterface.sessionShowHelp": .init("查询游戏会话详情。", []),
+            "CLIInterface:CLIInterface.sessionShowHelp": .init("查询游戏运行详情。", []),
             "CLIInterface:CLIInterface.sessionStopHelp": .init("请求游戏正常退出。", []),
-            "CLIInterface:CLIInterface.sessionTargetArgumentsHelp": .init("实例 ID 和会话 ID。", []),
+            "CLIInterface:CLIInterface.sessionTargetArgumentsHelp": .init("实例 ID 和运行记录 ID。", []),
             "CLIInterface:CLIInterface.sessionWaitHelp": .init("等待监控记录游戏退出。", []),
             "CLIInterface:CLIInterface.showEnvironmentValuesHelp": .init("显示环境变量的值。", []),
             "CLIInterface:CLIInterface.stateChangedSinceRead": .init("读取后状态已发生变化。", []),
             "CLIInterface:CLIInterface.targetDirectoryRemoved": .init("目标目录已被移除。", []),
             "CLIInterface:CLIInterface.unfinishedOperationRecoveryRequired": .init("检查此数据前，必须先恢复未完成的操作。", []),
             "CLIInterface:CLIInterface.uninstallAction": .init("卸载", []),
-            "CLIInterface:CLIInterface.unknownAccountAction": .init("未知账户操作。", []),
+            "CLIInterface:CLIInterface.unknownAccountAction": .init("未知账号操作。", []),
             "CLIInterface:CLIInterface.unknownCommand": .init("未知命令。", []),
             "CLIInterface:CLIInterface.unknownCommandPath": .init("未知命令路径。", []),
             "CLIInterface:CLIInterface.unknownConfigField": .init("未知配置字段。", []),
@@ -2676,29 +2676,29 @@ extension Messages {
             "CLIInterface:CLIInterface.unknownOrDuplicateConfigField": .init("未知或重复的配置字段：%1$@。", [.text]),
             "CLIInterface:CLIInterface.unknownOrEmptyConfigGroup": .init("未知或空的配置组：%1$@。", [.text]),
             "CLIInterface:CLIInterface.unknownRecoveryKind": .init("未知恢复类型。", []),
-            "CLIInterface:CLIInterface.unknownSessionAction": .init("未知会话操作。", []),
-            "CLIInterface:CLIInterface.unknownWorldAction": .init("未知世界操作。", []),
+            "CLIInterface:CLIInterface.unknownSessionAction": .init("未知运行记录操作。", []),
+            "CLIInterface:CLIInterface.unknownWorldAction": .init("未知存档操作。", []),
             "CLIInterface:CLIInterface.unsupportedLanguage": .init("不支持此语言。", []),
             "CLIInterface:CLIInterface.updateAllContentFilesHelp": .init("更新该类型的全部文件。", []),
             "CLIInterface:CLIInterface.validUuidRequired": .init("需要有效的 UUID。", []),
             "CLIInterface:CLIInterface.worldBackupArgumentsHelp": .init("实例 ID 和备份 ID。", []),
-            "CLIInterface:CLIInterface.worldBackupCommands": .init("世界备份与恢复", []),
-            "CLIInterface:CLIInterface.worldBackupCreateHelp": .init("备份世界。", []),
-            "CLIInterface:CLIInterface.worldBackupListHelp": .init("列出世界备份。", []),
+            "CLIInterface:CLIInterface.worldBackupCommands": .init("存档备份与恢复", []),
+            "CLIInterface:CLIInterface.worldBackupCreateHelp": .init("备份存档。", []),
+            "CLIInterface:CLIInterface.worldBackupListHelp": .init("列出存档备份。", []),
             "CLIInterface:CLIInterface.worldBackupNotFound": .init("找不到备份。", []),
             "CLIInterface:CLIInterface.worldBackupReasonHelp": .init("可选的备份原因。", []),
-            "CLIInterface:CLIInterface.worldBackupRemoveHelp": .init("将世界备份移到废纸篓。", []),
-            "CLIInterface:CLIInterface.worldBackupReplaceHelp": .init("覆盖已有世界。", []),
-            "CLIInterface:CLIInterface.worldBackupRestoreHelp": .init("恢复备份，覆盖已有世界时需要明确确认。", []),
-            "CLIInterface:CLIInterface.worldCommands": .init("世界管理、导入导出与备份", []),
-            "CLIInterface:CLIInterface.worldExportArgumentsHelp": .init("实例 ID、世界文件夹和文件路径。", []),
-            "CLIInterface:CLIInterface.worldExportHelp": .init("导出世界归档。", []),
-            "CLIInterface:CLIInterface.worldFolderArgumentsHelp": .init("实例 ID 和世界文件夹。", []),
-            "CLIInterface:CLIInterface.worldImportHelp": .init("导入世界归档或目录。", []),
-            "CLIInterface:CLIInterface.worldListHelp": .init("列出实例中的世界。", []),
-            "CLIInterface:CLIInterface.worldNotFound": .init("找不到世界。", []),
-            "CLIInterface:CLIInterface.worldRemoveHelp": .init("将世界移到废纸篓。", []),
-            "CLIInterface:CLIInterface.worldShowHelp": .init("查询世界详情。", []),
+            "CLIInterface:CLIInterface.worldBackupRemoveHelp": .init("将存档备份移到废纸篓。", []),
+            "CLIInterface:CLIInterface.worldBackupReplaceHelp": .init("覆盖已有存档。", []),
+            "CLIInterface:CLIInterface.worldBackupRestoreHelp": .init("恢复备份，覆盖已有存档时需要确认。", []),
+            "CLIInterface:CLIInterface.worldCommands": .init("存档管理、导入导出与备份", []),
+            "CLIInterface:CLIInterface.worldExportArgumentsHelp": .init("实例 ID、存档文件夹和文件路径。", []),
+            "CLIInterface:CLIInterface.worldExportHelp": .init("导出存档压缩包。", []),
+            "CLIInterface:CLIInterface.worldFolderArgumentsHelp": .init("实例 ID 和存档文件夹。", []),
+            "CLIInterface:CLIInterface.worldImportHelp": .init("导入存档压缩包或文件夹。", []),
+            "CLIInterface:CLIInterface.worldListHelp": .init("列出实例中的存档。", []),
+            "CLIInterface:CLIInterface.worldNotFound": .init("找不到存档。", []),
+            "CLIInterface:CLIInterface.worldRemoveHelp": .init("将存档移到废纸篓。", []),
+            "CLIInterface:CLIInterface.worldShowHelp": .init("查询存档详情。", []),
         ]
     }
 }

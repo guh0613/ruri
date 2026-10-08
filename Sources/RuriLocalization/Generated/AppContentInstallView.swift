@@ -15,17 +15,17 @@ extension Messages {
         public static var chooseInstance: LocalizedMessage {
             .init(key: "AppContentInstallView.chooseInstance", table: "Interface", fallback: "选择一个实例")
         }
-        /// 内容版本
+        /// 资源版本
         ///
         /// Resource: `Interface.AppContentInstallView.contentVersion`.
         public static var contentVersion: LocalizedMessage {
-            .init(key: "AppContentInstallView.contentVersion", table: "Interface", fallback: "内容版本")
+            .init(key: "AppContentInstallView.contentVersion", table: "Interface", fallback: "资源版本")
         }
-        /// 自动安装必需依赖。
+        /// 会自动安装所需的依赖。
         ///
         /// Resource: `Interface.AppContentInstallView.dependencyHelp`.
         public static var dependencyHelp: LocalizedMessage {
-            .init(key: "AppContentInstallView.dependencyHelp", table: "Interface", fallback: "自动安装必需依赖。")
+            .init(key: "AppContentInstallView.dependencyHelp", table: "Interface", fallback: "会自动安装所需的依赖。")
         }
         /// 查找兼容版本…
         ///
@@ -72,8 +72,8 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppContentInstallView.chooseInstalledInstance": .init("请先选择已安装的游戏实例。", []),
             "Interface:AppContentInstallView.chooseInstance": .init("选择一个实例", []),
-            "Interface:AppContentInstallView.contentVersion": .init("内容版本", []),
-            "Interface:AppContentInstallView.dependencyHelp": .init("自动安装必需依赖。", []),
+            "Interface:AppContentInstallView.contentVersion": .init("资源版本", []),
+            "Interface:AppContentInstallView.dependencyHelp": .init("会自动安装所需的依赖。", []),
             "Interface:AppContentInstallView.findCompatibleVersions": .init("查找兼容版本…", []),
             "Interface:AppContentInstallView.installContent": .init("安装", []),
             "Interface:AppContentInstallView.installToInstance": .init("安装到实例", []),

@@ -27,17 +27,17 @@ extension Messages {
         public static var chooseVersion: LocalizedMessage {
             .init(key: "LoaderSelection.chooseVersion", table: "Interface", fallback: "选择版本…")
         }
-        /// 加载器发现服务的校验信息不匹配，请重新应用加载器配置。
+        /// 加载器版本查询组件校验失败，请重新应用加载器配置。
         ///
         /// Resource: `Interface.LoaderSelection.discoveryLibraryMismatch`.
         public static var discoveryLibraryMismatch: LocalizedMessage {
-            .init(key: "LoaderSelection.discoveryLibraryMismatch", table: "Interface", fallback: "加载器发现服务的校验信息不匹配，请重新应用加载器配置。")
+            .init(key: "LoaderSelection.discoveryLibraryMismatch", table: "Interface", fallback: "加载器版本查询组件校验失败，请重新应用加载器配置。")
         }
-        /// 应用中缺少加载器发现服务，请重新安装 Ruri。
+        /// 缺少加载器版本查询组件，请重新安装 Ruri。
         ///
         /// Resource: `Interface.LoaderSelection.discoveryLibraryMissing`.
         public static var discoveryLibraryMissing: LocalizedMessage {
-            .init(key: "LoaderSelection.discoveryLibraryMissing", table: "Interface", fallback: "应用中缺少加载器发现服务，请重新安装 Ruri。")
+            .init(key: "LoaderSelection.discoveryLibraryMissing", table: "Interface", fallback: "缺少加载器版本查询组件，请重新安装 Ruri。")
         }
         /// OptiFine 标注的兼容性：%1$@
         ///
@@ -99,11 +99,11 @@ extension Messages {
         public static var optiFineBootstrapTooOld: LocalizedMessage {
             .init(key: "LoaderSelection.optiFineBootstrapTooOld", table: "Interface", fallback: "此 OptiFine 构建早于现代 Forge 的兼容版本，请使用 H1 pre2 或更新的对应版本。")
         }
-        /// 此 OptiFine 安装包不包含组合启动入口，请选择其他版本。
+        /// 此 OptiFine 安装包不支持与其他加载器组合使用，请选择其他版本。
         ///
         /// Resource: `Interface.LoaderSelection.optiFineCombinationUnavailable`.
         public static var optiFineCombinationUnavailable: LocalizedMessage {
-            .init(key: "LoaderSelection.optiFineCombinationUnavailable", table: "Interface", fallback: "此 OptiFine 安装包不包含组合启动入口，请选择其他版本。")
+            .init(key: "LoaderSelection.optiFineCombinationUnavailable", table: "Interface", fallback: "此 OptiFine 安装包不支持与其他加载器组合使用，请选择其他版本。")
         }
         /// 此 OptiFine 安装包不包含现代 Forge 所需的转换服务，请选择其他版本。
         ///
@@ -153,11 +153,11 @@ extension Messages {
         public static var universalVersionsHint: LocalizedMessage {
             .init(key: "LoaderSelection.universalVersionsHint", table: "Interface", fallback: "建议使用最新稳定版；旧版可能不兼容当前游戏或模组。")
         }
-        /// 此版本使用了无法识别的加载器启动入口，无法组合安装。
+        /// 无法识别此版本的启动方式，暂时不能与其他加载器组合安装。
         ///
         /// Resource: `Interface.LoaderSelection.unsupportedLaunchMethod`.
         public static var unsupportedLaunchMethod: LocalizedMessage {
-            .init(key: "LoaderSelection.unsupportedLaunchMethod", table: "Interface", fallback: "此版本使用了无法识别的加载器启动入口，无法组合安装。")
+            .init(key: "LoaderSelection.unsupportedLaunchMethod", table: "Interface", fallback: "无法识别此版本的启动方式，暂时不能与其他加载器组合安装。")
         }
         /// 此版本已不可用，请重新选择。
         ///
@@ -170,8 +170,8 @@ extension Messages {
             "Interface:LoaderSelection.allChannels": .init("全部分支", []),
             "Interface:LoaderSelection.channel": .init("版本分支", []),
             "Interface:LoaderSelection.chooseVersion": .init("选择版本…", []),
-            "Interface:LoaderSelection.discoveryLibraryMismatch": .init("加载器发现服务的校验信息不匹配，请重新应用加载器配置。", []),
-            "Interface:LoaderSelection.discoveryLibraryMissing": .init("应用中缺少加载器发现服务，请重新安装 Ruri。", []),
+            "Interface:LoaderSelection.discoveryLibraryMismatch": .init("加载器版本查询组件校验失败，请重新应用加载器配置。", []),
+            "Interface:LoaderSelection.discoveryLibraryMissing": .init("缺少加载器版本查询组件，请重新安装 Ruri。", []),
             "Interface:LoaderSelection.forgeCompatibility": .init("OptiFine 标注的兼容性：%1$@", [.text]),
             "Interface:LoaderSelection.forgeLiteLoaderWarning": .init("Forge 14.23.5.2760–14.23.5.2772 与 LiteLoader 有已知冲突，建议更换 Forge 版本。", []),
             "Interface:LoaderSelection.forgeOptiFineWarning": .init("Minecraft 1.14.4 的 Forge 28.2.2 及后续版本与 OptiFine 有已知冲突，建议使用较早的 Forge。", []),
@@ -182,7 +182,7 @@ extension Messages {
             "Interface:LoaderSelection.noLoaders": .init("按原版启动", []),
             "Interface:LoaderSelection.noMatchingVersions": .init("没有符合筛选条件的版本", []),
             "Interface:LoaderSelection.optiFineBootstrapTooOld": .init("此 OptiFine 构建早于现代 Forge 的兼容版本，请使用 H1 pre2 或更新的对应版本。", []),
-            "Interface:LoaderSelection.optiFineCombinationUnavailable": .init("此 OptiFine 安装包不包含组合启动入口，请选择其他版本。", []),
+            "Interface:LoaderSelection.optiFineCombinationUnavailable": .init("此 OptiFine 安装包不支持与其他加载器组合使用，请选择其他版本。", []),
             "Interface:LoaderSelection.optiFineTransformationUnavailable": .init("此 OptiFine 安装包不包含现代 Forge 所需的转换服务，请选择其他版本。", []),
             "Interface:LoaderSelection.optiFineWithoutForge": .init("此 OptiFine 版本明确不支持 Forge，请选择其他版本。", []),
             "Interface:LoaderSelection.preview": .init("预览版", []),
@@ -191,7 +191,7 @@ extension Messages {
             "Interface:LoaderSelection.snapshot": .init("快照版", []),
             "Interface:LoaderSelection.stable": .init("稳定版", []),
             "Interface:LoaderSelection.universalVersionsHint": .init("建议使用最新稳定版；旧版可能不兼容当前游戏或模组。", []),
-            "Interface:LoaderSelection.unsupportedLaunchMethod": .init("此版本使用了无法识别的加载器启动入口，无法组合安装。", []),
+            "Interface:LoaderSelection.unsupportedLaunchMethod": .init("无法识别此版本的启动方式，暂时不能与其他加载器组合安装。", []),
             "Interface:LoaderSelection.versionUnavailable": .init("此版本已不可用，请重新选择。", []),
         ]
     }

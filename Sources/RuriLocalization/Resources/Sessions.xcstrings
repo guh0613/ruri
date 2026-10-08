@@ -158,7 +158,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最常去的存档"
+            "value" : "最常玩的存档"
           }
         }
       }
@@ -482,7 +482,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "原始日志输出。"
+            "value" : "查看游戏的原始日志。"
           }
         }
       }
@@ -1076,7 +1076,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "累积"
+            "value" : "累计"
           }
         }
       }
@@ -1364,7 +1364,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "诊断附件已清理，游玩记录仍保留。"
+            "value" : "诊断文件已清理，游玩记录仍保留。"
           }
         }
       }
@@ -1382,7 +1382,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已收集日志，自动分析未完成，仍可导出报告。"
+            "value" : "日志已收集，但自动分析未完成。仍可导出报告。"
           }
         }
       }
@@ -1400,7 +1400,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "调试输出超过处理预算，详细记录已停止；仍保留近期输出。"
+            "value" : "调试输出过多，已停止保存详细记录。近期输出仍会保留。"
           }
         }
       }
@@ -1418,7 +1418,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法读写游玩历史：%1$@"
+            "value" : "无法读写游玩记录：%1$@"
           }
         }
       }
@@ -1436,7 +1436,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏监控未及时确认启动，请查看本次记录，不要重复启动。"
+            "value" : "暂时无法确认游戏是否已启动。请先查看本次运行记录，避免重复启动。"
           }
         }
       }
@@ -1544,7 +1544,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Ruri] 记录保存遇到问题：%1$@"
+            "value" : "[Ruri] 无法保存运行记录：%1$@"
           }
         }
       }
@@ -1562,7 +1562,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "时长包含加载与后台运行，不含睡眠时间。"
+            "value" : "游玩时长包含加载和后台运行的时间，不含 Mac 睡眠的时间。"
           }
         }
       }
@@ -1580,7 +1580,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "计时不完整，仅统计已确认的时间。"
+            "value" : "计时曾中断，仅统计已记录的时间。"
           }
         }
       }
@@ -1688,7 +1688,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在收尾"
+            "value" : "正在完成后续操作"
           }
         }
       }
@@ -1706,7 +1706,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "部分日志不可用"
+            "value" : "分析范围与缺失信息"
           }
         }
       }
@@ -1868,7 +1868,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "依据"
+            "value" : "相关日志"
           }
         }
       }
@@ -1922,7 +1922,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "额外隐藏内容（每行一项）"
+            "value" : "额外需要隐藏的内容（每行一项）"
           }
         }
       }
@@ -1940,7 +1940,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏未正常结束。可参考下方建议，或导出诊断报告。"
+            "value" : "游戏未正常结束。请查看下方建议，或导出诊断报告以便进一步排查。"
           }
         }
       }
@@ -1958,7 +1958,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未找到游戏日志，当前显示进程输出。"
+            "value" : "未找到游戏日志，当前显示游戏进程的输出。"
           }
         }
       }
@@ -2030,7 +2030,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未能准备 %1$@ 的完整文件：%2$@。其他日志仍可导出。"
+            "value" : "无法导出 %1$@ 的完整内容：%2$@。其他日志仍可导出。"
           }
         }
       }
@@ -2120,7 +2120,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未收到完整的结束信息，仅保留已确认的时长与日志。"
+            "value" : "未能记录完整的退出信息，已保留此前记录的时长和日志。"
           }
         }
       }
@@ -2138,7 +2138,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "JVM 崩溃报告"
+            "value" : "Java 崩溃报告"
           }
         }
       }
@@ -2354,7 +2354,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未找到本次游玩的日志，文件可能已轮转或清理。"
+            "value" : "未找到本次游玩的日志，文件可能已被新日志替换或清理。"
           }
         }
       }
@@ -2390,7 +2390,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "现有信息不足以判断原因，可导出报告进一步检查。"
+            "value" : "现有信息不足以判断原因。可以导出诊断报告，以便进一步排查。"
           }
         }
       }
@@ -2696,7 +2696,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此报告仅保留了部分内容，可能缺少上下文。"
+            "value" : "此报告仅保留了部分内容，可能遗漏相关信息。"
           }
         }
       }
@@ -2714,7 +2714,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "隐藏常见隐私信息后打包日志，可发给整合包作者或支持人员。"
+            "value" : "收集日志并隐藏常见隐私信息，便于向整合包作者或支持人员反馈问题。"
           }
         }
       }
@@ -2768,7 +2768,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "报告仅保存在本地，不会上传。自动隐藏可能不完整，分享前请检查。"
+            "value" : "报告仅保存在本地，不会自动上传。部分隐私信息可能未被隐藏，分享前请检查报告内容。"
           }
         }
       }
@@ -3128,7 +3128,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "日志含超过 1 MiB 的单行，无法安全隐藏敏感信息，仅提供摘录。可在游戏目录中查看原文件。"
+            "value" : "日志中有一行超过 1 MiB，无法可靠地隐藏其中的敏感信息，因此仅提供部分内容。原文件可在游戏文件夹中查看。"
           }
         }
       }

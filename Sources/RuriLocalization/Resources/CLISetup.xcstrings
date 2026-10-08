@@ -14,7 +14,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未能完成系统授权操作：%@"
+            "value" : "无法完成需要系统授权的操作：%@"
           }
         }
       }
@@ -50,7 +50,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安装目录需要管理员权限。请打开 Ruri 设置中的“命令行与自动化”，由系统授权完成安装或卸载；也可用 --bin-dir 指定已有的可写命令目录。"
+            "value" : "安装目录需要管理员权限。请打开 Ruri“设置”中的“命令行与自动化”，完成系统授权后安装或卸载。也可用 --bin-dir 指定已有且可写入的命令目录。"
           }
         }
       }
@@ -68,7 +68,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri 需要安装命令行工具到 /usr/local/bin。完成后即可在终端使用 ruri，无需手动配置 PATH。"
+            "value" : "Ruri 将在 /usr/local/bin 安装命令行工具。安装后即可在终端使用 ruri，无需手动配置 PATH。"
           }
         }
       }
@@ -176,7 +176,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通过 Ruri CLI 管理实例、账户和配置，也可供 AI agent 调用。"
+            "value" : "通过 Ruri CLI 管理实例、账号和配置，也可供 AI 智能体调用。"
           }
         }
       }
@@ -266,7 +266,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通过命令行管理实例、账户和配置，也可供 AI agent 调用。"
+            "value" : "通过命令行管理实例、账号和配置，也可供 AI 智能体调用。"
           }
         }
       }
@@ -284,7 +284,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安装时可能需要管理员授权。\n也可稍后前往「设置 → 命令行与自动化」安装。"
+            "value" : "安装时可能需要管理员授权。\n也可稍后在“设置”的“命令行与自动化”中安装。"
           }
         }
       }
@@ -338,7 +338,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "打开新的终端窗口，运行下方命令即可开始。"
+            "value" : "打开新的终端窗口，运行下方命令即可开始使用。"
           }
         }
       }

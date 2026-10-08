@@ -23,7 +23,7 @@ import RuriLocalization
         #expect(!containsChinese(english))
         let explicit = await run(["--language", "zh-Hans", "help", "config"])
         #expect(explicit.0 == 0)
-        #expect(String(decoding: explicit.1.output, as: UTF8.self).contains("查询显式配置"))
+        #expect(String(decoding: explicit.1.output, as: UTF8.self).contains("查询已设置的配置"))
         #expect(containsChinese(String(decoding: explicit.1.output, as: UTF8.self)))
         let again = await run(["help", "config"])
         #expect(again.1.output == initial.1.output)

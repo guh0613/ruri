@@ -86,7 +86,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在准备外置认证组件"
+            "value" : "正在准备第三方认证组件"
           }
         }
       }
@@ -176,7 +176,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在读取完整安装"
+            "value" : "正在读取完整安装文件"
           }
         }
       }
@@ -209,7 +209,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "正在应用 %1$lld 项内容更新"
+                  "value" : "正在安装 %1$lld 项资源更新"
                 }
               }
             }
@@ -302,7 +302,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "校验加载器生成文件"
+            "value" : "校验加载器生成的文件"
           }
         }
       }
@@ -644,7 +644,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "来源查询失败，文件将内附到整合包"
+            "value" : "无法查询文件来源，将把文件直接包含在整合包中"
           }
         }
       }
@@ -698,7 +698,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在应用内容更新"
+            "value" : "正在安装资源更新"
           }
         }
       }

@@ -15,17 +15,17 @@ extension Messages {
         public static var completeExportRequiresInstalledInstance: LocalizedMessage {
             .init(key: "CoreCompleteInstancePack.completeExportRequiresInstalledInstance", table: "Errors", fallback: "请先安装实例，再导出包含游戏文件的完整副本。")
         }
-        /// 导出期间安装文件改变，请重新导出。
+        /// 导出期间安装文件发生变化，请重新导出。
         ///
         /// Resource: `Errors.CoreCompleteInstancePack.installationFilesChangedDuringExport`.
         public static var installationFilesChangedDuringExport: LocalizedMessage {
-            .init(key: "CoreCompleteInstancePack.installationFilesChangedDuringExport", table: "Errors", fallback: "导出期间安装文件改变，请重新导出。")
+            .init(key: "CoreCompleteInstancePack.installationFilesChangedDuringExport", table: "Errors", fallback: "导出期间安装文件发生变化，请重新导出。")
         }
-        /// 完整副本的安装文件在预览后改变，请重新选择压缩包。
+        /// 预览后，完整副本中的安装文件发生变化，请重新选择压缩包。
         ///
         /// Resource: `Errors.CoreCompleteInstancePack.installationFilesChangedDuringPreview`.
         public static var installationFilesChangedDuringPreview: LocalizedMessage {
-            .init(key: "CoreCompleteInstancePack.installationFilesChangedDuringPreview", table: "Errors", fallback: "完整副本的安装文件在预览后改变，请重新选择压缩包。")
+            .init(key: "CoreCompleteInstancePack.installationFilesChangedDuringPreview", table: "Errors", fallback: "预览后，完整副本中的安装文件发生变化，请重新选择压缩包。")
         }
         /// 原始版本清单超过导出限制。
         ///
@@ -45,21 +45,21 @@ extension Messages {
         public static var copyingInstallationFiles: LocalizedMessage {
             .init(key: "CoreCompleteInstancePack.copyingInstallationFiles", table: "Progress", fallback: "正在复制安装文件")
         }
-        /// 正在读取完整安装
+        /// 正在读取完整安装文件
         ///
         /// Resource: `Progress.CoreCompleteInstancePack.readingCompleteInstallation`.
         public static var readingCompleteInstallation: LocalizedMessage {
-            .init(key: "CoreCompleteInstancePack.readingCompleteInstallation", table: "Progress", fallback: "正在读取完整安装")
+            .init(key: "CoreCompleteInstancePack.readingCompleteInstallation", table: "Progress", fallback: "正在读取完整安装文件")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreCompleteInstancePack.completeExportLocationInvalid": .init("请将完整副本保存在源实例和游戏资源文件夹之外。", []),
             "Errors:CoreCompleteInstancePack.completeExportRequiresInstalledInstance": .init("请先安装实例，再导出包含游戏文件的完整副本。", []),
-            "Errors:CoreCompleteInstancePack.installationFilesChangedDuringExport": .init("导出期间安装文件改变，请重新导出。", []),
-            "Errors:CoreCompleteInstancePack.installationFilesChangedDuringPreview": .init("完整副本的安装文件在预览后改变，请重新选择压缩包。", []),
+            "Errors:CoreCompleteInstancePack.installationFilesChangedDuringExport": .init("导出期间安装文件发生变化，请重新导出。", []),
+            "Errors:CoreCompleteInstancePack.installationFilesChangedDuringPreview": .init("预览后，完整副本中的安装文件发生变化，请重新选择压缩包。", []),
             "Errors:CoreCompleteInstancePack.sourceManifestExportLimitExceeded": .init("原始版本清单超过导出限制。", []),
             "Progress:CoreCompleteInstancePack.compressingCompleteCopy": .init("正在压缩完整副本", []),
             "Progress:CoreCompleteInstancePack.copyingInstallationFiles": .init("正在复制安装文件", []),
-            "Progress:CoreCompleteInstancePack.readingCompleteInstallation": .init("正在读取完整安装", []),
+            "Progress:CoreCompleteInstancePack.readingCompleteInstallation": .init("正在读取完整安装文件", []),
         ]
     }
 }

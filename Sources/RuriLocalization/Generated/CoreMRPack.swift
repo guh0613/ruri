@@ -75,11 +75,11 @@ extension Messages {
         public static var requireLoaderInstallation: LocalizedMessage {
             .init(key: "CoreMRPack.requireLoaderInstallation", table: "Errors", fallback: "请先完成加载器安装")
         }
-        /// 整合包需要尚未接入的组件：%1$@
+        /// 整合包需要尚不支持的组件：%1$@
         ///
         /// Resource: `Errors.CoreMRPack.unknownComponent`.
         public static func unknownComponent(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreMRPack.unknownComponent", table: "Errors", fallback: "整合包需要尚未接入的组件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreMRPack.unknownComponent", table: "Errors", fallback: "整合包需要尚不支持的组件：%1$@", arguments: [.text(value0)])
         }
         /// 不支持的 Modrinth 整合包清单
         ///
@@ -105,11 +105,11 @@ extension Messages {
         public static var preparingPack: LocalizedMessage {
             .init(key: "CoreMRPack.preparingPack", table: "Progress", fallback: "正在准备整合包")
         }
-        /// 来源查询失败，文件将内附到整合包
+        /// 无法查询文件来源，将把文件直接包含在整合包中
         ///
         /// Resource: `Progress.CoreMRPack.sourceLookupFailed`.
         public static var sourceLookupFailed: LocalizedMessage {
-            .init(key: "CoreMRPack.sourceLookupFailed", table: "Progress", fallback: "来源查询失败，文件将内附到整合包")
+            .init(key: "CoreMRPack.sourceLookupFailed", table: "Progress", fallback: "无法查询文件来源，将把文件直接包含在整合包中")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreMRPack.exportMetadataUnsupported": .init("mrpack 无法记录实例的附加启动参数、依赖库或 Java 约束。请使用 MCBBS 或 Ruri 格式完整保留。", []),
@@ -124,12 +124,12 @@ extension Messages {
             "Errors:CoreMRPack.missingFileHashOrSize": .init("mrpack 文件缺少有效的 SHA-1、SHA-512 或大小：%1$@", [.text]),
             "Errors:CoreMRPack.multipleLoaders": .init("整合包同时声明多个加载器", []),
             "Errors:CoreMRPack.requireLoaderInstallation": .init("请先完成加载器安装", []),
-            "Errors:CoreMRPack.unknownComponent": .init("整合包需要尚未接入的组件：%1$@", [.text]),
+            "Errors:CoreMRPack.unknownComponent": .init("整合包需要尚不支持的组件：%1$@", [.text]),
             "Errors:CoreMRPack.unsupportedManifest": .init("不支持的 Modrinth 整合包清单", []),
             "Progress:CoreMRPack.exportingPack": .init("正在导出 mrpack", []),
             "Progress:CoreMRPack.identifyingFiles": .init("正在识别 Modrinth 文件来源", []),
             "Progress:CoreMRPack.preparingPack": .init("正在准备整合包", []),
-            "Progress:CoreMRPack.sourceLookupFailed": .init("来源查询失败，文件将内附到整合包", []),
+            "Progress:CoreMRPack.sourceLookupFailed": .init("无法查询文件来源，将把文件直接包含在整合包中", []),
         ]
     }
 }

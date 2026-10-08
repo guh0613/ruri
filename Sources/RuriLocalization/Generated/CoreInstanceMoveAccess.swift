@@ -15,11 +15,11 @@ extension Messages {
         public static var unfinishedFileOperations: LocalizedMessage {
             .init(key: "CoreInstanceMoveAccess.unfinishedFileOperations", table: "Errors", fallback: "实例还有未完成的文件操作，请先恢复后再移动。")
         }
-        /// 实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。
+        /// 此实例仍在运行，或上次运行状态尚未确认。请先查看运行记录，再移动实例。
         ///
         /// Resource: `Errors.CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession`.
         public static var unfinishedOrUnconfirmedSession: LocalizedMessage {
-            .init(key: "CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession", table: "Errors", fallback: "实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。")
+            .init(key: "CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession", table: "Errors", fallback: "此实例仍在运行，或上次运行状态尚未确认。请先查看运行记录，再移动实例。")
         }
         /// 运行记录目录包含无法确认的项目，请先检查后再移动：%1$@
         ///
@@ -30,7 +30,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreInstanceMoveAccess.tooManyRunRecords": .init("运行记录数量过多，请先整理后再移动。", []),
             "Errors:CoreInstanceMoveAccess.unfinishedFileOperations": .init("实例还有未完成的文件操作，请先恢复后再移动。", []),
-            "Errors:CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession": .init("实例仍有未结束或状态未确认的运行会话，请先检查运行记录，再移动实例。", []),
+            "Errors:CoreInstanceMoveAccess.unfinishedOrUnconfirmedSession": .init("此实例仍在运行，或上次运行状态尚未确认。请先查看运行记录，再移动实例。", []),
             "Errors:CoreInstanceMoveAccess.unknownRunRecordEntry": .init("运行记录目录包含无法确认的项目，请先检查后再移动：%1$@", [.text]),
         ]
     }

@@ -75,11 +75,11 @@ extension Messages {
         public static var monitorComponentMissing: LocalizedMessage {
             .init(key: "CoreGameMonitor.monitorComponentMissing", table: "Errors", fallback: "无法定位游戏监控组件。")
         }
-        /// 缺少游戏监控组件，请重新构建或安装 Ruri。
+        /// 缺少游戏监控组件，请重新安装 Ruri。
         ///
         /// Resource: `Errors.CoreGameMonitor.monitorComponentNotFound`.
         public static var monitorComponentNotFound: LocalizedMessage {
-            .init(key: "CoreGameMonitor.monitorComponentNotFound", table: "Errors", fallback: "缺少游戏监控组件，请重新构建或安装 Ruri。")
+            .init(key: "CoreGameMonitor.monitorComponentNotFound", table: "Errors", fallback: "缺少游戏监控组件，请重新安装 Ruri。")
         }
         /// 游戏监控已断开或游戏已结束，无法发送结束请求。
         ///
@@ -87,17 +87,17 @@ extension Messages {
         public static var monitorDisconnected: LocalizedMessage {
             .init(key: "CoreGameMonitor.monitorDisconnected", table: "Errors", fallback: "游戏监控已断开或游戏已结束，无法发送结束请求。")
         }
-        /// 无法确认游戏监控组件的身份。
+        /// 无法确认游戏监控进程与本次运行是否匹配。
         ///
         /// Resource: `Errors.CoreGameMonitor.monitorIdentityFailed`.
         public static var monitorIdentityFailed: LocalizedMessage {
-            .init(key: "CoreGameMonitor.monitorIdentityFailed", table: "Errors", fallback: "无法确认游戏监控组件的身份。")
+            .init(key: "CoreGameMonitor.monitorIdentityFailed", table: "Errors", fallback: "无法确认游戏监控进程与本次运行是否匹配。")
         }
-        /// 监控组件在启动时中断，无法确认游戏状态，请检查运行记录。
+        /// 游戏监控在启动时中断，无法确认游戏状态。请查看运行记录。
         ///
         /// Resource: `Errors.CoreGameMonitor.monitorInterruptedAtLaunch`.
         public static var monitorInterruptedAtLaunch: LocalizedMessage {
-            .init(key: "CoreGameMonitor.monitorInterruptedAtLaunch", table: "Errors", fallback: "监控组件在启动时中断，无法确认游戏状态，请检查运行记录。")
+            .init(key: "CoreGameMonitor.monitorInterruptedAtLaunch", table: "Errors", fallback: "游戏监控在启动时中断，无法确认游戏状态。请查看运行记录。")
         }
         /// 启动信息超过大小限制。
         ///
@@ -111,17 +111,17 @@ extension Messages {
         public static var runDirectoryPolicyMissing: LocalizedMessage {
             .init(key: "CoreGameMonitor.runDirectoryPolicyMissing", table: "Errors", fallback: "游戏监控缺少运行目录策略。")
         }
-        /// 运行会话已经发生变化，请刷新后重试。
+        /// 运行记录已发生变化，请刷新后重试。
         ///
         /// Resource: `Errors.CoreGameMonitor.sessionChanged`.
         public static var sessionChanged: LocalizedMessage {
-            .init(key: "CoreGameMonitor.sessionChanged", table: "Errors", fallback: "运行会话已经发生变化，请刷新后重试。")
+            .init(key: "CoreGameMonitor.sessionChanged", table: "Errors", fallback: "运行记录已发生变化，请刷新后重试。")
         }
-        /// 游戏目录与运行会话不一致。
+        /// 游戏文件夹与运行记录不一致。
         ///
         /// Resource: `Errors.CoreGameMonitor.sessionDirectoryMismatch`.
         public static var sessionDirectoryMismatch: LocalizedMessage {
-            .init(key: "CoreGameMonitor.sessionDirectoryMismatch", table: "Errors", fallback: "游戏目录与运行会话不一致。")
+            .init(key: "CoreGameMonitor.sessionDirectoryMismatch", table: "Errors", fallback: "游戏文件夹与运行记录不一致。")
         }
         /// 共享运行目录需要新版监控协议。
         ///
@@ -142,14 +142,14 @@ extension Messages {
             "Errors:CoreGameMonitor.launcherEventRecordFailed": .init("无法记录启动器事件。", []),
             "Errors:CoreGameMonitor.launcherEventSaveFailed": .init("无法保存启动器事件。", []),
             "Errors:CoreGameMonitor.monitorComponentMissing": .init("无法定位游戏监控组件。", []),
-            "Errors:CoreGameMonitor.monitorComponentNotFound": .init("缺少游戏监控组件，请重新构建或安装 Ruri。", []),
+            "Errors:CoreGameMonitor.monitorComponentNotFound": .init("缺少游戏监控组件，请重新安装 Ruri。", []),
             "Errors:CoreGameMonitor.monitorDisconnected": .init("游戏监控已断开或游戏已结束，无法发送结束请求。", []),
-            "Errors:CoreGameMonitor.monitorIdentityFailed": .init("无法确认游戏监控组件的身份。", []),
-            "Errors:CoreGameMonitor.monitorInterruptedAtLaunch": .init("监控组件在启动时中断，无法确认游戏状态，请检查运行记录。", []),
+            "Errors:CoreGameMonitor.monitorIdentityFailed": .init("无法确认游戏监控进程与本次运行是否匹配。", []),
+            "Errors:CoreGameMonitor.monitorInterruptedAtLaunch": .init("游戏监控在启动时中断，无法确认游戏状态。请查看运行记录。", []),
             "Errors:CoreGameMonitor.requestInfoTooLarge": .init("启动信息超过大小限制。", []),
             "Errors:CoreGameMonitor.runDirectoryPolicyMissing": .init("游戏监控缺少运行目录策略。", []),
-            "Errors:CoreGameMonitor.sessionChanged": .init("运行会话已经发生变化，请刷新后重试。", []),
-            "Errors:CoreGameMonitor.sessionDirectoryMismatch": .init("游戏目录与运行会话不一致。", []),
+            "Errors:CoreGameMonitor.sessionChanged": .init("运行记录已发生变化，请刷新后重试。", []),
+            "Errors:CoreGameMonitor.sessionDirectoryMismatch": .init("游戏文件夹与运行记录不一致。", []),
             "Errors:CoreGameMonitor.sharedDirectoryProtocolRequired": .init("共享运行目录需要新版监控协议。", []),
         ]
     }

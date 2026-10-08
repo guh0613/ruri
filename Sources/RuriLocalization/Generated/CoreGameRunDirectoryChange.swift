@@ -9,17 +9,17 @@ extension Messages {
         public static var alreadyUsesDirectory: LocalizedMessage {
             .init(key: "CoreGameRunDirectoryChange.alreadyUsesDirectory", table: "Errors", fallback: "实例已经使用这个运行目录。")
         }
-        /// 自定义目录身份已经变化，请重新预览。
+        /// 自定义文件夹已发生变化，请重新预览。
         ///
         /// Resource: `Errors.CoreGameRunDirectoryChange.customIdentityChanged`.
         public static var customIdentityChanged: LocalizedMessage {
-            .init(key: "CoreGameRunDirectoryChange.customIdentityChanged", table: "Errors", fallback: "自定义目录身份已经变化，请重新预览。")
+            .init(key: "CoreGameRunDirectoryChange.customIdentityChanged", table: "Errors", fallback: "自定义文件夹已发生变化，请重新预览。")
         }
-        /// 整合包保持独立运行目录，以保留包的配置与更新记录。
+        /// 整合包需要使用独立运行目录，以保留配置和更新记录。
         ///
         /// Resource: `Errors.CoreGameRunDirectoryChange.independentPackDirectory`.
         public static var independentPackDirectory: LocalizedMessage {
-            .init(key: "CoreGameRunDirectoryChange.independentPackDirectory", table: "Errors", fallback: "整合包保持独立运行目录，以保留包的配置与更新记录。")
+            .init(key: "CoreGameRunDirectoryChange.independentPackDirectory", table: "Errors", fallback: "整合包需要使用独立运行目录，以保留配置和更新记录。")
         }
         /// 这个实例已被移除，请刷新后重试。
         ///
@@ -69,11 +69,11 @@ extension Messages {
         public static var unfinishedContentOperation: LocalizedMessage {
             .init(key: "CoreGameRunDirectoryChange.unfinishedContentOperation", table: "Errors", fallback: "此目录还有未完成的内容或存档操作，请先恢复这些操作。")
         }
-        /// 此实例仍有尚未收尾的运行记录，请先在运行历史中确认或恢复，再切换目录。
+        /// 此实例仍有未结束的运行记录。请先查看运行记录，确认游戏状态或恢复记录后，再切换目录。
         ///
         /// Resource: `Errors.CoreGameRunDirectoryChange.unfinishedRunRecord`.
         public static var unfinishedRunRecord: LocalizedMessage {
-            .init(key: "CoreGameRunDirectoryChange.unfinishedRunRecord", table: "Errors", fallback: "此实例仍有尚未收尾的运行记录，请先在运行历史中确认或恢复，再切换目录。")
+            .init(key: "CoreGameRunDirectoryChange.unfinishedRunRecord", table: "Errors", fallback: "此实例仍有未结束的运行记录。请先查看运行记录，确认游戏状态或恢复记录后，再切换目录。")
         }
         /// 游戏内容记录或备份包含不支持的文件：%1$@
         ///
@@ -83,8 +83,8 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreGameRunDirectoryChange.alreadyUsesDirectory": .init("实例已经使用这个运行目录。", []),
-            "Errors:CoreGameRunDirectoryChange.customIdentityChanged": .init("自定义目录身份已经变化，请重新预览。", []),
-            "Errors:CoreGameRunDirectoryChange.independentPackDirectory": .init("整合包保持独立运行目录，以保留包的配置与更新记录。", []),
+            "Errors:CoreGameRunDirectoryChange.customIdentityChanged": .init("自定义文件夹已发生变化，请重新预览。", []),
+            "Errors:CoreGameRunDirectoryChange.independentPackDirectory": .init("整合包需要使用独立运行目录，以保留配置和更新记录。", []),
             "Errors:CoreGameRunDirectoryChange.instanceRemoved": .init("这个实例已被移除，请刷新后重试。", []),
             "Errors:CoreGameRunDirectoryChange.instanceRemovedAfterValidation": .init("实例已被移除。", []),
             "Errors:CoreGameRunDirectoryChange.locationChanged": .init("实例或目录位置已经变化，请重新预览。", []),
@@ -93,7 +93,7 @@ extension Messages {
             "Errors:CoreGameRunDirectoryChange.sameDirectory": .init("所选目录就是当前游戏目录，无需切换。", []),
             "Errors:CoreGameRunDirectoryChange.snapshotsChanged": .init("预览后游戏文件或备份发生了变化，请刷新预览后再切换。", []),
             "Errors:CoreGameRunDirectoryChange.unfinishedContentOperation": .init("此目录还有未完成的内容或存档操作，请先恢复这些操作。", []),
-            "Errors:CoreGameRunDirectoryChange.unfinishedRunRecord": .init("此实例仍有尚未收尾的运行记录，请先在运行历史中确认或恢复，再切换目录。", []),
+            "Errors:CoreGameRunDirectoryChange.unfinishedRunRecord": .init("此实例仍有未结束的运行记录。请先查看运行记录，确认游戏状态或恢复记录后，再切换目录。", []),
             "Errors:CoreGameRunDirectoryChange.unsupportedRecordedFile": .init("游戏内容记录或备份包含不支持的文件：%1$@", [.text]),
         ]
     }

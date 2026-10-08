@@ -21,24 +21,24 @@ extension Messages {
         public static var instanceVersionChanged: LocalizedMessage {
             .init(key: "CoreContentBatchUpdater.instanceVersionChanged", table: "Errors", fallback: "实例的游戏版本或加载器已改变，请重新检查更新。")
         }
-        /// 请选择可更新的内容，同一项目只能选择一个版本。
+        /// 请选择可更新的资源，同一项目只能选择一个版本。
         ///
         /// Resource: `Errors.CoreContentBatchUpdater.selectionInvalid`.
         public static var selectionInvalid: LocalizedMessage {
-            .init(key: "CoreContentBatchUpdater.selectionInvalid", table: "Errors", fallback: "请选择可更新的内容，同一项目只能选择一个版本。")
+            .init(key: "CoreContentBatchUpdater.selectionInvalid", table: "Errors", fallback: "请选择可更新的资源，同一项目只能选择一个版本。")
         }
-        /// 正在应用 %1$lld 项内容更新
+        /// 正在安装 %1$lld 项资源更新
         ///
         /// Resource: `Progress.CoreContentBatchUpdater.applyingContentUpdates`.
         public static func applyingContentUpdates(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "CoreContentBatchUpdater.applyingContentUpdates", table: "Progress", fallback: "正在应用 %1$lld 项内容更新", arguments: [.integer(value0)])
+            .init(key: "CoreContentBatchUpdater.applyingContentUpdates", table: "Progress", fallback: "正在安装 %1$lld 项资源更新", arguments: [.integer(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreContentBatchUpdater.contentChanged": .init("%1$@ 已发生变化，请重新检查更新。", [.text]),
             "Errors:CoreContentBatchUpdater.installedProjectMismatch": .init("更新版本与已安装项目不匹配。", []),
             "Errors:CoreContentBatchUpdater.instanceVersionChanged": .init("实例的游戏版本或加载器已改变，请重新检查更新。", []),
-            "Errors:CoreContentBatchUpdater.selectionInvalid": .init("请选择可更新的内容，同一项目只能选择一个版本。", []),
-            "Progress:CoreContentBatchUpdater.applyingContentUpdates": .init("正在应用 %1$lld 项内容更新", [.integer]),
+            "Errors:CoreContentBatchUpdater.selectionInvalid": .init("请选择可更新的资源，同一项目只能选择一个版本。", []),
+            "Progress:CoreContentBatchUpdater.applyingContentUpdates": .init("正在安装 %1$lld 项资源更新", [.integer]),
         ]
     }
 }

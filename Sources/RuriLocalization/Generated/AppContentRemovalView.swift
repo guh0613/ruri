@@ -27,25 +27,25 @@ extension Messages {
         public static var moveToTrash: LocalizedMessage {
             .init(key: "AppContentRemovalView.moveToTrash", table: "Interface", fallback: "移到废纸篓")
         }
-        /// 移除 %1$lld 项游戏内容
+        /// 移除 %1$lld 项资源
         ///
         /// Resource: `Interface.AppContentRemovalView.removeContent`.
         public static func removeContent(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AppContentRemovalView.removeContent", table: "Interface", fallback: "移除 %1$lld 项游戏内容", arguments: [.integer(value0)])
+            .init(key: "AppContentRemovalView.removeContent", table: "Interface", fallback: "移除 %1$lld 项资源", arguments: [.integer(value0)])
         }
-        /// 所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。
+        /// 所选文件会移到废纸篓。如果仍有已启用的资源依赖这些文件，本次操作将取消。
         ///
         /// Resource: `Interface.AppContentRemovalView.removeContentHelp`.
         public static var removeContentHelp: LocalizedMessage {
-            .init(key: "AppContentRemovalView.removeContentHelp", table: "Interface", fallback: "所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。")
+            .init(key: "AppContentRemovalView.removeContentHelp", table: "Interface", fallback: "所选文件会移到废纸篓。如果仍有已启用的资源依赖这些文件，本次操作将取消。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppContentRemovalView.allStatus": .init("全部状态", []),
             "Interface:AppContentRemovalView.disabledStatus": .init("已停用", []),
             "Interface:AppContentRemovalView.enabledStatus": .init("已启用", []),
             "Interface:AppContentRemovalView.moveToTrash": .init("移到废纸篓", []),
-            "Interface:AppContentRemovalView.removeContent": .init("移除 %1$lld 项游戏内容", [.integer]),
-            "Interface:AppContentRemovalView.removeContentHelp": .init("所选文件会一起移到废纸篓。若仍有已启用的内容依赖它们，整批操作会停止。", []),
+            "Interface:AppContentRemovalView.removeContent": .init("移除 %1$lld 项资源", [.integer]),
+            "Interface:AppContentRemovalView.removeContentHelp": .init("所选文件会移到废纸篓。如果仍有已启用的资源依赖这些文件，本次操作将取消。", []),
         ]
     }
 }

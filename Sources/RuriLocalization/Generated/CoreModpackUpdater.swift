@@ -9,11 +9,11 @@ extension Messages {
         public static func dependencyConflict(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreModpackUpdater.dependencyConflict", table: "Errors", fallback: "“%1$@”依赖此版本，请先创建独立副本再更新整合包。", arguments: [.text(value0)])
         }
-        /// 预览后文件又有修改，请重新生成差异：%1$@
+        /// 预览后文件发生变化，请重新查看更新差异：%1$@
         ///
         /// Resource: `Errors.CoreModpackUpdater.filesChangedAfterPreview`.
         public static func filesChangedAfterPreview(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreModpackUpdater.filesChangedAfterPreview", table: "Errors", fallback: "预览后文件又有修改，请重新生成差异：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreModpackUpdater.filesChangedAfterPreview", table: "Errors", fallback: "预览后文件发生变化，请重新查看更新差异：%1$@", arguments: [.text(value0)])
         }
         /// 实例已从列表移除。
         ///
@@ -77,7 +77,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreModpackUpdater.dependencyConflict": .init("“%1$@”依赖此版本，请先创建独立副本再更新整合包。", [.text]),
-            "Errors:CoreModpackUpdater.filesChangedAfterPreview": .init("预览后文件又有修改，请重新生成差异：%1$@", [.text]),
+            "Errors:CoreModpackUpdater.filesChangedAfterPreview": .init("预览后文件发生变化，请重新查看更新差异：%1$@", [.text]),
             "Errors:CoreModpackUpdater.instanceRemoved": .init("实例已从列表移除。", []),
             "Errors:CoreModpackUpdater.instanceRemovedAfterPreview": .init("实例已移除。", []),
             "Errors:CoreModpackUpdater.invalidPackSelection": .init("请选择 Modrinth、CurseForge、HMCL 或 MCBBS 整合包更新文件。", []),

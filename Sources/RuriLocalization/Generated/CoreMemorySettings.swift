@@ -9,17 +9,17 @@ extension Messages {
         public static var automaticEstimation: LocalizedMessage {
             .init(key: "CoreMemorySettings.automaticEstimation", table: "Core", fallback: "自动估算")
         }
-        /// 由 JVM 自动决定
+        /// 由 Java 自动决定
         ///
         /// Resource: `Core.CoreMemorySettings.automaticallyManagedMemory`.
         public static var automaticallyManagedMemory: LocalizedMessage {
-            .init(key: "CoreMemorySettings.automaticallyManagedMemory", table: "Core", fallback: "由 JVM 自动决定")
+            .init(key: "CoreMemorySettings.automaticallyManagedMemory", table: "Core", fallback: "由 Java 自动决定")
         }
-        /// JVM 参数覆盖
+        /// 由 JVM 参数指定
         ///
         /// Resource: `Core.CoreMemorySettings.jvmOverride`.
         public static var jvmOverride: LocalizedMessage {
-            .init(key: "CoreMemorySettings.jvmOverride", table: "Core", fallback: "JVM 参数覆盖")
+            .init(key: "CoreMemorySettings.jvmOverride", table: "Core", fallback: "由 JVM 参数指定")
         }
         /// 内存设置
         ///
@@ -27,29 +27,29 @@ extension Messages {
         public static var memorySettings: LocalizedMessage {
             .init(key: "CoreMemorySettings.memorySettings", table: "Core", fallback: "内存设置")
         }
-        /// 堆上限 %1$@ · 初始 %2$@ · %3$@
+        /// 堆内存上限 %1$@ · 初始大小 %2$@ · %3$@
         ///
         /// Resource: `Core.CoreMemorySettings.memorySummary`.
         public static func memorySummary(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
-            .init(key: "CoreMemorySettings.memorySummary", table: "Core", fallback: "堆上限 %1$@ · 初始 %2$@ · %3$@", arguments: [.text(value0), .text(value1), .text(value2)])
+            .init(key: "CoreMemorySettings.memorySummary", table: "Core", fallback: "堆内存上限 %1$@ · 初始大小 %2$@ · %3$@", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        /// JVM 内存参数的最小堆、初始堆和最大堆不匹配，请检查 -Xms、-Xmx 及对应的 -XX 参数。
+        /// JVM 参数中的最小、初始和最大堆内存设置不一致，请检查 -Xms、-Xmx 和对应的 -XX 参数。
         ///
         /// Resource: `Errors.CoreMemorySettings.heapSettingsMismatch`.
         public static var heapSettingsMismatch: LocalizedMessage {
-            .init(key: "CoreMemorySettings.heapSettingsMismatch", table: "Errors", fallback: "JVM 内存参数的最小堆、初始堆和最大堆不匹配，请检查 -Xms、-Xmx 及对应的 -XX 参数。")
+            .init(key: "CoreMemorySettings.heapSettingsMismatch", table: "Errors", fallback: "JVM 参数中的最小、初始和最大堆内存设置不一致，请检查 -Xms、-Xmx 和对应的 -XX 参数。")
         }
-        /// 初始堆 %1$@ MB 大于本次最大堆 %2$@ MB。请降低初始值或调整内存模式。
+        /// 初始堆内存 %1$@ MB 超过本次分配的上限 %2$@ MB。请降低初始值，或调整内存分配方式。
         ///
         /// Resource: `Errors.CoreMemorySettings.initialHeapTooLarge`.
         public static func initialHeapTooLarge(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreMemorySettings.initialHeapTooLarge", table: "Errors", fallback: "初始堆 %1$@ MB 大于本次最大堆 %2$@ MB。请降低初始值或调整内存模式。", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreMemorySettings.initialHeapTooLarge", table: "Errors", fallback: "初始堆内存 %1$@ MB 超过本次分配的上限 %2$@ MB。请降低初始值，或调整内存分配方式。", arguments: [.text(value0), .text(value1)])
         }
-        /// 内存上限应为 512–131072 MB；初始堆与 Metaspace 上限应为 16–131072 MB，或使用默认。
+        /// 最大内存需为 512–131072 MB；初始堆内存和 Metaspace 上限需为 16–131072 MB，也可使用默认值。
         ///
         /// Resource: `Errors.CoreMemorySettings.invalidMemoryLimits`.
         public static var invalidMemoryLimits: LocalizedMessage {
-            .init(key: "CoreMemorySettings.invalidMemoryLimits", table: "Errors", fallback: "内存上限应为 512–131072 MB；初始堆与 Metaspace 上限应为 16–131072 MB，或使用默认。")
+            .init(key: "CoreMemorySettings.invalidMemoryLimits", table: "Errors", fallback: "最大内存需为 512–131072 MB；初始堆内存和 Metaspace 上限需为 16–131072 MB，也可使用默认值。")
         }
         /// 无效的 JVM 内存大小：%1$@。请使用字节数或 K/M/G 单位。
         ///
@@ -63,24 +63,24 @@ extension Messages {
         public static var memorySizeOutOfRange: LocalizedMessage {
             .init(key: "CoreMemorySettings.memorySizeOutOfRange", table: "Errors", fallback: "JVM 内存大小超出可表示范围。")
         }
-        /// 无法读取物理内存，请使用手动内存设置。
+        /// 无法读取本机内存信息，请手动设置游戏内存。
         ///
         /// Resource: `Errors.CoreMemorySettings.physicalMemoryUnreadable`.
         public static var physicalMemoryUnreadable: LocalizedMessage {
-            .init(key: "CoreMemorySettings.physicalMemoryUnreadable", table: "Errors", fallback: "无法读取物理内存，请使用手动内存设置。")
+            .init(key: "CoreMemorySettings.physicalMemoryUnreadable", table: "Errors", fallback: "无法读取本机内存信息，请手动设置游戏内存。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreMemorySettings.automaticEstimation": .init("自动估算", []),
-            "Core:CoreMemorySettings.automaticallyManagedMemory": .init("由 JVM 自动决定", []),
-            "Core:CoreMemorySettings.jvmOverride": .init("JVM 参数覆盖", []),
+            "Core:CoreMemorySettings.automaticallyManagedMemory": .init("由 Java 自动决定", []),
+            "Core:CoreMemorySettings.jvmOverride": .init("由 JVM 参数指定", []),
             "Core:CoreMemorySettings.memorySettings": .init("内存设置", []),
-            "Core:CoreMemorySettings.memorySummary": .init("堆上限 %1$@ · 初始 %2$@ · %3$@", [.text, .text, .text]),
-            "Errors:CoreMemorySettings.heapSettingsMismatch": .init("JVM 内存参数的最小堆、初始堆和最大堆不匹配，请检查 -Xms、-Xmx 及对应的 -XX 参数。", []),
-            "Errors:CoreMemorySettings.initialHeapTooLarge": .init("初始堆 %1$@ MB 大于本次最大堆 %2$@ MB。请降低初始值或调整内存模式。", [.text, .text]),
-            "Errors:CoreMemorySettings.invalidMemoryLimits": .init("内存上限应为 512–131072 MB；初始堆与 Metaspace 上限应为 16–131072 MB，或使用默认。", []),
+            "Core:CoreMemorySettings.memorySummary": .init("堆内存上限 %1$@ · 初始大小 %2$@ · %3$@", [.text, .text, .text]),
+            "Errors:CoreMemorySettings.heapSettingsMismatch": .init("JVM 参数中的最小、初始和最大堆内存设置不一致，请检查 -Xms、-Xmx 和对应的 -XX 参数。", []),
+            "Errors:CoreMemorySettings.initialHeapTooLarge": .init("初始堆内存 %1$@ MB 超过本次分配的上限 %2$@ MB。请降低初始值，或调整内存分配方式。", [.text, .text]),
+            "Errors:CoreMemorySettings.invalidMemoryLimits": .init("最大内存需为 512–131072 MB；初始堆内存和 Metaspace 上限需为 16–131072 MB，也可使用默认值。", []),
             "Errors:CoreMemorySettings.invalidMemorySize": .init("无效的 JVM 内存大小：%1$@。请使用字节数或 K/M/G 单位。", [.text]),
             "Errors:CoreMemorySettings.memorySizeOutOfRange": .init("JVM 内存大小超出可表示范围。", []),
-            "Errors:CoreMemorySettings.physicalMemoryUnreadable": .init("无法读取物理内存，请使用手动内存设置。", []),
+            "Errors:CoreMemorySettings.physicalMemoryUnreadable": .init("无法读取本机内存信息，请手动设置游戏内存。", []),
         ]
     }
 }

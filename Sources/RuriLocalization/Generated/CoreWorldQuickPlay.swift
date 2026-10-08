@@ -15,11 +15,11 @@ extension Messages {
         public static var invalidWorldName: LocalizedMessage {
             .init(key: "CoreWorldQuickPlay.invalidWorldName", table: "Errors", fallback: "无效的存档目录名。")
         }
-        /// 实例运行目录在选择存档后改变，请重新选择世界。
+        /// 选择存档后，实例的运行目录发生变化，请重新选择存档。
         ///
         /// Resource: `Errors.CoreWorldQuickPlay.runDirectoryChanged`.
         public static var runDirectoryChanged: LocalizedMessage {
-            .init(key: "CoreWorldQuickPlay.runDirectoryChanged", table: "Errors", fallback: "实例运行目录在选择存档后改变，请重新选择世界。")
+            .init(key: "CoreWorldQuickPlay.runDirectoryChanged", table: "Errors", fallback: "选择存档后，实例的运行目录发生变化，请重新选择存档。")
         }
         /// 此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。
         ///
@@ -36,7 +36,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreWorldQuickPlay.incompleteWorldData": .init("存档信息不完整，请先在游戏中检查此世界。", []),
             "Errors:CoreWorldQuickPlay.invalidWorldName": .init("无效的存档目录名。", []),
-            "Errors:CoreWorldQuickPlay.runDirectoryChanged": .init("实例运行目录在选择存档后改变，请重新选择世界。", []),
+            "Errors:CoreWorldQuickPlay.runDirectoryChanged": .init("选择存档后，实例的运行目录发生变化，请重新选择存档。", []),
             "Errors:CoreWorldQuickPlay.unsupportedVersion": .init("此版本不支持直接进入存档，请启动游戏后从单人游戏菜单选择世界。", []),
             "Errors:CoreWorldQuickPlay.worldDirectoryInvalid": .init("存档已移除或不是有效的文件夹，请刷新存档列表。", []),
         ]

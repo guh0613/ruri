@@ -39,11 +39,11 @@ extension Messages {
         public static var detectingJava: LocalizedMessage {
             .init(key: "AppJavaView.detectingJava", table: "Interface", fallback: "正在检测本机 Java…")
         }
-        /// 获取 Mojang 运行时列表…
+        /// 正在获取 Mojang 运行时列表…
         ///
         /// Resource: `Interface.AppJavaView.fetchingRuntimes`.
         public static var fetchingRuntimes: LocalizedMessage {
-            .init(key: "AppJavaView.fetchingRuntimes", table: "Interface", fallback: "获取 Mojang 运行时列表…")
+            .init(key: "AppJavaView.fetchingRuntimes", table: "Interface", fallback: "正在获取 Mojang 运行时列表…")
         }
         /// 清理未完成文件
         ///
@@ -69,11 +69,11 @@ extension Messages {
         public static var javaRequirements: LocalizedMessage {
             .init(key: "AppJavaView.javaRequirements", table: "Interface", fallback: "Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。")
         }
-        /// 以下设置仍在使用这一路径：
+        /// 以下设置仍在使用此 Java：
         ///
         /// Resource: `Interface.AppJavaView.javaStillReferenced`.
         public static var javaStillReferenced: LocalizedMessage {
-            .init(key: "AppJavaView.javaStillReferenced", table: "Interface", fallback: "以下设置仍在使用这一路径：")
+            .init(key: "AppJavaView.javaStillReferenced", table: "Interface", fallback: "以下设置仍在使用此 Java：")
         }
         /// 本机 Java
         ///
@@ -87,11 +87,11 @@ extension Messages {
         public static var moveToTrash: LocalizedMessage {
             .init(key: "AppJavaView.moveToTrash", table: "Interface", fallback: "移到废纸篓")
         }
-        /// 没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。
+        /// 未找到 Java。可以添加本机已安装的 Java，或从下方下载。
         ///
         /// Resource: `Interface.AppJavaView.noJavaFound`.
         public static var noJavaFound: LocalizedMessage {
-            .init(key: "AppJavaView.noJavaFound", table: "Interface", fallback: "没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。")
+            .init(key: "AppJavaView.noJavaFound", table: "Interface", fallback: "未找到 Java。可以添加本机已安装的 Java，或从下方下载。")
         }
         /// 官方游戏运行时
         ///
@@ -123,11 +123,11 @@ extension Messages {
         public static var removeManagedJava: LocalizedMessage {
             .init(key: "AppJavaView.removeManagedJava", table: "Interface", fallback: "移除 Ruri 下载的 Java")
         }
-        /// 从手动列表移除
+        /// 从手动添加的列表中移除
         ///
         /// Resource: `Interface.AppJavaView.removeManualJava`.
         public static var removeManualJava: LocalizedMessage {
-            .init(key: "AppJavaView.removeManualJava", table: "Interface", fallback: "从手动列表移除")
+            .init(key: "AppJavaView.removeManualJava", table: "Interface", fallback: "从手动添加的列表中移除")
         }
         /// 修复
         ///
@@ -165,11 +165,11 @@ extension Messages {
         public static var trashJava: LocalizedMessage {
             .init(key: "AppJavaView.trashJava", table: "Interface", fallback: "移到废纸篓…")
         }
-        /// 文件会移到废纸篓；正在被游戏或安装器使用时无法移除。
+        /// Java 文件会移到废纸篓。游戏或安装程序正在使用此 Java 时，无法移除。
         ///
         /// Resource: `Interface.AppJavaView.trashNotice`.
         public static var trashNotice: LocalizedMessage {
-            .init(key: "AppJavaView.trashNotice", table: "Interface", fallback: "文件会移到废纸篓；正在被游戏或安装器使用时无法移除。")
+            .init(key: "AppJavaView.trashNotice", table: "Interface", fallback: "Java 文件会移到废纸篓。游戏或安装程序正在使用此 Java 时，无法移除。")
         }
         /// 不可用的 Java
         ///
@@ -190,28 +190,28 @@ extension Messages {
             "Interface:AppJavaView.continueInstall": .init("继续安装", []),
             "Interface:AppJavaView.defaultSelection": .init("默认", []),
             "Interface:AppJavaView.detectingJava": .init("正在检测本机 Java…", []),
-            "Interface:AppJavaView.fetchingRuntimes": .init("获取 Mojang 运行时列表…", []),
+            "Interface:AppJavaView.fetchingRuntimes": .init("正在获取 Mojang 运行时列表…", []),
             "Interface:AppJavaView.incompleteDownloads": .init("清理未完成文件", []),
             "Interface:AppJavaView.install": .init("安装", []),
             "Interface:AppJavaView.installed": .init("已安装", []),
             "Interface:AppJavaView.javaRequirements": .init("Minecraft 的 Java 要求以版本清单为准。旧版游戏可能需要 Intel Java 和 Rosetta；较新版本优先使用 Apple Silicon 原生运行时。", []),
-            "Interface:AppJavaView.javaStillReferenced": .init("以下设置仍在使用这一路径：", []),
+            "Interface:AppJavaView.javaStillReferenced": .init("以下设置仍在使用此 Java：", []),
             "Interface:AppJavaView.localJava": .init("本机 Java", []),
             "Interface:AppJavaView.moveToTrash": .init("移到废纸篓", []),
-            "Interface:AppJavaView.noJavaFound": .init("没有找到 Java。添加已经安装的 Java，或从下方下载游戏运行时。", []),
+            "Interface:AppJavaView.noJavaFound": .init("未找到 Java。可以添加本机已安装的 Java，或从下方下载。", []),
             "Interface:AppJavaView.officialRuntimes": .init("官方游戏运行时", []),
             "Interface:AppJavaView.redetect": .init("重新检测", []),
             "Interface:AppJavaView.redetectLocalJava": .init("重新检测本机 Java", []),
             "Interface:AppJavaView.relocatePath": .init("重新选择路径…", []),
             "Interface:AppJavaView.removeManagedJava": .init("移除 Ruri 下载的 Java", []),
-            "Interface:AppJavaView.removeManualJava": .init("从手动列表移除", []),
+            "Interface:AppJavaView.removeManualJava": .init("从手动添加的列表中移除", []),
             "Interface:AppJavaView.repair": .init("修复", []),
             "Interface:AppJavaView.setDefaultJava": .init("设为默认 Java", []),
             "Interface:AppJavaView.showInFinder": .init("在 Finder 中显示", []),
             "Interface:AppJavaView.switchToAutomaticJava": .init("将这些设置改为自动选择 Java", []),
             "Interface:AppJavaView.temurinDownload": .init("Eclipse Temurin 下载", []),
             "Interface:AppJavaView.trashJava": .init("移到废纸篓…", []),
-            "Interface:AppJavaView.trashNotice": .init("文件会移到废纸篓；正在被游戏或安装器使用时无法移除。", []),
+            "Interface:AppJavaView.trashNotice": .init("Java 文件会移到废纸篓。游戏或安装程序正在使用此 Java 时，无法移除。", []),
             "Interface:AppJavaView.unavailableJava": .init("不可用的 Java", []),
             "Interface:AppJavaView.zuluDownload": .init("Azul Zulu 下载", []),
         ]

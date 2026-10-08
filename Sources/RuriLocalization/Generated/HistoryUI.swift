@@ -45,11 +45,11 @@ extension Messages {
         public static var dayTrack: LocalizedMessage {
             .init(key: "HistoryUI.dayTrack", table: "Sessions", fallback: "当天的游玩时段")
         }
-        /// 最常去的存档
+        /// 最常玩的存档
         ///
         /// Resource: `Sessions.HistoryUI.favoriteWorld`.
         public static var favoriteWorld: LocalizedMessage {
-            .init(key: "HistoryUI.favoriteWorld", table: "Sessions", fallback: "最常去的存档")
+            .init(key: "HistoryUI.favoriteWorld", table: "Sessions", fallback: "最常玩的存档")
         }
         /// 实例：%1$@
         ///
@@ -153,11 +153,11 @@ extension Messages {
         public static var openLogs: LocalizedMessage {
             .init(key: "HistoryUI.openLogs", table: "Sessions", fallback: "查看日志")
         }
-        /// 原始日志输出。
+        /// 查看游戏的原始日志。
         ///
         /// Resource: `Sessions.HistoryUI.openLogsHelp`.
         public static var openLogsHelp: LocalizedMessage {
-            .init(key: "HistoryUI.openLogsHelp", table: "Sessions", fallback: "原始日志输出。")
+            .init(key: "HistoryUI.openLogsHelp", table: "Sessions", fallback: "查看游戏的原始日志。")
         }
         /// 还有 %1$lld 个
         ///
@@ -329,7 +329,7 @@ extension Messages {
             "Sessions:HistoryUI.clearFilters": .init("清除筛选", []),
             "Sessions:HistoryUI.dayCount": .init("%1$lld 天", [.integer]),
             "Sessions:HistoryUI.dayTrack": .init("当天的游玩时段", []),
-            "Sessions:HistoryUI.favoriteWorld": .init("最常去的存档", []),
+            "Sessions:HistoryUI.favoriteWorld": .init("最常玩的存档", []),
             "Sessions:HistoryUI.filteredByInstance": .init("实例：%1$@", [.text]),
             "Sessions:HistoryUI.filteredByWorld": .init("存档：%1$@", [.text]),
             "Sessions:HistoryUI.filters": .init("筛选", []),
@@ -347,7 +347,7 @@ extension Messages {
             "Sessions:HistoryUI.noActivity": .init("此时段无记录", []),
             "Sessions:HistoryUI.noWorldsHelp": .init("退出游戏后会记录本次进入的存档。", []),
             "Sessions:HistoryUI.openLogs": .init("查看日志", []),
-            "Sessions:HistoryUI.openLogsHelp": .init("原始日志输出。", []),
+            "Sessions:HistoryUI.openLogsHelp": .init("查看游戏的原始日志。", []),
             "Sessions:HistoryUI.otherInstances": .init("还有 %1$lld 个", [.integer]),
             "Sessions:HistoryUI.previousMonth": .init("前 30 天", []),
             "Sessions:HistoryUI.previousWeek": .init("前 7 天", []),

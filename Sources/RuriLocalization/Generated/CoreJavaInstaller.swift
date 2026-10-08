@@ -21,11 +21,11 @@ extension Messages {
         public static var javaAlreadyInstalled: LocalizedMessage {
             .init(key: "CoreJavaInstaller.javaAlreadyInstalled", table: "Errors", fallback: "此 Java 已由另一个操作安装，请重新检测。")
         }
-        /// 此 Java 已损坏，请在 Java 页面点击“修复”：%1$@
+        /// 此 Java 已损坏，请前往“Java 运行时”页面点按“修复”：%1$@
         ///
         /// Resource: `Errors.CoreJavaInstaller.javaCorrupt`.
         public static func javaCorrupt(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreJavaInstaller.javaCorrupt", table: "Errors", fallback: "此 Java 已损坏，请在 Java 页面点击“修复”：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreJavaInstaller.javaCorrupt", table: "Errors", fallback: "此 Java 已损坏，请前往“Java 运行时”页面点按“修复”：%1$@", arguments: [.text(value0)])
         }
         /// 无法替换 Java 目录，原运行时仍保留。
         ///
@@ -79,7 +79,7 @@ extension Messages {
             "Errors:CoreJavaInstaller.inconsistentJavaLinks": .init("Java 目录中存在不一致的链接", []),
             "Errors:CoreJavaInstaller.insecureManifestLink": .init("Java 清单包含不安全链接", []),
             "Errors:CoreJavaInstaller.javaAlreadyInstalled": .init("此 Java 已由另一个操作安装，请重新检测。", []),
-            "Errors:CoreJavaInstaller.javaCorrupt": .init("此 Java 已损坏，请在 Java 页面点击“修复”：%1$@", [.text]),
+            "Errors:CoreJavaInstaller.javaCorrupt": .init("此 Java 已损坏，请前往“Java 运行时”页面点按“修复”：%1$@", [.text]),
             "Errors:CoreJavaInstaller.javaDirectoryReplaceFailed": .init("无法替换 Java 目录，原运行时仍保留。", []),
             "Errors:CoreJavaInstaller.javaVersionMismatch": .init("下载的 Java 版本或架构不符合要求", []),
             "Errors:CoreJavaInstaller.linkEscapesRuntime": .init("Java 链接超出运行时目录", []),

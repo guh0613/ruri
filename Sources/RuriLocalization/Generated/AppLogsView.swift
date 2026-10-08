@@ -39,11 +39,11 @@ extension Messages {
         public static var javaNotSelected: LocalizedMessage {
             .init(key: "AppLogsView.javaNotSelected", table: "Interface", fallback: "尚未选择 Java")
         }
-        /// 最后记录阶段：%1$@
+        /// 最后记录的阶段：%1$@
         ///
         /// Resource: `Interface.AppLogsView.lastRecordedStage`.
         public static func lastRecordedStage(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppLogsView.lastRecordedStage", table: "Interface", fallback: "最后记录阶段：%1$@", arguments: [.text(value0)])
+            .init(key: "AppLogsView.lastRecordedStage", table: "Interface", fallback: "最后记录的阶段：%1$@", arguments: [.text(value0)])
         }
         /// 暂无运行记录
         ///
@@ -105,11 +105,11 @@ extension Messages {
         public static var stageEnvironmentAndReport: LocalizedMessage {
             .init(key: "AppLogsView.stageEnvironmentAndReport", table: "Interface", fallback: "阶段、环境与报告")
         }
-        /// （截断副本）
+        /// （部分内容）
         ///
         /// Resource: `Interface.AppLogsView.truncatedCopy`.
         public static var truncatedCopy: LocalizedMessage {
-            .init(key: "AppLogsView.truncatedCopy", table: "Interface", fallback: "（截断副本）")
+            .init(key: "AppLogsView.truncatedCopy", table: "Interface", fallback: "（部分内容）")
         }
         /// 查看内容
         ///
@@ -124,7 +124,7 @@ extension Messages {
             "Interface:AppLogsView.exportFullLog": .init("导出日志…", []),
             "Interface:AppLogsView.filterLogs": .init("筛选日志", []),
             "Interface:AppLogsView.javaNotSelected": .init("尚未选择 Java", []),
-            "Interface:AppLogsView.lastRecordedStage": .init("最后记录阶段：%1$@", [.text]),
+            "Interface:AppLogsView.lastRecordedStage": .init("最后记录的阶段：%1$@", [.text]),
             "Interface:AppLogsView.noRunHistory": .init("暂无运行记录", []),
             "Interface:AppLogsView.recentLogPreview": .init("仅在此窗口打开时刷新近期日志。", []),
             "Interface:AppLogsView.recordedMemoryLimit": .init("记录的内存上限：%1$@ MB", [.text]),
@@ -135,7 +135,7 @@ extension Messages {
             "Interface:AppLogsView.selectRecord": .init("选择记录", []),
             "Interface:AppLogsView.showRunRecordInFinder": .init("在 Finder 中显示本次运行记录", []),
             "Interface:AppLogsView.stageEnvironmentAndReport": .init("阶段、环境与报告", []),
-            "Interface:AppLogsView.truncatedCopy": .init("（截断副本）", []),
+            "Interface:AppLogsView.truncatedCopy": .init("（部分内容）", []),
             "Interface:AppLogsView.viewContent": .init("查看内容", []),
         ]
     }

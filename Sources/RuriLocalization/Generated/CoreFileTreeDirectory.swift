@@ -9,11 +9,11 @@ extension Messages {
         public static var directoryEntryReadFailed: LocalizedMessage {
             .init(key: "CoreFileTreeDirectory.directoryEntryReadFailed", table: "Errors", fallback: "读取目录时发生错误。")
         }
-        /// 无法枚举目录：%1$@
+        /// 无法读取文件夹中的文件列表：%1$@
         ///
         /// Resource: `Errors.CoreFileTreeDirectory.directoryEnumerationFailed`.
         public static func directoryEnumerationFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreFileTreeDirectory.directoryEnumerationFailed", table: "Errors", fallback: "无法枚举目录：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreFileTreeDirectory.directoryEnumerationFailed", table: "Errors", fallback: "无法读取文件夹中的文件列表：%1$@", arguments: [.text(value0)])
         }
         /// 无法读取目录：%1$@
         ///
@@ -27,18 +27,18 @@ extension Messages {
         public static var tooManyDirectoryFiles: LocalizedMessage {
             .init(key: "CoreFileTreeDirectory.tooManyDirectoryFiles", table: "Errors", fallback: "目录文件数量超过限制。")
         }
-        /// 目录包含无法表示的文件名，原文件已保留。
+        /// 文件夹中有无法识别的文件名，原文件已保留。
         ///
         /// Resource: `Errors.CoreFileTreeDirectory.unrepresentableFilename`.
         public static var unrepresentableFilename: LocalizedMessage {
-            .init(key: "CoreFileTreeDirectory.unrepresentableFilename", table: "Errors", fallback: "目录包含无法表示的文件名，原文件已保留。")
+            .init(key: "CoreFileTreeDirectory.unrepresentableFilename", table: "Errors", fallback: "文件夹中有无法识别的文件名，原文件已保留。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreFileTreeDirectory.directoryEntryReadFailed": .init("读取目录时发生错误。", []),
-            "Errors:CoreFileTreeDirectory.directoryEnumerationFailed": .init("无法枚举目录：%1$@", [.text]),
+            "Errors:CoreFileTreeDirectory.directoryEnumerationFailed": .init("无法读取文件夹中的文件列表：%1$@", [.text]),
             "Errors:CoreFileTreeDirectory.directoryReadFailed": .init("无法读取目录：%1$@", [.text]),
             "Errors:CoreFileTreeDirectory.tooManyDirectoryFiles": .init("目录文件数量超过限制。", []),
-            "Errors:CoreFileTreeDirectory.unrepresentableFilename": .init("目录包含无法表示的文件名，原文件已保留。", []),
+            "Errors:CoreFileTreeDirectory.unrepresentableFilename": .init("文件夹中有无法识别的文件名，原文件已保留。", []),
         ]
     }
 }

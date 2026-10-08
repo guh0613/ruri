@@ -15,11 +15,11 @@ extension Messages {
         public static var followsDefaultHelp: LocalizedMessage {
             .init(key: "AppDefaultLaunchSettingsView.followsDefaultHelp", table: "Interface", fallback: "用于未单独设置的启动选项")
         }
-        /// 已运行的游戏保持当前设置
+        /// 下次启动游戏时生效
         ///
         /// Resource: `Interface.AppDefaultLaunchSettingsView.runningGameSettings`.
         public static var runningGameSettings: LocalizedMessage {
-            .init(key: "AppDefaultLaunchSettingsView.runningGameSettings", table: "Interface", fallback: "已运行的游戏保持当前设置")
+            .init(key: "AppDefaultLaunchSettingsView.runningGameSettings", table: "Interface", fallback: "下次启动游戏时生效")
         }
         /// 无法保存默认设置。
         ///
@@ -42,7 +42,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppDefaultLaunchSettingsView.defaultLaunchSettings": .init("默认启动设置", []),
             "Interface:AppDefaultLaunchSettingsView.followsDefaultHelp": .init("用于未单独设置的启动选项", []),
-            "Interface:AppDefaultLaunchSettingsView.runningGameSettings": .init("已运行的游戏保持当前设置", []),
+            "Interface:AppDefaultLaunchSettingsView.runningGameSettings": .init("下次启动游戏时生效", []),
             "Interface:AppDefaultLaunchSettingsView.saveDefaultFailure": .init("无法保存默认设置。", []),
             "Interface:AppDefaultLaunchSettingsView.saveDefaultSettings": .init("保存默认设置", []),
             "Interface:AppDefaultLaunchSettingsView.unsavedChanges": .init("有未保存的更改", []),

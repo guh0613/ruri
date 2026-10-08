@@ -45,11 +45,11 @@ extension Messages {
         public static var monitoringStopped: LocalizedMessage {
             .init(key: "AppAppModelGameMonitoring.monitoringStopped", table: "Interface", fallback: "游戏或启动命令仍在运行，监控已中断")
         }
-        /// 已提交正常退出请求，等待游戏处理。
+        /// 已发送退出请求，正在等待游戏退出。
         ///
         /// Resource: `Interface.AppAppModelGameMonitoring.normalExitRequested`.
         public static var normalExitRequested: LocalizedMessage {
-            .init(key: "AppAppModelGameMonitoring.normalExitRequested", table: "Interface", fallback: "已提交正常退出请求，等待游戏处理。")
+            .init(key: "AppAppModelGameMonitoring.normalExitRequested", table: "Interface", fallback: "已发送退出请求，正在等待游戏退出。")
         }
         /// 实例复制待恢复
         ///
@@ -105,11 +105,11 @@ extension Messages {
         public static var terminateProcess: LocalizedMessage {
             .init(key: "AppAppModelGameMonitoring.terminateProcess", table: "Interface", fallback: "终止进程")
         }
-        /// 这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。
+        /// 强制终止可能导致未保存的游戏进度丢失。请仅在游戏无法正常退出时使用；如果游戏仍有响应，请先返回游戏，通过游戏菜单退出。
         ///
         /// Resource: `Interface.AppAppModelGameMonitoring.terminateWarning`.
         public static var terminateWarning: LocalizedMessage {
-            .init(key: "AppAppModelGameMonitoring.terminateWarning", table: "Interface", fallback: "这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。")
+            .init(key: "AppAppModelGameMonitoring.terminateWarning", table: "Interface", fallback: "强制终止可能导致未保存的游戏进度丢失。请仅在游戏无法正常退出时使用；如果游戏仍有响应，请先返回游戏，通过游戏菜单退出。")
         }
         /// 正在终止进程
         ///
@@ -137,7 +137,7 @@ extension Messages {
             "Interface:AppAppModelGameMonitoring.launching": .init("正在启动", []),
             "Interface:AppAppModelGameMonitoring.monitoringDisconnected": .init("监控已断开", []),
             "Interface:AppAppModelGameMonitoring.monitoringStopped": .init("游戏或启动命令仍在运行，监控已中断", []),
-            "Interface:AppAppModelGameMonitoring.normalExitRequested": .init("已提交正常退出请求，等待游戏处理。", []),
+            "Interface:AppAppModelGameMonitoring.normalExitRequested": .init("已发送退出请求，正在等待游戏退出。", []),
             "Interface:AppAppModelGameMonitoring.pendingCopy": .init("实例复制待恢复", []),
             "Interface:AppAppModelGameMonitoring.pendingDirectoryCopy": .init("目录复制待恢复", []),
             "Interface:AppAppModelGameMonitoring.pendingMove": .init("实例移动待恢复", []),
@@ -147,7 +147,7 @@ extension Messages {
             "Interface:AppAppModelGameMonitoring.statusUnconfirmed": .init("监控已中断，运行状态待确认", []),
             "Interface:AppAppModelGameMonitoring.terminateGameProcess": .init("终止“%1$@”的游戏进程？", [.text]),
             "Interface:AppAppModelGameMonitoring.terminateProcess": .init("终止进程", []),
-            "Interface:AppAppModelGameMonitoring.terminateWarning": .init("这可能打断尚未完成的存档写入。仅在游戏无法正常退出时使用；如果游戏还能响应，请先返回游戏退出。", []),
+            "Interface:AppAppModelGameMonitoring.terminateWarning": .init("强制终止可能导致未保存的游戏进度丢失。请仅在游戏无法正常退出时使用；如果游戏仍有响应，请先返回游戏，通过游戏菜单退出。", []),
             "Interface:AppAppModelGameMonitoring.terminatingProcess": .init("正在终止进程", []),
             "Interface:AppAppModelGameMonitoring.unreadableLog": .init("无法读取 %1$@ 的运行日志：%2$@", [.text, .text]),
             "Interface:AppAppModelGameMonitoring.waitingForExit": .init("等待游戏退出", []),

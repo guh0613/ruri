@@ -15,23 +15,23 @@ extension Messages {
         public static var hmclCustomDirectory: LocalizedMessage {
             .init(key: "CoreMinecraftGameLocations.hmclCustomDirectory", table: "Core", fallback: "HMCL 自定义目录")
         }
-        /// 旧版 HMCL 的自定义目录无法定位，请手动确认。
+        /// 无法找到旧版 HMCL 指定的自定义文件夹，请手动确认游戏数据的位置。
         ///
         /// Resource: `Core.CoreMinecraftGameLocations.hmclCustomDirectoryMissing`.
         public static var hmclCustomDirectoryMissing: LocalizedMessage {
-            .init(key: "CoreMinecraftGameLocations.hmclCustomDirectoryMissing", table: "Core", fallback: "旧版 HMCL 的自定义目录无法定位，请手动确认。")
+            .init(key: "CoreMinecraftGameLocations.hmclCustomDirectoryMissing", table: "Core", fallback: "无法找到旧版 HMCL 指定的自定义文件夹，请手动确认游戏数据的位置。")
         }
-        /// HMCL 的自定义目录不是可直接使用的 macOS 绝对路径，请手动确认游戏数据位置。
+        /// HMCL 指定的自定义路径无法在 macOS 上直接使用，请手动确认游戏数据的位置。
         ///
         /// Resource: `Core.CoreMinecraftGameLocations.hmclCustomDirectoryWarning`.
         public static var hmclCustomDirectoryWarning: LocalizedMessage {
-            .init(key: "CoreMinecraftGameLocations.hmclCustomDirectoryWarning", table: "Core", fallback: "HMCL 的自定义目录不是可直接使用的 macOS 绝对路径，请手动确认游戏数据位置。")
+            .init(key: "CoreMinecraftGameLocations.hmclCustomDirectoryWarning", table: "Core", fallback: "HMCL 指定的自定义路径无法在 macOS 上直接使用，请手动确认游戏数据的位置。")
         }
-        /// 无法读取旧版 HMCL 的目录策略，请确认游戏数据位置。
+        /// 无法读取旧版 HMCL 的目录设置，请确认游戏数据的位置。
         ///
         /// Resource: `Core.CoreMinecraftGameLocations.hmclDirectoryPolicyUnreadable`.
         public static var hmclDirectoryPolicyUnreadable: LocalizedMessage {
-            .init(key: "CoreMinecraftGameLocations.hmclDirectoryPolicyUnreadable", table: "Core", fallback: "无法读取旧版 HMCL 的目录策略，请确认游戏数据位置。")
+            .init(key: "CoreMinecraftGameLocations.hmclDirectoryPolicyUnreadable", table: "Core", fallback: "无法读取旧版 HMCL 的目录设置，请确认游戏数据的位置。")
         }
         /// 此版本继承 HMCL 的全局目录设置，请确认实际使用的存档和模组目录。
         ///
@@ -63,17 +63,17 @@ extension Messages {
         public static var mods: LocalizedMessage {
             .init(key: "CoreMinecraftGameLocations.mods", table: "Core", fallback: "模组")
         }
-        /// 此版本有多个启动配置，使用不同游戏目录；请选择本次要接入的内容。
+        /// 此版本有多个启动配置，分别使用不同的游戏文件夹。请选择要导入的内容。
         ///
         /// Resource: `Core.CoreMinecraftGameLocations.multipleLauncherProfiles`.
         public static var multipleLauncherProfiles: LocalizedMessage {
-            .init(key: "CoreMinecraftGameLocations.multipleLauncherProfiles", table: "Core", fallback: "此版本有多个启动配置，使用不同游戏目录；请选择本次要接入的内容。")
+            .init(key: "CoreMinecraftGameLocations.multipleLauncherProfiles", table: "Core", fallback: "此版本有多个启动配置，分别使用不同的游戏文件夹。请选择要导入的内容。")
         }
-        /// 没有找到明确的运行目录设置，请选择存档、模组实际所在的位置。
+        /// 未找到运行目录设置，请选择实际存放存档和模组的位置。
         ///
         /// Resource: `Core.CoreMinecraftGameLocations.noRunDirectory`.
         public static var noRunDirectory: LocalizedMessage {
-            .init(key: "CoreMinecraftGameLocations.noRunDirectory", table: "Core", fallback: "没有找到明确的运行目录设置，请选择存档、模组实际所在的位置。")
+            .init(key: "CoreMinecraftGameLocations.noRunDirectory", table: "Core", fallback: "未找到运行目录设置，请选择实际存放存档和模组的位置。")
         }
         /// 官方启动器自定义目录
         ///
@@ -81,11 +81,11 @@ extension Messages {
         public static var officialCustomDirectory: LocalizedMessage {
             .init(key: "CoreMinecraftGameLocations.officialCustomDirectory", table: "Core", fallback: "官方启动器自定义目录")
         }
-        /// 一个官方启动器配置使用了无法定位的游戏目录，请确认要接入哪个配置。
+        /// 无法找到某个官方启动器配置使用的游戏文件夹，请确认要导入的配置。
         ///
         /// Resource: `Core.CoreMinecraftGameLocations.officialDirectoryMissing`.
         public static var officialDirectoryMissing: LocalizedMessage {
-            .init(key: "CoreMinecraftGameLocations.officialDirectoryMissing", table: "Core", fallback: "一个官方启动器配置使用了无法定位的游戏目录，请确认要接入哪个配置。")
+            .init(key: "CoreMinecraftGameLocations.officialDirectoryMissing", table: "Core", fallback: "无法找到某个官方启动器配置使用的游戏文件夹，请确认要导入的配置。")
         }
         /// 资源包
         ///
@@ -93,11 +93,11 @@ extension Messages {
         public static var resourcePacks: LocalizedMessage {
             .init(key: "CoreMinecraftGameLocations.resourcePacks", table: "Core", fallback: "资源包")
         }
-        /// 光影
+        /// 光影包
         ///
         /// Resource: `Core.CoreMinecraftGameLocations.shaders`.
         public static var shaders: LocalizedMessage {
-            .init(key: "CoreMinecraftGameLocations.shaders", table: "Core", fallback: "光影")
+            .init(key: "CoreMinecraftGameLocations.shaders", table: "Core", fallback: "光影包")
         }
         /// 此 Minecraft 目录中的多个版本可能共用这些存档、模组和设置。
         ///
@@ -138,20 +138,20 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreMinecraftGameLocations.gameSettings": .init("游戏设置", []),
             "Core:CoreMinecraftGameLocations.hmclCustomDirectory": .init("HMCL 自定义目录", []),
-            "Core:CoreMinecraftGameLocations.hmclCustomDirectoryMissing": .init("旧版 HMCL 的自定义目录无法定位，请手动确认。", []),
-            "Core:CoreMinecraftGameLocations.hmclCustomDirectoryWarning": .init("HMCL 的自定义目录不是可直接使用的 macOS 绝对路径，请手动确认游戏数据位置。", []),
-            "Core:CoreMinecraftGameLocations.hmclDirectoryPolicyUnreadable": .init("无法读取旧版 HMCL 的目录策略，请确认游戏数据位置。", []),
+            "Core:CoreMinecraftGameLocations.hmclCustomDirectoryMissing": .init("无法找到旧版 HMCL 指定的自定义文件夹，请手动确认游戏数据的位置。", []),
+            "Core:CoreMinecraftGameLocations.hmclCustomDirectoryWarning": .init("HMCL 指定的自定义路径无法在 macOS 上直接使用，请手动确认游戏数据的位置。", []),
+            "Core:CoreMinecraftGameLocations.hmclDirectoryPolicyUnreadable": .init("无法读取旧版 HMCL 的目录设置，请确认游戏数据的位置。", []),
             "Core:CoreMinecraftGameLocations.hmclGlobalDirectoryWarning": .init("此版本继承 HMCL 的全局目录设置，请确认实际使用的存档和模组目录。", []),
             "Core:CoreMinecraftGameLocations.hmclGlobalSettings": .init("此版本继承旧版 HMCL 的全局设置，请确认游戏数据位置。", []),
             "Core:CoreMinecraftGameLocations.launcherGameData": .init("原启动器为此版本指定的游戏数据位置。", []),
             "Core:CoreMinecraftGameLocations.modConfigs": .init("模组配置", []),
             "Core:CoreMinecraftGameLocations.mods": .init("模组", []),
-            "Core:CoreMinecraftGameLocations.multipleLauncherProfiles": .init("此版本有多个启动配置，使用不同游戏目录；请选择本次要接入的内容。", []),
-            "Core:CoreMinecraftGameLocations.noRunDirectory": .init("没有找到明确的运行目录设置，请选择存档、模组实际所在的位置。", []),
+            "Core:CoreMinecraftGameLocations.multipleLauncherProfiles": .init("此版本有多个启动配置，分别使用不同的游戏文件夹。请选择要导入的内容。", []),
+            "Core:CoreMinecraftGameLocations.noRunDirectory": .init("未找到运行目录设置，请选择实际存放存档和模组的位置。", []),
             "Core:CoreMinecraftGameLocations.officialCustomDirectory": .init("官方启动器自定义目录", []),
-            "Core:CoreMinecraftGameLocations.officialDirectoryMissing": .init("一个官方启动器配置使用了无法定位的游戏目录，请确认要接入哪个配置。", []),
+            "Core:CoreMinecraftGameLocations.officialDirectoryMissing": .init("无法找到某个官方启动器配置使用的游戏文件夹，请确认要导入的配置。", []),
             "Core:CoreMinecraftGameLocations.resourcePacks": .init("资源包", []),
-            "Core:CoreMinecraftGameLocations.shaders": .init("光影", []),
+            "Core:CoreMinecraftGameLocations.shaders": .init("光影包", []),
             "Core:CoreMinecraftGameLocations.sharedDirectoryContents": .init("此 Minecraft 目录中的多个版本可能共用这些存档、模组和设置。", []),
             "Core:CoreMinecraftGameLocations.sharedGameDirectory": .init("共享游戏目录", []),
             "Core:CoreMinecraftGameLocations.versionDirectory": .init("版本独立目录", []),

@@ -33,11 +33,11 @@ extension Messages {
         public static var operationInProgress: LocalizedMessage {
             .init(key: "CoreInstanceLocationLease.operationInProgress", table: "Errors", fallback: "实例正在移动或仍有文件操作，请稍后重试。")
         }
-        /// 此实例的导入或复制尚未完成，请先在实例库处理工作文件。
+        /// 此实例的导入或复制尚未完成，请先在实例库中恢复未完成的操作。
         ///
         /// Resource: `Errors.CoreInstanceLocationLease.requireCurrentDirectory`.
         public static var requireCurrentDirectory: LocalizedMessage {
-            .init(key: "CoreInstanceLocationLease.requireCurrentDirectory", table: "Errors", fallback: "此实例的导入或复制尚未完成，请先在实例库处理工作文件。")
+            .init(key: "CoreInstanceLocationLease.requireCurrentDirectory", table: "Errors", fallback: "此实例的导入或复制尚未完成，请先在实例库中恢复未完成的操作。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreInstanceLocationLease.folderRemoved": .init("此实例所属的 Minecraft 文件夹已从列表移除，请重新添加文件夹后再操作。", []),
@@ -45,7 +45,7 @@ extension Messages {
             "Errors:CoreInstanceLocationLease.lockFailed": .init("无法锁定实例位置。", []),
             "Errors:CoreInstanceLocationLease.lockNotRegularFile": .init("实例位置锁不是普通文件。", []),
             "Errors:CoreInstanceLocationLease.operationInProgress": .init("实例正在移动或仍有文件操作，请稍后重试。", []),
-            "Errors:CoreInstanceLocationLease.requireCurrentDirectory": .init("此实例的导入或复制尚未完成，请先在实例库处理工作文件。", []),
+            "Errors:CoreInstanceLocationLease.requireCurrentDirectory": .init("此实例的导入或复制尚未完成，请先在实例库中恢复未完成的操作。", []),
         ]
     }
 }

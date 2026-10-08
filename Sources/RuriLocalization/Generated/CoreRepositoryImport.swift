@@ -27,17 +27,17 @@ extension Messages {
         public static var importRecordChanged: LocalizedMessage {
             .init(key: "CoreRepositoryImport.importRecordChanged", table: "Errors", fallback: "导入记录已改变，请刷新后重试。")
         }
-        /// 实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。
+        /// 实例文件尚未完整写入目标位置，或版本清单已更改。请保留工作文件后重试。
         ///
         /// Resource: `Errors.CoreRepositoryImport.incompletePublication`.
         public static var incompletePublication: LocalizedMessage {
-            .init(key: "CoreRepositoryImport.incompletePublication", table: "Errors", fallback: "实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。")
+            .init(key: "CoreRepositoryImport.incompletePublication", table: "Errors", fallback: "实例文件尚未完整写入目标位置，或版本清单已更改。请保留工作文件后重试。")
         }
-        /// 此实例已经创建，请完成操作以清理工作记录。
+        /// 此实例已创建，请完成操作以清理操作记录。
         ///
         /// Resource: `Errors.CoreRepositoryImport.instanceAlreadyCreated`.
         public static var instanceAlreadyCreated: LocalizedMessage {
-            .init(key: "CoreRepositoryImport.instanceAlreadyCreated", table: "Errors", fallback: "此实例已经创建，请完成操作以清理工作记录。")
+            .init(key: "CoreRepositoryImport.instanceAlreadyCreated", table: "Errors", fallback: "此实例已创建，请完成操作以清理操作记录。")
         }
         /// 实例位置已经改变，请检查导入记录。
         ///
@@ -81,11 +81,11 @@ extension Messages {
         public static var pendingFolderOperationForMove: LocalizedMessage {
             .init(key: "CoreRepositoryImport.pendingFolderOperationForMove", table: "Errors", fallback: "此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。")
         }
-        /// 此名称仍有未完成的导入或复制，请先处理工作文件。
+        /// 此名称对应的导入或复制尚未完成，请先处理该操作。
         ///
         /// Resource: `Errors.CoreRepositoryImport.pendingNameConflict`.
         public static var pendingNameConflict: LocalizedMessage {
-            .init(key: "CoreRepositoryImport.pendingNameConflict", table: "Errors", fallback: "此名称仍有未完成的导入或复制，请先处理工作文件。")
+            .init(key: "CoreRepositoryImport.pendingNameConflict", table: "Errors", fallback: "此名称对应的导入或复制尚未完成，请先处理该操作。")
         }
         /// 没有找到未完成的导入或复制。
         ///
@@ -128,8 +128,8 @@ extension Messages {
             "Errors:CoreRepositoryImport.duplicateVersionName": .init("另一个实例已使用此版本名称，导入文件已保留。", []),
             "Errors:CoreRepositoryImport.importMarkerChanged": .init("导入标记已改变，未清理工作文件。", []),
             "Errors:CoreRepositoryImport.importRecordChanged": .init("导入记录已改变，请刷新后重试。", []),
-            "Errors:CoreRepositoryImport.incompletePublication": .init("实例文件尚未完整发布，或版本清单已改变。请保留工作文件后重试。", []),
-            "Errors:CoreRepositoryImport.instanceAlreadyCreated": .init("此实例已经创建，请完成操作以清理工作记录。", []),
+            "Errors:CoreRepositoryImport.incompletePublication": .init("实例文件尚未完整写入目标位置，或版本清单已更改。请保留工作文件后重试。", []),
+            "Errors:CoreRepositoryImport.instanceAlreadyCreated": .init("此实例已创建，请完成操作以清理操作记录。", []),
             "Errors:CoreRepositoryImport.instanceLocationChanged": .init("实例位置已经改变，请检查导入记录。", []),
             "Errors:CoreRepositoryImport.invalidCopyRecord": .init("实例复制记录无效。", []),
             "Errors:CoreRepositoryImport.invalidFolderImportRecord": .init("此游戏文件夹含有无效的导入记录，请先检查：%1$@", [.text]),
@@ -137,7 +137,7 @@ extension Messages {
             "Errors:CoreRepositoryImport.minecraftDirectoryRequired": .init("请选择 Minecraft 文件夹。", []),
             "Errors:CoreRepositoryImport.pendingFolderOperation": .init("此文件夹仍有未完成的导入或复制，请先完成或取消操作。", []),
             "Errors:CoreRepositoryImport.pendingFolderOperationForMove": .init("此文件夹仍有未完成的导入或复制，请恢复原位置并处理后再移动。", []),
-            "Errors:CoreRepositoryImport.pendingNameConflict": .init("此名称仍有未完成的导入或复制，请先处理工作文件。", []),
+            "Errors:CoreRepositoryImport.pendingNameConflict": .init("此名称对应的导入或复制尚未完成，请先处理该操作。", []),
             "Errors:CoreRepositoryImport.pendingOperationMissing": .init("没有找到未完成的导入或复制。", []),
             "Errors:CoreRepositoryImport.publishedResultMismatch": .init("整合包安装结果与目标实例不一致。", []),
             "Errors:CoreRepositoryImport.recoverWorkFilesFailed": .init("无法收回导入工作文件，请连接原磁盘后重试。", []),

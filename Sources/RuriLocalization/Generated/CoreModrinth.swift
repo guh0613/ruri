@@ -15,16 +15,16 @@ extension Messages {
         public static var unsupportedContentType: LocalizedMessage {
             .init(key: "CoreModrinth.unsupportedContentType", table: "Errors", fallback: "不支持的内容类型")
         }
-        /// 正在应用内容更新
+        /// 正在安装资源更新
         ///
         /// Resource: `Progress.CoreModrinth.applyingContentUpdate`.
         public static var applyingContentUpdate: LocalizedMessage {
-            .init(key: "CoreModrinth.applyingContentUpdate", table: "Progress", fallback: "正在应用内容更新")
+            .init(key: "CoreModrinth.applyingContentUpdate", table: "Progress", fallback: "正在安装资源更新")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreModrinth.notModrinthPack": .init("此文件不是 Modrinth 整合包", []),
             "Errors:CoreModrinth.unsupportedContentType": .init("不支持的内容类型", []),
-            "Progress:CoreModrinth.applyingContentUpdate": .init("正在应用内容更新", []),
+            "Progress:CoreModrinth.applyingContentUpdate": .init("正在安装资源更新", []),
         ]
     }
 }

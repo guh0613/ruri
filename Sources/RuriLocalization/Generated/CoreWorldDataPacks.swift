@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreWorldDataPacks {
-        /// 启用与停用文件同时存在，请先移除其中一份：%1$@
+        /// 同一数据包同时存在已启用和已停用的副本，请先移除其中一份：%1$@
         ///
         /// Resource: `Errors.CoreWorldDataPacks.duplicateEnabledDisabledPack`.
         public static func duplicateEnabledDisabledPack(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreWorldDataPacks.duplicateEnabledDisabledPack", table: "Errors", fallback: "启用与停用文件同时存在，请先移除其中一份：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreWorldDataPacks.duplicateEnabledDisabledPack", table: "Errors", fallback: "同一数据包同时存在已启用和已停用的副本，请先移除其中一份：%1$@", arguments: [.text(value0)])
         }
         /// 同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。
         ///
@@ -154,7 +154,7 @@ extension Messages {
             .init(key: "CoreWorldDataPacks.zipRequired", table: "Errors", fallback: "请选择 ZIP 格式的数据包。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:CoreWorldDataPacks.duplicateEnabledDisabledPack": .init("启用与停用文件同时存在，请先移除其中一份：%1$@", [.text]),
+            "Errors:CoreWorldDataPacks.duplicateEnabledDisabledPack": .init("同一数据包同时存在已启用和已停用的副本，请先移除其中一份：%1$@", [.text]),
             "Errors:CoreWorldDataPacks.duplicatePackName": .init("同名数据包已存在：%1$@。请先移除旧文件或更改导入文件名。", [.text]),
             "Errors:CoreWorldDataPacks.enableBeforeImport": .init("请先启用数据包再导入。", []),
             "Errors:CoreWorldDataPacks.existingEnabledName": .init("启用后的文件名已存在：%1$@", [.text]),

@@ -45,11 +45,11 @@ extension Messages {
         public static func duplicateVerificationPath(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreFileTreeManifest.duplicateVerificationPath", table: "Errors", fallback: "待校验的文件路径重复：%1$@", arguments: [.text(value0)])
         }
-        /// 文件内容与校验记录不一致，原文件和工作副本已保留，请核对后重试。
+        /// 文件内容与校验记录不一致，原文件和工作副本已保留。请检查后重试。
         ///
         /// Resource: `Errors.CoreFileTreeManifest.fileContentMismatch`.
         public static var fileContentMismatch: LocalizedMessage {
-            .init(key: "CoreFileTreeManifest.fileContentMismatch", table: "Errors", fallback: "文件内容与校验记录不一致，原文件和工作副本已保留，请核对后重试。")
+            .init(key: "CoreFileTreeManifest.fileContentMismatch", table: "Errors", fallback: "文件内容与校验记录不一致，原文件和工作副本已保留。请检查后重试。")
         }
         /// 校验期间文件被修改或替换。
         ///
@@ -123,11 +123,11 @@ extension Messages {
         public static var missingParentOrConflictingPath: LocalizedMessage {
             .init(key: "CoreFileTreeManifest.missingParentOrConflictingPath", table: "Errors", fallback: "文件校验记录缺少父目录或路径冲突。")
         }
-        /// 原文件清理期间出现新增或改变的内容，剩余文件已保留。
+        /// 清理原文件时，发现有内容被添加或修改。剩余文件已保留。
         ///
         /// Resource: `Errors.CoreFileTreeManifest.newOrChangedCleanupFiles`.
         public static var newOrChangedCleanupFiles: LocalizedMessage {
-            .init(key: "CoreFileTreeManifest.newOrChangedCleanupFiles", table: "Errors", fallback: "原文件清理期间出现新增或改变的内容，剩余文件已保留。")
+            .init(key: "CoreFileTreeManifest.newOrChangedCleanupFiles", table: "Errors", fallback: "清理原文件时，发现有内容被添加或修改。剩余文件已保留。")
         }
         /// 待校验文件数量超过限制。
         ///
@@ -155,7 +155,7 @@ extension Messages {
             "Errors:CoreFileTreeManifest.conflictingFilePath": .init("文件与目录路径冲突：%1$@", [.text]),
             "Errors:CoreFileTreeManifest.duplicatePathsOrInvalidSizes": .init("文件校验记录包含重复路径或无效大小。", []),
             "Errors:CoreFileTreeManifest.duplicateVerificationPath": .init("待校验的文件路径重复：%1$@", [.text]),
-            "Errors:CoreFileTreeManifest.fileContentMismatch": .init("文件内容与校验记录不一致，原文件和工作副本已保留，请核对后重试。", []),
+            "Errors:CoreFileTreeManifest.fileContentMismatch": .init("文件内容与校验记录不一致，原文件和工作副本已保留。请检查后重试。", []),
             "Errors:CoreFileTreeManifest.fileModifiedOrReplaced": .init("校验期间文件被修改或替换。", []),
             "Errors:CoreFileTreeManifest.fileVerificationFailed": .init("无法校验文件：%1$@", [.text]),
             "Errors:CoreFileTreeManifest.invalidDirectoryRecord": .init("目录校验记录无效。", []),
@@ -168,7 +168,7 @@ extension Messages {
             "Errors:CoreFileTreeManifest.manifestChangedDuringVerification": .init("校验期间目录内容改变，请重试。", []),
             "Errors:CoreFileTreeManifest.missingFileAttributes": .init("文件校验记录缺少附加信息。", []),
             "Errors:CoreFileTreeManifest.missingParentOrConflictingPath": .init("文件校验记录缺少父目录或路径冲突。", []),
-            "Errors:CoreFileTreeManifest.newOrChangedCleanupFiles": .init("原文件清理期间出现新增或改变的内容，剩余文件已保留。", []),
+            "Errors:CoreFileTreeManifest.newOrChangedCleanupFiles": .init("清理原文件时，发现有内容被添加或修改。剩余文件已保留。", []),
             "Errors:CoreFileTreeManifest.tooManyFilesToVerify": .init("待校验文件数量超过限制。", []),
             "Errors:CoreFileTreeManifest.verificationFileTooLarge": .init("待校验文件大小超过限制。", []),
             "Errors:CoreFileTreeManifest.verificationRecordTooLarge": .init("文件校验记录超过大小限制。", []),

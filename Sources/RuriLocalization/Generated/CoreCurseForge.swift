@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreCurseForge {
-        /// 请先在设置中配置 Ruri 的 CurseForge API Key。
+        /// 请先在 Ruri 设置中填写 CurseForge API Key。
         ///
         /// Resource: `Core.CoreCurseForge.apiKeyMissing`.
         public static var apiKeyMissing: LocalizedMessage {
-            .init(key: "CoreCurseForge.apiKeyMissing", table: "Core", fallback: "请先在设置中配置 Ruri 的 CurseForge API Key。")
+            .init(key: "CoreCurseForge.apiKeyMissing", table: "Core", fallback: "请先在 Ruri 设置中填写 CurseForge API Key。")
         }
         /// 无法读取 CurseForge API Key（钥匙串状态 %1$@）。
         ///
@@ -15,11 +15,11 @@ extension Messages {
         public static func apiKeyReadFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreCurseForge.apiKeyReadFailed", table: "Core", fallback: "无法读取 CurseForge API Key（钥匙串状态 %1$@）。", arguments: [.text(value0)])
         }
-        /// 批量内容更新
+        /// 批量更新资源
         ///
         /// Resource: `Core.CoreCurseForge.bulkContentUpdate`.
         public static var bulkContentUpdate: LocalizedMessage {
-            .init(key: "CoreCurseForge.bulkContentUpdate", table: "Core", fallback: "批量内容更新")
+            .init(key: "CoreCurseForge.bulkContentUpdate", table: "Core", fallback: "批量更新资源")
         }
         /// 移除 API Key 失败（钥匙串状态 %1$@）
         ///
@@ -27,11 +27,11 @@ extension Messages {
         public static func apiKeyRemoveFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreCurseForge.apiKeyRemoveFailed", table: "Errors", fallback: "移除 API Key 失败（钥匙串状态 %1$@）", arguments: [.text(value0)])
         }
-        /// 请先在设置中配置 Ruri 的 CurseForge API Key。
+        /// 请先在 Ruri 设置中填写 CurseForge API Key。
         ///
         /// Resource: `Errors.CoreCurseForge.apiKeyRequired`.
         public static var apiKeyRequired: LocalizedMessage {
-            .init(key: "CoreCurseForge.apiKeyRequired", table: "Errors", fallback: "请先在设置中配置 Ruri 的 CurseForge API Key。")
+            .init(key: "CoreCurseForge.apiKeyRequired", table: "Errors", fallback: "请先在 Ruri 设置中填写 CurseForge API Key。")
         }
         /// 保存 API Key 失败（钥匙串状态 %1$@）
         ///
@@ -69,11 +69,11 @@ extension Messages {
         public static var fileMismatchRequest: LocalizedMessage {
             .init(key: "CoreCurseForge.fileMismatchRequest", table: "Errors", fallback: "CurseForge 文件与请求不一致")
         }
-        /// 必需依赖之间存在不兼容关系
+        /// 所需依赖之间不兼容。
         ///
         /// Resource: `Errors.CoreCurseForge.incompatibleDependencies`.
         public static var incompatibleDependencies: LocalizedMessage {
-            .init(key: "CoreCurseForge.incompatibleDependencies", table: "Errors", fallback: "必需依赖之间存在不兼容关系")
+            .init(key: "CoreCurseForge.incompatibleDependencies", table: "Errors", fallback: "所需依赖之间不兼容。")
         }
         /// %1$@ 与此游戏版本或加载器不兼容
         ///
@@ -153,11 +153,11 @@ extension Messages {
         public static var projectMismatch: LocalizedMessage {
             .init(key: "CoreCurseForge.projectMismatch", table: "Errors", fallback: "CurseForge 项目与请求不一致")
         }
-        /// 依赖要求同一项目的不同版本
+        /// 不同依赖要求使用同一项目的不同版本。
         ///
         /// Resource: `Errors.CoreCurseForge.requiredDependencyVersionConflict`.
         public static var requiredDependencyVersionConflict: LocalizedMessage {
-            .init(key: "CoreCurseForge.requiredDependencyVersionConflict", table: "Errors", fallback: "依赖要求同一项目的不同版本")
+            .init(key: "CoreCurseForge.requiredDependencyVersionConflict", table: "Errors", fallback: "不同依赖要求使用同一项目的不同版本。")
         }
         /// 必需依赖数量超过限制
         ///
@@ -184,18 +184,18 @@ extension Messages {
             .init(key: "CoreCurseForge.downloadFile", table: "Progress", fallback: "下载 %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreCurseForge.apiKeyMissing": .init("请先在设置中配置 Ruri 的 CurseForge API Key。", []),
+            "Core:CoreCurseForge.apiKeyMissing": .init("请先在 Ruri 设置中填写 CurseForge API Key。", []),
             "Core:CoreCurseForge.apiKeyReadFailed": .init("无法读取 CurseForge API Key（钥匙串状态 %1$@）。", [.text]),
-            "Core:CoreCurseForge.bulkContentUpdate": .init("批量内容更新", []),
+            "Core:CoreCurseForge.bulkContentUpdate": .init("批量更新资源", []),
             "Errors:CoreCurseForge.apiKeyRemoveFailed": .init("移除 API Key 失败（钥匙串状态 %1$@）", [.text]),
-            "Errors:CoreCurseForge.apiKeyRequired": .init("请先在设置中配置 Ruri 的 CurseForge API Key。", []),
+            "Errors:CoreCurseForge.apiKeyRequired": .init("请先在 Ruri 设置中填写 CurseForge API Key。", []),
             "Errors:CoreCurseForge.apiKeySaveFailed": .init("保存 API Key 失败（钥匙串状态 %1$@）", [.text]),
             "Errors:CoreCurseForge.cacheFileFailed": .init("无法缓存已下载文件", []),
             "Errors:CoreCurseForge.checksumMismatch": .init("所选文件与 %1$@ 的校验信息不符", [.text]),
             "Errors:CoreCurseForge.fileChecksumFailed": .init("文件校验失败：%1$@", [.text]),
             "Errors:CoreCurseForge.fileMismatch": .init("所选文件与 %1$@ 的大小或校验值不符。请下载指定版本。", [.text]),
             "Errors:CoreCurseForge.fileMismatchRequest": .init("CurseForge 文件与请求不一致", []),
-            "Errors:CoreCurseForge.incompatibleDependencies": .init("必需依赖之间存在不兼容关系", []),
+            "Errors:CoreCurseForge.incompatibleDependencies": .init("所需依赖之间不兼容。", []),
             "Errors:CoreCurseForge.incompatibleGameOrLoader": .init("%1$@ 与此游戏版本或加载器不兼容", [.text]),
             "Errors:CoreCurseForge.invalidApiKey": .init("请输入有效的 CurseForge API Key", []),
             "Errors:CoreCurseForge.invalidDownloadMetadata": .init("%1$@ 不可用或缺少有效的文件校验信息。", [.text]),
@@ -209,7 +209,7 @@ extension Messages {
             "Errors:CoreCurseForge.packFileMissing": .init("找不到整合包文件：项目 %1$@，文件 %2$@", [.text, .text]),
             "Errors:CoreCurseForge.projectDependencyMismatch": .init("%1$@ 与项目 %2$@ 不兼容", [.text, .text]),
             "Errors:CoreCurseForge.projectMismatch": .init("CurseForge 项目与请求不一致", []),
-            "Errors:CoreCurseForge.requiredDependencyVersionConflict": .init("依赖要求同一项目的不同版本", []),
+            "Errors:CoreCurseForge.requiredDependencyVersionConflict": .init("不同依赖要求使用同一项目的不同版本。", []),
             "Errors:CoreCurseForge.tooManyRequiredDependencies": .init("必需依赖数量超过限制", []),
             "Errors:CoreCurseForge.unsupportedContentType": .init("不支持的 CurseForge 内容类型", []),
             "Errors:CoreCurseForge.versionListMismatch": .init("CurseForge 返回的版本列表与项目不一致", []),

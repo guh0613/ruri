@@ -14,7 +14,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账户已移除，但凭据或外观数据清理失败。"
+            "value" : "账号已移除，但凭据或外观数据清理失败。"
           }
         }
       }
@@ -32,7 +32,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账户管理与登录"
+            "value" : "账号管理与登录"
           }
         }
       }
@@ -50,7 +50,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账户身份已发生变化。"
+            "value" : "账号身份已发生变化。"
           }
         }
       }
@@ -68,7 +68,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出账户，不显示凭据。"
+            "value" : "列出账号，不显示凭据。"
           }
         }
       }
@@ -104,7 +104,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microsoft 与外置登录"
+            "value" : "Microsoft 与第三方账号登录"
           }
         }
       }
@@ -140,7 +140,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "开始分步完成的 Microsoft 或外置登录。"
+            "value" : "开始 Microsoft 或第三方账号登录流程，稍后完成授权。"
           }
         }
       }
@@ -158,7 +158,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "注销外置登录凭据并移除账户。"
+            "value" : "注销第三方登录凭据并移除账号。"
           }
         }
       }
@@ -176,7 +176,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "找不到账户。"
+            "value" : "找不到账号。"
           }
         }
       }
@@ -194,7 +194,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "添加或复用离线账户。"
+            "value" : "添加或复用离线账号。"
           }
         }
       }
@@ -212,7 +212,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账户的登录服务类型不匹配。"
+            "value" : "账号的登录服务类型不匹配。"
           }
         }
       }
@@ -230,7 +230,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "刷新已保存账户的凭据。"
+            "value" : "刷新已保存账号的凭据。"
           }
         }
       }
@@ -248,7 +248,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "移除账户及其本地凭据。"
+            "value" : "移除账号及其本地凭据。"
           }
         }
       }
@@ -266,7 +266,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账户已被移除。"
+            "value" : "账号已被移除。"
           }
         }
       }
@@ -284,7 +284,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账户已被移除或替换。"
+            "value" : "账号已被移除或替换。"
           }
         }
       }
@@ -302,7 +302,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "选择当前使用的账户。"
+            "value" : "选择当前使用的账号。"
           }
         }
       }
@@ -320,7 +320,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询当前账户 ID。"
+            "value" : "查询当前账号 ID。"
           }
         }
       }
@@ -356,7 +356,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询账户详情。"
+            "value" : "查询账号详情。"
           }
         }
       }
@@ -518,7 +518,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "设置应用语言，重启后生效。"
+            "value" : "设置界面语言，重新启动 Ruri 后生效。"
           }
         }
       }
@@ -644,7 +644,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询项目描述及元数据。"
+            "value" : "查询项目简介及详细信息。"
           }
         }
       }
@@ -968,7 +968,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "找不到匹配的兼容版本。"
+            "value" : "找不到符合条件的兼容版本。"
           }
         }
       }
@@ -1004,7 +1004,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "原子应用 JSON 配置补丁。"
+            "value" : "将 JSON 配置补丁作为一次完整操作应用。"
           }
         }
       }
@@ -1022,7 +1022,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "全局设置、默认配置与实例覆盖"
+            "value" : "全局设置、默认配置与实例独立配置"
           }
         }
       }
@@ -1076,7 +1076,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询显式配置、有效配置及继承来源。"
+            "value" : "查询已设置的配置、实际生效的配置及继承来源。"
           }
         }
       }
@@ -1094,7 +1094,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "恢复实例配置组的继承。"
+            "value" : "让指定实例配置组重新使用默认配置。"
           }
         }
       }
@@ -1292,7 +1292,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "确认失去监控的游戏已结束。"
+            "value" : "确认已与监控断开连接的游戏已经退出。"
           }
         }
       }
@@ -1346,7 +1346,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检查已安装内容的兼容更新。"
+            "value" : "检查已安装资源的兼容更新。"
           }
         }
       }
@@ -1364,7 +1364,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模组、资源包与光影管理"
+            "value" : "模组、资源包与光影包管理"
           }
         }
       }
@@ -1382,7 +1382,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "禁用所选内容。"
+            "value" : "停用所选资源。"
           }
         }
       }
@@ -1400,7 +1400,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启用所选内容。"
+            "value" : "启用所选资源。"
           }
         }
       }
@@ -1472,7 +1472,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导入本地内容文件。"
+            "value" : "导入本地资源文件。"
           }
         }
       }
@@ -1508,7 +1508,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "内容类型。"
+            "value" : "资源类型。"
           }
         }
       }
@@ -1526,7 +1526,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出已安装的模组、资源包或光影。"
+            "value" : "列出已安装的模组、资源包或光影包。"
           }
         }
       }
@@ -1580,7 +1580,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将所选内容移到废纸篓。"
+            "value" : "将所选资源移到废纸篓。"
           }
         }
       }
@@ -1598,7 +1598,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "更新所选内容及依赖。"
+            "value" : "更新所选资源及其依赖。"
           }
         }
       }
@@ -1760,7 +1760,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "禁用世界的数据包。"
+            "value" : "停用存档中的数据包。"
           }
         }
       }
@@ -1778,7 +1778,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启用世界的数据包。"
+            "value" : "启用存档中的数据包。"
           }
         }
       }
@@ -1796,7 +1796,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例 ID、世界名称和文件路径。"
+            "value" : "实例 ID、存档名称和文件路径。"
           }
         }
       }
@@ -1814,7 +1814,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将数据包导入世界。"
+            "value" : "将数据包导入存档。"
           }
         }
       }
@@ -1850,7 +1850,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出世界的数据包。"
+            "value" : "列出存档中的数据包。"
           }
         }
       }
@@ -1922,7 +1922,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "替换完整的数据包优先级顺序。"
+            "value" : "设置完整的数据包优先级顺序。"
           }
         }
       }
@@ -1958,7 +1958,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例 ID、世界名称和项目 ID。"
+            "value" : "实例 ID、存档名称和项目 ID。"
           }
         }
       }
@@ -1976,7 +1976,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "移除世界的数据包。"
+            "value" : "移除存档中的数据包。"
           }
         }
       }
@@ -2030,7 +2030,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例 ID、世界名称和数据包名称。"
+            "value" : "实例 ID、存档名称和数据包名称。"
           }
         }
       }
@@ -2084,7 +2084,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例 ID 和世界名称。"
+            "value" : "实例 ID 和存档名称。"
           }
         }
       }
@@ -2102,7 +2102,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "注册已有目录。"
+            "value" : "添加已有的游戏目录。"
           }
         }
       }
@@ -2120,7 +2120,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏目录的注册、迁移与恢复"
+            "value" : "游戏目录的添加、移动与恢复"
           }
         }
       }
@@ -2156,7 +2156,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检查已有 Minecraft 文件夹，不注册目录。"
+            "value" : "检查已有的 Minecraft 文件夹，不添加到 Ruri。"
           }
         }
       }
@@ -2192,7 +2192,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出已注册和已断开连接的游戏目录。"
+            "value" : "列出已添加的游戏目录，包括暂时无法访问的目录。"
           }
         }
       }
@@ -2264,7 +2264,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "恢复已断开连接的 Minecraft 目录。"
+            "value" : "恢复暂时无法访问的 Minecraft 目录。"
           }
         }
       }
@@ -2300,7 +2300,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重新关联已移动的注册目录。"
+            "value" : "重新指定已移动的游戏目录的位置。"
           }
         }
       }
@@ -2318,7 +2318,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "移除目录注册，保留文件。"
+            "value" : "从 Ruri 中移除目录，保留文件。"
           }
         }
       }
@@ -2336,7 +2336,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重命名已注册的目录。"
+            "value" : "更改已添加目录的显示名称。"
           }
         }
       }
@@ -2354,7 +2354,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "选择已注册的目录。"
+            "value" : "选择已添加的游戏目录。"
           }
         }
       }
@@ -2408,7 +2408,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检查状态、路径、Java、账户凭据及内置辅助程序。"
+            "value" : "检查状态、路径、Java、账号凭据及内置辅助程序。"
           }
         }
       }
@@ -2624,7 +2624,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不包含世界存档。"
+            "value" : "不包含游戏存档。"
           }
         }
       }
@@ -2642,7 +2642,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "外置登录的用户名或邮箱。"
+            "value" : "第三方登录的用户名或邮箱。"
           }
         }
       }
@@ -2660,7 +2660,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "外置登录需要 --password-stdin。"
+            "value" : "第三方登录需要 --password-stdin。"
           }
         }
       }
@@ -2678,7 +2678,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "login start 返回的外置登录角色 ID。"
+            "value" : "login start 返回的第三方登录角色 ID。"
           }
         }
       }
@@ -2696,7 +2696,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "外置登录服务器。"
+            "value" : "第三方登录服务器。"
           }
         }
       }
@@ -2786,7 +2786,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "包含世界备份。"
+            "value" : "包含存档备份。"
           }
         }
       }
@@ -3236,7 +3236,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安装尚未完成安装的实例。"
+            "value" : "完成实例的安装。"
           }
         }
       }
@@ -3272,7 +3272,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出托管及已注册的实例。"
+            "value" : "列出由 Ruri 管理和从其他位置添加的实例。"
           }
         }
       }
@@ -3398,7 +3398,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例 ID 和收藏状态，状态为 true 或 false。"
+            "value" : "实例 ID 和固定状态，状态为 true 或 false。"
           }
         }
       }
@@ -3596,7 +3596,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重新关联已移动的自定义游戏目录。"
+            "value" : "重新指定已移动的自定义游戏目录的位置。"
           }
         }
       }
@@ -3974,7 +3974,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "注册已安装的 Java 运行时。"
+            "value" : "添加已安装的 Java。"
           }
         }
       }
@@ -4082,7 +4082,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java 发现、安装与管理"
+            "value" : "Java 查找、安装与管理"
           }
         }
       }
@@ -4100,7 +4100,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "设置默认 Java 选择。"
+            "value" : "设置默认使用的 Java。"
           }
         }
       }
@@ -4118,7 +4118,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "从手动列表中移除 Java，保留文件及配置引用。"
+            "value" : "从手动添加的列表中移除 Java，保留文件和使用它的配置。"
           }
         }
       }
@@ -4136,7 +4136,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按目录中的 ID 安装 Java 运行时。"
+            "value" : "使用 java catalog 返回的 ID 安装 Java。"
           }
         }
       }
@@ -4226,7 +4226,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出引用指定托管 Java 的配置。"
+            "value" : "列出使用指定托管 Java 的配置。"
           }
         }
       }
@@ -4280,7 +4280,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将引用此 Java 的配置重置为自动选择。"
+            "value" : "将使用此 Java 的配置重置为自动选择。"
           }
         }
       }
@@ -4316,7 +4316,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保留当前选中的账户。"
+            "value" : "保留当前选中的账号。"
           }
         }
       }
@@ -4334,7 +4334,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "移动已提交后保留原始文件。"
+            "value" : "实例移至目标位置后，保留原位置的文件。"
           }
         }
       }
@@ -4352,7 +4352,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账户 UUID，默认使用当前账户。"
+            "value" : "账号 UUID，默认使用当前账号。"
           }
         }
       }
@@ -4370,7 +4370,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请选择账户，或通过 --account 指定账户。"
+            "value" : "请选择账号，或通过 --account 指定账号。"
           }
         }
       }
@@ -4424,7 +4424,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启动游戏，监控接管后返回。"
+            "value" : "启动游戏，并在监控组件开始接管运行后返回。"
           }
         }
       }
@@ -4946,7 +4946,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此实例没有已安装整合包的元数据。"
+            "value" : "此实例没有已安装整合包的信息。"
           }
         }
       }
@@ -5000,7 +5000,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询已安装整合包的元数据。"
+            "value" : "查询已安装整合包的信息。"
           }
         }
       }
@@ -5288,7 +5288,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅显示存在问题的会话。"
+            "value" : "仅显示需要关注的运行记录。"
           }
         }
       }
@@ -5306,7 +5306,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用于快速游玩的世界文件夹。"
+            "value" : "启动后直接进入的存档文件夹。"
           }
         }
       }
@@ -5342,7 +5342,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "需要重新登录的已有账户。"
+            "value" : "需要重新登录的已有账号。"
           }
         }
       }
@@ -5414,7 +5414,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出未完成的数据操作及会话。"
+            "value" : "列出未完成的数据操作和运行记录。"
           }
         }
       }
@@ -5450,7 +5450,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "事务 UUID 或会话 UUID。"
+            "value" : "事务 UUID 或运行记录 UUID。"
           }
         }
       }
@@ -5576,7 +5576,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询命令及其机器接口。"
+            "value" : "查询命令的输入和输出结构。"
           }
         }
       }
@@ -5792,7 +5792,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询投影文件的元数据。"
+            "value" : "查询投影文件的详细信息。"
           }
         }
       }
@@ -5846,7 +5846,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "分析已记录的启动与游戏诊断信息。"
+            "value" : "分析已记录的启动信息和游戏日志。"
           }
         }
       }
@@ -5864,7 +5864,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏会话、日志与诊断"
+            "value" : "游戏运行记录、日志与诊断"
           }
         }
       }
@@ -5882,7 +5882,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例 ID、会话 ID 和文件路径。"
+            "value" : "实例 ID、运行记录 ID 和文件路径。"
           }
         }
       }
@@ -5900,7 +5900,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导出脱敏后的诊断包。"
+            "value" : "隐藏敏感信息后导出诊断报告。"
           }
         }
       }
@@ -5954,7 +5954,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "强制停止游戏进程。"
+            "value" : "强制终止游戏进程。"
           }
         }
       }
@@ -5972,7 +5972,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出游戏会话。"
+            "value" : "列出游戏运行记录。"
           }
         }
       }
@@ -5990,7 +5990,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "跟随日志直到会话结束，使用 text 或 ndjson 格式。"
+            "value" : "使用 text 或 ndjson 格式持续输出日志，直到本次运行结束。"
           }
         }
       }
@@ -6044,7 +6044,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "读取或持续跟随会话日志。"
+            "value" : "读取本次运行的日志，或持续输出新日志。"
           }
         }
       }
@@ -6080,7 +6080,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询游戏会话详情。"
+            "value" : "查询游戏运行详情。"
           }
         }
       }
@@ -6116,7 +6116,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例 ID 和会话 ID。"
+            "value" : "实例 ID 和运行记录 ID。"
           }
         }
       }
@@ -6242,7 +6242,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未知账户操作。"
+            "value" : "未知账号操作。"
           }
         }
       }
@@ -6530,7 +6530,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未知会话操作。"
+            "value" : "未知运行记录操作。"
           }
         }
       }
@@ -6548,7 +6548,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未知世界操作。"
+            "value" : "未知存档操作。"
           }
         }
       }
@@ -6638,7 +6638,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "世界备份与恢复"
+            "value" : "存档备份与恢复"
           }
         }
       }
@@ -6656,7 +6656,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "备份世界。"
+            "value" : "备份存档。"
           }
         }
       }
@@ -6674,7 +6674,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出世界备份。"
+            "value" : "列出存档备份。"
           }
         }
       }
@@ -6728,7 +6728,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将世界备份移到废纸篓。"
+            "value" : "将存档备份移到废纸篓。"
           }
         }
       }
@@ -6746,7 +6746,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "覆盖已有世界。"
+            "value" : "覆盖已有存档。"
           }
         }
       }
@@ -6764,7 +6764,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "恢复备份，覆盖已有世界时需要明确确认。"
+            "value" : "恢复备份，覆盖已有存档时需要确认。"
           }
         }
       }
@@ -6782,7 +6782,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "世界管理、导入导出与备份"
+            "value" : "存档管理、导入导出与备份"
           }
         }
       }
@@ -6800,7 +6800,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例 ID、世界文件夹和文件路径。"
+            "value" : "实例 ID、存档文件夹和文件路径。"
           }
         }
       }
@@ -6818,7 +6818,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导出世界归档。"
+            "value" : "导出存档压缩包。"
           }
         }
       }
@@ -6836,7 +6836,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例 ID 和世界文件夹。"
+            "value" : "实例 ID 和存档文件夹。"
           }
         }
       }
@@ -6854,7 +6854,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导入世界归档或目录。"
+            "value" : "导入存档压缩包或文件夹。"
           }
         }
       }
@@ -6872,7 +6872,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "列出实例中的世界。"
+            "value" : "列出实例中的存档。"
           }
         }
       }
@@ -6890,7 +6890,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "找不到世界。"
+            "value" : "找不到存档。"
           }
         }
       }
@@ -6908,7 +6908,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将世界移到废纸篓。"
+            "value" : "将存档移到废纸篓。"
           }
         }
       }
@@ -6926,7 +6926,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查询世界详情。"
+            "value" : "查询存档详情。"
           }
         }
       }

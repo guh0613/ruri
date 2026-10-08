@@ -39,11 +39,11 @@ extension Messages {
         public static var manageSavesAndBackups: LocalizedMessage {
             .init(key: "AppInstanceMenu.manageSavesAndBackups", table: "Interface", fallback: "管理存档与备份")
         }
-        /// 管理原理图
+        /// 管理投影
         ///
         /// Resource: `Interface.AppInstanceMenu.manageSchematics`.
         public static var manageSchematics: LocalizedMessage {
-            .init(key: "AppInstanceMenu.manageSchematics", table: "Interface", fallback: "管理原理图")
+            .init(key: "AppInstanceMenu.manageSchematics", table: "Interface", fallback: "管理投影")
         }
         /// 更多操作
         ///
@@ -100,7 +100,7 @@ extension Messages {
             "Interface:AppInstanceMenu.instanceSettings": .init("实例设置", []),
             "Interface:AppInstanceMenu.manageModsAndResourcePacks": .init("管理模组与资源包", []),
             "Interface:AppInstanceMenu.manageSavesAndBackups": .init("管理存档与备份", []),
-            "Interface:AppInstanceMenu.manageSchematics": .init("管理原理图", []),
+            "Interface:AppInstanceMenu.manageSchematics": .init("管理投影", []),
             "Interface:AppInstanceMenu.moreActions": .init("更多操作", []),
             "Interface:AppInstanceMenu.moveToOtherFolder": .init("移动到其他文件夹…", []),
             "Interface:AppInstanceMenu.moveToTrash": .init("移到废纸篓", []),

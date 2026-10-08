@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreCustomRunDirectory {
-        /// 目录身份与选取时不一致。
+        /// 所选文件夹已发生变化，请重新选择。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.directoryIdentityChanged`.
         public static var directoryIdentityChanged: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.directoryIdentityChanged", table: "Errors", fallback: "目录身份与选取时不一致。")
+            .init(key: "CoreCustomRunDirectory.directoryIdentityChanged", table: "Errors", fallback: "所选文件夹已发生变化，请重新选择。")
         }
         /// 无法访问自定义运行目录：%1$@
         /// 请连接原磁盘、检查权限或重新定位原文件夹。
@@ -17,11 +17,11 @@ extension Messages {
         public static func directoryUnavailable(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "CoreCustomRunDirectory.directoryUnavailable", table: "Errors", fallback: "无法访问自定义运行目录：%1$@\n请连接原磁盘、检查权限或重新定位原文件夹。\n%2$@", arguments: [.text(value0), .text(value1)])
         }
-        /// 此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。
+        /// 此文件夹是已添加自定义文件夹的副本。请重新指定原文件夹的位置，或选择其他文件夹。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.duplicateDirectory`.
         public static var duplicateDirectory: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.duplicateDirectory", table: "Errors", fallback: "此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。")
+            .init(key: "CoreCustomRunDirectory.duplicateDirectory", table: "Errors", fallback: "此文件夹是已添加自定义文件夹的副本。请重新指定原文件夹的位置，或选择其他文件夹。")
         }
         /// 请选择已存在的游戏文件夹。
         ///
@@ -29,35 +29,35 @@ extension Messages {
         public static var existingGameFolderRequired: LocalizedMessage {
             .init(key: "CoreCustomRunDirectory.existingGameFolderRequired", table: "Errors", fallback: "请选择已存在的游戏文件夹。")
         }
-        /// 同一路径的目录身份已经改变，请重新检查原目录。
+        /// 此路径已不再指向原来的文件夹，请重新检查。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.identityChanged`.
         public static var identityChanged: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.identityChanged", table: "Errors", fallback: "同一路径的目录身份已经改变，请重新检查原目录。")
+            .init(key: "CoreCustomRunDirectory.identityChanged", table: "Errors", fallback: "此路径已不再指向原来的文件夹，请重新检查。")
         }
-        /// 自定义运行目录登记信息无效。
+        /// 保存的自定义运行目录信息无效。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.invalidConfiguration`.
         public static var invalidConfiguration: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.invalidConfiguration", table: "Errors", fallback: "自定义运行目录登记信息无效。")
+            .init(key: "CoreCustomRunDirectory.invalidConfiguration", table: "Errors", fallback: "保存的自定义运行目录信息无效。")
         }
-        /// 自定义目录身份标记无效。
+        /// 自定义文件夹的识别标记无效。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.invalidMarker`.
         public static var invalidMarker: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.invalidMarker", table: "Errors", fallback: "自定义目录身份标记无效。")
+            .init(key: "CoreCustomRunDirectory.invalidMarker", table: "Errors", fallback: "自定义文件夹的识别标记无效。")
         }
-        /// 自定义目录标记版本无效。
+        /// 自定义文件夹的识别标记版本无效。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.invalidMarkerVersion`.
         public static var invalidMarkerVersion: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.invalidMarkerVersion", table: "Errors", fallback: "自定义目录标记版本无效。")
+            .init(key: "CoreCustomRunDirectory.invalidMarkerVersion", table: "Errors", fallback: "自定义文件夹的识别标记版本无效。")
         }
-        /// 无法读取自定义目录身份标记。
+        /// 无法读取自定义文件夹的识别标记。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.markerUnreadable`.
         public static var markerUnreadable: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.markerUnreadable", table: "Errors", fallback: "无法读取自定义目录身份标记。")
+            .init(key: "CoreCustomRunDirectory.markerUnreadable", table: "Errors", fallback: "无法读取自定义文件夹的识别标记。")
         }
         /// 自定义运行目录之间不能相互嵌套。
         ///
@@ -65,38 +65,38 @@ extension Messages {
         public static var nestedDirectories: LocalizedMessage {
             .init(key: "CoreCustomRunDirectory.nestedDirectories", table: "Errors", fallback: "自定义运行目录之间不能相互嵌套。")
         }
-        /// 自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。
+        /// 自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请选择独立目录、共享目录，或其他位置。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.overlappingDirectory`.
         public static var overlappingDirectory: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.overlappingDirectory", table: "Errors", fallback: "自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。")
+            .init(key: "CoreCustomRunDirectory.overlappingDirectory", table: "Errors", fallback: "自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请选择独立目录、共享目录，或其他位置。")
         }
-        /// 自定义目录标记过大。
+        /// 自定义文件夹的识别标记超过大小限制。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.oversizedMarker`.
         public static var oversizedMarker: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.oversizedMarker", table: "Errors", fallback: "自定义目录标记过大。")
+            .init(key: "CoreCustomRunDirectory.oversizedMarker", table: "Errors", fallback: "自定义文件夹的识别标记超过大小限制。")
         }
-        /// 路径已失联或不再是原文件夹。
+        /// 此路径已不可用，或不再指向原来的文件夹。
         ///
         /// Resource: `Errors.CoreCustomRunDirectory.pathUnlinked`.
         public static var pathUnlinked: LocalizedMessage {
-            .init(key: "CoreCustomRunDirectory.pathUnlinked", table: "Errors", fallback: "路径已失联或不再是原文件夹。")
+            .init(key: "CoreCustomRunDirectory.pathUnlinked", table: "Errors", fallback: "此路径已不可用，或不再指向原来的文件夹。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:CoreCustomRunDirectory.directoryIdentityChanged": .init("目录身份与选取时不一致。", []),
+            "Errors:CoreCustomRunDirectory.directoryIdentityChanged": .init("所选文件夹已发生变化，请重新选择。", []),
             "Errors:CoreCustomRunDirectory.directoryUnavailable": .init("无法访问自定义运行目录：%1$@\n请连接原磁盘、检查权限或重新定位原文件夹。\n%2$@", [.text, .text]),
-            "Errors:CoreCustomRunDirectory.duplicateDirectory": .init("此目录是已登记自定义目录的另一份副本，请重新定位原目录或选择其他目录。", []),
+            "Errors:CoreCustomRunDirectory.duplicateDirectory": .init("此文件夹是已添加自定义文件夹的副本。请重新指定原文件夹的位置，或选择其他文件夹。", []),
             "Errors:CoreCustomRunDirectory.existingGameFolderRequired": .init("请选择已存在的游戏文件夹。", []),
-            "Errors:CoreCustomRunDirectory.identityChanged": .init("同一路径的目录身份已经改变，请重新检查原目录。", []),
-            "Errors:CoreCustomRunDirectory.invalidConfiguration": .init("自定义运行目录登记信息无效。", []),
-            "Errors:CoreCustomRunDirectory.invalidMarker": .init("自定义目录身份标记无效。", []),
-            "Errors:CoreCustomRunDirectory.invalidMarkerVersion": .init("自定义目录标记版本无效。", []),
-            "Errors:CoreCustomRunDirectory.markerUnreadable": .init("无法读取自定义目录身份标记。", []),
+            "Errors:CoreCustomRunDirectory.identityChanged": .init("此路径已不再指向原来的文件夹，请重新检查。", []),
+            "Errors:CoreCustomRunDirectory.invalidConfiguration": .init("保存的自定义运行目录信息无效。", []),
+            "Errors:CoreCustomRunDirectory.invalidMarker": .init("自定义文件夹的识别标记无效。", []),
+            "Errors:CoreCustomRunDirectory.invalidMarkerVersion": .init("自定义文件夹的识别标记版本无效。", []),
+            "Errors:CoreCustomRunDirectory.markerUnreadable": .init("无法读取自定义文件夹的识别标记。", []),
             "Errors:CoreCustomRunDirectory.nestedDirectories": .init("自定义运行目录之间不能相互嵌套。", []),
-            "Errors:CoreCustomRunDirectory.overlappingDirectory": .init("自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请使用独立/共享模式，或选择其他位置。", []),
-            "Errors:CoreCustomRunDirectory.oversizedMarker": .init("自定义目录标记过大。", []),
-            "Errors:CoreCustomRunDirectory.pathUnlinked": .init("路径已失联或不再是原文件夹。", []),
+            "Errors:CoreCustomRunDirectory.overlappingDirectory": .init("自定义运行目录不能与 Ruri 公共数据或实例文件夹重叠。请选择独立目录、共享目录，或其他位置。", []),
+            "Errors:CoreCustomRunDirectory.oversizedMarker": .init("自定义文件夹的识别标记超过大小限制。", []),
+            "Errors:CoreCustomRunDirectory.pathUnlinked": .init("此路径已不可用，或不再指向原来的文件夹。", []),
         ]
     }
 }

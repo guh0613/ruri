@@ -9,11 +9,11 @@ extension Messages {
         public static var appearance: LocalizedMessage {
             .init(key: "CoreStateStore.appearance", table: "Core", fallback: "外观")
         }
-        /// 数据已由另一个 Ruri 更新
+        /// 另一个 Ruri 进程已更新数据
         ///
         /// Resource: `Core.CoreStateStore.dataUpdatedElsewhere`.
         public static var dataUpdatedElsewhere: LocalizedMessage {
-            .init(key: "CoreStateStore.dataUpdatedElsewhere", table: "Core", fallback: "数据已由另一个 Ruri 更新")
+            .init(key: "CoreStateStore.dataUpdatedElsewhere", table: "Core", fallback: "另一个 Ruri 进程已更新数据")
         }
         /// 默认内存策略
         ///
@@ -33,11 +33,11 @@ extension Messages {
         public static var favoriteStatus: LocalizedMessage {
             .init(key: "CoreStateStore.favoriteStatus", table: "Core", fallback: "固定状态")
         }
-        /// %1$@的修改与另一窗口冲突（%2$@）
+        /// 另一窗口也修改了%1$@，无法同时保存（%2$@）
         ///
         /// Resource: `Core.CoreStateStore.fieldConflict`.
         public static func fieldConflict(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreStateStore.fieldConflict", table: "Core", fallback: "%1$@的修改与另一窗口冲突（%2$@）", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreStateStore.fieldConflict", table: "Core", fallback: "另一窗口也修改了%1$@，无法同时保存（%2$@）", arguments: [.text(value0), .text(value1)])
         }
         /// 游戏参数
         ///
@@ -117,11 +117,11 @@ extension Messages {
         public static var sameInstanceDirectory: LocalizedMessage {
             .init(key: "CoreStateStore.sameInstanceDirectory", table: "Core", fallback: "同一实例文件夹")
         }
-        /// 保存冲突：%1$@。原文件已保留，请重新载入后再修改。
+        /// 无法保存，修改发生冲突：%1$@。原文件已保留，请重新加载后再修改。
         ///
         /// Resource: `Core.CoreStateStore.saveConflictPreservingOriginal`.
         public static func saveConflictPreservingOriginal(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreStateStore.saveConflictPreservingOriginal", table: "Core", fallback: "保存冲突：%1$@。原文件已保留，请重新载入后再修改。", arguments: [.text(value0)])
+            .init(key: "CoreStateStore.saveConflictPreservingOriginal", table: "Core", fallback: "无法保存，修改发生冲突：%1$@。原文件已保留，请重新加载后再修改。", arguments: [.text(value0)])
         }
         /// 当前实例、文件夹或账号的选择已在另一窗口改变
         ///
@@ -129,17 +129,17 @@ extension Messages {
         public static var selectionChangedElsewhere: LocalizedMessage {
             .init(key: "CoreStateStore.selectionChangedElsewhere", table: "Core", fallback: "当前实例、文件夹或账号的选择已在另一窗口改变")
         }
-        /// %1$@的修改与另一窗口冲突
+        /// 另一窗口也修改了%1$@，无法同时保存
         ///
         /// Resource: `Core.CoreStateStore.subjectChangeConflict`.
         public static func subjectChangeConflict(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreStateStore.subjectChangeConflict", table: "Core", fallback: "%1$@的修改与另一窗口冲突", arguments: [.text(value0)])
+            .init(key: "CoreStateStore.subjectChangeConflict", table: "Core", fallback: "另一窗口也修改了%1$@，无法同时保存", arguments: [.text(value0)])
         }
-        /// %1$@与另一窗口冲突
+        /// %1$@与另一窗口的修改冲突
         ///
         /// Resource: `Core.CoreStateStore.subjectConflict`.
         public static func subjectConflict(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreStateStore.subjectConflict", table: "Core", fallback: "%1$@与另一窗口冲突", arguments: [.text(value0)])
+            .init(key: "CoreStateStore.subjectConflict", table: "Core", fallback: "%1$@与另一窗口的修改冲突", arguments: [.text(value0)])
         }
         /// 窗口高度
         ///
@@ -153,11 +153,11 @@ extension Messages {
         public static var windowWidth: LocalizedMessage {
             .init(key: "CoreStateStore.windowWidth", table: "Core", fallback: "窗口宽度")
         }
-        /// 文件夹登记与保留记录包含重复身份，已暂停写入。
+        /// 已添加或保留的文件夹记录中有重复项，已暂停保存。
         ///
         /// Resource: `Errors.CoreStateStore.duplicateDirectoryIdentities`.
         public static var duplicateDirectoryIdentities: LocalizedMessage {
-            .init(key: "CoreStateStore.duplicateDirectoryIdentities", table: "Errors", fallback: "文件夹登记与保留记录包含重复身份，已暂停写入。")
+            .init(key: "CoreStateStore.duplicateDirectoryIdentities", table: "Errors", fallback: "已添加或保留的文件夹记录中有重复项，已暂停保存。")
         }
         /// 数据包含重复实例或账号，已暂停写入。
         ///
@@ -171,11 +171,11 @@ extension Messages {
         public static var newerDataVersion: LocalizedMessage {
             .init(key: "CoreStateStore.newerDataVersion", table: "Errors", fallback: "此数据由更新版本的 Ruri 创建，请升级启动器。")
         }
-        /// 另一个 Ruri 正在保存数据，请稍后重试。
+        /// 另一个 Ruri 进程正在保存数据，请稍后重试。
         ///
         /// Resource: `Errors.CoreStateStore.saveInProgress`.
         public static var saveInProgress: LocalizedMessage {
-            .init(key: "CoreStateStore.saveInProgress", table: "Errors", fallback: "另一个 Ruri 正在保存数据，请稍后重试。")
+            .init(key: "CoreStateStore.saveInProgress", table: "Errors", fallback: "另一个 Ruri 进程正在保存数据，请稍后重试。")
         }
         /// 无法锁定 Ruri 设置文件。
         ///
@@ -183,19 +183,19 @@ extension Messages {
         public static var settingsLockFailed: LocalizedMessage {
             .init(key: "CoreStateStore.settingsLockFailed", table: "Errors", fallback: "无法锁定 Ruri 设置文件。")
         }
-        /// 启动快照不能覆盖实例设置，请保存原实例的覆盖项。
+        /// 无法用本次启动的临时配置覆盖实例设置，请保存原实例的独立设置。
         ///
         /// Resource: `Errors.CoreStateStore.snapshotCannotOverwriteSettings`.
         public static var snapshotCannotOverwriteSettings: LocalizedMessage {
-            .init(key: "CoreStateStore.snapshotCannotOverwriteSettings", table: "Errors", fallback: "启动快照不能覆盖实例设置，请保存原实例的覆盖项。")
+            .init(key: "CoreStateStore.snapshotCannotOverwriteSettings", table: "Errors", fallback: "无法用本次启动的临时配置覆盖实例设置，请保存原实例的独立设置。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreStateStore.appearance": .init("外观", []),
-            "Core:CoreStateStore.dataUpdatedElsewhere": .init("数据已由另一个 Ruri 更新", []),
+            "Core:CoreStateStore.dataUpdatedElsewhere": .init("另一个 Ruri 进程已更新数据", []),
             "Core:CoreStateStore.defaultMemoryPolicy": .init("默认内存策略", []),
             "Core:CoreStateStore.downloadSource": .init("下载源", []),
             "Core:CoreStateStore.favoriteStatus": .init("固定状态", []),
-            "Core:CoreStateStore.fieldConflict": .init("%1$@的修改与另一窗口冲突（%2$@）", [.text, .text]),
+            "Core:CoreStateStore.fieldConflict": .init("另一窗口也修改了%1$@，无法同时保存（%2$@）", [.text, .text]),
             "Core:CoreStateStore.gameArguments": .init("游戏参数", []),
             "Core:CoreStateStore.invalidDataFormat": .init("数据格式无效", []),
             "Core:CoreStateStore.javaSelection": .init("Java 选择", []),
@@ -209,18 +209,18 @@ extension Messages {
             "Core:CoreStateStore.sameAccount": .init("同一账号", []),
             "Core:CoreStateStore.sameInstance": .init("同一实例", []),
             "Core:CoreStateStore.sameInstanceDirectory": .init("同一实例文件夹", []),
-            "Core:CoreStateStore.saveConflictPreservingOriginal": .init("保存冲突：%1$@。原文件已保留，请重新载入后再修改。", [.text]),
+            "Core:CoreStateStore.saveConflictPreservingOriginal": .init("无法保存，修改发生冲突：%1$@。原文件已保留，请重新加载后再修改。", [.text]),
             "Core:CoreStateStore.selectionChangedElsewhere": .init("当前实例、文件夹或账号的选择已在另一窗口改变", []),
-            "Core:CoreStateStore.subjectChangeConflict": .init("%1$@的修改与另一窗口冲突", [.text]),
-            "Core:CoreStateStore.subjectConflict": .init("%1$@与另一窗口冲突", [.text]),
+            "Core:CoreStateStore.subjectChangeConflict": .init("另一窗口也修改了%1$@，无法同时保存", [.text]),
+            "Core:CoreStateStore.subjectConflict": .init("%1$@与另一窗口的修改冲突", [.text]),
             "Core:CoreStateStore.windowHeight": .init("窗口高度", []),
             "Core:CoreStateStore.windowWidth": .init("窗口宽度", []),
-            "Errors:CoreStateStore.duplicateDirectoryIdentities": .init("文件夹登记与保留记录包含重复身份，已暂停写入。", []),
+            "Errors:CoreStateStore.duplicateDirectoryIdentities": .init("已添加或保留的文件夹记录中有重复项，已暂停保存。", []),
             "Errors:CoreStateStore.duplicateInstancesOrAccounts": .init("数据包含重复实例或账号，已暂停写入。", []),
             "Errors:CoreStateStore.newerDataVersion": .init("此数据由更新版本的 Ruri 创建，请升级启动器。", []),
-            "Errors:CoreStateStore.saveInProgress": .init("另一个 Ruri 正在保存数据，请稍后重试。", []),
+            "Errors:CoreStateStore.saveInProgress": .init("另一个 Ruri 进程正在保存数据，请稍后重试。", []),
             "Errors:CoreStateStore.settingsLockFailed": .init("无法锁定 Ruri 设置文件。", []),
-            "Errors:CoreStateStore.snapshotCannotOverwriteSettings": .init("启动快照不能覆盖实例设置，请保存原实例的覆盖项。", []),
+            "Errors:CoreStateStore.snapshotCannotOverwriteSettings": .init("无法用本次启动的临时配置覆盖实例设置，请保存原实例的独立设置。", []),
         ]
     }
 }

@@ -9,23 +9,23 @@ extension Messages {
         public static var installationRequired: LocalizedMessage {
             .init(key: "CoreInstanceComponents.installationRequired", table: "Core", fallback: "请先完成此实例的安装。")
         }
-        /// 此实例同时使用多个加载器，暂不支持保留组合的更换操作。
+        /// 此实例使用多个加载器，暂时无法在更换加载器时保留当前组合。
         ///
         /// Resource: `Core.CoreInstanceComponents.multipleLoadersUnsupported`.
         public static var multipleLoadersUnsupported: LocalizedMessage {
-            .init(key: "CoreInstanceComponents.multipleLoadersUnsupported", table: "Core", fallback: "此实例同时使用多个加载器，暂不支持保留组合的更换操作。")
+            .init(key: "CoreInstanceComponents.multipleLoadersUnsupported", table: "Core", fallback: "此实例使用多个加载器，暂时无法在更换加载器时保留当前组合。")
         }
-        /// 此实例还有 %1$@，暂不支持保留这些组件的更换操作。
+        /// 此实例还安装了 %1$@，暂时无法在更换加载器时保留这些组件。
         ///
         /// Resource: `Core.CoreInstanceComponents.unsupportedComponents`.
         public static func unsupportedComponents(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreInstanceComponents.unsupportedComponents", table: "Core", fallback: "此实例还有 %1$@，暂不支持保留这些组件的更换操作。", arguments: [.text(value0)])
+            .init(key: "CoreInstanceComponents.unsupportedComponents", table: "Core", fallback: "此实例还安装了 %1$@，暂时无法在更换加载器时保留这些组件。", arguments: [.text(value0)])
         }
-        /// 实例组件在操作期间改变，请重新打开组件管理。
+        /// 操作期间实例组件发生变化，请重新打开“管理加载器”。
         ///
         /// Resource: `Errors.CoreInstanceComponents.componentsChangedDuringOperation`.
         public static var componentsChangedDuringOperation: LocalizedMessage {
-            .init(key: "CoreInstanceComponents.componentsChangedDuringOperation", table: "Errors", fallback: "实例组件在操作期间改变，请重新打开组件管理。")
+            .init(key: "CoreInstanceComponents.componentsChangedDuringOperation", table: "Errors", fallback: "操作期间实例组件发生变化，请重新打开“管理加载器”。")
         }
         /// “%1$@”继承此版本，直接更换会同时影响它。请先为此实例创建独立副本。
         ///
@@ -57,11 +57,11 @@ extension Messages {
         public static var loaderBackupMissing: LocalizedMessage {
             .init(key: "CoreInstanceComponents.loaderBackupMissing", table: "Errors", fallback: "没有适用于当前位置的加载器备份。")
         }
-        /// 加载器设置未完成保存，请在组件管理中恢复上次配置。
+        /// 加载器设置未保存完整，请在“管理加载器”中恢复上次配置。
         ///
         /// Resource: `Errors.CoreInstanceComponents.loaderSettingsSaveIncomplete`.
         public static var loaderSettingsSaveIncomplete: LocalizedMessage {
-            .init(key: "CoreInstanceComponents.loaderSettingsSaveIncomplete", table: "Errors", fallback: "加载器设置未完成保存，请在组件管理中恢复上次配置。")
+            .init(key: "CoreInstanceComponents.loaderSettingsSaveIncomplete", table: "Errors", fallback: "加载器设置未保存完整，请在“管理加载器”中恢复上次配置。")
         }
         /// 当前已经使用这个加载器版本。
         ///
@@ -101,15 +101,15 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreInstanceComponents.installationRequired": .init("请先完成此实例的安装。", []),
-            "Core:CoreInstanceComponents.multipleLoadersUnsupported": .init("此实例同时使用多个加载器，暂不支持保留组合的更换操作。", []),
-            "Core:CoreInstanceComponents.unsupportedComponents": .init("此实例还有 %1$@，暂不支持保留这些组件的更换操作。", [.text]),
-            "Errors:CoreInstanceComponents.componentsChangedDuringOperation": .init("实例组件在操作期间改变，请重新打开组件管理。", []),
+            "Core:CoreInstanceComponents.multipleLoadersUnsupported": .init("此实例使用多个加载器，暂时无法在更换加载器时保留当前组合。", []),
+            "Core:CoreInstanceComponents.unsupportedComponents": .init("此实例还安装了 %1$@，暂时无法在更换加载器时保留这些组件。", [.text]),
+            "Errors:CoreInstanceComponents.componentsChangedDuringOperation": .init("操作期间实例组件发生变化，请重新打开“管理加载器”。", []),
             "Errors:CoreInstanceComponents.dependentInstanceWarning": .init("“%1$@”继承此版本，直接更换会同时影响它。请先为此实例创建独立副本。", [.text]),
             "Errors:CoreInstanceComponents.instanceRemoved": .init("实例已从列表移除。", []),
             "Errors:CoreInstanceComponents.launchManifestChanged": .init("启动清单已改变，请重新尝试。", []),
             "Errors:CoreInstanceComponents.launchManifestUnavailable": .init("当前版本的启动清单不可用，请先修复。", []),
             "Errors:CoreInstanceComponents.loaderBackupMissing": .init("没有适用于当前位置的加载器备份。", []),
-            "Errors:CoreInstanceComponents.loaderSettingsSaveIncomplete": .init("加载器设置未完成保存，请在组件管理中恢复上次配置。", []),
+            "Errors:CoreInstanceComponents.loaderSettingsSaveIncomplete": .init("加载器设置未保存完整，请在“管理加载器”中恢复上次配置。", []),
             "Errors:CoreInstanceComponents.loaderVersionAlreadySelected": .init("当前已经使用这个加载器版本。", []),
             "Errors:CoreInstanceComponents.loaderVersionSelectionRequired": .init("请选择加载器版本。", []),
             "Errors:CoreInstanceComponents.missingGameClient": .init("游戏客户端缺失，请先修复此实例。", []),

@@ -104,7 +104,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "选择登录方式，开始你的下一段旅程。"
+            "value" : "选择登录方式，添加用于游玩 Minecraft 的账号。"
           }
         }
       }
@@ -158,7 +158,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "外观分类"
+            "value" : "外观"
           }
         }
       }
@@ -248,7 +248,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ruri 将自动复制授权码并打开微软登录页面，可在浏览器中直接粘贴。完成授权后，Ruri 会自动完成登录。"
+            "value" : "Ruri 会复制授权码并打开 Microsoft 登录页面。粘贴授权码并完成授权后，Ruri 会自动登录。"
           }
         }
       }
@@ -320,7 +320,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导入一张披风 PNG，或保持不使用披风。"
+            "value" : "导入 PNG 披风文件，或选择不使用披风。"
           }
         }
       }
@@ -338,7 +338,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导入一张皮肤 PNG，旋转查看角色并选择手臂模型。"
+            "value" : "导入 PNG 皮肤文件，旋转角色查看效果，并选择手臂模型。"
           }
         }
       }
@@ -392,7 +392,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "拖动角色查看各个角度，确认后应用到此账号。"
+            "value" : "拖动角色查看不同角度，确认后将外观应用到此账号。"
           }
         }
       }
@@ -590,7 +590,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "皮肤名称需为 1–80 个字符。"
+            "value" : "请输入 1–80 个字符的皮肤名称。"
           }
         }
       }
@@ -644,7 +644,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导入 PNG，或把账号当前皮肤保存到这里。"
+            "value" : "导入 PNG 皮肤文件，或保存账号当前使用的皮肤。"
           }
         }
       }
@@ -716,7 +716,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这会注销当前登录会话，并从 Ruri 移除此账号。游戏实例和皮肤库会保留。"
+            "value" : "退出登录并从 Ruri 中移除此账号。游戏实例和皮肤库会保留。"
           }
         }
       }
@@ -752,7 +752,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用微软账号登录"
+            "value" : "使用 Microsoft 账号登录"
           }
         }
       }
@@ -770,7 +770,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "微软账号支持 64 × 64 或 64 × 32 的皮肤；披风可从此账号已拥有的款式中选择。"
+            "value" : "Microsoft 账号支持 64 × 64 或 64 × 32 像素的皮肤。披风可从账号已拥有的款式中选择。"
           }
         }
       }
@@ -896,7 +896,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重新验证 %1$@ 的身份，更新保存在钥匙串中的登录凭据。"
+            "value" : "重新登录 %1$@，更新保存在钥匙串中的登录凭据。"
           }
         }
       }
@@ -1397,7 +1397,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "有 %1$lld 份收藏无法读取，其他收藏仍可使用。"
+                  "value" : "有 %1$lld 款已收藏的皮肤无法读取，其他皮肤仍可使用。"
                 }
               }
             }
@@ -1508,7 +1508,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "登录微软账号、连接第三方认证服务器，或创建一个离线角色。"
+            "value" : "登录 Microsoft 账号、连接第三方认证服务器，或添加离线账号。"
           }
         }
       }
@@ -1526,7 +1526,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "登录的角色与原账号不一致。请使用原来的微软账号重新登录；其他账号请通过“添加账号”添加。"
+            "value" : "登录的角色与原账号不一致。请使用原来的 Microsoft 账号重新登录，或通过“添加账号”添加其他账号。"
           }
         }
       }
@@ -1544,7 +1544,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "离线皮肤配置无效，请重新应用皮肤后再启动游戏。"
+            "value" : "离线皮肤配置无效。请重新应用皮肤，再启动游戏。"
           }
         }
       }

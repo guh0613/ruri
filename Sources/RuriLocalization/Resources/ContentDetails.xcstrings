@@ -68,7 +68,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "配置 CurseForge API Key 后可同时识别该平台。"
+            "value" : "设置 CurseForge API Key 后，也可识别来自该平台的资源。"
           }
         }
       }
@@ -140,7 +140,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "以下文件对应重复项目，暂未纳入更新：%1$@"
+            "value" : "以下文件存在同项目的其他副本或版本，暂不检查更新：%1$@"
           }
         }
       }
@@ -230,7 +230,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。"
+            "value" : "可以查看文件夹的本地信息。在线识别和更新仅支持 ZIP 文件。"
           }
         }
       }
@@ -428,7 +428,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在识别在线项目…"
+            "value" : "正在查找资源对应的在线项目…"
           }
         }
       }
@@ -446,7 +446,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "中文名称与百科关联来自 MC 百科，由 HMCL 整理。"
+            "value" : "中文名称和百科链接来自 MC 百科，由 HMCL 整理。"
           }
         }
       }

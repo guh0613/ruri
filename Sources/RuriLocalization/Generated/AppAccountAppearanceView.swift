@@ -3,17 +3,17 @@ import Foundation
 
 extension Messages {
     public enum AppAccountAppearanceView {
-        /// 更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。
+        /// 更改会保存到此账号的认证服务。重新进入服务器后，游戏中的外观可能才会更新。
         ///
         /// Resource: `Interface.AppAccountAppearanceView.appearanceChangesSaved`.
         public static var appearanceChangesSaved: LocalizedMessage {
-            .init(key: "AppAccountAppearanceView.appearanceChangesSaved", table: "Interface", fallback: "更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。")
+            .init(key: "AppAccountAppearanceView.appearanceChangesSaved", table: "Interface", fallback: "更改会保存到此账号的认证服务。重新进入服务器后，游戏中的外观可能才会更新。")
         }
-        /// 预览未能加载：%1$@
+        /// 无法加载预览：%1$@
         ///
         /// Resource: `Interface.AppAccountAppearanceView.appearanceError`.
         public static func appearanceError(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppAccountAppearanceView.appearanceError", table: "Interface", fallback: "预览未能加载：%1$@", arguments: [.text(value0)])
+            .init(key: "AppAccountAppearanceView.appearanceError", table: "Interface", fallback: "无法加载预览：%1$@", arguments: [.text(value0)])
         }
         /// 披风
         ///
@@ -39,11 +39,11 @@ extension Messages {
         public static var capeRemoved: LocalizedMessage {
             .init(key: "AppAccountAppearanceView.capeRemoved", table: "Interface", fallback: "已移除披风")
         }
-        /// 此认证站未开放披风上传，请在认证站管理。
+        /// 此认证站不支持在 Ruri 中上传披风，请前往认证站管理。
         ///
         /// Resource: `Interface.AppAccountAppearanceView.capeUploadUnavailable`.
         public static var capeUploadUnavailable: LocalizedMessage {
-            .init(key: "AppAccountAppearanceView.capeUploadUnavailable", table: "Interface", fallback: "此认证站未开放披风上传，请在认证站管理。")
+            .init(key: "AppAccountAppearanceView.capeUploadUnavailable", table: "Interface", fallback: "此认证站不支持在 Ruri 中上传披风，请前往认证站管理。")
         }
         /// 重新选择…
         ///
@@ -141,11 +141,11 @@ extension Messages {
         public static var refresh: LocalizedMessage {
             .init(key: "AppAccountAppearanceView.refresh", table: "Interface", fallback: "刷新")
         }
-        /// 更改已提交，但刷新外观失败：%1$@
+        /// 外观已更改，但无法刷新预览：%1$@
         ///
         /// Resource: `Interface.AppAccountAppearanceView.refreshAppearanceError`.
         public static func refreshAppearanceError(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppAccountAppearanceView.refreshAppearanceError", table: "Interface", fallback: "更改已提交，但刷新外观失败：%1$@", arguments: [.text(value0)])
+            .init(key: "AppAccountAppearanceView.refreshAppearanceError", table: "Interface", fallback: "外观已更改，但无法刷新预览：%1$@", arguments: [.text(value0)])
         }
         /// 移除当前披风
         ///
@@ -171,11 +171,11 @@ extension Messages {
         public static var skinModel: LocalizedMessage {
             .init(key: "AppAccountAppearanceView.skinModel", table: "Interface", fallback: "皮肤模型")
         }
-        /// 此认证站未开放皮肤上传，请在认证站管理。
+        /// 此认证站不支持在 Ruri 中上传皮肤，请前往认证站管理。
         ///
         /// Resource: `Interface.AppAccountAppearanceView.skinUploadUnavailable`.
         public static var skinUploadUnavailable: LocalizedMessage {
-            .init(key: "AppAccountAppearanceView.skinUploadUnavailable", table: "Interface", fallback: "此认证站未开放皮肤上传，请在认证站管理。")
+            .init(key: "AppAccountAppearanceView.skinUploadUnavailable", table: "Interface", fallback: "此认证站不支持在 Ruri 中上传皮肤，请前往认证站管理。")
         }
         /// 皮肤与披风
         ///
@@ -214,13 +214,13 @@ extension Messages {
             .init(key: "AppAccountAppearanceView.useDefaultSkin", table: "Interface", fallback: "使用默认皮肤")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:AppAccountAppearanceView.appearanceChangesSaved": .init("更改会保存到此账号的认证服务。游戏中的外观可能需要重新进入服务器后才更新。", []),
-            "Interface:AppAccountAppearanceView.appearanceError": .init("预览未能加载：%1$@", [.text]),
+            "Interface:AppAccountAppearanceView.appearanceChangesSaved": .init("更改会保存到此账号的认证服务。重新进入服务器后，游戏中的外观可能才会更新。", []),
+            "Interface:AppAccountAppearanceView.appearanceError": .init("无法加载预览：%1$@", [.text]),
             "Interface:AppAccountAppearanceView.cape": .init("披风", []),
             "Interface:AppAccountAppearanceView.capeChanged": .init("已更换披风", []),
             "Interface:AppAccountAppearanceView.capeHidden": .init("已隐藏披风", []),
             "Interface:AppAccountAppearanceView.capeRemoved": .init("已移除披风", []),
-            "Interface:AppAccountAppearanceView.capeUploadUnavailable": .init("此认证站未开放披风上传，请在认证站管理。", []),
+            "Interface:AppAccountAppearanceView.capeUploadUnavailable": .init("此认证站不支持在 Ruri 中上传披风，请前往认证站管理。", []),
             "Interface:AppAccountAppearanceView.chooseAgain": .init("重新选择…", []),
             "Interface:AppAccountAppearanceView.chooseCapePNG": .init("选择披风 PNG…", []),
             "Interface:AppAccountAppearanceView.chooseSkinPNG": .init("选择皮肤 PNG…", []),
@@ -237,12 +237,12 @@ extension Messages {
             "Interface:AppAccountAppearanceView.prepareUpload": .init("准备上传%1$@", [.text]),
             "Interface:AppAccountAppearanceView.processing": .init("正在处理…", []),
             "Interface:AppAccountAppearanceView.refresh": .init("刷新", []),
-            "Interface:AppAccountAppearanceView.refreshAppearanceError": .init("更改已提交，但刷新外观失败：%1$@", [.text]),
+            "Interface:AppAccountAppearanceView.refreshAppearanceError": .init("外观已更改，但无法刷新预览：%1$@", [.text]),
             "Interface:AppAccountAppearanceView.removeCurrentCape": .init("移除当前披风", []),
             "Interface:AppAccountAppearanceView.restoreDefaultSkin": .init("恢复默认皮肤", []),
             "Interface:AppAccountAppearanceView.savePNG": .init("保存 PNG…", []),
             "Interface:AppAccountAppearanceView.skinModel": .init("皮肤模型", []),
-            "Interface:AppAccountAppearanceView.skinUploadUnavailable": .init("此认证站未开放皮肤上传，请在认证站管理。", []),
+            "Interface:AppAccountAppearanceView.skinUploadUnavailable": .init("此认证站不支持在 Ruri 中上传皮肤，请前往认证站管理。", []),
             "Interface:AppAccountAppearanceView.skinsAndCapes": .init("皮肤与披风", []),
             "Interface:AppAccountAppearanceView.texturePreview": .init("纹理预览", []),
             "Interface:AppAccountAppearanceView.uploadToAccount": .init("上传到此账号", []),

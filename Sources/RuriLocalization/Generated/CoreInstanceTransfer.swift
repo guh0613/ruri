@@ -3,19 +3,19 @@ import Foundation
 
 extension Messages {
     public enum CoreInstanceTransfer {
-        /// 整合包导入需要恢复，请在实例库处理未完成的导入。
+        /// 整合包导入已中断，请在实例库中恢复未完成的导入。
         /// %1$@
         /// %2$@
         ///
         /// Resource: `Core.CoreInstanceTransfer.importNeedsRecovery`.
         public static func importNeedsRecovery(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreInstanceTransfer.importNeedsRecovery", table: "Core", fallback: "整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreInstanceTransfer.importNeedsRecovery", table: "Core", fallback: "整合包导入已中断，请在实例库中恢复未完成的导入。\n%1$@\n%2$@", arguments: [.text(value0), .text(value1)])
         }
-        /// 目录包含多个实例，请选择其中一个实例目录。
+        /// 此文件夹包含多个实例，请选择其中一个实例的文件夹。
         ///
         /// Resource: `Core.CoreInstanceTransfer.multipleInstanceDirectories`.
         public static var multipleInstanceDirectories: LocalizedMessage {
-            .init(key: "CoreInstanceTransfer.multipleInstanceDirectories", table: "Core", fallback: "目录包含多个实例，请选择其中一个实例目录。")
+            .init(key: "CoreInstanceTransfer.multipleInstanceDirectories", table: "Core", fallback: "此文件夹包含多个实例，请选择其中一个实例的文件夹。")
         }
         /// 操作已取消。
         ///
@@ -30,11 +30,11 @@ extension Messages {
         public static func packImportIncomplete(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreInstanceTransfer.packImportIncomplete", table: "Core", fallback: "整合包导入未完成，工作文件已保留，可重新导入。\n%1$@", arguments: [.text(value0)])
         }
-        /// 已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。
+        /// 已保留原实例的启动命令并将其停用。请在实例设置中检查命令、变量及其 macOS 兼容性，再决定是否启用。
         ///
         /// Resource: `Core.CoreInstanceTransfer.retainedCommands`.
         public static var retainedCommands: LocalizedMessage {
-            .init(key: "CoreInstanceTransfer.retainedCommands", table: "Core", fallback: "已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。")
+            .init(key: "CoreInstanceTransfer.retainedCommands", table: "Core", fallback: "已保留原实例的启动命令并将其停用。请在实例设置中检查命令、变量及其 macOS 兼容性，再决定是否启用。")
         }
         /// Ruri 完整副本
         ///
@@ -54,11 +54,11 @@ extension Messages {
         public static var unsupportedManifest: LocalizedMessage {
             .init(key: "CoreInstanceTransfer.unsupportedManifest", table: "Core", fallback: "未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。")
         }
-        /// 请选择实际实例目录或压缩包。
+        /// 请选择实例文件夹或压缩包，不要选择符号链接。
         ///
         /// Resource: `Errors.CoreInstanceTransfer.actualDirectoryRequired`.
         public static var actualDirectoryRequired: LocalizedMessage {
-            .init(key: "CoreInstanceTransfer.actualDirectoryRequired", table: "Errors", fallback: "请选择实际实例目录或压缩包。")
+            .init(key: "CoreInstanceTransfer.actualDirectoryRequired", table: "Errors", fallback: "请选择实例文件夹或压缩包，不要选择符号链接。")
         }
         /// 整合包内附文件校验失败：%1$@
         ///
@@ -72,11 +72,11 @@ extension Messages {
         public static func customPatchRequiresHandling(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreInstanceTransfer.customPatchRequiresHandling", table: "Errors", fallback: "实例包含自定义 %1$@，需要先处理这些补丁后再迁移。", arguments: [.text(value0)])
         }
-        /// 此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。
+        /// 此格式无法保留启动命令的停用状态。请选择 Ruri 格式，导入后检查这些命令再决定是否启用。
         ///
         /// Resource: `Errors.CoreInstanceTransfer.disabledCommandsUnsupported`.
         public static var disabledCommandsUnsupported: LocalizedMessage {
-            .init(key: "CoreInstanceTransfer.disabledCommandsUnsupported", table: "Errors", fallback: "此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。")
+            .init(key: "CoreInstanceTransfer.disabledCommandsUnsupported", table: "Errors", fallback: "此格式无法保留启动命令的停用状态。请选择 Ruri 格式，导入后检查这些命令再决定是否启用。")
         }
         /// 此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。
         ///
@@ -205,18 +205,18 @@ extension Messages {
             .init(key: "CoreInstanceTransfer.identifyingInstance", table: "Progress", fallback: "正在识别实例")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreInstanceTransfer.importNeedsRecovery": .init("整合包导入需要恢复，请在实例库处理未完成的导入。\n%1$@\n%2$@", [.text, .text]),
-            "Core:CoreInstanceTransfer.multipleInstanceDirectories": .init("目录包含多个实例，请选择其中一个实例目录。", []),
+            "Core:CoreInstanceTransfer.importNeedsRecovery": .init("整合包导入已中断，请在实例库中恢复未完成的导入。\n%1$@\n%2$@", [.text, .text]),
+            "Core:CoreInstanceTransfer.multipleInstanceDirectories": .init("此文件夹包含多个实例，请选择其中一个实例的文件夹。", []),
             "Core:CoreInstanceTransfer.operationCancelled": .init("操作已取消。", []),
             "Core:CoreInstanceTransfer.packImportIncomplete": .init("整合包导入未完成，工作文件已保留，可重新导入。\n%1$@", [.text]),
-            "Core:CoreInstanceTransfer.retainedCommands": .init("已保留原实例的启动命令并停用。请在实例设置中检查命令、变量与 macOS 兼容性后再开启。", []),
+            "Core:CoreInstanceTransfer.retainedCommands": .init("已保留原实例的启动命令并将其停用。请在实例设置中检查命令、变量及其 macOS 兼容性，再决定是否启用。", []),
             "Core:CoreInstanceTransfer.ruriFullCopy": .init("Ruri 完整副本", []),
             "Core:CoreInstanceTransfer.ruriInstance": .init("Ruri 实例", []),
             "Core:CoreInstanceTransfer.unsupportedManifest": .init("未找到支持的实例清单。请选择 Ruri、Prism/MultiMC 实例或 HMCL、MCBBS、CurseForge 整合包。", []),
-            "Errors:CoreInstanceTransfer.actualDirectoryRequired": .init("请选择实际实例目录或压缩包。", []),
+            "Errors:CoreInstanceTransfer.actualDirectoryRequired": .init("请选择实例文件夹或压缩包，不要选择符号链接。", []),
             "Errors:CoreInstanceTransfer.bundledFileChecksumFailed": .init("整合包内附文件校验失败：%1$@", [.text]),
             "Errors:CoreInstanceTransfer.customPatchRequiresHandling": .init("实例包含自定义 %1$@，需要先处理这些补丁后再迁移。", [.text]),
-            "Errors:CoreInstanceTransfer.disabledCommandsUnsupported": .init("此格式无法保留启动命令的停用状态，请使用 Ruri 格式。导入后需自行检查并开启这些命令。", []),
+            "Errors:CoreInstanceTransfer.disabledCommandsUnsupported": .init("此格式无法保留启动命令的停用状态。请选择 Ruri 格式，导入后检查这些命令再决定是否启用。", []),
             "Errors:CoreInstanceTransfer.extraLaunchSettings": .init("此实例包含额外游戏参数、依赖库或 Java 约束。请使用 Ruri 或 MCBBS 格式完整保留这些设置。", []),
             "Errors:CoreInstanceTransfer.invalidIconSettings": .init("实例版本、内存或窗口设置无效。", []),
             "Errors:CoreInstanceTransfer.invalidInstanceManifest": .init("实例清单不是有效文件：%1$@", [.text]),

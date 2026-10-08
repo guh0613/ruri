@@ -57,11 +57,11 @@ extension Messages {
         public static func noDownloadableFile(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreModrinthContentPlan.noDownloadableFile", table: "Errors", fallback: "%1$@ 没有可下载的文件", arguments: [.text(value0)])
         }
-        /// %1$@ 与本次选择的其他内容不兼容。
+        /// %1$@ 与本次选择的其他资源不兼容。
         ///
         /// Resource: `Errors.CoreModrinthContentPlan.selectedContentIncompatible`.
         public static func selectedContentIncompatible(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreModrinthContentPlan.selectedContentIncompatible", table: "Errors", fallback: "%1$@ 与本次选择的其他内容不兼容。", arguments: [.text(value0)])
+            .init(key: "CoreModrinthContentPlan.selectedContentIncompatible", table: "Errors", fallback: "%1$@ 与本次选择的其他资源不兼容。", arguments: [.text(value0)])
         }
         /// 下载 %1$@
         ///
@@ -79,7 +79,7 @@ extension Messages {
             "Errors:CoreModrinthContentPlan.missingDependencyDownloadID": .init("必需依赖缺少下载标识", []),
             "Errors:CoreModrinthContentPlan.missingFileChecksum": .init("%1$@ 缺少校验信息", [.text]),
             "Errors:CoreModrinthContentPlan.noDownloadableFile": .init("%1$@ 没有可下载的文件", [.text]),
-            "Errors:CoreModrinthContentPlan.selectedContentIncompatible": .init("%1$@ 与本次选择的其他内容不兼容。", [.text]),
+            "Errors:CoreModrinthContentPlan.selectedContentIncompatible": .init("%1$@ 与本次选择的其他资源不兼容。", [.text]),
             "Progress:CoreModrinthContentPlan.downloadingContent": .init("下载 %1$@", [.text]),
         ]
     }

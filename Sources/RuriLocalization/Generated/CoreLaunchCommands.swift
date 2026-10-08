@@ -57,11 +57,11 @@ extension Messages {
         public static func executableMissing(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreLaunchCommands.executableMissing", table: "Errors", fallback: "找不到包装命令的可执行文件：%1$@", arguments: [.text(value0)])
         }
-        /// 启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。
+        /// 启动命令不能包含空字符，长度不能超过 32 KB。超时时间需为 1–3600 秒。
         ///
         /// Resource: `Errors.CoreLaunchCommands.invalidCommand`.
         public static var invalidCommand: LocalizedMessage {
-            .init(key: "CoreLaunchCommands.invalidCommand", table: "Errors", fallback: "启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。")
+            .init(key: "CoreLaunchCommands.invalidCommand", table: "Errors", fallback: "启动命令不能包含空字符，长度不能超过 32 KB。超时时间需为 1–3600 秒。")
         }
         /// 包装命令包含未支持的变量：%1$@
         ///
@@ -79,7 +79,7 @@ extension Messages {
             "Core:CoreLaunchCommands.commandTimedOut": .init("%1$@超时", [.text]),
             "Core:CoreLaunchCommands.unknownResult": .init("未知", []),
             "Errors:CoreLaunchCommands.executableMissing": .init("找不到包装命令的可执行文件：%1$@", [.text]),
-            "Errors:CoreLaunchCommands.invalidCommand": .init("启动命令不能包含空字符或超过 32 KB，超时应为 1–3600 秒。", []),
+            "Errors:CoreLaunchCommands.invalidCommand": .init("启动命令不能包含空字符，长度不能超过 32 KB。超时时间需为 1–3600 秒。", []),
             "Errors:CoreLaunchCommands.unsupportedVariable": .init("包装命令包含未支持的变量：%1$@", [.text]),
         ]
     }

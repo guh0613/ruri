@@ -9,15 +9,15 @@ extension Messages {
         public static func contentCollisions(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreMinecraftGameDataFiles.contentCollisions", table: "Core", fallback: "当前游戏内容包含目标位置保留的文件或目录：%1$@。请选择其他目标，以保留这些内容和原有安装文件。", arguments: [.text(value0)])
         }
-        /// 源目录与目标目录互相包含，无法复制。请选择互不嵌套的游戏目录。
+        /// 源文件夹与目标文件夹不能互相包含，请选择其他游戏文件夹。
         ///
         /// Resource: `Core.CoreMinecraftGameDataFiles.nestedSourceAndTargetDirectories`.
         public static var nestedSourceAndTargetDirectories: LocalizedMessage {
-            .init(key: "CoreMinecraftGameDataFiles.nestedSourceAndTargetDirectories", table: "Core", fallback: "源目录与目标目录互相包含，无法复制。请选择互不嵌套的游戏目录。")
+            .init(key: "CoreMinecraftGameDataFiles.nestedSourceAndTargetDirectories", table: "Core", fallback: "源文件夹与目标文件夹不能互相包含，请选择其他游戏文件夹。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreMinecraftGameDataFiles.contentCollisions": .init("当前游戏内容包含目标位置保留的文件或目录：%1$@。请选择其他目标，以保留这些内容和原有安装文件。", [.text]),
-            "Core:CoreMinecraftGameDataFiles.nestedSourceAndTargetDirectories": .init("源目录与目标目录互相包含，无法复制。请选择互不嵌套的游戏目录。", []),
+            "Core:CoreMinecraftGameDataFiles.nestedSourceAndTargetDirectories": .init("源文件夹与目标文件夹不能互相包含，请选择其他游戏文件夹。", []),
         ]
     }
 }

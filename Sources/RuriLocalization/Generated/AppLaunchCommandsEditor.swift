@@ -9,11 +9,11 @@ extension Messages {
         public static var afterLaunchCommand: LocalizedMessage {
             .init(key: "AppLaunchCommandsEditor.afterLaunchCommand", table: "Interface", fallback: "退出后命令")
         }
-        /// 游戏退出后执行，包括崩溃退出；手动终止游戏时跳过。留空不执行。
+        /// 游戏退出后执行，崩溃退出时也会执行。手动终止游戏时跳过，留空则不执行。
         ///
         /// Resource: `Interface.AppLaunchCommandsEditor.afterLaunchHelp`.
         public static var afterLaunchHelp: LocalizedMessage {
-            .init(key: "AppLaunchCommandsEditor.afterLaunchHelp", table: "Interface", fallback: "游戏退出后执行，包括崩溃退出；手动终止游戏时跳过。留空不执行。")
+            .init(key: "AppLaunchCommandsEditor.afterLaunchHelp", table: "Interface", fallback: "游戏退出后执行，崩溃退出时也会执行。手动终止游戏时跳过，留空则不执行。")
         }
         /// RURI_GAME_DIRECTORY：游戏运行目录
         /// RURI_INSTANCE_DIRECTORY：实例配置目录
@@ -32,11 +32,11 @@ extension Messages {
         public static var beforeLaunchCommand: LocalizedMessage {
             .init(key: "AppLaunchCommandsEditor.beforeLaunchCommand", table: "Interface", fallback: "启动前命令")
         }
-        /// 启动前由 /bin/sh 执行，留空跳过。失败或超时将取消启动。
+        /// 启动前由 /bin/sh 执行，留空则不执行。命令失败或超时会取消游戏启动。
         ///
         /// Resource: `Interface.AppLaunchCommandsEditor.beforeLaunchHelp`.
         public static var beforeLaunchHelp: LocalizedMessage {
-            .init(key: "AppLaunchCommandsEditor.beforeLaunchHelp", table: "Interface", fallback: "启动前由 /bin/sh 执行，留空跳过。失败或超时将取消启动。")
+            .init(key: "AppLaunchCommandsEditor.beforeLaunchHelp", table: "Interface", fallback: "启动前由 /bin/sh 执行，留空则不执行。命令失败或超时会取消游戏启动。")
         }
         /// 例如：printf '%s\n' "$RURI_GAME_DIRECTORY"
         ///
@@ -62,11 +62,11 @@ extension Messages {
         public static var seconds: LocalizedMessage {
             .init(key: "AppLaunchCommandsEditor.seconds", table: "Interface", fallback: "秒")
         }
-        /// 前后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。
+        /// 启动前命令和退出后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。
         ///
         /// Resource: `Interface.AppLaunchCommandsEditor.shellExecutionHelp`.
         public static var shellExecutionHelp: LocalizedMessage {
-            .init(key: "AppLaunchCommandsEditor.shellExecutionHelp", table: "Interface", fallback: "前后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。")
+            .init(key: "AppLaunchCommandsEditor.shellExecutionHelp", table: "Interface", fallback: "启动前命令和退出后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。")
         }
         /// 可用变量
         ///
@@ -100,15 +100,15 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppLaunchCommandsEditor.afterLaunchCommand": .init("退出后命令", []),
-            "Interface:AppLaunchCommandsEditor.afterLaunchHelp": .init("游戏退出后执行，包括崩溃退出；手动终止游戏时跳过。留空不执行。", []),
+            "Interface:AppLaunchCommandsEditor.afterLaunchHelp": .init("游戏退出后执行，崩溃退出时也会执行。手动终止游戏时跳过，留空则不执行。", []),
             "Interface:AppLaunchCommandsEditor.availableVariables": .init("RURI_GAME_DIRECTORY：游戏运行目录\nRURI_INSTANCE_DIRECTORY：实例配置目录\nRURI_INSTANCE_NAME / RURI_INSTANCE_ID：实例名称和标识\nRURI_GAME_VERSION：游戏版本\nRURI_JAVA：Java 可执行文件\nRURI_EXIT_CODE / RURI_EXIT_REASON：游戏退出码和原因，仅退出后命令可用", []),
             "Interface:AppLaunchCommandsEditor.beforeLaunchCommand": .init("启动前命令", []),
-            "Interface:AppLaunchCommandsEditor.beforeLaunchHelp": .init("启动前由 /bin/sh 执行，留空跳过。失败或超时将取消启动。", []),
+            "Interface:AppLaunchCommandsEditor.beforeLaunchHelp": .init("启动前由 /bin/sh 执行，留空则不执行。命令失败或超时会取消游戏启动。", []),
             "Interface:AppLaunchCommandsEditor.beforeLaunchPlaceholder": .init("例如：printf '%%s\\n' \"$RURI_GAME_DIRECTORY\"", []),
             "Interface:AppLaunchCommandsEditor.commandTimeout": .init("每条命令最长运行时间", []),
             "Interface:AppLaunchCommandsEditor.customLaunchCommand": .init("运行自定义启动命令", []),
             "Interface:AppLaunchCommandsEditor.seconds": .init("秒", []),
-            "Interface:AppLaunchCommandsEditor.shellExecutionHelp": .init("前后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。", []),
+            "Interface:AppLaunchCommandsEditor.shellExecutionHelp": .init("启动前命令和退出后命令由 /bin/sh 在游戏运行目录中执行。路径变量请加双引号。", []),
             "Interface:AppLaunchCommandsEditor.variablesAndExamples": .init("可用变量", []),
             "Interface:AppLaunchCommandsEditor.wrapperCommand": .init("包装命令", []),
             "Interface:AppLaunchCommandsEditor.wrapperHelp": .init("自动追加 Java 路径和启动参数，不支持 shell 管道。脚本需使用 exec \"$@\" 启动游戏。", []),

@@ -15,11 +15,11 @@ extension Messages {
         public static func dropTitle(_ value0: Int64, _ value1: String) -> LocalizedMessage {
             .init(key: "ContentImport.dropTitle", table: "ContentImport", fallback: "松开以导入 %1$lld 项%2$@", arguments: [.integer(value0), .text(value1)])
         }
-        /// 从 Finder 拖入资源，或使用上方的“导入…”。
+        /// 从 Finder 拖入文件，或点按上方的“导入…”。
         ///
         /// Resource: `ContentImport.ContentImport.emptyHint`.
         public static var emptyHint: LocalizedMessage {
-            .init(key: "ContentImport.emptyHint", table: "ContentImport", fallback: "从 Finder 拖入资源，或使用上方的“导入…”。")
+            .init(key: "ContentImport.emptyHint", table: "ContentImport", fallback: "从 Finder 拖入文件，或点按上方的“导入…”。")
         }
         /// 导入%1$@
         ///
@@ -27,11 +27,11 @@ extension Messages {
         public static func importing(_ value0: String) -> LocalizedMessage {
             .init(key: "ContentImport.importing", table: "ContentImport", fallback: "导入%1$@", arguments: [.text(value0)])
         }
-        /// 未能读取拖入的文件，请从 Finder 重新拖入，或使用“导入…”。
+        /// 无法读取拖入的文件。请从 Finder 重新拖入，或点按“导入…”。
         ///
         /// Resource: `ContentImport.ContentImport.invalidDrop`.
         public static var invalidDrop: LocalizedMessage {
-            .init(key: "ContentImport.invalidDrop", table: "ContentImport", fallback: "未能读取拖入的文件，请从 Finder 重新拖入，或使用“导入…”。")
+            .init(key: "ContentImport.invalidDrop", table: "ContentImport", fallback: "无法读取拖入的文件。请从 Finder 重新拖入，或点按“导入…”。")
         }
         /// JAR 或 LITEMOD 文件
         ///
@@ -39,34 +39,34 @@ extension Messages {
         public static var modFormats: LocalizedMessage {
             .init(key: "ContentImport.modFormats", table: "ContentImport", fallback: "JAR 或 LITEMOD 文件")
         }
-        /// 资源包 ZIP 或文件夹
+        /// 资源包 ZIP 文件或文件夹
         ///
         /// Resource: `ContentImport.ContentImport.resourcePackFormats`.
         public static var resourcePackFormats: LocalizedMessage {
-            .init(key: "ContentImport.resourcePackFormats", table: "ContentImport", fallback: "资源包 ZIP 或文件夹")
+            .init(key: "ContentImport.resourcePackFormats", table: "ContentImport", fallback: "资源包 ZIP 文件或文件夹")
         }
-        /// 光影 ZIP 或文件夹
+        /// 光影包 ZIP 文件或文件夹
         ///
         /// Resource: `ContentImport.ContentImport.shaderFormats`.
         public static var shaderFormats: LocalizedMessage {
-            .init(key: "ContentImport.shaderFormats", table: "ContentImport", fallback: "光影 ZIP 或文件夹")
+            .init(key: "ContentImport.shaderFormats", table: "ContentImport", fallback: "光影包 ZIP 文件或文件夹")
         }
-        /// 当前暂不能导入资源
+        /// 暂时无法导入资源
         ///
         /// Resource: `ContentImport.ContentImport.unavailable`.
         public static var unavailable: LocalizedMessage {
-            .init(key: "ContentImport.unavailable", table: "ContentImport", fallback: "当前暂不能导入资源")
+            .init(key: "ContentImport.unavailable", table: "ContentImport", fallback: "暂时无法导入资源")
         }
         static let definitions: [String: MessageDefinition] = [
             "ContentImport:ContentImport.copyHint": .init("文件将复制到当前实例", []),
             "ContentImport:ContentImport.dropTitle": .init("松开以导入 %1$lld 项%2$@", [.integer, .text]),
-            "ContentImport:ContentImport.emptyHint": .init("从 Finder 拖入资源，或使用上方的“导入…”。", []),
+            "ContentImport:ContentImport.emptyHint": .init("从 Finder 拖入文件，或点按上方的“导入…”。", []),
             "ContentImport:ContentImport.importing": .init("导入%1$@", [.text]),
-            "ContentImport:ContentImport.invalidDrop": .init("未能读取拖入的文件，请从 Finder 重新拖入，或使用“导入…”。", []),
+            "ContentImport:ContentImport.invalidDrop": .init("无法读取拖入的文件。请从 Finder 重新拖入，或点按“导入…”。", []),
             "ContentImport:ContentImport.modFormats": .init("JAR 或 LITEMOD 文件", []),
-            "ContentImport:ContentImport.resourcePackFormats": .init("资源包 ZIP 或文件夹", []),
-            "ContentImport:ContentImport.shaderFormats": .init("光影 ZIP 或文件夹", []),
-            "ContentImport:ContentImport.unavailable": .init("当前暂不能导入资源", []),
+            "ContentImport:ContentImport.resourcePackFormats": .init("资源包 ZIP 文件或文件夹", []),
+            "ContentImport:ContentImport.shaderFormats": .init("光影包 ZIP 文件或文件夹", []),
+            "ContentImport:ContentImport.unavailable": .init("暂时无法导入资源", []),
         ]
     }
 }

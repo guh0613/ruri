@@ -15,11 +15,11 @@ extension Messages {
         public static var addGameFolderEntry: LocalizedMessage {
             .init(key: "AppAppModelMinecraftDirectory.addGameFolderEntry", table: "Interface", fallback: "添加游戏文件夹")
         }
-        /// 选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。
+        /// 选择游戏文件夹或它的上一级文件夹，确认位置和显示名称后添加。
         ///
         /// Resource: `Interface.AppAppModelMinecraftDirectory.folderSelectionHelp`.
         public static var folderSelectionHelp: LocalizedMessage {
-            .init(key: "AppAppModelMinecraftDirectory.folderSelectionHelp", table: "Interface", fallback: "选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。")
+            .init(key: "AppAppModelMinecraftDirectory.folderSelectionHelp", table: "Interface", fallback: "选择游戏文件夹或它的上一级文件夹，确认位置和显示名称后添加。")
         }
         /// 恢复游戏文件夹
         ///
@@ -30,7 +30,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppAppModelMinecraftDirectory.addGameFolder": .init("添加文件夹", []),
             "Interface:AppAppModelMinecraftDirectory.addGameFolderEntry": .init("添加游戏文件夹", []),
-            "Interface:AppAppModelMinecraftDirectory.folderSelectionHelp": .init("选择游戏文件夹或其上一级目录，确认位置和显示名称后添加。", []),
+            "Interface:AppAppModelMinecraftDirectory.folderSelectionHelp": .init("选择游戏文件夹或它的上一级文件夹，确认位置和显示名称后添加。", []),
             "Interface:AppAppModelMinecraftDirectory.recoverGameFolder": .init("恢复游戏文件夹", []),
         ]
     }

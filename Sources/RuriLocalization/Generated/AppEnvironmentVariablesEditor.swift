@@ -51,11 +51,11 @@ extension Messages {
         public static var noCustomVariables: LocalizedMessage {
             .init(key: "AppEnvironmentVariablesEditor.noCustomVariables", table: "Interface", fallback: "没有自定义环境变量")
         }
-        /// 移除继承值
+        /// 移除继承的值
         ///
         /// Resource: `Interface.AppEnvironmentVariablesEditor.removeInheritedValue`.
         public static var removeInheritedValue: LocalizedMessage {
-            .init(key: "AppEnvironmentVariablesEditor.removeInheritedValue", table: "Interface", fallback: "移除继承值")
+            .init(key: "AppEnvironmentVariablesEditor.removeInheritedValue", table: "Interface", fallback: "移除继承的值")
         }
         /// 移除
         ///
@@ -81,11 +81,11 @@ extension Messages {
         public static var valueColumn: LocalizedMessage {
             .init(key: "AppEnvironmentVariablesEditor.valueColumn", table: "Interface", fallback: "值")
         }
-        /// 值无需引号。“移除”表示不向游戏传递该系统变量。
+        /// 值无需加引号。选择“移除”后，不会将该系统环境变量传递给游戏。
         ///
         /// Resource: `Interface.AppEnvironmentVariablesEditor.valuePassthroughNotice`.
         public static var valuePassthroughNotice: LocalizedMessage {
-            .init(key: "AppEnvironmentVariablesEditor.valuePassthroughNotice", table: "Interface", fallback: "值无需引号。“移除”表示不向游戏传递该系统变量。")
+            .init(key: "AppEnvironmentVariablesEditor.valuePassthroughNotice", table: "Interface", fallback: "值无需加引号。选择“移除”后，不会将该系统环境变量传递给游戏。")
         }
         /// 环境变量操作
         ///
@@ -120,12 +120,12 @@ extension Messages {
             "Interface:AppEnvironmentVariablesEditor.name": .init("名称", []),
             "Interface:AppEnvironmentVariablesEditor.nameValidation": .init("名称只能包含字母、数字和下划线，不能以数字开头。Java 相关变量由 Ruri 管理，请使用 Java 或 JVM 参数设置。本机环境配置不会写入导出的整合包。", []),
             "Interface:AppEnvironmentVariablesEditor.noCustomVariables": .init("没有自定义环境变量", []),
-            "Interface:AppEnvironmentVariablesEditor.removeInheritedValue": .init("移除继承值", []),
+            "Interface:AppEnvironmentVariablesEditor.removeInheritedValue": .init("移除继承的值", []),
             "Interface:AppEnvironmentVariablesEditor.removeVariable": .init("移除", []),
             "Interface:AppEnvironmentVariablesEditor.setVariable": .init("设置", []),
             "Interface:AppEnvironmentVariablesEditor.usageGuide": .init("使用说明", []),
             "Interface:AppEnvironmentVariablesEditor.valueColumn": .init("值", []),
-            "Interface:AppEnvironmentVariablesEditor.valuePassthroughNotice": .init("值无需引号。“移除”表示不向游戏传递该系统变量。", []),
+            "Interface:AppEnvironmentVariablesEditor.valuePassthroughNotice": .init("值无需加引号。选择“移除”后，不会将该系统环境变量传递给游戏。", []),
             "Interface:AppEnvironmentVariablesEditor.variableActions": .init("环境变量操作", []),
             "Interface:AppEnvironmentVariablesEditor.variableHint": .init("按模组或工具的要求添加。", []),
             "Interface:AppEnvironmentVariablesEditor.variableName": .init("变量名称", []),

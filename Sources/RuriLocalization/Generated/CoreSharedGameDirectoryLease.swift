@@ -15,11 +15,11 @@ extension Messages {
         public static var directoryInUse: LocalizedMessage {
             .init(key: "CoreSharedGameDirectoryLease.directoryInUse", table: "Errors", fallback: "此运行目录正被另一个实例使用，请先结束游戏或等待文件操作完成。")
         }
-        /// 共享目录的运行记录无效，请检查运行历史。
+        /// 共享文件夹的运行记录无效，请查看运行记录。
         ///
         /// Resource: `Errors.CoreSharedGameDirectoryLease.invalidRunHistory`.
         public static var invalidRunHistory: LocalizedMessage {
-            .init(key: "CoreSharedGameDirectoryLease.invalidRunHistory", table: "Errors", fallback: "共享目录的运行记录无效，请检查运行历史。")
+            .init(key: "CoreSharedGameDirectoryLease.invalidRunHistory", table: "Errors", fallback: "共享文件夹的运行记录无效，请查看运行记录。")
         }
         /// 无法锁定共享运行目录。
         ///
@@ -45,21 +45,21 @@ extension Messages {
         public static var sharedRunRecordInvalid: LocalizedMessage {
             .init(key: "CoreSharedGameDirectoryLease.sharedRunRecordInvalid", table: "Errors", fallback: "共享目录运行记录无效。")
         }
-        /// 共享目录的上次运行尚未确认结束，无法移动其历史。
+        /// 尚未确认共享文件夹的上次运行是否已结束，无法移动相关运行记录。
         ///
         /// Resource: `Errors.CoreSharedGameDirectoryLease.unconfirmedPreviousRun`.
         public static var unconfirmedPreviousRun: LocalizedMessage {
-            .init(key: "CoreSharedGameDirectoryLease.unconfirmedPreviousRun", table: "Errors", fallback: "共享目录的上次运行尚未确认结束，无法移动其历史。")
+            .init(key: "CoreSharedGameDirectoryLease.unconfirmedPreviousRun", table: "Errors", fallback: "尚未确认共享文件夹的上次运行是否已结束，无法移动相关运行记录。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreSharedGameDirectoryLease.activeReservation": .init("“%1$@”仍在使用此共享目录，或上次运行状态尚未确认。请先返回该实例检查运行记录。", [.text]),
             "Errors:CoreSharedGameDirectoryLease.directoryInUse": .init("此运行目录正被另一个实例使用，请先结束游戏或等待文件操作完成。", []),
-            "Errors:CoreSharedGameDirectoryLease.invalidRunHistory": .init("共享目录的运行记录无效，请检查运行历史。", []),
+            "Errors:CoreSharedGameDirectoryLease.invalidRunHistory": .init("共享文件夹的运行记录无效，请查看运行记录。", []),
             "Errors:CoreSharedGameDirectoryLease.lockFailed": .init("无法锁定共享运行目录。", []),
             "Errors:CoreSharedGameDirectoryLease.reservationMismatch": .init("共享运行目录与上次运行记录不一致，请检查原实例。", []),
             "Errors:CoreSharedGameDirectoryLease.reservationVersionInvalid": .init("自定义运行目录的占用记录版本无效。", []),
             "Errors:CoreSharedGameDirectoryLease.sharedRunRecordInvalid": .init("共享目录运行记录无效。", []),
-            "Errors:CoreSharedGameDirectoryLease.unconfirmedPreviousRun": .init("共享目录的上次运行尚未确认结束，无法移动其历史。", []),
+            "Errors:CoreSharedGameDirectoryLease.unconfirmedPreviousRun": .init("尚未确认共享文件夹的上次运行是否已结束，无法移动相关运行记录。", []),
         ]
     }
 }

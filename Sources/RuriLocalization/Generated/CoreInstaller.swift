@@ -34,11 +34,11 @@ extension Messages {
         public static var gameResourceIndexMissing: LocalizedMessage {
             .init(key: "CoreInstaller.gameResourceIndexMissing", table: "Errors", fallback: "游戏资源索引缺失，请先修复实例。")
         }
-        /// 生成依赖缺少路径
+        /// 生成的依赖文件缺少路径。
         ///
         /// Resource: `Errors.CoreInstaller.generatedDependencyPathMissing`.
         public static var generatedDependencyPathMissing: LocalizedMessage {
-            .init(key: "CoreInstaller.generatedDependencyPathMissing", table: "Errors", fallback: "生成依赖缺少路径")
+            .init(key: "CoreInstaller.generatedDependencyPathMissing", table: "Errors", fallback: "生成的依赖文件缺少路径。")
         }
         /// 整合包依赖库的下载地址无效
         ///
@@ -142,7 +142,7 @@ extension Messages {
             "Errors:CoreInstaller.dependencyTargetsExistingGameFile": .init("整合包依赖不能指定已有游戏文件的位置。", []),
             "Errors:CoreInstaller.existingGameFileConflictsWithModpack": .init("已有游戏文件与整合包所需文件不同，未覆盖：%1$@\n请先检查此文件，或将整合包导入另一个 Minecraft 文件夹。", [.text]),
             "Errors:CoreInstaller.gameResourceIndexMissing": .init("游戏资源索引缺失，请先修复实例。", []),
-            "Errors:CoreInstaller.generatedDependencyPathMissing": .init("生成依赖缺少路径", []),
+            "Errors:CoreInstaller.generatedDependencyPathMissing": .init("生成的依赖文件缺少路径。", []),
             "Errors:CoreInstaller.invalidDependencyDownloadURL": .init("整合包依赖库的下载地址无效", []),
             "Errors:CoreInstaller.invalidResourceIndexHash": .init("资源索引包含无效哈希", []),
             "Errors:CoreInstaller.loaderVersionUnavailable": .init("此版本没有可用的 %1$@ 加载器。", [.text]),

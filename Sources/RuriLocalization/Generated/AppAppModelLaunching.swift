@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelLaunching {
-        /// 请重新添加外置认证账号。
+        /// 请重新添加第三方认证账号。
         ///
         /// Resource: `Errors.AppAppModelLaunching.externalAuthRequired`.
         public static var externalAuthRequired: LocalizedMessage {
-            .init(key: "AppAppModelLaunching.externalAuthRequired", table: "Errors", fallback: "请重新添加外置认证账号。")
+            .init(key: "AppAppModelLaunching.externalAuthRequired", table: "Errors", fallback: "请重新添加第三方认证账号。")
         }
         /// Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。
         ///
@@ -51,11 +51,11 @@ extension Messages {
         public static var checkingAccountAndJava: LocalizedMessage {
             .init(key: "AppAppModelLaunching.checkingAccountAndJava", table: "Progress", fallback: "正在检查账号和 Java")
         }
-        /// 正在准备外置认证组件
+        /// 正在准备第三方认证组件
         ///
         /// Resource: `Progress.AppAppModelLaunching.preparingAuthComponent`.
         public static var preparingAuthComponent: LocalizedMessage {
-            .init(key: "AppAppModelLaunching.preparingAuthComponent", table: "Progress", fallback: "正在准备外置认证组件")
+            .init(key: "AppAppModelLaunching.preparingAuthComponent", table: "Progress", fallback: "正在准备第三方认证组件")
         }
         /// 正在准备所需的 Java %1$@
         ///
@@ -64,7 +64,7 @@ extension Messages {
             .init(key: "AppAppModelLaunching.preparingJava", table: "Progress", fallback: "正在准备所需的 Java %1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:AppAppModelLaunching.externalAuthRequired": .init("请重新添加外置认证账号。", []),
+            "Errors:AppAppModelLaunching.externalAuthRequired": .init("请重新添加第三方认证账号。", []),
             "Errors:AppAppModelLaunching.javaRuntimeUnavailable": .init("Mojang 未提供此版本需要的 Java，请到 Java 运行时页面手动安装。", []),
             "Interface:AppAppModelLaunching.instanceInUse": .init("此实例或共享目录正在使用中，请查看运行记录或实例设置。", []),
             "Interface:AppAppModelLaunching.launchFailureNotice": .init("%1$@，可在运行记录中查看详情。", [.text]),
@@ -72,7 +72,7 @@ extension Messages {
             "Interface:AppAppModelLaunching.runRecordIncomplete": .init("运行记录未能完整写入：%1$@", [.text]),
             "Interface:AppAppModelLaunching.worldLaunch": .init("[Ruri] 进入存档：%1$@", [.text]),
             "Progress:AppAppModelLaunching.checkingAccountAndJava": .init("正在检查账号和 Java", []),
-            "Progress:AppAppModelLaunching.preparingAuthComponent": .init("正在准备外置认证组件", []),
+            "Progress:AppAppModelLaunching.preparingAuthComponent": .init("正在准备第三方认证组件", []),
             "Progress:AppAppModelLaunching.preparingJava": .init("正在准备所需的 Java %1$@", [.text]),
         ]
     }

@@ -15,44 +15,44 @@ extension Messages {
         public static func batchDestinationExists(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreContentBatch.batchDestinationExists", table: "Errors", fallback: "目标文件已存在，整批操作尚未执行：%1$@", arguments: [.text(value0)])
         }
-        /// 内容列表已改变，请刷新后重新选择：%1$@
+        /// 资源列表已更改，请刷新后重新选择：%1$@
         ///
         /// Resource: `Errors.CoreContentBatch.contentListChanged`.
         public static func contentListChanged(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreContentBatch.contentListChanged", table: "Errors", fallback: "内容列表已改变，请刷新后重新选择：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreContentBatch.contentListChanged", table: "Errors", fallback: "资源列表已更改，请刷新后重新选择：%1$@", arguments: [.text(value0)])
         }
-        /// 内容操作恢复失败，备份保留在 %1$@。%2$@
+        /// 无法恢复资源操作，备份保存在 %1$@。%2$@
         ///
         /// Resource: `Errors.CoreContentBatch.contentRecoveryFailed`.
         public static func contentRecoveryFailed(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreContentBatch.contentRecoveryFailed", table: "Errors", fallback: "内容操作恢复失败，备份保留在 %1$@。%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreContentBatch.contentRecoveryFailed", table: "Errors", fallback: "无法恢复资源操作，备份保存在 %1$@。%2$@", arguments: [.text(value0), .text(value1)])
         }
-        /// “%1$@”需要 %2$@。请将依赖与模组一起启用，或把依赖它的模组一起停用/移除。整批操作尚未执行。
+        /// “%1$@”需要 %2$@。启用模组时，请同时启用所需依赖；停用或移除依赖时，请同时处理依赖它的模组。本次操作尚未执行。
         ///
         /// Resource: `Errors.CoreContentBatch.dependencySelectionRequired`.
         public static func dependencySelectionRequired(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreContentBatch.dependencySelectionRequired", table: "Errors", fallback: "“%1$@”需要 %2$@。请将依赖与模组一起启用，或把依赖它的模组一起停用/移除。整批操作尚未执行。", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreContentBatch.dependencySelectionRequired", table: "Errors", fallback: "“%1$@”需要 %2$@。启用模组时，请同时启用所需依赖；停用或移除依赖时，请同时处理依赖它的模组。本次操作尚未执行。", arguments: [.text(value0), .text(value1)])
         }
-        /// 选择中包含重复文件。
+        /// 所选文件中有重复项。
         ///
         /// Resource: `Errors.CoreContentBatch.duplicateSelection`.
         public static var duplicateSelection: LocalizedMessage {
-            .init(key: "CoreContentBatch.duplicateSelection", table: "Errors", fallback: "选择中包含重复文件。")
+            .init(key: "CoreContentBatch.duplicateSelection", table: "Errors", fallback: "所选文件中有重复项。")
         }
-        /// 内容目录中存在不支持的文件类型：%1$@
+        /// 资源文件夹中存在不支持的文件类型：%1$@
         ///
         /// Resource: `Errors.CoreContentBatch.unsupportedContentFileType`.
         public static func unsupportedContentFileType(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreContentBatch.unsupportedContentFileType", table: "Errors", fallback: "内容目录中存在不支持的文件类型：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreContentBatch.unsupportedContentFileType", table: "Errors", fallback: "资源文件夹中存在不支持的文件类型：%1$@", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreContentBatch.removalFolder": .init("Ruri 已移除的内容 %1$@", [.text]),
             "Errors:CoreContentBatch.batchDestinationExists": .init("目标文件已存在，整批操作尚未执行：%1$@", [.text]),
-            "Errors:CoreContentBatch.contentListChanged": .init("内容列表已改变，请刷新后重新选择：%1$@", [.text]),
-            "Errors:CoreContentBatch.contentRecoveryFailed": .init("内容操作恢复失败，备份保留在 %1$@。%2$@", [.text, .text]),
-            "Errors:CoreContentBatch.dependencySelectionRequired": .init("“%1$@”需要 %2$@。请将依赖与模组一起启用，或把依赖它的模组一起停用/移除。整批操作尚未执行。", [.text, .text]),
-            "Errors:CoreContentBatch.duplicateSelection": .init("选择中包含重复文件。", []),
-            "Errors:CoreContentBatch.unsupportedContentFileType": .init("内容目录中存在不支持的文件类型：%1$@", [.text]),
+            "Errors:CoreContentBatch.contentListChanged": .init("资源列表已更改，请刷新后重新选择：%1$@", [.text]),
+            "Errors:CoreContentBatch.contentRecoveryFailed": .init("无法恢复资源操作，备份保存在 %1$@。%2$@", [.text, .text]),
+            "Errors:CoreContentBatch.dependencySelectionRequired": .init("“%1$@”需要 %2$@。启用模组时，请同时启用所需依赖；停用或移除依赖时，请同时处理依赖它的模组。本次操作尚未执行。", [.text, .text]),
+            "Errors:CoreContentBatch.duplicateSelection": .init("所选文件中有重复项。", []),
+            "Errors:CoreContentBatch.unsupportedContentFileType": .init("资源文件夹中存在不支持的文件类型：%1$@", [.text]),
         ]
     }
 }

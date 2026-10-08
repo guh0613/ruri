@@ -21,11 +21,11 @@ extension Messages {
         public static var compatible: LocalizedMessage {
             .init(key: "ContentDetails.compatible", table: "ContentDetails", fallback: "格式兼容")
         }
-        /// 配置 CurseForge API Key 后可同时识别该平台。
+        /// 设置 CurseForge API Key 后，也可识别来自该平台的资源。
         ///
         /// Resource: `ContentDetails.ContentDetails.curseforgeUnavailable`.
         public static var curseforgeUnavailable: LocalizedMessage {
-            .init(key: "ContentDetails.curseforgeUnavailable", table: "ContentDetails", fallback: "配置 CurseForge API Key 后可同时识别该平台。")
+            .init(key: "ContentDetails.curseforgeUnavailable", table: "ContentDetails", fallback: "设置 CurseForge API Key 后，也可识别来自该平台的资源。")
         }
         /// 简介
         ///
@@ -45,11 +45,11 @@ extension Messages {
         public static var download: LocalizedMessage {
             .init(key: "ContentDetails.download", table: "ContentDetails", fallback: "获取资源")
         }
-        /// 以下文件对应重复项目，暂未纳入更新：%1$@
+        /// 以下文件存在同项目的其他副本或版本，暂不检查更新：%1$@
         ///
         /// Resource: `ContentDetails.ContentDetails.duplicateProjects`.
         public static func duplicateProjects(_ value0: String) -> LocalizedMessage {
-            .init(key: "ContentDetails.duplicateProjects", table: "ContentDetails", fallback: "以下文件对应重复项目，暂未纳入更新：%1$@", arguments: [.text(value0)])
+            .init(key: "ContentDetails.duplicateProjects", table: "ContentDetails", fallback: "以下文件存在同项目的其他副本或版本，暂不检查更新：%1$@", arguments: [.text(value0)])
         }
         /// MC 百科
         ///
@@ -75,11 +75,11 @@ extension Messages {
         public static var folder: LocalizedMessage {
             .init(key: "ContentDetails.folder", table: "ContentDetails", fallback: "文件夹")
         }
-        /// 文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。
+        /// 可以查看文件夹的本地信息。在线识别和更新仅支持 ZIP 文件。
         ///
         /// Resource: `ContentDetails.ContentDetails.folderOnlineInfo`.
         public static var folderOnlineInfo: LocalizedMessage {
-            .init(key: "ContentDetails.folderOnlineInfo", table: "ContentDetails", fallback: "文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。")
+            .init(key: "ContentDetails.folderOnlineInfo", table: "ContentDetails", fallback: "可以查看文件夹的本地信息。在线识别和更新仅支持 ZIP 文件。")
         }
         /// 当前游戏格式
         ///
@@ -141,17 +141,17 @@ extension Messages {
         public static var localFile: LocalizedMessage {
             .init(key: "ContentDetails.localFile", table: "ContentDetails", fallback: "本地导入")
         }
-        /// 正在识别在线项目…
+        /// 正在查找资源对应的在线项目…
         ///
         /// Resource: `ContentDetails.ContentDetails.lookingUp`.
         public static var lookingUp: LocalizedMessage {
-            .init(key: "ContentDetails.lookingUp", table: "ContentDetails", fallback: "正在识别在线项目…")
+            .init(key: "ContentDetails.lookingUp", table: "ContentDetails", fallback: "正在查找资源对应的在线项目…")
         }
-        /// 中文名称与百科关联来自 MC 百科，由 HMCL 整理。
+        /// 中文名称和百科链接来自 MC 百科，由 HMCL 整理。
         ///
         /// Resource: `ContentDetails.ContentDetails.metadataAttribution`.
         public static var metadataAttribution: LocalizedMessage {
-            .init(key: "ContentDetails.metadataAttribution", table: "ContentDetails", fallback: "中文名称与百科关联来自 MC 百科，由 HMCL 整理。")
+            .init(key: "ContentDetails.metadataAttribution", table: "ContentDetails", fallback: "中文名称和百科链接来自 MC 百科，由 HMCL 整理。")
         }
         /// 缺少资源包信息
         ///
@@ -307,16 +307,16 @@ extension Messages {
             "ContentDetails:ContentDetails.authors": .init("作者", []),
             "ContentDetails:ContentDetails.compatibility": .init("兼容性", []),
             "ContentDetails:ContentDetails.compatible": .init("格式兼容", []),
-            "ContentDetails:ContentDetails.curseforgeUnavailable": .init("配置 CurseForge API Key 后可同时识别该平台。", []),
+            "ContentDetails:ContentDetails.curseforgeUnavailable": .init("设置 CurseForge API Key 后，也可识别来自该平台的资源。", []),
             "ContentDetails:ContentDetails.description": .init("简介", []),
             "ContentDetails:ContentDetails.details": .init("资源详情", []),
             "ContentDetails:ContentDetails.download": .init("获取资源", []),
-            "ContentDetails:ContentDetails.duplicateProjects": .init("以下文件对应重复项目，暂未纳入更新：%1$@", [.text]),
+            "ContentDetails:ContentDetails.duplicateProjects": .init("以下文件存在同项目的其他副本或版本，暂不检查更新：%1$@", [.text]),
             "ContentDetails:ContentDetails.encyclopedia": .init("MC 百科", []),
             "ContentDetails:ContentDetails.fileChanged": .init("文件已发生变化，请刷新后重试：%1$@", [.text]),
             "ContentDetails:ContentDetails.filename": .init("文件名", []),
             "ContentDetails:ContentDetails.folder": .init("文件夹", []),
-            "ContentDetails:ContentDetails.folderOnlineInfo": .init("文件夹可查看本地信息，在线识别与更新支持 ZIP 文件。", []),
+            "ContentDetails:ContentDetails.folderOnlineInfo": .init("可以查看文件夹的本地信息。在线识别和更新仅支持 ZIP 文件。", []),
             "ContentDetails:ContentDetails.gameFormat": .init("当前游戏格式", []),
             "ContentDetails:ContentDetails.gameVersions": .init("游戏版本", []),
             "ContentDetails:ContentDetails.homepage": .init("官方网站", []),
@@ -327,8 +327,8 @@ extension Messages {
             "ContentDetails:ContentDetails.irisFeatures": .init("Iris 功能要求", []),
             "ContentDetails:ContentDetails.loadingMetadata": .init("正在读取资源信息…", []),
             "ContentDetails:ContentDetails.localFile": .init("本地导入", []),
-            "ContentDetails:ContentDetails.lookingUp": .init("正在识别在线项目…", []),
-            "ContentDetails:ContentDetails.metadataAttribution": .init("中文名称与百科关联来自 MC 百科，由 HMCL 整理。", []),
+            "ContentDetails:ContentDetails.lookingUp": .init("正在查找资源对应的在线项目…", []),
+            "ContentDetails:ContentDetails.metadataAttribution": .init("中文名称和百科链接来自 MC 百科，由 HMCL 整理。", []),
             "ContentDetails:ContentDetails.missingPackMetadata": .init("缺少资源包信息", []),
             "ContentDetails:ContentDetails.missingShaders": .init("未找到光影文件", []),
             "ContentDetails:ContentDetails.modID": .init("模组 ID", []),

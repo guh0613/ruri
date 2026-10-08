@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppContentVersionView {
-        /// 此内容没有可查询的版本来源。
+        /// 无法查询此资源的版本来源。
         ///
         /// Resource: `Errors.AppContentVersionView.noVersionSource`.
         public static var noVersionSource: LocalizedMessage {
-            .init(key: "AppContentVersionView.noVersionSource", table: "Errors", fallback: "此内容没有可查询的版本来源。")
+            .init(key: "AppContentVersionView.noVersionSource", table: "Errors", fallback: "无法查询此资源的版本来源。")
         }
         /// 当前版本：%1$@ · %2$@
         ///
@@ -57,11 +57,11 @@ extension Messages {
         public static var nextPage: LocalizedMessage {
             .init(key: "AppContentVersionView.nextPage", table: "Interface", fallback: "下一页")
         }
-        /// 没有匹配的版本。可查看测试版或其他分页。
+        /// 没有匹配的版本。可以查看测试版或翻页查找。
         ///
         /// Resource: `Interface.AppContentVersionView.noMatchingVersion`.
         public static var noMatchingVersion: LocalizedMessage {
-            .init(key: "AppContentVersionView.noMatchingVersion", table: "Interface", fallback: "没有匹配的版本。可查看测试版或其他分页。")
+            .init(key: "AppContentVersionView.noMatchingVersion", table: "Interface", fallback: "没有匹配的版本。可以查看测试版或翻页查找。")
         }
         /// 第 %1$lld 页
         ///
@@ -81,17 +81,17 @@ extension Messages {
         public static func replaceItemVersion(_ value0: String) -> LocalizedMessage {
             .init(key: "AppContentVersionView.replaceItemVersion", table: "Interface", fallback: "更换 %1$@ 的版本", arguments: [.text(value0)])
         }
-        /// 更换内容版本
+        /// 更换资源版本
         ///
         /// Resource: `Interface.AppContentVersionView.replaceVersion`.
         public static var replaceVersion: LocalizedMessage {
-            .init(key: "AppContentVersionView.replaceVersion", table: "Interface", fallback: "更换内容版本")
+            .init(key: "AppContentVersionView.replaceVersion", table: "Interface", fallback: "更换资源版本")
         }
-        /// 正在解析必需依赖…
+        /// 正在检查所需的依赖…
         ///
         /// Resource: `Interface.AppContentVersionView.resolveDependencies`.
         public static var resolveDependencies: LocalizedMessage {
-            .init(key: "AppContentVersionView.resolveDependencies", table: "Interface", fallback: "正在解析必需依赖…")
+            .init(key: "AppContentVersionView.resolveDependencies", table: "Interface", fallback: "正在检查所需的依赖…")
         }
         /// 返回版本列表
         ///
@@ -124,7 +124,7 @@ extension Messages {
             .init(key: "AppContentVersionView.viewInstallPlan", table: "Interface", fallback: "查看安装清单")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:AppContentVersionView.noVersionSource": .init("此内容没有可查询的版本来源。", []),
+            "Errors:AppContentVersionView.noVersionSource": .init("无法查询此资源的版本来源。", []),
             "Interface:AppContentVersionView.currentVersion": .init("当前版本：%1$@ · %2$@", [.text, .text]),
             "Interface:AppContentVersionView.findCompatibleVersion": .init("查找兼容版本…", []),
             "Interface:AppContentVersionView.includePrereleases": .init("包含 Beta / Alpha 测试版", []),
@@ -133,12 +133,12 @@ extension Messages {
             "Interface:AppContentVersionView.installed": .init("已安装", []),
             "Interface:AppContentVersionView.instanceRemoved": .init("实例已移除", []),
             "Interface:AppContentVersionView.nextPage": .init("下一页", []),
-            "Interface:AppContentVersionView.noMatchingVersion": .init("没有匹配的版本。可查看测试版或其他分页。", []),
+            "Interface:AppContentVersionView.noMatchingVersion": .init("没有匹配的版本。可以查看测试版或翻页查找。", []),
             "Interface:AppContentVersionView.pageNumber": .init("第 %1$lld 页", [.integer]),
             "Interface:AppContentVersionView.previousPage": .init("上一页", []),
             "Interface:AppContentVersionView.replaceItemVersion": .init("更换 %1$@ 的版本", [.text]),
-            "Interface:AppContentVersionView.replaceVersion": .init("更换内容版本", []),
-            "Interface:AppContentVersionView.resolveDependencies": .init("正在解析必需依赖…", []),
+            "Interface:AppContentVersionView.replaceVersion": .init("更换资源版本", []),
+            "Interface:AppContentVersionView.resolveDependencies": .init("正在检查所需的依赖…", []),
             "Interface:AppContentVersionView.returnToVersions": .init("返回版本列表", []),
             "Interface:AppContentVersionView.stableRelease": .init("正式版", []),
             "Interface:AppContentVersionView.versionReplaced": .init("%1$@ 已更换为 %2$@", [.text, .text]),

@@ -15,11 +15,11 @@ extension Messages {
         public static var chartLabel: LocalizedMessage {
             .init(key: "HomeActivity.chartLabel", table: "Sessions", fallback: "全年游玩热力图")
         }
-        /// 累积
+        /// 累计
         ///
         /// Resource: `Sessions.HomeActivity.cumulative`.
         public static var cumulative: LocalizedMessage {
-            .init(key: "HomeActivity.cumulative", table: "Sessions", fallback: "累积")
+            .init(key: "HomeActivity.cumulative", table: "Sessions", fallback: "累计")
         }
         /// 日
         ///
@@ -114,7 +114,7 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Sessions:HomeActivity.activeDays": .init("游玩了 %1$lld 天", [.integer]),
             "Sessions:HomeActivity.chartLabel": .init("全年游玩热力图", []),
-            "Sessions:HomeActivity.cumulative": .init("累积", []),
+            "Sessions:HomeActivity.cumulative": .init("累计", []),
             "Sessions:HomeActivity.day": .init("日", []),
             "Sessions:HomeActivity.dayContribution": .init("当日游玩 %1$@", [.text]),
             "Sessions:HomeActivity.dayTime": .init("当日游玩时长", []),

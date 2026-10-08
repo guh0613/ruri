@@ -9,11 +9,11 @@ extension Messages {
         public static var moveCancelledWithBackup: LocalizedMessage {
             .init(key: "CoreRepositoryInstanceMover.moveCancelledWithBackup", table: "Core", fallback: "移动已取消，原实例保留，工作副本已另存。")
         }
-        /// 实例已移动，原文件与工作记录尚需处理，请恢复实例移动。%1$@
+        /// 实例已移动，原文件和操作记录还需处理。请恢复未完成的移动。%1$@
         ///
         /// Resource: `Core.CoreRepositoryInstanceMover.moveCommittedNeedsRecovery`.
         public static func moveCommittedNeedsRecovery(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.moveCommittedNeedsRecovery", table: "Core", fallback: "实例已移动，原文件与工作记录尚需处理，请恢复实例移动。%1$@", arguments: [.text(value0)])
+            .init(key: "CoreRepositoryInstanceMover.moveCommittedNeedsRecovery", table: "Core", fallback: "实例已移动，原文件和操作记录还需处理。请恢复未完成的移动。%1$@", arguments: [.text(value0)])
         }
         /// 移动未完成，原实例保留。%1$@
         ///
@@ -46,17 +46,17 @@ extension Messages {
         public static var cannotCreateCleanupDirectory: LocalizedMessage {
             .init(key: "CoreRepositoryInstanceMover.cannotCreateCleanupDirectory", table: "Errors", fallback: "无法创建原文件清理目录。")
         }
-        /// 移动目标的身份改变，原文件已保留。
+        /// 目标位置已被替换，原文件已保留。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.changedDestinationIdentity`.
         public static var changedDestinationIdentity: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.changedDestinationIdentity", table: "Errors", fallback: "移动目标的身份改变，原文件已保留。")
+            .init(key: "CoreRepositoryInstanceMover.changedDestinationIdentity", table: "Errors", fallback: "目标位置已被替换，原文件已保留。")
         }
-        /// 剩余原文件的身份改变。
+        /// 剩余原文件已被替换。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.changedRemainingFiles`.
         public static var changedRemainingFiles: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.changedRemainingFiles", table: "Errors", fallback: "剩余原文件的身份改变。")
+            .init(key: "CoreRepositoryInstanceMover.changedRemainingFiles", table: "Errors", fallback: "剩余原文件已被替换。")
         }
         /// 实例设置在预览后改变，请重新预览。
         ///
@@ -64,17 +64,17 @@ extension Messages {
         public static var changedSettingsAfterPreview: LocalizedMessage {
             .init(key: "CoreRepositoryInstanceMover.changedSettingsAfterPreview", table: "Errors", fallback: "实例设置在预览后改变，请重新预览。")
         }
-        /// 移动工作区身份改变。
+        /// 移动所需的工作文件夹已被替换。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.changedWorkspaceIdentity`.
         public static var changedWorkspaceIdentity: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.changedWorkspaceIdentity", table: "Errors", fallback: "移动工作区身份改变。")
+            .init(key: "CoreRepositoryInstanceMover.changedWorkspaceIdentity", table: "Errors", fallback: "移动所需的工作文件夹已被替换。")
         }
-        /// 原文件清理目录身份改变。
+        /// 用于清理原文件的文件夹已被替换。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.cleanupDirectoryIdentityChanged`.
         public static var cleanupDirectoryIdentityChanged: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.cleanupDirectoryIdentityChanged", table: "Errors", fallback: "原文件清理目录身份改变。")
+            .init(key: "CoreRepositoryInstanceMover.cleanupDirectoryIdentityChanged", table: "Errors", fallback: "用于清理原文件的文件夹已被替换。")
         }
         /// 无法确认原文件的清理位置。
         ///
@@ -88,23 +88,23 @@ extension Messages {
         public static var cleanupOriginalFilesFailed: LocalizedMessage {
             .init(key: "CoreRepositoryInstanceMover.cleanupOriginalFilesFailed", table: "Errors", fallback: "无法整理原实例文件，请恢复移动。")
         }
-        /// 移动包含原文件清理记录，需要先核对提交状态。
+        /// 移动记录包含原文件的清理信息，需要先确认实例是否已移至目标位置。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.cleanupRecordNeedsCommitCheck`.
         public static var cleanupRecordNeedsCommitCheck: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.cleanupRecordNeedsCommitCheck", table: "Errors", fallback: "移动包含原文件清理记录，需要先核对提交状态。")
+            .init(key: "CoreRepositoryInstanceMover.cleanupRecordNeedsCommitCheck", table: "Errors", fallback: "移动记录包含原文件的清理信息，需要先确认实例是否已移至目标位置。")
         }
-        /// 移动工作区已存在，未覆盖已有文件。
+        /// 移动所需的工作文件夹已存在，未覆盖已有文件。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.existingMoveWorkspace`.
         public static var existingMoveWorkspace: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.existingMoveWorkspace", table: "Errors", fallback: "移动工作区已存在，未覆盖已有文件。")
+            .init(key: "CoreRepositoryInstanceMover.existingMoveWorkspace", table: "Errors", fallback: "移动所需的工作文件夹已存在，未覆盖已有文件。")
         }
-        /// 移动目标尚未完整发布。
+        /// 实例文件尚未完整写入目标位置。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.incompleteDestinationPublication`.
         public static var incompleteDestinationPublication: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.incompleteDestinationPublication", table: "Errors", fallback: "移动目标尚未完整发布。")
+            .init(key: "CoreRepositoryInstanceMover.incompleteDestinationPublication", table: "Errors", fallback: "实例文件尚未完整写入目标位置。")
         }
         /// 实例设置已改变，请重新预览。
         ///
@@ -118,11 +118,11 @@ extension Messages {
         public static var missingInstallationFiles: LocalizedMessage {
             .init(key: "CoreRepositoryInstanceMover.missingInstallationFiles", table: "Errors", fallback: "移动预览缺少安装文件。")
         }
-        /// 移动尚未提交，不能清理原文件。
+        /// 实例尚未确认移至目标位置，无法清理原文件。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.moveNotCommitted`.
         public static var moveNotCommitted: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.moveNotCommitted", table: "Errors", fallback: "移动尚未提交，不能清理原文件。")
+            .init(key: "CoreRepositoryInstanceMover.moveNotCommitted", table: "Errors", fallback: "实例尚未确认移至目标位置，无法清理原文件。")
         }
         /// 待恢复的移动已经改变。
         ///
@@ -136,11 +136,11 @@ extension Messages {
         public static var settingsChangedDuringMove: LocalizedMessage {
             .init(key: "CoreRepositoryInstanceMover.settingsChangedDuringMove", table: "Errors", fallback: "实例设置在移动期间改变。")
         }
-        /// 原文件夹身份改变，请检查或选择保留原文件完成移动。
+        /// 原文件夹已被替换。请检查文件，或选择“保留原文件并完成”。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.sourceFolderIdentityChanged`.
         public static var sourceFolderIdentityChanged: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.sourceFolderIdentityChanged", table: "Errors", fallback: "原文件夹身份改变，请检查或选择保留原文件完成移动。")
+            .init(key: "CoreRepositoryInstanceMover.sourceFolderIdentityChanged", table: "Errors", fallback: "原文件夹已被替换。请检查文件，或选择“保留原文件并完成”。")
         }
         /// 原位置出现其他文件，未继续清理。
         ///
@@ -148,38 +148,38 @@ extension Messages {
         public static var unexpectedOriginalFiles: LocalizedMessage {
             .init(key: "CoreRepositoryInstanceMover.unexpectedOriginalFiles", table: "Errors", fallback: "原位置出现其他文件，未继续清理。")
         }
-        /// 工作区身份改变，目标文件原地保留。
+        /// 工作文件夹已被替换，目标文件已保留在原位置。
         ///
         /// Resource: `Errors.CoreRepositoryInstanceMover.workspaceIdentityChanged`.
         public static var workspaceIdentityChanged: LocalizedMessage {
-            .init(key: "CoreRepositoryInstanceMover.workspaceIdentityChanged", table: "Errors", fallback: "工作区身份改变，目标文件原地保留。")
+            .init(key: "CoreRepositoryInstanceMover.workspaceIdentityChanged", table: "Errors", fallback: "工作文件夹已被替换，目标文件已保留在原位置。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreRepositoryInstanceMover.moveCancelledWithBackup": .init("移动已取消，原实例保留，工作副本已另存。", []),
-            "Core:CoreRepositoryInstanceMover.moveCommittedNeedsRecovery": .init("实例已移动，原文件与工作记录尚需处理，请恢复实例移动。%1$@", [.text]),
+            "Core:CoreRepositoryInstanceMover.moveCommittedNeedsRecovery": .init("实例已移动，原文件和操作记录还需处理。请恢复未完成的移动。%1$@", [.text]),
             "Core:CoreRepositoryInstanceMover.moveIncompleteOriginalRetained": .init("移动未完成，原实例保留。%1$@", [.text]),
             "Core:CoreRepositoryInstanceMover.moveRecoveredWithFiles": .init("未完成的移动已恢复，原实例及工作副本保留。", []),
             "Core:CoreRepositoryInstanceMover.moveRecoveryRequired": .init("移动需要恢复，原实例保留。%1$@\n%2$@", [.text, .text]),
             "Core:CoreRepositoryInstanceMover.movedWithRetainedFiles": .init("实例已移动，部分原文件或工作文件保留，可在 Finder 中检查。", []),
             "Errors:CoreRepositoryInstanceMover.cannotCreateCleanupDirectory": .init("无法创建原文件清理目录。", []),
-            "Errors:CoreRepositoryInstanceMover.changedDestinationIdentity": .init("移动目标的身份改变，原文件已保留。", []),
-            "Errors:CoreRepositoryInstanceMover.changedRemainingFiles": .init("剩余原文件的身份改变。", []),
+            "Errors:CoreRepositoryInstanceMover.changedDestinationIdentity": .init("目标位置已被替换，原文件已保留。", []),
+            "Errors:CoreRepositoryInstanceMover.changedRemainingFiles": .init("剩余原文件已被替换。", []),
             "Errors:CoreRepositoryInstanceMover.changedSettingsAfterPreview": .init("实例设置在预览后改变，请重新预览。", []),
-            "Errors:CoreRepositoryInstanceMover.changedWorkspaceIdentity": .init("移动工作区身份改变。", []),
-            "Errors:CoreRepositoryInstanceMover.cleanupDirectoryIdentityChanged": .init("原文件清理目录身份改变。", []),
+            "Errors:CoreRepositoryInstanceMover.changedWorkspaceIdentity": .init("移动所需的工作文件夹已被替换。", []),
+            "Errors:CoreRepositoryInstanceMover.cleanupDirectoryIdentityChanged": .init("用于清理原文件的文件夹已被替换。", []),
             "Errors:CoreRepositoryInstanceMover.cleanupLocationUnknown": .init("无法确认原文件的清理位置。", []),
             "Errors:CoreRepositoryInstanceMover.cleanupOriginalFilesFailed": .init("无法整理原实例文件，请恢复移动。", []),
-            "Errors:CoreRepositoryInstanceMover.cleanupRecordNeedsCommitCheck": .init("移动包含原文件清理记录，需要先核对提交状态。", []),
-            "Errors:CoreRepositoryInstanceMover.existingMoveWorkspace": .init("移动工作区已存在，未覆盖已有文件。", []),
-            "Errors:CoreRepositoryInstanceMover.incompleteDestinationPublication": .init("移动目标尚未完整发布。", []),
+            "Errors:CoreRepositoryInstanceMover.cleanupRecordNeedsCommitCheck": .init("移动记录包含原文件的清理信息，需要先确认实例是否已移至目标位置。", []),
+            "Errors:CoreRepositoryInstanceMover.existingMoveWorkspace": .init("移动所需的工作文件夹已存在，未覆盖已有文件。", []),
+            "Errors:CoreRepositoryInstanceMover.incompleteDestinationPublication": .init("实例文件尚未完整写入目标位置。", []),
             "Errors:CoreRepositoryInstanceMover.instanceSettingsChanged": .init("实例设置已改变，请重新预览。", []),
             "Errors:CoreRepositoryInstanceMover.missingInstallationFiles": .init("移动预览缺少安装文件。", []),
-            "Errors:CoreRepositoryInstanceMover.moveNotCommitted": .init("移动尚未提交，不能清理原文件。", []),
+            "Errors:CoreRepositoryInstanceMover.moveNotCommitted": .init("实例尚未确认移至目标位置，无法清理原文件。", []),
             "Errors:CoreRepositoryInstanceMover.pendingMoveChanged": .init("待恢复的移动已经改变。", []),
             "Errors:CoreRepositoryInstanceMover.settingsChangedDuringMove": .init("实例设置在移动期间改变。", []),
-            "Errors:CoreRepositoryInstanceMover.sourceFolderIdentityChanged": .init("原文件夹身份改变，请检查或选择保留原文件完成移动。", []),
+            "Errors:CoreRepositoryInstanceMover.sourceFolderIdentityChanged": .init("原文件夹已被替换。请检查文件，或选择“保留原文件并完成”。", []),
             "Errors:CoreRepositoryInstanceMover.unexpectedOriginalFiles": .init("原位置出现其他文件，未继续清理。", []),
-            "Errors:CoreRepositoryInstanceMover.workspaceIdentityChanged": .init("工作区身份改变，目标文件原地保留。", []),
+            "Errors:CoreRepositoryInstanceMover.workspaceIdentityChanged": .init("工作文件夹已被替换，目标文件已保留在原位置。", []),
         ]
     }
 }

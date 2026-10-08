@@ -39,11 +39,11 @@ extension Messages {
         public static var changeServer: LocalizedMessage {
             .init(key: "AppExternalAccountForm.changeServer", table: "Interface", fallback: "更换服务器")
         }
-        /// 选择本次添加的游戏角色
+        /// 选择要添加的游戏角色
         ///
         /// Resource: `Interface.AppExternalAccountForm.chooseRole`.
         public static var chooseRole: LocalizedMessage {
-            .init(key: "AppExternalAccountForm.chooseRole", table: "Interface", fallback: "选择本次添加的游戏角色")
+            .init(key: "AppExternalAccountForm.chooseRole", table: "Interface", fallback: "选择要添加的游戏角色")
         }
         /// 正在连接认证服务器…
         ///
@@ -51,11 +51,11 @@ extension Messages {
         public static var connectingServer: LocalizedMessage {
             .init(key: "AppExternalAccountForm.connectingServer", table: "Interface", fallback: "正在连接认证服务器…")
         }
-        /// 使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。
+        /// 使用上方认证站的账号登录。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串中。
         ///
         /// Resource: `Interface.AppExternalAccountForm.credentialsHelp`.
         public static var credentialsHelp: LocalizedMessage {
-            .init(key: "AppExternalAccountForm.credentialsHelp", table: "Interface", fallback: "使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。")
+            .init(key: "AppExternalAccountForm.credentialsHelp", table: "Interface", fallback: "使用上方认证站的账号登录。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串中。")
         }
         /// 识别服务器
         ///
@@ -124,9 +124,9 @@ extension Messages {
             "Interface:AppExternalAccountForm.authPassword": .init("认证站密码", []),
             "Interface:AppExternalAccountForm.authServer": .init("认证站账号", []),
             "Interface:AppExternalAccountForm.changeServer": .init("更换服务器", []),
-            "Interface:AppExternalAccountForm.chooseRole": .init("选择本次添加的游戏角色", []),
+            "Interface:AppExternalAccountForm.chooseRole": .init("选择要添加的游戏角色", []),
             "Interface:AppExternalAccountForm.connectingServer": .init("正在连接认证服务器…", []),
-            "Interface:AppExternalAccountForm.credentialsHelp": .init("使用上方认证站的账号。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串。", []),
+            "Interface:AppExternalAccountForm.credentialsHelp": .init("使用上方认证站的账号登录。密码仅用于本次登录，登录凭据保存在 macOS 钥匙串中。", []),
             "Interface:AppExternalAccountForm.identifyServer": .init("识别服务器", []),
             "Interface:AppExternalAccountForm.login": .init("登录", []),
             "Interface:AppExternalAccountForm.password": .init("密码", []),

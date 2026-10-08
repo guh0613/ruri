@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreGameRunDirectory {
-        /// 所有新实例独立
+        /// 所有新实例使用独立目录
         ///
         /// Resource: `Core.CoreGameRunDirectory.allNewInstancesIsolated`.
         public static var allNewInstancesIsolated: LocalizedMessage {
-            .init(key: "CoreGameRunDirectory.allNewInstancesIsolated", table: "Core", fallback: "所有新实例独立")
+            .init(key: "CoreGameRunDirectory.allNewInstancesIsolated", table: "Core", fallback: "所有新实例使用独立目录")
         }
         /// 自定义运行目录
         ///
@@ -33,11 +33,11 @@ extension Messages {
         public static var isolatedDirectoryDescription: LocalizedMessage {
             .init(key: "CoreGameRunDirectory.isolatedDirectoryDescription", table: "Core", fallback: "此实例单独保存模组、存档和游戏设置。")
         }
-        /// 有模组加载器的实例独立
+        /// 有模组加载器的新实例使用独立目录
         ///
         /// Resource: `Core.CoreGameRunDirectory.loaderInstancesIsolated`.
         public static var loaderInstancesIsolated: LocalizedMessage {
-            .init(key: "CoreGameRunDirectory.loaderInstancesIsolated", table: "Core", fallback: "有模组加载器的实例独立")
+            .init(key: "CoreGameRunDirectory.loaderInstancesIsolated", table: "Core", fallback: "有模组加载器的新实例使用独立目录")
         }
         /// 新实例使用共享目录
         ///
@@ -70,12 +70,12 @@ extension Messages {
             .init(key: "CoreGameRunDirectory.customPathMismatch", table: "Errors", fallback: "自定义运行目录与本次操作的路径不一致，请刷新后重试。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreGameRunDirectory.allNewInstancesIsolated": .init("所有新实例独立", []),
+            "Core:CoreGameRunDirectory.allNewInstancesIsolated": .init("所有新实例使用独立目录", []),
             "Core:CoreGameRunDirectory.customDirectory": .init("自定义运行目录", []),
             "Core:CoreGameRunDirectory.customDirectoryDescription": .init("在指定位置保存模组、存档和游戏设置。使用同一路径的实例不能同时运行。", []),
             "Core:CoreGameRunDirectory.isolatedDirectory": .init("独立运行目录", []),
             "Core:CoreGameRunDirectory.isolatedDirectoryDescription": .init("此实例单独保存模组、存档和游戏设置。", []),
-            "Core:CoreGameRunDirectory.loaderInstancesIsolated": .init("有模组加载器的实例独立", []),
+            "Core:CoreGameRunDirectory.loaderInstancesIsolated": .init("有模组加载器的新实例使用独立目录", []),
             "Core:CoreGameRunDirectory.newInstancesShared": .init("新实例使用共享目录", []),
             "Core:CoreGameRunDirectory.sharedDirectory": .init("共享运行目录", []),
             "Core:CoreGameRunDirectory.sharedDirectoryDescription": .init("使用同一共享目录的实例共用模组、存档和游戏设置，不能同时运行。", []),

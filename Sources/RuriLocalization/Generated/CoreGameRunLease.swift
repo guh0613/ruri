@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreGameRunLease {
-        /// 这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。
+        /// 此实例仍在运行，或上次运行状态尚未确认，请先查看运行记录。
         ///
         /// Resource: `Errors.CoreGameRunLease.activeRunSession`.
         public static var activeRunSession: LocalizedMessage {
-            .init(key: "CoreGameRunLease.activeRunSession", table: "Errors", fallback: "这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。")
+            .init(key: "CoreGameRunLease.activeRunSession", table: "Errors", fallback: "此实例仍在运行，或上次运行状态尚未确认，请先查看运行记录。")
         }
         /// 这个实例正在运行或准备启动，请先结束当前游戏。
         ///
@@ -22,7 +22,7 @@ extension Messages {
             .init(key: "CoreGameRunLease.runLockUnavailable", table: "Errors", fallback: "无法取得实例运行锁。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:CoreGameRunLease.activeRunSession": .init("这个实例仍有活动或状态未确认的运行会话，请先检查运行记录。", []),
+            "Errors:CoreGameRunLease.activeRunSession": .init("此实例仍在运行，或上次运行状态尚未确认，请先查看运行记录。", []),
             "Errors:CoreGameRunLease.instanceAlreadyRunning": .init("这个实例正在运行或准备启动，请先结束当前游戏。", []),
             "Errors:CoreGameRunLease.runLockUnavailable": .init("无法取得实例运行锁。", []),
         ]

@@ -176,7 +176,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "搜索范围过大。请选择游戏文件夹或其上一级目录。"
+            "value" : "搜索范围过大。请选择游戏文件夹或它的上一级文件夹。"
           }
         }
       }
@@ -302,7 +302,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "由 Ruri 管理，用于存放新安装和导入的实例。"
+            "value" : "由 Ruri 管理，用于存放新安装或导入的实例。"
           }
         }
       }
@@ -320,7 +320,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已自动定位到游戏文件夹"
+            "value" : "已找到游戏文件夹"
           }
         }
       }
@@ -356,7 +356,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未包含游戏版本"
+            "value" : "没有游戏版本"
           }
         }
       }
@@ -464,7 +464,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "选择包含 versions 的游戏文件夹，通常名为 .minecraft 或 minecraft。选择其上一级目录也可自动识别。"
+            "value" : "选择包含 versions 文件夹的游戏文件夹，通常名为 .minecraft 或 minecraft。也可以选择它的上一级文件夹，让 Ruri 自动查找。"
           }
         }
       }
@@ -590,7 +590,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新游戏可使用空文件夹。"
+            "value" : "选择空文件夹，用于安装新游戏。"
           }
         }
       }
@@ -608,7 +608,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "没有找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可以选择它的上一级目录。若要存放新游戏，请选择一个空文件夹。"
+            "value" : "未找到游戏文件夹。请选择包含 versions 的 .minecraft 或 minecraft 文件夹，也可选择它的上一级文件夹。安装新游戏时可以选择空文件夹。"
           }
         }
       }
@@ -644,7 +644,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未在自动查找范围内检测到游戏文件夹，请手动选择位置。"
+            "value" : "未自动找到游戏文件夹，请手动选择位置。"
           }
         }
       }
@@ -716,7 +716,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "从列表移除后，游戏文件仍保留在原位置，实例设置也会保留以便重新添加。"
+            "value" : "从列表移除后，游戏文件仍留在原位置。实例设置也会保留，重新添加文件夹后可以恢复。"
           }
         }
       }

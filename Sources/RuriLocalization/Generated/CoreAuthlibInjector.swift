@@ -9,11 +9,11 @@ extension Messages {
         public static var authlibInjectorChecksumFailed: LocalizedMessage {
             .init(key: "CoreAuthlibInjector.authlibInjectorChecksumFailed", table: "Errors", fallback: "authlib-injector 文件校验失败，请重试。")
         }
-        /// 外置认证组件尚未准备好。
+        /// 第三方认证组件尚未准备好。
         ///
         /// Resource: `Errors.CoreAuthlibInjector.externalAuthComponentNotReady`.
         public static var externalAuthComponentNotReady: LocalizedMessage {
-            .init(key: "CoreAuthlibInjector.externalAuthComponentNotReady", table: "Errors", fallback: "外置认证组件尚未准备好。")
+            .init(key: "CoreAuthlibInjector.externalAuthComponentNotReady", table: "Errors", fallback: "第三方认证组件尚未准备好。")
         }
         /// authlib-injector 下载信息无效。
         ///
@@ -23,7 +23,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreAuthlibInjector.authlibInjectorChecksumFailed": .init("authlib-injector 文件校验失败，请重试。", []),
-            "Errors:CoreAuthlibInjector.externalAuthComponentNotReady": .init("外置认证组件尚未准备好。", []),
+            "Errors:CoreAuthlibInjector.externalAuthComponentNotReady": .init("第三方认证组件尚未准备好。", []),
             "Errors:CoreAuthlibInjector.invalidAuthlibInjectorDownloadInfo": .init("authlib-injector 下载信息无效。", []),
         ]
     }

@@ -9,11 +9,11 @@ extension Messages {
         public static var cancelledWorkFilesKept: LocalizedMessage {
             .init(key: "AppRepositoryImportRecoveryView.cancelledWorkFilesKept", table: "Interface", fallback: "已取消，工作文件已保留。")
         }
-        /// 复制收尾
+        /// 完成复制后的清理
         ///
         /// Resource: `Interface.AppRepositoryImportRecoveryView.copyCleanup`.
         public static var copyCleanup: LocalizedMessage {
-            .init(key: "AppRepositoryImportRecoveryView.copyCleanup", table: "Interface", fallback: "复制收尾")
+            .init(key: "AppRepositoryImportRecoveryView.copyCleanup", table: "Interface", fallback: "完成复制后的清理")
         }
         /// 实例文件已准备好，可以完成操作。
         ///
@@ -39,11 +39,11 @@ extension Messages {
         public static var finishInstanceOperation: LocalizedMessage {
             .init(key: "AppRepositoryImportRecoveryView.finishInstanceOperation", table: "Interface", fallback: "完成实例操作")
         }
-        /// 导入收尾
+        /// 完成导入后的清理
         ///
         /// Resource: `Interface.AppRepositoryImportRecoveryView.importCleanup`.
         public static var importCleanup: LocalizedMessage {
-            .init(key: "AppRepositoryImportRecoveryView.importCleanup", table: "Interface", fallback: "导入收尾")
+            .init(key: "AppRepositoryImportRecoveryView.importCleanup", table: "Interface", fallback: "完成导入后的清理")
         }
         /// 未完成的实例复制
         ///
@@ -89,12 +89,12 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppRepositoryImportRecoveryView.cancelledWorkFilesKept": .init("已取消，工作文件已保留。", []),
-            "Interface:AppRepositoryImportRecoveryView.copyCleanup": .init("复制收尾", []),
+            "Interface:AppRepositoryImportRecoveryView.copyCleanup": .init("完成复制后的清理", []),
             "Interface:AppRepositoryImportRecoveryView.filesReady": .init("实例文件已准备好，可以完成操作。", []),
             "Interface:AppRepositoryImportRecoveryView.finishCopy": .init("完成复制", []),
             "Interface:AppRepositoryImportRecoveryView.finishImport": .init("完成导入", []),
             "Interface:AppRepositoryImportRecoveryView.finishInstanceOperation": .init("完成实例操作", []),
-            "Interface:AppRepositoryImportRecoveryView.importCleanup": .init("导入收尾", []),
+            "Interface:AppRepositoryImportRecoveryView.importCleanup": .init("完成导入后的清理", []),
             "Interface:AppRepositoryImportRecoveryView.incompleteCopy": .init("未完成的实例复制", []),
             "Interface:AppRepositoryImportRecoveryView.incompleteImport": .init("未完成的整合包导入", []),
             "Interface:AppRepositoryImportRecoveryView.keepAndCancel": .init("保留文件并取消", []),

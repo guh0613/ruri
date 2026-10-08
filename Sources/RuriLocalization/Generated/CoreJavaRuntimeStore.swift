@@ -45,11 +45,11 @@ extension Messages {
         public static var invalidManualJavaPathRecord: LocalizedMessage {
             .init(key: "CoreJavaRuntimeStore.invalidManualJavaPathRecord", table: "Errors", fallback: "手动添加的 Java 路径记录无效。")
         }
-        /// Java 已移到废纸篓，但引用设置未能保存，请在 Finder 中还原它。
+        /// Java 已移到废纸篓，但未能更新使用它的设置。请在 Finder 中将其还原。
         ///
         /// Resource: `Errors.CoreJavaRuntimeStore.javaReferenceSaveFailed`.
         public static var javaReferenceSaveFailed: LocalizedMessage {
-            .init(key: "CoreJavaRuntimeStore.javaReferenceSaveFailed", table: "Errors", fallback: "Java 已移到废纸篓，但引用设置未能保存，请在 Finder 中还原它。")
+            .init(key: "CoreJavaRuntimeStore.javaReferenceSaveFailed", table: "Errors", fallback: "Java 已移到废纸篓，但未能更新使用它的设置。请在 Finder 中将其还原。")
         }
         /// 此运行时目录已不存在，请重新检测。
         ///
@@ -57,17 +57,17 @@ extension Messages {
         public static var javaRuntimeDirectoryMissing: LocalizedMessage {
             .init(key: "CoreJavaRuntimeStore.javaRuntimeDirectoryMissing", table: "Errors", fallback: "此运行时目录已不存在，请重新检测。")
         }
-        /// 以下设置仍指定此 Java：%1$@。请先更换 Java，或选择移除并改为自动选择。
+        /// 以下设置仍在使用此 Java：%1$@。请先选择其他 Java，或在移除时将这些设置改为自动选择。
         ///
         /// Resource: `Errors.CoreJavaRuntimeStore.javaStillReferencedBySettings`.
         public static func javaStillReferencedBySettings(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreJavaRuntimeStore.javaStillReferencedBySettings", table: "Errors", fallback: "以下设置仍指定此 Java：%1$@。请先更换 Java，或选择移除并改为自动选择。", arguments: [.text(value0)])
+            .init(key: "CoreJavaRuntimeStore.javaStillReferencedBySettings", table: "Errors", fallback: "以下设置仍在使用此 Java：%1$@。请先选择其他 Java，或在移除时将这些设置改为自动选择。", arguments: [.text(value0)])
         }
-        /// 不修改通过符号链接接入的 Java，请在 Finder 中处理原目录。
+        /// 无法修改通过符号链接添加的 Java，请在 Finder 中处理原文件夹。
         ///
         /// Resource: `Errors.CoreJavaRuntimeStore.preserveSymlinkedJavaDirectory`.
         public static var preserveSymlinkedJavaDirectory: LocalizedMessage {
-            .init(key: "CoreJavaRuntimeStore.preserveSymlinkedJavaDirectory", table: "Errors", fallback: "不修改通过符号链接接入的 Java，请在 Finder 中处理原目录。")
+            .init(key: "CoreJavaRuntimeStore.preserveSymlinkedJavaDirectory", table: "Errors", fallback: "无法修改通过符号链接添加的 Java，请在 Finder 中处理原文件夹。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreJavaRuntimeStore.addedManually": .init("手动添加", []),
@@ -77,10 +77,10 @@ extension Messages {
             "Core:CoreJavaRuntimeStore.fromLaunchSettings": .init("启动设置", []),
             "Errors:CoreJavaRuntimeStore.invalidJavaRuntimeName": .init("Java 运行时名称无效。", []),
             "Errors:CoreJavaRuntimeStore.invalidManualJavaPathRecord": .init("手动添加的 Java 路径记录无效。", []),
-            "Errors:CoreJavaRuntimeStore.javaReferenceSaveFailed": .init("Java 已移到废纸篓，但引用设置未能保存，请在 Finder 中还原它。", []),
+            "Errors:CoreJavaRuntimeStore.javaReferenceSaveFailed": .init("Java 已移到废纸篓，但未能更新使用它的设置。请在 Finder 中将其还原。", []),
             "Errors:CoreJavaRuntimeStore.javaRuntimeDirectoryMissing": .init("此运行时目录已不存在，请重新检测。", []),
-            "Errors:CoreJavaRuntimeStore.javaStillReferencedBySettings": .init("以下设置仍指定此 Java：%1$@。请先更换 Java，或选择移除并改为自动选择。", [.text]),
-            "Errors:CoreJavaRuntimeStore.preserveSymlinkedJavaDirectory": .init("不修改通过符号链接接入的 Java，请在 Finder 中处理原目录。", []),
+            "Errors:CoreJavaRuntimeStore.javaStillReferencedBySettings": .init("以下设置仍在使用此 Java：%1$@。请先选择其他 Java，或在移除时将这些设置改为自动选择。", [.text]),
+            "Errors:CoreJavaRuntimeStore.preserveSymlinkedJavaDirectory": .init("无法修改通过符号链接添加的 Java，请在 Finder 中处理原文件夹。", []),
         ]
     }
 }

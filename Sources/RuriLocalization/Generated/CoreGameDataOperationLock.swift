@@ -9,15 +9,15 @@ extension Messages {
         public static var lockFailed: LocalizedMessage {
             .init(key: "CoreGameDataOperationLock.lockFailed", table: "Errors", fallback: "无法锁定游戏文件操作。")
         }
-        /// 另一个 Ruri 正在处理此目录的游戏文件，请稍后刷新。
+        /// 另一个 Ruri 进程正在处理此文件夹中的游戏文件，请稍后刷新。
         ///
         /// Resource: `Errors.CoreGameDataOperationLock.operationInProgress`.
         public static var operationInProgress: LocalizedMessage {
-            .init(key: "CoreGameDataOperationLock.operationInProgress", table: "Errors", fallback: "另一个 Ruri 正在处理此目录的游戏文件，请稍后刷新。")
+            .init(key: "CoreGameDataOperationLock.operationInProgress", table: "Errors", fallback: "另一个 Ruri 进程正在处理此文件夹中的游戏文件，请稍后刷新。")
         }
         static let definitions: [String: MessageDefinition] = [
             "Errors:CoreGameDataOperationLock.lockFailed": .init("无法锁定游戏文件操作。", []),
-            "Errors:CoreGameDataOperationLock.operationInProgress": .init("另一个 Ruri 正在处理此目录的游戏文件，请稍后刷新。", []),
+            "Errors:CoreGameDataOperationLock.operationInProgress": .init("另一个 Ruri 进程正在处理此文件夹中的游戏文件，请稍后刷新。", []),
         ]
     }
 }

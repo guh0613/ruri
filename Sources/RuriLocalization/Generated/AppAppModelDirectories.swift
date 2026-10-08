@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelDirectories {
-        /// 已清理完成的复制记录，目标内容保留。
+        /// 已清理复制记录，目标文件已保留。
         ///
         /// Resource: `Interface.AppAppModelDirectories.cleanedCopyRecord`.
         public static var cleanedCopyRecord: LocalizedMessage {
-            .init(key: "AppAppModelDirectories.cleanedCopyRecord", table: "Interface", fallback: "已清理完成的复制记录，目标内容保留。")
+            .init(key: "AppAppModelDirectories.cleanedCopyRecord", table: "Interface", fallback: "已清理复制记录，目标文件已保留。")
         }
         /// 复制并切换
         ///
@@ -21,11 +21,11 @@ extension Messages {
         public static func directorySwitchCompleted(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "AppAppModelDirectories.directorySwitchCompleted", table: "Interface", fallback: "%1$@ 已%2$@；原目录及备份已保留。", arguments: [.text(value0), .text(value1)])
         }
-        /// 已恢复到切换前的状态，复制工作区另行保留。
+        /// 已恢复原来的目录设置，复制过程中的工作文件已另行保留。
         ///
         /// Resource: `Interface.AppAppModelDirectories.directorySwitchRecovered`.
         public static var directorySwitchRecovered: LocalizedMessage {
-            .init(key: "AppAppModelDirectories.directorySwitchRecovered", table: "Interface", fallback: "已恢复到切换前的状态，复制工作区另行保留。")
+            .init(key: "AppAppModelDirectories.directorySwitchRecovered", table: "Interface", fallback: "已恢复原来的目录设置，复制过程中的工作文件已另行保留。")
         }
         /// 恢复 %1$@ 的目录复制
         ///
@@ -70,10 +70,10 @@ extension Messages {
             .init(key: "AppAppModelDirectories.useTargetContents", table: "Interface", fallback: "使用目标内容")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:AppAppModelDirectories.cleanedCopyRecord": .init("已清理完成的复制记录，目标内容保留。", []),
+            "Interface:AppAppModelDirectories.cleanedCopyRecord": .init("已清理复制记录，目标文件已保留。", []),
             "Interface:AppAppModelDirectories.copyAndSwitch": .init("复制并切换", []),
             "Interface:AppAppModelDirectories.directorySwitchCompleted": .init("%1$@ 已%2$@；原目录及备份已保留。", [.text, .text]),
-            "Interface:AppAppModelDirectories.directorySwitchRecovered": .init("已恢复到切换前的状态，复制工作区另行保留。", []),
+            "Interface:AppAppModelDirectories.directorySwitchRecovered": .init("已恢复原来的目录设置，复制过程中的工作文件已另行保留。", []),
             "Interface:AppAppModelDirectories.recoverDirectoryCopy": .init("恢复 %1$@ 的目录复制", [.text]),
             "Interface:AppAppModelDirectories.relocateCustomDirectory": .init("重新定位自定义游戏目录", []),
             "Interface:AppAppModelDirectories.relocatedInstances": .init("已更新 %1$lld 个实例的目录位置，游戏文件保留在所选文件夹。", [.integer]),

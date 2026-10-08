@@ -9,41 +9,41 @@ extension Messages {
         public static func actionFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreGameDiagnosis.actionFailed", table: "Diagnostics", fallback: "%1$@失败", arguments: [.text(value0)])
         }
-        /// 分析读取量已达 16 MiB，未读取 %1$@。
+        /// 已达到 16 MiB 的分析上限，未读取 %1$@。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.analysisReadLimit`.
         public static func analysisReadLimit(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.analysisReadLimit", table: "Diagnostics", fallback: "分析读取量已达 16 MiB，未读取 %1$@。", arguments: [.text(value0)])
+            .init(key: "CoreGameDiagnosis.analysisReadLimit", table: "Diagnostics", fallback: "已达到 16 MiB 的分析上限，未读取 %1$@。", arguments: [.text(value0)])
         }
-        /// 核对所选 Java 的 ARM64 / Intel 架构，并使用适用于这套游戏的版本。
+        /// 检查所选 Java 使用的是 ARM64 还是 Intel 架构，并选择游戏支持的版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.architectureCheck`.
         public static var architectureCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.architectureCheck", table: "Diagnostics", fallback: "核对所选 Java 的 ARM64 / Intel 架构，并使用适用于这套游戏的版本。")
+            .init(key: "CoreGameDiagnosis.architectureCheck", table: "Diagnostics", fallback: "检查所选 Java 使用的是 ARM64 还是 Intel 架构，并选择游戏支持的版本。")
         }
-        /// 本地库或 Java 的架构不匹配
+        /// Java 与原生库的架构不兼容
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.architectureMismatch`.
         public static var architectureMismatch: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.architectureMismatch", table: "Diagnostics", fallback: "本地库或 Java 的架构不匹配")
+            .init(key: "CoreGameDiagnosis.architectureMismatch", table: "Diagnostics", fallback: "Java 与原生库的架构不兼容")
         }
-        /// 系统明确报告二进制架构不兼容，需要让 Java 与游戏本地库使用匹配的架构。
+        /// Java 与游戏使用的原生库架构不兼容。两者需要使用匹配的 ARM64 或 Intel 版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.architectureMismatchExplanation`.
         public static var architectureMismatchExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.architectureMismatchExplanation", table: "Diagnostics", fallback: "系统明确报告二进制架构不兼容，需要让 Java 与游戏本地库使用匹配的架构。")
+            .init(key: "CoreGameDiagnosis.architectureMismatchExplanation", table: "Diagnostics", fallback: "Java 与游戏使用的原生库架构不兼容。两者需要使用匹配的 ARM64 或 Intel 版本。")
         }
-        /// 检查提供本地库的模组是否支持当前架构；之后修复实例以重新准备本地库。
+        /// 检查含原生库的模组是否支持所选架构，再修复实例以重新安装所需的原生库。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.architectureModCheck`.
         public static var architectureModCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.architectureModCheck", table: "Diagnostics", fallback: "检查提供本地库的模组是否支持当前架构；之后修复实例以重新准备本地库。")
+            .init(key: "CoreGameDiagnosis.architectureModCheck", table: "Diagnostics", fallback: "检查含原生库的模组是否支持所选架构，再修复实例以重新安装所需的原生库。")
         }
-        /// %1$@ 仅分析有界片段，可能缺少上下文；原有文件未修改。
+        /// 仅分析了 %1$@ 的部分内容，可能遗漏相关信息。原文件已保留。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.boundedTail`.
         public static func boundedTail(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.boundedTail", table: "Diagnostics", fallback: "%1$@ 仅分析有界片段，可能缺少上下文；原有文件未修改。", arguments: [.text(value0)])
+            .init(key: "CoreGameDiagnosis.boundedTail", table: "Diagnostics", fallback: "仅分析了 %1$@ 的部分内容，可能遗漏相关信息。原文件已保留。", arguments: [.text(value0)])
         }
         /// 检查账号
         ///
@@ -57,35 +57,35 @@ extension Messages {
         public static var checkInstanceSettings: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.checkInstanceSettings", table: "Diagnostics", fallback: "检查实例设置")
         }
-        /// 在实例设置核对 Java，按游戏和整合包要求选择版本。
+        /// 打开实例设置，选择游戏或整合包要求的 Java 版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.classVersionCheck`.
         public static var classVersionCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.classVersionCheck", table: "Diagnostics", fallback: "在实例设置核对 Java，按游戏和整合包要求选择版本。")
+            .init(key: "CoreGameDiagnosis.classVersionCheck", table: "Diagnostics", fallback: "打开实例设置，选择游戏或整合包要求的 Java 版本。")
         }
-        /// 如果刚替换过模组，检查该模组是否要求另一代 Java 或 Minecraft。
+        /// 如果最近更换过模组，请检查它支持的 Java 和 Minecraft 版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.classVersionModCheck`.
         public static var classVersionModCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.classVersionModCheck", table: "Diagnostics", fallback: "如果刚替换过模组，检查该模组是否要求另一代 Java 或 Minecraft。")
+            .init(key: "CoreGameDiagnosis.classVersionModCheck", table: "Diagnostics", fallback: "如果最近更换过模组，请检查它支持的 Java 和 Minecraft 版本。")
         }
-        /// Java 无法读取所需的类版本
+        /// Java 版本不兼容
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.classVersionUnreadable`.
         public static var classVersionUnreadable: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.classVersionUnreadable", table: "Diagnostics", fallback: "Java 无法读取所需的类版本")
+            .init(key: "CoreGameDiagnosis.classVersionUnreadable", table: "Diagnostics", fallback: "Java 版本不兼容")
         }
-        /// Java 明确报告类文件版本不受支持。游戏、加载器和模组都可能对 Java 有要求。
+        /// 当前 Java 无法读取游戏、加载器或模组中的类文件。请检查它们要求的 Java 版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.classVersionUnsupported`.
         public static var classVersionUnsupported: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.classVersionUnsupported", table: "Diagnostics", fallback: "Java 明确报告类文件版本不受支持。游戏、加载器和模组都可能对 Java 有要求。")
+            .init(key: "CoreGameDiagnosis.classVersionUnsupported", table: "Diagnostics", fallback: "当前 Java 无法读取游戏、加载器或模组中的类文件。请检查它们要求的 Java 版本。")
         }
-        /// 需要验证的线索
+        /// 可能的原因，仍需检查
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.cluesNeedingVerification`.
         public static var cluesNeedingVerification: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.cluesNeedingVerification", table: "Diagnostics", fallback: "需要验证的线索")
+            .init(key: "CoreGameDiagnosis.cluesNeedingVerification", table: "Diagnostics", fallback: "可能的原因，仍需检查")
         }
         /// 收集诊断报告
         ///
@@ -93,29 +93,29 @@ extension Messages {
         public static var collectDiagnosticReports: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.collectDiagnosticReports", table: "Diagnostics", fallback: "收集诊断报告")
         }
-        /// 先查看原文的文件名和底层错误；修改前把该配置复制到别处留作备份。
+        /// 查看日志中提到的配置文件和具体错误。修改前，先备份该配置文件。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.configBackup`.
         public static var configBackup: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.configBackup", table: "Diagnostics", fallback: "先查看原文的文件名和底层错误；修改前把该配置复制到别处留作备份。")
+            .init(key: "CoreGameDiagnosis.configBackup", table: "Diagnostics", fallback: "查看日志中提到的配置文件和具体错误。修改前，先备份该配置文件。")
         }
-        /// 加载器在错误上下文中指出无法读取配置。可能是内容格式、版本差异或文件访问问题。
+        /// 加载器无法读取配置文件。文件格式、配置版本或访问权限可能有问题。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.configReadExplanation`.
         public static var configReadExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.configReadExplanation", table: "Diagnostics", fallback: "加载器在错误上下文中指出无法读取配置。可能是内容格式、版本差异或文件访问问题。")
+            .init(key: "CoreGameDiagnosis.configReadExplanation", table: "Diagnostics", fallback: "加载器无法读取配置文件。文件格式、配置版本或访问权限可能有问题。")
         }
-        /// 配置文件读取失败
+        /// 无法读取配置文件
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.configReadFailure`.
         public static var configReadFailure: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.configReadFailure", table: "Diagnostics", fallback: "配置文件读取失败")
+            .init(key: "CoreGameDiagnosis.configReadFailure", table: "Diagnostics", fallback: "无法读取配置文件")
         }
-        /// 按对应模组说明修正配置；需要重新生成时只处理该文件，避免清空整套配置。
+        /// 按模组说明修正配置。如果需要重新生成配置，只处理出错的文件，保留其他配置。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.configRepair`.
         public static var configRepair: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.configRepair", table: "Diagnostics", fallback: "按对应模组说明修正配置；需要重新生成时只处理该文件，避免清空整套配置。")
+            .init(key: "CoreGameDiagnosis.configRepair", table: "Diagnostics", fallback: "按模组说明修正配置。如果需要重新生成配置，只处理出错的文件，保留其他配置。")
         }
         /// 游戏异常退出，暂时无法确定原因。
         ///
@@ -123,53 +123,53 @@ extension Messages {
         public static var confirmedAbnormalExit: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.confirmedAbnormalExit", table: "Diagnostics", fallback: "游戏异常退出，暂时无法确定原因。")
         }
-        /// 报告注明手动触发调试崩溃
+        /// 手动触发的调试崩溃
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.debugCrash`.
         public static var debugCrash: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.debugCrash", table: "Diagnostics", fallback: "报告注明手动触发调试崩溃")
+            .init(key: "CoreGameDiagnosis.debugCrash", table: "Diagnostics", fallback: "手动触发的调试崩溃")
         }
-        /// Minecraft 报告的描述是手动调试崩溃，不据此推断模组不兼容。
+        /// Minecraft 报告这是一次手动触发的调试崩溃，不能据此判断模组是否存在冲突。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.debugCrashExplanation`.
         public static var debugCrashExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.debugCrashExplanation", table: "Diagnostics", fallback: "Minecraft 报告的描述是手动调试崩溃，不据此推断模组不兼容。")
+            .init(key: "CoreGameDiagnosis.debugCrashExplanation", table: "Diagnostics", fallback: "Minecraft 报告这是一次手动触发的调试崩溃，不能据此判断模组是否存在冲突。")
         }
-        /// 若这是有意触发的调试操作，保存所需报告后正常重新启动。
+        /// 如果这是有意进行的调试操作，保存所需报告后重新启动游戏即可。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.debugCrashRetry`.
         public static var debugCrashRetry: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.debugCrashRetry", table: "Diagnostics", fallback: "若这是有意触发的调试操作，保存所需报告后正常重新启动。")
+            .init(key: "CoreGameDiagnosis.debugCrashRetry", table: "Diagnostics", fallback: "如果这是有意进行的调试操作，保存所需报告后重新启动游戏即可。")
         }
-        /// 加载器发现重复模组
+        /// 发现重复模组
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.duplicateMod`.
         public static var duplicateMod: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.duplicateMod", table: "Diagnostics", fallback: "加载器发现重复模组")
+            .init(key: "CoreGameDiagnosis.duplicateMod", table: "Diagnostics", fallback: "发现重复模组")
         }
-        /// 在模组管理中核对原文列出的文件和版本。
+        /// 打开“管理模组”，查看日志中列出的文件及其版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.duplicateModCheck`.
         public static var duplicateModCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.duplicateModCheck", table: "Diagnostics", fallback: "在模组管理中核对原文列出的文件和版本。")
+            .init(key: "CoreGameDiagnosis.duplicateModCheck", table: "Diagnostics", fallback: "打开“管理模组”，查看日志中列出的文件及其版本。")
         }
-        /// 同一个模组被加载多次，可能存在不同版本或重复来源。
+        /// 加载器发现同一个模组存在多个副本或版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.duplicateModExplanation`.
         public static var duplicateModExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.duplicateModExplanation", table: "Diagnostics", fallback: "同一个模组被加载多次，可能存在不同版本或重复来源。")
+            .init(key: "CoreGameDiagnosis.duplicateModExplanation", table: "Diagnostics", fallback: "加载器发现同一个模组存在多个副本或版本。")
         }
-        /// 停用多余的一份后重试；不要同时删掉所有版本。
+        /// 保留需要的版本，停用多余的副本，再启动游戏。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.duplicateModRetry`.
         public static var duplicateModRetry: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.duplicateModRetry", table: "Diagnostics", fallback: "停用多余的一份后重试；不要同时删掉所有版本。")
+            .init(key: "CoreGameDiagnosis.duplicateModRetry", table: "Diagnostics", fallback: "保留需要的版本，停用多余的副本，再启动游戏。")
         }
-        /// 证据不是普通文件。
+        /// 无法读取此诊断文件：它不是普通文件。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.evidenceNotRegularFile`.
         public static var evidenceNotRegularFile: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.evidenceNotRegularFile", table: "Diagnostics", fallback: "证据不是普通文件。")
+            .init(key: "CoreGameDiagnosis.evidenceNotRegularFile", table: "Diagnostics", fallback: "无法读取此诊断文件：它不是普通文件。")
         }
         /// 退出码
         ///
@@ -177,35 +177,35 @@ extension Messages {
         public static var exitCode: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.exitCode", table: "Diagnostics", fallback: "退出码")
         }
-        /// %1$@：%2$@；Ruri 结束请求：%3$@
+        /// %1$@：%2$@；是否通过 Ruri 请求终止：%3$@
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.exitSummary`.
         public static func exitSummary(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.exitSummary", table: "Diagnostics", fallback: "%1$@：%2$@；Ruri 结束请求：%3$@", arguments: [.text(value0), .text(value1), .text(value2)])
+            .init(key: "CoreGameDiagnosis.exitSummary", table: "Diagnostics", fallback: "%1$@：%2$@；是否通过 Ruri 请求终止：%3$@", arguments: [.text(value0), .text(value1), .text(value2)])
         }
-        /// 核对下方原始错误以及对应设置，处理后重新启动。
+        /// 查看相关日志中的具体错误并检查对应设置，再尝试启动游戏。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.guidanceCheckErrors`.
         public static var guidanceCheckErrors: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.guidanceCheckErrors", table: "Diagnostics", fallback: "核对下方原始错误以及对应设置，处理后重新启动。")
+            .init(key: "CoreGameDiagnosis.guidanceCheckErrors", table: "Diagnostics", fallback: "查看相关日志中的具体错误并检查对应设置，再尝试启动游戏。")
         }
-        /// 若仍然失败，收集这次运行记录，以便比较重试前后的错误。
+        /// 如果仍然失败，收集重试后的运行记录，以便比较两次的错误。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.guidanceCollectRetry`.
         public static var guidanceCollectRetry: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.guidanceCollectRetry", table: "Diagnostics", fallback: "若仍然失败，收集这次运行记录，以便比较重试前后的错误。")
+            .init(key: "CoreGameDiagnosis.guidanceCollectRetry", table: "Diagnostics", fallback: "如果仍然失败，收集重试后的运行记录，以便比较两次的错误。")
         }
-        /// 有
+        /// 是
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.hasExitStatus`.
         public static var hasExitStatus: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.hasExitStatus", table: "Diagnostics", fallback: "有")
+            .init(key: "CoreGameDiagnosis.hasExitStatus", table: "Diagnostics", fallback: "是")
         }
-        /// 跳过无效证据路径。
+        /// 已跳过路径无效的诊断文件。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.invalidEvidencePathSkipped`.
         public static var invalidEvidencePathSkipped: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.invalidEvidencePathSkipped", table: "Diagnostics", fallback: "跳过无效证据路径。")
+            .init(key: "CoreGameDiagnosis.invalidEvidencePathSkipped", table: "Diagnostics", fallback: "已跳过路径无效的诊断文件。")
         }
         /// 未记录 Java
         ///
@@ -213,125 +213,125 @@ extension Messages {
         public static var javaNotRecorded: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.javaNotRecorded", table: "Diagnostics", fallback: "未记录 Java")
         }
-        /// JVM 记录了本机崩溃
+        /// Java 发生严重错误
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.jvmCrash`.
         public static var jvmCrash: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.jvmCrash", table: "Diagnostics", fallback: "JVM 记录了本机崩溃")
+            .init(key: "CoreGameDiagnosis.jvmCrash", table: "Diagnostics", fallback: "Java 发生严重错误")
         }
-        /// 核对所用 Java 和含本地库的模组版本，将报告与复现步骤一起提供给维护者。
+        /// 检查 Java 和含原生库的模组版本。向维护者反馈时，请附上报告和复现步骤。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.jvmCrashCheck`.
         public static var jvmCrashCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.jvmCrashCheck", table: "Diagnostics", fallback: "核对所用 Java 和含本地库的模组版本，将报告与复现步骤一起提供给维护者。")
+            .init(key: "CoreGameDiagnosis.jvmCrashCheck", table: "Diagnostics", fallback: "检查 Java 和含原生库的模组版本。向维护者反馈时，请附上报告和复现步骤。")
         }
-        /// 虚拟机报告致命错误；Problematic frame 只是崩溃位置，仍需结合本地库、Java 与系统环境判断原因。
+        /// Java 报告了致命错误。报告中的 Problematic frame 表示崩溃位置，具体原因还需结合原生库、Java 版本和系统环境检查。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.jvmCrashExplanation`.
         public static var jvmCrashExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.jvmCrashExplanation", table: "Diagnostics", fallback: "虚拟机报告致命错误；Problematic frame 只是崩溃位置，仍需结合本地库、Java 与系统环境判断原因。")
+            .init(key: "CoreGameDiagnosis.jvmCrashExplanation", table: "Diagnostics", fallback: "Java 报告了致命错误。报告中的 Problematic frame 表示崩溃位置，具体原因还需结合原生库、Java 版本和系统环境检查。")
         }
-        /// 保留 JVM 报告的错误信号、Problematic frame 与 Java 版本。
+        /// 保留 Java 崩溃报告，其中的错误信号、Problematic frame 和 Java 版本有助于排查问题。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.jvmCrashReport`.
         public static var jvmCrashReport: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.jvmCrashReport", table: "Diagnostics", fallback: "保留 JVM 报告的错误信号、Problematic frame 与 Java 版本。")
+            .init(key: "CoreGameDiagnosis.jvmCrashReport", table: "Diagnostics", fallback: "保留 Java 崩溃报告，其中的错误信号、Problematic frame 和 Java 版本有助于排查问题。")
         }
-        /// 最后记录阶段：%1$@
+        /// 最后记录的阶段：%1$@
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.lastRecordedPhase`.
         public static func lastRecordedPhase(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.lastRecordedPhase", table: "Diagnostics", fallback: "最后记录阶段：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreGameDiagnosis.lastRecordedPhase", table: "Diagnostics", fallback: "最后记录的阶段：%1$@", arguments: [.text(value0)])
         }
-        /// 核对实例的附加 JVM 参数，保留副本后逐项撤销最近增加的参数。
+        /// 在实例设置中检查附加 JVM 参数。先保存一份副本，再逐项移除最近添加的参数。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.launchArgumentCheck`.
         public static var launchArgumentCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.launchArgumentCheck", table: "Diagnostics", fallback: "核对实例的附加 JVM 参数，保留副本后逐项撤销最近增加的参数。")
+            .init(key: "CoreGameDiagnosis.launchArgumentCheck", table: "Diagnostics", fallback: "在实例设置中检查附加 JVM 参数。先保存一份副本，再逐项移除最近添加的参数。")
         }
-        /// 虚拟机报告参数或内存上限无效，游戏尚未正常启动。
+        /// Java 无法使用当前的启动参数或内存上限，游戏未能启动。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.launchArgumentExplanation`.
         public static var launchArgumentExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.launchArgumentExplanation", table: "Diagnostics", fallback: "虚拟机报告参数或内存上限无效，游戏尚未正常启动。")
+            .init(key: "CoreGameDiagnosis.launchArgumentExplanation", table: "Diagnostics", fallback: "Java 无法使用当前的启动参数或内存上限，游戏未能启动。")
         }
-        /// Java 启动参数被拒绝
+        /// Java 启动参数无效
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.launchArgumentRejected`.
         public static var launchArgumentRejected: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.launchArgumentRejected", table: "Diagnostics", fallback: "Java 启动参数被拒绝")
+            .init(key: "CoreGameDiagnosis.launchArgumentRejected", table: "Diagnostics", fallback: "Java 启动参数无效")
         }
-        /// 确认内存上限与所选 Java 匹配，然后重试。
+        /// 检查内存上限是否适用于所选 Java，再尝试启动游戏。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.launchArgumentRetry`.
         public static var launchArgumentRetry: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.launchArgumentRetry", table: "Diagnostics", fallback: "确认内存上限与所选 Java 匹配，然后重试。")
+            .init(key: "CoreGameDiagnosis.launchArgumentRetry", table: "Diagnostics", fallback: "检查内存上限是否适用于所选 Java，再尝试启动游戏。")
         }
-        /// 启动已取消，没有证据表明游戏发生了崩溃。
+        /// 启动已取消。现有记录未显示游戏发生崩溃。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.launchCancelled`.
         public static var launchCancelled: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.launchCancelled", table: "Diagnostics", fallback: "启动已取消，没有证据表明游戏发生了崩溃。")
+            .init(key: "CoreGameDiagnosis.launchCancelled", table: "Diagnostics", fallback: "启动已取消。现有记录未显示游戏发生崩溃。")
         }
-        /// 启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。
+        /// 启动在“%1$@”阶段失败，未记录到游戏退出信息。请先查看该阶段的错误。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.launchPreparationFailed`.
         public static func launchPreparationFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.launchPreparationFailed", table: "Diagnostics", fallback: "启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。", arguments: [.text(value0)])
+            .init(key: "CoreGameDiagnosis.launchPreparationFailed", table: "Diagnostics", fallback: "启动在“%1$@”阶段失败，未记录到游戏退出信息。请先查看该阶段的错误。", arguments: [.text(value0)])
         }
-        /// 加载器拒绝了模组组合
+        /// 模组依赖或兼容性问题
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.loaderModConflict`.
         public static var loaderModConflict: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.loaderModConflict", table: "Diagnostics", fallback: "加载器拒绝了模组组合")
+            .init(key: "CoreGameDiagnosis.loaderModConflict", table: "Diagnostics", fallback: "模组依赖或兼容性问题")
         }
-        /// 按证据中的模组 ID 和版本范围核对依赖，并确认 Minecraft 与加载器版本。
+        /// 查看相关日志中的模组 ID 和版本要求，检查所需依赖、Minecraft 版本和加载器版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.loaderModConflictCheck`.
         public static var loaderModConflictCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.loaderModConflictCheck", table: "Diagnostics", fallback: "按证据中的模组 ID 和版本范围核对依赖，并确认 Minecraft 与加载器版本。")
+            .init(key: "CoreGameDiagnosis.loaderModConflictCheck", table: "Diagnostics", fallback: "查看相关日志中的模组 ID 和版本要求，检查所需依赖、Minecraft 版本和加载器版本。")
         }
-        /// 加载器报告缺少依赖、版本要求不满足或模组冲突。原文通常包含需要的版本范围。
+        /// 加载器报告部分模组缺少依赖、版本不符合要求，或彼此冲突。日志通常会列出所需的版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.loaderModConflictExplanation`.
         public static var loaderModConflictExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.loaderModConflictExplanation", table: "Diagnostics", fallback: "加载器报告缺少依赖、版本要求不满足或模组冲突。原文通常包含需要的版本范围。")
+            .init(key: "CoreGameDiagnosis.loaderModConflictExplanation", table: "Diagnostics", fallback: "加载器报告部分模组缺少依赖、版本不符合要求，或彼此冲突。日志通常会列出所需的版本。")
         }
-        /// 在模组管理中处理最近的变更；一次只改一组相关依赖，保留恢复余地后重试。
+        /// 打开“管理模组”，检查最近的改动。每次只调整一组相关模组及其依赖，保留副本以便恢复，再启动游戏。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.loaderModConflictRetry`.
         public static var loaderModConflictRetry: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.loaderModConflictRetry", table: "Diagnostics", fallback: "在模组管理中处理最近的变更；一次只改一组相关依赖，保留恢复余地后重试。")
+            .init(key: "CoreGameDiagnosis.loaderModConflictRetry", table: "Diagnostics", fallback: "打开“管理模组”，检查最近的改动。每次只调整一组相关模组及其依赖，保留副本以便恢复，再启动游戏。")
         }
-        /// 日志明确报告
+        /// 日志中记录的错误
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.logExplicitReport`.
         public static var logExplicitReport: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.logExplicitReport", table: "Diagnostics", fallback: "日志明确报告")
+            .init(key: "CoreGameDiagnosis.logExplicitReport", table: "Diagnostics", fallback: "日志中记录的错误")
         }
-        /// 核对游戏所需的 Java 和加载器版本，检查自定义参数是否影响首线程启动。
+        /// 检查游戏要求的 Java 和加载器版本，以及自定义参数是否影响在主线程启动游戏。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.mainThreadCheck`.
         public static var mainThreadCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.mainThreadCheck", table: "Diagnostics", fallback: "核对游戏所需的 Java 和加载器版本，检查自定义参数是否影响首线程启动。")
+            .init(key: "CoreGameDiagnosis.mainThreadCheck", table: "Diagnostics", fallback: "检查游戏要求的 Java 和加载器版本，以及自定义参数是否影响在主线程启动游戏。")
         }
-        /// 保留报告中的 Java、macOS 与错误原文，便于确认是否需要修正启动器的启动方式。
+        /// 向维护者反馈时，请附上 Java 版本、macOS 版本和错误原文，以便检查启动方式。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.mainThreadReport`.
         public static var mainThreadReport: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.mainThreadReport", table: "Diagnostics", fallback: "保留报告中的 Java、macOS 与错误原文，便于确认是否需要修正启动器的启动方式。")
+            .init(key: "CoreGameDiagnosis.mainThreadReport", table: "Diagnostics", fallback: "向维护者反馈时，请附上 Java 版本、macOS 版本和错误原文，以便检查启动方式。")
         }
-        /// 窗口初始化违反 macOS 主线程要求
+        /// 游戏窗口发生线程错误
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.mainThreadViolation`.
         public static var mainThreadViolation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.mainThreadViolation", table: "Diagnostics", fallback: "窗口初始化违反 macOS 主线程要求")
+            .init(key: "CoreGameDiagnosis.mainThreadViolation", table: "Diagnostics", fallback: "游戏窗口发生线程错误")
         }
-        /// Cocoa 或 GLFW 明确报告窗口必须在主线程创建。需要检查 Java、LWJGL 与首线程启动参数的组合。
+        /// Cocoa 或 GLFW 报告了窗口主线程错误。需要检查 Java、LWJGL 与主线程启动参数是否兼容。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.mainThreadViolationExplanation`.
         public static var mainThreadViolationExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.mainThreadViolationExplanation", table: "Diagnostics", fallback: "Cocoa 或 GLFW 明确报告窗口必须在主线程创建。需要检查 Java、LWJGL 与首线程启动参数的组合。")
+            .init(key: "CoreGameDiagnosis.mainThreadViolationExplanation", table: "Diagnostics", fallback: "Cocoa 或 GLFW 报告了窗口主线程错误。需要检查 Java、LWJGL 与主线程启动参数是否兼容。")
         }
         /// 管理模组
         ///
@@ -357,11 +357,11 @@ extension Messages {
         public static var missingMainClass: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.missingMainClass", table: "Diagnostics", fallback: "找不到或无法加载主类")
         }
-        /// 检查实例所用的游戏与加载器版本，再使用实例的修复功能补全安装文件。
+        /// 检查实例的 Minecraft 和加载器版本，再点按“修复安装文件”补全所需文件。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.missingMainClassCheck`.
         public static var missingMainClassCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.missingMainClassCheck", table: "Diagnostics", fallback: "检查实例所用的游戏与加载器版本，再使用实例的修复功能补全安装文件。")
+            .init(key: "CoreGameDiagnosis.missingMainClassCheck", table: "Diagnostics", fallback: "检查实例的 Minecraft 和加载器版本，再点按“修复安装文件”补全所需文件。")
         }
         /// 找不到或無法載入主要類別
         ///
@@ -369,53 +369,53 @@ extension Messages {
         public static var missingMainClassCjk: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.missingMainClassCjk", table: "Diagnostics", fallback: "找不到或無法載入主要類別")
         }
-        /// Java 明确报告无法加载主类。版本文件、加载器安装或启动入口需要检查。
+        /// Java 无法加载游戏的主类。游戏安装文件、加载器或启动配置可能有问题。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.missingMainClassExplanation`.
         public static var missingMainClassExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.missingMainClassExplanation", table: "Diagnostics", fallback: "Java 明确报告无法加载主类。版本文件、加载器安装或启动入口需要检查。")
+            .init(key: "CoreGameDiagnosis.missingMainClassExplanation", table: "Diagnostics", fallback: "Java 无法加载游戏的主类。游戏安装文件、加载器或启动配置可能有问题。")
         }
-        /// 保留现有配置与存档；若修复后仍失败，附上这次报告。
+        /// 保留现有配置和存档。如果修复后仍无法启动，请在反馈时附上诊断报告。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.missingMainClassReport`.
         public static var missingMainClassReport: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.missingMainClassReport", table: "Diagnostics", fallback: "保留现有配置与存档；若修复后仍失败，附上这次报告。")
+            .init(key: "CoreGameDiagnosis.missingMainClassReport", table: "Diagnostics", fallback: "保留现有配置和存档。如果修复后仍无法启动，请在反馈时附上诊断报告。")
         }
-        /// 这是模组修改游戏代码时的失败线索。文件名或堆栈中的模组不能直接当作唯一责任方。
+        /// 模组修改游戏代码时出错。日志中提到的模组可能受到其他模组影响，需要进一步检查。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.mixinApplyExplanation`.
         public static var mixinApplyExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.mixinApplyExplanation", table: "Diagnostics", fallback: "这是模组修改游戏代码时的失败线索。文件名或堆栈中的模组不能直接当作唯一责任方。")
+            .init(key: "CoreGameDiagnosis.mixinApplyExplanation", table: "Diagnostics", fallback: "模组修改游戏代码时出错。日志中提到的模组可能受到其他模组影响，需要进一步检查。")
         }
-        /// 错误上下文中有 Mixin 应用失败
+        /// Mixin 应用失败
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.mixinApplyFailure`.
         public static var mixinApplyFailure: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.mixinApplyFailure", table: "Diagnostics", fallback: "错误上下文中有 Mixin 应用失败")
+            .init(key: "CoreGameDiagnosis.mixinApplyFailure", table: "Diagnostics", fallback: "Mixin 应用失败")
         }
-        /// 先处理上方明确的依赖或入口错误，再检查这里涉及的模组版本组合。
+        /// 如果上方还有依赖或模组初始化错误，请先处理这些问题，再检查相关模组的版本是否兼容。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.mixinDependencyCheck`.
         public static var mixinDependencyCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.mixinDependencyCheck", table: "Diagnostics", fallback: "先处理上方明确的依赖或入口错误，再检查这里涉及的模组版本组合。")
+            .init(key: "CoreGameDiagnosis.mixinDependencyCheck", table: "Diagnostics", fallback: "如果上方还有依赖或模组初始化错误，请先处理这些问题，再检查相关模组的版本是否兼容。")
         }
-        /// 通过模组管理逐步停用最近改动的模组来验证，之后仍能重新启用；不要根据单条警告批量删除模组。
+        /// 打开“管理模组”，逐个停用最近改动的模组并重试。先停用而不删除，以便恢复；单条警告不足以判断哪些模组需要移除。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.mixinModCheck`.
         public static var mixinModCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.mixinModCheck", table: "Diagnostics", fallback: "通过模组管理逐步停用最近改动的模组来验证，之后仍能重新启用；不要根据单条警告批量删除模组。")
+            .init(key: "CoreGameDiagnosis.mixinModCheck", table: "Diagnostics", fallback: "打开“管理模组”，逐个停用最近改动的模组并重试。先停用而不删除，以便恢复；单条警告不足以判断哪些模组需要移除。")
         }
-        /// 核对证据中列出的模组、依赖与加载器版本。
+        /// 查看相关日志中提到的模组，检查它及其依赖和加载器的版本。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.modInitializationCheck`.
         public static var modInitializationCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.modInitializationCheck", table: "Diagnostics", fallback: "核对证据中列出的模组、依赖与加载器版本。")
+            .init(key: "CoreGameDiagnosis.modInitializationCheck", table: "Diagnostics", fallback: "查看相关日志中提到的模组，检查它及其依赖和加载器的版本。")
         }
-        /// 加载器指出某个入口或模组实例初始化失败；依赖或其他模组仍可能参与其中。
+        /// 加载器无法完成某个模组的初始化。原因也可能与它依赖的组件或其他模组有关。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.modInitializationExplanation`.
         public static var modInitializationExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.modInitializationExplanation", table: "Diagnostics", fallback: "加载器指出某个入口或模组实例初始化失败；依赖或其他模组仍可能参与其中。")
+            .init(key: "CoreGameDiagnosis.modInitializationExplanation", table: "Diagnostics", fallback: "加载器无法完成某个模组的初始化。原因也可能与它依赖的组件或其他模组有关。")
         }
         /// 模组初始化失败
         ///
@@ -423,23 +423,23 @@ extension Messages {
         public static var modInitializationFailure: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.modInitializationFailure", table: "Diagnostics", fallback: "模组初始化失败")
         }
-        /// 若错误紧随一次更新出现，先核对此前版本；可在模组管理中停用最近加入的模组来验证，之后仍能重新启用。
+        /// 如果问题出现在更新后，检查之前使用的版本。也可以先停用最近添加的模组并重试，排查后再重新启用。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.modInitializationRetry`.
         public static var modInitializationRetry: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.modInitializationRetry", table: "Diagnostics", fallback: "若错误紧随一次更新出现，先核对此前版本；可在模组管理中停用最近加入的模组来验证，之后仍能重新启用。")
+            .init(key: "CoreGameDiagnosis.modInitializationRetry", table: "Diagnostics", fallback: "如果问题出现在更新后，检查之前使用的版本。也可以先停用最近添加的模组并重试，排查后再重新启用。")
         }
-        /// 监控记录已中断，未取得游戏的退出结果。
+        /// 游戏监控已中断，未记录到退出结果。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.monitoringInterrupted`.
         public static var monitoringInterrupted: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.monitoringInterrupted", table: "Diagnostics", fallback: "监控记录已中断，未取得游戏的退出结果。")
+            .init(key: "CoreGameDiagnosis.monitoringInterrupted", table: "Diagnostics", fallback: "游戏监控已中断，未记录到退出结果。")
         }
-        /// JVM 报告本机内存分配失败。增大 Java 堆上限可能进一步挤占系统内存。
+        /// Java 无法分配所需的系统内存。此时增加游戏的内存上限可能让系统可用内存更少。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.nativeMemoryAllocationExplanation`.
         public static var nativeMemoryAllocationExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.nativeMemoryAllocationExplanation", table: "Diagnostics", fallback: "JVM 报告本机内存分配失败。增大 Java 堆上限可能进一步挤占系统内存。")
+            .init(key: "CoreGameDiagnosis.nativeMemoryAllocationExplanation", table: "Diagnostics", fallback: "Java 无法分配所需的系统内存。此时增加游戏的内存上限可能让系统可用内存更少。")
         }
         /// 虚拟机无法分配所需内存
         ///
@@ -447,89 +447,89 @@ extension Messages {
         public static var nativeMemoryAllocationFailure: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.nativeMemoryAllocationFailure", table: "Diagnostics", fallback: "虚拟机无法分配所需内存")
         }
-        /// 检查系统内存压力与其他程序占用，核对是否设置了过大的 Java 堆。
+        /// 在“活动监视器”中查看内存压力和其他 App 的占用，并检查游戏的内存上限是否设得过高。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.nativeMemoryCheck`.
         public static var nativeMemoryCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.nativeMemoryCheck", table: "Diagnostics", fallback: "检查系统内存压力与其他程序占用，核对是否设置了过大的 Java 堆。")
+            .init(key: "CoreGameDiagnosis.nativeMemoryCheck", table: "Diagnostics", fallback: "在“活动监视器”中查看内存压力和其他 App 的占用，并检查游戏的内存上限是否设得过高。")
         }
-        /// 调整后重新启动；保留 JVM 报告中的分配大小和失败位置供排查。
+        /// 调整后重新启动游戏，并保留 Java 崩溃报告，以便查看内存分配失败的详情。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.nativeMemoryRetry`.
         public static var nativeMemoryRetry: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.nativeMemoryRetry", table: "Diagnostics", fallback: "调整后重新启动；保留 JVM 报告中的分配大小和失败位置供排查。")
+            .init(key: "CoreGameDiagnosis.nativeMemoryRetry", table: "Diagnostics", fallback: "调整后重新启动游戏，并保留 Java 崩溃报告，以便查看内存分配失败的详情。")
         }
-        /// 无
+        /// 否
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.noExitStatus`.
         public static var noExitStatus: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.noExitStatus", table: "Diagnostics", fallback: "无")
+            .init(key: "CoreGameDiagnosis.noExitStatus", table: "Diagnostics", fallback: "否")
         }
-        /// 系统曾接收 Ruri 的正常退出请求。
+        /// 系统已接收 Ruri 发出的正常退出请求。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.normalExitRequested`.
         public static var normalExitRequested: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.normalExitRequested", table: "Diagnostics", fallback: "系统曾接收 Ruri 的正常退出请求。")
+            .init(key: "CoreGameDiagnosis.normalExitRequested", table: "Diagnostics", fallback: "系统已接收 Ruri 发出的正常退出请求。")
         }
-        /// Java 报告内存耗尽
+        /// Java 内存不足
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.outOfMemory`.
         public static var outOfMemory: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.outOfMemory", table: "Diagnostics", fallback: "Java 报告内存耗尽")
+            .init(key: "CoreGameDiagnosis.outOfMemory", table: "Diagnostics", fallback: "Java 内存不足")
         }
-        /// 仅在堆内存不足时考虑调整实例内存，并给 macOS 留出余量；同时检查最近加入的模组或高分辨率资源。
+        /// 如果提示 Java heap space，可适当增加实例的内存上限，同时为 macOS 留出可用内存。也请检查最近添加的模组或高分辨率资源包。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.outOfMemoryCheck`.
         public static var outOfMemoryCheck: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.outOfMemoryCheck", table: "Diagnostics", fallback: "仅在堆内存不足时考虑调整实例内存，并给 macOS 留出余量；同时检查最近加入的模组或高分辨率资源。")
+            .init(key: "CoreGameDiagnosis.outOfMemoryCheck", table: "Diagnostics", fallback: "如果提示 Java heap space，可适当增加实例的内存上限，同时为 macOS 留出可用内存。也请检查最近添加的模组或高分辨率资源包。")
         }
-        /// 错误上下文出现 OutOfMemoryError；仅凭这一类错误还不能判断应增加哪一种内存。
+        /// 日志中出现了 OutOfMemoryError。需要先确认哪一类内存不足，才能判断是否应增加游戏的内存上限。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.outOfMemoryExplanation`.
         public static var outOfMemoryExplanation: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.outOfMemoryExplanation", table: "Diagnostics", fallback: "错误上下文出现 OutOfMemoryError；仅凭这一类错误还不能判断应增加哪一种内存。")
+            .init(key: "CoreGameDiagnosis.outOfMemoryExplanation", table: "Diagnostics", fallback: "日志中出现了 OutOfMemoryError。需要先确认哪一类内存不足，才能判断是否应增加游戏的内存上限。")
         }
-        /// 先查看原文是 Java heap space、Direct buffer memory、Metaspace 还是无法创建线程。
+        /// 查看错误后面的说明：Java heap space 表示堆内存不足；Direct buffer memory、Metaspace 和无法创建线程表示其他内存或资源限制。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.outOfMemoryTypes`.
         public static var outOfMemoryTypes: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.outOfMemoryTypes", table: "Diagnostics", fallback: "先查看原文是 Java heap space、Direct buffer memory、Metaspace 还是无法创建线程。")
+            .init(key: "CoreGameDiagnosis.outOfMemoryTypes", table: "Diagnostics", fallback: "查看错误后面的说明：Java heap space 表示堆内存不足；Direct buffer memory、Metaspace 和无法创建线程表示其他内存或资源限制。")
         }
-        /// 这是启动器记录的准备阶段错误，尚不能归为游戏崩溃。
+        /// 启动准备过程中发生错误，请查看具体错误信息。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.preparationError`.
         public static var preparationError: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.preparationError", table: "Diagnostics", fallback: "这是启动器记录的准备阶段错误，尚不能归为游戏崩溃。")
+            .init(key: "CoreGameDiagnosis.preparationError", table: "Diagnostics", fallback: "启动准备过程中发生错误，请查看具体错误信息。")
         }
-        /// 原进程身份已失效
+        /// 原游戏进程已不存在
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.processIdentityInvalid`.
         public static var processIdentityInvalid: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.processIdentityInvalid", table: "Diagnostics", fallback: "原进程身份已失效")
+            .init(key: "CoreGameDiagnosis.processIdentityInvalid", table: "Diagnostics", fallback: "原游戏进程已不存在")
         }
-        /// 记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。
+        /// 游戏进程已被终止，现有记录无法确定原因，也无法确认是谁发出了终止请求。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.processTerminated`.
         public static var processTerminated: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.processTerminated", table: "Diagnostics", fallback: "记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。")
+            .init(key: "CoreGameDiagnosis.processTerminated", table: "Diagnostics", fallback: "游戏进程已被终止，现有记录无法确定原因，也无法确认是谁发出了终止请求。")
         }
-        /// 恢复依据：%1$@
+        /// 恢复记录的依据：%1$@
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.recoveryBasis`.
         public static func recoveryBasis(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.recoveryBasis", table: "Diagnostics", fallback: "恢复依据：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreGameDiagnosis.recoveryBasis", table: "Diagnostics", fallback: "恢复记录的依据：%1$@", arguments: [.text(value0)])
         }
-        /// 恢复记录时间：%1$@（不是游戏退出时间）
+        /// 记录恢复时间：%1$@（游戏退出时间未知）
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.recoveryRecordTime`.
         public static func recoveryRecordTime(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.recoveryRecordTime", table: "Diagnostics", fallback: "恢复记录时间：%1$@（不是游戏退出时间）", arguments: [.text(value0)])
+            .init(key: "CoreGameDiagnosis.recoveryRecordTime", table: "Diagnostics", fallback: "记录恢复时间：%1$@（游戏退出时间未知）", arguments: [.text(value0)])
         }
-        /// 找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。
+        /// 发现 %1$lld 类相关错误。以下是错误原文和建议的处理步骤；日志中提到的模组可能只是原因之一。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.relatedErrorCount`.
         public static func relatedErrorCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.relatedErrorCount", table: "Diagnostics", fallback: "找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。", arguments: [.integer(value0)])
+            .init(key: "CoreGameDiagnosis.relatedErrorCount", table: "Diagnostics", fallback: "发现 %1$lld 类相关错误。以下是错误原文和建议的处理步骤；日志中提到的模组可能只是原因之一。", arguments: [.integer(value0)])
         }
         /// 修复安装文件
         ///
@@ -537,35 +537,35 @@ extension Messages {
         public static var repairInstallationFiles: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.repairInstallationFiles", table: "Diagnostics", fallback: "修复安装文件")
         }
-        /// 本次有 %1$lld 份报告，仅分析前 12 份；其余仍可在运行目录查看。
+        /// 本次共有 %1$lld 份报告，已分析前 12 份。其余报告可在运行记录文件夹中查看。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.reportLimit`.
         public static func reportLimit(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.reportLimit", table: "Diagnostics", fallback: "本次有 %1$lld 份报告，仅分析前 12 份；其余仍可在运行目录查看。", arguments: [.integer(value0)])
+            .init(key: "CoreGameDiagnosis.reportLimit", table: "Diagnostics", fallback: "本次共有 %1$lld 份报告，已分析前 12 份。其余报告可在运行记录文件夹中查看。", arguments: [.integer(value0)])
         }
-        /// 本次运行已经结束，无需进行崩溃处理。
+        /// 本次运行已结束，无需排查崩溃。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.runCompleted`.
         public static var runCompleted: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.runCompleted", table: "Diagnostics", fallback: "本次运行已经结束，无需进行崩溃处理。")
+            .init(key: "CoreGameDiagnosis.runCompleted", table: "Diagnostics", fallback: "本次运行已结束，无需排查崩溃。")
         }
-        /// 本次运行尚无最终退出记录，暂不判断崩溃原因。可继续查看实时日志和进程状态。
+        /// 尚未记录到游戏的退出结果，暂时无法分析崩溃原因。可以继续查看实时日志和运行状态。
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.runWithoutExitRecord`.
         public static var runWithoutExitRecord: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.runWithoutExitRecord", table: "Diagnostics", fallback: "本次运行尚无最终退出记录，暂不判断崩溃原因。可继续查看实时日志和进程状态。")
+            .init(key: "CoreGameDiagnosis.runWithoutExitRecord", table: "Diagnostics", fallback: "尚未记录到游戏的退出结果，暂时无法分析崩溃原因。可以继续查看实时日志和运行状态。")
         }
-        /// 未能读取会话日志：%1$@
+        /// 无法读取本次运行的日志：%1$@
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.sessionLogReadFailure`.
         public static func sessionLogReadFailure(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.sessionLogReadFailure", table: "Diagnostics", fallback: "未能读取会话日志：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreGameDiagnosis.sessionLogReadFailure", table: "Diagnostics", fallback: "无法读取本次运行的日志：%1$@", arguments: [.text(value0)])
         }
-        /// %1$@（末段）
+        /// %1$@（末尾片段）
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.tailTitle`.
         public static func tailTitle(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.tailTitle", table: "Diagnostics", fallback: "%1$@（末段）", arguments: [.text(value0)])
+            .init(key: "CoreGameDiagnosis.tailTitle", table: "Diagnostics", fallback: "%1$@（末尾片段）", arguments: [.text(value0)])
         }
         /// 终止信号
         ///
@@ -573,11 +573,11 @@ extension Messages {
         public static var terminationSignal: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.terminationSignal", table: "Diagnostics", fallback: "终止信号")
         }
-        /// 未能读取 %1$@：%2$@
+        /// 无法读取 %1$@：%2$@
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.unreadableReport`.
         public static func unreadableReport(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.unreadableReport", table: "Diagnostics", fallback: "未能读取 %1$@：%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreGameDiagnosis.unreadableReport", table: "Diagnostics", fallback: "无法读取 %1$@：%2$@", arguments: [.text(value0), .text(value1)])
         }
         /// 用户确认游戏已退出
         ///
@@ -585,111 +585,111 @@ extension Messages {
         public static var userConfirmedExit: LocalizedMessage {
             .init(key: "CoreGameDiagnosis.userConfirmedExit", table: "Diagnostics", fallback: "用户确认游戏已退出")
         }
-        /// 查看运行文件
+        /// 查看运行记录文件
         ///
         /// Resource: `Diagnostics.CoreGameDiagnosis.viewRunFiles`.
         public static var viewRunFiles: LocalizedMessage {
-            .init(key: "CoreGameDiagnosis.viewRunFiles", table: "Diagnostics", fallback: "查看运行文件")
+            .init(key: "CoreGameDiagnosis.viewRunFiles", table: "Diagnostics", fallback: "查看运行记录文件")
         }
         static let definitions: [String: MessageDefinition] = [
             "Diagnostics:CoreGameDiagnosis.actionFailed": .init("%1$@失败", [.text]),
-            "Diagnostics:CoreGameDiagnosis.analysisReadLimit": .init("分析读取量已达 16 MiB，未读取 %1$@。", [.text]),
-            "Diagnostics:CoreGameDiagnosis.architectureCheck": .init("核对所选 Java 的 ARM64 / Intel 架构，并使用适用于这套游戏的版本。", []),
-            "Diagnostics:CoreGameDiagnosis.architectureMismatch": .init("本地库或 Java 的架构不匹配", []),
-            "Diagnostics:CoreGameDiagnosis.architectureMismatchExplanation": .init("系统明确报告二进制架构不兼容，需要让 Java 与游戏本地库使用匹配的架构。", []),
-            "Diagnostics:CoreGameDiagnosis.architectureModCheck": .init("检查提供本地库的模组是否支持当前架构；之后修复实例以重新准备本地库。", []),
-            "Diagnostics:CoreGameDiagnosis.boundedTail": .init("%1$@ 仅分析有界片段，可能缺少上下文；原有文件未修改。", [.text]),
+            "Diagnostics:CoreGameDiagnosis.analysisReadLimit": .init("已达到 16 MiB 的分析上限，未读取 %1$@。", [.text]),
+            "Diagnostics:CoreGameDiagnosis.architectureCheck": .init("检查所选 Java 使用的是 ARM64 还是 Intel 架构，并选择游戏支持的版本。", []),
+            "Diagnostics:CoreGameDiagnosis.architectureMismatch": .init("Java 与原生库的架构不兼容", []),
+            "Diagnostics:CoreGameDiagnosis.architectureMismatchExplanation": .init("Java 与游戏使用的原生库架构不兼容。两者需要使用匹配的 ARM64 或 Intel 版本。", []),
+            "Diagnostics:CoreGameDiagnosis.architectureModCheck": .init("检查含原生库的模组是否支持所选架构，再修复实例以重新安装所需的原生库。", []),
+            "Diagnostics:CoreGameDiagnosis.boundedTail": .init("仅分析了 %1$@ 的部分内容，可能遗漏相关信息。原文件已保留。", [.text]),
             "Diagnostics:CoreGameDiagnosis.checkAccount": .init("检查账号", []),
             "Diagnostics:CoreGameDiagnosis.checkInstanceSettings": .init("检查实例设置", []),
-            "Diagnostics:CoreGameDiagnosis.classVersionCheck": .init("在实例设置核对 Java，按游戏和整合包要求选择版本。", []),
-            "Diagnostics:CoreGameDiagnosis.classVersionModCheck": .init("如果刚替换过模组，检查该模组是否要求另一代 Java 或 Minecraft。", []),
-            "Diagnostics:CoreGameDiagnosis.classVersionUnreadable": .init("Java 无法读取所需的类版本", []),
-            "Diagnostics:CoreGameDiagnosis.classVersionUnsupported": .init("Java 明确报告类文件版本不受支持。游戏、加载器和模组都可能对 Java 有要求。", []),
-            "Diagnostics:CoreGameDiagnosis.cluesNeedingVerification": .init("需要验证的线索", []),
+            "Diagnostics:CoreGameDiagnosis.classVersionCheck": .init("打开实例设置，选择游戏或整合包要求的 Java 版本。", []),
+            "Diagnostics:CoreGameDiagnosis.classVersionModCheck": .init("如果最近更换过模组，请检查它支持的 Java 和 Minecraft 版本。", []),
+            "Diagnostics:CoreGameDiagnosis.classVersionUnreadable": .init("Java 版本不兼容", []),
+            "Diagnostics:CoreGameDiagnosis.classVersionUnsupported": .init("当前 Java 无法读取游戏、加载器或模组中的类文件。请检查它们要求的 Java 版本。", []),
+            "Diagnostics:CoreGameDiagnosis.cluesNeedingVerification": .init("可能的原因，仍需检查", []),
             "Diagnostics:CoreGameDiagnosis.collectDiagnosticReports": .init("收集诊断报告", []),
-            "Diagnostics:CoreGameDiagnosis.configBackup": .init("先查看原文的文件名和底层错误；修改前把该配置复制到别处留作备份。", []),
-            "Diagnostics:CoreGameDiagnosis.configReadExplanation": .init("加载器在错误上下文中指出无法读取配置。可能是内容格式、版本差异或文件访问问题。", []),
-            "Diagnostics:CoreGameDiagnosis.configReadFailure": .init("配置文件读取失败", []),
-            "Diagnostics:CoreGameDiagnosis.configRepair": .init("按对应模组说明修正配置；需要重新生成时只处理该文件，避免清空整套配置。", []),
+            "Diagnostics:CoreGameDiagnosis.configBackup": .init("查看日志中提到的配置文件和具体错误。修改前，先备份该配置文件。", []),
+            "Diagnostics:CoreGameDiagnosis.configReadExplanation": .init("加载器无法读取配置文件。文件格式、配置版本或访问权限可能有问题。", []),
+            "Diagnostics:CoreGameDiagnosis.configReadFailure": .init("无法读取配置文件", []),
+            "Diagnostics:CoreGameDiagnosis.configRepair": .init("按模组说明修正配置。如果需要重新生成配置，只处理出错的文件，保留其他配置。", []),
             "Diagnostics:CoreGameDiagnosis.confirmedAbnormalExit": .init("游戏异常退出，暂时无法确定原因。", []),
-            "Diagnostics:CoreGameDiagnosis.debugCrash": .init("报告注明手动触发调试崩溃", []),
-            "Diagnostics:CoreGameDiagnosis.debugCrashExplanation": .init("Minecraft 报告的描述是手动调试崩溃，不据此推断模组不兼容。", []),
-            "Diagnostics:CoreGameDiagnosis.debugCrashRetry": .init("若这是有意触发的调试操作，保存所需报告后正常重新启动。", []),
-            "Diagnostics:CoreGameDiagnosis.duplicateMod": .init("加载器发现重复模组", []),
-            "Diagnostics:CoreGameDiagnosis.duplicateModCheck": .init("在模组管理中核对原文列出的文件和版本。", []),
-            "Diagnostics:CoreGameDiagnosis.duplicateModExplanation": .init("同一个模组被加载多次，可能存在不同版本或重复来源。", []),
-            "Diagnostics:CoreGameDiagnosis.duplicateModRetry": .init("停用多余的一份后重试；不要同时删掉所有版本。", []),
-            "Diagnostics:CoreGameDiagnosis.evidenceNotRegularFile": .init("证据不是普通文件。", []),
+            "Diagnostics:CoreGameDiagnosis.debugCrash": .init("手动触发的调试崩溃", []),
+            "Diagnostics:CoreGameDiagnosis.debugCrashExplanation": .init("Minecraft 报告这是一次手动触发的调试崩溃，不能据此判断模组是否存在冲突。", []),
+            "Diagnostics:CoreGameDiagnosis.debugCrashRetry": .init("如果这是有意进行的调试操作，保存所需报告后重新启动游戏即可。", []),
+            "Diagnostics:CoreGameDiagnosis.duplicateMod": .init("发现重复模组", []),
+            "Diagnostics:CoreGameDiagnosis.duplicateModCheck": .init("打开“管理模组”，查看日志中列出的文件及其版本。", []),
+            "Diagnostics:CoreGameDiagnosis.duplicateModExplanation": .init("加载器发现同一个模组存在多个副本或版本。", []),
+            "Diagnostics:CoreGameDiagnosis.duplicateModRetry": .init("保留需要的版本，停用多余的副本，再启动游戏。", []),
+            "Diagnostics:CoreGameDiagnosis.evidenceNotRegularFile": .init("无法读取此诊断文件：它不是普通文件。", []),
             "Diagnostics:CoreGameDiagnosis.exitCode": .init("退出码", []),
-            "Diagnostics:CoreGameDiagnosis.exitSummary": .init("%1$@：%2$@；Ruri 结束请求：%3$@", [.text, .text, .text]),
-            "Diagnostics:CoreGameDiagnosis.guidanceCheckErrors": .init("核对下方原始错误以及对应设置，处理后重新启动。", []),
-            "Diagnostics:CoreGameDiagnosis.guidanceCollectRetry": .init("若仍然失败，收集这次运行记录，以便比较重试前后的错误。", []),
-            "Diagnostics:CoreGameDiagnosis.hasExitStatus": .init("有", []),
-            "Diagnostics:CoreGameDiagnosis.invalidEvidencePathSkipped": .init("跳过无效证据路径。", []),
+            "Diagnostics:CoreGameDiagnosis.exitSummary": .init("%1$@：%2$@；是否通过 Ruri 请求终止：%3$@", [.text, .text, .text]),
+            "Diagnostics:CoreGameDiagnosis.guidanceCheckErrors": .init("查看相关日志中的具体错误并检查对应设置，再尝试启动游戏。", []),
+            "Diagnostics:CoreGameDiagnosis.guidanceCollectRetry": .init("如果仍然失败，收集重试后的运行记录，以便比较两次的错误。", []),
+            "Diagnostics:CoreGameDiagnosis.hasExitStatus": .init("是", []),
+            "Diagnostics:CoreGameDiagnosis.invalidEvidencePathSkipped": .init("已跳过路径无效的诊断文件。", []),
             "Diagnostics:CoreGameDiagnosis.javaNotRecorded": .init("未记录 Java", []),
-            "Diagnostics:CoreGameDiagnosis.jvmCrash": .init("JVM 记录了本机崩溃", []),
-            "Diagnostics:CoreGameDiagnosis.jvmCrashCheck": .init("核对所用 Java 和含本地库的模组版本，将报告与复现步骤一起提供给维护者。", []),
-            "Diagnostics:CoreGameDiagnosis.jvmCrashExplanation": .init("虚拟机报告致命错误；Problematic frame 只是崩溃位置，仍需结合本地库、Java 与系统环境判断原因。", []),
-            "Diagnostics:CoreGameDiagnosis.jvmCrashReport": .init("保留 JVM 报告的错误信号、Problematic frame 与 Java 版本。", []),
-            "Diagnostics:CoreGameDiagnosis.lastRecordedPhase": .init("最后记录阶段：%1$@", [.text]),
-            "Diagnostics:CoreGameDiagnosis.launchArgumentCheck": .init("核对实例的附加 JVM 参数，保留副本后逐项撤销最近增加的参数。", []),
-            "Diagnostics:CoreGameDiagnosis.launchArgumentExplanation": .init("虚拟机报告参数或内存上限无效，游戏尚未正常启动。", []),
-            "Diagnostics:CoreGameDiagnosis.launchArgumentRejected": .init("Java 启动参数被拒绝", []),
-            "Diagnostics:CoreGameDiagnosis.launchArgumentRetry": .init("确认内存上限与所选 Java 匹配，然后重试。", []),
-            "Diagnostics:CoreGameDiagnosis.launchCancelled": .init("启动已取消，没有证据表明游戏发生了崩溃。", []),
-            "Diagnostics:CoreGameDiagnosis.launchPreparationFailed": .init("启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。", [.text]),
-            "Diagnostics:CoreGameDiagnosis.loaderModConflict": .init("加载器拒绝了模组组合", []),
-            "Diagnostics:CoreGameDiagnosis.loaderModConflictCheck": .init("按证据中的模组 ID 和版本范围核对依赖，并确认 Minecraft 与加载器版本。", []),
-            "Diagnostics:CoreGameDiagnosis.loaderModConflictExplanation": .init("加载器报告缺少依赖、版本要求不满足或模组冲突。原文通常包含需要的版本范围。", []),
-            "Diagnostics:CoreGameDiagnosis.loaderModConflictRetry": .init("在模组管理中处理最近的变更；一次只改一组相关依赖，保留恢复余地后重试。", []),
-            "Diagnostics:CoreGameDiagnosis.logExplicitReport": .init("日志明确报告", []),
-            "Diagnostics:CoreGameDiagnosis.mainThreadCheck": .init("核对游戏所需的 Java 和加载器版本，检查自定义参数是否影响首线程启动。", []),
-            "Diagnostics:CoreGameDiagnosis.mainThreadReport": .init("保留报告中的 Java、macOS 与错误原文，便于确认是否需要修正启动器的启动方式。", []),
-            "Diagnostics:CoreGameDiagnosis.mainThreadViolation": .init("窗口初始化违反 macOS 主线程要求", []),
-            "Diagnostics:CoreGameDiagnosis.mainThreadViolationExplanation": .init("Cocoa 或 GLFW 明确报告窗口必须在主线程创建。需要检查 Java、LWJGL 与首线程启动参数的组合。", []),
+            "Diagnostics:CoreGameDiagnosis.jvmCrash": .init("Java 发生严重错误", []),
+            "Diagnostics:CoreGameDiagnosis.jvmCrashCheck": .init("检查 Java 和含原生库的模组版本。向维护者反馈时，请附上报告和复现步骤。", []),
+            "Diagnostics:CoreGameDiagnosis.jvmCrashExplanation": .init("Java 报告了致命错误。报告中的 Problematic frame 表示崩溃位置，具体原因还需结合原生库、Java 版本和系统环境检查。", []),
+            "Diagnostics:CoreGameDiagnosis.jvmCrashReport": .init("保留 Java 崩溃报告，其中的错误信号、Problematic frame 和 Java 版本有助于排查问题。", []),
+            "Diagnostics:CoreGameDiagnosis.lastRecordedPhase": .init("最后记录的阶段：%1$@", [.text]),
+            "Diagnostics:CoreGameDiagnosis.launchArgumentCheck": .init("在实例设置中检查附加 JVM 参数。先保存一份副本，再逐项移除最近添加的参数。", []),
+            "Diagnostics:CoreGameDiagnosis.launchArgumentExplanation": .init("Java 无法使用当前的启动参数或内存上限，游戏未能启动。", []),
+            "Diagnostics:CoreGameDiagnosis.launchArgumentRejected": .init("Java 启动参数无效", []),
+            "Diagnostics:CoreGameDiagnosis.launchArgumentRetry": .init("检查内存上限是否适用于所选 Java，再尝试启动游戏。", []),
+            "Diagnostics:CoreGameDiagnosis.launchCancelled": .init("启动已取消。现有记录未显示游戏发生崩溃。", []),
+            "Diagnostics:CoreGameDiagnosis.launchPreparationFailed": .init("启动在“%1$@”阶段失败，未记录到游戏退出信息。请先查看该阶段的错误。", [.text]),
+            "Diagnostics:CoreGameDiagnosis.loaderModConflict": .init("模组依赖或兼容性问题", []),
+            "Diagnostics:CoreGameDiagnosis.loaderModConflictCheck": .init("查看相关日志中的模组 ID 和版本要求，检查所需依赖、Minecraft 版本和加载器版本。", []),
+            "Diagnostics:CoreGameDiagnosis.loaderModConflictExplanation": .init("加载器报告部分模组缺少依赖、版本不符合要求，或彼此冲突。日志通常会列出所需的版本。", []),
+            "Diagnostics:CoreGameDiagnosis.loaderModConflictRetry": .init("打开“管理模组”，检查最近的改动。每次只调整一组相关模组及其依赖，保留副本以便恢复，再启动游戏。", []),
+            "Diagnostics:CoreGameDiagnosis.logExplicitReport": .init("日志中记录的错误", []),
+            "Diagnostics:CoreGameDiagnosis.mainThreadCheck": .init("检查游戏要求的 Java 和加载器版本，以及自定义参数是否影响在主线程启动游戏。", []),
+            "Diagnostics:CoreGameDiagnosis.mainThreadReport": .init("向维护者反馈时，请附上 Java 版本、macOS 版本和错误原文，以便检查启动方式。", []),
+            "Diagnostics:CoreGameDiagnosis.mainThreadViolation": .init("游戏窗口发生线程错误", []),
+            "Diagnostics:CoreGameDiagnosis.mainThreadViolationExplanation": .init("Cocoa 或 GLFW 报告了窗口主线程错误。需要检查 Java、LWJGL 与主线程启动参数是否兼容。", []),
             "Diagnostics:CoreGameDiagnosis.manageMods": .init("管理模组", []),
             "Diagnostics:CoreGameDiagnosis.memoryLimit": .init("%1$@ · 内存上限 %2$@ MB", [.text, .text]),
             "Diagnostics:CoreGameDiagnosis.missingLaunchEntry": .init("找不到游戏启动入口", []),
             "Diagnostics:CoreGameDiagnosis.missingMainClass": .init("找不到或无法加载主类", []),
-            "Diagnostics:CoreGameDiagnosis.missingMainClassCheck": .init("检查实例所用的游戏与加载器版本，再使用实例的修复功能补全安装文件。", []),
+            "Diagnostics:CoreGameDiagnosis.missingMainClassCheck": .init("检查实例的 Minecraft 和加载器版本，再点按“修复安装文件”补全所需文件。", []),
             "Diagnostics:CoreGameDiagnosis.missingMainClassCjk": .init("找不到或無法載入主要類別", []),
-            "Diagnostics:CoreGameDiagnosis.missingMainClassExplanation": .init("Java 明确报告无法加载主类。版本文件、加载器安装或启动入口需要检查。", []),
-            "Diagnostics:CoreGameDiagnosis.missingMainClassReport": .init("保留现有配置与存档；若修复后仍失败，附上这次报告。", []),
-            "Diagnostics:CoreGameDiagnosis.mixinApplyExplanation": .init("这是模组修改游戏代码时的失败线索。文件名或堆栈中的模组不能直接当作唯一责任方。", []),
-            "Diagnostics:CoreGameDiagnosis.mixinApplyFailure": .init("错误上下文中有 Mixin 应用失败", []),
-            "Diagnostics:CoreGameDiagnosis.mixinDependencyCheck": .init("先处理上方明确的依赖或入口错误，再检查这里涉及的模组版本组合。", []),
-            "Diagnostics:CoreGameDiagnosis.mixinModCheck": .init("通过模组管理逐步停用最近改动的模组来验证，之后仍能重新启用；不要根据单条警告批量删除模组。", []),
-            "Diagnostics:CoreGameDiagnosis.modInitializationCheck": .init("核对证据中列出的模组、依赖与加载器版本。", []),
-            "Diagnostics:CoreGameDiagnosis.modInitializationExplanation": .init("加载器指出某个入口或模组实例初始化失败；依赖或其他模组仍可能参与其中。", []),
+            "Diagnostics:CoreGameDiagnosis.missingMainClassExplanation": .init("Java 无法加载游戏的主类。游戏安装文件、加载器或启动配置可能有问题。", []),
+            "Diagnostics:CoreGameDiagnosis.missingMainClassReport": .init("保留现有配置和存档。如果修复后仍无法启动，请在反馈时附上诊断报告。", []),
+            "Diagnostics:CoreGameDiagnosis.mixinApplyExplanation": .init("模组修改游戏代码时出错。日志中提到的模组可能受到其他模组影响，需要进一步检查。", []),
+            "Diagnostics:CoreGameDiagnosis.mixinApplyFailure": .init("Mixin 应用失败", []),
+            "Diagnostics:CoreGameDiagnosis.mixinDependencyCheck": .init("如果上方还有依赖或模组初始化错误，请先处理这些问题，再检查相关模组的版本是否兼容。", []),
+            "Diagnostics:CoreGameDiagnosis.mixinModCheck": .init("打开“管理模组”，逐个停用最近改动的模组并重试。先停用而不删除，以便恢复；单条警告不足以判断哪些模组需要移除。", []),
+            "Diagnostics:CoreGameDiagnosis.modInitializationCheck": .init("查看相关日志中提到的模组，检查它及其依赖和加载器的版本。", []),
+            "Diagnostics:CoreGameDiagnosis.modInitializationExplanation": .init("加载器无法完成某个模组的初始化。原因也可能与它依赖的组件或其他模组有关。", []),
             "Diagnostics:CoreGameDiagnosis.modInitializationFailure": .init("模组初始化失败", []),
-            "Diagnostics:CoreGameDiagnosis.modInitializationRetry": .init("若错误紧随一次更新出现，先核对此前版本；可在模组管理中停用最近加入的模组来验证，之后仍能重新启用。", []),
-            "Diagnostics:CoreGameDiagnosis.monitoringInterrupted": .init("监控记录已中断，未取得游戏的退出结果。", []),
-            "Diagnostics:CoreGameDiagnosis.nativeMemoryAllocationExplanation": .init("JVM 报告本机内存分配失败。增大 Java 堆上限可能进一步挤占系统内存。", []),
+            "Diagnostics:CoreGameDiagnosis.modInitializationRetry": .init("如果问题出现在更新后，检查之前使用的版本。也可以先停用最近添加的模组并重试，排查后再重新启用。", []),
+            "Diagnostics:CoreGameDiagnosis.monitoringInterrupted": .init("游戏监控已中断，未记录到退出结果。", []),
+            "Diagnostics:CoreGameDiagnosis.nativeMemoryAllocationExplanation": .init("Java 无法分配所需的系统内存。此时增加游戏的内存上限可能让系统可用内存更少。", []),
             "Diagnostics:CoreGameDiagnosis.nativeMemoryAllocationFailure": .init("虚拟机无法分配所需内存", []),
-            "Diagnostics:CoreGameDiagnosis.nativeMemoryCheck": .init("检查系统内存压力与其他程序占用，核对是否设置了过大的 Java 堆。", []),
-            "Diagnostics:CoreGameDiagnosis.nativeMemoryRetry": .init("调整后重新启动；保留 JVM 报告中的分配大小和失败位置供排查。", []),
-            "Diagnostics:CoreGameDiagnosis.noExitStatus": .init("无", []),
-            "Diagnostics:CoreGameDiagnosis.normalExitRequested": .init("系统曾接收 Ruri 的正常退出请求。", []),
-            "Diagnostics:CoreGameDiagnosis.outOfMemory": .init("Java 报告内存耗尽", []),
-            "Diagnostics:CoreGameDiagnosis.outOfMemoryCheck": .init("仅在堆内存不足时考虑调整实例内存，并给 macOS 留出余量；同时检查最近加入的模组或高分辨率资源。", []),
-            "Diagnostics:CoreGameDiagnosis.outOfMemoryExplanation": .init("错误上下文出现 OutOfMemoryError；仅凭这一类错误还不能判断应增加哪一种内存。", []),
-            "Diagnostics:CoreGameDiagnosis.outOfMemoryTypes": .init("先查看原文是 Java heap space、Direct buffer memory、Metaspace 还是无法创建线程。", []),
-            "Diagnostics:CoreGameDiagnosis.preparationError": .init("这是启动器记录的准备阶段错误，尚不能归为游戏崩溃。", []),
-            "Diagnostics:CoreGameDiagnosis.processIdentityInvalid": .init("原进程身份已失效", []),
-            "Diagnostics:CoreGameDiagnosis.processTerminated": .init("记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。", []),
-            "Diagnostics:CoreGameDiagnosis.recoveryBasis": .init("恢复依据：%1$@", [.text]),
-            "Diagnostics:CoreGameDiagnosis.recoveryRecordTime": .init("恢复记录时间：%1$@（不是游戏退出时间）", [.text]),
-            "Diagnostics:CoreGameDiagnosis.relatedErrorCount": .init("找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。", [.integer]),
+            "Diagnostics:CoreGameDiagnosis.nativeMemoryCheck": .init("在“活动监视器”中查看内存压力和其他 App 的占用，并检查游戏的内存上限是否设得过高。", []),
+            "Diagnostics:CoreGameDiagnosis.nativeMemoryRetry": .init("调整后重新启动游戏，并保留 Java 崩溃报告，以便查看内存分配失败的详情。", []),
+            "Diagnostics:CoreGameDiagnosis.noExitStatus": .init("否", []),
+            "Diagnostics:CoreGameDiagnosis.normalExitRequested": .init("系统已接收 Ruri 发出的正常退出请求。", []),
+            "Diagnostics:CoreGameDiagnosis.outOfMemory": .init("Java 内存不足", []),
+            "Diagnostics:CoreGameDiagnosis.outOfMemoryCheck": .init("如果提示 Java heap space，可适当增加实例的内存上限，同时为 macOS 留出可用内存。也请检查最近添加的模组或高分辨率资源包。", []),
+            "Diagnostics:CoreGameDiagnosis.outOfMemoryExplanation": .init("日志中出现了 OutOfMemoryError。需要先确认哪一类内存不足，才能判断是否应增加游戏的内存上限。", []),
+            "Diagnostics:CoreGameDiagnosis.outOfMemoryTypes": .init("查看错误后面的说明：Java heap space 表示堆内存不足；Direct buffer memory、Metaspace 和无法创建线程表示其他内存或资源限制。", []),
+            "Diagnostics:CoreGameDiagnosis.preparationError": .init("启动准备过程中发生错误，请查看具体错误信息。", []),
+            "Diagnostics:CoreGameDiagnosis.processIdentityInvalid": .init("原游戏进程已不存在", []),
+            "Diagnostics:CoreGameDiagnosis.processTerminated": .init("游戏进程已被终止，现有记录无法确定原因，也无法确认是谁发出了终止请求。", []),
+            "Diagnostics:CoreGameDiagnosis.recoveryBasis": .init("恢复记录的依据：%1$@", [.text]),
+            "Diagnostics:CoreGameDiagnosis.recoveryRecordTime": .init("记录恢复时间：%1$@（游戏退出时间未知）", [.text]),
+            "Diagnostics:CoreGameDiagnosis.relatedErrorCount": .init("发现 %1$lld 类相关错误。以下是错误原文和建议的处理步骤；日志中提到的模组可能只是原因之一。", [.integer]),
             "Diagnostics:CoreGameDiagnosis.repairInstallationFiles": .init("修复安装文件", []),
-            "Diagnostics:CoreGameDiagnosis.reportLimit": .init("本次有 %1$lld 份报告，仅分析前 12 份；其余仍可在运行目录查看。", [.integer]),
-            "Diagnostics:CoreGameDiagnosis.runCompleted": .init("本次运行已经结束，无需进行崩溃处理。", []),
-            "Diagnostics:CoreGameDiagnosis.runWithoutExitRecord": .init("本次运行尚无最终退出记录，暂不判断崩溃原因。可继续查看实时日志和进程状态。", []),
-            "Diagnostics:CoreGameDiagnosis.sessionLogReadFailure": .init("未能读取会话日志：%1$@", [.text]),
-            "Diagnostics:CoreGameDiagnosis.tailTitle": .init("%1$@（末段）", [.text]),
+            "Diagnostics:CoreGameDiagnosis.reportLimit": .init("本次共有 %1$lld 份报告，已分析前 12 份。其余报告可在运行记录文件夹中查看。", [.integer]),
+            "Diagnostics:CoreGameDiagnosis.runCompleted": .init("本次运行已结束，无需排查崩溃。", []),
+            "Diagnostics:CoreGameDiagnosis.runWithoutExitRecord": .init("尚未记录到游戏的退出结果，暂时无法分析崩溃原因。可以继续查看实时日志和运行状态。", []),
+            "Diagnostics:CoreGameDiagnosis.sessionLogReadFailure": .init("无法读取本次运行的日志：%1$@", [.text]),
+            "Diagnostics:CoreGameDiagnosis.tailTitle": .init("%1$@（末尾片段）", [.text]),
             "Diagnostics:CoreGameDiagnosis.terminationSignal": .init("终止信号", []),
-            "Diagnostics:CoreGameDiagnosis.unreadableReport": .init("未能读取 %1$@：%2$@", [.text, .text]),
+            "Diagnostics:CoreGameDiagnosis.unreadableReport": .init("无法读取 %1$@：%2$@", [.text, .text]),
             "Diagnostics:CoreGameDiagnosis.userConfirmedExit": .init("用户确认游戏已退出", []),
-            "Diagnostics:CoreGameDiagnosis.viewRunFiles": .init("查看运行文件", []),
+            "Diagnostics:CoreGameDiagnosis.viewRunFiles": .init("查看运行记录文件", []),
         ]
     }
 }

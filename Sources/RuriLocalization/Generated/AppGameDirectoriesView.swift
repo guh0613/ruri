@@ -75,11 +75,11 @@ extension Messages {
         public static var manageFolders: LocalizedMessage {
             .init(key: "AppGameDirectoriesView.manageFolders", table: "Interface", fallback: "管理文件夹…")
         }
-        /// 保留 %1$lld 个实例的设置和运行历史
+        /// 保留了 %1$lld 个实例的设置和运行记录
         ///
         /// Resource: `Interface.AppGameDirectoriesView.preserveDetachedSettings`.
         public static func preserveDetachedSettings(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AppGameDirectoriesView.preserveDetachedSettings", table: "Interface", fallback: "保留 %1$lld 个实例的设置和运行历史", arguments: [.integer(value0)])
+            .init(key: "AppGameDirectoriesView.preserveDetachedSettings", table: "Interface", fallback: "保留了 %1$lld 个实例的设置和运行记录", arguments: [.integer(value0)])
         }
         /// 重新添加
         ///
@@ -99,11 +99,11 @@ extension Messages {
         public static var relocate: LocalizedMessage {
             .init(key: "AppGameDirectoriesView.relocate", table: "Interface", fallback: "重新定位")
         }
-        /// 选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行历史。
+        /// 选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行记录。
         ///
         /// Resource: `Interface.AppGameDirectoriesView.relocateFolder`.
         public static func relocateFolder(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppGameDirectoriesView.relocateFolder", table: "Interface", fallback: "选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行历史。", arguments: [.text(value0)])
+            .init(key: "AppGameDirectoriesView.relocateFolder", table: "Interface", fallback: "选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行记录。", arguments: [.text(value0)])
         }
         /// 重新定位原文件夹…
         ///
@@ -117,11 +117,11 @@ extension Messages {
         public static var removeFromList: LocalizedMessage {
             .init(key: "AppGameDirectoriesView.removeFromList", table: "Interface", fallback: "从列表移除")
         }
-        /// 从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。
+        /// 从列表移除后，文件、设置和运行记录会保留。重新添加原文件夹即可恢复。
         ///
         /// Resource: `Interface.AppGameDirectoriesView.removedFolderRecovery`.
         public static var removedFolderRecovery: LocalizedMessage {
-            .init(key: "AppGameDirectoriesView.removedFolderRecovery", table: "Interface", fallback: "从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。")
+            .init(key: "AppGameDirectoriesView.removedFolderRecovery", table: "Interface", fallback: "从列表移除后，文件、设置和运行记录会保留。重新添加原文件夹即可恢复。")
         }
         /// 已移除的文件夹
         ///
@@ -172,14 +172,14 @@ extension Messages {
             "Interface:AppGameDirectoriesView.instanceCount": .init("%1$lld 个实例", [.integer]),
             "Interface:AppGameDirectoriesView.instanceFolders": .init("实例文件夹", []),
             "Interface:AppGameDirectoriesView.manageFolders": .init("管理文件夹…", []),
-            "Interface:AppGameDirectoriesView.preserveDetachedSettings": .init("保留 %1$lld 个实例的设置和运行历史", [.integer]),
+            "Interface:AppGameDirectoriesView.preserveDetachedSettings": .init("保留了 %1$lld 个实例的设置和运行记录", [.integer]),
             "Interface:AppGameDirectoriesView.readdFolder": .init("重新添加", []),
             "Interface:AppGameDirectoriesView.refreshVersions": .init("刷新版本列表", []),
             "Interface:AppGameDirectoriesView.relocate": .init("重新定位", []),
-            "Interface:AppGameDirectoriesView.relocateFolder": .init("选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行历史。", [.text]),
+            "Interface:AppGameDirectoriesView.relocateFolder": .init("选择“%1$@”原文件夹的新位置，恢复其中实例的设置和运行记录。", [.text]),
             "Interface:AppGameDirectoriesView.relocateOriginal": .init("重新定位原文件夹…", []),
             "Interface:AppGameDirectoriesView.removeFromList": .init("从列表移除", []),
-            "Interface:AppGameDirectoriesView.removedFolderRecovery": .init("从列表移除不会删除文件、设置或运行历史，重新添加原文件夹可恢复。", []),
+            "Interface:AppGameDirectoriesView.removedFolderRecovery": .init("从列表移除后，文件、设置和运行记录会保留。重新添加原文件夹即可恢复。", []),
             "Interface:AppGameDirectoriesView.removedFolders": .init("已移除的文件夹", []),
             "Interface:AppGameDirectoriesView.saveName": .init("保存名称", []),
             "Interface:AppGameDirectoriesView.select": .init("选择", []),

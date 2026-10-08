@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppAppModel {
-        /// 数据索引在外部被移除或替换，已暂停写入。请检查数据目录。
+        /// 数据索引已被其他程序移除或替换，已暂停保存。请检查数据文件夹。
         ///
         /// Resource: `Errors.AppAppModel.externalIndexChanged`.
         public static var externalIndexChanged: LocalizedMessage {
-            .init(key: "AppAppModel.externalIndexChanged", table: "Errors", fallback: "数据索引在外部被移除或替换，已暂停写入。请检查数据目录。")
+            .init(key: "AppAppModel.externalIndexChanged", table: "Errors", fallback: "数据索引已被其他程序移除或替换，已暂停保存。请检查数据文件夹。")
         }
         /// 默认实例文件夹
         ///
@@ -15,25 +15,25 @@ extension Messages {
         public static var defaultInstanceDirectory: LocalizedMessage {
             .init(key: "AppAppModel.defaultInstanceDirectory", table: "Interface", fallback: "默认实例文件夹")
         }
-        /// 无法恢复目录登记：%1$@
+        /// 无法恢复已添加的文件夹：%1$@
         ///
         /// Resource: `Interface.AppAppModel.directoryRecoveryFailed`.
         public static func directoryRecoveryFailed(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppAppModel.directoryRecoveryFailed", table: "Interface", fallback: "无法恢复目录登记：%1$@", arguments: [.text(value0)])
+            .init(key: "AppAppModel.directoryRecoveryFailed", table: "Interface", fallback: "无法恢复已添加的文件夹：%1$@", arguments: [.text(value0)])
         }
-        /// 无法同步其他客户端的更改，已暂停写入以保留原数据。
+        /// 无法同步其他 Ruri 进程的更改，已暂停保存以保留原数据。
         /// %1$@
         ///
         /// Resource: `Interface.AppAppModel.externalChangesDetected`.
         public static func externalChangesDetected(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppAppModel.externalChangesDetected", table: "Interface", fallback: "无法同步其他客户端的更改，已暂停写入以保留原数据。\n%1$@", arguments: [.text(value0)])
+            .init(key: "AppAppModel.externalChangesDetected", table: "Interface", fallback: "无法同步其他 Ruri 进程的更改，已暂停保存以保留原数据。\n%1$@", arguments: [.text(value0)])
         }
         /// %1$@
-        /// 已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。
+        /// 此窗口已暂停保存、安装和启动操作。请重新打开 Ruri，加载磁盘上的最新数据。
         ///
         /// Resource: `Interface.AppAppModel.savePaused`.
         public static func savePaused(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppAppModel.savePaused", table: "Interface", fallback: "%1$@\n已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。", arguments: [.text(value0)])
+            .init(key: "AppAppModel.savePaused", table: "Interface", fallback: "%1$@\n此窗口已暂停保存、安装和启动操作。请重新打开 Ruri，加载磁盘上的最新数据。", arguments: [.text(value0)])
         }
         /// 任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。
         ///
@@ -55,11 +55,11 @@ extension Messages {
             .init(key: "AppAppModel.taskCompleted", table: "Progress", fallback: "已完成")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:AppAppModel.externalIndexChanged": .init("数据索引在外部被移除或替换，已暂停写入。请检查数据目录。", []),
+            "Errors:AppAppModel.externalIndexChanged": .init("数据索引已被其他程序移除或替换，已暂停保存。请检查数据文件夹。", []),
             "Interface:AppAppModel.defaultInstanceDirectory": .init("默认实例文件夹", []),
-            "Interface:AppAppModel.directoryRecoveryFailed": .init("无法恢复目录登记：%1$@", [.text]),
-            "Interface:AppAppModel.externalChangesDetected": .init("无法同步其他客户端的更改，已暂停写入以保留原数据。\n%1$@", [.text]),
-            "Interface:AppAppModel.savePaused": .init("%1$@\n已暂停本窗口的后续写入和安装/启动。请重新打开 Ruri 载入磁盘上的最新状态。", [.text]),
+            "Interface:AppAppModel.directoryRecoveryFailed": .init("无法恢复已添加的文件夹：%1$@", [.text]),
+            "Interface:AppAppModel.externalChangesDetected": .init("无法同步其他 Ruri 进程的更改，已暂停保存以保留原数据。\n%1$@", [.text]),
+            "Interface:AppAppModel.savePaused": .init("%1$@\n此窗口已暂停保存、安装和启动操作。请重新打开 Ruri，加载磁盘上的最新数据。", [.text]),
             "Interface:AppAppModel.taskCancelled": .init("任务已取消。重试时会复用可用缓存，并尝试继续未完成的下载。", []),
             "Interface:AppAppModel.unreadableData": .init("无法读取 Ruri 数据，已暂停写入以保护原文件。\n%1$@", [.text]),
             "Progress:AppAppModel.taskCompleted": .init("已完成", []),

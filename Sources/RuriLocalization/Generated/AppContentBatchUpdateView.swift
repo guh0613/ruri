@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppContentBatchUpdateView {
-        /// 批量更新 %1$lld 项内容
+        /// 批量更新 %1$lld 项资源
         ///
         /// Resource: `Interface.AppContentBatchUpdateView.batchUpdate`.
         public static func batchUpdate(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AppContentBatchUpdateView.batchUpdate", table: "Interface", fallback: "批量更新 %1$lld 项内容", arguments: [.integer(value0)])
+            .init(key: "AppContentBatchUpdateView.batchUpdate", table: "Interface", fallback: "批量更新 %1$lld 项资源", arguments: [.integer(value0)])
         }
         /// 共 %1$lld 个文件 · %2$@
         ///
@@ -15,11 +15,11 @@ extension Messages {
         public static func fileSummary(_ value0: Int64, _ value1: String) -> LocalizedMessage {
             .init(key: "AppContentBatchUpdateView.fileSummary", table: "Interface", fallback: "共 %1$lld 个文件 · %2$@", arguments: [.integer(value0), .text(value1)])
         }
-        /// 已更新 %1$lld 项内容
+        /// 已更新 %1$lld 项资源
         ///
         /// Resource: `Interface.AppContentBatchUpdateView.itemsUpdated`.
         public static func itemsUpdated(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AppContentBatchUpdateView.itemsUpdated", table: "Interface", fallback: "已更新 %1$lld 项内容", arguments: [.integer(value0)])
+            .init(key: "AppContentBatchUpdateView.itemsUpdated", table: "Interface", fallback: "已更新 %1$lld 项资源", arguments: [.integer(value0)])
         }
         /// 更新后继续保持停用
         ///
@@ -33,11 +33,11 @@ extension Messages {
         public static func newVersion(_ value0: String) -> LocalizedMessage {
             .init(key: "AppContentBatchUpdateView.newVersion", table: "Interface", fallback: "新增 · %1$@", arguments: [.text(value0)])
         }
-        /// 更新保留停用状态；取消或失败时保留原文件。
+        /// 更新后保持原来的停用状态。取消或更新失败时，原文件会保留。
         ///
         /// Resource: `Interface.AppContentBatchUpdateView.replacementDetails`.
         public static var replacementDetails: LocalizedMessage {
-            .init(key: "AppContentBatchUpdateView.replacementDetails", table: "Interface", fallback: "更新保留停用状态；取消或失败时保留原文件。")
+            .init(key: "AppContentBatchUpdateView.replacementDetails", table: "Interface", fallback: "更新后保持原来的停用状态。取消或更新失败时，原文件会保留。")
         }
         /// 必需依赖
         ///
@@ -51,22 +51,22 @@ extension Messages {
         public static func updateAll(_ value0: Int64) -> LocalizedMessage {
             .init(key: "AppContentBatchUpdateView.updateAll", table: "Interface", fallback: "更新全部 %1$lld 项", arguments: [.integer(value0)])
         }
-        /// 更新 %1$lld 项内容
+        /// 更新 %1$lld 项资源
         ///
         /// Resource: `Interface.AppContentBatchUpdateView.updateItems`.
         public static func updateItems(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AppContentBatchUpdateView.updateItems", table: "Interface", fallback: "更新 %1$lld 项内容", arguments: [.integer(value0)])
+            .init(key: "AppContentBatchUpdateView.updateItems", table: "Interface", fallback: "更新 %1$lld 项资源", arguments: [.integer(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:AppContentBatchUpdateView.batchUpdate": .init("批量更新 %1$lld 项内容", [.integer]),
+            "Interface:AppContentBatchUpdateView.batchUpdate": .init("批量更新 %1$lld 项资源", [.integer]),
             "Interface:AppContentBatchUpdateView.fileSummary": .init("共 %1$lld 个文件 · %2$@", [.integer, .text]),
-            "Interface:AppContentBatchUpdateView.itemsUpdated": .init("已更新 %1$lld 项内容", [.integer]),
+            "Interface:AppContentBatchUpdateView.itemsUpdated": .init("已更新 %1$lld 项资源", [.integer]),
             "Interface:AppContentBatchUpdateView.keepDisabled": .init("更新后继续保持停用", []),
             "Interface:AppContentBatchUpdateView.newVersion": .init("新增 · %1$@", [.text]),
-            "Interface:AppContentBatchUpdateView.replacementDetails": .init("更新保留停用状态；取消或失败时保留原文件。", []),
+            "Interface:AppContentBatchUpdateView.replacementDetails": .init("更新后保持原来的停用状态。取消或更新失败时，原文件会保留。", []),
             "Interface:AppContentBatchUpdateView.requiredDependencies": .init("必需依赖", []),
             "Interface:AppContentBatchUpdateView.updateAll": .init("更新全部 %1$lld 项", [.integer]),
-            "Interface:AppContentBatchUpdateView.updateItems": .init("更新 %1$lld 项内容", [.integer]),
+            "Interface:AppContentBatchUpdateView.updateItems": .init("更新 %1$lld 项资源", [.integer]),
         ]
     }
 }

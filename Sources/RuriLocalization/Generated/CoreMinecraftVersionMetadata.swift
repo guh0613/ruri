@@ -3,17 +3,17 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftVersionMetadata {
-        /// 无法确定实际 Minecraft 版本，不能仅按文件夹名称判断。
+        /// 无法确定实际的 Minecraft 版本，文件夹名称不足以确认版本。
         ///
         /// Resource: `Core.CoreMinecraftVersionMetadata.actualVersionUnknown`.
         public static var actualVersionUnknown: LocalizedMessage {
-            .init(key: "CoreMinecraftVersionMetadata.actualVersionUnknown", table: "Core", fallback: "无法确定实际 Minecraft 版本，不能仅按文件夹名称判断。")
+            .init(key: "CoreMinecraftVersionMetadata.actualVersionUnknown", table: "Core", fallback: "无法确定实际的 Minecraft 版本，文件夹名称不足以确认版本。")
         }
-        /// 游戏 JAR 与清单声明的版本不同，需要在接入前核对。
+        /// 游戏 JAR 的版本与清单不同，请在导入前检查。
         ///
         /// Resource: `Core.CoreMinecraftVersionMetadata.declaredVersionMismatch`.
         public static var declaredVersionMismatch: LocalizedMessage {
-            .init(key: "CoreMinecraftVersionMetadata.declaredVersionMismatch", table: "Core", fallback: "游戏 JAR 与清单声明的版本不同，需要在接入前核对。")
+            .init(key: "CoreMinecraftVersionMetadata.declaredVersionMismatch", table: "Core", fallback: "游戏 JAR 的版本与清单不同，请在导入前检查。")
         }
         /// 无法从游戏 JAR 读取版本信息：%1$@
         ///
@@ -21,17 +21,17 @@ extension Messages {
         public static func jarVersionReadFailed(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreMinecraftVersionMetadata.jarVersionReadFailed", table: "Core", fallback: "无法从游戏 JAR 读取版本信息：%1$@", arguments: [.text(value0)])
         }
-        /// 本地游戏 JAR 缺失，接入时需要补齐游戏文件。
+        /// 缺少本地游戏 JAR，导入时需要补全游戏文件。
         ///
         /// Resource: `Core.CoreMinecraftVersionMetadata.localJarMissing`.
         public static var localJarMissing: LocalizedMessage {
-            .init(key: "CoreMinecraftVersionMetadata.localJarMissing", table: "Core", fallback: "本地游戏 JAR 缺失，接入时需要补齐游戏文件。")
+            .init(key: "CoreMinecraftVersionMetadata.localJarMissing", table: "Core", fallback: "缺少本地游戏 JAR，导入时需要补全游戏文件。")
         }
-        /// 此版本使用尚未识别的启动入口：%1$@
+        /// 无法识别此版本的启动方式：%1$@
         ///
         /// Resource: `Core.CoreMinecraftVersionMetadata.unknownLaunchEntry`.
         public static func unknownLaunchEntry(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreMinecraftVersionMetadata.unknownLaunchEntry", table: "Core", fallback: "此版本使用尚未识别的启动入口：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreMinecraftVersionMetadata.unknownLaunchEntry", table: "Core", fallback: "无法识别此版本的启动方式：%1$@", arguments: [.text(value0)])
         }
         /// 版本名称或继承路径无效。
         ///
@@ -76,11 +76,11 @@ extension Messages {
             .init(key: "CoreMinecraftVersionMetadata.jarVersionInfoTooLarge", table: "Errors", fallback: "JAR 的版本信息超过限制。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreMinecraftVersionMetadata.actualVersionUnknown": .init("无法确定实际 Minecraft 版本，不能仅按文件夹名称判断。", []),
-            "Core:CoreMinecraftVersionMetadata.declaredVersionMismatch": .init("游戏 JAR 与清单声明的版本不同，需要在接入前核对。", []),
+            "Core:CoreMinecraftVersionMetadata.actualVersionUnknown": .init("无法确定实际的 Minecraft 版本，文件夹名称不足以确认版本。", []),
+            "Core:CoreMinecraftVersionMetadata.declaredVersionMismatch": .init("游戏 JAR 的版本与清单不同，请在导入前检查。", []),
             "Core:CoreMinecraftVersionMetadata.jarVersionReadFailed": .init("无法从游戏 JAR 读取版本信息：%1$@", [.text]),
-            "Core:CoreMinecraftVersionMetadata.localJarMissing": .init("本地游戏 JAR 缺失，接入时需要补齐游戏文件。", []),
-            "Core:CoreMinecraftVersionMetadata.unknownLaunchEntry": .init("此版本使用尚未识别的启动入口：%1$@", [.text]),
+            "Core:CoreMinecraftVersionMetadata.localJarMissing": .init("缺少本地游戏 JAR，导入时需要补全游戏文件。", []),
+            "Core:CoreMinecraftVersionMetadata.unknownLaunchEntry": .init("无法识别此版本的启动方式：%1$@", [.text]),
             "Errors:CoreMinecraftVersionMetadata.invalidInheritancePath": .init("版本名称或继承路径无效。", []),
             "Errors:CoreMinecraftVersionMetadata.invalidLibraryManifest": .init("依赖库清单格式无效。", []),
             "Errors:CoreMinecraftVersionMetadata.invalidVersionReference": .init("版本引用格式无效。", []),

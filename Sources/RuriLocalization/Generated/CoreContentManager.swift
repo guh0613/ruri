@@ -27,11 +27,11 @@ extension Messages {
         public static var resourcePacks: LocalizedMessage {
             .init(key: "CoreContentManager.resourcePacks", table: "Core", fallback: "资源包")
         }
-        /// 光影
+        /// 光影包
         ///
         /// Resource: `Core.CoreContentManager.shaders`.
         public static var shaders: LocalizedMessage {
-            .init(key: "CoreContentManager.shaders", table: "Core", fallback: "光影")
+            .init(key: "CoreContentManager.shaders", table: "Core", fallback: "光影包")
         }
         /// 请选择 %1$@ 文件
         ///
@@ -39,17 +39,17 @@ extension Messages {
         public static func chooseFiles(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreContentManager.chooseFiles", table: "Errors", fallback: "请选择 %1$@ 文件", arguments: [.text(value0)])
         }
-        /// %1$@ 在预览后发生变化，请重新检查更新。整批文件尚未替换。
+        /// 预览后 %1$@ 发生变化，请重新检查更新。本次尚未替换任何文件。
         ///
         /// Resource: `Errors.CoreContentManager.contentChangedAfterPreview`.
         public static func contentChangedAfterPreview(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreContentManager.contentChangedAfterPreview", table: "Errors", fallback: "%1$@ 在预览后发生变化，请重新检查更新。整批文件尚未替换。", arguments: [.text(value0)])
+            .init(key: "CoreContentManager.contentChangedAfterPreview", table: "Errors", fallback: "预览后 %1$@ 发生变化，请重新检查更新。本次尚未替换任何文件。", arguments: [.text(value0)])
         }
-        /// 多个内容项目使用了相同的文件名
+        /// 多个资源使用了相同的文件名。
         ///
         /// Resource: `Errors.CoreContentManager.duplicateContentFilenames`.
         public static var duplicateContentFilenames: LocalizedMessage {
-            .init(key: "CoreContentManager.duplicateContentFilenames", table: "Errors", fallback: "多个内容项目使用了相同的文件名")
+            .init(key: "CoreContentManager.duplicateContentFilenames", table: "Errors", fallback: "多个资源使用了相同的文件名。")
         }
         /// 所选文件或实例中已存在模组 %1$@，请先处理重复文件。
         ///
@@ -69,23 +69,23 @@ extension Messages {
         public static func externallyModifiedContent(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreContentManager.externallyModifiedContent", table: "Errors", fallback: "%1$@ 已在外部修改。请先备份或移走该文件，再更新。", arguments: [.text(value0)])
         }
-        /// 无效内容文件名：%1$@
+        /// 资源文件名无效：%1$@
         ///
         /// Resource: `Errors.CoreContentManager.invalidContentFilename`.
         public static func invalidContentFilename(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreContentManager.invalidContentFilename", table: "Errors", fallback: "无效内容文件名：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreContentManager.invalidContentFilename", table: "Errors", fallback: "资源文件名无效：%1$@", arguments: [.text(value0)])
         }
-        /// 无效的内容路径：%1$@
+        /// 资源路径无效：%1$@
         ///
         /// Resource: `Errors.CoreContentManager.invalidContentPath`.
         public static func invalidContentPath(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreContentManager.invalidContentPath", table: "Errors", fallback: "无效的内容路径：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreContentManager.invalidContentPath", table: "Errors", fallback: "资源路径无效：%1$@", arguments: [.text(value0)])
         }
-        /// 内容恢复备份缺失：%1$@。原文件尚未改动，请检查 %2$@。
+        /// 缺少资源恢复备份：%1$@。原文件尚未改动，请检查 %2$@。
         ///
         /// Resource: `Errors.CoreContentManager.missingRestoreBackup`.
         public static func missingRestoreBackup(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreContentManager.missingRestoreBackup", table: "Errors", fallback: "内容恢复备份缺失：%1$@。原文件尚未改动，请检查 %2$@。", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreContentManager.missingRestoreBackup", table: "Errors", fallback: "缺少资源恢复备份：%1$@。原文件尚未改动，请检查 %2$@。", arguments: [.text(value0), .text(value1)])
         }
         /// 待安装文件校验失败：%1$@
         ///
@@ -99,37 +99,37 @@ extension Messages {
         public static func requiredDependencyDisabled(_ value0: String) -> LocalizedMessage {
             .init(key: "CoreContentManager.requiredDependencyDisabled", table: "Errors", fallback: "%1$@ 的必需依赖尚未启用。请先启用依赖，再安装或更新。", arguments: [.text(value0)])
         }
-        /// 内容管理不修改符号链接：%1$@
+        /// 无法修改通过符号链接添加的资源：%1$@
         ///
         /// Resource: `Errors.CoreContentManager.symlinkUnmodified`.
         public static func symlinkUnmodified(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreContentManager.symlinkUnmodified", table: "Errors", fallback: "内容管理不修改符号链接：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreContentManager.symlinkUnmodified", table: "Errors", fallback: "无法修改通过符号链接添加的资源：%1$@", arguments: [.text(value0)])
         }
-        /// 目标文件已存在且不属于本次更新：%1$@。请先在内容管理中处理同名文件。
+        /// 目标位置已有同名文件，且不属于本次更新：%1$@。请先在“游戏内容”中检查该文件。
         ///
         /// Resource: `Errors.CoreContentManager.targetFileConflict`.
         public static func targetFileConflict(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreContentManager.targetFileConflict", table: "Errors", fallback: "目标文件已存在且不属于本次更新：%1$@。请先在内容管理中处理同名文件。", arguments: [.text(value0)])
+            .init(key: "CoreContentManager.targetFileConflict", table: "Errors", fallback: "目标位置已有同名文件，且不属于本次更新：%1$@。请先在“游戏内容”中检查该文件。", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreContentManager.importedIDsSeparator": .init(" 或 ", []),
             "Core:CoreContentManager.localFile": .init("本地文件", []),
             "Core:CoreContentManager.mods": .init("模组", []),
             "Core:CoreContentManager.resourcePacks": .init("资源包", []),
-            "Core:CoreContentManager.shaders": .init("光影", []),
+            "Core:CoreContentManager.shaders": .init("光影包", []),
             "Errors:CoreContentManager.chooseFiles": .init("请选择 %1$@ 文件", [.text]),
-            "Errors:CoreContentManager.contentChangedAfterPreview": .init("%1$@ 在预览后发生变化，请重新检查更新。整批文件尚未替换。", [.text]),
-            "Errors:CoreContentManager.duplicateContentFilenames": .init("多个内容项目使用了相同的文件名", []),
+            "Errors:CoreContentManager.contentChangedAfterPreview": .init("预览后 %1$@ 发生变化，请重新检查更新。本次尚未替换任何文件。", [.text]),
+            "Errors:CoreContentManager.duplicateContentFilenames": .init("多个资源使用了相同的文件名。", []),
             "Errors:CoreContentManager.duplicateModID": .init("所选文件或实例中已存在模组 %1$@，请先处理重复文件。", [.text]),
             "Errors:CoreContentManager.duplicateProjectVersions": .init("安装计划包含同一项目的多个版本", []),
             "Errors:CoreContentManager.externallyModifiedContent": .init("%1$@ 已在外部修改。请先备份或移走该文件，再更新。", [.text]),
-            "Errors:CoreContentManager.invalidContentFilename": .init("无效内容文件名：%1$@", [.text]),
-            "Errors:CoreContentManager.invalidContentPath": .init("无效的内容路径：%1$@", [.text]),
-            "Errors:CoreContentManager.missingRestoreBackup": .init("内容恢复备份缺失：%1$@。原文件尚未改动，请检查 %2$@。", [.text, .text]),
+            "Errors:CoreContentManager.invalidContentFilename": .init("资源文件名无效：%1$@", [.text]),
+            "Errors:CoreContentManager.invalidContentPath": .init("资源路径无效：%1$@", [.text]),
+            "Errors:CoreContentManager.missingRestoreBackup": .init("缺少资源恢复备份：%1$@。原文件尚未改动，请检查 %2$@。", [.text, .text]),
             "Errors:CoreContentManager.pendingFileValidationFailed": .init("待安装文件校验失败：%1$@", [.text]),
             "Errors:CoreContentManager.requiredDependencyDisabled": .init("%1$@ 的必需依赖尚未启用。请先启用依赖，再安装或更新。", [.text]),
-            "Errors:CoreContentManager.symlinkUnmodified": .init("内容管理不修改符号链接：%1$@", [.text]),
-            "Errors:CoreContentManager.targetFileConflict": .init("目标文件已存在且不属于本次更新：%1$@。请先在内容管理中处理同名文件。", [.text]),
+            "Errors:CoreContentManager.symlinkUnmodified": .init("无法修改通过符号链接添加的资源：%1$@", [.text]),
+            "Errors:CoreContentManager.targetFileConflict": .init("目标位置已有同名文件，且不属于本次更新：%1$@。请先在“游戏内容”中检查该文件。", [.text]),
         ]
     }
 }

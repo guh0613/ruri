@@ -194,7 +194,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重新打开 Ruri 后生效。"
+            "value" : "重新启动 Ruri 后生效。"
           }
         }
       }

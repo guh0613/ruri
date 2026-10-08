@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppGameSessionRecoveryView {
-        /// 收尾记录并恢复启动
+        /// 结束记录并恢复启动
         ///
         /// Resource: `Interface.AppGameSessionRecoveryView.finalizeAndResume`.
         public static var finalizeAndResume: LocalizedMessage {
-            .init(key: "AppGameSessionRecoveryView.finalizeAndResume", table: "Interface", fallback: "收尾记录并恢复启动")
+            .init(key: "AppGameSessionRecoveryView.finalizeAndResume", table: "Interface", fallback: "结束记录并恢复启动")
         }
         /// 已确认此实例的游戏已退出
         ///
@@ -21,11 +21,11 @@ extension Messages {
         public static var instanceBusy: LocalizedMessage {
             .init(key: "AppGameSessionRecoveryView.instanceBusy", table: "Interface", fallback: "此实例正被其他操作占用，请等待操作完成。")
         }
-        /// 恢复仅更新运行记录，不会结束进程或删除日志。
+        /// 恢复时仅更新运行记录，不会终止游戏或删除日志。
         ///
         /// Resource: `Interface.AppGameSessionRecoveryView.recoveryDetails`.
         public static var recoveryDetails: LocalizedMessage {
-            .init(key: "AppGameSessionRecoveryView.recoveryDetails", table: "Interface", fallback: "恢复仅更新运行记录，不会结束进程或删除日志。")
+            .init(key: "AppGameSessionRecoveryView.recoveryDetails", table: "Interface", fallback: "恢复时仅更新运行记录，不会终止游戏或删除日志。")
         }
         /// 刷新状态
         ///
@@ -40,10 +40,10 @@ extension Messages {
             .init(key: "AppGameSessionRecoveryView.returnToGame", table: "Interface", fallback: "返回游戏")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:AppGameSessionRecoveryView.finalizeAndResume": .init("收尾记录并恢复启动", []),
+            "Interface:AppGameSessionRecoveryView.finalizeAndResume": .init("结束记录并恢复启动", []),
             "Interface:AppGameSessionRecoveryView.gameExitConfirmed": .init("已确认此实例的游戏已退出", []),
             "Interface:AppGameSessionRecoveryView.instanceBusy": .init("此实例正被其他操作占用，请等待操作完成。", []),
-            "Interface:AppGameSessionRecoveryView.recoveryDetails": .init("恢复仅更新运行记录，不会结束进程或删除日志。", []),
+            "Interface:AppGameSessionRecoveryView.recoveryDetails": .init("恢复时仅更新运行记录，不会终止游戏或删除日志。", []),
             "Interface:AppGameSessionRecoveryView.refreshStatus": .init("刷新状态", []),
             "Interface:AppGameSessionRecoveryView.returnToGame": .init("返回游戏", []),
         ]

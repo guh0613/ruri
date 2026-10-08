@@ -105,11 +105,11 @@ extension Messages {
         public static var environmentNeedsRepair: LocalizedMessage {
             .init(key: "AppLaunchSettingsEditor.environmentNeedsRepair", table: "Interface", fallback: "默认环境配置需要修正")
         }
-        /// 本机上限 %1$@
+        /// 本机可分配上限 %1$@
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.estimateCeilingLegend`.
         public static func estimateCeilingLegend(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.estimateCeilingLegend", table: "Interface", fallback: "本机上限 %1$@", arguments: [.text(value0)])
+            .init(key: "AppLaunchSettingsEditor.estimateCeilingLegend", table: "Interface", fallback: "本机可分配上限 %1$@", arguments: [.text(value0)])
         }
         /// 基本需求
         ///
@@ -117,11 +117,11 @@ extension Messages {
         public static var estimateDemandLegend: LocalizedMessage {
             .init(key: "AppLaunchSettingsEditor.estimateDemandLegend", table: "Interface", fallback: "基本需求")
         }
-        /// 宽裕余量
+        /// 额外余量
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.estimateMarginLegend`.
         public static var estimateMarginLegend: LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.estimateMarginLegend", table: "Interface", fallback: "宽裕余量")
+            .init(key: "AppLaunchSettingsEditor.estimateMarginLegend", table: "Interface", fallback: "额外余量")
         }
         /// 未满足
         ///
@@ -183,11 +183,11 @@ extension Messages {
         public static var gameDisplayMode: LocalizedMessage {
             .init(key: "AppLaunchSettingsEditor.gameDisplayMode", table: "Interface", fallback: " · 使用游戏保存的显示模式")
         }
-        /// 堆上限
+        /// 堆内存上限
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.heapLimit`.
         public static var heapLimit: LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.heapLimit", table: "Interface", fallback: "堆上限")
+            .init(key: "AppLaunchSettingsEditor.heapLimit", table: "Interface", fallback: "堆内存上限")
         }
         /// 此处设置 Java 堆内存，游戏进程的总内存占用会更高。
         ///
@@ -339,23 +339,23 @@ extension Messages {
         public static var memoryEstimateExplain: LocalizedMessage {
             .init(key: "AppLaunchSettingsEditor.memoryEstimateExplain", table: "Interface", fallback: "估算说明")
         }
-        /// 每个实例启动时按各自的 Minecraft 版本、加载器、Mod 数量以及本机剩余内存单独估算；此处显示的是无 Mod 实例的示例值。
+        /// 启动时，会根据每个实例的 Minecraft 版本、加载器、模组数量和本机可用内存估算分配大小。此处显示未安装模组的实例作为示例。
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.memoryEstimateGenericHelp`.
         public static var memoryEstimateGenericHelp: LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.memoryEstimateGenericHelp", table: "Interface", fallback: "每个实例启动时按各自的 Minecraft 版本、加载器、Mod 数量以及本机剩余内存单独估算；此处显示的是无 Mod 实例的示例值。")
+            .init(key: "AppLaunchSettingsEditor.memoryEstimateGenericHelp", table: "Interface", fallback: "启动时，会根据每个实例的 Minecraft 版本、加载器、模组数量和本机可用内存估算分配大小。此处显示未安装模组的实例作为示例。")
         }
-        /// 按 Minecraft 版本、加载器和 Mod 数量算出基本需求与宽裕值，再按本机内存与当前剩余内存在两者之间取值；渲染距离、资源包、光影等游戏内可调的开销由宽裕值覆盖。
+        /// 根据 Minecraft 版本、加载器和模组数量估算基本需求，再按本机内存总量和当前可用内存预留余量。余量用于提高渲染距离、启用资源包或光影等额外开销。
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.memoryEstimateHelp`.
         public static var memoryEstimateHelp: LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.memoryEstimateHelp", table: "Interface", fallback: "按 Minecraft 版本、加载器和 Mod 数量算出基本需求与宽裕值，再按本机内存与当前剩余内存在两者之间取值；渲染距离、资源包、光影等游戏内可调的开销由宽裕值覆盖。")
+            .init(key: "AppLaunchSettingsEditor.memoryEstimateHelp", table: "Interface", fallback: "根据 Minecraft 版本、加载器和模组数量估算基本需求，再按本机内存总量和当前可用内存预留余量。余量用于提高渲染距离、启用资源包或光影等额外开销。")
         }
-        /// 示例：无 Mod 实例
+        /// 示例：未安装模组的实例
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.memoryEstimateSample`.
         public static var memoryEstimateSample: LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.memoryEstimateSample", table: "Interface", fallback: "示例：无 Mod 实例")
+            .init(key: "AppLaunchSettingsEditor.memoryEstimateSample", table: "Interface", fallback: "示例：未安装模组的实例")
         }
         /// 正在统计实例内容…
         ///
@@ -363,23 +363,23 @@ extension Messages {
         public static var memoryEstimateScanning: LocalizedMessage {
             .init(key: "AppLaunchSettingsEditor.memoryEstimateScanning", table: "Interface", fallback: "正在统计实例内容…")
         }
-        /// 本机内存不足：内容需要 %1$@，只能分配 %2$@。可关闭其他应用、减少 Mod，或改为手动设置。
+        /// 估算需要 %1$@，但本机只能分配 %2$@。可以关闭其他 App、减少模组，或手动设置内存。
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.memoryEstimateShortfall`.
         public static func memoryEstimateShortfall(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.memoryEstimateShortfall", table: "Interface", fallback: "本机内存不足：内容需要 %1$@，只能分配 %2$@。可关闭其他应用、减少 Mod，或改为手动设置。", arguments: [.text(value0), .text(value1)])
+            .init(key: "AppLaunchSettingsEditor.memoryEstimateShortfall", table: "Interface", fallback: "估算需要 %1$@，但本机只能分配 %2$@。可以关闭其他 App、减少模组，或手动设置内存。", arguments: [.text(value0), .text(value1)])
         }
-        /// 剩余内存有限，已满足基本需求 %1$@，但未留出全部余量（宽裕值 %2$@）。关闭其他应用后可重新估算。
+        /// 可用内存已满足基本需求 %1$@，但不足以分配含全部余量的 %2$@。关闭其他 App 后可以重新估算。
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.memoryEstimateTrimmed`.
         public static func memoryEstimateTrimmed(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.memoryEstimateTrimmed", table: "Interface", fallback: "剩余内存有限，已满足基本需求 %1$@，但未留出全部余量（宽裕值 %2$@）。关闭其他应用后可重新估算。", arguments: [.text(value0), .text(value1)])
+            .init(key: "AppLaunchSettingsEditor.memoryEstimateTrimmed", table: "Interface", fallback: "可用内存已满足基本需求 %1$@，但不足以分配含全部余量的 %2$@。关闭其他 App 后可以重新估算。", arguments: [.text(value0), .text(value1)])
         }
-        /// 初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。
+        /// 初始内存不能超过最大内存。Metaspace 用于存放类信息，通常无需设置上限。
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.memorySettingsHelp`.
         public static var memorySettingsHelp: LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.memorySettingsHelp", table: "Interface", fallback: "初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。")
+            .init(key: "AppLaunchSettingsEditor.memorySettingsHelp", table: "Interface", fallback: "初始内存不能超过最大内存。Metaspace 用于存放类信息，通常无需设置上限。")
         }
         /// Metaspace 上限
         ///
@@ -387,11 +387,11 @@ extension Messages {
         public static var metaspaceLimit: LocalizedMessage {
             .init(key: "AppLaunchSettingsEditor.metaspaceLimit", table: "Interface", fallback: "Metaspace 上限")
         }
-        /// 限制类元数据内存
+        /// 限制 Metaspace 大小
         ///
         /// Resource: `Interface.AppLaunchSettingsEditor.metaspaceToggle`.
         public static var metaspaceToggle: LocalizedMessage {
-            .init(key: "AppLaunchSettingsEditor.metaspaceToggle", table: "Interface", fallback: "限制类元数据内存")
+            .init(key: "AppLaunchSettingsEditor.metaspaceToggle", table: "Interface", fallback: "限制 Metaspace 大小")
         }
         /// 无自定义环境变量
         ///
@@ -495,9 +495,9 @@ extension Messages {
             "Interface:AppLaunchSettingsEditor.customValue": .init("自定义", []),
             "Interface:AppLaunchSettingsEditor.customValueFormat": .init("自定义%1$@", [.text]),
             "Interface:AppLaunchSettingsEditor.environmentNeedsRepair": .init("默认环境配置需要修正", []),
-            "Interface:AppLaunchSettingsEditor.estimateCeilingLegend": .init("本机上限 %1$@", [.text]),
+            "Interface:AppLaunchSettingsEditor.estimateCeilingLegend": .init("本机可分配上限 %1$@", [.text]),
             "Interface:AppLaunchSettingsEditor.estimateDemandLegend": .init("基本需求", []),
-            "Interface:AppLaunchSettingsEditor.estimateMarginLegend": .init("宽裕余量", []),
+            "Interface:AppLaunchSettingsEditor.estimateMarginLegend": .init("额外余量", []),
             "Interface:AppLaunchSettingsEditor.estimateUnmetLegend": .init("未满足", []),
             "Interface:AppLaunchSettingsEditor.followDefault": .init("跟随默认设置", []),
             "Interface:AppLaunchSettingsEditor.fullscreenHelp": .init("关闭“全屏启动”后，使用游戏保存的全屏状态。", []),
@@ -508,7 +508,7 @@ extension Messages {
             "Interface:AppLaunchSettingsEditor.gameArgumentsPlaceholder": .init("例如：--width 1600 --height 900", []),
             "Interface:AppLaunchSettingsEditor.gameArgumentsQuotingHelp": .init("含空格的参数加引号；这里填写的窗口尺寸优先。", []),
             "Interface:AppLaunchSettingsEditor.gameDisplayMode": .init(" · 使用游戏保存的显示模式", []),
-            "Interface:AppLaunchSettingsEditor.heapLimit": .init("堆上限", []),
+            "Interface:AppLaunchSettingsEditor.heapLimit": .init("堆内存上限", []),
             "Interface:AppLaunchSettingsEditor.heapMemoryExplanation": .init("此处设置 Java 堆内存，游戏进程的总内存占用会更高。", []),
             "Interface:AppLaunchSettingsEditor.hideLauncher": .init("游戏运行时隐藏 Ruri", []),
             "Interface:AppLaunchSettingsEditor.initialHeapValue": .init("初始 %1$@", [.text]),
@@ -534,15 +534,15 @@ extension Messages {
             "Interface:AppLaunchSettingsEditor.maximumMemory": .init("最大 %1$@ MB", [.text]),
             "Interface:AppLaunchSettingsEditor.maximumMemoryLabel": .init("最大内存", []),
             "Interface:AppLaunchSettingsEditor.memoryEstimateExplain": .init("估算说明", []),
-            "Interface:AppLaunchSettingsEditor.memoryEstimateGenericHelp": .init("每个实例启动时按各自的 Minecraft 版本、加载器、Mod 数量以及本机剩余内存单独估算；此处显示的是无 Mod 实例的示例值。", []),
-            "Interface:AppLaunchSettingsEditor.memoryEstimateHelp": .init("按 Minecraft 版本、加载器和 Mod 数量算出基本需求与宽裕值，再按本机内存与当前剩余内存在两者之间取值；渲染距离、资源包、光影等游戏内可调的开销由宽裕值覆盖。", []),
-            "Interface:AppLaunchSettingsEditor.memoryEstimateSample": .init("示例：无 Mod 实例", []),
+            "Interface:AppLaunchSettingsEditor.memoryEstimateGenericHelp": .init("启动时，会根据每个实例的 Minecraft 版本、加载器、模组数量和本机可用内存估算分配大小。此处显示未安装模组的实例作为示例。", []),
+            "Interface:AppLaunchSettingsEditor.memoryEstimateHelp": .init("根据 Minecraft 版本、加载器和模组数量估算基本需求，再按本机内存总量和当前可用内存预留余量。余量用于提高渲染距离、启用资源包或光影等额外开销。", []),
+            "Interface:AppLaunchSettingsEditor.memoryEstimateSample": .init("示例：未安装模组的实例", []),
             "Interface:AppLaunchSettingsEditor.memoryEstimateScanning": .init("正在统计实例内容…", []),
-            "Interface:AppLaunchSettingsEditor.memoryEstimateShortfall": .init("本机内存不足：内容需要 %1$@，只能分配 %2$@。可关闭其他应用、减少 Mod，或改为手动设置。", [.text, .text]),
-            "Interface:AppLaunchSettingsEditor.memoryEstimateTrimmed": .init("剩余内存有限，已满足基本需求 %1$@，但未留出全部余量（宽裕值 %2$@）。关闭其他应用后可重新估算。", [.text, .text]),
-            "Interface:AppLaunchSettingsEditor.memorySettingsHelp": .init("初始内存不能大于最大内存。Metaspace 用于加载类，通常无需限制。", []),
+            "Interface:AppLaunchSettingsEditor.memoryEstimateShortfall": .init("估算需要 %1$@，但本机只能分配 %2$@。可以关闭其他 App、减少模组，或手动设置内存。", [.text, .text]),
+            "Interface:AppLaunchSettingsEditor.memoryEstimateTrimmed": .init("可用内存已满足基本需求 %1$@，但不足以分配含全部余量的 %2$@。关闭其他 App 后可以重新估算。", [.text, .text]),
+            "Interface:AppLaunchSettingsEditor.memorySettingsHelp": .init("初始内存不能超过最大内存。Metaspace 用于存放类信息，通常无需设置上限。", []),
             "Interface:AppLaunchSettingsEditor.metaspaceLimit": .init("Metaspace 上限", []),
-            "Interface:AppLaunchSettingsEditor.metaspaceToggle": .init("限制类元数据内存", []),
+            "Interface:AppLaunchSettingsEditor.metaspaceToggle": .init("限制 Metaspace 大小", []),
             "Interface:AppLaunchSettingsEditor.noCustomEnvironment": .init("无自定义环境变量", []),
             "Interface:AppLaunchSettingsEditor.noCustomLaunchCommand": .init("不运行自定义启动命令", []),
             "Interface:AppLaunchSettingsEditor.noGameArguments": .init("无附加游戏参数", []),

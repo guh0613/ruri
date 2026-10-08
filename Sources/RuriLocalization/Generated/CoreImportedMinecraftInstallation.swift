@@ -3,14 +3,14 @@ import Foundation
 
 extension Messages {
     public enum CoreImportedMinecraftInstallation {
-        /// 本地游戏安装记录无效，请检查实例元数据。
+        /// 本地游戏的安装记录无效，请检查实例信息。
         ///
         /// Resource: `Errors.CoreImportedMinecraftInstallation.invalidInstallationMetadata`.
         public static var invalidInstallationMetadata: LocalizedMessage {
-            .init(key: "CoreImportedMinecraftInstallation.invalidInstallationMetadata", table: "Errors", fallback: "本地游戏安装记录无效，请检查实例元数据。")
+            .init(key: "CoreImportedMinecraftInstallation.invalidInstallationMetadata", table: "Errors", fallback: "本地游戏的安装记录无效，请检查实例信息。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:CoreImportedMinecraftInstallation.invalidInstallationMetadata": .init("本地游戏安装记录无效，请检查实例元数据。", []),
+            "Errors:CoreImportedMinecraftInstallation.invalidInstallationMetadata": .init("本地游戏的安装记录无效，请检查实例信息。", []),
         ]
     }
 }

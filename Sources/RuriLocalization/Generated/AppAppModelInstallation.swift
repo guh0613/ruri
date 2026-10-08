@@ -3,17 +3,17 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelInstallation {
-        /// 设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。
+        /// 已暂停保存设置，安装结果尚未记录。请重新加载后检查实例。
         ///
         /// Resource: `Errors.AppAppModelInstallation.installationWritePaused`.
         public static var installationWritePaused: LocalizedMessage {
-            .init(key: "AppAppModelInstallation.installationWritePaused", table: "Errors", fallback: "设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。")
+            .init(key: "AppAppModelInstallation.installationWritePaused", table: "Errors", fallback: "已暂停保存设置，安装结果尚未记录。请重新加载后检查实例。")
         }
-        /// 实例已被移除，未重新登记。
+        /// 实例已被移除，未重新添加到列表。
         ///
         /// Resource: `Errors.AppAppModelInstallation.instanceRemoved`.
         public static var instanceRemoved: LocalizedMessage {
-            .init(key: "AppAppModelInstallation.instanceRemoved", table: "Errors", fallback: "实例已被移除，未重新登记。")
+            .init(key: "AppAppModelInstallation.instanceRemoved", table: "Errors", fallback: "实例已被移除，未重新添加到列表。")
         }
         /// 更换 %1$@ 的加载器
         ///
@@ -58,8 +58,8 @@ extension Messages {
             .init(key: "AppAppModelInstallation.restoreLoaderConfiguration", table: "Interface", fallback: "恢复 %1$@ 的加载器配置", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Errors:AppAppModelInstallation.installationWritePaused": .init("设置写入已暂停，安装结果尚未登记。请重新载入后检查实例。", []),
-            "Errors:AppAppModelInstallation.instanceRemoved": .init("实例已被移除，未重新登记。", []),
+            "Errors:AppAppModelInstallation.installationWritePaused": .init("已暂停保存设置，安装结果尚未记录。请重新加载后检查实例。", []),
+            "Errors:AppAppModelInstallation.instanceRemoved": .init("实例已被移除，未重新添加到列表。", []),
             "Interface:AppAppModelInstallation.changeLoader": .init("更换 %1$@ 的加载器", [.text]),
             "Interface:AppAppModelInstallation.installInstance": .init("安装 %1$@", [.text]),
             "Interface:AppAppModelInstallation.installationResult": .init("%1$@ 已准备就绪", [.text]),

@@ -3,23 +3,23 @@ import Foundation
 
 extension Messages {
     public enum CoreGameNormalQuit {
-        /// 没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。
+        /// 无法发送退出请求。游戏窗口可能尚未准备好，或不支持这种退出方式。请返回游戏，通过游戏菜单退出。
         ///
         /// Resource: `Core.CoreGameNormalQuit.normalExitRequestFailed`.
         public static var normalExitRequestFailed: LocalizedMessage {
-            .init(key: "CoreGameNormalQuit.normalExitRequestFailed", table: "Core", fallback: "没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。")
+            .init(key: "CoreGameNormalQuit.normalExitRequestFailed", table: "Core", fallback: "无法发送退出请求。游戏窗口可能尚未准备好，或不支持这种退出方式。请返回游戏，通过游戏菜单退出。")
         }
-        /// 系统已接收正常退出请求，正在等待游戏处理；Ruri 会继续采集日志，不会自动升级为终止进程。
+        /// 系统已接收退出请求，正在等待游戏退出。Ruri 会继续记录日志，不会自动强制终止游戏。
         ///
         /// Resource: `Core.CoreGameNormalQuit.normalExitRequestPending`.
         public static var normalExitRequestPending: LocalizedMessage {
-            .init(key: "CoreGameNormalQuit.normalExitRequestPending", table: "Core", fallback: "系统已接收正常退出请求，正在等待游戏处理；Ruri 会继续采集日志，不会自动升级为终止进程。")
+            .init(key: "CoreGameNormalQuit.normalExitRequestPending", table: "Core", fallback: "系统已接收退出请求，正在等待游戏退出。Ruri 会继续记录日志，不会自动强制终止游戏。")
         }
-        /// 本次启动未启用应用退出请求，请返回游戏，通过游戏菜单退出。
+        /// 本次运行不支持从 Ruri 请求正常退出，请返回游戏，通过游戏菜单退出。
         ///
         /// Resource: `Errors.CoreGameNormalQuit.appExitRequestDisabled`.
         public static var appExitRequestDisabled: LocalizedMessage {
-            .init(key: "CoreGameNormalQuit.appExitRequestDisabled", table: "Errors", fallback: "本次启动未启用应用退出请求，请返回游戏，通过游戏菜单退出。")
+            .init(key: "CoreGameNormalQuit.appExitRequestDisabled", table: "Errors", fallback: "本次运行不支持从 Ruri 请求正常退出，请返回游戏，通过游戏菜单退出。")
         }
         /// 游戏或监控状态已经变化，暂时无法请求正常退出。
         ///
@@ -28,9 +28,9 @@ extension Messages {
             .init(key: "CoreGameNormalQuit.quitStateChanged", table: "Errors", fallback: "游戏或监控状态已经变化，暂时无法请求正常退出。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreGameNormalQuit.normalExitRequestFailed": .init("没有成功发送正常退出请求。游戏窗口可能尚未就绪，或不支持这条退出路径；请返回游戏，通过游戏菜单退出。", []),
-            "Core:CoreGameNormalQuit.normalExitRequestPending": .init("系统已接收正常退出请求，正在等待游戏处理；Ruri 会继续采集日志，不会自动升级为终止进程。", []),
-            "Errors:CoreGameNormalQuit.appExitRequestDisabled": .init("本次启动未启用应用退出请求，请返回游戏，通过游戏菜单退出。", []),
+            "Core:CoreGameNormalQuit.normalExitRequestFailed": .init("无法发送退出请求。游戏窗口可能尚未准备好，或不支持这种退出方式。请返回游戏，通过游戏菜单退出。", []),
+            "Core:CoreGameNormalQuit.normalExitRequestPending": .init("系统已接收退出请求，正在等待游戏退出。Ruri 会继续记录日志，不会自动强制终止游戏。", []),
+            "Errors:CoreGameNormalQuit.appExitRequestDisabled": .init("本次运行不支持从 Ruri 请求正常退出，请返回游戏，通过游戏菜单退出。", []),
             "Errors:CoreGameNormalQuit.quitStateChanged": .init("游戏或监控状态已经变化，暂时无法请求正常退出。", []),
         ]
     }

@@ -33,11 +33,11 @@ extension Messages {
         public static var invalidKeys: LocalizedMessage {
             .init(key: "CoreRunDirectoryCopyJournal.invalidKeys", table: "Errors", fallback: "运行目录复制项目记录无效。")
         }
-        /// 发布副本的文件身份记录无效。
+        /// 目标副本的文件识别信息无效。
         ///
         /// Resource: `Errors.CoreRunDirectoryCopyJournal.invalidPublishedIdentity`.
         public static var invalidPublishedIdentity: LocalizedMessage {
-            .init(key: "CoreRunDirectoryCopyJournal.invalidPublishedIdentity", table: "Errors", fallback: "发布副本的文件身份记录无效。")
+            .init(key: "CoreRunDirectoryCopyJournal.invalidPublishedIdentity", table: "Errors", fallback: "目标副本的文件识别信息无效。")
         }
         /// 运行目录复制记录无效，工作副本已保留。
         ///
@@ -87,11 +87,11 @@ extension Messages {
         public static var sizeLimit: LocalizedMessage {
             .init(key: "CoreRunDirectoryCopyJournal.sizeLimit", table: "Errors", fallback: "运行目录复制记录超过大小限制。")
         }
-        /// 无法确认复制项目的文件身份：%1$@
+        /// 无法确认要复制的文件是否与记录一致：%1$@
         ///
         /// Resource: `Errors.CoreRunDirectoryCopyJournal.sourceIdentityUnknown`.
         public static func sourceIdentityUnknown(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreRunDirectoryCopyJournal.sourceIdentityUnknown", table: "Errors", fallback: "无法确认复制项目的文件身份：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreRunDirectoryCopyJournal.sourceIdentityUnknown", table: "Errors", fallback: "无法确认要复制的文件是否与记录一致：%1$@", arguments: [.text(value0)])
         }
         /// 运行目录复制记录包含目标安装目录。
         ///
@@ -111,7 +111,7 @@ extension Messages {
             "Errors:CoreRunDirectoryCopyJournal.installedFilesPreserved": .init("运行目录复制记录包含目标安装文件，未移动这些文件。", []),
             "Errors:CoreRunDirectoryCopyJournal.invalidBackupPath": .init("运行目录复制记录包含无效的备份路径。", []),
             "Errors:CoreRunDirectoryCopyJournal.invalidKeys": .init("运行目录复制项目记录无效。", []),
-            "Errors:CoreRunDirectoryCopyJournal.invalidPublishedIdentity": .init("发布副本的文件身份记录无效。", []),
+            "Errors:CoreRunDirectoryCopyJournal.invalidPublishedIdentity": .init("目标副本的文件识别信息无效。", []),
             "Errors:CoreRunDirectoryCopyJournal.invalidRecord": .init("运行目录复制记录无效，工作副本已保留。", []),
             "Errors:CoreRunDirectoryCopyJournal.invalidRecordFile": .init("运行目录复制记录不是有效文件或超过大小限制。", []),
             "Errors:CoreRunDirectoryCopyJournal.invalidSharedCopyLock": .init("共享目录的复制占用记录无效。", []),
@@ -120,7 +120,7 @@ extension Messages {
             "Errors:CoreRunDirectoryCopyJournal.recordReadFailed": .init("无法读取运行目录复制记录，请检查 %1$@。", [.text]),
             "Errors:CoreRunDirectoryCopyJournal.retainedPath": .init("运行目录复制记录包含保留路径。", []),
             "Errors:CoreRunDirectoryCopyJournal.sizeLimit": .init("运行目录复制记录超过大小限制。", []),
-            "Errors:CoreRunDirectoryCopyJournal.sourceIdentityUnknown": .init("无法确认复制项目的文件身份：%1$@", [.text]),
+            "Errors:CoreRunDirectoryCopyJournal.sourceIdentityUnknown": .init("无法确认要复制的文件是否与记录一致：%1$@", [.text]),
             "Errors:CoreRunDirectoryCopyJournal.targetDirectoryPresent": .init("运行目录复制记录包含目标安装目录。", []),
             "Errors:CoreRunDirectoryCopyJournal.unfinishedCopy": .init("此实例有未完成的运行目录复制，请在实例设置中恢复后继续。", []),
         ]

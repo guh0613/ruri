@@ -3,17 +3,17 @@ import Foundation
 
 extension Messages {
     public enum CoreGameSessionRecovery {
-        /// 暂时无法核对监控进程
+        /// 暂时无法确认监控状态
         ///
         /// Resource: `Core.CoreGameSessionRecovery.cannotCheckMonitorProcess`.
         public static var cannotCheckMonitorProcess: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.cannotCheckMonitorProcess", table: "Core", fallback: "暂时无法核对监控进程")
+            .init(key: "CoreGameSessionRecovery.cannotCheckMonitorProcess", table: "Core", fallback: "暂时无法确认监控状态")
         }
-        /// 游戏进程已消失，缺少退出结果
+        /// 游戏已不再运行，但缺少退出结果
         ///
         /// Resource: `Core.CoreGameSessionRecovery.gameProcessGoneWithoutExit`.
         public static var gameProcessGoneWithoutExit: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.gameProcessGoneWithoutExit", table: "Core", fallback: "游戏进程已消失，缺少退出结果")
+            .init(key: "CoreGameSessionRecovery.gameProcessGoneWithoutExit", table: "Core", fallback: "游戏已不再运行，但缺少退出结果")
         }
         /// 游戏仍在运行，监控已断开
         ///
@@ -21,17 +21,17 @@ extension Messages {
         public static var gameRunningMonitorDisconnected: LocalizedMessage {
             .init(key: "CoreGameSessionRecovery.gameRunningMonitorDisconnected", table: "Core", fallback: "游戏仍在运行，监控已断开")
         }
-        /// 系统没有提供足够的进程信息，当前不能确认监控是否已经退出。请稍后刷新；这时不会收尾仍可能被写入的记录。
+        /// 系统提供的进程信息不足，无法确认游戏监控是否已退出。请稍后刷新；确认前会保留当前运行记录。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.insufficientProcessInformation`.
         public static var insufficientProcessInformation: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.insufficientProcessInformation", table: "Core", fallback: "系统没有提供足够的进程信息，当前不能确认监控是否已经退出。请稍后刷新；这时不会收尾仍可能被写入的记录。")
+            .init(key: "CoreGameSessionRecovery.insufficientProcessInformation", table: "Core", fallback: "系统提供的进程信息不足，无法确认游戏监控是否已退出。请稍后刷新；确认前会保留当前运行记录。")
         }
-        /// 监控已中断，核对记录中的身份后确认原游戏进程已消失。没有取得实际退出码或退出时间。
+        /// 游戏监控已中断，已确认原游戏进程不再运行。退出码和退出时间未知。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.interruptedGameProcessGone`.
         public static var interruptedGameProcessGone: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.interruptedGameProcessGone", table: "Core", fallback: "监控已中断，核对记录中的身份后确认原游戏进程已消失。没有取得实际退出码或退出时间。")
+            .init(key: "CoreGameSessionRecovery.interruptedGameProcessGone", table: "Core", fallback: "游戏监控已中断，已确认原游戏进程不再运行。退出码和退出时间未知。")
         }
         /// 监控中断，命令结果未知
         ///
@@ -39,11 +39,11 @@ extension Messages {
         public static var interruptedUnknownCommandResult: LocalizedMessage {
             .init(key: "CoreGameSessionRecovery.interruptedUnknownCommandResult", table: "Core", fallback: "监控中断，命令结果未知")
         }
-        /// 监控已中断且缺少游戏进程身份，由用户确认游戏已退出后收尾。没有取得实际退出码或退出时间。
+        /// 游戏监控已中断，无法确认原游戏进程的状态。用户确认游戏已退出后，已结束本次运行记录。退出码和退出时间未知。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.interruptedUnverifiedGameExit`.
         public static var interruptedUnverifiedGameExit: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.interruptedUnverifiedGameExit", table: "Core", fallback: "监控已中断且缺少游戏进程身份，由用户确认游戏已退出后收尾。没有取得实际退出码或退出时间。")
+            .init(key: "CoreGameSessionRecovery.interruptedUnverifiedGameExit", table: "Core", fallback: "游戏监控已中断，无法确认原游戏进程的状态。用户确认游戏已退出后，已结束本次运行记录。退出码和退出时间未知。")
         }
         /// 启动命令仍在运行，监控已断开
         ///
@@ -51,23 +51,23 @@ extension Messages {
         public static var launchCommandRunningMonitorDisconnected: LocalizedMessage {
             .init(key: "CoreGameSessionRecovery.launchCommandRunningMonitorDisconnected", table: "Core", fallback: "启动命令仍在运行，监控已断开")
         }
-        /// 命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。
+        /// 启动命令仍在运行。请先在“活动监视器”中结束该命令，再恢复运行记录。恢复时不会重新执行命令。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.launchCommandStillExists`.
         public static var launchCommandStillExists: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.launchCommandStillExists", table: "Core", fallback: "命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。")
+            .init(key: "CoreGameSessionRecovery.launchCommandStillExists", table: "Core", fallback: "启动命令仍在运行。请先在“活动监视器”中结束该命令，再恢复运行记录。恢复时不会重新执行命令。")
         }
-        /// 进程身份仍然匹配。请先返回游戏，通过游戏菜单退出；这期间控制台输出可能无法继续保存。
+        /// 游戏仍在运行。请返回游戏，通过游戏菜单退出。这期间可能无法继续保存控制台输出。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.matchingProcessIdentity`.
         public static var matchingProcessIdentity: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.matchingProcessIdentity", table: "Core", fallback: "进程身份仍然匹配。请先返回游戏，通过游戏菜单退出；这期间控制台输出可能无法继续保存。")
+            .init(key: "CoreGameSessionRecovery.matchingProcessIdentity", table: "Core", fallback: "游戏仍在运行。请返回游戏，通过游戏菜单退出。这期间可能无法继续保存控制台输出。")
         }
-        /// 监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。
+        /// 游戏退出后，监控在处理后续操作时中断。已保留退出码和游玩时长，不会重新执行退出后命令。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.monitorInterruptedAfterExit`.
         public static var monitorInterruptedAfterExit: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.monitorInterruptedAfterExit", table: "Core", fallback: "监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。")
+            .init(key: "CoreGameSessionRecovery.monitorInterruptedAfterExit", table: "Core", fallback: "游戏退出后，监控在处理后续操作时中断。已保留退出码和游玩时长，不会重新执行退出后命令。")
         }
         /// 监控已中断，无法确认游戏状态
         ///
@@ -81,17 +81,17 @@ extension Messages {
         public static var monitorStillRunning: LocalizedMessage {
             .init(key: "CoreGameSessionRecovery.monitorStillRunning", table: "Core", fallback: "监控组件仍在运行")
         }
-        /// 无需再恢复这条记录。
+        /// 这条运行记录无需恢复。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.noRecoveryNeeded`.
         public static var noRecoveryNeeded: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.noRecoveryNeeded", table: "Core", fallback: "无需再恢复这条记录。")
+            .init(key: "CoreGameSessionRecovery.noRecoveryNeeded", table: "Core", fallback: "这条运行记录无需恢复。")
         }
-        /// 原游戏进程已不存在，可以恢复实例的启动入口。退出码和结束时间未知。
+        /// 游戏已不再运行。恢复这条记录后，即可重新启动实例。上次退出的退出码和时间未知。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.originalProcessGone`.
         public static var originalProcessGone: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.originalProcessGone", table: "Core", fallback: "原游戏进程已不存在，可以恢复实例的启动入口。退出码和结束时间未知。")
+            .init(key: "CoreGameSessionRecovery.originalProcessGone", table: "Core", fallback: "游戏已不再运行。恢复这条记录后，即可重新启动实例。上次退出的退出码和时间未知。")
         }
         /// 运行记录已经结束
         ///
@@ -99,17 +99,17 @@ extension Messages {
         public static var recordAlreadyFinished: LocalizedMessage {
             .init(key: "CoreGameSessionRecovery.recordAlreadyFinished", table: "Core", fallback: "运行记录已经结束")
         }
-        /// 无法确认游戏进程。请先在游戏、Dock 或活动监视器中确认游戏已退出，再恢复启动入口。
+        /// 无法确认游戏是否仍在运行。请先通过游戏窗口、Dock 或“活动监视器”确认游戏已退出，再恢复运行记录。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.unverifiedGameExit`.
         public static var unverifiedGameExit: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.unverifiedGameExit", table: "Core", fallback: "无法确认游戏进程。请先在游戏、Dock 或活动监视器中确认游戏已退出，再恢复启动入口。")
+            .init(key: "CoreGameSessionRecovery.unverifiedGameExit", table: "Core", fallback: "无法确认游戏是否仍在运行。请先通过游戏窗口、Dock 或“活动监视器”确认游戏已退出，再恢复运行记录。")
         }
-        /// 请等待监控完成收尾，或返回游戏查看当前状态。
+        /// 请等待游戏监控完成后续操作，或返回游戏查看当前状态。
         ///
         /// Resource: `Core.CoreGameSessionRecovery.waitForMonitorOrCheckGame`.
         public static var waitForMonitorOrCheckGame: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.waitForMonitorOrCheckGame", table: "Core", fallback: "请等待监控完成收尾，或返回游戏查看当前状态。")
+            .init(key: "CoreGameSessionRecovery.waitForMonitorOrCheckGame", table: "Core", fallback: "请等待游戏监控完成后续操作，或返回游戏查看当前状态。")
         }
         /// 尚未确认游戏已退出，无法恢复实例启动。
         ///
@@ -117,17 +117,17 @@ extension Messages {
         public static var gameExitUnconfirmed: LocalizedMessage {
             .init(key: "CoreGameSessionRecovery.gameExitUnconfirmed", table: "Errors", fallback: "尚未确认游戏已退出，无法恢复实例启动。")
         }
-        /// 游戏进程仍然存在，请先在游戏中退出。
+        /// 游戏仍在运行，请先通过游戏菜单退出。
         ///
         /// Resource: `Errors.CoreGameSessionRecovery.gameProcessStillExists`.
         public static var gameProcessStillExists: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.gameProcessStillExists", table: "Errors", fallback: "游戏进程仍然存在，请先在游戏中退出。")
+            .init(key: "CoreGameSessionRecovery.gameProcessStillExists", table: "Errors", fallback: "游戏仍在运行，请先通过游戏菜单退出。")
         }
-        /// 启动命令仍然存在，请先结束该命令。
+        /// 启动命令仍在运行，请先结束该命令。
         ///
         /// Resource: `Errors.CoreGameSessionRecovery.launchCommandStillExistsResolution`.
         public static var launchCommandStillExistsResolution: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.launchCommandStillExistsResolution", table: "Errors", fallback: "启动命令仍然存在，请先结束该命令。")
+            .init(key: "CoreGameSessionRecovery.launchCommandStillExistsResolution", table: "Errors", fallback: "启动命令仍在运行，请先结束该命令。")
         }
         /// 无法确认监控已退出，请稍后刷新状态。
         ///
@@ -135,11 +135,11 @@ extension Messages {
         public static var monitorExitUnconfirmed: LocalizedMessage {
             .init(key: "CoreGameSessionRecovery.monitorExitUnconfirmed", table: "Errors", fallback: "无法确认监控已退出，请稍后刷新状态。")
         }
-        /// 监控仍在运行，不能收尾它正在写入的记录。
+        /// 游戏监控仍在运行，暂时无法结束它正在写入的记录。
         ///
         /// Resource: `Errors.CoreGameSessionRecovery.monitorStillWriting`.
         public static var monitorStillWriting: LocalizedMessage {
-            .init(key: "CoreGameSessionRecovery.monitorStillWriting", table: "Errors", fallback: "监控仍在运行，不能收尾它正在写入的记录。")
+            .init(key: "CoreGameSessionRecovery.monitorStillWriting", table: "Errors", fallback: "游戏监控仍在运行，暂时无法结束它正在写入的记录。")
         }
         /// 运行记录已经变化，请刷新状态后重试。
         ///
@@ -172,29 +172,29 @@ extension Messages {
             .init(key: "CoreGameSessionRecovery.runCompleted", table: "Errors", fallback: "这次运行已经完成，不需要恢复。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreGameSessionRecovery.cannotCheckMonitorProcess": .init("暂时无法核对监控进程", []),
-            "Core:CoreGameSessionRecovery.gameProcessGoneWithoutExit": .init("游戏进程已消失，缺少退出结果", []),
+            "Core:CoreGameSessionRecovery.cannotCheckMonitorProcess": .init("暂时无法确认监控状态", []),
+            "Core:CoreGameSessionRecovery.gameProcessGoneWithoutExit": .init("游戏已不再运行，但缺少退出结果", []),
             "Core:CoreGameSessionRecovery.gameRunningMonitorDisconnected": .init("游戏仍在运行，监控已断开", []),
-            "Core:CoreGameSessionRecovery.insufficientProcessInformation": .init("系统没有提供足够的进程信息，当前不能确认监控是否已经退出。请稍后刷新；这时不会收尾仍可能被写入的记录。", []),
-            "Core:CoreGameSessionRecovery.interruptedGameProcessGone": .init("监控已中断，核对记录中的身份后确认原游戏进程已消失。没有取得实际退出码或退出时间。", []),
+            "Core:CoreGameSessionRecovery.insufficientProcessInformation": .init("系统提供的进程信息不足，无法确认游戏监控是否已退出。请稍后刷新；确认前会保留当前运行记录。", []),
+            "Core:CoreGameSessionRecovery.interruptedGameProcessGone": .init("游戏监控已中断，已确认原游戏进程不再运行。退出码和退出时间未知。", []),
             "Core:CoreGameSessionRecovery.interruptedUnknownCommandResult": .init("监控中断，命令结果未知", []),
-            "Core:CoreGameSessionRecovery.interruptedUnverifiedGameExit": .init("监控已中断且缺少游戏进程身份，由用户确认游戏已退出后收尾。没有取得实际退出码或退出时间。", []),
+            "Core:CoreGameSessionRecovery.interruptedUnverifiedGameExit": .init("游戏监控已中断，无法确认原游戏进程的状态。用户确认游戏已退出后，已结束本次运行记录。退出码和退出时间未知。", []),
             "Core:CoreGameSessionRecovery.launchCommandRunningMonitorDisconnected": .init("启动命令仍在运行，监控已断开", []),
-            "Core:CoreGameSessionRecovery.launchCommandStillExists": .init("命令进程仍然存在。请先在活动监视器中结束该命令，再恢复记录；不会重新执行这条命令。", []),
-            "Core:CoreGameSessionRecovery.matchingProcessIdentity": .init("进程身份仍然匹配。请先返回游戏，通过游戏菜单退出；这期间控制台输出可能无法继续保存。", []),
-            "Core:CoreGameSessionRecovery.monitorInterruptedAfterExit": .init("监控在退出收尾期间中断，已保留取得的游戏退出码与游玩时长；不会重新执行退出后命令。", []),
+            "Core:CoreGameSessionRecovery.launchCommandStillExists": .init("启动命令仍在运行。请先在“活动监视器”中结束该命令，再恢复运行记录。恢复时不会重新执行命令。", []),
+            "Core:CoreGameSessionRecovery.matchingProcessIdentity": .init("游戏仍在运行。请返回游戏，通过游戏菜单退出。这期间可能无法继续保存控制台输出。", []),
+            "Core:CoreGameSessionRecovery.monitorInterruptedAfterExit": .init("游戏退出后，监控在处理后续操作时中断。已保留退出码和游玩时长，不会重新执行退出后命令。", []),
             "Core:CoreGameSessionRecovery.monitorInterruptedUnknownGameState": .init("监控已中断，无法确认游戏状态", []),
             "Core:CoreGameSessionRecovery.monitorStillRunning": .init("监控组件仍在运行", []),
-            "Core:CoreGameSessionRecovery.noRecoveryNeeded": .init("无需再恢复这条记录。", []),
-            "Core:CoreGameSessionRecovery.originalProcessGone": .init("原游戏进程已不存在，可以恢复实例的启动入口。退出码和结束时间未知。", []),
+            "Core:CoreGameSessionRecovery.noRecoveryNeeded": .init("这条运行记录无需恢复。", []),
+            "Core:CoreGameSessionRecovery.originalProcessGone": .init("游戏已不再运行。恢复这条记录后，即可重新启动实例。上次退出的退出码和时间未知。", []),
             "Core:CoreGameSessionRecovery.recordAlreadyFinished": .init("运行记录已经结束", []),
-            "Core:CoreGameSessionRecovery.unverifiedGameExit": .init("无法确认游戏进程。请先在游戏、Dock 或活动监视器中确认游戏已退出，再恢复启动入口。", []),
-            "Core:CoreGameSessionRecovery.waitForMonitorOrCheckGame": .init("请等待监控完成收尾，或返回游戏查看当前状态。", []),
+            "Core:CoreGameSessionRecovery.unverifiedGameExit": .init("无法确认游戏是否仍在运行。请先通过游戏窗口、Dock 或“活动监视器”确认游戏已退出，再恢复运行记录。", []),
+            "Core:CoreGameSessionRecovery.waitForMonitorOrCheckGame": .init("请等待游戏监控完成后续操作，或返回游戏查看当前状态。", []),
             "Errors:CoreGameSessionRecovery.gameExitUnconfirmed": .init("尚未确认游戏已退出，无法恢复实例启动。", []),
-            "Errors:CoreGameSessionRecovery.gameProcessStillExists": .init("游戏进程仍然存在，请先在游戏中退出。", []),
-            "Errors:CoreGameSessionRecovery.launchCommandStillExistsResolution": .init("启动命令仍然存在，请先结束该命令。", []),
+            "Errors:CoreGameSessionRecovery.gameProcessStillExists": .init("游戏仍在运行，请先通过游戏菜单退出。", []),
+            "Errors:CoreGameSessionRecovery.launchCommandStillExistsResolution": .init("启动命令仍在运行，请先结束该命令。", []),
             "Errors:CoreGameSessionRecovery.monitorExitUnconfirmed": .init("无法确认监控已退出，请稍后刷新状态。", []),
-            "Errors:CoreGameSessionRecovery.monitorStillWriting": .init("监控仍在运行，不能收尾它正在写入的记录。", []),
+            "Errors:CoreGameSessionRecovery.monitorStillWriting": .init("游戏监控仍在运行，暂时无法结束它正在写入的记录。", []),
             "Errors:CoreGameSessionRecovery.recordChanged": .init("运行记录已经变化，请刷新状态后重试。", []),
             "Errors:CoreGameSessionRecovery.recoveryLogAppendFailed": .init("无法追加恢复日志。", []),
             "Errors:CoreGameSessionRecovery.recoveryLogNotRegularFile": .init("运行日志不是普通文件。", []),

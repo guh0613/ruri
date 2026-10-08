@@ -9,11 +9,11 @@ extension Messages {
         public static var longLogLineOmitted: LocalizedMessage {
             .init(key: "CoreLaunch.longLogLineOmitted", table: "Core", fallback: "[Ruri] 单行日志过长，已省略")
         }
-        /// 请先完成外置认证并准备认证组件。
+        /// 请先完成第三方认证并准备认证组件。
         ///
         /// Resource: `Errors.CoreLaunch.externalAuthRequired`.
         public static var externalAuthRequired: LocalizedMessage {
-            .init(key: "CoreLaunch.externalAuthRequired", table: "Errors", fallback: "请先完成外置认证并准备认证组件。")
+            .init(key: "CoreLaunch.externalAuthRequired", table: "Errors", fallback: "请先完成第三方认证并准备认证组件。")
         }
         /// 游戏已在运行或正在结束
         ///
@@ -107,7 +107,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Core:CoreLaunch.longLogLineOmitted": .init("[Ruri] 单行日志过长，已省略", []),
-            "Errors:CoreLaunch.externalAuthRequired": .init("请先完成外置认证并准备认证组件。", []),
+            "Errors:CoreLaunch.externalAuthRequired": .init("请先完成第三方认证并准备认证组件。", []),
             "Errors:CoreLaunch.gameAlreadyRunning": .init("游戏已在运行或正在结束", []),
             "Errors:CoreLaunch.gameArgumentsOverride": .init("附加游戏参数不能覆盖账号身份、令牌或游戏目录。", []),
             "Errors:CoreLaunch.gameFilesMissing": .init("游戏文件缺失：%1$@。请先修复实例。", [.text]),

@@ -27,11 +27,11 @@ extension Messages {
         public static var manualDownload: LocalizedMessage {
             .init(key: "AppCurseForgeFilePicker.manualDownload", table: "Interface", fallback: "手动下载")
         }
-        /// 部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。
+        /// 部分文件需要从 CurseForge 网站手动下载。下载对应版本后，在此选择文件，通过校验即可继续安装。
         ///
         /// Resource: `Interface.AppCurseForgeFilePicker.manualDownloadNotice`.
         public static var manualDownloadNotice: LocalizedMessage {
-            .init(key: "AppCurseForgeFilePicker.manualDownloadNotice", table: "Interface", fallback: "部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。")
+            .init(key: "AppCurseForgeFilePicker.manualDownloadNotice", table: "Interface", fallback: "部分文件需要从 CurseForge 网站手动下载。下载对应版本后，在此选择文件，通过校验即可继续安装。")
         }
         /// 打开下载页面
         ///
@@ -39,11 +39,11 @@ extension Messages {
         public static var openDownloadPage: LocalizedMessage {
             .init(key: "AppCurseForgeFilePicker.openDownloadPage", table: "Interface", fallback: "打开下载页面")
         }
-        /// 选择 %1$@。Ruri 会核对版本、大小与校验值。
+        /// 请选择 %1$@。Ruri 会检查版本、文件大小和校验值。
         ///
         /// Resource: `Interface.AppCurseForgeFilePicker.selectFile`.
         public static func selectFile(_ value0: String) -> LocalizedMessage {
-            .init(key: "AppCurseForgeFilePicker.selectFile", table: "Interface", fallback: "选择 %1$@。Ruri 会核对版本、大小与校验值。", arguments: [.text(value0)])
+            .init(key: "AppCurseForgeFilePicker.selectFile", table: "Interface", fallback: "请选择 %1$@。Ruri 会检查版本、文件大小和校验值。", arguments: [.text(value0)])
         }
         /// 已校验
         ///
@@ -56,9 +56,9 @@ extension Messages {
             "Interface:AppCurseForgeFilePicker.chooseAnotherFile": .init("重新选择…", []),
             "Interface:AppCurseForgeFilePicker.chooseDownloadedFile": .init("选择已下载文件…", []),
             "Interface:AppCurseForgeFilePicker.manualDownload": .init("手动下载", []),
-            "Interface:AppCurseForgeFilePicker.manualDownloadNotice": .init("部分作者要求从 CurseForge 页面下载。下载对应版本后选择文件，校验通过即可继续安装。", []),
+            "Interface:AppCurseForgeFilePicker.manualDownloadNotice": .init("部分文件需要从 CurseForge 网站手动下载。下载对应版本后，在此选择文件，通过校验即可继续安装。", []),
             "Interface:AppCurseForgeFilePicker.openDownloadPage": .init("打开下载页面", []),
-            "Interface:AppCurseForgeFilePicker.selectFile": .init("选择 %1$@。Ruri 会核对版本、大小与校验值。", [.text]),
+            "Interface:AppCurseForgeFilePicker.selectFile": .init("请选择 %1$@。Ruri 会检查版本、文件大小和校验值。", [.text]),
             "Interface:AppCurseForgeFilePicker.verified": .init("已校验", []),
         ]
     }

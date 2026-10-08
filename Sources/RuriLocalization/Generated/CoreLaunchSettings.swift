@@ -57,11 +57,11 @@ extension Messages {
         public static var argumentsTooLong: LocalizedMessage {
             .init(key: "CoreLaunchSettings.argumentsTooLong", table: "Errors", fallback: "附加启动参数过长。")
         }
-        /// 窗口宽度应为 320–16384，高度应为 240–16384。
+        /// 窗口宽度需为 320–16384 像素，高度需为 240–16384 像素。
         ///
         /// Resource: `Errors.CoreLaunchSettings.invalidWindowSize`.
         public static var invalidWindowSize: LocalizedMessage {
-            .init(key: "CoreLaunchSettings.invalidWindowSize", table: "Errors", fallback: "窗口宽度应为 320–16384，高度应为 240–16384。")
+            .init(key: "CoreLaunchSettings.invalidWindowSize", table: "Errors", fallback: "窗口宽度需为 320–16384 像素，高度需为 240–16384 像素。")
         }
         /// 请选择 Java 可执行文件的完整路径。
         ///
@@ -85,7 +85,7 @@ extension Messages {
             "Core:CoreLaunchSettings.launcherAndLogs": .init("启动器与日志", []),
             "Core:CoreLaunchSettings.memory": .init("内存", []),
             "Errors:CoreLaunchSettings.argumentsTooLong": .init("附加启动参数过长。", []),
-            "Errors:CoreLaunchSettings.invalidWindowSize": .init("窗口宽度应为 320–16384，高度应为 240–16384。", []),
+            "Errors:CoreLaunchSettings.invalidWindowSize": .init("窗口宽度需为 320–16384 像素，高度需为 240–16384 像素。", []),
             "Errors:CoreLaunchSettings.javaPath": .init("请选择 Java 可执行文件的完整路径。", []),
             "Errors:CoreLaunchSettings.majorVersion": .init("Java 主版本应为 6–99。", []),
         ]

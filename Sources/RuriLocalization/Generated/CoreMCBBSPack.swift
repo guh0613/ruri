@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreMCBBSPack {
-        /// 缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。
+        /// 缺失的文件将从整合包指定的 fileApi 下载。本次安装所选清单中的版本，暂不支持在线更新此类整合包。
         ///
         /// Resource: `Core.CoreMCBBSPack.packMissingFilesNotice`.
         public static var packMissingFilesNotice: LocalizedMessage {
-            .init(key: "CoreMCBBSPack.packMissingFilesNotice", table: "Core", fallback: "缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。")
+            .init(key: "CoreMCBBSPack.packMissingFilesNotice", table: "Core", fallback: "缺失的文件将从整合包指定的 fileApi 下载。本次安装所选清单中的版本，暂不支持在线更新此类整合包。")
         }
         /// MCBBS 清单存在重复路径或项目
         ///
@@ -81,11 +81,11 @@ extension Messages {
         public static var packFileCountExceeded: LocalizedMessage {
             .init(key: "CoreMCBBSPack.packFileCountExceeded", table: "Errors", fallback: "整合包文件数量超过限制")
         }
-        /// MCBBS 整合包包含尚未接入的组件：%1$@
+        /// MCBBS 整合包包含尚不支持的组件：%1$@
         ///
         /// Resource: `Errors.CoreMCBBSPack.unsupportedPackComponents`.
         public static func unsupportedPackComponents(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreMCBBSPack.unsupportedPackComponents", table: "Errors", fallback: "MCBBS 整合包包含尚未接入的组件：%1$@", arguments: [.text(value0)])
+            .init(key: "CoreMCBBSPack.unsupportedPackComponents", table: "Errors", fallback: "MCBBS 整合包包含尚不支持的组件：%1$@", arguments: [.text(value0)])
         }
         /// 不支持的 MCBBS 文件类型：%1$@
         ///
@@ -106,7 +106,7 @@ extension Messages {
             .init(key: "CoreMCBBSPack.preparingPack", table: "Progress", fallback: "正在准备整合包")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreMCBBSPack.packMissingFilesNotice": .init("缺失文件将从整合包的 fileApi 下载；当前安装所选清单版本，在线整合包更新尚未接入。", []),
+            "Core:CoreMCBBSPack.packMissingFilesNotice": .init("缺失的文件将从整合包指定的 fileApi 下载。本次安装所选清单中的版本，暂不支持在线更新此类整合包。", []),
             "Errors:CoreMCBBSPack.duplicatePackPathOrProject": .init("MCBBS 清单存在重复路径或项目", []),
             "Errors:CoreMCBBSPack.invalidCurseForgeFileID": .init("MCBBS CurseForge 文件标识无效", []),
             "Errors:CoreMCBBSPack.invalidFileApiSource": .init("MCBBS fileApi 下载源无效", []),
@@ -119,7 +119,7 @@ extension Messages {
             "Errors:CoreMCBBSPack.missingFileHash": .init("MCBBS 文件缺少路径或有效的 SHA-1", []),
             "Errors:CoreMCBBSPack.multiplePackLoaders": .init("MCBBS 整合包同时声明多个加载器，暂时无法安装。", []),
             "Errors:CoreMCBBSPack.packFileCountExceeded": .init("整合包文件数量超过限制", []),
-            "Errors:CoreMCBBSPack.unsupportedPackComponents": .init("MCBBS 整合包包含尚未接入的组件：%1$@", [.text]),
+            "Errors:CoreMCBBSPack.unsupportedPackComponents": .init("MCBBS 整合包包含尚不支持的组件：%1$@", [.text]),
             "Errors:CoreMCBBSPack.unsupportedPackFileType": .init("不支持的 MCBBS 文件类型：%1$@", [.text]),
             "Progress:CoreMCBBSPack.exportingMCBBSPack": .init("正在导出 MCBBS 整合包", []),
             "Progress:CoreMCBBSPack.preparingPack": .init("正在准备整合包", []),

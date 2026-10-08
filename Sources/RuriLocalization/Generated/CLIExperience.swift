@@ -15,11 +15,11 @@ extension Messages {
         public static var configFields: LocalizedMessage {
             .init(key: "CLIExperience.configFields", table: "CLIExperience", fallback: "配置字段（? 表示允许 null；空字符串与 null 不同）：")
         }
-        /// 预览：将更新配置
+        /// 预览：即将更新的配置
         ///
         /// Resource: `CLIExperience.CLIExperience.configPreview`.
         public static var configPreview: LocalizedMessage {
-            .init(key: "CLIExperience.configPreview", table: "CLIExperience", fallback: "预览：将更新配置")
+            .init(key: "CLIExperience.configPreview", table: "CLIExperience", fallback: "预览：即将更新的配置")
         }
         /// 配置作用域：app、defaults、instance:<uuid>。set 的值使用 JSON 字面量（字符串需保留双引号）；apply --file - 从 stdin 读取补丁。inherit 按组恢复继承，--if-revision 防止覆盖并发修改。
         ///
@@ -27,11 +27,11 @@ extension Messages {
         public static var configRules: LocalizedMessage {
             .init(key: "CLIExperience.configRules", table: "CLIExperience", fallback: "配置作用域：app、defaults、instance:<uuid>。set 的值使用 JSON 字面量（字符串需保留双引号）；apply --file - 从 stdin 读取补丁。inherit 按组恢复继承，--if-revision 防止覆盖并发修改。")
         }
-        /// 配置未变化
+        /// 配置未更改
         ///
         /// Resource: `CLIExperience.CLIExperience.configUnchanged`.
         public static var configUnchanged: LocalizedMessage {
-            .init(key: "CLIExperience.configUnchanged", table: "CLIExperience", fallback: "配置未变化")
+            .init(key: "CLIExperience.configUnchanged", table: "CLIExperience", fallback: "配置未更改")
         }
         /// 配置已更新
         ///
@@ -39,11 +39,11 @@ extension Messages {
         public static var configUpdated: LocalizedMessage {
             .init(key: "CLIExperience.configUpdated", table: "CLIExperience", fallback: "配置已更新")
         }
-        /// 发现命令：ruri help <资源> 查看整组用法；ruri help --all 查看完整速查表。
+        /// 查看命令：ruri help <资源> 显示该组命令的用法；ruri help --all 显示完整速查表。
         ///
         /// Resource: `CLIExperience.CLIExperience.discovery`.
         public static var discovery: LocalizedMessage {
-            .init(key: "CLIExperience.discovery", table: "CLIExperience", fallback: "发现命令：ruri help <资源> 查看整组用法；ruri help --all 查看完整速查表。")
+            .init(key: "CLIExperience.discovery", table: "CLIExperience", fallback: "查看命令：ruri help <资源> 显示该组命令的用法；ruri help --all 显示完整速查表。")
         }
         /// 没有匹配的结果。
         ///
@@ -51,11 +51,11 @@ extension Messages {
         public static var empty: LocalizedMessage {
             .init(key: "CLIExperience.empty", table: "CLIExperience", fallback: "没有匹配的结果。")
         }
-        /// 默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。
+        /// 默认输出简洁文本；--json 返回格式稳定的结构化结果；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。
         ///
         /// Resource: `CLIExperience.CLIExperience.formats`.
         public static func formats(_ value0: String) -> LocalizedMessage {
-            .init(key: "CLIExperience.formats", table: "CLIExperience", fallback: "默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。", arguments: [.text(value0)])
+            .init(key: "CLIExperience.formats", table: "CLIExperience", fallback: "默认输出简洁文本；--json 返回格式稳定的结构化结果；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。", arguments: [.text(value0)])
         }
         /// 使用 --json 查看完整字段。
         ///
@@ -63,11 +63,11 @@ extension Messages {
         public static var fullDetails: LocalizedMessage {
             .init(key: "CLIExperience.fullDetails", table: "CLIExperience", fallback: "使用 --json 查看完整字段。")
         }
-        /// 展开目录中所有命令的完整结构，输出可能很长
+        /// 显示所有命令的完整结构，输出可能较长
         ///
         /// Resource: `CLIExperience.CLIExperience.fullSchema`.
         public static var fullSchema: LocalizedMessage {
-            .init(key: "CLIExperience.fullSchema", table: "CLIExperience", fallback: "展开目录中所有命令的完整结构，输出可能很长")
+            .init(key: "CLIExperience.fullSchema", table: "CLIExperience", fallback: "显示所有命令的完整结构，输出可能较长")
         }
         /// 列出全部命令的精简用法
         ///
@@ -75,11 +75,11 @@ extension Messages {
         public static var helpAll: LocalizedMessage {
             .init(key: "CLIExperience.helpAll", table: "CLIExperience", fallback: "列出全部命令的精简用法")
         }
-        /// 脱敏后无可显示的差异。
+        /// 隐藏敏感信息后，没有可显示的差异。
         ///
         /// Resource: `CLIExperience.CLIExperience.hiddenChanges`.
         public static var hiddenChanges: LocalizedMessage {
-            .init(key: "CLIExperience.hiddenChanges", table: "CLIExperience", fallback: "脱敏后无可显示的差异。")
+            .init(key: "CLIExperience.hiddenChanges", table: "CLIExperience", fallback: "隐藏敏感信息后，没有可显示的差异。")
         }
         /// 只返回命令输入结构；config apply 同时包含补丁结构
         ///
@@ -135,17 +135,17 @@ extension Messages {
         public static var retryable: LocalizedMessage {
             .init(key: "CLIExperience.retryable", table: "CLIExperience", fallback: "此操作可以重试。")
         }
-        /// 目标使用 list 返回的完整 ID；修改需明确目标，selected 查询当前选择。支持 --dry-run 的命令可预览；删除等操作需 --yes，覆盖另需 --replace。
+        /// 使用 list 返回的完整 ID 指定目标；修改时需明确指定目标，可用 selected 查询当前选择。支持 --dry-run 的命令可先预览；删除等操作需要 --yes，覆盖还需要 --replace。
         ///
         /// Resource: `CLIExperience.CLIExperience.rules`.
         public static var rules: LocalizedMessage {
-            .init(key: "CLIExperience.rules", table: "CLIExperience", fallback: "目标使用 list 返回的完整 ID；修改需明确目标，selected 查询当前选择。支持 --dry-run 的命令可预览；删除等操作需 --yes，覆盖另需 --replace。")
+            .init(key: "CLIExperience.rules", table: "CLIExperience", fallback: "使用 list 返回的完整 ID 指定目标；修改时需明确指定目标，可用 selected 查询当前选择。支持 --dry-run 的命令可先预览；删除等操作需要 --yes，覆盖还需要 --replace。")
         }
-        /// 严格结构：ruri schema <资源> <动作> --input 或 --output-schema；配置可加 --scope app|defaults|instance。
+        /// 查询命令结构：ruri schema <资源> <动作> --input 或 --output-schema；配置命令可加 --scope app|defaults|instance。
         ///
         /// Resource: `CLIExperience.CLIExperience.schemaHint`.
         public static var schemaHint: LocalizedMessage {
-            .init(key: "CLIExperience.schemaHint", table: "CLIExperience", fallback: "严格结构：ruri schema <资源> <动作> --input 或 --output-schema；配置可加 --scope app|defaults|instance。")
+            .init(key: "CLIExperience.schemaHint", table: "CLIExperience", fallback: "查询命令结构：ruri schema <资源> <动作> --input 或 --output-schema；配置命令可加 --scope app|defaults|instance。")
         }
         /// 只查询指定配置作用域的字段：app、defaults 或 instance
         ///
@@ -165,17 +165,17 @@ extension Messages {
         public static func total(_ value0: Int64) -> LocalizedMessage {
             .init(key: "CLIExperience.total", table: "CLIExperience", fallback: "共 %lld 项。", arguments: [.integer(value0)])
         }
-        /// 未变化
+        /// 未更改
         ///
         /// Resource: `CLIExperience.CLIExperience.unchanged`.
         public static var unchanged: LocalizedMessage {
-            .init(key: "CLIExperience.unchanged", table: "CLIExperience", fallback: "未变化")
+            .init(key: "CLIExperience.unchanged", table: "CLIExperience", fallback: "未更改")
         }
-        /// 找不到命令：%@。使用 ruri help --all 查看命令目录。
+        /// 找不到命令：%@。使用 ruri help --all 查看命令列表。
         ///
         /// Resource: `CLIExperience.CLIExperience.unknownHelp`.
         public static func unknownHelp(_ value0: String) -> LocalizedMessage {
-            .init(key: "CLIExperience.unknownHelp", table: "CLIExperience", fallback: "找不到命令：%@。使用 ruri help --all 查看命令目录。", arguments: [.text(value0)])
+            .init(key: "CLIExperience.unknownHelp", table: "CLIExperience", fallback: "找不到命令：%@。使用 ruri help --all 查看命令列表。", arguments: [.text(value0)])
         }
         /// 警告：%@
         ///
@@ -186,17 +186,17 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "CLIExperience:CLIExperience.completed": .init("已完成", []),
             "CLIExperience:CLIExperience.configFields": .init("配置字段（? 表示允许 null；空字符串与 null 不同）：", []),
-            "CLIExperience:CLIExperience.configPreview": .init("预览：将更新配置", []),
+            "CLIExperience:CLIExperience.configPreview": .init("预览：即将更新的配置", []),
             "CLIExperience:CLIExperience.configRules": .init("配置作用域：app、defaults、instance:<uuid>。set 的值使用 JSON 字面量（字符串需保留双引号）；apply --file - 从 stdin 读取补丁。inherit 按组恢复继承，--if-revision 防止覆盖并发修改。", []),
-            "CLIExperience:CLIExperience.configUnchanged": .init("配置未变化", []),
+            "CLIExperience:CLIExperience.configUnchanged": .init("配置未更改", []),
             "CLIExperience:CLIExperience.configUpdated": .init("配置已更新", []),
-            "CLIExperience:CLIExperience.discovery": .init("发现命令：ruri help <资源> 查看整组用法；ruri help --all 查看完整速查表。", []),
+            "CLIExperience:CLIExperience.discovery": .init("查看命令：ruri help <资源> 显示该组命令的用法；ruri help --all 显示完整速查表。", []),
             "CLIExperience:CLIExperience.empty": .init("没有匹配的结果。", []),
-            "CLIExperience:CLIExperience.formats": .init("默认输出简洁文本；--json 返回稳定结构；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。", [.text]),
+            "CLIExperience:CLIExperience.formats": .init("默认输出简洁文本；--json 返回格式稳定的结构化结果；--output ndjson 返回事件流。--data-dir <路径> 指定数据目录；--language %1$@；--quiet 隐藏进度。", [.text]),
             "CLIExperience:CLIExperience.fullDetails": .init("使用 --json 查看完整字段。", []),
-            "CLIExperience:CLIExperience.fullSchema": .init("展开目录中所有命令的完整结构，输出可能很长", []),
+            "CLIExperience:CLIExperience.fullSchema": .init("显示所有命令的完整结构，输出可能较长", []),
             "CLIExperience:CLIExperience.helpAll": .init("列出全部命令的精简用法", []),
-            "CLIExperience:CLIExperience.hiddenChanges": .init("脱敏后无可显示的差异。", []),
+            "CLIExperience:CLIExperience.hiddenChanges": .init("隐藏敏感信息后，没有可显示的差异。", []),
             "CLIExperience:CLIExperience.inputSchema": .init("只返回命令输入结构；config apply 同时包含补丁结构", []),
             "CLIExperience:CLIExperience.listRules": .init("列表默认最多 50 项，--limit <1…1000> / --offset <数量> 分页，--all 返回全部。", []),
             "CLIExperience:CLIExperience.more": .init("还有更多：%@", [.text]),
@@ -206,13 +206,13 @@ extension Messages {
             "CLIExperience:CLIExperience.preview": .init("预览（未执行）", []),
             "CLIExperience:CLIExperience.previewMessage": .init("预览（未执行）：%1$@", [.text]),
             "CLIExperience:CLIExperience.retryable": .init("此操作可以重试。", []),
-            "CLIExperience:CLIExperience.rules": .init("目标使用 list 返回的完整 ID；修改需明确目标，selected 查询当前选择。支持 --dry-run 的命令可预览；删除等操作需 --yes，覆盖另需 --replace。", []),
-            "CLIExperience:CLIExperience.schemaHint": .init("严格结构：ruri schema <资源> <动作> --input 或 --output-schema；配置可加 --scope app|defaults|instance。", []),
+            "CLIExperience:CLIExperience.rules": .init("使用 list 返回的完整 ID 指定目标；修改时需明确指定目标，可用 selected 查询当前选择。支持 --dry-run 的命令可先预览；删除等操作需要 --yes，覆盖还需要 --replace。", []),
+            "CLIExperience:CLIExperience.schemaHint": .init("查询命令结构：ruri schema <资源> <动作> --input 或 --output-schema；配置命令可加 --scope app|defaults|instance。", []),
             "CLIExperience:CLIExperience.schemaScope": .init("只查询指定配置作用域的字段：app、defaults 或 instance", []),
             "CLIExperience:CLIExperience.schemaSelection": .init("--input、--output-schema 和 --scope 需要指定完整命令；--scope 仅适用于配置命令的输入。", []),
             "CLIExperience:CLIExperience.total": .init("共 %lld 项。", [.integer]),
-            "CLIExperience:CLIExperience.unchanged": .init("未变化", []),
-            "CLIExperience:CLIExperience.unknownHelp": .init("找不到命令：%@。使用 ruri help --all 查看命令目录。", [.text]),
+            "CLIExperience:CLIExperience.unchanged": .init("未更改", []),
+            "CLIExperience:CLIExperience.unknownHelp": .init("找不到命令：%@。使用 ruri help --all 查看命令列表。", [.text]),
             "CLIExperience:CLIExperience.warning": .init("警告：%@", [.text]),
         ]
     }

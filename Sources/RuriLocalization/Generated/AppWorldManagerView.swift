@@ -9,11 +9,11 @@ extension Messages {
         public static var backupAndRestore: LocalizedMessage {
             .init(key: "AppWorldManagerView.backupAndRestore", table: "Interface", fallback: "自动备份并恢复")
         }
-        /// 备份 %1$lld
+        /// %1$lld 个备份
         ///
         /// Resource: `Interface.AppWorldManagerView.backupCount`.
         public static func backupCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AppWorldManagerView.backupCount", table: "Interface", fallback: "备份 %1$lld", arguments: [.integer(value0)])
+            .init(key: "AppWorldManagerView.backupCount", table: "Interface", fallback: "%1$lld 个备份", arguments: [.integer(value0)])
         }
         /// 在存档列表中选择“备份”。
         ///
@@ -195,11 +195,11 @@ extension Messages {
         public static func worldBackedUp(_ value0: String) -> LocalizedMessage {
             .init(key: "AppWorldManagerView.worldBackedUp", table: "Interface", fallback: "%1$@ 已备份", arguments: [.text(value0)])
         }
-        /// 存档 %1$lld
+        /// %1$lld 个存档
         ///
         /// Resource: `Interface.AppWorldManagerView.worldCount`.
         public static func worldCount(_ value0: Int64) -> LocalizedMessage {
-            .init(key: "AppWorldManagerView.worldCount", table: "Interface", fallback: "存档 %1$lld", arguments: [.integer(value0)])
+            .init(key: "AppWorldManagerView.worldCount", table: "Interface", fallback: "%1$lld 个存档", arguments: [.integer(value0)])
         }
         /// 在游戏中创建世界，或导入存档文件夹、ZIP 文件。
         ///
@@ -257,7 +257,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppWorldManagerView.backupAndRestore": .init("自动备份并恢复", []),
-            "Interface:AppWorldManagerView.backupCount": .init("备份 %1$lld", [.integer]),
+            "Interface:AppWorldManagerView.backupCount": .init("%1$lld 个备份", [.integer]),
             "Interface:AppWorldManagerView.backupDescription": .init("在存档列表中选择“备份”。", []),
             "Interface:AppWorldManagerView.backupInfoUnavailable": .init("无法读取备份信息", []),
             "Interface:AppWorldManagerView.backupWorld": .init("备份 %1$@", [.text]),
@@ -288,7 +288,7 @@ extension Messages {
             "Interface:AppWorldManagerView.showInFinder": .init("在 Finder 中显示", []),
             "Interface:AppWorldManagerView.trashWorldPrompt": .init("移到废纸篓？", []),
             "Interface:AppWorldManagerView.worldBackedUp": .init("%1$@ 已备份", [.text]),
-            "Interface:AppWorldManagerView.worldCount": .init("存档 %1$lld", [.integer]),
+            "Interface:AppWorldManagerView.worldCount": .init("%1$lld 个存档", [.integer]),
             "Interface:AppWorldManagerView.worldDescription": .init("在游戏中创建世界，或导入存档文件夹、ZIP 文件。", []),
             "Interface:AppWorldManagerView.worldEditNotice": .init("请先结束游戏，再修改或备份存档。", []),
             "Interface:AppWorldManagerView.worldImported": .init("已导入到 %1$@", [.text]),

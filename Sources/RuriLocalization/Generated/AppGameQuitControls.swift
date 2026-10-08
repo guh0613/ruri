@@ -15,17 +15,17 @@ extension Messages {
         public static var cancelWillStop: LocalizedMessage {
             .init(key: "AppGameQuitControls.cancelWillStop", table: "Interface", fallback: "取消命令后将停止本次启动。")
         }
-        /// 游戏已退出，可以取消仍在运行的收尾命令。
+        /// 游戏已退出，可以取消仍在运行的退出后命令。
         ///
         /// Resource: `Interface.AppGameQuitControls.gameExited`.
         public static var gameExited: LocalizedMessage {
-            .init(key: "AppGameQuitControls.gameExited", table: "Interface", fallback: "游戏已退出，可以取消仍在运行的收尾命令。")
+            .init(key: "AppGameQuitControls.gameExited", table: "Interface", fallback: "游戏已退出，可以取消仍在运行的退出后命令。")
         }
-        /// 游戏尚未退出，可能正在保存或等待操作。可返回游戏查看。
+        /// 游戏尚未退出，可能正在保存进度或等待操作。可以返回游戏查看。
         ///
         /// Resource: `Interface.AppGameQuitControls.gameStillRunning`.
         public static var gameStillRunning: LocalizedMessage {
-            .init(key: "AppGameQuitControls.gameStillRunning", table: "Interface", fallback: "游戏尚未退出，可能正在保存或等待操作。可返回游戏查看。")
+            .init(key: "AppGameQuitControls.gameStillRunning", table: "Interface", fallback: "游戏尚未退出，可能正在保存进度或等待操作。可以返回游戏查看。")
         }
         /// 本次启动请通过游戏菜单正常退出。
         ///
@@ -66,8 +66,8 @@ extension Messages {
         static let definitions: [String: MessageDefinition] = [
             "Interface:AppGameQuitControls.cancelCommand": .init("取消命令", []),
             "Interface:AppGameQuitControls.cancelWillStop": .init("取消命令后将停止本次启动。", []),
-            "Interface:AppGameQuitControls.gameExited": .init("游戏已退出，可以取消仍在运行的收尾命令。", []),
-            "Interface:AppGameQuitControls.gameStillRunning": .init("游戏尚未退出，可能正在保存或等待操作。可返回游戏查看。", []),
+            "Interface:AppGameQuitControls.gameExited": .init("游戏已退出，可以取消仍在运行的退出后命令。", []),
+            "Interface:AppGameQuitControls.gameStillRunning": .init("游戏尚未退出，可能正在保存进度或等待操作。可以返回游戏查看。", []),
             "Interface:AppGameQuitControls.normalExitNotice": .init("本次启动请通过游戏菜单正常退出。", []),
             "Interface:AppGameQuitControls.requestExitAgain": .init("再次请求退出", []),
             "Interface:AppGameQuitControls.requestNormalExit": .init("请求正常退出", []),

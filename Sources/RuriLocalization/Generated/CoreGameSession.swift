@@ -21,11 +21,11 @@ extension Messages {
         public static var gameExited: LocalizedMessage {
             .init(key: "CoreGameSession.gameExited", table: "Core", fallback: "游戏已退出")
         }
-        /// 游戏进程运行
+        /// 游戏正在运行
         ///
         /// Resource: `Core.CoreGameSession.gameProcessRunning`.
         public static var gameProcessRunning: LocalizedMessage {
-            .init(key: "CoreGameSession.gameProcessRunning", table: "Core", fallback: "游戏进程运行")
+            .init(key: "CoreGameSession.gameProcessRunning", table: "Core", fallback: "游戏正在运行")
         }
         /// 安装游戏
         ///
@@ -45,11 +45,11 @@ extension Messages {
         public static var launchFailed: LocalizedMessage {
             .init(key: "CoreGameSession.launchFailed", table: "Core", fallback: "启动失败")
         }
-        /// 监控记录已收尾 · 退出结果未知
+        /// 运行记录已结束 · 退出结果未知
         ///
         /// Resource: `Core.CoreGameSession.monitoringFinishedUnknownExit`.
         public static var monitoringFinishedUnknownExit: LocalizedMessage {
-            .init(key: "CoreGameSession.monitoringFinishedUnknownExit", table: "Core", fallback: "监控记录已收尾 · 退出结果未知")
+            .init(key: "CoreGameSession.monitoringFinishedUnknownExit", table: "Core", fallback: "运行记录已结束 · 退出结果未知")
         }
         /// %1$@失败
         ///
@@ -81,11 +81,11 @@ extension Messages {
         public static var readingVersion: LocalizedMessage {
             .init(key: "CoreGameSession.readingVersion", table: "Core", fallback: "读取版本")
         }
-        /// 恢复中断记录
+        /// 恢复中断的运行记录
         ///
         /// Resource: `Core.CoreGameSession.recoveringInterruptedRecord`.
         public static var recoveringInterruptedRecord: LocalizedMessage {
-            .init(key: "CoreGameSession.recoveringInterruptedRecord", table: "Core", fallback: "恢复中断记录")
+            .init(key: "CoreGameSession.recoveringInterruptedRecord", table: "Core", fallback: "恢复中断的运行记录")
         }
         /// [Ruri] 未能保存报告副本 %1$@：%2$@
         ///
@@ -161,18 +161,18 @@ extension Messages {
         public static var startingGameProcess: LocalizedMessage {
             .init(key: "CoreGameSession.startingGameProcess", table: "Core", fallback: "创建游戏进程")
         }
-        /// [Ruri] 此处显示日志末尾，完整内容保存在会话目录。
+        /// [Ruri] 当前仅显示日志末尾，完整内容保存在本次运行的记录文件夹中。
         /// %1$@
         ///
         /// Resource: `Core.CoreGameSession.truncatedLog`.
         public static func truncatedLog(_ value0: String) -> LocalizedMessage {
-            .init(key: "CoreGameSession.truncatedLog", table: "Core", fallback: "[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n%1$@", arguments: [.text(value0)])
+            .init(key: "CoreGameSession.truncatedLog", table: "Core", fallback: "[Ruri] 当前仅显示日志末尾，完整内容保存在本次运行的记录文件夹中。\n%1$@", arguments: [.text(value0)])
         }
-        /// [Ruri] 此处显示日志末尾，完整内容保存在会话目录。
+        /// [Ruri] 当前仅显示日志末尾，完整内容保存在本次运行的记录文件夹中。
         ///
         /// Resource: `Core.CoreGameSession.truncatedLogNotice`.
         public static var truncatedLogNotice: LocalizedMessage {
-            .init(key: "CoreGameSession.truncatedLogNotice", table: "Core", fallback: "[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n")
+            .init(key: "CoreGameSession.truncatedLogNotice", table: "Core", fallback: "[Ruri] 当前仅显示日志末尾，完整内容保存在本次运行的记录文件夹中。\n")
         }
         /// 验证账号
         ///
@@ -246,29 +246,29 @@ extension Messages {
         public static var logNotRegularFile: LocalizedMessage {
             .init(key: "CoreGameSession.logNotRegularFile", table: "Errors", fallback: "日志不是普通文件。")
         }
-        /// 游戏已启动，不能改写本轮内存设置。
+        /// 游戏已启动，无法更改本次运行的内存设置。
         ///
         /// Resource: `Errors.CoreGameSession.memoryChangeAfterLaunch`.
         public static var memoryChangeAfterLaunch: LocalizedMessage {
-            .init(key: "CoreGameSession.memoryChangeAfterLaunch", table: "Errors", fallback: "游戏已启动，不能改写本轮内存设置。")
+            .init(key: "CoreGameSession.memoryChangeAfterLaunch", table: "Errors", fallback: "游戏已启动，无法更改本次运行的内存设置。")
         }
-        /// 监控组件不能接管这个运行记录。
+        /// 监控组件无法继续记录本次运行。
         ///
         /// Resource: `Errors.CoreGameSession.monitorCannotAdoptRun`.
         public static var monitorCannotAdoptRun: LocalizedMessage {
-            .init(key: "CoreGameSession.monitorCannotAdoptRun", table: "Errors", fallback: "监控组件不能接管这个运行记录。")
+            .init(key: "CoreGameSession.monitorCannotAdoptRun", table: "Errors", fallback: "监控组件无法继续记录本次运行。")
         }
-        /// 运行会话已经结束。
+        /// 本次运行已结束。
         ///
         /// Resource: `Errors.CoreGameSession.runAlreadyFinished`.
         public static var runAlreadyFinished: LocalizedMessage {
-            .init(key: "CoreGameSession.runAlreadyFinished", table: "Errors", fallback: "运行会话已经结束。")
+            .init(key: "CoreGameSession.runAlreadyFinished", table: "Errors", fallback: "本次运行已结束。")
         }
-        /// 这个运行记录不能交给监控组件。
+        /// 无法让监控组件继续记录本次运行。
         ///
         /// Resource: `Errors.CoreGameSession.runCannotBeHandedToMonitor`.
         public static var runCannotBeHandedToMonitor: LocalizedMessage {
-            .init(key: "CoreGameSession.runCannotBeHandedToMonitor", table: "Errors", fallback: "这个运行记录不能交给监控组件。")
+            .init(key: "CoreGameSession.runCannotBeHandedToMonitor", table: "Errors", fallback: "无法让监控组件继续记录本次运行。")
         }
         /// 运行日志已关闭。
         ///
@@ -286,17 +286,17 @@ extension Messages {
             "Core:CoreGameSession.buildingLaunchArguments": .init("构建启动参数", []),
             "Core:CoreGameSession.checkingInstance": .init("检查实例", []),
             "Core:CoreGameSession.gameExited": .init("游戏已退出", []),
-            "Core:CoreGameSession.gameProcessRunning": .init("游戏进程运行", []),
+            "Core:CoreGameSession.gameProcessRunning": .init("游戏正在运行", []),
             "Core:CoreGameSession.installingGame": .init("安装游戏", []),
             "Core:CoreGameSession.launchCancelled": .init("启动已取消", []),
             "Core:CoreGameSession.launchFailed": .init("启动失败", []),
-            "Core:CoreGameSession.monitoringFinishedUnknownExit": .init("监控记录已收尾 · 退出结果未知", []),
+            "Core:CoreGameSession.monitoringFinishedUnknownExit": .init("运行记录已结束 · 退出结果未知", []),
             "Core:CoreGameSession.phaseFailed": .init("%1$@失败", [.text]),
             "Core:CoreGameSession.playtimeSaveFailed": .init("[Ruri] 未能保存游玩时长：%1$@", [.text]),
             "Core:CoreGameSession.preparingJava": .init("准备 Java", []),
             "Core:CoreGameSession.preparingLaunch": .init("准备启动", []),
             "Core:CoreGameSession.readingVersion": .init("读取版本", []),
-            "Core:CoreGameSession.recoveringInterruptedRecord": .init("恢复中断记录", []),
+            "Core:CoreGameSession.recoveringInterruptedRecord": .init("恢复中断的运行记录", []),
             "Core:CoreGameSession.reportCopyFailed": .init("[Ruri] 未能保存报告副本 %1$@：%2$@", [.text, .text]),
             "Core:CoreGameSession.reportCopySaveFailed": .init("[Ruri] 未能保存报告副本：%1$@", [.text]),
             "Core:CoreGameSession.reportTooLargeNotice": .init("\n[Ruri] 报告超过 8 MiB，副本仅保留开头。\n", []),
@@ -309,8 +309,8 @@ extension Messages {
             "Core:CoreGameSession.startedWithoutCompletion": .init("%1$@ · 尚无完成记录", [.text]),
             "Core:CoreGameSession.startedWithoutExitRecord": .init("游戏已启动 · 尚无退出记录", []),
             "Core:CoreGameSession.startingGameProcess": .init("创建游戏进程", []),
-            "Core:CoreGameSession.truncatedLog": .init("[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n%1$@", [.text]),
-            "Core:CoreGameSession.truncatedLogNotice": .init("[Ruri] 此处显示日志末尾，完整内容保存在会话目录。\n", []),
+            "Core:CoreGameSession.truncatedLog": .init("[Ruri] 当前仅显示日志末尾，完整内容保存在本次运行的记录文件夹中。\n%1$@", [.text]),
+            "Core:CoreGameSession.truncatedLogNotice": .init("[Ruri] 当前仅显示日志末尾，完整内容保存在本次运行的记录文件夹中。\n", []),
             "Core:CoreGameSession.validatingAccount": .init("验证账号", []),
             "Core:CoreGameSession.waitingForGameExit": .init("等待游戏处理退出请求", []),
             "Errors:CoreGameSession.exportFileCreationFailed": .init("无法创建导出文件。", []),
@@ -323,10 +323,10 @@ extension Messages {
             "Errors:CoreGameSession.invalidRunReportPath": .init("运行报告路径无效。", []),
             "Errors:CoreGameSession.logChangedDuringExport": .init("导出期间日志发生变化，请重试。", []),
             "Errors:CoreGameSession.logNotRegularFile": .init("日志不是普通文件。", []),
-            "Errors:CoreGameSession.memoryChangeAfterLaunch": .init("游戏已启动，不能改写本轮内存设置。", []),
-            "Errors:CoreGameSession.monitorCannotAdoptRun": .init("监控组件不能接管这个运行记录。", []),
-            "Errors:CoreGameSession.runAlreadyFinished": .init("运行会话已经结束。", []),
-            "Errors:CoreGameSession.runCannotBeHandedToMonitor": .init("这个运行记录不能交给监控组件。", []),
+            "Errors:CoreGameSession.memoryChangeAfterLaunch": .init("游戏已启动，无法更改本次运行的内存设置。", []),
+            "Errors:CoreGameSession.monitorCannotAdoptRun": .init("监控组件无法继续记录本次运行。", []),
+            "Errors:CoreGameSession.runAlreadyFinished": .init("本次运行已结束。", []),
+            "Errors:CoreGameSession.runCannotBeHandedToMonitor": .init("无法让监控组件继续记录本次运行。", []),
             "Errors:CoreGameSession.runLogClosed": .init("运行日志已关闭。", []),
             "Errors:CoreGameSession.runLogCreationFailed": .init("无法创建运行日志。", []),
         ]

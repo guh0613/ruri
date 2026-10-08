@@ -32,7 +32,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "分析读取量已达 16 MiB，未读取 %1$@。"
+            "value" : "已达到 16 MiB 的分析上限，未读取 %1$@。"
           }
         }
       }
@@ -50,7 +50,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "核对所选 Java 的 ARM64 / Intel 架构，并使用适用于这套游戏的版本。"
+            "value" : "检查所选 Java 使用的是 ARM64 还是 Intel 架构，并选择游戏支持的版本。"
           }
         }
       }
@@ -68,7 +68,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本地库或 Java 的架构不匹配"
+            "value" : "Java 与原生库的架构不兼容"
           }
         }
       }
@@ -86,7 +86,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "系统明确报告二进制架构不兼容，需要让 Java 与游戏本地库使用匹配的架构。"
+            "value" : "Java 与游戏使用的原生库架构不兼容。两者需要使用匹配的 ARM64 或 Intel 版本。"
           }
         }
       }
@@ -104,7 +104,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检查提供本地库的模组是否支持当前架构；之后修复实例以重新准备本地库。"
+            "value" : "检查含原生库的模组是否支持所选架构，再修复实例以重新安装所需的原生库。"
           }
         }
       }
@@ -122,7 +122,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ 仅分析有界片段，可能缺少上下文；原有文件未修改。"
+            "value" : "仅分析了 %1$@ 的部分内容，可能遗漏相关信息。原文件已保留。"
           }
         }
       }
@@ -176,7 +176,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在实例设置核对 Java，按游戏和整合包要求选择版本。"
+            "value" : "打开实例设置，选择游戏或整合包要求的 Java 版本。"
           }
         }
       }
@@ -194,7 +194,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果刚替换过模组，检查该模组是否要求另一代 Java 或 Minecraft。"
+            "value" : "如果最近更换过模组，请检查它支持的 Java 和 Minecraft 版本。"
           }
         }
       }
@@ -212,7 +212,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java 无法读取所需的类版本"
+            "value" : "Java 版本不兼容"
           }
         }
       }
@@ -230,7 +230,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java 明确报告类文件版本不受支持。游戏、加载器和模组都可能对 Java 有要求。"
+            "value" : "当前 Java 无法读取游戏、加载器或模组中的类文件。请检查它们要求的 Java 版本。"
           }
         }
       }
@@ -248,7 +248,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "需要验证的线索"
+            "value" : "可能的原因，仍需检查"
           }
         }
       }
@@ -284,7 +284,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "先查看原文的文件名和底层错误；修改前把该配置复制到别处留作备份。"
+            "value" : "查看日志中提到的配置文件和具体错误。修改前，先备份该配置文件。"
           }
         }
       }
@@ -302,7 +302,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "加载器在错误上下文中指出无法读取配置。可能是内容格式、版本差异或文件访问问题。"
+            "value" : "加载器无法读取配置文件。文件格式、配置版本或访问权限可能有问题。"
           }
         }
       }
@@ -320,7 +320,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "配置文件读取失败"
+            "value" : "无法读取配置文件"
           }
         }
       }
@@ -338,7 +338,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按对应模组说明修正配置；需要重新生成时只处理该文件，避免清空整套配置。"
+            "value" : "按模组说明修正配置。如果需要重新生成配置，只处理出错的文件，保留其他配置。"
           }
         }
       }
@@ -374,7 +374,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "报告注明手动触发调试崩溃"
+            "value" : "手动触发的调试崩溃"
           }
         }
       }
@@ -392,7 +392,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Minecraft 报告的描述是手动调试崩溃，不据此推断模组不兼容。"
+            "value" : "Minecraft 报告这是一次手动触发的调试崩溃，不能据此判断模组是否存在冲突。"
           }
         }
       }
@@ -410,7 +410,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "若这是有意触发的调试操作，保存所需报告后正常重新启动。"
+            "value" : "如果这是有意进行的调试操作，保存所需报告后重新启动游戏即可。"
           }
         }
       }
@@ -428,7 +428,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "加载器发现重复模组"
+            "value" : "发现重复模组"
           }
         }
       }
@@ -446,7 +446,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在模组管理中核对原文列出的文件和版本。"
+            "value" : "打开“管理模组”，查看日志中列出的文件及其版本。"
           }
         }
       }
@@ -464,7 +464,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "同一个模组被加载多次，可能存在不同版本或重复来源。"
+            "value" : "加载器发现同一个模组存在多个副本或版本。"
           }
         }
       }
@@ -482,7 +482,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "停用多余的一份后重试；不要同时删掉所有版本。"
+            "value" : "保留需要的版本，停用多余的副本，再启动游戏。"
           }
         }
       }
@@ -500,7 +500,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "证据不是普通文件。"
+            "value" : "无法读取此诊断文件：它不是普通文件。"
           }
         }
       }
@@ -536,7 +536,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@：%2$@；Ruri 结束请求：%3$@"
+            "value" : "%1$@：%2$@；是否通过 Ruri 请求终止：%3$@"
           }
         }
       }
@@ -554,7 +554,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "核对下方原始错误以及对应设置，处理后重新启动。"
+            "value" : "查看相关日志中的具体错误并检查对应设置，再尝试启动游戏。"
           }
         }
       }
@@ -572,7 +572,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "若仍然失败，收集这次运行记录，以便比较重试前后的错误。"
+            "value" : "如果仍然失败，收集重试后的运行记录，以便比较两次的错误。"
           }
         }
       }
@@ -590,7 +590,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "有"
+            "value" : "是"
           }
         }
       }
@@ -608,7 +608,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "跳过无效证据路径。"
+            "value" : "已跳过路径无效的诊断文件。"
           }
         }
       }
@@ -644,7 +644,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "JVM 记录了本机崩溃"
+            "value" : "Java 发生严重错误"
           }
         }
       }
@@ -662,7 +662,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "核对所用 Java 和含本地库的模组版本，将报告与复现步骤一起提供给维护者。"
+            "value" : "检查 Java 和含原生库的模组版本。向维护者反馈时，请附上报告和复现步骤。"
           }
         }
       }
@@ -680,7 +680,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "虚拟机报告致命错误；Problematic frame 只是崩溃位置，仍需结合本地库、Java 与系统环境判断原因。"
+            "value" : "Java 报告了致命错误。报告中的 Problematic frame 表示崩溃位置，具体原因还需结合原生库、Java 版本和系统环境检查。"
           }
         }
       }
@@ -698,7 +698,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保留 JVM 报告的错误信号、Problematic frame 与 Java 版本。"
+            "value" : "保留 Java 崩溃报告，其中的错误信号、Problematic frame 和 Java 版本有助于排查问题。"
           }
         }
       }
@@ -716,7 +716,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最后记录阶段：%1$@"
+            "value" : "最后记录的阶段：%1$@"
           }
         }
       }
@@ -734,7 +734,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "核对实例的附加 JVM 参数，保留副本后逐项撤销最近增加的参数。"
+            "value" : "在实例设置中检查附加 JVM 参数。先保存一份副本，再逐项移除最近添加的参数。"
           }
         }
       }
@@ -752,7 +752,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "虚拟机报告参数或内存上限无效，游戏尚未正常启动。"
+            "value" : "Java 无法使用当前的启动参数或内存上限，游戏未能启动。"
           }
         }
       }
@@ -770,7 +770,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java 启动参数被拒绝"
+            "value" : "Java 启动参数无效"
           }
         }
       }
@@ -788,7 +788,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "确认内存上限与所选 Java 匹配，然后重试。"
+            "value" : "检查内存上限是否适用于所选 Java，再尝试启动游戏。"
           }
         }
       }
@@ -806,7 +806,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启动已取消，没有证据表明游戏发生了崩溃。"
+            "value" : "启动已取消。现有记录未显示游戏发生崩溃。"
           }
         }
       }
@@ -824,7 +824,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启动在“%1$@”阶段失败，游戏尚未产生退出记录。先检查该阶段的错误。"
+            "value" : "启动在“%1$@”阶段失败，未记录到游戏退出信息。请先查看该阶段的错误。"
           }
         }
       }
@@ -842,7 +842,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "加载器拒绝了模组组合"
+            "value" : "模组依赖或兼容性问题"
           }
         }
       }
@@ -860,7 +860,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按证据中的模组 ID 和版本范围核对依赖，并确认 Minecraft 与加载器版本。"
+            "value" : "查看相关日志中的模组 ID 和版本要求，检查所需依赖、Minecraft 版本和加载器版本。"
           }
         }
       }
@@ -878,7 +878,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "加载器报告缺少依赖、版本要求不满足或模组冲突。原文通常包含需要的版本范围。"
+            "value" : "加载器报告部分模组缺少依赖、版本不符合要求，或彼此冲突。日志通常会列出所需的版本。"
           }
         }
       }
@@ -896,7 +896,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在模组管理中处理最近的变更；一次只改一组相关依赖，保留恢复余地后重试。"
+            "value" : "打开“管理模组”，检查最近的改动。每次只调整一组相关模组及其依赖，保留副本以便恢复，再启动游戏。"
           }
         }
       }
@@ -914,7 +914,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "日志明确报告"
+            "value" : "日志中记录的错误"
           }
         }
       }
@@ -932,7 +932,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "核对游戏所需的 Java 和加载器版本，检查自定义参数是否影响首线程启动。"
+            "value" : "检查游戏要求的 Java 和加载器版本，以及自定义参数是否影响在主线程启动游戏。"
           }
         }
       }
@@ -950,7 +950,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保留报告中的 Java、macOS 与错误原文，便于确认是否需要修正启动器的启动方式。"
+            "value" : "向维护者反馈时，请附上 Java 版本、macOS 版本和错误原文，以便检查启动方式。"
           }
         }
       }
@@ -968,7 +968,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "窗口初始化违反 macOS 主线程要求"
+            "value" : "游戏窗口发生线程错误"
           }
         }
       }
@@ -986,7 +986,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cocoa 或 GLFW 明确报告窗口必须在主线程创建。需要检查 Java、LWJGL 与首线程启动参数的组合。"
+            "value" : "Cocoa 或 GLFW 报告了窗口主线程错误。需要检查 Java、LWJGL 与主线程启动参数是否兼容。"
           }
         }
       }
@@ -1076,7 +1076,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检查实例所用的游戏与加载器版本，再使用实例的修复功能补全安装文件。"
+            "value" : "检查实例的 Minecraft 和加载器版本，再点按“修复安装文件”补全所需文件。"
           }
         }
       }
@@ -1112,7 +1112,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java 明确报告无法加载主类。版本文件、加载器安装或启动入口需要检查。"
+            "value" : "Java 无法加载游戏的主类。游戏安装文件、加载器或启动配置可能有问题。"
           }
         }
       }
@@ -1130,7 +1130,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保留现有配置与存档；若修复后仍失败，附上这次报告。"
+            "value" : "保留现有配置和存档。如果修复后仍无法启动，请在反馈时附上诊断报告。"
           }
         }
       }
@@ -1148,7 +1148,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这是模组修改游戏代码时的失败线索。文件名或堆栈中的模组不能直接当作唯一责任方。"
+            "value" : "模组修改游戏代码时出错。日志中提到的模组可能受到其他模组影响，需要进一步检查。"
           }
         }
       }
@@ -1166,7 +1166,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "错误上下文中有 Mixin 应用失败"
+            "value" : "Mixin 应用失败"
           }
         }
       }
@@ -1184,7 +1184,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "先处理上方明确的依赖或入口错误，再检查这里涉及的模组版本组合。"
+            "value" : "如果上方还有依赖或模组初始化错误，请先处理这些问题，再检查相关模组的版本是否兼容。"
           }
         }
       }
@@ -1202,7 +1202,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通过模组管理逐步停用最近改动的模组来验证，之后仍能重新启用；不要根据单条警告批量删除模组。"
+            "value" : "打开“管理模组”，逐个停用最近改动的模组并重试。先停用而不删除，以便恢复；单条警告不足以判断哪些模组需要移除。"
           }
         }
       }
@@ -1220,7 +1220,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "核对证据中列出的模组、依赖与加载器版本。"
+            "value" : "查看相关日志中提到的模组，检查它及其依赖和加载器的版本。"
           }
         }
       }
@@ -1238,7 +1238,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "加载器指出某个入口或模组实例初始化失败；依赖或其他模组仍可能参与其中。"
+            "value" : "加载器无法完成某个模组的初始化。原因也可能与它依赖的组件或其他模组有关。"
           }
         }
       }
@@ -1274,7 +1274,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "若错误紧随一次更新出现，先核对此前版本；可在模组管理中停用最近加入的模组来验证，之后仍能重新启用。"
+            "value" : "如果问题出现在更新后，检查之前使用的版本。也可以先停用最近添加的模组并重试，排查后再重新启用。"
           }
         }
       }
@@ -1292,7 +1292,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "监控记录已中断，未取得游戏的退出结果。"
+            "value" : "游戏监控已中断，未记录到退出结果。"
           }
         }
       }
@@ -1310,7 +1310,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "JVM 报告本机内存分配失败。增大 Java 堆上限可能进一步挤占系统内存。"
+            "value" : "Java 无法分配所需的系统内存。此时增加游戏的内存上限可能让系统可用内存更少。"
           }
         }
       }
@@ -1346,7 +1346,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检查系统内存压力与其他程序占用，核对是否设置了过大的 Java 堆。"
+            "value" : "在“活动监视器”中查看内存压力和其他 App 的占用，并检查游戏的内存上限是否设得过高。"
           }
         }
       }
@@ -1364,7 +1364,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "调整后重新启动；保留 JVM 报告中的分配大小和失败位置供排查。"
+            "value" : "调整后重新启动游戏，并保留 Java 崩溃报告，以便查看内存分配失败的详情。"
           }
         }
       }
@@ -1382,7 +1382,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无"
+            "value" : "否"
           }
         }
       }
@@ -1400,7 +1400,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "系统曾接收 Ruri 的正常退出请求。"
+            "value" : "系统已接收 Ruri 发出的正常退出请求。"
           }
         }
       }
@@ -1418,7 +1418,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java 报告内存耗尽"
+            "value" : "Java 内存不足"
           }
         }
       }
@@ -1436,7 +1436,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅在堆内存不足时考虑调整实例内存，并给 macOS 留出余量；同时检查最近加入的模组或高分辨率资源。"
+            "value" : "如果提示 Java heap space，可适当增加实例的内存上限，同时为 macOS 留出可用内存。也请检查最近添加的模组或高分辨率资源包。"
           }
         }
       }
@@ -1454,7 +1454,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "错误上下文出现 OutOfMemoryError；仅凭这一类错误还不能判断应增加哪一种内存。"
+            "value" : "日志中出现了 OutOfMemoryError。需要先确认哪一类内存不足，才能判断是否应增加游戏的内存上限。"
           }
         }
       }
@@ -1472,7 +1472,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "先查看原文是 Java heap space、Direct buffer memory、Metaspace 还是无法创建线程。"
+            "value" : "查看错误后面的说明：Java heap space 表示堆内存不足；Direct buffer memory、Metaspace 和无法创建线程表示其他内存或资源限制。"
           }
         }
       }
@@ -1490,7 +1490,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这是启动器记录的准备阶段错误，尚不能归为游戏崩溃。"
+            "value" : "启动准备过程中发生错误，请查看具体错误信息。"
           }
         }
       }
@@ -1508,7 +1508,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "原进程身份已失效"
+            "value" : "原游戏进程已不存在"
           }
         }
       }
@@ -1526,7 +1526,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "记录表明进程被结束，但不能确定请求来源，也不能据此断言内存不足或模组冲突。"
+            "value" : "游戏进程已被终止，现有记录无法确定原因，也无法确认是谁发出了终止请求。"
           }
         }
       }
@@ -1544,7 +1544,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "恢复依据：%1$@"
+            "value" : "恢复记录的依据：%1$@"
           }
         }
       }
@@ -1562,7 +1562,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "恢复记录时间：%1$@（不是游戏退出时间）"
+            "value" : "记录恢复时间：%1$@（游戏退出时间未知）"
           }
         }
       }
@@ -1595,7 +1595,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "找到 %1$lld 类相关错误。下面保留了原文和处理步骤；错误中出现的模组不一定是唯一原因。"
+                  "value" : "发现 %1$lld 类相关错误。以下是错误原文和建议的处理步骤；日志中提到的模组可能只是原因之一。"
                 }
               }
             }
@@ -1649,7 +1649,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "本次有 %1$lld 份报告，仅分析前 12 份；其余仍可在运行目录查看。"
+                  "value" : "本次共有 %1$lld 份报告，已分析前 12 份。其余报告可在运行记录文件夹中查看。"
                 }
               }
             }
@@ -1670,7 +1670,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本次运行已经结束，无需进行崩溃处理。"
+            "value" : "本次运行已结束，无需排查崩溃。"
           }
         }
       }
@@ -1688,7 +1688,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本次运行尚无最终退出记录，暂不判断崩溃原因。可继续查看实时日志和进程状态。"
+            "value" : "尚未记录到游戏的退出结果，暂时无法分析崩溃原因。可以继续查看实时日志和运行状态。"
           }
         }
       }
@@ -1706,7 +1706,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未能读取会话日志：%1$@"
+            "value" : "无法读取本次运行的日志：%1$@"
           }
         }
       }
@@ -1724,7 +1724,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@（末段）"
+            "value" : "%1$@（末尾片段）"
           }
         }
       }
@@ -1760,7 +1760,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未能读取 %1$@：%2$@"
+            "value" : "无法读取 %1$@：%2$@"
           }
         }
       }
@@ -1796,7 +1796,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "查看运行文件"
+            "value" : "查看运行记录文件"
           }
         }
       }
@@ -1814,7 +1814,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正文从原文件第 1 行开始"
+            "value" : "行号与原文件一致，从第 1 行开始"
           }
         }
       }
@@ -1832,7 +1832,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已读取的完整文件"
+            "value" : "完整文件"
           }
         }
       }
@@ -1850,7 +1850,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法保存诊断包。"
+            "value" : "无法保存诊断报告。"
           }
         }
       }
@@ -1868,7 +1868,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "诊断结论与处理步骤"
+            "value" : "诊断结果与处理建议"
           }
         }
       }
@@ -1904,7 +1904,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "诊断与运行记录不匹配，请重新分析。"
+            "value" : "诊断结果与运行记录不匹配，请重新分析。"
           }
         }
       }
@@ -1922,7 +1922,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请将诊断包保存在 Ruri 数据目录和实例文件夹之外。"
+            "value" : "请选择 Ruri 数据文件夹和实例文件夹以外的位置保存诊断报告。"
           }
         }
       }
@@ -1940,7 +1940,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Minecraft: %1$@\nLoader: %2$@ %3$@\nJava: %4$@\nMemory: %5$@\nSystem: %6$@\nHost architecture: %7$@\nAccount type: %8$@\nStarted: %9$@\nLast recorded stage: %10$@\nState: %11$@\nExit kind: %12$@\nExit status: %13$@\nStop requested through Ruri: %14$@\nNormal quit request sent: %15$@"
+            "value" : "Minecraft：%1$@\n加载器：%2$@ %3$@\nJava：%4$@\n内存：%5$@\n系统：%6$@\n主机架构：%7$@\n账号类型：%8$@\n开始时间：%9$@\n最后记录的阶段：%10$@\n状态：%11$@\n退出方式：%12$@\n退出状态：%13$@\n是否通过 Ruri 请求终止：%14$@\n是否已发送正常退出请求：%15$@"
           }
         }
       }
@@ -2012,7 +2012,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "yes (exit not recorded)"
+            "value" : "是（尚未记录到退出结果）"
           }
         }
       }
@@ -2066,7 +2066,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "堆上限 %1$@ MB"
+            "value" : "Java 堆内存上限 %1$@ MB"
           }
         }
       }
@@ -2084,7 +2084,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请选择有效的报告内容。"
+            "value" : "请选择要导出的有效报告内容。"
           }
         }
       }
@@ -2102,7 +2102,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "no"
+            "value" : "否"
           }
         }
       }
@@ -2120,7 +2120,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未发现读取截断或读取错误。"
+            "value" : "未发现日志截断或读取错误。"
           }
         }
       }
@@ -2138,7 +2138,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\n读取范围与缺失信息\n%1$@"
+            "value" : "\n分析范围与缺失信息\n%1$@"
           }
         }
       }
@@ -2156,7 +2156,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\n读取范围与缺失信息\n"
+            "value" : "\n分析范围与缺失信息\n"
           }
         }
       }
@@ -2174,7 +2174,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nRecovery observed at (not exit time): %1$@\nRecovery basis: %2$@\n%3$@"
+            "value" : "\n记录恢复时间（非游戏退出时间）：%1$@\n恢复依据：%2$@\n%3$@"
           }
         }
       }
@@ -2210,7 +2210,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "末段内从 1 开始，不是原文件行号"
+            "value" : "行号从此片段的第 1 行开始，与原文件不同"
           }
         }
       }
@@ -2228,7 +2228,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "片段，可能缺少上下文"
+            "value" : "部分内容，可能遗漏相关信息"
           }
         }
       }
@@ -2246,7 +2246,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "yes"
+            "value" : "是"
           }
         }
       }

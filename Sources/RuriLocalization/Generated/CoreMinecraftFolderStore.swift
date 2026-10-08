@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum CoreMinecraftFolderStore {
-        /// 导入或复制尚需完成，请处理实例库中的工作文件。
+        /// 导入或复制尚未完成，请在实例库中恢复未完成的操作。
         ///
         /// Resource: `Core.CoreMinecraftFolderStore.pendingWorkFiles`.
         public static var pendingWorkFiles: LocalizedMessage {
-            .init(key: "CoreMinecraftFolderStore.pendingWorkFiles", table: "Core", fallback: "导入或复制尚需完成，请处理实例库中的工作文件。")
+            .init(key: "CoreMinecraftFolderStore.pendingWorkFiles", table: "Core", fallback: "导入或复制尚未完成，请在实例库中恢复未完成的操作。")
         }
         /// 版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。
         ///
@@ -21,11 +21,11 @@ extension Messages {
         public static var alreadyAddedFolder: LocalizedMessage {
             .init(key: "CoreMinecraftFolderStore.alreadyAddedFolder", table: "Errors", fallback: "此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。")
         }
-        /// 无法接入“%1$@”的自定义游戏目录：%2$@
+        /// 无法使用“%1$@”的自定义游戏文件夹：%2$@
         ///
         /// Resource: `Errors.CoreMinecraftFolderStore.customDirectoryUnavailable`.
         public static func customDirectoryUnavailable(_ value0: String, _ value1: String) -> LocalizedMessage {
-            .init(key: "CoreMinecraftFolderStore.customDirectoryUnavailable", table: "Errors", fallback: "无法接入“%1$@”的自定义游戏目录：%2$@", arguments: [.text(value0), .text(value1)])
+            .init(key: "CoreMinecraftFolderStore.customDirectoryUnavailable", table: "Errors", fallback: "无法使用“%1$@”的自定义游戏文件夹：%2$@", arguments: [.text(value0), .text(value1)])
         }
         /// 请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。
         ///
@@ -69,11 +69,11 @@ extension Messages {
         public static var localVersionMissing: LocalizedMessage {
             .init(key: "CoreMinecraftFolderStore.localVersionMissing", table: "Errors", fallback: "找不到本地版本。")
         }
-        /// 文件夹位置已改变，请重新刷新。
+        /// 文件夹位置已更改，请刷新后重试。
         ///
         /// Resource: `Errors.CoreMinecraftFolderStore.locationChanged`.
         public static var locationChanged: LocalizedMessage {
-            .init(key: "CoreMinecraftFolderStore.locationChanged", table: "Errors", fallback: "文件夹位置已改变，请重新刷新。")
+            .init(key: "CoreMinecraftFolderStore.locationChanged", table: "Errors", fallback: "文件夹位置已更改，请刷新后重试。")
         }
         /// 原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。
         ///
@@ -82,10 +82,10 @@ extension Messages {
             .init(key: "CoreMinecraftFolderStore.originalFolderAvailable", table: "Errors", fallback: "原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。")
         }
         static let definitions: [String: MessageDefinition] = [
-            "Core:CoreMinecraftFolderStore.pendingWorkFiles": .init("导入或复制尚需完成，请处理实例库中的工作文件。", []),
+            "Core:CoreMinecraftFolderStore.pendingWorkFiles": .init("导入或复制尚未完成，请在实例库中恢复未完成的操作。", []),
             "Core:CoreMinecraftFolderStore.versionDirectoryMissing": .init("版本文件夹已移除或改名。请恢复原文件夹，或从实例列表中移除此版本。", []),
             "Errors:CoreMinecraftFolderStore.alreadyAddedFolder": .init("此位置已经添加为 Ruri 实例文件夹，请直接在文件夹列表中选择。", []),
-            "Errors:CoreMinecraftFolderStore.customDirectoryUnavailable": .init("无法接入“%1$@”的自定义游戏目录：%2$@", [.text, .text]),
+            "Errors:CoreMinecraftFolderStore.customDirectoryUnavailable": .init("无法使用“%1$@”的自定义游戏文件夹：%2$@", [.text, .text]),
             "Errors:CoreMinecraftFolderStore.dependencyCheckRequired": .init("请先处理“%1$@”的无效清单，才能确认它是否依赖此版本。", [.text]),
             "Errors:CoreMinecraftFolderStore.dependencyExists": .init("“%1$@”依赖此版本，请先处理依赖它的版本。", [.text]),
             "Errors:CoreMinecraftFolderStore.duplicateFolder": .init("此文件夹已添加到 Ruri，或是已有文件夹的副本。若原文件夹已移动，请在文件夹管理中选择它的新位置。", []),
@@ -93,7 +93,7 @@ extension Messages {
             "Errors:CoreMinecraftFolderStore.folderListChanged": .init("文件夹列表已改变，请刷新后重试。", []),
             "Errors:CoreMinecraftFolderStore.invalidRuriMarker": .init("无法识别此文件夹的 Ruri 标记。", []),
             "Errors:CoreMinecraftFolderStore.localVersionMissing": .init("找不到本地版本。", []),
-            "Errors:CoreMinecraftFolderStore.locationChanged": .init("文件夹位置已改变，请重新刷新。", []),
+            "Errors:CoreMinecraftFolderStore.locationChanged": .init("文件夹位置已更改，请刷新后重试。", []),
             "Errors:CoreMinecraftFolderStore.originalFolderAvailable": .init("原 Minecraft 文件夹仍可访问，请选择原文件夹以恢复实例设置。当前选择的是另一份副本。", []),
         ]
     }

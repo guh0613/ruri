@@ -51,11 +51,11 @@ extension Messages {
         public static var language: LocalizedMessage {
             .init(key: "Common.language", table: "Common", fallback: "语言")
         }
-        /// 重新打开 Ruri 后生效。
+        /// 重新启动 Ruri 后生效。
         ///
         /// Resource: `Common.Common.languageRestart`.
         public static var languageRestart: LocalizedMessage {
-            .init(key: "Common.languageRestart", table: "Common", fallback: "重新打开 Ruri 后生效。")
+            .init(key: "Common.languageRestart", table: "Common", fallback: "重新启动 Ruri 后生效。")
         }
         /// 本地化资源读取成功
         ///
@@ -72,7 +72,7 @@ extension Messages {
             "Common:Common.invalidLanguageOption": .init("--language 后需要填写语言代码。", []),
             "Common:Common.labeledValue": .init("%1$@：%2$@", [.text, .text]),
             "Common:Common.language": .init("语言", []),
-            "Common:Common.languageRestart": .init("重新打开 Ruri 后生效。", []),
+            "Common:Common.languageRestart": .init("重新启动 Ruri 后生效。", []),
             "Common:Common.localizationCheck": .init("本地化资源读取成功", []),
         ]
     }

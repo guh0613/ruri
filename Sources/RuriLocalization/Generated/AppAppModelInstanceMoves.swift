@@ -3,11 +3,11 @@ import Foundation
 
 extension Messages {
     public enum AppAppModelInstanceMoves {
-        /// 实例移动已完成，原文件与工作记录已清理。
+        /// 实例已移动，原文件和操作记录已清理。
         ///
         /// Resource: `Interface.AppAppModelInstanceMoves.instanceMoveCompleted`.
         public static var instanceMoveCompleted: LocalizedMessage {
-            .init(key: "AppAppModelInstanceMoves.instanceMoveCompleted", table: "Interface", fallback: "实例移动已完成，原文件与工作记录已清理。")
+            .init(key: "AppAppModelInstanceMoves.instanceMoveCompleted", table: "Interface", fallback: "实例已移动，原文件和操作记录已清理。")
         }
         /// 已移动“%1$@”。
         ///
@@ -34,7 +34,7 @@ extension Messages {
             .init(key: "AppAppModelInstanceMoves.recoverInstanceMove", table: "Interface", fallback: "恢复 %1$@ 的移动", arguments: [.text(value0)])
         }
         static let definitions: [String: MessageDefinition] = [
-            "Interface:AppAppModelInstanceMoves.instanceMoveCompleted": .init("实例移动已完成，原文件与工作记录已清理。", []),
+            "Interface:AppAppModelInstanceMoves.instanceMoveCompleted": .init("实例已移动，原文件和操作记录已清理。", []),
             "Interface:AppAppModelInstanceMoves.instanceMoved": .init("已移动“%1$@”。", [.text]),
             "Interface:AppAppModelInstanceMoves.moveInstance": .init("移动 %1$@", [.text]),
             "Interface:AppAppModelInstanceMoves.moveNeedsRecovery": .init("实例已移至目标位置，还需完成清理。", []),

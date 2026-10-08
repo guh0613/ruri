@@ -27,11 +27,11 @@ extension Messages {
         public static var hardcoreMode: LocalizedMessage {
             .init(key: "CoreWorldManager.hardcoreMode", table: "Core", fallback: "极限")
         }
-        /// 导入的世界
+        /// 导入的存档
         ///
         /// Resource: `Core.CoreWorldManager.importedWorld`.
         public static var importedWorld: LocalizedMessage {
-            .init(key: "CoreWorldManager.importedWorld", table: "Core", fallback: "导入的世界")
+            .init(key: "CoreWorldManager.importedWorld", table: "Core", fallback: "导入的存档")
         }
         /// 手动备份
         ///
@@ -170,7 +170,7 @@ extension Messages {
             "Core:CoreWorldManager.automaticBackup": .init("恢复前自动备份", []),
             "Core:CoreWorldManager.creativeMode": .init("创造", []),
             "Core:CoreWorldManager.hardcoreMode": .init("极限", []),
-            "Core:CoreWorldManager.importedWorld": .init("导入的世界", []),
+            "Core:CoreWorldManager.importedWorld": .init("导入的存档", []),
             "Core:CoreWorldManager.manualBackup": .init("手动备份", []),
             "Core:CoreWorldManager.restoredFolder": .init("%1$@ 恢复", [.text]),
             "Core:CoreWorldManager.spectatorMode": .init("旁观", []),
