@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 sys.dont_write_bytecode = True
 from lib.localization import check_source_literals, check_bundle, shipping_languages
-from lib.localization_catalog import (read_catalogs, CLI_LANGUAGES, SHIP_THRESHOLD, REQUIRED_COMPLETE,
+from lib.localization_catalog import (read_catalogs, compile_catalogs, CLI_LANGUAGES, SHIP_THRESHOLD, REQUIRED_COMPLETE,
                                       validate_policy, check_completeness, accept_translations, coverage, read_baseline)
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -99,6 +99,7 @@ if __name__ == '__main__':
     selection.add_argument('--keys', help='Comma-separated Group.name or Table:Group.name keys to accept')
     selection.add_argument('--all', action='store_true', help='Accept every existing translation')
     mode.add_argument('--bundle', type=Path, help='Verify resources in a built app after relocation')
+    mode.add_argument('--compile', type=Path, metavar='BUNDLE', help='Compile String Catalogs into a resource bundle built without Xcode')
     parser.add_argument('--cli', type=Path, help='Also verify a standalone CLI with --bundle')
     options = parser.parse_args()
     if options.cli and not options.bundle:
@@ -108,7 +109,9 @@ if __name__ == '__main__':
     if options.accept and not (options.keys or options.all):
         parser.error('--accept requires --keys or --all')
     try:
-        if options.bundle:
+        if options.compile:
+            compile_catalogs(ROOT, options.compile)
+        elif options.bundle:
             check_bundle(options.bundle.resolve(), options.cli.resolve() if options.cli else None)
         elif options.status is not None:
             show_status(options.status or None)

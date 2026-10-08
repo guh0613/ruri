@@ -1,0 +1,145 @@
+{
+  lib,
+  stdenv,
+  swift,
+  swiftpm,
+  fetchSwiftPMDeps,
+  apple-sdk_26,
+  darwinMinVersionHook,
+  jq,
+  python3,
+  rcodesign,
+  sqlite,
+  zlib,
+}:
+let
+  infoPlist = builtins.readFile ../Resources/Info.plist;
+
+  # Nix replaces Sparkle's in-app updater (see RURI_DISABLE_SPARKLE below), so
+  # its pin is neither fetched nor resolved.
+  removeSparklePin = ''
+    jq 'del(.pins[] | select(.identity == "sparkle"))' Package.resolved > Package.resolved.new
+    mv Package.resolved.new Package.resolved
+  '';
+in
+stdenv.mkDerivation (finalAttrs: {
+  pname = "ruri-launcher";
+  version = lib.head (builtins.match ".*<key>RuriVersion</key><string>([^<]+)</string>.*" infoPlist);
+
+  src = lib.fileset.toSource {
+    root = ../.;
+    fileset = lib.fileset.unions [
+      ../Package.swift
+      ../Package.resolved
+      ../Resources
+      ../Sources
+      ../Tests
+      ../scripts
+    ];
+  };
+
+  postPatch = removeSparklePin;
+
+  swiftpmDeps = fetchSwiftPMDeps {
+    inherit (finalAttrs) pname version src;
+    postPatch = removeSparklePin;
+    hash = "sha256-EFRLefyZyq/VBUoe5cOeiDlc5+NsqTxTE2fp8KovsDw=";
+  };
+
+  strictDeps = true;
+
+  nativeBuildInputs = [
+    swift
+    swiftpm
+    jq
+    (python3.withPackages (ps: [ ps.pillow ]))
+    rcodesign
+  ];
+
+  buildInputs = [
+    apple-sdk_26
+    (darwinMinVersionHook "14.0")
+    sqlite
+    zlib
+  ];
+
+  env = {
+    RURI_DISABLE_SPARKLE = "1";
+    # The release CurseForge key is not public; users can add their own in Settings.
+    RURI_CURSEFORGE_API_KEY = "";
+  };
+
+  # SwiftPM builds the Swift products; the rest follows scripts/build-app.sh
+  # with tools available outside Xcode.
+  postBuild = ''
+    mkdir -p build/game-host build/icons
+    # Universal, so the same host can load native or Rosetta Java.
+    hostFlags=(-mmacosx-version-min=14.0 -arch arm64 -arch x86_64 -fobjc-arc -O2 -Wall -Wextra -Werror)
+    $CC "''${hostFlags[@]}" -dynamiclib -framework Foundation Sources/RuriGameHost/WorkingDirectory.m \
+      -install_name @rpath/libRuriGameSupport.dylib -o build/game-host/libRuriGameSupport.dylib
+    $CC "''${hostFlags[@]}" -framework AppKit -framework ImageIO \
+      Sources/RuriGameHost/main.m Sources/RuriGameHost/HostProtocol.m Sources/RuriGameHost/GameApplication.m \
+      -Lbuild/game-host -lRuriGameSupport -Wl,-rpath,@executable_path/../Frameworks -o build/game-host/ruri-game
+
+    # actool compiles Icon Composer documents only inside Xcode.
+    python3 scripts/lib/icon.py Resources/AppIcon.icon build/icons/AppIcon.icns
+    python3 scripts/lib/icon.py Resources/GameHostIcon.icon build/icons/GameHostIcon.icns
+  '';
+
+  installPhase = ''
+    runHook preInstall
+
+    binPath="$(swiftpmBinPath)"
+    app="$out/Applications/Ruri.app"
+    mkdir -p "$app/Contents/MacOS" "$app/Contents/Helpers" "$app/Contents/Resources"
+
+    cp Resources/Info.plist "$app/Contents/Info.plist"
+    cp Resources/ThirdPartyNotices.txt build/icons/AppIcon.icns "$app/Contents/Resources/"
+    python3 scripts/lib/app.py bundle "$app"
+
+    install -m755 "$binPath/Ruri" "$app/Contents/MacOS/Ruri"
+    install -m755 "$binPath/ruri-cli" "$binPath/ruri-monitor" "$app/Contents/Helpers/"
+    # Like release builds, drop the symbol tables: about half of each executable.
+    $STRIP "$app/Contents/MacOS/Ruri" "$app/Contents/Helpers/ruri-cli" "$app/Contents/Helpers/ruri-monitor"
+    cp -R "$binPath"/*.bundle "$app/Contents/Resources/"
+    # Xcode compiles the String Catalogs that SwiftPM copies as-is.
+    python3 scripts/localization.py --compile "$app/Contents/Resources/Ruri_RuriLocalization.bundle"
+
+    host="$app/Contents/Helpers/RuriGame.app"
+    install -Dm644 Resources/GameHost-Info.plist "$host/Contents/Info.plist"
+    install -Dm755 build/game-host/ruri-game "$host/Contents/MacOS/ruri-game"
+    install -Dm755 build/game-host/libRuriGameSupport.dylib "$host/Contents/Frameworks/libRuriGameSupport.dylib"
+    install -Dm644 build/icons/GameHostIcon.icns "$host/Contents/Resources/GameHostIcon.icns"
+
+    mkdir -p "$out/bin"
+    ln -s "$app/Contents/Helpers/ruri-cli" "$out/bin/ruri"
+
+    runHook postInstall
+  '';
+
+  # Sign after fixup has stripped the binaries and rewritten their rpaths. Like
+  # contributor builds, this is an ad hoc signature; the CLI shares the
+  # launcher's identifier.
+  postFixup = ''
+    rcodesign sign \
+      --binary-identifier Contents/Helpers/ruri-cli:dev.ruri.launcher \
+      "$out/Applications/Ruri.app"
+  '';
+
+  doInstallCheck = true;
+  installCheckPhase = ''
+    runHook preInstallCheck
+    test "$("$out/bin/ruri" --version)" = "${finalAttrs.version}"
+    "$out/bin/ruri" --help > /dev/null
+    python3 scripts/localization.py --bundle "$out/Applications/Ruri.app"
+    runHook postInstallCheck
+  '';
+
+  meta = {
+    description = "Minecraft Java launcher for macOS";
+    homepage = "https://github.com/guh0613/ruri";
+    license = lib.licenses.gpl3Only;
+    platforms = [ "aarch64-darwin" ];
+    mainProgram = "ruri";
+  };
+})
