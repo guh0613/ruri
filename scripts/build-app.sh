@@ -8,7 +8,7 @@ fi
 select_xcode
 configuration="${1:-release}"
 if (( $# )); then shift; fi
-export RURI_BUILD_DIR="${RURI_BUILD_DIR:-.build/validation}"
+export RURI_BUILD_DIR="${RURI_BUILD_DIR:-.build}"
 mkdir -p build
 stage_dir="$(mktemp -d "$(pwd)/build/.ruri-build.XXXXXX")"
 trap 'rm -rf "$stage_dir"' EXIT

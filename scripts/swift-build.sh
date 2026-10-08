@@ -8,7 +8,6 @@
 set -euo pipefail
 cd "${0:A:h:h}"
 source scripts/lib/build.sh
-python3 scripts/localization.py --check >&2
 select_xcode
 
 swift_command=build
@@ -37,23 +36,7 @@ for argument in "$@"; do
   esac
 done
 
-sdk_path="$(xcrun --sdk macosx --show-sdk-path)"
-sdk_version="$(xcrun --sdk "$sdk_path" --show-sdk-version)"
-package="$(xcrun swift package dump-package)"
-platform="$(print -r -- "$package" | plutil -extract platforms.0.platformName raw -o - -)"
-if [[ "$platform" != macos ]]; then
-  print -u2 -- "Expected Package.swift to declare macOS as its first supported platform."
-  exit 1
-fi
-deployment_target="$(print -r -- "$package" | plutil -extract platforms.0.version raw -o - -)"
-
-# Some Swift drivers forward -sdk to clang as --sysroot, losing the SDK version
-# at link time. Specify both versions without changing the deployment target.
-build_args=(
-  --sdk "$sdk_path"
-  -Xlinker -platform_version -Xlinker macos
-  -Xlinker "$deployment_target" -Xlinker "$sdk_version"
-)
+build_args=()
 # Building every architecture with one compiler keeps an older toolchain's bugs
 # out of a single slice. Each architecture builds in its own folder, because the
 # products path does not name the architecture.
@@ -70,6 +53,25 @@ fi
 # next release build recompile everything. Keep release in its own folder.
 if [[ "$configuration" == release ]]; then scratch_path="$scratch_path/release-scratch"; fi
 build_args+=(--scratch-path "$scratch_path")
+# Querying a product path does not compile or validate application resources.
+if [[ "$swift_command" == build ]] && (( ${@[(Ie)--show-bin-path]} )); then
+  exec xcrun swift build "${build_args[@]}" "$@"
+fi
+
+python3 scripts/localization.py --check >&2
+sdk_path="$(xcrun --sdk macosx --show-sdk-path)"
+sdk_version="$(xcrun --sdk "$sdk_path" --show-sdk-version)"
+package="$(xcrun swift package dump-package)"
+platform="$(print -r -- "$package" | plutil -extract platforms.0.platformName raw -o - -)"
+if [[ "$platform" != macos ]]; then
+  print -u2 -- "Expected Package.swift to declare macOS as its first supported platform."
+  exit 1
+fi
+deployment_target="$(print -r -- "$package" | plutil -extract platforms.0.version raw -o - -)"
+# Keep SDK metadata consistent between compilation and linking.
+build_args+=(--sdk "$sdk_path"
+  -Xlinker -platform_version -Xlinker macos
+  -Xlinker "$deployment_target" -Xlinker "$sdk_version")
 if [[ "$swift_command" == test ]]; then
   host_app="$(pwd)/${RURI_BUILD_DIR:-.build}/game-host/RuriGame.app"
   if [[ "${RURI_BUILD_DIR:-}" == /* ]]; then host_app="$RURI_BUILD_DIR/game-host/RuriGame.app"; fi
