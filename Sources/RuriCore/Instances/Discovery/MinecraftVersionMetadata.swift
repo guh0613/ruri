@@ -80,10 +80,7 @@ extension MinecraftDirectoryScan {
         if let value = value as? [String: Any], let id = value["id"] as? String { return id }
         throw RuriError.message(Messages.CoreMinecraftVersionMetadata.invalidVersionReference)
     }
-    static func checkIdentifier(_ name: String) throws {
-        guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, name.utf8.count <= 255, name != ".", name != "..", !name.contains("/"), !name.contains("\\"),
-              !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.invalidInheritancePath) }
-    }
+    static func checkIdentifier(_ name: String) throws { try SessionFileSystem.checkVersionIdentifier(name) }
     private static func isGameVersion(_ value: String) -> Bool {
         value.count <= 128 && value.range(of: #"^(?:[0-9]+(?:\.[0-9]+)*(?:(?:-pre|-rc)[0-9]+| Pre-Release [0-9]+| Release Candidate [0-9]+)?|[0-9]{2}w[0-9]{2}[a-z]|[abc][0-9][A-Za-z0-9._-]*|(?:rd|inf)-[0-9]+)$"#, options: .regularExpression) != nil
     }

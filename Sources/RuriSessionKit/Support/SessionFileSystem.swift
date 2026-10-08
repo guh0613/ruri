@@ -19,4 +19,8 @@ public enum SessionFileSystem {
         }
         return resolved
     }
+    package static func checkVersionIdentifier(_ name: String) throws {
+        guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, name.utf8.count <= 255, name != ".", name != "..", !name.contains("/"), !name.contains("\\"),
+              !name.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreMinecraftVersionMetadata.invalidInheritancePath) }
+    }
 }
