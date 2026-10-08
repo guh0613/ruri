@@ -63,12 +63,4 @@ extension LauncherPaths {
         try validateInstanceLocation(instanceID)
         try FileManager.default.createDirectory(at: instance(instanceID), withIntermediateDirectories: true)
     }
-    /// Freeze exactly one instance's location for a detached monitor. Bookmarks
-    /// are only for the launcher UI; the monitor must retain the launch path.
-    func monitorSnapshot(for instanceID: UUID) -> LauncherPaths {
-        let id = directoryID(for: instanceID)
-        let selected = directories.filter { $0.id == id }.map { item in var item = item; item.bookmark = nil; return item }
-        var custom = instanceCustomDirectories?[instanceID]; custom?.bookmark = nil
-        return LauncherPaths(root: root, directories: selected, instanceDirectories: [instanceID: id], instanceRunDirectories: [instanceID: runDirectory(for: instanceID)], instanceCustomDirectories: custom.map { [instanceID: $0] }, instanceRepositoryVersions: instanceRepositoryVersions?[instanceID].map { [instanceID: $0] })
-    }
 }

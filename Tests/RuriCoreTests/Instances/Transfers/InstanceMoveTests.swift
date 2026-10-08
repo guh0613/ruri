@@ -216,7 +216,7 @@ struct InstanceMoveTests {
         try recorder.fail(CancellationError(), cancelled: true)
         struct Reservation: Encodable { let version = 1; let paths: LauncherPaths; let instanceID: UUID; let sessionID: UUID }
         let reservation = fixture.paths.gameDataState(source.id).appendingPathComponent("active-run.json")
-        try JSONEncoder().encode(Reservation(paths: fixture.paths.monitorSnapshot(for: source.id), instanceID: source.id, sessionID: recorder.record.id)).write(to: reservation)
+        try JSONEncoder().encode(Reservation(paths: fixture.paths.legacyMonitorSnapshot(for: source.id), instanceID: source.id, sessionID: recorder.record.id)).write(to: reservation)
         var alias = GameInstance(name: "Shared sibling", gameVersion: "1.21.1"); alias.runDirectory = .shared
         try StateStore.update(fixture.paths) { $0.instances.append(alias) }
         let service = InstanceMover(paths: fixture.paths)

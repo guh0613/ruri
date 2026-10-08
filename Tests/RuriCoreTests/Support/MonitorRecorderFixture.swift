@@ -14,3 +14,13 @@ extension MonitorSessionRecorder {
                       paths: SessionLocationSnapshot(paths: paths, instanceID: instanceID), monitor: monitor)
     }
 }
+
+extension LauncherPaths {
+    /// The pre-extraction v1 encoder, retained only to verify old payloads.
+    func legacyMonitorSnapshot(for instanceID: UUID) -> LauncherPaths {
+        let id = directoryID(for: instanceID)
+        let selected = directories.filter { $0.id == id }.map { item in var item = item; item.bookmark = nil; return item }
+        var custom = instanceCustomDirectories?[instanceID]; custom?.bookmark = nil
+        return LauncherPaths(root: root, directories: selected, instanceDirectories: [instanceID: id], instanceRunDirectories: [instanceID: runDirectory(for: instanceID)], instanceCustomDirectories: custom.map { [instanceID: $0] }, instanceRepositoryVersions: instanceRepositoryVersions?[instanceID].map { [instanceID: $0] })
+    }
+}

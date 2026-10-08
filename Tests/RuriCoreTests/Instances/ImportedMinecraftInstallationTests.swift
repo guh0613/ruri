@@ -84,7 +84,7 @@ struct ImportedMinecraftInstallationTests {
         let ordinary = GameInstance(name: "New game", gameVersion: "1.21.1")
         #expect(try f.paths.resources(for: ordinary).root == f.paths.root)
         // A serialized monitor snapshot must resolve the same installation.
-        let monitor = try JSONDecoder().decode(LauncherPaths.self, from: JSONEncoder().encode(f.paths.monitorSnapshot(for: f.instance.id)))
+        let monitor = try JSONDecoder().decode(LauncherPaths.self, from: JSONEncoder().encode(SessionLocationSnapshot(paths: f.paths, instanceID: f.instance.id)))
         let monitorPlan = try f.plan(f.instance, paths: monitor)
         func stableArguments(_ plan: LaunchPlan) -> [String] { plan.arguments.map { $0 == plan.quickPlayLog?.path ? "<quick-play-log>" : $0 } }
         #expect(stableArguments(monitorPlan) == stableArguments(plan))
