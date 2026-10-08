@@ -15,7 +15,7 @@ package protocol SessionLocationPaths: SessionPaths {
 extension SessionLocationPaths {
     package var repositoryImportID: UUID? { nil }
     package func runDirectory(for id: UUID) -> GameRunDirectory { instanceRunDirectories?[id] ?? .isolated }
-    package func repositoryImportWorkspace(_ id: UUID) -> URL { directoryRoot(directoryID(for: id)).appendingPathComponent(".ruri/imports/\(id.uuidString)") }
+    package func repositoryImportWorkspace(_ id: UUID) -> URL { SessionOperation.repositoryImport.url(paths: self, instanceID: id) }
     package func isMinecraftDirectory(_ id: UUID) -> Bool { directories.first(where: { $0.id == id })?.isMinecraft == true }
     package func directoryID(for instanceID: UUID) -> UUID { instanceDirectories[instanceID] ?? newInstanceDirectoryID }
     package func directoryRoot(_ id: UUID) -> URL {
@@ -97,8 +97,9 @@ extension SessionLocationPaths {
             _ = try SessionFileSystem.safePath("versions/\(version)/\(version).json", within: root)
             _ = try SessionFileSystem.safePath(".ruri/instances/\(instanceID.uuidString)", within: root)
             if repositoryImportID == instanceID {
-                _ = try SessionFileSystem.safePath(".ruri/imports/\(instanceID.uuidString)/version/\(version).json", within: root)
-                _ = try SessionFileSystem.safePath(".ruri/imports/\(instanceID.uuidString)/metadata", within: root)
+                let workspace = try SessionOperation.repositoryImport.checkedURL(paths: self, instanceID: instanceID)
+                _ = try SessionFileSystem.safePath("version/\(version).json", within: workspace)
+                _ = try SessionFileSystem.safePath("metadata", within: workspace)
             }
         } else {
             _ = try SessionFileSystem.safePath("instances/\(instanceID.uuidString)/minecraft", within: root)

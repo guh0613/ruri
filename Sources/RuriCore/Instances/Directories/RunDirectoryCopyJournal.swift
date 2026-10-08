@@ -49,7 +49,7 @@ struct RunDirectoryCopyJournal: Codable, Sendable {
     let emptyDirectories: [EmptyDirectory]
     var owner: RunDirectoryCopyOwner { .init(transactionID: id, instanceID: original.id, instanceName: original.name) }
     static func root(paths: LauncherPaths, instanceID: UUID) throws -> URL {
-        try LauncherPaths.safePath("run-directory-change", within: paths.instance(instanceID))
+        try SessionOperation.runDirectoryChange.checkedURL(paths: paths, instanceID: instanceID)
     }
     static func load(paths: LauncherPaths, instanceID: UUID, recordDirectory: URL? = nil) throws -> RunDirectoryCopyJournal {
         let root = try recordDirectory ?? root(paths: paths, instanceID: instanceID)
@@ -137,15 +137,14 @@ public enum RunDirectoryCopyGuard {
         var owner: RunDirectoryCopyOwner { .init(transactionID: transactionID, instanceID: instanceID, instanceName: instanceName) }
     }
     static func markerURL(paths: LauncherPaths, instanceID: UUID) throws -> URL {
-        try LauncherPaths.safePath("directory-change.json", within: paths.gameDataState(instanceID))
+        try SessionOperation.sharedDirectoryChange.checkedURL(paths: paths, instanceID: instanceID)
     }
     public static func hasPending(paths: LauncherPaths, instanceID: UUID) -> Bool {
-        let own = paths.instance(instanceID).appendingPathComponent("run-directory-change")
-        if FileManager.default.fileExists(atPath: own.path) { return true }
-        return paths.runDirectory(for: instanceID) != .isolated && FileManager.default.fileExists(atPath: paths.gameDataState(instanceID).appendingPathComponent("directory-change.json").path)
+        SessionOperation.runDirectoryChange.hasPending(paths: paths, instanceID: instanceID)
+            || SessionOperation.sharedDirectoryChange.hasPending(paths: paths, instanceID: instanceID)
     }
     public static func owner(paths: LauncherPaths, instanceID: UUID) throws -> RunDirectoryCopyOwner? {
-        if FileManager.default.fileExists(atPath: paths.instance(instanceID).appendingPathComponent("run-directory-change").path) {
+        if SessionOperation.runDirectoryChange.hasPending(paths: paths, instanceID: instanceID) {
             return try RunDirectoryCopyJournal.load(paths: paths, instanceID: instanceID).owner
         }
         guard paths.runDirectory(for: instanceID) != .isolated else { return nil }
@@ -153,7 +152,7 @@ public enum RunDirectoryCopyGuard {
     }
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID, allowing id: UUID? = nil) throws {
         try InstanceCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: id)
-        if FileManager.default.fileExists(atPath: paths.instance(instanceID).appendingPathComponent("run-directory-change").path) {
+        if SessionOperation.runDirectoryChange.hasPending(paths: paths, instanceID: instanceID) {
             guard let id, try RunDirectoryCopyJournal.load(paths: paths, instanceID: instanceID).id == id else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.unfinishedCopy) }
         }
         try requireSharedAvailable(paths: paths, instanceID: instanceID, allowing: id)
@@ -164,7 +163,7 @@ public enum RunDirectoryCopyGuard {
     }
     private static func sharedMarker(paths: LauncherPaths, instanceID: UUID) throws -> Marker? {
         let url = try markerURL(paths: paths, instanceID: instanceID)
-        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        guard SessionOperation.sharedDirectoryChange.hasPending(paths: paths, instanceID: instanceID) else { return nil }
         let marker: Marker = try decode(url, limit: 8192)
         guard marker.version == 1, marker.instanceName.count <= 1024 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.invalidSharedCopyLock) }
         return marker

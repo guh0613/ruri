@@ -39,13 +39,13 @@ struct ModpackReplacement: Sendable {
 }
 
 public enum ModpackUpdateStore {
-    static func pending(_ id: UUID, paths: LauncherPaths) -> URL { paths.instance(id).appendingPathComponent("modpack-update-transaction") }
+    static func pending(_ id: UUID, paths: LauncherPaths) -> URL { SessionOperation.modpackUpdate.url(paths: paths, instanceID: id).deletingLastPathComponent() }
     static func previous(_ id: UUID, paths: LauncherPaths) -> URL { paths.instance(id).appendingPathComponent("previous-modpack-update") }
     public static func hasPending(paths: LauncherPaths, instanceID: UUID) -> Bool {
-        FileManager.default.fileExists(atPath: pending(instanceID, paths: paths).appendingPathComponent("journal.json").path)
+        SessionOperation.modpackUpdate.hasPending(paths: paths, instanceID: instanceID)
     }
     public static func hasBackup(paths: LauncherPaths, instanceID: UUID) -> Bool {
-        FileManager.default.fileExists(atPath: previous(instanceID, paths: paths).appendingPathComponent("journal.json").path)
+        FileManager.default.fileExists(atPath: previous(instanceID, paths: paths).appendingPathComponent(SessionOperation.modpackUpdate.filename).path)
     }
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID) throws {
         guard !hasPending(paths: paths, instanceID: instanceID) else { throw RuriError.message(Messages.CoreModpackUpdateStore.updateRecoveryRequired) }
@@ -57,7 +57,7 @@ public enum ModpackUpdateStore {
         }
     }
     private static func read(_ root: URL) throws -> ModpackUpdateJournal {
-        try JSONDecoder().decode(ModpackUpdateJournal.self, from: RunDirectoryCopyGuard.read(root.appendingPathComponent("journal.json"), limit: 64 * 1024 * 1024))
+        try JSONDecoder().decode(ModpackUpdateJournal.self, from: RunDirectoryCopyGuard.read(root.appendingPathComponent(SessionOperation.modpackUpdate.filename), limit: 64 * 1024 * 1024))
     }
     static func replace(_ target: URL, from source: URL?) throws {
         if let source {
@@ -114,7 +114,7 @@ public enum ModpackUpdateStore {
                 files.append(.init(target: item.target, group: item.group, before: before, after: after))
             }
             let journal = ModpackUpdateJournal(id: id, original: original, updated: updated, files: files)
-            try JSONEncoder().encode(journal).write(to: directory.appendingPathComponent("journal.json"), options: .atomic)
+            try JSONEncoder().encode(journal).write(to: directory.appendingPathComponent(SessionOperation.modpackUpdate.filename), options: .atomic)
             let saved = try StateStore.update(paths) { state in
                 guard let index = state.instances.firstIndex(where: { $0.id == original.id }), state.instances[index] == original else {
                     throw RuriError.message(Messages.CoreModpackUpdateStore.instanceSettingsChangedBeforeCommit)

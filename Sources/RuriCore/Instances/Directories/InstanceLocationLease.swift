@@ -26,8 +26,7 @@ public final class InstanceLocationLease: @unchecked Sendable {
 
     static func requireCurrentDirectory(paths: LauncherPaths, instanceID: UUID) throws {
         try ModpackUpdateStore.requireAvailable(paths: paths, instanceID: instanceID)
-        if paths.repositoryImportID != instanceID, paths.isMinecraftDirectory(paths.directoryID(for: instanceID)),
-           FileManager.default.fileExists(atPath: paths.repositoryImportWorkspace(instanceID).path) {
+        if paths.repositoryImportID != instanceID, SessionOperation.repositoryImport.hasPending(paths: paths, instanceID: instanceID) {
             throw RuriError.message(Messages.CoreInstanceLocationLease.requireCurrentDirectory)
         }
         let state = try StateStore.load(paths)

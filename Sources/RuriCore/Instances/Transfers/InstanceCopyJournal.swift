@@ -26,7 +26,7 @@ struct InstanceCopyJournal: Codable, Sendable {
     var verificationDigest: String?
     var owner: InstanceCopyOwner { .init(transactionID: id, sourceID: original.id, copyID: copy.id, sourceName: original.name, copyName: copy.name) }
     static func root(paths: LauncherPaths, sourceID: UUID) throws -> URL {
-        try LauncherPaths.safePath("instance-copy-transactions/\(sourceID.uuidString)", within: paths.root)
+        try SessionOperation.instanceCopy.checkedURL(paths: paths, instanceID: sourceID)
     }
     static func load(paths: LauncherPaths, sourceID: UUID, at directory: URL? = nil) throws -> Self {
         let parent = try directory ?? root(paths: paths, sourceID: sourceID)
@@ -81,16 +81,15 @@ struct InstanceCopyJournal: Codable, Sendable {
 }
 
 public enum InstanceCopyGuard {
-    static let markerName = ".ruri-instance-copy.json"
+    static let markerName = SessionOperation.copyPublication.filename
     public static func hasPending(paths: LauncherPaths, instanceID: UUID) -> Bool {
-        guard let record = try? InstanceCopyJournal.root(paths: paths, sourceID: instanceID) else { return true }
-        return FileManager.default.fileExists(atPath: record.path) || FileManager.default.fileExists(atPath: paths.instance(instanceID).appendingPathComponent(markerName).path)
+        SessionOperation.instanceCopy.hasPending(paths: paths, instanceID: instanceID)
+            || SessionOperation.copyPublication.hasPending(paths: paths, instanceID: instanceID)
     }
     public static func owner(paths: LauncherPaths, instanceID: UUID) throws -> InstanceCopyOwner? {
-        let own = try InstanceCopyJournal.root(paths: paths, sourceID: instanceID)
-        if FileManager.default.fileExists(atPath: own.path) { return try InstanceCopyJournal.load(paths: paths, sourceID: instanceID).owner }
-        let marker = try LauncherPaths.safePath(markerName, within: paths.instance(instanceID))
-        guard FileManager.default.fileExists(atPath: marker.path) else { return nil }
+        if SessionOperation.instanceCopy.hasPending(paths: paths, instanceID: instanceID) { return try InstanceCopyJournal.load(paths: paths, sourceID: instanceID).owner }
+        let marker = try SessionOperation.copyPublication.checkedURL(paths: paths, instanceID: instanceID)
+        guard SessionOperation.copyPublication.hasPending(paths: paths, instanceID: instanceID) else { return nil }
         let owner: InstanceCopyOwner = try RunDirectoryCopyGuard.decode(marker, limit: 8192)
         guard owner.copyID == instanceID, owner.copyID != owner.sourceID, owner.sourceName.count <= 1024, owner.copyName.count <= 256 else { throw RuriError.message(Messages.CoreInstanceCopyJournal.invalidCopyOwnerInfo) }
         return owner
@@ -110,7 +109,7 @@ public enum InstanceCopyGuard {
         try FileManager.default.removeItem(at: file)
     }
     static func requireDirectoryAvailable(_ id: UUID, paths: LauncherPaths) throws {
-        let root = try LauncherPaths.safePath("instance-copy-transactions", within: paths.root)
+        let root = try LauncherPaths.safePath(SessionOperation.instanceCopy.rawValue, within: paths.root)
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         let records = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil)
         guard records.count <= 500 else { throw RuriError.message(Messages.CoreInstanceCopyJournal.tooManyPendingCopies) }

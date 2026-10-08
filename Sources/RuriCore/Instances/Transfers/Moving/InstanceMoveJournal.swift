@@ -24,7 +24,7 @@ struct InstanceMoveJournal: Codable, Sendable {
     var retirement: Retirement?
 
     static func root(paths: LauncherPaths, instanceID: UUID) throws -> URL {
-        try LauncherPaths.safePath("instance-move-transactions/\(instanceID.uuidString)", within: paths.root)
+        try SessionOperation.instanceMove.checkedURL(paths: paths, instanceID: instanceID)
     }
     static func load(paths: LauncherPaths, instanceID: UUID, at parent: URL? = nil) throws -> Self {
         let root = try parent ?? Self.root(paths: paths, instanceID: instanceID)
@@ -113,14 +113,13 @@ public enum InstanceMoveGuard {
         }.sorted { $0.path < $1.path }
     }
     public static func hasPending(paths: LauncherPaths, instanceID: UUID) -> Bool {
-        guard let root = try? InstanceMoveJournal.root(paths: paths, instanceID: instanceID) else { return true }
-        return FileManager.default.fileExists(atPath: root.path)
+        SessionOperation.instanceMove.hasPending(paths: paths, instanceID: instanceID)
     }
     static func requireAvailable(paths: LauncherPaths, instanceID: UUID) throws {
         guard !hasPending(paths: paths, instanceID: instanceID) else { throw RuriError.message(Messages.CoreInstanceMoveJournal.unfinishedMoveExists) }
     }
     static func requireDirectoryAvailable(_ id: UUID, paths: LauncherPaths) throws {
-        let root = try LauncherPaths.safePath("instance-move-transactions", within: paths.root)
+        let root = try LauncherPaths.safePath(SessionOperation.instanceMove.rawValue, within: paths.root)
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         let records = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil)
         guard records.count <= 500 else { throw RuriError.message(Messages.CoreInstanceMoveJournal.tooManyPendingMoves) }

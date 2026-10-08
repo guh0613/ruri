@@ -17,7 +17,7 @@ package final class SessionRunLease: Sendable {
     package static func resume(paths: SessionLocationSnapshot, instanceID: UUID, sessionID: UUID, monitor: ProcessIdentity) throws -> Self {
         let location = try SessionLocationLease.acquire(paths: paths, instanceID: instanceID, exclusive: false)
         _ = try paths.validated(for: instanceID)
-        try checkPendingOperations(paths: paths, instanceID: instanceID)
+        try SessionOperation.requireNoPending(paths: paths, instanceID: instanceID)
         try requireHandoff(paths: paths, instanceID: instanceID, sessionID: sessionID, monitor: monitor)
         try FileManager.default.createDirectory(at: paths.instance(instanceID), withIntermediateDirectories: true)
         let instance = try SessionRunFileLease.instance(at: paths.instance(instanceID))
@@ -31,7 +31,7 @@ package final class SessionRunLease: Sendable {
                   same(saved.game(instanceID), root) else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationMismatch) }
         }
         // Recheck after all kernel locks are held, before allowing any writer.
-        try checkPendingOperations(paths: paths, instanceID: instanceID)
+        try SessionOperation.requireNoPending(paths: paths, instanceID: instanceID)
         try requireHandoff(paths: paths, instanceID: instanceID, sessionID: sessionID, monitor: monitor)
         let records = try GameSessionStore.list(paths: paths, instanceID: instanceID)
         guard !records.contains(where: { $0.id != sessionID && !$0.state.isFinished && $0.monitorActivity != .inactive }) else {
@@ -53,25 +53,5 @@ package final class SessionRunLease: Sendable {
     }
     private static func same(_ first: URL, _ second: URL) -> Bool {
         first.standardizedFileURL.resolvingSymlinksInPath().path == second.standardizedFileURL.resolvingSymlinksInPath().path
-    }
-    private static func checkPendingOperations(paths: SessionLocationSnapshot, instanceID: UUID) throws {
-        let metadata = paths.instance(instanceID)
-        let files = [
-            try SessionFileSystem.safePath("instance-move-transactions/\(instanceID.uuidString)", within: paths.root),
-            try SessionFileSystem.safePath("instance-copy-transactions/\(instanceID.uuidString)", within: paths.root),
-            metadata.appendingPathComponent(".ruri-instance-copy.json"), metadata.appendingPathComponent("run-directory-change"),
-            metadata.appendingPathComponent("modpack-update-transaction/journal.json")
-        ]
-        guard !files.contains(where: { FileManager.default.fileExists(atPath: $0.path) }) else {
-            throw RuriError.message(Messages.CoreGameRunLease.activeRunSession)
-        }
-        if paths.runDirectory(for: instanceID) != .isolated,
-           FileManager.default.fileExists(atPath: paths.gameDataState(instanceID).appendingPathComponent("directory-change.json").path) {
-            throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.unfinishedCopy)
-        }
-        if paths.isMinecraftDirectory(paths.directoryID(for: instanceID)),
-           FileManager.default.fileExists(atPath: paths.repositoryImportWorkspace(instanceID).path) {
-            throw RuriError.message(Messages.CoreInstanceLocationLease.requireCurrentDirectory)
-        }
     }
 }

@@ -232,7 +232,7 @@ final class RepositoryImportTransaction {
 
 public enum RepositoryImportStore {
     static func reservedVersionNames(in repository: URL) throws -> Set<String> {
-        let root = try LauncherPaths.safePath(".ruri/imports", within: repository)
+        let root = try LauncherPaths.safePath(SessionOperation.repositoryImport.rawValue, within: repository)
         guard FileManager.default.fileExists(atPath: root.path) else { return [] }
         var names = Set<String>()
         for workspace in try FileTree.children(in: root) where UUID(uuidString: workspace.lastPathComponent) != nil {
@@ -254,7 +254,7 @@ public enum RepositoryImportStore {
         let state = try StateStore.load(paths)
         guard let directory = state.gameDirectories?.first(where: { $0.id == directoryID }), directory.isMinecraft else { return [] }
         try directory.validateAvailability()
-        let root = try LauncherPaths.safePath(".ruri/imports", within: directory.url)
+        let root = try LauncherPaths.safePath(SessionOperation.repositoryImport.rawValue, within: directory.url)
         guard FileManager.default.fileExists(atPath: root.path) else { return [] }
         return try FileTree.children(in: root).filter { UUID(uuidString: $0.lastPathComponent) != nil }.map { workspace in
             let journal = try RepositoryImportTransaction.read(workspace, directory: directory)
@@ -282,7 +282,7 @@ public enum RepositoryImportStore {
     static func requireDirectoryAvailable(_ directory: GameDirectory) throws {
         guard directory.isMinecraft else { return }
         try directory.validateAvailability()
-        let root = try LauncherPaths.safePath(".ruri/imports", within: directory.url)
+        let root = try LauncherPaths.safePath(SessionOperation.repositoryImport.rawValue, within: directory.url)
         guard FileManager.default.fileExists(atPath: root.path) else { return }
         guard try !FileTree.children(in: root).contains(where: { UUID(uuidString: $0.lastPathComponent) != nil }) else {
             throw RuriError.message(Messages.CoreRepositoryImport.pendingFolderOperationForMove)
