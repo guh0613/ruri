@@ -5,29 +5,14 @@ import Darwin
 /// A shared run directory has one writer, even when instances or launcher
 /// clients differ. The persistent reservation covers monitor handoff and loss.
 final class SharedGameDirectoryLease: @unchecked Sendable {
-    private let descriptor: Int32
+    private let fileLease: SessionRunFileLease
     private let root: URL
-    private init(_ descriptor: Int32, root: URL) { self.descriptor = descriptor; self.root = root }
-    deinit { close(descriptor) }
-    private struct Reservation: Codable {
-        let version: Int
-        let paths: LauncherPaths
-        let instanceID: UUID
-        let sessionID: UUID
-    }
+    private init(_ fileLease: SessionRunFileLease, root: URL) { self.fileLease = fileLease; self.root = root }
+    private typealias Reservation = SessionRunReservation
     static func acquire(paths: LauncherPaths, instanceID: UUID, ignoringSession: UUID?, directoryChangeID: UUID? = nil) throws -> SharedGameDirectoryLease {
         try paths.validateInstanceLocation(instanceID)
         let root = paths.game(instanceID)
-        let metadata = try LauncherPaths.safePath(".ruri", within: root)
-        try FileManager.default.createDirectory(at: metadata, withIntermediateDirectories: true)
-        let url = try LauncherPaths.safePath("run.lock", within: metadata)
-        let fd = open(url.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.lockFailed) }
-        var info = stat(), lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET)
-        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
-            close(fd); throw RuriError.message(Messages.CoreSharedGameDirectoryLease.directoryInUse)
-        }
-        let result = SharedGameDirectoryLease(fd, root: root)
+        let result = SharedGameDirectoryLease(try SessionRunFileLease.shared(at: root), root: root)
         try RunDirectoryCopyGuard.requireSharedAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
         try result.checkReservation(instanceID: instanceID, ignoringSession: ignoringSession, paths: paths)
         return result
@@ -41,20 +26,10 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
         return fstat(fd, &info) != 0 || info.st_mode & S_IFMT != S_IFREG || fcntl(fd, F_OFD_SETLK, &lock) != 0
     }
     func reserve(paths: LauncherPaths, session: GameSession) throws {
-        let file = try LauncherPaths.safePath(".ruri/active-run.json", within: root)
-        let reservation = Reservation(version: 1, paths: paths.monitorSnapshot(for: session.instanceID), instanceID: session.instanceID, sessionID: session.id)
-        try JSONEncoder().encode(reservation).write(to: file, options: .atomic)
+        try Reservation(paths: SessionLocationSnapshot(paths: paths, instanceID: session.instanceID),
+                        instanceID: session.instanceID, sessionID: session.id).save(in: root)
     }
-    func clearReservation(session: GameSession) throws {
-        guard session.state.isFinished else { return }
-        let file = try LauncherPaths.safePath(".ruri/active-run.json", within: root)
-        guard FileManager.default.fileExists(atPath: file.path) else { return }
-        let values = try file.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
-        guard values.isRegularFile == true, (values.fileSize ?? .max) <= 131_072 else { throw RuriError.message(Messages.CoreSharedGameDirectoryLease.sharedRunRecordInvalid) }
-        let reservation = try JSONDecoder().decode(Reservation.self, from: Data(contentsOf: file))
-        guard reservation.instanceID == session.instanceID, reservation.sessionID == session.id else { return }
-        try FileManager.default.removeItem(at: file)
-    }
+    func clearReservation(session: GameSession) throws { try Reservation.clear(session: session, in: root) }
     func clearFinishedReservation(paths: LauncherPaths, instanceID: UUID) throws {
         let file = try LauncherPaths.safePath(".ruri/active-run.json", within: root)
         guard FileManager.default.fileExists(atPath: file.path) else { return }
@@ -78,7 +53,12 @@ final class SharedGameDirectoryLease: @unchecked Sendable {
             throw RuriError.message(Messages.CoreSharedGameDirectoryLease.reservationMismatch)
         }
         try reservation.paths.validateDirectoryConfiguration()
-        var checked = reservation.paths
+        var checked = LauncherPaths(root: reservation.paths.root, directories: reservation.paths.directories,
+                                    instanceDirectories: reservation.paths.instanceDirectories,
+                                    newInstanceDirectoryID: reservation.paths.newInstanceDirectoryID,
+                                    instanceRunDirectories: reservation.paths.instanceRunDirectories,
+                                    instanceCustomDirectories: reservation.paths.instanceCustomDirectories,
+                                    instanceRepositoryVersions: reservation.paths.instanceRepositoryVersions)
         if let collection = paths.directories.first(where: { $0.id == reservation.paths.directoryID(for: reservation.instanceID) }) {
             let directories = checked.directories.map { $0.id == collection.id ? collection : $0 }
             checked = LauncherPaths(root: checked.root, directories: directories, instanceDirectories: checked.instanceDirectories,

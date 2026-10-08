@@ -8,22 +8,22 @@ public final class JavaRuntimeLease: @unchecked Sendable {
     private let descriptor: Int32
     private init(_ descriptor: Int32) { self.descriptor = descriptor }
     deinit { close(descriptor) }
-    static func managedID(binary: URL, paths: LauncherPaths) -> String? {
-        let root = paths.runtimes.standardizedFileURL.resolvingSymlinksInPath().path + "/"
+    package static func managedID(binary: URL, paths: any SessionPaths) -> String? {
+        let root = paths.root.appendingPathComponent("runtimes").standardizedFileURL.resolvingSymlinksInPath().path + "/"
         let file = binary.standardizedFileURL.resolvingSymlinksInPath().path
         guard file.hasPrefix(root), let folder = file.dropFirst(root.count).split(separator: "/").first else { return nil }
         let id = String(folder)
         return id.hasPrefix(".partial-") ? String(id.dropFirst(9)) : id.hasPrefix(".") ? nil : id
     }
-    static func shared(binary: URL, paths: LauncherPaths) throws -> JavaRuntimeLease? {
+    package static func shared(binary: URL, paths: any SessionPaths) throws -> JavaRuntimeLease? {
         guard let id = managedID(binary: binary, paths: paths) else { return nil }
         return try acquire(id: id, paths: paths, exclusive: false)
     }
-    static func acquire(id: String, paths: LauncherPaths, exclusive: Bool) throws -> JavaRuntimeLease {
+    package static func acquire(id: String, paths: any SessionPaths, exclusive: Bool) throws -> JavaRuntimeLease {
         guard !id.isEmpty, !id.hasPrefix("."), !id.contains("/"), !id.contains("\\"), !id.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) else { throw RuriError.message(Messages.CoreJavaRuntimeLease.invalidJavaRuntimeName) }
-        let directory = try LauncherPaths.safePath(".locks", within: paths.runtimes)
+        let directory = try SessionFileSystem.safePath(".locks", within: paths.root.appendingPathComponent("runtimes"))
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        let lockFile = try LauncherPaths.safePath(id + ".lock", within: directory)
+        let lockFile = try SessionFileSystem.safePath(id + ".lock", within: directory)
         let fd = open(lockFile.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK, S_IRUSR | S_IWUSR)
         guard fd >= 0 else { throw RuriError.message(Messages.CoreJavaRuntimeLease.javaRuntimeLockFailed) }
         var info = stat()
@@ -32,7 +32,7 @@ public final class JavaRuntimeLease: @unchecked Sendable {
         guard fcntl(fd, F_OFD_SETLK, &value) == 0 else { close(fd); throw RuriError.message(Messages.CoreJavaRuntimeLease.javaRuntimeInUse) }
         return JavaRuntimeLease(fd)
     }
-    static func requireNoRunningProcess(in directory: URL) throws {
+    package static func requireNoRunningProcess(in directory: URL) throws {
         let bytes = proc_listallpids(nil, 0)
         guard bytes > 0 else { return }
         var pids = [Int32](repeating: 0, count: Int(bytes) + 64)

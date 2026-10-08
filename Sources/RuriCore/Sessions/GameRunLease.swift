@@ -5,24 +5,17 @@ import Darwin
 /// Open-file-description locks survive object handoffs but are never inherited
 /// by Java. The monitor holds one for the whole game lifetime.
 public final class GameRunLease: @unchecked Sendable {
-    private let descriptor: Int32
+    private let fileLease: SessionRunFileLease
     private let sharedDirectory: SharedGameDirectoryLease?
     private let location: InstanceLocationLease
-    private init(_ descriptor: Int32, sharedDirectory: SharedGameDirectoryLease?, location: InstanceLocationLease) {
-        self.descriptor = descriptor; self.sharedDirectory = sharedDirectory; self.location = location
+    private init(_ fileLease: SessionRunFileLease, sharedDirectory: SharedGameDirectoryLease?, location: InstanceLocationLease) {
+        self.fileLease = fileLease; self.sharedDirectory = sharedDirectory; self.location = location
     }
-    deinit { Darwin.close(descriptor) }
     public static func acquire(paths: LauncherPaths, instanceID: UUID, ignoringSession: UUID? = nil, directoryChangeID: UUID? = nil) throws -> GameRunLease {
         let location = try InstanceLocationLease.acquire(paths: paths, instanceID: instanceID)
         try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
         try paths.prepareInstance(instanceID)
-        let file = try LauncherPaths.safePath(".ruri-game.lock", within: paths.instance(instanceID))
-        let fd = open(file.path, O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW, S_IRUSR | S_IWUSR)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreGameRunLease.runLockUnavailable) }
-        var lock = flock(); lock.l_type = Int16(F_WRLCK); lock.l_whence = Int16(SEEK_SET); lock.l_len = 0
-        guard fcntl(fd, F_OFD_SETLK, &lock) == 0 else {
-            Darwin.close(fd); throw RuriError.message(Messages.CoreGameRunLease.instanceAlreadyRunning)
-        }
+        let fileLease = try SessionRunFileLease.instance(at: paths.instance(instanceID))
         var shared: SharedGameDirectoryLease?
         do {
             try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
@@ -31,8 +24,8 @@ public final class GameRunLease: @unchecked Sendable {
             guard !records.contains(where: { $0.id != ignoringSession && !$0.state.isFinished && GameMonitorClient.activity($0) != .inactive }) else {
                 throw RuriError.message(Messages.CoreGameRunLease.activeRunSession)
             }
-        } catch { Darwin.close(fd); throw error }
-        return GameRunLease(fd, sharedDirectory: shared, location: location)
+        } catch { throw error }
+        return GameRunLease(fileLease, sharedDirectory: shared, location: location)
     }
     func excludeLocationOperations() throws { try location.excludeOtherOperations() }
     func clearFinishedReservation(paths: LauncherPaths, instanceID: UUID) throws { try sharedDirectory?.clearFinishedReservation(paths: paths, instanceID: instanceID) }

@@ -15,20 +15,12 @@ struct MonitorLaunchRequest: Codable {
     var region: String? = nil
 }
 public enum GameMonitorClient {
-    public enum Activity: Equatable, Sendable { case inactive, monitoring, orphaned, uncertain }
+    public typealias Activity = GameMonitorActivity
     public enum ClientEvent: String, Codable, Sendable { case connected, windowClosed, windowReopened, quitRequested, normalQuitRequested, stopRequested, gameActivationRequested }
     public static func recordEvent(_ event: ClientEvent, paths: LauncherPaths, session: GameSession) throws {
         try GameSessionEventStore.append(event.rawValue, source: "client", sessionID: session.id, paths: paths)
     }
-    public static func activity(_ record: GameSession) -> Activity {
-        if record.monitorIdentity?.isAlive == true { return .monitoring }
-        if record.state.isFinished || record.monitorIdentity == nil { return .inactive }
-        if record.monitorIdentity?.liveness == .unverifiable { return .uncertain }
-        if record.gameIdentity?.isAlive == true || record.commandIdentity?.isAlive == true { return .orphaned }
-        // A monitor may have died between spawning Java and saving its identity.
-        if record.gameIdentity == nil || record.gameIdentity?.liveness == .unverifiable { return .uncertain }
-        return .inactive
-    }
+    public static func activity(_ record: GameSession) -> Activity { record.monitorActivity }
     /// A queued socket update can outlive its monitor. Consult the durable
     /// result before treating an unfinished snapshot as a lost monitor; normal
     /// shutdown commits the final record before the helper exits.

@@ -182,14 +182,5 @@ public enum RunDirectoryCopyGuard {
     static func decode<T: Decodable>(_ url: URL, limit: Int) throws -> T {
         try JSONDecoder().decode(T.self, from: read(url, limit: limit))
     }
-    static func read(_ url: URL, limit: Int) throws -> Data {
-        let fd = open(url.path, O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)
-        guard fd >= 0 else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.recordReadFailed(url.path)) }
-        let handle = FileHandle(fileDescriptor: fd, closeOnDealloc: true); defer { try? handle.close() }
-        var info = stat()
-        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, info.st_size >= 0, info.st_size <= limit else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.invalidRecordFile) }
-        let data = try handle.read(upToCount: limit + 1) ?? Data()
-        guard data.count <= limit else { throw RuriError.message(Messages.CoreRunDirectoryCopyJournal.sizeLimit) }
-        return data
-    }
+    static func read(_ url: URL, limit: Int) throws -> Data { try SessionFileSystem.readBounded(url, limit: limit) }
 }
