@@ -62,9 +62,9 @@ struct InstanceMovePreviewTests {
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id) }
         try recorder.close() // Inactive process alone does not finish its history.
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id) }
-        try recorder.fail(CancellationError(), cancelled: true)
+        let recovered = try GameSessionRecovery.finish(paths: fixture.paths, expected: recorder.record, userConfirmedEnded: true)
         _ = try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id)
-        let original = try JSONEncoder().encode(recorder.record)
+        let original = try JSONEncoder().encode(recovered)
         try GameHistoryStore.withDatabase(paths: fixture.paths) { db in
             try db.execute("UPDATE sessions SET payload=? WHERE id=?", [.blob(Data("broken history".utf8)), .text(recorder.record.id.uuidString)])
         }
@@ -73,7 +73,7 @@ struct InstanceMovePreviewTests {
             try db.execute("UPDATE sessions SET payload=? WHERE id=?", [.blob(original), .text(recorder.record.id.uuidString)])
         }
         let identity: ProcessIdentity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
-        var live = recorder.record; live.gameIdentity = identity; live.revision = (live.revision) + 1
+        var live = recovered; live.gameIdentity = identity; live.revision += 1
         try GameHistoryStore.record(live, paths: fixture.paths)
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: fixture.source.id, directoryID: fixture.target.id) }
     }

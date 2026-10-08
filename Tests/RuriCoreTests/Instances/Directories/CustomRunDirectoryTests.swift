@@ -75,6 +75,10 @@ struct CustomRunDirectoryTests {
     @Test @MainActor func monitorSnapshotsStripBookmarksAndRejectOtherProtocols() throws {
         let (paths, a, _, custom) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
         let frozen = SessionLocationSnapshot(paths: paths, instanceID: a.id)
+        let legacy = try JSONSerialization.jsonObject(with: JSONEncoder().encode(paths.monitorSnapshot(for: a.id))) as? NSDictionary
+        let encoded = try JSONSerialization.jsonObject(with: JSONEncoder().encode(frozen)) as? NSDictionary
+        #expect(legacy == encoded)
+        #expect(throws: (any Error).self) { try frozen.validated(for: UUID()) }
         #expect(frozen.instanceCustomDirectories?[a.id]?.bookmark == nil)
         let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: [], directory: custom.url, environment: [:])

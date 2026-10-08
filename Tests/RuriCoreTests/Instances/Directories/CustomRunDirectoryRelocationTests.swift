@@ -115,7 +115,10 @@ struct CustomRunDirectoryRelocationTests {
         try FileManager.default.moveItem(at: custom.url, to: moved)
         let service = CustomRunDirectoryRelocation(paths: paths)
         await #expect(throws: (any Error).self) { try await service.preview(instanceID: a.id, target: moved) }
-        try recorder.fail(RuriError.message("Cancelled preparation fixture"), cancelled: true)
+        // Simulate the external owner's recovered record, not a stale writer.
+        var cancelled = recorder.record
+        cancelled.state = .cancelled; cancelled.revision += 1
+        try GameHistoryStore.record(cancelled, paths: otherBase)
         let preview = try await service.preview(instanceID: a.id, target: moved)
         let changed = try await service.apply(preview)
         let next = try GameRunLease.acquire(paths: paths.configured(with: changed), instanceID: a.id)
