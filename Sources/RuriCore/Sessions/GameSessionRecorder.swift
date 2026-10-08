@@ -5,18 +5,18 @@ import OSLog
 /// The single runtime metadata writer. Byte capture, process supervision and
 /// evidence discovery have their own lifetimes and do not run inside save().
 @MainActor public final class GameSessionRecorder {
-    public private(set) var record: GameSession
-    public let directory: URL
-    public private(set) var hasHandedOff = false
+    package let writer: SessionRecordWriter
+    public private(set) var record: GameSession { get { writer.record } set { writer.record = newValue } }
+    public var directory: URL { writer.directory }
+    public private(set) var hasHandedOff: Bool { get { writer.hasHandedOff } set { writer.hasHandedOff = newValue } }
     private let paths: LauncherPaths
-    private var closed = false
-    private var redactor = GameLogRedactor()
+    private var closed: Bool { get { writer.closed } set { writer.closed = newValue } }
+    private var redactor: GameLogRedactor { writer.redactor }
     private var lease: GameRunLease?
     private var capturedOutput: [GameOutputCapture] = []
     private var artifactsCaptured = false
     private var savedCaptureCount = 0
-    private var warnedAboutStorage = false
-    var onChange: (@Sendable (GameSession) -> Void)?
+    var onChange: (@Sendable (GameSession) -> Void)? { get { writer.onChange } set { writer.onChange = newValue } }
     var onCapture: (@Sendable (GameOutputCapture) -> Void)?
 
     public init(paths: LauncherPaths, instance: GameInstance, accountMode: String) throws {
@@ -26,7 +26,7 @@ import OSLog
         try paths.validateBinding(instance)
         lease = try GameRunLease.acquire(paths: paths, instanceID: instance.id)
         let now = Date(), id = UUID()
-        record = GameSession(id: id, instanceID: instance.id, instanceName: instance.name, gameVersion: instance.gameVersion, loader: instance.loader.rawValue,
+        var record = GameSession(id: id, instanceID: instance.id, instanceName: instance.name, gameVersion: instance.gameVersion, loader: instance.loader.rawValue,
                              loaderVersion: instance.loaderVersion, memoryMB: memory?.maximumMB ?? instance.memoryMB,
                              operatingSystem: ProcessInfo.processInfo.operatingSystemVersionString, hostArchitecture: JavaRuntime.hostArchitecture,
                              accountMode: accountMode, ownerPID: ProcessInfo.processInfo.processIdentifier, createdAt: now, updatedAt: now,
@@ -34,8 +34,8 @@ import OSLog
         record.memory = memory
         record.launcherVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
         record.debugLogging = instance.launchPresentation?.debugLogging == true
-        directory = try GameSessionStore.directory(paths: paths, instanceID: instance.id, sessionID: id)
         record.gameDirectory = paths.game(instance.id)
+        writer = try SessionRecordWriter(record: record, paths: paths)
         try transition(.preparing)
         try lease?.reserve(paths: paths, session: record)
     }
@@ -43,11 +43,12 @@ import OSLog
     public init(resuming sessionID: UUID, instanceID: UUID, paths: LauncherPaths, monitor: ProcessIdentity) throws {
         self.paths = paths
         lease = try GameRunLease.acquire(paths: paths, instanceID: instanceID, ignoringSession: sessionID)
-        record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
+        var record = try GameSessionStore.load(paths: paths, instanceID: instanceID, sessionID: sessionID)
         guard !record.state.isFinished, record.processID == nil, record.monitorIdentity == monitor,
               monitor.pid == ProcessInfo.processInfo.processIdentifier, monitor.isAlive else { throw RuriError.message(Messages.CoreGameSession.monitorCannotAdoptRun) }
-        directory = try GameSessionStore.directory(paths: paths, instanceID: instanceID, sessionID: sessionID)
-        record.ownerPID = monitor.pid; record.updatedAt = Date(); try save()
+        record.ownerPID = monitor.pid; record.updatedAt = Date()
+        writer = try SessionRecordWriter(record: record, paths: paths)
+        try save()
     }
 
     public func handoff(to monitor: ProcessIdentity) throws {
@@ -59,13 +60,6 @@ import OSLog
     func acknowledgeHandoff(_ current: GameSession) {
         guard hasHandedOff, current.id == record.id, current.monitorIdentity == record.monitorIdentity else { return }
         record = current
-    }
-    public func addSecrets(_ values: [String]) { redactor.addSecrets(values) }
-    public func redacted(_ text: String) -> String { redactor.redact(text) }
-
-    func configureLogging(debug: Bool) throws {
-        guard record.debugLogging != debug else { return }
-        record.debugLogging = debug; try save()
     }
     func setControlEndpoint(_ endpoint: String) throws { record.controlEndpoint = endpoint; record.updatedAt = Date(); try save() }
     func checkpoint(_ timing: GameSessionTiming, activity: GameActivityTracking? = nil) {
@@ -94,51 +88,18 @@ import OSLog
     private func ensureArtifactDirectory() throws {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
     }
-    public func append(_ text: String) throws {
-        guard !closed else { throw RuriError.message(Messages.CoreGameSession.runLogClosed) }
-        try GameSessionEventStore.append(redactor.redact(text), sessionID: record.id, paths: paths)
-    }
     func prepareGame(directory: URL) {
         record.gameDirectory = directory
         record.logBaseline = GameLogSources.baseline(in: directory)
     }
     private func note(_ text: String) { do { try append(text) } catch { storageWarning(error) } }
 
-    public func transition(_ stage: GameSession.Stage, message: String? = nil) throws {
-        try transition(stage, message: message.map(LocalizedMessage.verbatim) ?? stage.message)
-    }
-    public func transition(_ stage: GameSession.Stage, message: LocalizedMessage) throws {
-        guard !record.state.isFinished, !hasHandedOff else { throw RuriError.message(Messages.CoreGameSession.runAlreadyFinished) }
-        record.stage = stage; record.updatedAt = Date()
-        let descriptor = message.recorded(redact: redactor.redact)
-        if record.events.count < 512 { record.events.append(.init(id: UUID(), date: record.updatedAt, stage: stage, message: descriptor.fallback, localizedMessage: descriptor)) }
-        try save()
-    }
-    public func setJava(_ label: String) throws { record.java = label; try save() }
-    public func setMemory(_ memory: LaunchMemory) throws {
-        guard record.processID == nil, !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.memoryChangeAfterLaunch) }
-        record.memory = memory; record.memoryMB = memory.maximumMB; try save()
-    }
-    public func setTuning(_ tuning: JVMTuning) throws {
-        guard record.processID == nil, !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.memoryChangeAfterLaunch) }
-        record.tuning = tuning; try save()
-    }
     func setHostStatus(_ status: GameHostStatus) throws {
         guard !record.state.isFinished, record.host != status else { return }
         record.host = status; record.updatedAt = Date()
         try save(); note("[Ruri] \(status.summary)")
     }
     public func setNativeQuitSupported(_ supported: Bool) throws { record.nativeQuitSupported = supported; try save() }
-    /// The launcher picked this run's destination, so the save is known before
-    /// the game writes anything. A later read-back still wins if they differ.
-    public func setWorld(_ world: GameWorldPlay) throws {
-        guard !record.state.isFinished, world.isValid else { return }
-        record.world = world; try save()
-    }
-    public func setDestination(_ destination: LaunchDestination) throws {
-        guard !record.state.isFinished else { return }
-        record.destination = destination; try save()
-    }
     func recordNormalQuit(requestID: UUID, requestedAt: Date, accepted: Bool) throws {
         guard !record.state.isFinished else { return }
         let attempt = GameNormalQuitAttempt(requestID: requestID, requestedAt: requestedAt, processedAt: Date(), accepted: accepted)
@@ -275,18 +236,18 @@ import OSLog
         }
     }
 
-    private func save() throws {
-        record.revision = (record.revision) + 1
-        record.updatedAt = Date()
-        do { try GameHistoryStore.record(record, paths: paths) }
-        catch { storageWarning(error); throw error }
-        onChange?(record)
-    }
-    private func storageWarning(_ error: any Error) {
-        let text = redactor.redact(error.localizedDescription)
-        Logger(subsystem: "dev.ruri", category: "monitor").error("\(text, privacy: .private)")
-        guard !warnedAboutStorage else { return }
-        warnedAboutStorage = true
-        try? GameSessionEventStore.append(Messages.SessionRuntime.storageWarning(text).localized, sessionID: record.id, paths: paths)
-    }
+    public func addSecrets(_ values: [String]) { writer.addSecrets(values) }
+    public func redacted(_ text: String) -> String { writer.redacted(text) }
+    func configureLogging(debug: Bool) throws { try writer.configureLogging(debug: debug) }
+    public func append(_ text: String) throws { try writer.append(text) }
+    public func transition(_ stage: GameSession.Stage, message: String? = nil) throws { try writer.transition(stage, message: message) }
+    public func transition(_ stage: GameSession.Stage, message: LocalizedMessage) throws { try writer.transition(stage, message: message) }
+    public func setJava(_ label: String) throws { try writer.setJava(label) }
+    public func setMemory(_ memory: LaunchMemory) throws { try writer.setMemory(memory) }
+    public func setTuning(_ tuning: JVMTuning) throws { try writer.setTuning(tuning) }
+    public func setWorld(_ world: GameWorldPlay) throws { try writer.setWorld(world) }
+    public func setDestination(_ destination: LaunchDestination) throws { try writer.setDestination(destination) }
+
+    private func save() throws { try writer.save() }
+    private func storageWarning(_ error: any Error) { writer.storageWarning(error) }
 }
