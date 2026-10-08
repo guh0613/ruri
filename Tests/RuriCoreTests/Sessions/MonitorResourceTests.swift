@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct MonitorResourceTests {
     @MainActor private func waitFor(_ condition: () throws -> Bool) async throws {
@@ -84,7 +85,7 @@ struct MonitorResourceTests {
     @Test @MainActor func retentionBoundsHistoryWithoutLosingPlaytime() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         for _ in 0..<14 {
-            let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+            let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
             try recorder.finish(exit: .init(status: 0, reason: .exit, processID: 123, startedAt: recorder.record.createdAt, endedAt: Date(), stopRequested: false, durationSeconds: 10))
         }
         #expect(try GameSessionStore.list(paths: paths, instanceID: instance.id).count == 14)
@@ -92,7 +93,7 @@ struct MonitorResourceTests {
         #expect(try GameHistoryStore.list(paths: paths, query: .init(instanceID: instance.id)).count == 14)
         #expect(try GameHistoryStore.summary(paths: paths, instanceID: instance.id).playCount == 14)
         for _ in 0..<5 {
-            let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+            let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
             let capture = try recorder.makeOutputCapture(); recorder.retainOutput(capture)
             capture.receive(Data("failure evidence\n".utf8)); capture.finish()
             try recorder.fail(RuriError.message("fixture failure"), cancelled: false)
@@ -107,7 +108,7 @@ struct MonitorResourceTests {
 
     @Test @MainActor func largeNativeLogPreservesTheFailureTailWithinReportBudget() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let logs = paths.game(instance.id).appendingPathComponent("logs")
         try FileManager.default.createDirectory(at: logs, withIntermediateDirectories: true)
         let text = "old first line\n" + String(repeating: "ordinary line\n", count: 250_000) + "final failure\n"

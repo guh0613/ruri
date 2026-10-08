@@ -31,7 +31,7 @@ let package = Package(
                           linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]),
         .target(name: "RuriCommandKit", dependencies: ["RuriCore", "RuriLocalization", .product(name: "ArgumentParser", package: "swift-argument-parser")]),
         .executableTarget(name: "RuriCLI", dependencies: ["RuriCommandKit", "RuriLocalization"]),
-        .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore", "RuriLocalization"]),
+        .executableTarget(name: "RuriMonitor", dependencies: ["RuriMonitorRuntime", "RuriLocalization"]),
         .testTarget(name: "RuriMonitorRuntimeTests", dependencies: ["RuriMonitorRuntime", "RuriSessionKit", "RuriLocalization"]),
         .testTarget(name: "RuriSessionKitTests", dependencies: ["RuriSessionKit"]),
         .testTarget(name: "RuriCoreTests", dependencies: ["RuriCore", "RuriMonitorRuntime", "RuriLocalization"]),

@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameActivityTests {
     private let start = Date(timeIntervalSince1970: 1_800_000_000)
@@ -91,7 +92,7 @@ struct GameActivityTests {
     }
     @Test(.timeLimit(.minutes(1))) @MainActor func monitorPersistsQuickPlayBeforeExitAndDoesNotReassignWholeRun() async throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let end = paths.root.appendingPathComponent("finish-game"), log = paths.instance(instance.id).appendingPathComponent("quick-play/test.json")
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: ["-c", #"i=0; while [ ! -f "$1" ] && [ "$i" -lt 200 ]; do sleep 0.05; i=$((i+1)); done"#, "activity-fixture", end.path], directory: paths.game(instance.id), environment: ["PATH":"/bin:/usr/bin"], quickPlayLog: log)
         let coordinator = GameSessionCoordinator(plan: plan, recorder: recorder, paths: paths, checkpointInterval: .milliseconds(50), checkpointLeeway: .milliseconds(5))

@@ -3,6 +3,7 @@ import Foundation
 import Testing
 import ZIPFoundation
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameSystemReportCollectorTests {
     private func ips(pid: Int32 = 123456, name: String = "ruri-game", detail: String = "native-failure") -> String {
@@ -46,7 +47,7 @@ struct GameSystemReportCollectorTests {
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
         let system = paths.root.appendingPathComponent("system")
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         recorder.addSecrets(["private-fixture-secret"])
         let exit = GameExit(status: SIGBUS, reason: .signal, processID: 123456, startedAt: recorder.record.createdAt, endedAt: Date(), stopRequested: false)
         try recorder.recordGameExit(exit)
@@ -87,7 +88,7 @@ struct GameSystemReportCollectorTests {
     @Test @MainActor func reportPickerIncludesSavedMinecraftAndJVMReportsWithoutOrdinaryLogs() throws {
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let game = paths.game(instance.id)
         _ = try write("minecraft-failure", name: "crash-current.txt", root: game.appendingPathComponent("crash-reports"))
         _ = try write("jvm-failure", name: "hs_err_pid123456.log", root: game)

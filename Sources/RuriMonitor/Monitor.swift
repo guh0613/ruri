@@ -1,5 +1,5 @@
 import Foundation
-import RuriCore
+import RuriMonitorRuntime
 import RuriLocalization
 
 @main struct Monitor {

@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import Security
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct OfflineSkinTests {
     func fixture() throws -> (LauncherPaths, OfflineSkinLaunch, Account, SavedPlayerSkin) {

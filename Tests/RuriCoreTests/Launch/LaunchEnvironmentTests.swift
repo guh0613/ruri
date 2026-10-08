@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct LaunchEnvironmentTests {
     private func paths() -> LauncherPaths { LauncherPaths(root: FileManager.default.temporaryDirectory.appendingPathComponent("ruri-env-\(UUID().uuidString)")) }

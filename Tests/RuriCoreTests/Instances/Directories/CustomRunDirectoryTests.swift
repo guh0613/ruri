@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct CustomRunDirectoryTests {
     private func fixture() throws -> (LauncherPaths, GameInstance, GameInstance, CustomRunDirectory) {
@@ -73,7 +74,7 @@ struct CustomRunDirectoryTests {
 
     @Test @MainActor func monitorSnapshotsStripBookmarksAndRejectOtherProtocols() throws {
         let (paths, a, _, custom) = try fixture(); defer { try? FileManager.default.removeItem(at: paths.root.deletingLastPathComponent()) }
-        let frozen = paths.monitorSnapshot(for: a.id)
+        let frozen = SessionLocationSnapshot(paths: paths, instanceID: a.id)
         #expect(frozen.instanceCustomDirectories?[a.id]?.bookmark == nil)
         let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"), arguments: [], directory: custom.url, environment: [:])

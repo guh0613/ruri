@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameHostTests {
     @Test(.timeLimit(.minutes(1))) @MainActor func nativeLibrariesCannotRebaseRelativePathsIntoTheHostBundle() async throws {

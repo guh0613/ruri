@@ -1,11 +1,12 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameSessionStorageTests {
     @Test(.timeLimit(.minutes(1))) @MainActor func runningGamePersistsCheckpointsBeforeItsFinalResult() async throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let end = paths.root.appendingPathComponent("finish-game")
         let plan = LaunchPlan(executable: URL(fileURLWithPath: "/bin/sh"),
                               arguments: ["-c", #"i=0; while [ ! -f "$1" ] && [ "$i" -lt 200 ]; do sleep 0.05; i=$((i+1)); done"#, "checkpoint-fixture", end.path],

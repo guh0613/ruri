@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import ZIPFoundation
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameLogExportTests {
     @Test @MainActor func completeExportContainsTheMiddleAndNeverReopensTheLiveLog() async throws {
@@ -9,7 +10,7 @@ struct GameLogExportTests {
         defer { try? FileManager.default.removeItem(at: root) }
         let paths = LauncherPaths(root: root.appendingPathComponent("data")); try paths.prepare()
         let instance = GameInstance(name: "Full export", gameVersion: "fixture")
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let logs = paths.game(instance.id).appendingPathComponent("logs")
         try FileManager.default.createDirectory(at: logs, withIntermediateDirectories: true)
         let file = logs.appendingPathComponent("latest.log")
@@ -41,7 +42,7 @@ struct GameLogExportTests {
         try FileManager.default.createDirectory(at: logs, withIntermediateDirectories: true)
         let file = logs.appendingPathComponent("latest.log")
         try "previous-output\n".write(to: file, atomically: true, encoding: .utf8)
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         recorder.prepareGame(directory: paths.game(instance.id))
         try recorder.started(processID: ProcessInfo.processInfo.processIdentifier)
         let cursor = try GameSessionLogCursor(paths: paths, session: recorder.record, source: .console)
@@ -64,7 +65,7 @@ struct GameLogExportTests {
 
     @Test @MainActor func anUnsafeLongLineIsReportedInsteadOfClaimingACompleteExport() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let logs = paths.game(instance.id).appendingPathComponent("logs")
         try FileManager.default.createDirectory(at: logs, withIntermediateDirectories: true)
         try Data(repeating: 120, count: 1_048_577).write(to: logs.appendingPathComponent("latest.log"))
@@ -75,7 +76,7 @@ struct GameLogExportTests {
     }
     @Test @MainActor func streamingRedactionMasksQuotedCredentialContinuations() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let logs = paths.game(instance.id).appendingPathComponent("logs")
         try FileManager.default.createDirectory(at: logs, withIntermediateDirectories: true)
         let content = #"{"access_token":"first'private"# + "\n" + #"second\"private"# + "\n" + #"third-private","next":"safe"}"# + "\n"

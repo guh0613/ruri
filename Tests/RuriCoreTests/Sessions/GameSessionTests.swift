@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import RuriLocalization
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameSessionTests {
     @Test @MainActor func reviewingLiveLogsDoesNotAcknowledgeLaterFailure() throws {
@@ -32,7 +33,7 @@ struct GameSessionTests {
         let oldLog = try GameSessionStore.logTail(paths: paths, session: failed.record)
         #expect(!oldLog.contains("private-refresh-value") && oldLog.contains("<redacted>"))
         #expect(failed.record.stage == .account && failed.record.state == .failed)
-        let next = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let next = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         try next.transition(.java); try next.setJava("Java 21")
         try next.started(processID: 123)
         try next.append("Second run output")
@@ -59,7 +60,7 @@ struct GameSessionTests {
     }
     @Test @MainActor func evidenceCopiesSurviveNextGameLogAndSkipOldReports() throws {
         let (paths, instance) = try setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let game = paths.game(instance.id)
         for directory in ["logs", "crash-reports"] { try FileManager.default.createDirectory(at: game.appendingPathComponent(directory), withIntermediateDirectories: true) }
         let latest = game.appendingPathComponent("logs/latest.log")

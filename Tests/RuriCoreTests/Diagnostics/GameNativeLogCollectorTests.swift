@@ -2,6 +2,7 @@ import Darwin
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameNativeLogCollectorTests {
     private func write(_ text: String, _ relative: String, game: URL, date: Date? = nil) throws -> URL {
@@ -12,7 +13,7 @@ struct GameNativeLogCollectorTests {
         return url
     }
 
-    @MainActor private func finish(_ recorder: GameSessionRecorder, status: Int32 = 0) throws {
+    @MainActor private func finish(_ recorder: MonitorSessionRecorder, status: Int32 = 0) throws {
         try recorder.finish(exit: .init(status: status, reason: .exit, processID: 123456,
                                        startedAt: recorder.record.createdAt, endedAt: Date(), stopRequested: false))
     }
@@ -20,7 +21,7 @@ struct GameNativeLogCollectorTests {
     @Test @MainActor func nativeLogsAreCollectedOnlyOnRequestWithoutChangingSources() throws {
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let game = paths.game(instance.id)
         let content = "Authorization: Bearer private-token\n游戏已启动\n"
         let latest = try write(content, "logs/latest.log", game: game)
@@ -39,7 +40,7 @@ struct GameNativeLogCollectorTests {
     @Test @MainActor func onlyReportsFromThisRunAndExactJVMPIDAreIncluded() throws {
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let game = paths.game(instance.id), old = recorder.record.createdAt.addingTimeInterval(-60)
         _ = try write("current game output", "logs/latest.log", game: game)
         _ = try write("stale debug output", "logs/debug.log", game: game, date: old)
@@ -55,7 +56,7 @@ struct GameNativeLogCollectorTests {
     @Test @MainActor func currentNativeFileReplacesTheSavedDuplicate() throws {
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         _ = try write("Incompatible mods found!\n", "logs/latest.log", game: paths.game(instance.id))
         try finish(recorder, status: 1)
         #expect(recorder.record.evidence.contains { $0.name == "latest.log" })
@@ -67,10 +68,10 @@ struct GameNativeLogCollectorTests {
     @Test @MainActor func nextRunCannotReplaceHistoricalEvidenceEvenInsideTimestampTolerance() throws {
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
-        let first = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let first = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         _ = try write("first-run-evidence", "logs/latest.log", game: paths.game(instance.id))
         try finish(first, status: 1)
-        let second = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let second = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         try second.started(processID: 123456)
         _ = try write("second-run-evidence", "logs/latest.log", game: paths.game(instance.id), date: first.record.exit!.endedAt)
         try finish(second)
@@ -95,12 +96,12 @@ struct GameNativeLogCollectorTests {
         }
         var state = PersistentState(); state.instances = [firstInstance, secondInstance]
         let paths = base.configured(with: try StateStore.save(state, to: base))
-        let first = try GameSessionRecorder(paths: paths, instance: firstInstance, accountMode: "offline")
+        let first = try MonitorSessionRecorder(paths: paths, instance: firstInstance, accountMode: "offline")
         _ = try write("first-output", "logs/latest.log", game: paths.game(firstInstance.id))
         try finish(first)
         let current = try GameDiagnosticAnalyzer.load(paths: paths, session: first.record, includeGameLogs: true)
         #expect(current.documents.contains { $0.gameRelativePath == "logs/latest.log" && $0.text == "first-output" })
-        let second = try GameSessionRecorder(paths: paths, instance: secondInstance, accountMode: "offline")
+        let second = try MonitorSessionRecorder(paths: paths, instance: secondInstance, accountMode: "offline")
         try second.started(processID: 123456)
         _ = try write("other-instance-output", "logs/latest.log", game: paths.game(secondInstance.id), date: first.record.exit!.endedAt)
         try finish(second)
@@ -123,7 +124,7 @@ struct GameNativeLogCollectorTests {
     @Test @MainActor func symlinksAndNamedPipesAreSkippedWithoutReadingTheirTargets() throws {
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let game = paths.game(instance.id), logs = game.appendingPathComponent("logs")
         try FileManager.default.createDirectory(at: logs, withIntermediateDirectories: true)
         let secret = try write("outside-private-content", "secret.txt", game: paths.root)
@@ -146,7 +147,7 @@ struct GameNativeLogCollectorTests {
     @Test @MainActor func largeNativeLogsKeepBoundedUTF8HeadsAndTails() throws {
         let (paths, instance) = try GameSessionTests().setup()
         defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let content = "start-marker\n" + String(repeating: "日志内容🐈\n", count: 620_000) + "end-marker\n"
         for name in ["latest.log", "debug.log"] { _ = try write(content, "logs/" + name, game: paths.game(instance.id)) }
         try finish(recorder)

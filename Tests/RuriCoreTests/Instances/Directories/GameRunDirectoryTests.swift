@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameRunDirectoryTests {
     private func fixture() throws -> (LauncherPaths, GameInstance, GameInstance, GameInstance) {
@@ -41,7 +42,7 @@ struct GameRunDirectoryTests {
         let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
         try recorder.handoff(to: identity)
         #expect(throws: (any Error).self) { try GameRunLease.acquire(paths: paths, instanceID: b.id) }
-        let monitor = try GameSessionRecorder(resuming: recorder.record.id, instanceID: a.id, paths: paths, monitor: identity)
+        let monitor = try MonitorSessionRecorder(resuming: recorder.record.id, instanceID: a.id, paths: paths, monitor: identity)
         try monitor.fail(RuriError.message("controlled preparation failure"), cancelled: false)
         try FileManager.default.removeItem(at: paths.instance(a.id))
         let next = try GameRunLease.acquire(paths: paths, instanceID: b.id)

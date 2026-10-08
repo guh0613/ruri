@@ -33,7 +33,7 @@ struct MonitorLifecycleTests {
                               arguments: ["-c", #"trap 'printf "game-stopped\n"; exit 0' TERM; printf 'fixture-access-secret\n'; while :; do sleep 0.05; done"#],
                               directory: paths.game(instance.id), environment: ["PATH": "/bin:/usr/bin"], debugLogging: true)
         try recorder.handoff(to: identity)
-        let request = MonitorLaunchRequest(version: MonitorLaunchRequest.currentVersion, instanceID: instance.id, sessionID: recorder.record.id, monitor: identity, plan: plan, secrets: ["fixture-access-secret", "fixture-refresh-secret"], storage: paths.monitorSnapshot(for: instance.id))
+        let request = MonitorLaunchRequest(version: MonitorLaunchRequest.currentVersion, instanceID: instance.id, sessionID: recorder.record.id, monitor: identity, plan: plan, secrets: ["fixture-access-secret", "fixture-refresh-secret"], storage: SessionLocationSnapshot(paths: paths, instanceID: instance.id))
         try input.fileHandleForWriting.write(contentsOf: JSONEncoder().encode(request)); try input.fileHandleForWriting.close()
         func load() throws -> GameSession { try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: recorder.record.id) }
         defer { if let record = try? load() { try? GameMonitorClient.requestStop(paths: paths, record: record) } }

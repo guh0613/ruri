@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct MonitorOwnershipTests {
     @Test @MainActor func handoffKeepsInstanceReservedAndAllowsOnlyDesignatedMonitor() throws {
@@ -17,8 +18,8 @@ struct MonitorOwnershipTests {
         // GUI lease and acquiring the monitor's lease.
         #expect(throws: (any Error).self) { try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline") }
         let wrong = ProcessIdentity(pid: identity.pid, startSeconds: 0, startMicroseconds: 0)
-        #expect(throws: (any Error).self) { try GameSessionRecorder(resuming: first.record.id, instanceID: instance.id, paths: paths, monitor: wrong) }
-        let resumed = try GameSessionRecorder(resuming: first.record.id, instanceID: instance.id, paths: paths, monitor: identity)
+        #expect(throws: (any Error).self) { try MonitorSessionRecorder(resuming: first.record.id, instanceID: instance.id, paths: paths, monitor: wrong) }
+        let resumed = try MonitorSessionRecorder(resuming: first.record.id, instanceID: instance.id, paths: paths, monitor: identity)
         #expect(GameRunLease.isHeld(paths: paths, instanceID: instance.id))
         try resumed.fail(RuriError.message("controlled failure"), cancelled: false)
         #expect(!GameRunLease.isHeld(paths: paths, instanceID: instance.id))

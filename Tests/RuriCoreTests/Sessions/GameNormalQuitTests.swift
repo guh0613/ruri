@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameNormalQuitTests {
     @Test func normalRequestDoesNotHideASubsequentFailure() {
@@ -14,7 +15,7 @@ struct GameNormalQuitTests {
     }
     @Test @MainActor func normalQuitOutcomeIsIndependentOfTheFinalExit() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         try recorder.setNativeQuitSupported(false)
         #expect(throws: (any Error).self) { try GameMonitorClient.requestNormalQuit(paths: paths, record: recorder.record) }
         let id = UUID()

@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCore
+@testable import RuriMonitorRuntime
 
 struct GameHistoryTests {
     private func session(instance: GameInstance, id: UUID = UUID(), started: Date = Date(), seconds: Double = 30) -> GameSession {
@@ -58,7 +59,7 @@ struct GameHistoryTests {
 
     @Test @MainActor func interruptedSessionRetainsOnlyItsConfirmedCheckpoint() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
         var clock = GameTimingAccumulator(startedAt: Date().addingTimeInterval(-60))
         recorder.checkpoint(clock.sample(at: Date(), awakeSeconds: 42, elapsedSeconds: 60))
@@ -92,7 +93,7 @@ struct GameHistoryTests {
 
     @Test @MainActor func brokenDiagnosticLogDoesNotLoseTheGameResultOrTime() throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
-        let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
+        let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let output = try recorder.makeOutputCapture(); recorder.retainOutput(output)
         output.receive(Data("bounded evidence\n".utf8)); output.finish()
         // A directory where the console file should be simulates a sink error.
