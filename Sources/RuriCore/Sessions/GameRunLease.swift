@@ -17,14 +17,12 @@ public final class GameRunLease: @unchecked Sendable {
         try paths.prepareInstance(instanceID)
         let fileLease = try SessionRunFileLease.instance(at: paths.instance(instanceID))
         var shared: SharedGameDirectoryLease?
-        do {
-            try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
-            if paths.runDirectory(for: instanceID) != .isolated { shared = try SharedGameDirectoryLease.acquire(paths: paths, instanceID: instanceID, ignoringSession: ignoringSession, directoryChangeID: directoryChangeID) }
-            let records = try GameSessionStore.list(paths: paths, instanceID: instanceID)
-            guard !records.contains(where: { $0.id != ignoringSession && !$0.state.isFinished && GameMonitorClient.activity($0) != .inactive }) else {
-                throw RuriError.message(Messages.CoreGameRunLease.activeRunSession)
-            }
-        } catch { throw error }
+        try RunDirectoryCopyGuard.requireAvailable(paths: paths, instanceID: instanceID, allowing: directoryChangeID)
+        if paths.runDirectory(for: instanceID) != .isolated { shared = try SharedGameDirectoryLease.acquire(paths: paths, instanceID: instanceID, ignoringSession: ignoringSession, directoryChangeID: directoryChangeID) }
+        let records = try GameSessionStore.list(paths: paths, instanceID: instanceID)
+        guard !records.contains(where: { $0.id != ignoringSession && !$0.state.isFinished && GameMonitorClient.activity($0) != .inactive }) else {
+            throw RuriError.message(Messages.CoreGameRunLease.activeRunSession)
+        }
         return GameRunLease(fileLease, sharedDirectory: shared, location: location)
     }
     func excludeLocationOperations() throws { try location.excludeOtherOperations() }
