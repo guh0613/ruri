@@ -9,14 +9,17 @@ import Sparkle
     private static let prereleaseChannel = "prerelease"
     private static let prereleasePreferenceKey = "RuriReceivePrereleaseUpdates"
     #if arch(arm64)
-    private static let feed = "https://guh0613.github.io/ruri/appcast-arm64.xml"
+    private static let feedName = "appcast-arm64.xml"
     #else
-    private static let feed = "https://guh0613.github.io/ruri/appcast-x86_64.xml"
+    private static let feedName = "appcast-x86_64.xml"
     #endif
+    private static let feed = (Bundle.main.object(forInfoDictionaryKey: "RuriAppcastBaseURL") as? String)
+        .flatMap(URL.init(string:))?.appendingPathComponent(feedName).absoluteString
 
-    /// Builds run outside a packaged bundle have no update key, and Sparkle
-    /// would report a startup error for them.
-    let isAvailable = Bundle.main.object(forInfoDictionaryKey: "SUPublicEDKey") != nil
+    /// Builds run outside a packaged bundle, and ad hoc signed packages, have
+    /// no update key or feed: Sparkle would report a startup error for them,
+    /// and contributor builds must not replace themselves with official releases.
+    let isAvailable = Bundle.main.object(forInfoDictionaryKey: "SUPublicEDKey") != nil && SoftwareUpdater.feed != nil
     private(set) var canCheckForUpdates = false
     private(set) var lastUpdateCheckDate: Date?
     var automaticallyChecksForUpdates = false {

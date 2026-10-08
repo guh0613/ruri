@@ -45,6 +45,31 @@ class ConfigureAppTests(unittest.TestCase):
         self.assertEqual(self.path.read_bytes(), self.source)
 
 
+class ConfigureUpdatesTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.path = Path(temporary.name) / "Info.plist"
+
+    def configure(self, environment):
+        self.path.write_bytes((ROOT / "Resources/Info.plist").read_bytes())
+        app.configure_updates(self.path, environment)
+        return plistlib.loads(self.path.read_bytes())
+
+    def test_signed_packages_keep_updates(self):
+        info = self.configure({"RURI_SIGN_IDENTITY": "0123456789ABCDEF0123456789ABCDEF01234567"})
+        self.assertIn("SUPublicEDKey", info)
+        self.assertIn("RuriAppcastBaseURL", info)
+
+    def test_ad_hoc_packages_never_update_to_official_releases(self):
+        for environment in ({}, {"RURI_SIGN_IDENTITY": "-"}):
+            with self.subTest(environment=environment):
+                info = self.configure(environment)
+                self.assertNotIn("SUPublicEDKey", info)
+                self.assertNotIn("RuriAppcastBaseURL", info)
+                self.assertEqual(info["CFBundleIdentifier"], "dev.ruri.launcher")
+
+
 class ConfigureServicesTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()

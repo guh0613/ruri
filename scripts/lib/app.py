@@ -48,6 +48,21 @@ def configure_metadata(path: Path) -> None:
 
 
 
+def configure_updates(path: Path, environment=None) -> None:
+    environment = os.environ if environment is None else environment
+    # Official releases verify against the pinned identity. An ad hoc package
+    # is a contributor or fork build: Sparkle would accept a signed official
+    # release over it, so it ships without an update key or feed.
+    if environment.get("RURI_SIGN_IDENTITY", "-") != "-":
+        return
+    with path.open("rb") as source:
+        info = plistlib.load(source)
+    for key in ("SUPublicEDKey", "RuriAppcastBaseURL"):
+        info.pop(key, None)
+    with path.open("wb") as destination:
+        plistlib.dump(info, destination, sort_keys=False)
+
+
 def configure_services(resources: Path, environment=None, root: Path = ROOT) -> None:
     environment = os.environ if environment is None else environment
     # Read raw text, never source a shell file: CurseForge keys can contain '$'.
@@ -79,6 +94,7 @@ if __name__ == "__main__":
             configure_metadata(args.path)
         else:
             configure_metadata(args.path / "Contents/Info.plist")
+            configure_updates(args.path / "Contents/Info.plist")
             configure_services(args.path / "Contents/Resources")
     except (ValueError, OSError) as error:
         # Service credentials must never be included in command output.
