@@ -8,3 +8,7 @@ references/
 xcuserdata/
 /.private/
 __pycache__/
+.devenv/
+.direnv/
+result
+result-*
