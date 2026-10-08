@@ -580,7 +580,7 @@
     "reason": "SQLite statement or query fragment; internal database syntax."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameHistoryStore.swift",
     "literal": "\"UPDATE sessions SET payload = ? WHERE id = ?\"",
     "reason": "SQLite statement or query fragment; internal database syntax."
   },
@@ -610,17 +610,17 @@
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameSessionEventStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameSessionEventStore.swift",
     "literal": "\"\"\"\n                INSERT OR IGNORE INTO runtime_events(id, session_id, date, payload)\n                SELECT ?, ?, ?, ? WHERE\n                    (SELECT count(*) FROM runtime_events WHERE session_id=?) < 512 AND\n                    (SELECT coalesce(sum(length(payload)), 0) FROM runtime_events WHERE session_id=?) + ? <= 262144\n                \"\"\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameSessionEventStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameSessionEventStore.swift",
     "literal": "\"SELECT payload FROM runtime_events WHERE session_id=? ORDER BY date, id LIMIT 512\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameSessionEventStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameSessionEventStore.swift",
     "literal": "\"[Ruri] \\($0.0.ISO8601Format()) \\($0.1)\"",
     "reason": "Stable event prefix around an ISO timestamp and already localized text."
   },
@@ -635,47 +635,47 @@
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA user_version\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA journal_mode=WAL\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA journal_mode=DELETE\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA user_version\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA user_version\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA user_version\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA user_version\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA synchronous=FULL\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"BEGIN IMMEDIATE\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
@@ -685,72 +685,72 @@
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameHistoryStore.swift",
     "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE id = ?\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameHistoryStore.swift",
     "literal": "\"\"\"\n                UPDATE sessions SET timing=?, seconds=?, started=?, played=1, updated=?, revision=?, observed=?\n                WHERE id=? AND finished=0 AND revision < ?\n                \"\"\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameHistoryStore.swift",
     "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE instance_id=? AND finished=0 ORDER BY created DESC\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameHistoryStore.swift",
     "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE id = ?\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameHistoryStore.swift",
     "literal": "\"SELECT payload, timing, updated, revision, endpoint, observed FROM sessions WHERE instance_id=? AND finished=1 ORDER BY created DESC LIMIT 20\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX sessions_instance_date ON sessions(instance_id, created DESC)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX sessions_date ON sessions(created DESC)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX sessions_updated ON sessions(updated)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX sessions_credit ON sessions(instance_id, seconds, played, started)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX sessions_active ON sessions(instance_id, finished, created DESC)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE TABLE runtime_events(id TEXT PRIMARY KEY, session_id TEXT NOT NULL, date REAL NOT NULL, payload BLOB NOT NULL)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX runtime_events_session ON runtime_events(session_id, date)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE TABLE launcher_events(id TEXT PRIMARY KEY, session_id TEXT, updated REAL NOT NULL, running INTEGER NOT NULL, payload BLOB NOT NULL)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX launcher_events_session ON launcher_events(session_id, updated)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
@@ -785,27 +785,27 @@
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"ALTER TABLE sessions ADD COLUMN world_folder TEXT\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"ALTER TABLE sessions ADD COLUMN world_name TEXT\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX sessions_world ON sessions(instance_id, world_folder, started)\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA user_version=2\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"\"\"\n                        CREATE TABLE sessions(\n                            id TEXT PRIMARY KEY, instance_id TEXT NOT NULL, name TEXT NOT NULL, game_version TEXT NOT NULL,\n                            created REAL NOT NULL, started REAL NOT NULL, updated REAL NOT NULL, seconds REAL NOT NULL,\n                            played INTEGER NOT NULL, attention INTEGER NOT NULL, finished INTEGER NOT NULL,\n                            revision INTEGER NOT NULL, payload BLOB NOT NULL, timing BLOB, endpoint TEXT, observed REAL NOT NULL,\n                            reviewed_revision INTEGER, reviewed_at REAL, world_folder TEXT, world_name TEXT)\n                        \"\"\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
   },
@@ -1161,22 +1161,22 @@
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameActivityStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameActivityStore.swift",
     "literal": "\"DELETE FROM activity_days WHERE segment_id IN (SELECT id FROM activity_segments WHERE session_id=?)\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameActivityStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameActivityStore.swift",
     "literal": "\"DELETE FROM activity_segments WHERE session_id=?\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameActivityStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameActivityStore.swift",
     "literal": "\"\"\"\n                INSERT INTO activity_segments(id,session_id,instance_id,kind,target,name,started,ended,seconds,quality,payload)\n                VALUES(?,?,?,?,?,?,?,?,?,?,?)\n                \"\"\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameActivityStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameActivityStore.swift",
     "literal": "\"INSERT INTO activity_days(segment_id,date,seconds) VALUES(?,?,?)\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
@@ -1216,12 +1216,12 @@
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameHistoryStore.swift",
     "literal": "\"\"\"\n            INSERT INTO sessions(id, instance_id, name, game_version, created, started, updated, seconds, played, attention, finished, revision, payload, timing, endpoint, observed, world_folder, world_name, tracking_version)\n            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n            ON CONFLICT(id) DO UPDATE SET name=excluded.name, game_version=excluded.game_version,\n                started=excluded.started, updated=excluded.updated, seconds=excluded.seconds, played=excluded.played,\n                attention=excluded.attention, finished=excluded.finished, revision=excluded.revision, payload=excluded.payload, timing=excluded.timing, endpoint=excluded.endpoint, observed=excluded.observed,\n                world_folder=excluded.world_folder, world_name=excluded.world_name, tracking_version=excluded.tracking_version\n            WHERE (excluded.revision > sessions.revision OR (excluded.revision = sessions.revision AND\n                excluded.updated > sessions.updated)) AND (sessions.finished=0 OR excluded.finished=1)\n            \"\"\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "file": "Sources/RuriSessionKit/Storage/GameHistoryStore.swift",
     "literal": "\"SELECT changes()\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
@@ -1236,37 +1236,37 @@
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"ALTER TABLE sessions ADD COLUMN tracking_version INTEGER\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"\"\"\n                        CREATE TABLE activity_segments(id TEXT PRIMARY KEY,session_id TEXT NOT NULL,instance_id TEXT NOT NULL,\n                            kind TEXT NOT NULL,target TEXT NOT NULL,name TEXT NOT NULL,started REAL NOT NULL,ended REAL NOT NULL,\n                            seconds REAL NOT NULL,quality TEXT NOT NULL,payload BLOB NOT NULL)\n                        \"\"\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX activity_target ON activity_segments(kind,target,started)\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX activity_session ON activity_segments(session_id)\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE INDEX activity_instance ON activity_segments(instance_id,kind,started)\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"CREATE TABLE activity_days(segment_id TEXT NOT NULL,date REAL NOT NULL,seconds REAL NOT NULL,PRIMARY KEY(segment_id,date))\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Sessions/HistoryDatabase.swift",
+    "file": "Sources/RuriSessionKit/Storage/HistoryDatabase.swift",
     "literal": "\"PRAGMA user_version=3\"",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
   },

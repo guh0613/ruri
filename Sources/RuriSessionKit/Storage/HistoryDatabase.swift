@@ -6,13 +6,13 @@ import RuriLocalization
 /// One serialized connection per data root. A transaction cannot interleave
 /// with another caller in this process; WAL coordinates other launcher/monitor
 /// processes. The bounded cache also releases roots used by disposable tests.
-final class HistoryDatabasePool: @unchecked Sendable {
-    static let shared = HistoryDatabasePool()
+package final class HistoryDatabasePool: @unchecked Sendable {
+    package static let shared = HistoryDatabasePool()
     private let lock = NSLock()
     private var entries: [String: (HistoryDatabase, UInt64)] = [:]
     private var sequence: UInt64 = 0
 
-    func database(paths: LauncherPaths) throws -> HistoryDatabase {
+    package func database(paths: any SessionPaths) throws -> HistoryDatabase {
         lock.lock(); defer { lock.unlock() }
         let key = paths.root.standardizedFileURL.resolvingSymlinksInPath().path
         sequence &+= 1
@@ -28,26 +28,26 @@ final class HistoryDatabasePool: @unchecked Sendable {
     }
 }
 
-final class HistoryDatabase: @unchecked Sendable {
-    enum Value { case text(String), real(Double), integer(Int), blob(Data), null }
+package final class HistoryDatabase: @unchecked Sendable {
+    package enum Value { case text(String), real(Double), integer(Int), blob(Data), null }
     private var connection: OpaquePointer?
     private let lock = NSRecursiveLock()
-    let file: URL
+    package let file: URL
     private var identity: (dev_t, ino_t)?
 
-    func synchronized<T>(_ body: (HistoryDatabase) throws -> T) rethrows -> T {
+    package func synchronized<T>(_ body: (HistoryDatabase) throws -> T) rethrows -> T {
         lock.lock(); defer { lock.unlock() }
         return try body(self)
     }
-    var isCurrent: Bool {
+    package var isCurrent: Bool {
         var info = stat()
         return lstat(file.path, &info) == 0 && info.st_mode & S_IFMT == S_IFREG && identity?.0 == info.st_dev && identity?.1 == info.st_ino
     }
 
-    init(paths: LauncherPaths) throws {
-        let directory = try LauncherPaths.safePath("records", within: paths.root)
+    package init(paths: any SessionPaths) throws {
+        let directory = try SessionFileSystem.safePath("records", within: paths.root)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
-        file = try LauncherPaths.safePath("records.sqlite", within: directory)
+        file = try SessionFileSystem.safePath("records.sqlite", within: directory)
         for suffix in ["", "-wal", "-shm", "-journal"] {
             let url = directory.appendingPathComponent("records.sqlite" + suffix)
             if FileManager.default.fileExists(atPath: url.path) {
@@ -131,18 +131,18 @@ final class HistoryDatabase: @unchecked Sendable {
     }
     deinit { sqlite3_close(connection) }
 
-    func transaction(_ work: () throws -> Void) throws {
+    package func transaction(_ work: () throws -> Void) throws {
         try execute("BEGIN IMMEDIATE")
         do { try work(); try execute("COMMIT") }
         catch { try? execute("ROLLBACK"); throw error }
     }
-    func execute(_ sql: String, _ values: [Value] = []) throws { try rows(sql, values) { _ in } }
-    func scalar(_ sql: String, _ values: [Value] = []) throws -> Double {
+    package func execute(_ sql: String, _ values: [Value] = []) throws { try rows(sql, values) { _ in } }
+    package func scalar(_ sql: String, _ values: [Value] = []) throws -> Double {
         var value = 0.0
         try rows(sql, values) { value = sqlite3_column_double($0, 0) }
         return value
     }
-    func records(_ sql: String, _ values: [Value] = []) throws -> [GameSession] {
+    package func records(_ sql: String, _ values: [Value] = []) throws -> [GameSession] {
         var records: [GameSession] = []
         try rows(sql, values) { statement in
             try Task.checkCancellation()
@@ -160,15 +160,15 @@ final class HistoryDatabase: @unchecked Sendable {
         }
         return records
     }
-    static func data(_ statement: OpaquePointer, _ column: Int32) -> Data? {
+    package static func data(_ statement: OpaquePointer, _ column: Int32) -> Data? {
         let count = Int(sqlite3_column_bytes(statement, column))
         guard count > 0, count <= 1_048_576, let bytes = sqlite3_column_blob(statement, column) else { return nil }
         return Data(bytes: bytes, count: count)
     }
-    static func text(_ statement: OpaquePointer, _ column: Int32) -> String? {
+    package static func text(_ statement: OpaquePointer, _ column: Int32) -> String? {
         sqlite3_column_text(statement, column).map { String(cString: $0) }
     }
-    func rows(_ sql: String, _ values: [Value] = [], _ consume: (OpaquePointer) throws -> Void) throws {
+    package func rows(_ sql: String, _ values: [Value] = [], _ consume: (OpaquePointer) throws -> Void) throws {
         var statement: OpaquePointer?
         guard sqlite3_prepare_v2(connection, sql, -1, &statement, nil) == SQLITE_OK, let statement else { throw failure() }
         defer { sqlite3_finalize(statement) }
