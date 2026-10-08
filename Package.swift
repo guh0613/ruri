@@ -23,6 +23,7 @@ let package = Package(
         .systemLibrary(name: "CSQLite"),
         .target(name: "RuriLocalization", resources: [.process("Resources")]),
         .target(name: "RuriSessionKit", dependencies: ["RuriLocalization", "CSQLite", "CZlib"]),
+        .target(name: "RuriMonitorRuntime", dependencies: ["RuriSessionKit", "RuriLocalization"]),
         .target(name: "RuriCore", dependencies: ["RuriSessionKit", "ZIPFoundation", "CZlib", "CSQLite", "RuriLocalization", .product(name: "Markdown", package: "swift-markdown"), "TOMLDecoder"], resources: [.copy("Resources/LoaderSupport"), .copy("Resources/mod_data.txt")]),
         // Sparkle.framework is embedded in Contents/Frameworks by scripts/build-app.sh.
         .executableTarget(name: "Ruri", dependencies: ["RuriCore", "RuriLocalization", .product(name: "Sparkle", package: "Sparkle")],
@@ -31,8 +32,9 @@ let package = Package(
         .target(name: "RuriCommandKit", dependencies: ["RuriCore", "RuriLocalization", .product(name: "ArgumentParser", package: "swift-argument-parser")]),
         .executableTarget(name: "RuriCLI", dependencies: ["RuriCommandKit", "RuriLocalization"]),
         .executableTarget(name: "RuriMonitor", dependencies: ["RuriCore", "RuriLocalization"]),
+        .testTarget(name: "RuriMonitorRuntimeTests", dependencies: ["RuriMonitorRuntime", "RuriSessionKit", "RuriLocalization"]),
         .testTarget(name: "RuriSessionKitTests", dependencies: ["RuriSessionKit"]),
-        .testTarget(name: "RuriCoreTests", dependencies: ["RuriCore", "RuriLocalization"]),
+        .testTarget(name: "RuriCoreTests", dependencies: ["RuriCore", "RuriMonitorRuntime", "RuriLocalization"]),
         .testTarget(name: "RuriLocalizationTests", dependencies: ["RuriLocalization"]),
         .testTarget(name: "RuriCLITests", dependencies: ["RuriCommandKit", "RuriCore"])
     ]
