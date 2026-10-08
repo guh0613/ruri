@@ -5,10 +5,11 @@ import Testing
 struct GameDiagnosisTests {
     func session(state: GameSession.State = .failed, status: Int32 = 1, reason: GameExit.Reason = .exit, stopRequested: Bool = false) -> GameSession {
         let now = Date()
-        return .init(id: UUID(), instanceID: UUID(), instanceName: "诊断测试", gameVersion: "1.21.1", loader: "fabric", loaderVersion: nil, memoryMB: 4096,
+        var record = GameSession(id: UUID(), instanceID: UUID(), instanceName: "诊断测试", gameVersion: "1.21.1", loader: "fabric", loaderVersion: nil, memoryMB: 4096,
                      operatingSystem: "macOS", hostArchitecture: "aarch64", accountMode: "offline", ownerPID: 123,
-                     createdAt: now, updatedAt: now, state: state, stage: .finished,
-                     exit: .init(status: status, reason: reason, processID: 123, startedAt: now, endedAt: now, stopRequested: stopRequested), events: [], evidence: [])
+                     createdAt: now, updatedAt: now, state: state, stage: .finished)
+        record.exit = .init(status: status, reason: reason, processID: 123, startedAt: now, endedAt: now, stopRequested: stopRequested)
+        return record
     }
     func document(_ text: String, kind: GameDiagnosticDocument.Kind = .output, id: String = "launcher.log") -> GameDiagnosticDocument {
         .init(id: id, relativePath: id, title: id, kind: kind, text: text)

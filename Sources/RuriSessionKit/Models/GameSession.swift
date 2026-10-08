@@ -3,23 +3,11 @@ import Foundation
 
 public struct GameSession: Codable, Identifiable, Equatable, Sendable {
     package init(
-        schema: Int = 1, gameDirectory: URL? = nil, nativeLogs: [GameLogReference]? = nil, logBaseline: [GameLogReference]? = nil,
         id: UUID, instanceID: UUID, instanceName: String, gameVersion: String, loader: String, loaderVersion: String? = nil,
-        memoryMB: Int, memory: LaunchMemory? = nil, tuning: JVMTuning? = nil, operatingSystem: String, hostArchitecture: String,
-        accountMode: String, ownerPID: Int32, createdAt: Date, updatedAt: Date, state: State, stage: Stage, java: String? = nil,
-        processID: Int32? = nil, monitorIdentity: ProcessIdentity? = nil, gameIdentity: ProcessIdentity? = nil,
-        commandIdentity: ProcessIdentity? = nil, commandResults: [GameCommandResult]? = nil, failure: String? = nil,
-        failureMessage: LocalizedMessage? = nil, exit: GameExit? = nil, interruption: GameSessionInterruption? = nil,
-        nativeQuitSupported: Bool? = nil, normalQuitAttempt: GameNormalQuitAttempt? = nil, debugLogging: Bool = false,
-        host: GameHostStatus? = nil, world: GameWorldPlay? = nil, destination: LaunchDestination? = nil,
-        activity: GameActivityTracking? = nil, revision: UInt64 = 0, finalSnapshot: Bool = false, timing: GameSessionTiming? = nil,
-        controlEndpoint: String? = nil, launcherVersion: String? = nil, artifactState: ArtifactState? = nil,
-        outputTruncated: Bool? = nil, events: [Event], evidence: [Evidence]
+        memoryMB: Int, operatingSystem: String, hostArchitecture: String,
+        accountMode: String, ownerPID: Int32, createdAt: Date, updatedAt: Date, state: State, stage: Stage,
+        events: [Event] = [], evidence: [Evidence] = []
     ) {
-        self.schema = schema
-        self.gameDirectory = gameDirectory
-        self.nativeLogs = nativeLogs
-        self.logBaseline = logBaseline
         self.id = id
         self.instanceID = instanceID
         self.instanceName = instanceName
@@ -27,8 +15,6 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
         self.loader = loader
         self.loaderVersion = loaderVersion
         self.memoryMB = memoryMB
-        self.memory = memory
-        self.tuning = tuning
         self.operatingSystem = operatingSystem
         self.hostArchitecture = hostArchitecture
         self.accountMode = accountMode
@@ -37,30 +23,6 @@ public struct GameSession: Codable, Identifiable, Equatable, Sendable {
         self.updatedAt = updatedAt
         self.state = state
         self.stage = stage
-        self.java = java
-        self.processID = processID
-        self.monitorIdentity = monitorIdentity
-        self.gameIdentity = gameIdentity
-        self.commandIdentity = commandIdentity
-        self.commandResults = commandResults
-        self.failure = failure
-        self.failureMessage = failureMessage
-        self.exit = exit
-        self.interruption = interruption
-        self.nativeQuitSupported = nativeQuitSupported
-        self.normalQuitAttempt = normalQuitAttempt
-        self.debugLogging = debugLogging
-        self.host = host
-        self.world = world
-        self.destination = destination
-        self.activity = activity
-        self.revision = revision
-        self.finalSnapshot = finalSnapshot
-        self.timing = timing
-        self.controlEndpoint = controlEndpoint
-        self.launcherVersion = launcherVersion
-        self.artifactState = artifactState
-        self.outputTruncated = outputTruncated
         self.events = events
         self.evidence = evidence
     }

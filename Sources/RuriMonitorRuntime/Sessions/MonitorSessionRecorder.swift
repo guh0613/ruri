@@ -1,22 +1,18 @@
 import Foundation
 import RuriLocalization
-import OSLog
 
 /// The single runtime metadata writer. Byte capture, process supervision and
 /// evidence discovery have their own lifetimes and do not run inside save().
 @MainActor package final class MonitorSessionRecorder {
     package let writer: SessionRecordWriter
-    public private(set) var record: GameSession { get { writer.record } set { writer.record = newValue } }
-    public var directory: URL { writer.directory }
-    public private(set) var hasHandedOff: Bool { get { writer.hasHandedOff } set { writer.hasHandedOff = newValue } }
+    private(set) var record: GameSession { get { writer.record } set { writer.record = newValue } }
+    var directory: URL { writer.directory }
     private var paths: any SessionPaths { writer.paths }
-    private var closed: Bool { get { writer.closed } set { writer.closed = newValue } }
     private var redactor: GameLogRedactor { writer.redactor }
     private var releaseLease: ((GameSession) throws -> Void)?
     private var capturedOutput: [GameOutputCapture] = []
     private var artifactsCaptured = false
     private var savedCaptureCount = 0
-    var onChange: (@Sendable (GameSession) -> Void)? { get { writer.onChange } set { writer.onChange = newValue } }
     var onCapture: (@Sendable (GameOutputCapture) -> Void)?
 
     package init(writer: SessionRecordWriter, release: @escaping (GameSession) throws -> Void) {
@@ -28,12 +24,12 @@ import OSLog
         record.ownerPID = monitor.pid; record.updatedAt = Date()
         let writer = try SessionRecordWriter(record: record, paths: paths)
         self.init(writer: writer) { record in try lease.clearReservation(session: record) }
-        try save()
+        try writer.save()
     }
 
-    func setControlEndpoint(_ endpoint: String) throws { record.controlEndpoint = endpoint; record.updatedAt = Date(); try save() }
+    func setControlEndpoint(_ endpoint: String) throws { record.controlEndpoint = endpoint; record.updatedAt = Date(); try writer.save() }
     func checkpoint(_ timing: GameSessionTiming, activity: GameActivityTracking? = nil) {
-        guard !closed, !hasHandedOff, !record.state.isFinished, record.exit == nil else { return }
+        guard !writer.closed, !writer.hasHandedOff, !record.state.isFinished, record.exit == nil else { return }
         record.timing = timing
         if let activity {
             record.activity = activity
@@ -42,8 +38,8 @@ import OSLog
             } else { record.world = nil }
         }
         record.updatedAt = Date(); record.revision = (record.revision) + 1
-        do { try GameHistoryStore.checkpoint(record, paths: paths) } catch { storageWarning(error) }
-        onChange?(record)
+        do { try GameHistoryStore.checkpoint(record, paths: paths) } catch { writer.storageWarning(error) }
+        writer.onChange?(record)
     }
     func makeOutputCapture() throws -> GameOutputCapture {
         let file = try SessionFileSystem.safePath("console.log", within: directory)
@@ -62,31 +58,30 @@ import OSLog
         record.gameDirectory = directory
         record.logBaseline = GameLogSources.baseline(in: directory)
     }
-    private func note(_ text: String) { do { try append(text) } catch { storageWarning(error) } }
 
     func setHostStatus(_ status: GameHostStatus) throws {
         guard !record.state.isFinished, record.host != status else { return }
         record.host = status; record.updatedAt = Date()
-        try save(); note("[Ruri] \(status.summary)")
+        try writer.save(); writer.note("[Ruri] \(status.summary)")
     }
-    public func setNativeQuitSupported(_ supported: Bool) throws { record.nativeQuitSupported = supported; try save() }
+    func setNativeQuitSupported(_ supported: Bool) throws { record.nativeQuitSupported = supported; try writer.save() }
     func recordNormalQuit(requestID: UUID, requestedAt: Date, accepted: Bool) throws {
         guard !record.state.isFinished else { return }
         let attempt = GameNormalQuitAttempt(requestID: requestID, requestedAt: requestedAt, processedAt: Date(), accepted: accepted)
         record.normalQuitAttempt = attempt; record.updatedAt = attempt.processedAt
         if accepted { record.stage = .quitting }
         if record.events.count < 512 { record.events.append(.init(id: UUID(), date: attempt.processedAt, stage: record.stage, message: attempt.explanation, localizedMessage: attempt.explanationMessage.recorded(redact: redactor.redact))) }
-        try save()
+        try writer.save()
     }
-    public func started(processID: Int32) throws {
+    func started(processID: Int32) throws {
         record.processID = processID; record.gameIdentity = ProcessIdentity.read(processID)
-        record.state = .running; try transition(.running)
+        record.state = .running; try writer.transition(.running)
     }
-    func commandStarted(processID: Int32) throws { record.commandIdentity = ProcessIdentity.read(processID); record.updatedAt = Date(); try save() }
+    func commandStarted(processID: Int32) throws { record.commandIdentity = ProcessIdentity.read(processID); record.updatedAt = Date(); try writer.save() }
     func commandFinished(_ result: GameCommandResult) throws {
         record.commandResults = (record.commandResults ?? []) + [result]
         record.commandIdentity = nil; record.updatedAt = Date()
-        try save(); note("[Ruri] " + result.summary)
+        try writer.save(); writer.note("[Ruri] " + result.summary)
     }
 
     /// Exit/timing are committed before any report reads or user post-command.
@@ -95,7 +90,7 @@ import OSLog
         if let timing { record.timing = timing }
         record.updatedAt = Date()
         record.nativeLogs = GameLogSources.references(paths: paths, session: record)
-        try save()
+        try writer.save()
     }
 
     func preserveEvidence(exit: GameExit, systemReportRoot: URL = GameSystemReportCollector.defaultRoot,
@@ -105,7 +100,7 @@ import OSLog
         // Successful ordinary runs own no duplicate output files. Native logs
         // stay in the game directory; only failures/debug runs preserve copies.
         guard exit.requiresAttention || record.debugLogging == true else { return }
-        do { try saveCapturedOutput() } catch { storageWarning(error) }
+        do { try saveCapturedOutput() } catch { writer.storageWarning(error) }
         let paths = paths, redactor = redactor
         var snapshot = record
         snapshot.exit = exit
@@ -113,8 +108,8 @@ import OSLog
         do {
             let files = try await Task.detached(priority: .utility) { try GameArtifactCollector.collect(paths: paths, session: record, exit: exit, redactor: redactor) }.value
             self.record.evidence = files; self.record.artifactState = .available; self.record.updatedAt = Date()
-            try save()
-        } catch { storageWarning(error) }
+            try writer.save()
+        } catch { writer.storageWarning(error) }
         do {
             let snapshot = record
             let files = try await Task.detached(priority: .utility) {
@@ -124,13 +119,14 @@ import OSLog
             if !files.isEmpty {
                 self.record.evidence += files
                 self.record.artifactState = .available
-                try save()
+                try writer.save()
             }
-        } catch { storageWarning(error) }
+        } catch { writer.storageWarning(error) }
     }
 
-    public func finish(exit: GameExit) throws {
-        guard !record.state.isFinished, !hasHandedOff else { throw RuriError.message(Messages.CoreGameSession.runAlreadyFinished) }
+    func finish(exit: GameExit) throws {
+        try writer.requireWritable()
+        guard !record.state.isFinished else { throw RuriError.message(Messages.CoreGameSession.runAlreadyFinished) }
         defer { try? close() }
         record.exit = exit; record.updatedAt = Date()
         if record.nativeLogs == nil { record.nativeLogs = GameLogSources.references(paths: paths, session: record) }
@@ -139,49 +135,41 @@ import OSLog
         if record.events.count < 512 { record.events.append(.init(id: UUID(), date: record.updatedAt, stage: .finished, message: exit.summary, localizedMessage: exit.summaryMessage.recorded(redact: redactor.redact))) }
         // Commit the result before touching diagnostic files. A broken output
         // sink cannot roll back playtime or the known process exit.
-        var persistence = Result { try save() }
+        var persistence = Result { try writer.save() }
         if exit.requiresAttention || record.hasPostCommandFailure || record.debugLogging == true {
-            do { try saveCapturedOutput() } catch { storageWarning(error) }
+            do { try saveCapturedOutput() } catch { writer.storageWarning(error) }
         }
         if !artifactsCaptured && (exit.requiresAttention || record.debugLogging == true) {
             do { record.evidence = try GameArtifactCollector.collect(paths: paths, session: record, exit: exit, redactor: redactor) }
-            catch { storageWarning(error) }
+            catch { writer.storageWarning(error) }
             do {
                 var budget = 6 * 1_048_576
                 let reports = try GameSystemReportCollector.collect(session: record, budget: &budget)
                 record.evidence += try GameArtifactCollector.preserveSystemReports(reports.documents, paths: paths, session: record, redactor: redactor)
-            } catch { storageWarning(error) }
+            } catch { writer.storageWarning(error) }
         }
         record.artifactState = FileManager.default.fileExists(atPath: directory.path) ? .available : .unavailable
         // History metadata only, read after the game has written its saves.
         record.applyWorldPlayed(start: exit.startedAt, end: exit.endedAt)
         record.finalSnapshot = true; record.updatedAt = Date()
-        do { try save(); persistence = .success(()) } catch { storageWarning(error) }
+        do { try writer.save(); persistence = .success(()) } catch { writer.storageWarning(error) }
         try? SessionArtifactRetention.prune(paths: paths, instanceID: record.instanceID, keeping: record.id)
         try close()
         try persistence.get()
     }
 
-    public func fail(_ error: any Error, cancelled: Bool) throws {
-        guard !record.state.isFinished, !hasHandedOff else { throw RuriError.message(Messages.CoreGameSession.runAlreadyFinished) }
+    func fail(_ error: any Error, cancelled: Bool) throws {
+        let persistence = try writer.recordFailure(error, cancelled: cancelled) { try saveCapturedOutput() }
         defer { try? close() }
-        record.failure = cancelled ? nil : redactor.redact(String(error.localizedDescription.prefix(32768)))
-        record.failureMessage = cancelled ? nil : (error as? RuriError)?.localizedMessage?.recorded(limit: 32768, redact: redactor.redact)
-        record.state = cancelled ? .cancelled : .failed; record.updatedAt = Date(); record.controlEndpoint = nil
-        var persistence = Result { try save() }
-        if !cancelled { do { try saveCapturedOutput() } catch { storageWarning(error) } }
-        note("[Ruri] \(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)")
-        record.finalSnapshot = true; record.artifactState = .available
-        do { try save(); persistence = .success(()) } catch { storageWarning(error) }
         try? SessionArtifactRetention.prune(paths: paths, instanceID: record.instanceID, keeping: record.id)
         try close()
         try persistence.get()
     }
 
-    public func close() throws {
-        guard !closed else { return }
-        defer { closed = true; releaseLease = nil; capturedOutput = [] }
-        do { try releaseLease?(record) } catch { storageWarning(error) }
+    func close() throws {
+        guard !writer.closed else { return }
+        defer { writer.closed = true; releaseLease = nil; capturedOutput = [] }
+        do { try releaseLease?(record) } catch { writer.storageWarning(error) }
     }
 
     private func saveCapturedOutput() throws {
@@ -202,22 +190,7 @@ import OSLog
         try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: tailFile.path)
         savedCaptureCount = capturedOutput.count
         for output in outputs {
-            if let failure = output.writeFailure { note(Messages.MonitorLogging.writeFailed(failure).localized) }
+            if let failure = output.writeFailure { writer.note(Messages.MonitorLogging.writeFailed(failure).localized) }
         }
     }
-
-    public func addSecrets(_ values: [String]) { writer.addSecrets(values) }
-    public func redacted(_ text: String) -> String { writer.redacted(text) }
-    func configureLogging(debug: Bool) throws { try writer.configureLogging(debug: debug) }
-    public func append(_ text: String) throws { try writer.append(text) }
-    public func transition(_ stage: GameSession.Stage, message: String? = nil) throws { try writer.transition(stage, message: message) }
-    public func transition(_ stage: GameSession.Stage, message: LocalizedMessage) throws { try writer.transition(stage, message: message) }
-    public func setJava(_ label: String) throws { try writer.setJava(label) }
-    public func setMemory(_ memory: LaunchMemory) throws { try writer.setMemory(memory) }
-    public func setTuning(_ tuning: JVMTuning) throws { try writer.setTuning(tuning) }
-    public func setWorld(_ world: GameWorldPlay) throws { try writer.setWorld(world) }
-    public func setDestination(_ destination: LaunchDestination) throws { try writer.setDestination(destination) }
-
-    private func save() throws { try writer.save() }
-    private func storageWarning(_ error: any Error) { writer.storageWarning(error) }
 }

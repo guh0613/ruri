@@ -9,7 +9,6 @@ import RuriLocalization
     public private(set) var hasHandedOff: Bool { get { writer.hasHandedOff } set { writer.hasHandedOff = newValue } }
     private let paths: LauncherPaths
     private var lease: GameRunLease?
-    private var redactor: GameLogRedactor { writer.redactor }
     public init(paths: LauncherPaths, instance: GameInstance, accountMode: String) throws {
         let instance = (try? instance.resolvingPersistedLaunchSettings(paths: paths)) ?? instance
         let memory = try? JVMHeapArguments.resolve(base: instance.frozenMemory ?? MemorySettings(maximumMB: instance.memoryMB).resolve(), arguments: ArgumentTokenizer.split(instance.extraJVMArguments))
@@ -32,8 +31,9 @@ import RuriLocalization
     }
 
     public func handoff(to monitor: ProcessIdentity) throws {
+        try writer.requireWritable()
         guard record.processID == nil, !record.state.isFinished, !hasHandedOff else { throw RuriError.message(Messages.CoreGameSession.runCannotBeHandedToMonitor) }
-        record.monitorIdentity = monitor; record.updatedAt = Date(); try save()
+        record.monitorIdentity = monitor; record.updatedAt = Date(); try writer.save()
         hasHandedOff = true
         try close()
     }
@@ -42,15 +42,8 @@ import RuriLocalization
         record = current
     }
     public func fail(_ error: any Error, cancelled: Bool) throws {
-        guard !record.state.isFinished, !hasHandedOff else { throw RuriError.message(Messages.CoreGameSession.runAlreadyFinished) }
+        let persistence = try writer.recordFailure(error, cancelled: cancelled)
         defer { try? close() }
-        record.failure = cancelled ? nil : redactor.redact(String(error.localizedDescription.prefix(32768)))
-        record.failureMessage = cancelled ? nil : (error as? RuriError)?.localizedMessage?.recorded(limit: 32768, redact: redactor.redact)
-        record.state = cancelled ? .cancelled : .failed; record.updatedAt = Date(); record.controlEndpoint = nil
-        var persistence = Result { try save() }
-        note("[Ruri] \(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)")
-        record.finalSnapshot = true; record.artifactState = .available
-        do { try save(); persistence = .success(()) } catch { storageWarning(error) }
         try close()
         try? GameSessionRetention.prune(paths: paths, instanceID: record.instanceID, keeping: record.id)
         try persistence.get()
@@ -59,9 +52,8 @@ import RuriLocalization
     public func close() throws {
         guard !writer.closed else { return }
         defer { writer.closed = true; lease = nil }
-        do { try lease?.clearReservation(session: record) } catch { storageWarning(error) }
+        do { try lease?.clearReservation(session: record) } catch { writer.storageWarning(error) }
     }
-    private func note(_ text: String) { do { try append(text) } catch { storageWarning(error) } }
     public func addSecrets(_ values: [String]) { writer.addSecrets(values) }
     public func redacted(_ text: String) -> String { writer.redacted(text) }
     func configureLogging(debug: Bool) throws { try writer.configureLogging(debug: debug) }
@@ -73,7 +65,4 @@ import RuriLocalization
     public func setTuning(_ tuning: JVMTuning) throws { try writer.setTuning(tuning) }
     public func setWorld(_ world: GameWorldPlay) throws { try writer.setWorld(world) }
     public func setDestination(_ destination: LaunchDestination) throws { try writer.setDestination(destination) }
-
-    private func save() throws { try writer.save() }
-    private func storageWarning(_ error: any Error) { writer.storageWarning(error) }
 }

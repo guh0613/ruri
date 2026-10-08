@@ -22,8 +22,8 @@ public enum GameMonitorService {
                 let paths = try validatedPaths(decoded)
                 guard decoded.plan.directory.resolvingSymlinksInPath() == paths.game(decoded.instanceID).resolvingSymlinksInPath() else { throw RuriError.message(Messages.CoreGameMonitor.sessionDirectoryMismatch) }
                 let recorder = try MonitorSessionRecorder(resuming: decoded.sessionID, instanceID: decoded.instanceID, paths: paths, monitor: decoded.monitor)
-                recorder.addSecrets(decoded.secrets + decoded.plan.environmentRedactions)
-                try recorder.configureLogging(debug: decoded.plan.debugLogging == true)
+                recorder.writer.addSecrets(decoded.secrets + decoded.plan.environmentRedactions)
+                try recorder.writer.configureLogging(debug: decoded.plan.debugLogging == true)
                 return try await GameSessionCoordinator(plan: decoded.plan, recorder: recorder, paths: paths).run()
             }
         } catch {

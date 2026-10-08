@@ -15,7 +15,7 @@ import Darwin
         do {
             let capture = try recorder.makeOutputCapture()
             recorder.retainOutput(capture)
-            try recorder.transition(phase == .before ? .beforeCommand : .afterCommand)
+            try recorder.writer.transition(phase == .before ? .beforeCommand : .afterCommand)
             if shouldStop() {
                 let cancelled = GameCommandResult(phase: phase, startedAt: started, endedAt: Date(), status: nil, cancelled: true, timedOut: false, error: nil)
                 try recorder.commandFinished(cancelled)
@@ -50,8 +50,8 @@ import Darwin
             result = GameCommandResult(phase: phase, startedAt: started, endedAt: Date(), status: status, cancelled: cancelled, timedOut: timedOut, error: nil)
         } catch {
             watcher?.cancel()
-            result = GameCommandResult(phase: phase, startedAt: started, endedAt: Date(), status: nil, cancelled: false, timedOut: false, error: recorder.redacted(error.localizedDescription),
-                                       errorMessage: (error as? RuriError)?.localizedMessage?.recorded(redact: recorder.redacted))
+            result = GameCommandResult(phase: phase, startedAt: started, endedAt: Date(), status: nil, cancelled: false, timedOut: false, error: recorder.writer.redacted(error.localizedDescription),
+                                       errorMessage: (error as? RuriError)?.localizedMessage?.recorded(redact: recorder.writer.redacted))
         }
         try? recorder.commandFinished(result)
         return result

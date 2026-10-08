@@ -91,16 +91,20 @@ struct GameHistoryTests {
         #expect(try GameHistoryStore.summary(paths: paths).seconds == 30)
     }
 
-    @Test @MainActor func brokenDiagnosticLogDoesNotLoseTheGameResultOrTime() throws {
+    @Test(arguments: [false, true]) @MainActor func brokenDiagnosticLogDoesNotLoseTheGameResultOrTime(knownExit: Bool) throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         let output = try recorder.makeOutputCapture(); recorder.retainOutput(output)
         output.receive(Data("bounded evidence\n".utf8)); output.finish()
         // A directory where the console file should be simulates a sink error.
         try FileManager.default.createDirectory(at: recorder.directory.appendingPathComponent("console-tail.log"), withIntermediateDirectories: true)
-        try recorder.finish(exit: .init(status: 7, reason: .exit, processID: 123, startedAt: recorder.record.createdAt, endedAt: Date(), stopRequested: false, durationSeconds: 15))
+        if knownExit {
+            try recorder.finish(exit: .init(status: 7, reason: .exit, processID: 123, startedAt: recorder.record.createdAt, endedAt: Date(), stopRequested: false, durationSeconds: 15))
+        } else { try recorder.fail(RuriError.message("failed before game start"), cancelled: false) }
         let saved = try #require(try GameHistoryStore.load(paths: paths, sessionID: recorder.record.id))
-        #expect(saved.exit?.status == 7 && saved.state == .failed && saved.playedSeconds == 15)
-        #expect(try GameHistoryStore.summary(paths: paths).seconds == 15)
+        #expect(saved.exit?.status == (knownExit ? 7 : nil) && saved.state == .failed && saved.finalSnapshot)
+        #expect(saved.playedSeconds == (knownExit ? 15 : 0))
+        #expect(try GameHistoryStore.summary(paths: paths).seconds == (knownExit ? 15 : 0))
+        #expect(!GameRunLease.isHeld(paths: paths, instanceID: instance.id))
     }
 }

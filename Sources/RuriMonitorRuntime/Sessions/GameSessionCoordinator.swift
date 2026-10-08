@@ -22,9 +22,9 @@ import RuriLocalization
 
     func run() async throws -> Int32 {
         let transport = try MonitorServiceTransport(session: recorder.record) { [weak self] request in self?.control(request) ?? false }
-        recorder.onChange = { [weak transport] record in transport?.update(record) }
+        recorder.writer.onChange = { [weak transport] record in transport?.update(record) }
         recorder.onCapture = { [weak transport] capture in transport?.setCapture(capture) }
-        defer { recorder.onChange = nil; recorder.onCapture = nil; transport.close() }
+        defer { recorder.writer.onChange = nil; recorder.onCapture = nil; transport.close() }
         do {
             try recorder.setControlEndpoint(transport.endpoint)
             try plan.commands?.validate()
@@ -44,8 +44,8 @@ import RuriLocalization
             if let skin = plan.offlineSkin {
                 let server = try await OfflineSkinServer.start(skin)
                 skinServer = server; plan = try server.applying(to: plan)
-                try? recorder.append(Messages.OfflineSkin.ready.localized)
-                try? recorder.append("[Ruri] \(plan.redactedCommand)")
+                try? recorder.writer.append(Messages.OfflineSkin.ready.localized)
+                try? recorder.writer.append("[Ruri] \(plan.redactedCommand)")
             }
             try checkCancellation()
             let result = try await runGame()
@@ -64,7 +64,7 @@ import RuriLocalization
     }
 
     private func runGame() async throws -> GameExit {
-        if recorder.record.stage != .starting { try recorder.transition(.starting) }
+        if recorder.record.stage != .starting { try recorder.writer.transition(.starting) }
         if let log = plan.quickPlayLog {
             let expected = try SessionFileSystem.safePath("quick-play/" + log.lastPathComponent, within: paths.instance(recorder.record.instanceID))
             guard log.isFileURL, log.pathExtension == "json", log.standardizedFileURL == expected.standardizedFileURL else { throw RuriError.message(Messages.Servers.invalidList) }
@@ -129,7 +129,7 @@ import RuriLocalization
         switch request.command {
         case .stop:
             stopPending = true
-            if let game, game.isRunning { try? recorder.transition(.stopping); game.stop() }
+            if let game, game.isRunning { try? recorder.writer.transition(.stopping); game.stop() }
             return true
         case .quit:
             guard let game, game.isRunning, recorder.record.nativeQuitSupported == true else { return false }

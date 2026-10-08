@@ -20,11 +20,11 @@ struct GamePlaytimeTests {
     @Test @MainActor func cursorReplaysHistoryAndIncrementalOutputWithoutDuplicatingIt() async throws {
         let (paths, instance) = try GameSessionTests().setup(); defer { try? FileManager.default.removeItem(at: paths.root) }
         let recorder = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
-        try recorder.append("before reconnection")
+        try recorder.writer.append("before reconnection")
         let cursor = try GameSessionLogCursor(paths: paths, session: recorder.record)
-        try recorder.append("during reconnection")
+        try recorder.writer.append("during reconnection")
         #expect(try await cursor.refresh())
-        try recorder.append("after reconnection")
+        try recorder.writer.append("after reconnection")
         #expect(try await cursor.refresh())
         #expect(try await !cursor.refresh())
         let lines = await cursor.lines

@@ -12,6 +12,7 @@ struct MonitorOwnershipTests {
         let identity = try #require(ProcessIdentity.read(ProcessInfo.processInfo.processIdentifier))
         try first.handoff(to: identity)
         #expect(throws: (any Error).self) { try first.setJava("stale preparation callback") }
+        #expect(first.record.java == nil)
         #expect(try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: first.record.id).java == nil)
         #expect(!GameRunLease.isHeld(paths: paths, instanceID: instance.id))
         // The persistent handoff record closes the gap between releasing the
@@ -22,6 +23,11 @@ struct MonitorOwnershipTests {
         let resumed = try MonitorSessionRecorder(resuming: first.record.id, instanceID: instance.id, paths: paths, monitor: identity)
         #expect(GameRunLease.isHeld(paths: paths, instanceID: instance.id))
         try resumed.fail(RuriError.message("controlled failure"), cancelled: false)
+        let finished = resumed.record
+        #expect(throws: (any Error).self) { try resumed.fail(CancellationError(), cancelled: true) }
+        #expect(throws: (any Error).self) { try resumed.writer.setJava("late metadata callback") }
+        #expect(resumed.record == finished)
+        #expect(try GameSessionStore.load(paths: paths, instanceID: instance.id, sessionID: finished.id) == finished)
         #expect(!GameRunLease.isHeld(paths: paths, instanceID: instance.id))
         let next = try GameSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
         try next.fail(CancellationError(), cancelled: true)

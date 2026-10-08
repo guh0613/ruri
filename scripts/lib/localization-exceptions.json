@@ -565,11 +565,6 @@
     "reason": "Stable log prefix around already localized text or verbatim process output."
   },
   {
-    "file": "Sources/RuriCore/Sessions/GameSessionRecorder.swift",
-    "literal": "\"[Ruri] \\(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)\"",
-    "reason": "Stable log prefix around already localized text or verbatim process output."
-  },
-  {
     "file": "Sources/RuriCore/Diagnostics/GameDiagnosticBundle.swift",
     "literal": "\"\\nRuri: \\(version)\\n\"",
     "reason": "Product identifier and version in the export environment header."
@@ -1396,7 +1391,7 @@
     "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
   },
   {
-    "file": "Sources/RuriMonitorRuntime/Sessions/MonitorSessionRecorder.swift",
+    "file": "Sources/RuriSessionKit/Storage/SessionRecordWriter.swift",
     "literal": "\"[Ruri] \\(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)\"",
     "reason": "Stable log prefix around already localized text or verbatim process output."
   }

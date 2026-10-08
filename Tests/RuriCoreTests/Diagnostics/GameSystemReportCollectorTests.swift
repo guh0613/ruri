@@ -48,7 +48,7 @@ struct GameSystemReportCollectorTests {
         defer { try? FileManager.default.removeItem(at: paths.root) }
         let system = paths.root.appendingPathComponent("system")
         let recorder = try MonitorSessionRecorder(paths: paths, instance: instance, accountMode: "offline")
-        recorder.addSecrets(["private-fixture-secret"])
+        recorder.writer.addSecrets(["private-fixture-secret"])
         let exit = GameExit(status: SIGBUS, reason: .signal, processID: 123456, startedAt: recorder.record.createdAt, endedAt: Date(), stopRequested: false)
         try recorder.recordGameExit(exit)
         let content = ips(detail: "private-fixture-secret")

@@ -36,7 +36,7 @@ struct GameDiagnosticBundleTests {
         defer { try? FileManager.default.removeItem(at: root) }
         let paths = LauncherPaths(root: root.appendingPathComponent("data")); try paths.prepare()
         let recorder = try GameSessionRecorder(paths: paths, instance: GameInstance(name: "private-title", gameVersion: "1.21.1"), accountMode: "offline")
-        try recorder.append("Error: Could not find or load main class PRIVATE-EVIDENCE")
+        try recorder.writer.append("Error: Could not find or load main class PRIVATE-EVIDENCE")
         try recorder.fail(RuriError.message("failed"), cancelled: false)
         let diagnosis = try GameDiagnosticAnalyzer.load(paths: paths, session: recorder.record)
         let preview = try GameDiagnosticBundle.preview(session: recorder.record, diagnosis: diagnosis, homeDirectory: root.path)
