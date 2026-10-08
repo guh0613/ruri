@@ -11,22 +11,22 @@ public indirect enum NBTValue: Sendable, Equatable {
 
 /// Keep untouched fields as their original bytes, including numeric widths,
 /// array types, modified UTF-8 and the subtype of an empty list.
-struct ServerNBTDocument: Sendable {
-    struct Field: Sendable {
-        let name: String
-        let type: UInt8
-        let encoded: Data
-        let payload: Data
-        let value: NBTValue
+package struct ServerNBTDocument: Sendable {
+    package struct Field: Sendable {
+        package let name: String
+        package let type: UInt8
+        package let encoded: Data
+        package let payload: Data
+        package let value: NBTValue
     }
-    var root: [Field]
-    var entries: [[Field]]
-    let header: Data
-    let compressed: Bool
-    static func empty() throws -> Self { try NBTReader.serverDocument(Data([10, 0, 0, 9, 0, 7] + Array("servers".utf8) + [10, 0, 0, 0, 0, 0])) }
-    func encoded() throws -> Data { try NBTReader.encodeServers(self) }
-    static func string(_ name: String, _ value: String) throws -> Field { try NBTReader.serverField(name, type: 8, payload: NBTReader.serverString(value), value: .string(value)) }
-    static func byte(_ name: String, _ value: UInt8) throws -> Field { try NBTReader.serverField(name, type: 1, payload: Data([value]), value: .integer(Int64(value))) }
+    package var root: [Field]
+    package var entries: [[Field]]
+    package let header: Data
+    package let compressed: Bool
+    package static func empty() throws -> Self { try NBTReader.serverDocument(Data([10, 0, 0, 9, 0, 7] + Array("servers".utf8) + [10, 0, 0, 0, 0, 0])) }
+    package func encoded() throws -> Data { try NBTReader.encodeServers(self) }
+    package static func string(_ name: String, _ value: String) throws -> Field { try NBTReader.serverField(name, type: 8, payload: NBTReader.serverString(value), value: .string(value)) }
+    package static func byte(_ name: String, _ value: UInt8) throws -> Field { try NBTReader.serverField(name, type: 1, payload: Data([value]), value: .integer(Int64(value))) }
 }
 
 extension NBTReader {
@@ -46,7 +46,7 @@ extension NBTReader {
         }
         return result
     }
-    static func serverDocument(_ data: Data) throws -> ServerNBTDocument {
+    package static func serverDocument(_ data: Data) throws -> ServerNBTDocument {
         var reader = try NBTReader(data: data)
         guard try reader.byte() == 10 else { throw RuriError.message(Messages.Servers.invalidList) }
         _ = try reader.text()
@@ -79,7 +79,7 @@ extension NBTReader {
 }
 
 public enum Gzip {
-    static func compress(_ data: Data) throws -> Data {
+    package static func compress(_ data: Data) throws -> Data {
         guard data.count <= 32 * 1024 * 1024 else { throw RuriError.message(Messages.CoreNBT.nbtCompressionInputTooLarge) }
         var stream = z_stream()
         guard deflateInit2_(&stream, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY, zlibVersion(), Int32(MemoryLayout<z_stream>.size)) == Z_OK else { throw RuriError.message(Messages.CoreNBT.gzipCompressionInitializationFailed) }
@@ -147,7 +147,7 @@ public struct NBTReader {
     }
     // Copy untouched tags verbatim: NBTValue deliberately does not retain numeric
     // widths, array types or empty-list subtypes, so it cannot be used as a writer.
-    static func updatingDataPacks(_ data: Data, enabled: [String], disabled: [String]) throws -> Data {
+    package static func updatingDataPacks(_ data: Data, enabled: [String], disabled: [String]) throws -> Data {
         var reader = try NBTReader(data: data)
         guard try reader.byte() == 10 else { throw RuriError.message(Messages.CoreNBT.nbtRootIsNotCompound) }
         _ = try reader.text()

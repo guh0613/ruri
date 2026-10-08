@@ -330,7 +330,7 @@
     "reason": "Fixed redaction marker or regular-expression replacement syntax; never translate."
   },
   {
-    "file": "Sources/RuriCore/Diagnostics/GameLog.swift",
+    "file": "Sources/RuriSessionKit/Diagnostics/GameLog.swift",
     "literal": "\"<log4j:Event \"",
     "reason": "Log4j XML recognition prefix."
   },

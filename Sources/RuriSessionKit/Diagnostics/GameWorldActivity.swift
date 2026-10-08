@@ -4,7 +4,7 @@ extension GameSession {
     /// Fold a read-back save into a finished record. A quick-play choice keeps
     /// its provenance when the save agrees, and is replaced when the player
     /// moved on to another one during the same run.
-    mutating func applyWorldPlayed(start: Date, end: Date) {
+    package mutating func applyWorldPlayed(start: Date, end: Date) {
         guard activity == nil else { return }
         guard let directory = gameDirectory,
               let played = GameWorldActivity.played(in: directory, start: start, end: end) else { return }
@@ -19,16 +19,16 @@ extension GameSession {
 /// Reads back which save a finished run touched. This is metadata for the
 /// history page, never a launch or liveness authority: every failure simply
 /// leaves the run without a save, and nothing here writes to the game folder.
-enum GameWorldActivity {
+package enum GameWorldActivity {
     /// A save that was still being written as the process ended can stamp
     /// itself slightly after the observed exit; a clock skewed the other way
     /// must not make the previous run's save look like this one's.
-    static let leadIn: TimeInterval = 60
-    static let leadOut: TimeInterval = 300
-    static let scanLimit = 512
-    static let levelDataLimit = 8 * 1024 * 1024
+    package static let leadIn: TimeInterval = 60
+    package static let leadOut: TimeInterval = 300
+    package static let scanLimit = 512
+    package static let levelDataLimit = 8 * 1024 * 1024
 
-    static func played(in gameDirectory: URL, start: Date, end: Date) -> GameWorldPlay? {
+    package static func played(in gameDirectory: URL, start: Date, end: Date) -> GameWorldPlay? {
         guard start <= end else { return nil }
         let window = start.addingTimeInterval(-leadIn)...max(end, start).addingTimeInterval(leadOut)
         var best: GameWorldPlay?
@@ -41,7 +41,7 @@ enum GameWorldActivity {
     }
 
     private static func saves(in gameDirectory: URL) -> [URL] {
-        guard let saves = try? LauncherPaths.safePath("saves", within: gameDirectory),
+        guard let saves = try? SessionFileSystem.safePath("saves", within: gameDirectory),
               (try? saves.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])).map({ $0.isDirectory == true && $0.isSymbolicLink != true }) == true,
               let entries = try? FileManager.default.contentsOfDirectory(at: saves, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey], options: [.skipsHiddenFiles])
         else { return [] }

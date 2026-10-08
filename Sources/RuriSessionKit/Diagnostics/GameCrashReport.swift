@@ -16,13 +16,13 @@ public struct GameCrashReport: Identifiable, Sendable {
         let keys: Set<URLResourceKey> = [.isRegularFileKey, .isSymbolicLinkKey, .contentModificationDateKey]
         var candidates: [(URL, Kind)] = []
         if (try? game.appendingPathComponent("crash-reports").resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink) == false,
-           let directory = try? LauncherPaths.safePath("crash-reports", within: game),
+           let directory = try? SessionFileSystem.safePath("crash-reports", within: game),
            let files = try? fm.contentsOfDirectory(at: directory, includingPropertiesForKeys: Array(keys)) {
             candidates += files.filter { $0.lastPathComponent.hasPrefix("crash-") && $0.pathExtension == "txt" }.map { ($0, .minecraft) }
         }
         let jvmName = "hs_err_pid\(exit.processID).log"
         if (try? game.appendingPathComponent(jvmName).resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink) == false,
-           let jvm = try? LauncherPaths.safePath(jvmName, within: game) { candidates.append((jvm, .jvm)) }
+           let jvm = try? SessionFileSystem.safePath(jvmName, within: game) { candidates.append((jvm, .jvm)) }
         return candidates.compactMap { url, kind -> GameCrashReport? in
             guard let attributes = try? url.resourceValues(forKeys: keys), attributes.isRegularFile == true,
                   attributes.isSymbolicLink == false, let modified = attributes.contentModificationDate,

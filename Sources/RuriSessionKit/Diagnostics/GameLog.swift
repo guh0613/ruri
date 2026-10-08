@@ -24,14 +24,14 @@ public struct GameLogFormatter: Sendable {
     public mutating func flush() -> [String] { defer { event = "" }; return event.isEmpty ? [] : [event] }
 }
 private final class LogEventParser: NSObject, XMLParserDelegate {
-    var thread = "main"; var level = "INFO"; var message = ""; var throwable = ""; var current = ""
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes: [String: String]) {
+    package var thread = "main"; var level = "INFO"; var message = ""; var throwable = ""; var current = ""
+    package func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes: [String: String]) {
         current = elementName
         if elementName == "log4j:Event" { thread = attributes["thread"] ?? "main"; level = attributes["level"] ?? "INFO" }
     }
-    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) { current = "" }
-    func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) { append(String(decoding: CDATABlock, as: UTF8.self)) }
-    func parser(_ parser: XMLParser, foundCharacters string: String) { append(string) }
+    package func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) { current = "" }
+    package func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) { append(String(decoding: CDATABlock, as: UTF8.self)) }
+    package func parser(_ parser: XMLParser, foundCharacters string: String) { append(string) }
     private func append(_ text: String) {
         if current == "log4j:Message" { message += text }
         if current == "log4j:Throwable" { throwable += text }

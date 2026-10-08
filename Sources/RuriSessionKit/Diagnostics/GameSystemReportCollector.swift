@@ -4,12 +4,12 @@ import RuriLocalization
 
 /// Bounded collection at exit or on an explicit read. No debugger attach,
 /// privileged log access, directory watcher or in-game crash handler is installed.
-enum GameSystemReportCollector {
-    static let defaultRoot = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/DiagnosticReports")
+package enum GameSystemReportCollector {
+    package static let defaultRoot = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/DiagnosticReports")
 
     /// macOS writes its report after the process has exited. Only native crash
     /// signals warrant waiting; ordinary Java failures get one immediate read.
-    static func collectAfterExit(session: GameSession, root: URL = defaultRoot,
+    package static func collectAfterExit(session: GameSession, root: URL = defaultRoot,
                                  retryDelays: [Duration] = [.seconds(1), .seconds(2), .seconds(4)]) async throws -> GameEvidenceSnapshot {
         guard let exit = session.exit, exit.requiresAttention else { return .init(documents: [], limitations: []) }
         var snapshot = session
@@ -25,7 +25,7 @@ enum GameSystemReportCollector {
         return .init(documents: [], limitations: [])
     }
 
-    static func collect(session: GameSession, budget: inout Int, root: URL = defaultRoot) throws -> GameEvidenceSnapshot {
+    package static func collect(session: GameSession, budget: inout Int, root: URL = defaultRoot) throws -> GameEvidenceSnapshot {
         guard session.needsAttention, session.hasPlayed, budget > 0 else { return .init(documents: [], limitations: []) }
         let identities = [session.gameIdentity, session.monitorIdentity].compactMap { $0 }
         let pids = Set(identities.map(\.pid) + (session.exit.map { [$0.processID] } ?? []))

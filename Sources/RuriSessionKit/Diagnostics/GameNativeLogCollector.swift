@@ -3,13 +3,13 @@ import Darwin
 import RuriLocalization
 
 /// Bounded analysis reads are separate from complete, explicit file export.
-enum GameNativeLogCollector {
-    struct Snapshot {
-        var documents: [GameDiagnosticDocument] = []
-        var limitations: [String] = []
-        var names: Set<String> = []
+package enum GameNativeLogCollector {
+    package struct Snapshot {
+        package var documents: [GameDiagnosticDocument] = []
+        package var limitations: [String] = []
+        package var names: Set<String> = []
     }
-    static func collect(paths: LauncherPaths, session: GameSession, budget: inout Int) throws -> Snapshot {
+    package static func collect(paths: any SessionPaths, session: GameSession, budget: inout Int) throws -> Snapshot {
         var result = Snapshot()
         for source in try GameLogSources.native(paths: paths, session: session) {
             do {
@@ -23,7 +23,7 @@ enum GameNativeLogCollector {
         if result.documents.isEmpty { result.limitations.append(Messages.NativeGameLogs.noMatchingLogs.localized) }
         return result
     }
-    static func read(_ source: GameLogFile, budget: inout Int, perFileLimit: Int = 2 * 1_048_576) throws -> [GameDiagnosticDocument] {
+    package static func read(_ source: GameLogFile, budget: inout Int, perFileLimit: Int = 2 * 1_048_576) throws -> [GameDiagnosticDocument] {
         try Task.checkCancellation()
         let limit = min(budget, perFileLimit)
         guard limit > 0 else { return [] }

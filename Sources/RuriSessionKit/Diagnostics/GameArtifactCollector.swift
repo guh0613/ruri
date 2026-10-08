@@ -3,8 +3,8 @@ import Darwin
 import RuriLocalization
 
 /// Capture known files before post-launch commands can replace them.
-enum GameArtifactCollector {
-    static func preserveSystemReports(_ documents: [GameDiagnosticDocument], paths: LauncherPaths, session: GameSession,
+package enum GameArtifactCollector {
+    package static func preserveSystemReports(_ documents: [GameDiagnosticDocument], paths: any SessionPaths, session: GameSession,
                                       redactor: GameLogRedactor) throws -> [GameSession.Evidence] {
         guard !documents.isEmpty else { return [] }
         let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
@@ -22,7 +22,7 @@ enum GameArtifactCollector {
         }
     }
 
-    static func collect(paths: LauncherPaths, session: GameSession, exit: GameExit, redactor: GameLogRedactor) throws -> [GameSession.Evidence] {
+    package static func collect(paths: any SessionPaths, session: GameSession, exit: GameExit, redactor: GameLogRedactor) throws -> [GameSession.Evidence] {
         var evidence: [GameSession.Evidence] = []
         let directory = try GameSessionStore.directory(paths: paths, instanceID: session.instanceID, sessionID: session.id)
         var snapshot = session
@@ -46,7 +46,7 @@ enum GameArtifactCollector {
                 if offset > 0 { if let newline = data.firstIndex(of: 10) { data.removeSubrange(...newline) } else { data.removeAll() } }
                 let content = redactor.redact(String(decoding: data, as: UTF8.self))
                 let relative = "reports/\(index)-\(url.lastPathComponent)"
-                let destination = try LauncherPaths.safePath(relative, within: directory)
+                let destination = try SessionFileSystem.safePath(relative, within: directory)
                 let encoded = Data((truncated ? Messages.CoreGameSession.reportWithTruncation(content).localized : content).utf8)
                 try encoded.prefix(budget).write(to: destination, options: .atomic)
                 try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: destination.path)
