@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+  <channel>
+    <title>Ruri (arm64)</title>
+    <link>https://github.com/guh0613/ruri/releases</link>
+    <item>
+      <title>Ruri 0.10.6</title>
+      <pubDate>Thu, 08 Oct 2026 06:27:26 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.10.6</link>
+      <sparkle:version>34</sparkle:version>
+      <sparkle:shortVersionString>0.10.6</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.10.6</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">&gt; 全面优化了 App 与命令行中的中英文文本，用词更统一、表达更自然。同时修复了切换主题后外观不同步的问题。
+&gt;
+&gt; Polished Chinese and English text throughout the app and CLI for more consistent, natural wording. Also fixed the appearance not staying in sync when switching themes.
+
+- chore(release): bump version to 0.10.6 (ab00194)
+- fix(i18n): polish Chinese copy across the app and CLI (8321bfe)
+- fix(ui): keep appearance in sync when switching themes (6ca5074)
+- chore(dev): debug the packaged app and isolate data from VS Code (cc9b9c8)
+- fix(update): disable Sparkle in ad hoc signed builds (4496fff)
+- chore: license Ruri under GPL-3.0 (de4ada0)
+- fix(i18n): polish English translations across the app and CLI (a4d4700)
+
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.10.6/Ruri-0.10.6-macOS-arm64.dmg" length="28976586" type="application/octet-stream" sparkle:edSignature="BxggekvtcgxDM4DEKl9whRoem8EJ7WPLJ1CXPcoMf3J/5KVXIfvQhiSa4N/Wy4qWtmusTmgyusRCv8WzfAF/Ag==" />
+    </item>
+    <item>
+      <title>Ruri 0.10.5</title>
+      <pubDate>Tue, 06 Oct 2026 05:40:38 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.10.5</link>
+      <sparkle:version>33</sparkle:version>
+      <sparkle:shortVersionString>0.10.5</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.10.5</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">&gt; Ruri 新增英文界面，默认跟随系统语言。系统语言为英文时会显示英文，可在「设置 → 外观 → 语言」切回简体中文。
+&gt;
+&gt; Ruri now has an English interface and follows the system language by default. To change it, go to Settings → Appearance → Language.
+
+- fix(release): find sign_update in the per-architecture build folder (b066a28)
+- chore(release): bump version to 0.10.5 (a368773)
+- fix(settings): show the language restart hint only after a change (935a803)
+- refactor(i18n): keep the language choice only in AppleLanguages (3d3d5d7)
+- fix(i18n): polish English terminology and casing (268c6f5)
+- feat(i18n): add English localization (de1059d)
+- fix(i18n): remove hard-coded Chinese grammar from composed text (849576f)
+- feat(i18n): track translation coverage, staleness and plural rules (092886a)
+- feat(i18n): fall back through English and sync AppKit language (40b40c3)
+- refactor(i18n): migrate to string catalogs with stable message keys (afa74f0)
+- ci: cross-compile Intel builds with the Xcode that tests arm64 (40e6e6c)
+
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.10.5/Ruri-0.10.5-macOS-arm64.dmg" length="28976343" type="application/octet-stream" sparkle:edSignature="BJsiBdurDoLdPzUdt+iNfoPvHRl5lzW/Ke2hsWlq5wjpU2RXTMpDTQZqO38ro4bTcqfsWW3Fym6ncL1gbSYKDg==" />
+    </item>
+    <item>
+      <title>Ruri 0.10.0</title>
+      <pubDate>Sun, 04 Oct 2026 11:21:48 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.10.0</link>
+      <sparkle:version>31</sparkle:version>
+      <sparkle:shortVersionString>0.10.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.10.0</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">- fix(ui): adapt server details to narrow columns (508e1e6)
+- fix(ui): adapt collection widths to sidebar visibility (ed45617)
+- fix(accounts): avoid an x86_64 compiler crash in the arms picker (65a2c6e)
+- chore(release): bump version to 0.10.0 (6945671)
+- feat(import): redesign the modpack import sheet (391bd5b)
+- fix(curseforge): install archived files that packs pin (c9cf01b)
+- fix(ui): restore native sidebar selection emphasis (0f45c91)
+- fix(ui): remove scrollbar gutters from immersive detail pages (ed8611e)
+- fix(ui): stabilize collection toolbars during sidebar transitions (3ff2bc6)
+- fix(ui): simplify instance and launch settings copy (ff8f9c4)
+- fix(accounts): treat arm model as an attribute of a saved skin (ffb9d0c)
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.10.0/Ruri-0.10.0-macOS-arm64.dmg" length="28738671" type="application/octet-stream" sparkle:edSignature="ftISrBq557fzn8LI38ayPsOCHrLOcUunM7rr4Kp2stfTDN1K4LO7Jj5pKyCcFBsGOIxJK5RxWpPlE45vXIQZCw==" />
+    </item>
+    <item>
+      <title>Ruri 0.9.9-beta</title>
+      <pubDate>Tue, 29 Sep 2026 14:38:18 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.9.9-beta</link>
+      <sparkle:version>28</sparkle:version>
+      <sparkle:shortVersionString>0.9.9-beta</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.9.9-beta</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">- chore(release): bump version to 0.9.9-beta (69f1ec1)
+- fix(app): opt the launcher out of Game Mode (5712b6c)
+- fix(instances): show the planned heap on the detail and home pages (65980e4)
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.9.9-beta/Ruri-0.9.9-beta-macOS-arm64.dmg" length="28695664" type="application/octet-stream" sparkle:edSignature="gqumwg/2+v6JPRWxsxg2LLgRIqU10O1d2RzsNPLY81QZranQRWRTriGqzzwu2+xsJwRc4uS2EMmuxkaa+aFnAQ==" />
+    </item>
+    <item>
+      <title>Ruri 0.9.8-beta</title>
+      <pubDate>Tue, 29 Sep 2026 13:39:38 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.9.8-beta</link>
+      <sparkle:version>27</sparkle:version>
+      <sparkle:shortVersionString>0.9.8-beta</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.9.8-beta</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">- chore(release): bump version to 0.9.8-beta (9b2b931)
+- fix(sessions): hide menu gaps in play records and fold the estimate note into a tooltip (3cc3028)
+- feat(launch): choose JVM options per Java, heap and mods (24e36cc)
+- test(monitor): wait for the first line before checking the log preview (43cdcaa)
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.9.8-beta/Ruri-0.9.8-beta-macOS-arm64.dmg" length="28685966" type="application/octet-stream" sparkle:edSignature="uoPdkOdowEGrsHrc7BuzwWueXNaH14QNgWhu9CbOCre1yleyAFKesLp2/iL3dby12jPXlhFTgGsYMXX9yYjbBg==" />
+    </item>
+    <item>
+      <title>Ruri 0.9.7-beta</title>
+      <pubDate>Mon, 28 Sep 2026 12:14:14 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.9.7-beta</link>
+      <sparkle:version>26</sparkle:version>
+      <sparkle:shortVersionString>0.9.7-beta</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.9.7-beta</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">- chore(release): bump version to 0.9.7-beta (66235e1)
+- ci(release): rely on CI instead of rebuilding and retesting (6042344)
+- perf(settings): cut launch settings editor type-checking from 3.6 s (7bee148)
+- build: strip release executables and keep release builds in their own folder (b08f685)
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.9.7-beta/Ruri-0.9.7-beta-macOS-arm64.dmg" length="28441317" type="application/octet-stream" sparkle:edSignature="UuQhx0IBqXja/3e3YhR+GXbuM5YC10niFMZ7z7iulAj06zK4hFpsH6aZIx7f3WrPho2bFoER8FWb+UvzOqneAw==" />
+    </item>
+    <item>
+      <title>Ruri 0.9.6-beta</title>
+      <pubDate>Mon, 28 Sep 2026 06:05:20 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.9.6-beta</link>
+      <sparkle:version>25</sparkle:version>
+      <sparkle:shortVersionString>0.9.6-beta</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.9.6-beta</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">- chore(release): bump version to 0.9.6-beta (ab9db55)
+- fix(servers): prevent clipped rows on initial load (6b1a7e6)
+- feat(activity): notify only for what needs attention and show task progress (be63eaa)
+- fix(worlds): move Done to the footer in schematic and data pack sheets (708f493)
+- feat(home): replace favorites and "show on home" with pinning (943310e)
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.9.6-beta/Ruri-0.9.6-beta-macOS-arm64.dmg" length="36134044" type="application/octet-stream" sparkle:edSignature="J/A8YeXwhQj5xtj+Ox2qgAi2MkYAVlWrm6NtkX9N9mMCTG/fNTDZ1KmcIS/68QR11rMhPy3AHCnawp/X+PYmCw==" />
+    </item>
+    <item>
+      <title>Ruri 0.9.0-beta</title>
+      <pubDate>Sat, 26 Sep 2026 12:05:35 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.9.0-beta</link>
+      <sparkle:version>23</sparkle:version>
+      <sparkle:shortVersionString>0.9.0-beta</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.9.0-beta</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">- test(cli): respect the resolved authorization language (d9b8e0a)
+- chore(release): bump version to 0.9.0-beta (14df357)
+- feat(cli): offer compact first-launch installation (918ccb7)
+- test(cli): verify English defaults in the distributed app (36abbf9)
+- feat(cli): default to English independently of the app language (cf498af)
+- test(cli): verify concise discovery and text output in packaged apps (7bbe33c)
+- feat(cli): render concise text results and actionable diagnostics (94b81f6)
+- feat(cli): add grouped command help and focused schema discovery (6c2e034)
+- fix(settings): clarify CLI copy and space installation details (c19c07f)
+- fix(cli): render requested command help and simplify installation copy (2110780)
+- fix(cli): install into the standard command path with guided authorization (ee29003)
+- fix(app): refresh derived settings after shared state commits (bcd0c3c)
+- fix(cli): include actionable recovery details in failed operations (94dab94)
+- test(cli): verify signed packages on both supported architectures (e486f28)
+- fix(core): preserve concurrent CLI edits in GUI configuration drafts (c16793e)
+- feat(cli): finalize discovery installation UI and packaged acceptance checks (b6117c7)
+- feat(cli): add resource pack world and recovery commands (2ff1bff)
+- feat(cli): share account authentication and monitored game launching (d7c783e)
+- feat(cli): expose instance directory and Java management (7c5b046)
+- feat(cli): add atomic configuration patches and inheritance inspection (ed1ee07)
+- feat(cli): add typed command protocol and bundled CLI infrastructure (7eb468c)
+- chore: streamline tests and build tooling (f9904b6)
+- fix(update): publish the appcast through a gh-pages branch (85909a2)
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.9.0-beta/Ruri-0.9.0-beta-macOS-arm64.dmg" length="34689013" type="application/octet-stream" sparkle:edSignature="QCU7dBrru2s760WJ5/zsOy1dkiabU94L7FJUGBs9lLWNJZy/3Px229+a0IZvsNJu6Yp6oth3uxqogafLH7nOAQ==" />
+    </item>
+    <item>
+      <title>Ruri 0.8.6-beta</title>
+      <pubDate>Wed, 23 Sep 2026 10:53:23 +0000</pubDate>
+      <link>https://github.com/guh0613/ruri/releases/tag/v0.8.6-beta</link>
+      <sparkle:version>21</sparkle:version>
+      <sparkle:shortVersionString>0.8.6-beta</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:fullReleaseNotesLink>https://github.com/guh0613/ruri/releases/tag/v0.8.6-beta</sparkle:fullReleaseNotesLink>
+      <description sparkle:format="markdown">- chore(release): bump version to 0.8.6-beta (c6659ae)
+- feat(update): check for and install updates with Sparkle (49c82c0)
+</description>
+      <enclosure url="https://github.com/guh0613/ruri/releases/download/v0.8.6-beta/Ruri-0.8.6-beta-macOS-arm64.dmg" length="26722725" type="application/octet-stream" sparkle:edSignature="ER8DsnCfW1aR8NcVgBLQnRzHVar9FKRqP51qe7Vun9EdGGlp8qifgTWZv3lbYYikwYf0Ogmmd+Bwy0jg+vJvCA==" />
+    </item>
+  </channel>
+</rss>
