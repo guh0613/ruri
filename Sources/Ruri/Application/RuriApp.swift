@@ -61,6 +61,16 @@ private struct MainWindowContent: View {
         RootView().environment(model).environment(updater)
             .environment(\.locale, LocalizationContext.current.formatLocale)
             .environment(\.layoutDirection, Locale.Language(identifier: LocalizationContext.current.language).characterDirection == .rightToLeft ? .rightToLeft : .leftToRight)
+            .onChange(of: model.state.settings.appearance, initial: true) { _, preference in
+                // Let AppKit propagate one appearance to windows, native controls,
+                // and SwiftUI. A presentation-level color scheme can leave them
+                // out of sync when switching back from dark to light.
+                NSApp.appearance = switch preference {
+                case "light": NSAppearance(named: .aqua)
+                case "dark": NSAppearance(named: .darkAqua)
+                default: nil
+                }
+            }
             .onAppear {
                 lifecycle.model = model
                 let action = openWindow

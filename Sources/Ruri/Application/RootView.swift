@@ -84,7 +84,6 @@ struct RootView: View {
             }
         }
         .frame(minWidth: minimumWindowWidth, minHeight: 600)
-        .preferredColorScheme(model.colorScheme)
         .sheet(isPresented: Bindable(model).showCLISetup) { CLIOnboardingView() }
         .sheet(isPresented: Bindable(model).showCreate) { CreateInstanceView() }
         .sheet(isPresented: Binding(get: { model.showDirectories || model.showAddDirectory }, set: {
