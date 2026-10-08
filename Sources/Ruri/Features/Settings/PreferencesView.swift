@@ -97,6 +97,7 @@ struct PreferencesView: View {
                 Text(model.paths.root.path).font(.system(.caption, design: .monospaced)).foregroundStyle(.secondary)
                     .textSelection(.enabled).fixedSize(horizontal: false, vertical: true)
             }.multilineTextAlignment(.leading).padding(.vertical, 3)
+            DownloadCacheRow()
         }
         Section {
             LabeledContent(Messages.AppPreferencesView.version.localized, value: BuildConfiguration().version)

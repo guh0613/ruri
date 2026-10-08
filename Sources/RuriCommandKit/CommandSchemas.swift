@@ -71,6 +71,7 @@ enum CommandSchemas {
         case "launch": return ["credentials", "downloads", "gameFiles", "process", "sessionHistory"]
         case "session": return spec.path.last == "export" ? ["exportFile"] : ["process"]
         case "download": return ["downloads", "exportFile"]
+        case "cache": return ["downloads"]
         default: return ["configuration", "gameFiles"]
         }
     }
@@ -107,6 +108,7 @@ enum CommandSchemas {
         if path == "app info" { return object(fields("version,application,cli,dataDirectory", type: nullable(string)).merging(["schemaVersion": integer]) { _, n in n }) }
         if p.starts(with: ["app", "language"]) { return object(["language": string, "supported": array(string), "restartRequired": boolean, "dryRun": boolean]) }
         if p.first == "cli" { return action == "status" ? installation : object(["changed": boolean, "dryRun": boolean, "status": installation]) }
+        if p.first == "cache" { return object(["bytes": integer, "files": integer].merging(action == "clean" ? ["dryRun": boolean] : [:]) { _, n in n }) }
         if path == "schema" { return object(["commands": array(object([:])), "output": object([:]), "globalOptions": array(string), "configuration": object([:])]) }
         if path == "doctor" { return object(["healthy": boolean, "checks": array(object(["check": string, "ok": boolean, "details": .object([:])]))]) }
         if action == "selected" { return object(["id": nullable(string)]) }

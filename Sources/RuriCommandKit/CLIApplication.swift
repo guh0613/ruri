@@ -135,6 +135,13 @@ public enum CLIApplication {
                 return .object(["language": .string(language), "restartRequired": .bool(true), "dryRun": .bool(request.dryRun)])
             }
             return .object(["language": .string(LocalizationContext.savedLanguage(in: preferences)),"supported": .array(LocalizationContext.supportedLanguages.map(Value.string))])
+        case "cache status", "cache clean":
+            let maintenance = CacheMaintenance(paths: basePaths(request))
+            let clean = request.path == "cache clean" && !request.dryRun
+            let summary = clean ? maintenance.clean() : maintenance.survey()
+            var result: [String: Value] = ["bytes": .integer(Int(summary.bytes)), "files": .integer(summary.files)]
+            if request.path == "cache clean" { result["dryRun"] = .bool(request.dryRun) }
+            return .object(result)
         case "cli status", "cli install", "cli uninstall":
             let service = try CLIInstallation(binDirectory: request.string("bin-dir").map { URL(fileURLWithPath: $0) })
             if request.path == "cli install" { return try service.install(dryRun: request.dryRun) }

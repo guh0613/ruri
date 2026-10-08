@@ -82,6 +82,8 @@ public actor ModpackReleaseService {
             try await downloader.fetch(item)
         }
         guard DownloadManager.valid(archive, item: item) else { throw RuriError.message(Messages.CoreModpackReleases.selectedReleaseMismatch) }
-        return try await InstanceTransfer(paths: paths).prepare(archive, origin: release.origin)
+        let prepared = try await InstanceTransfer(paths: paths).prepare(archive, origin: release.origin)
+        CacheMaintenance.discardArchive(archive, paths: paths)
+        return prepared
     }
 }

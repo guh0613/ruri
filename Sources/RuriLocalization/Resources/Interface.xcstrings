@@ -19765,6 +19765,24 @@
         }
       }
     },
+    "AppPreferencesView.cacheCleaned" : {
+      "comment" : "Success notice after cleaning the download cache. Placeholders: 1 = amount of disk space freed, such as 320 MB.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freed %1$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已释放 %1$@"
+          }
+        }
+      }
+    },
     "AppPreferencesView.checkForUpdates" : {
       "comment" : "Shown in the Ruri preferences: Check for Updates. No format arguments.",
       "extractionState" : "manual",
@@ -19779,6 +19797,60 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "检查更新"
+          }
+        }
+      }
+    },
+    "AppPreferencesView.cleanCache" : {
+      "comment" : "Shown in the Ruri preferences: button that deletes cached files no instance uses. No format arguments.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clean Up"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清理"
+          }
+        }
+      }
+    },
+    "AppPreferencesView.cleaningCache" : {
+      "comment" : "Activity title when cleaning the download cache. No format arguments.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clean Up Download Cache"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清理下载缓存"
+          }
+        }
+      }
+    },
+    "AppPreferencesView.cleaningInProgress" : {
+      "comment" : "Shown in the Ruri preferences under Download Cache while the cleanup runs. No format arguments.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cleaning up…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在清理…"
           }
         }
       }
@@ -19905,6 +19977,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "还原更改"
+          }
+        }
+      }
+    },
+    "AppPreferencesView.downloadCache" : {
+      "comment" : "Shown in the Ruri preferences: Download Cache, the row that frees cache space. No format arguments.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download Cache"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载缓存"
           }
         }
       }
@@ -20125,6 +20215,24 @@
         }
       }
     },
+    "AppPreferencesView.measuringCache" : {
+      "comment" : "Shown in the Ruri preferences while measuring how much cache space can be freed. No format arguments.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculating…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在计算…"
+          }
+        }
+      }
+    },
     "AppPreferencesView.microsoftLogin" : {
       "comment" : "Shown in the Ruri preferences: Microsoft Login. No format arguments.",
       "extractionState" : "manual",
@@ -20269,6 +20377,24 @@
         }
       }
     },
+    "AppPreferencesView.nothingToReclaim" : {
+      "comment" : "Shown in the Ruri preferences under Download Cache when cleaning would free no space. No format arguments.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing to clean up"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无需清理"
+          }
+        }
+      }
+    },
     "AppPreferencesView.openDataDirectory" : {
       "comment" : "Shown in the Ruri preferences: Open Data Folder in Finder. No format arguments.",
       "extractionState" : "manual",
@@ -20337,6 +20463,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "接收预览版更新"
+          }
+        }
+      }
+    },
+    "AppPreferencesView.reclaimableSpace" : {
+      "comment" : "Shown in the Ruri preferences under Download Cache. Placeholders: 1 = amount of disk space, such as 320 MB.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ can be freed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可释放 %1$@"
           }
         }
       }

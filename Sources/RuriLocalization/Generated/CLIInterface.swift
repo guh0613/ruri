@@ -195,6 +195,24 @@ extension Messages {
         public static var bundledCliNotFound: LocalizedMessage {
             .init(key: "CLIInterface.bundledCliNotFound", table: "CLIInterface", fallback: "找不到应用内的命令行工具。")
         }
+        /// 删除不再被任何实例使用的缓存文件。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.cacheCleanHelp`.
+        public static var cacheCleanHelp: LocalizedMessage {
+            .init(key: "CLIInterface.cacheCleanHelp", table: "CLIInterface", fallback: "删除不再被任何实例使用的缓存文件。")
+        }
+        /// 下载缓存的空间清理
+        ///
+        /// Resource: `CLIInterface.CLIInterface.cacheCommands`.
+        public static var cacheCommands: LocalizedMessage {
+            .init(key: "CLIInterface.cacheCommands", table: "CLIInterface", fallback: "下载缓存的空间清理")
+        }
+        /// 显示清理下载缓存可释放的空间。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.cacheStatusHelp`.
+        public static var cacheStatusHelp: LocalizedMessage {
+            .init(key: "CLIInterface.cacheStatusHelp", table: "CLIInterface", fallback: "显示清理下载缓存可释放的空间。")
+        }
         /// 列出内容平台的分类。
         ///
         /// Resource: `CLIInterface.CLIInterface.catalogCategoriesHelp`.
@@ -2346,6 +2364,9 @@ extension Messages {
             "CLIInterface:CLIInterface.appVersionHelp": .init("显示应用及命令行工具的版本和路径。", []),
             "CLIInterface:CLIInterface.booleanValueRequired": .init("请使用 true 或 false。", []),
             "CLIInterface:CLIInterface.bundledCliNotFound": .init("找不到应用内的命令行工具。", []),
+            "CLIInterface:CLIInterface.cacheCleanHelp": .init("删除不再被任何实例使用的缓存文件。", []),
+            "CLIInterface:CLIInterface.cacheCommands": .init("下载缓存的空间清理", []),
+            "CLIInterface:CLIInterface.cacheStatusHelp": .init("显示清理下载缓存可释放的空间。", []),
             "CLIInterface:CLIInterface.catalogCategoriesHelp": .init("列出内容平台的分类。", []),
             "CLIInterface:CLIInterface.catalogCategoryHelp": .init("内容平台的分类。", []),
             "CLIInterface:CLIInterface.catalogCommands": .init("内容搜索与版本查询", []),

@@ -577,6 +577,60 @@
         }
       }
     },
+    "CLIInterface.cacheCleanHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri cache clean`.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete cached files no instance uses anymore."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除不再被任何实例使用的缓存文件。"
+          }
+        }
+      }
+    },
+    "CLIInterface.cacheCommands" : {
+      "comment" : "Command-group description in CLI help for `ruri cache`.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cache commands"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载缓存的空间清理"
+          }
+        }
+      }
+    },
+    "CLIInterface.cacheStatusHelp" : {
+      "comment" : "Command summary shown in CLI help and discovery for `ruri cache status`.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show how much space cleaning the download cache frees."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示清理下载缓存可释放的空间。"
+          }
+        }
+      }
+    },
     "CLIInterface.catalogCategoriesHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri catalog categories`.",
       "extractionState" : "manual",

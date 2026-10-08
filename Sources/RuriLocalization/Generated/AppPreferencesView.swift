@@ -51,11 +51,35 @@ extension Messages {
         public static var bmclapiMirror: LocalizedMessage {
             .init(key: "AppPreferencesView.bmclapiMirror", table: "Interface", fallback: "BMCLAPI 镜像服务")
         }
+        /// 已释放 %1$@
+        ///
+        /// Resource: `Interface.AppPreferencesView.cacheCleaned`.
+        public static func cacheCleaned(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppPreferencesView.cacheCleaned", table: "Interface", fallback: "已释放 %1$@", arguments: [.text(value0)])
+        }
         /// 检查更新
         ///
         /// Resource: `Interface.AppPreferencesView.checkForUpdates`.
         public static var checkForUpdates: LocalizedMessage {
             .init(key: "AppPreferencesView.checkForUpdates", table: "Interface", fallback: "检查更新")
+        }
+        /// 清理
+        ///
+        /// Resource: `Interface.AppPreferencesView.cleanCache`.
+        public static var cleanCache: LocalizedMessage {
+            .init(key: "AppPreferencesView.cleanCache", table: "Interface", fallback: "清理")
+        }
+        /// 清理下载缓存
+        ///
+        /// Resource: `Interface.AppPreferencesView.cleaningCache`.
+        public static var cleaningCache: LocalizedMessage {
+            .init(key: "AppPreferencesView.cleaningCache", table: "Interface", fallback: "清理下载缓存")
+        }
+        /// 正在清理…
+        ///
+        /// Resource: `Interface.AppPreferencesView.cleaningInProgress`.
+        public static var cleaningInProgress: LocalizedMessage {
+            .init(key: "AppPreferencesView.cleaningInProgress", table: "Interface", fallback: "正在清理…")
         }
         /// 自定义应用 Client ID
         ///
@@ -98,6 +122,12 @@ extension Messages {
         /// Resource: `Interface.AppPreferencesView.discardGameChanges`.
         public static var discardGameChanges: LocalizedMessage {
             .init(key: "AppPreferencesView.discardGameChanges", table: "Interface", fallback: "还原更改")
+        }
+        /// 下载缓存
+        ///
+        /// Resource: `Interface.AppPreferencesView.downloadCache`.
+        public static var downloadCache: LocalizedMessage {
+            .init(key: "AppPreferencesView.downloadCache", table: "Interface", fallback: "下载缓存")
         }
         /// 下载源
         ///
@@ -171,6 +201,12 @@ extension Messages {
         public static var manageInstanceFolders: LocalizedMessage {
             .init(key: "AppPreferencesView.manageInstanceFolders", table: "Interface", fallback: "管理实例文件夹…")
         }
+        /// 正在计算…
+        ///
+        /// Resource: `Interface.AppPreferencesView.measuringCache`.
+        public static var measuringCache: LocalizedMessage {
+            .init(key: "AppPreferencesView.measuringCache", table: "Interface", fallback: "正在计算…")
+        }
         /// Microsoft 登录
         ///
         /// Resource: `Interface.AppPreferencesView.microsoftLogin`.
@@ -219,6 +255,12 @@ extension Messages {
         public static var newInstances: LocalizedMessage {
             .init(key: "AppPreferencesView.newInstances", table: "Interface", fallback: "新建实例")
         }
+        /// 无需清理
+        ///
+        /// Resource: `Interface.AppPreferencesView.nothingToReclaim`.
+        public static var nothingToReclaim: LocalizedMessage {
+            .init(key: "AppPreferencesView.nothingToReclaim", table: "Interface", fallback: "无需清理")
+        }
         /// 在 Finder 中打开数据目录
         ///
         /// Resource: `Interface.AppPreferencesView.openDataDirectory`.
@@ -242,6 +284,12 @@ extension Messages {
         /// Resource: `Interface.AppPreferencesView.receivePrereleaseUpdates`.
         public static var receivePrereleaseUpdates: LocalizedMessage {
             .init(key: "AppPreferencesView.receivePrereleaseUpdates", table: "Interface", fallback: "接收预览版更新")
+        }
+        /// 可释放 %1$@
+        ///
+        /// Resource: `Interface.AppPreferencesView.reclaimableSpace`.
+        public static func reclaimableSpace(_ value0: String) -> LocalizedMessage {
+            .init(key: "AppPreferencesView.reclaimableSpace", table: "Interface", fallback: "可释放 %1$@", arguments: [.text(value0)])
         }
         /// 在 Finder 中显示
         ///
@@ -300,7 +348,11 @@ extension Messages {
             "Interface:AppPreferencesView.automaticallyCheckForUpdates": .init("自动检查更新", []),
             "Interface:AppPreferencesView.automaticallyInstallUpdates": .init("自动下载并安装更新", []),
             "Interface:AppPreferencesView.bmclapiMirror": .init("BMCLAPI 镜像服务", []),
+            "Interface:AppPreferencesView.cacheCleaned": .init("已释放 %1$@", [.text]),
             "Interface:AppPreferencesView.checkForUpdates": .init("检查更新", []),
+            "Interface:AppPreferencesView.cleanCache": .init("清理", []),
+            "Interface:AppPreferencesView.cleaningCache": .init("清理下载缓存", []),
+            "Interface:AppPreferencesView.cleaningInProgress": .init("正在清理…", []),
             "Interface:AppPreferencesView.customClientID": .init("自定义应用 Client ID", []),
             "Interface:AppPreferencesView.customClientIDDetails": .init("自定义 Client ID 需启用公共客户端登录，并获准访问 Minecraft 服务。", []),
             "Interface:AppPreferencesView.dark": .init("深色", []),
@@ -308,6 +360,7 @@ extension Messages {
             "Interface:AppPreferencesView.dataDirectory": .init("数据目录", []),
             "Interface:AppPreferencesView.defaultMemory": .init("默认内存分配", []),
             "Interface:AppPreferencesView.discardGameChanges": .init("还原更改", []),
+            "Interface:AppPreferencesView.downloadCache": .init("下载缓存", []),
             "Interface:AppPreferencesView.downloadSource": .init("下载源", []),
             "Interface:AppPreferencesView.downloadsAndNetwork": .init("下载与网络", []),
             "Interface:AppPreferencesView.editDefaultLaunchSettings": .init("编辑全局游戏设置…", []),
@@ -320,6 +373,7 @@ extension Messages {
             "Interface:AppPreferencesView.lastUpdateCheck": .init("上次检查：%1$@", [.text]),
             "Interface:AppPreferencesView.light": .init("浅色", []),
             "Interface:AppPreferencesView.manageInstanceFolders": .init("管理实例文件夹…", []),
+            "Interface:AppPreferencesView.measuringCache": .init("正在计算…", []),
             "Interface:AppPreferencesView.microsoftLogin": .init("Microsoft 登录", []),
             "Interface:AppPreferencesView.microsoftLoginDetails": .init("留空使用内置登录配置。", []),
             "Interface:AppPreferencesView.microsoftRegistrationDocs": .init("Microsoft 应用注册文档", []),
@@ -328,10 +382,12 @@ extension Messages {
             "Interface:AppPreferencesView.newInstanceIsolation": .init("新实例隔离规则", []),
             "Interface:AppPreferencesView.newInstanceIsolationDetails": .init("仅影响新建实例；导入整合包始终使用独立目录。共享目录的实例共用模组、存档和游戏设置，不能同时运行。", []),
             "Interface:AppPreferencesView.newInstances": .init("新建实例", []),
+            "Interface:AppPreferencesView.nothingToReclaim": .init("无需清理", []),
             "Interface:AppPreferencesView.openDataDirectory": .init("在 Finder 中打开数据目录", []),
             "Interface:AppPreferencesView.parallelDownloads": .init("并行下载：%1$@", [.text]),
             "Interface:AppPreferencesView.parallelDownloadsLabel": .init("并行下载", []),
             "Interface:AppPreferencesView.receivePrereleaseUpdates": .init("接收预览版更新", []),
+            "Interface:AppPreferencesView.reclaimableSpace": .init("可释放 %1$@", [.text]),
             "Interface:AppPreferencesView.showInFinder": .init("在 Finder 中显示", []),
             "Interface:AppPreferencesView.softwareUpdate": .init("软件更新", []),
             "Interface:AppPreferencesView.softwareUpdateDetails": .init("更新从 GitHub Releases 下载并校验签名，自动安装的更新在退出 Ruri 时生效。预览版可能不稳定。", []),

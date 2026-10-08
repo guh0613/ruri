@@ -869,6 +869,18 @@
   },
   {
     "file": "Sources/RuriCommandKit/CLIApplication.swift",
+    "literal": "\"cache status\"",
+    "line": 64,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CLIApplication.swift",
+    "literal": "\"cache clean\"",
+    "line": 64,
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CLIApplication.swift",
     "literal": "\"cli status\"",
     "line": 64,
     "reason": "Public command path or invocation syntax; not a translated message."

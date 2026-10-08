@@ -89,9 +89,10 @@ public struct CurseForgeFile: Decodable, Identifiable, Sendable {
     private func hash(algorithm: Int, length: Int) -> String? {
         hashes.first(where: { $0.algo == algorithm && $0.value.range(of: "^[a-fA-F0-9]{\(length)}$", options: .regularExpression) != nil })?.value.lowercased()
     }
-    public func downloadItem(to destination: URL, permittedURL: URL?) throws -> DownloadItem {
+    /// Pack archives pass `cacheable: false`; the import unpacks them once.
+    public func downloadItem(to destination: URL, permittedURL: URL?, cacheable: Bool = true) throws -> DownloadItem {
         try validateDownloadMetadata()
-        return DownloadItem(url: permittedURL, destination: destination, sha1: sha1, md5: md5, size: fileLength, cacheable: true)
+        return DownloadItem(url: permittedURL, destination: destination, sha1: sha1, md5: md5, size: fileLength, cacheable: cacheable)
     }
     func validateDownloadMetadata() throws {
         guard id > 0, modId > 0, fileLength >= 0, downloadable, sha1 != nil || md5 != nil else { throw RuriError.message(Messages.CoreCurseForge.invalidDownloadMetadata(fileName)) }
@@ -162,7 +163,11 @@ public actor CurseForgeService {
     deinit { if ownsSession { client.session.invalidateAndCancel() } }
     public static func cachedFile(_ file: CurseForgeFile, paths: LauncherPaths) async -> URL? {
         guard let url = try? LauncherPaths.safePath("curseforge/\(file.id)/\(file.fileName)", within: paths.cache),
-              let check = try? file.downloadItem(to: url, permittedURL: nil), DownloadManager.valid(url, item: check) else { return nil }
+              let check = try? file.downloadItem(to: url, permittedURL: nil) else { return nil }
+        if DownloadManager.valid(url, item: check) { return url }
+        // Cache cleanup keeps one copy of a download, in the SHA-1 store.
+        guard (try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)) != nil,
+              await DownloadCache(paths: paths).restore(check, through: url.deletingLastPathComponent().appendingPathComponent(".restore-\(UUID().uuidString)")) else { return nil }
         return url
     }
     public static func cacheManualFile(_ source: URL, file: CurseForgeFile, paths: LauncherPaths) async throws -> URL {

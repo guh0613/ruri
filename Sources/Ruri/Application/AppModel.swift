@@ -156,6 +156,10 @@ import RuriCore
     private func initializeApplication() async {
         Task.detached(priority: .utility) { _ = ModNameIndex.shared }
         if !readOnly {
+            let maintenance = CacheMaintenance(paths: basePaths)
+            Task.detached(priority: .background) { maintenance.removeLeftovers() }
+        }
+        if !readOnly {
             do {
                 let basePaths = basePaths
                 _ = try await Task.detached(priority: .utility) { try GameDirectoryStore.resolveBookmarks(paths: basePaths) }.value

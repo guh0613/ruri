@@ -18,10 +18,11 @@ extension AppModel {
             else {
                 guard let url = file.downloadURL else { throw RuriError.message(Messages.AppAppModelCurseForge.downloadRequired) }
                 archive = try LauncherPaths.safePath("curseforge/\(file.id)/\(file.fileName)", within: paths.cache)
-                try await installer.downloader.fetch(file.downloadItem(to: archive, permittedURL: url))
+                try await installer.downloader.fetch(file.downloadItem(to: archive, permittedURL: url, cacheable: false))
             }
             guard DownloadManager.valid(archive, item: try file.downloadItem(to: archive, permittedURL: nil)) else { throw RuriError.message(Messages.AppAppModelCurseForge.packValidationFailed) }
             let prepared = try await InstanceTransfer(paths: paths).prepare(archive, origin: ModpackOrigin(provider: .curseforge, projectID: String(project.id), versionID: String(file.id))) { [weak self] p in Task { @MainActor in self?.progress(id, p) } }
+            CacheMaintenance.discardArchive(archive, paths: paths)
             importingInstance = await InstanceIconImage.download(project.logo?.thumbnailUrl).map(prepared.usingIcon) ?? prepared
         }
     }

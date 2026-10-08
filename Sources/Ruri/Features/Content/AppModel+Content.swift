@@ -17,6 +17,7 @@ extension AppModel {
                 progress(id, InstallProgress(Messages.AppAppModelContent.downloadManifest))
                 try await installer.downloader.fetch(DownloadItem(url: file.url, destination: archive, sha1: file.hashes["sha1"], sha512: file.hashes["sha512"], size: file.size))
                 let prepared = try await InstanceTransfer(paths: paths).prepare(archive, origin: ModpackOrigin(provider: .modrinth, projectID: project.id, versionID: version.id)) { [weak self] p in Task { @MainActor in self?.progress(id, p) } }
+                CacheMaintenance.discardArchive(archive, paths: paths)
                 importingInstance = await InstanceIconImage.download(project.icon_url).map(prepared.usingIcon) ?? prepared
                 report(Messages.AppAppModelContent.manifestRead); return
             } else if let instance {
