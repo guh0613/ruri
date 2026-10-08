@@ -15,6 +15,16 @@ public struct MacOSGameSettings: Codable, Equatable, Sendable {
 }
 
 public struct GameHostPlan: Codable, Sendable {
+    package init(instanceID: UUID, name: String, iconPNG: Data? = nil, javaVersion: String, architecture: String, settings: MacOSGameSettings, fullscreen: Bool) {
+        self.instanceID = instanceID
+        self.name = name
+        self.iconPNG = iconPNG
+        self.javaVersion = javaVersion
+        self.architecture = architecture
+        self.settings = settings
+        self.fullscreen = fullscreen
+    }
+
     public let instanceID: UUID
     public let name: String
     public let iconPNG: Data?
@@ -25,6 +35,15 @@ public struct GameHostPlan: Codable, Sendable {
 }
 
 public struct GameHostStatus: Codable, Equatable, Sendable {
+    package init(backend: Backend, fallback: String? = nil, jvmStarted: Bool = false, windowReadyAt: Date? = nil, fullscreen: Bool = false, failure: String? = nil) {
+        self.backend = backend
+        self.fallback = fallback
+        self.jvmStarted = jvmStarted
+        self.windowReadyAt = windowReadyAt
+        self.fullscreen = fullscreen
+        self.failure = failure
+    }
+
     public enum Backend: String, Codable, Sendable { case native, java }
     public var backend: Backend
     public var fallback: String?

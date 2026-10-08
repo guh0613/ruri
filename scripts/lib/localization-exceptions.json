@@ -350,7 +350,7 @@
     "reason": "HTTP User-Agent protocol value."
   },
   {
-    "file": "Sources/RuriCore/Installation/LoaderKind.swift",
+    "file": "Sources/RuriSessionKit/Models/LoaderKind.swift",
     "literal": "\"Legacy Fabric\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
@@ -410,7 +410,7 @@
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
   {
-    "file": "Sources/RuriCore/Launch/MemorySettings.swift",
+    "file": "Sources/RuriSessionKit/Models/LaunchMemory.swift",
     "literal": "\" · Metaspace ≤ \\(Self.size($0))\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
@@ -845,7 +845,7 @@
     "reason": "Fixed HTTP-date format for parsing the Retry-After header; protocol syntax, not user-facing text."
   },
   {
-    "file": "Sources/RuriCore/Launch/MemoryEstimator.swift",
+    "file": "Sources/RuriSessionKit/Models/MemoryEstimate.swift",
     "literal": "\"Minecraft \\(workload.gameVersion)\"",
     "reason": "Product, loader, platform, format or unit name with verbatim version/author/dimension data."
   },
@@ -1386,12 +1386,12 @@
     "reason": "Diagnostic log framing separates complete localized messages and raw log records with line breaks; no sentence is assembled."
   },
   {
-    "file": "Sources/RuriCore/Launch/MemorySettings.swift",
+    "file": "Sources/RuriSessionKit/Models/LaunchMemory.swift",
     "literal": "public var summary: String { Messages.CoreMemorySettings.memorySummary(String(describing: Self.size(maximumBytes)), String(describing: initialBytes == 0 ? Messages.CoreMemorySettings.automaticallyManagedMemory.localized : Self.size(initialBytes)), maximumSource.title).localized + (metaspaceBytes.map { \" · Metaspace ≤ \\(Self.size($0))\" } ?? \"\") }",
     "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
   },
   {
-    "file": "Sources/RuriCore/Launch/MemorySettings.swift",
+    "file": "Sources/RuriSessionKit/Models/LaunchMemory.swift",
     "literal": "return estimate.basis + \" · \" + Messages.CoreMemoryEstimate.constrained(String(describing: Self.size(Int64(estimate.demandMB) * 1_048_576)), String(describing: Self.size(Int64(estimate.maximumMB) * 1_048_576))).localized",
     "reason": "The middle dot separates independent labels, names or numeric summaries; it carries no grammatical word order."
   }

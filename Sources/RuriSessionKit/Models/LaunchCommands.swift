@@ -15,7 +15,7 @@ public struct LaunchCommands: Codable, Equatable, Sendable {
         }
         if enabled { _ = try ArgumentTokenizer.split(wrapper) }
     }
-    func resolveWrapper(environment: [String: String], directory: URL) throws -> [String] {
+    package func resolveWrapper(environment: [String: String], directory: URL) throws -> [String] {
         guard enabled else { return [] }
         let pattern = try NSRegularExpression(pattern: #"\$\{(RURI_[A-Z_]+)\}"#)
         var tokens = try ArgumentTokenizer.split(wrapper).map { token in
@@ -44,6 +44,17 @@ public struct LaunchCommands: Codable, Equatable, Sendable {
 }
 
 public struct GameCommandResult: Codable, Equatable, Sendable {
+    package init(phase: Phase, startedAt: Date, endedAt: Date, status: Int32? = nil, cancelled: Bool, timedOut: Bool, error: String? = nil, errorMessage: LocalizedMessage? = nil) {
+        self.phase = phase
+        self.startedAt = startedAt
+        self.endedAt = endedAt
+        self.status = status
+        self.cancelled = cancelled
+        self.timedOut = timedOut
+        self.error = error
+        self.errorMessage = errorMessage
+    }
+
     public enum Phase: String, Codable, Sendable {
         case before, after
         public var title: String { message.localized }

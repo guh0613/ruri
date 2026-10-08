@@ -13,7 +13,7 @@ public enum RuriError: LocalizedError, Sendable {
         case .message: nil
         }
     }
-    var httpStatusCode: Int? { if case .httpResponse(let code, _) = self { code } else { nil } }
+    package var httpStatusCode: Int? { if case .httpResponse(let code, _) = self { code } else { nil } }
     public var messageID: String? { localizedMessage?.key }
     public var errorDescription: String? {
         switch self { case .message(let text): text; default: localizedMessage?.localized }

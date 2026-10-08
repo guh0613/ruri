@@ -3,6 +3,12 @@ import Darwin
 
 /// A PID alone may refer to an unrelated process after the original has exited.
 public struct ProcessIdentity: Codable, Equatable, Sendable {
+    package init(pid: Int32, startSeconds: UInt64, startMicroseconds: UInt64) {
+        self.pid = pid
+        self.startSeconds = startSeconds
+        self.startMicroseconds = startMicroseconds
+    }
+
     public enum Liveness: Sendable { case alive, exited, unverifiable }
     public let pid: Int32
     public let startSeconds: UInt64
