@@ -6,7 +6,7 @@ import unittest
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from lib.localization import candidates, localized_concatenations
-from lib.localization_catalog import (catalog_text, localization_value, read_catalogs, read_json, signature,
+from lib.localization_catalog import (catalog_text, compiled_entry, localization_value, read_catalogs, read_json, signature,
                                       coverage, source_hash, accept_translations, read_baseline,
                                       validate_policy, shipping_languages, check_completeness, REQUIRED_COMPLETE)
 
@@ -44,6 +44,17 @@ class CatalogTests(unittest.TestCase):
         node['substitutions']['total']['argNum'] = 3
         with self.assertRaisesRegex(ValueError, 'position'):
             localization_value(node)
+
+    def test_compiled_entries_match_xcstringstool(self):
+        rule = lambda **variants: {'NSStringFormatSpecTypeKey': 'NSStringPluralRuleType', 'NSStringFormatValueTypeKey': 'lld', **variants}
+        self.assertEqual(compiled_entry(unit('%1$@ ready')), '%1$@ ready')
+        self.assertEqual(compiled_entry(plural(one='%1$lld file', other='%1$lld files')),
+                         {'NSStringLocalizedFormatKey': '%#@value@', 'value': rule(one='%1$lld file', other='%1$lld files')})
+        self.assertEqual(compiled_entry(plural(other='%1$@ · %2$lld files'))['NSStringLocalizedFormatKey'], '%2$#@value@')
+        node = {**unit('Showing %1$#@count@, offset %2$lld.'), 'substitutions': {
+            'count': {'argNum': 1, 'formatSpecifier': 'lld', **plural(one='%lld item', other='%lld items')}}}
+        self.assertEqual(compiled_entry(node), {'NSStringLocalizedFormatKey': 'Showing %1$#@count@, offset %2$lld.',
+                                                'count': rule(one='%lld item', other='%lld items')})
 
     def test_duplicate_json_keys_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:

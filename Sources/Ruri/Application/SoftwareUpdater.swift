@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+#if canImport(Sparkle)
 import Sparkle
 
 /// Sparkle updates from the per-architecture appcast that the Appcast workflow
@@ -60,3 +61,17 @@ import Sparkle
         lastUpdateCheckDate = updater.lastUpdateCheckDate
     }
 }
+#else
+/// Builds without Sparkle (`RURI_DISABLE_SPARKLE=1`) are updated by the package
+/// manager that installed them, so the update commands stay hidden.
+@MainActor @Observable final class SoftwareUpdater {
+    let isAvailable = false
+    let canCheckForUpdates = false
+    let lastUpdateCheckDate: Date? = nil
+    var automaticallyChecksForUpdates = false
+    var automaticallyDownloadsUpdates = false
+    var receivesPrereleases = false
+
+    func checkForUpdates() {}
+}
+#endif

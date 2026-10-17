@@ -1,6 +1,10 @@
 // swift-tools-version: 6.2
 import PackageDescription
 
+// Package managers that update the app themselves (such as Nix) set
+// RURI_DISABLE_SPARKLE=1 to build without Sparkle's in-app updater.
+let usesSparkle = Context.environment["RURI_DISABLE_SPARKLE"] != "1"
+
 let package = Package(
     name: "Ruri",
     defaultLocalization: "zh-Hans",
@@ -15,9 +19,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser.git", exact: "1.8.2"),
         .package(url: "https://github.com/weichsel/ZIPFoundation.git", exact: "0.9.20"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", exact: "0.8.0"),
-        .package(url: "https://github.com/dduan/TOMLDecoder.git", exact: "0.4.5"),
-        .package(url: "https://github.com/sparkle-project/Sparkle.git", exact: "2.10.0")
-    ],
+        .package(url: "https://github.com/dduan/TOMLDecoder.git", exact: "0.4.5")
+    ] + (usesSparkle ? [.package(url: "https://github.com/sparkle-project/Sparkle.git", exact: "2.10.0")] : []),
     targets: [
         .systemLibrary(name: "CZlib"),
         .systemLibrary(name: "CSQLite"),
@@ -26,7 +29,7 @@ let package = Package(
         .target(name: "RuriMonitorRuntime", dependencies: ["RuriSessionKit", "RuriLocalization"]),
         .target(name: "RuriCore", dependencies: ["RuriSessionKit", "ZIPFoundation", "CZlib", "CSQLite", "RuriLocalization", .product(name: "Markdown", package: "swift-markdown"), "TOMLDecoder"], resources: [.copy("Resources/LoaderSupport"), .copy("Resources/mod_data.txt")]),
         // Sparkle.framework is embedded in Contents/Frameworks by scripts/build-app.sh.
-        .executableTarget(name: "Ruri", dependencies: ["RuriCore", "RuriLocalization", .product(name: "Sparkle", package: "Sparkle")],
+        .executableTarget(name: "Ruri", dependencies: ["RuriCore", "RuriLocalization"] + (usesSparkle ? [.product(name: "Sparkle", package: "Sparkle")] : []),
                           resources: [.copy("Resources/JavaBrands")],
                           linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]),
         .target(name: "RuriCommandKit", dependencies: ["RuriCore", "RuriLocalization", .product(name: "ArgumentParser", package: "swift-argument-parser")]),

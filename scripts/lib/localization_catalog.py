@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import plistlib
 import re
 import sys
 sys.dont_write_bytecode = True
@@ -181,6 +182,41 @@ def read_catalogs(root, check_format=False, format_files=False):
                                   'value': value, 'kinds': [expected[i + 1] for i in range(len(expected))],
                                   'plurals': plurals, 'entry': entry}
     return catalogs
+
+
+def plural_rule(specifier, variants):
+    return {'NSStringFormatSpecTypeKey': 'NSStringPluralRuleType', 'NSStringFormatValueTypeKey': specifier, **variants}
+
+
+def compiled_entry(node):
+    """Return a .strings value, or a .stringsdict entry for plurals, as xcstringstool writes them."""
+    if 'variations' in node:
+        variants = plural_variants(node)
+        (argument,) = localization_value(node)[2]
+        tokens = [m for m in FORMAT.finditer(variants['other']) if m[2] != '%']
+        specifier = next(m[2] for position, m in enumerate(tokens, 1) if (int(m[1]) if m[1] else position) == argument)
+        key = '%#@value@' if argument == 1 else f'%{argument}$#@value@'
+        return {'NSStringLocalizedFormatKey': key, 'value': plural_rule(specifier, variants)}
+    entry = {'NSStringLocalizedFormatKey': unit_value(node)}
+    for name, rule in node.get('substitutions', {}).items():
+        entry[name] = plural_rule(rule['formatSpecifier'], plural_variants(rule))
+    return entry if len(entry) > 1 else entry['NSStringLocalizedFormatKey']
+
+
+def compile_catalogs(root, bundle):
+    """Replace the String Catalogs SwiftPM copies into a bundle without Xcode with compiled tables."""
+    tables = {}
+    for item in read_catalogs(root).values():
+        for language, node in item['entry']['localizations'].items():
+            entry = compiled_entry(node)
+            kind = 'stringsdict' if isinstance(entry, dict) else 'strings'
+            tables.setdefault((language, item['table'], kind), {})[item['key']] = entry
+    for (language, table, kind), entries in tables.items():
+        path = bundle / f'{language}.lproj/{table}.{kind}'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(plistlib.dumps(entries))
+    for catalog in bundle.glob('*.xcstrings'):
+        catalog.unlink()
 
 
 def source_hash(item):
