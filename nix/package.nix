@@ -35,6 +35,7 @@ stdenv.mkDerivation (finalAttrs: {
       ../Sources
       ../Tests
       ../scripts
+      ./icons
     ];
   };
 
@@ -52,7 +53,7 @@ stdenv.mkDerivation (finalAttrs: {
     swift
     swiftpm
     jq
-    (python3.withPackages (ps: [ ps.pillow ]))
+    python3
     rcodesign
   ];
 
@@ -72,7 +73,7 @@ stdenv.mkDerivation (finalAttrs: {
   # SwiftPM builds the Swift products; the rest follows scripts/build-app.sh
   # with tools available outside Xcode.
   postBuild = ''
-    mkdir -p build/game-host build/icons
+    mkdir -p build/game-host
     # Universal, so the same host can load native or Rosetta Java.
     hostFlags=(-mmacosx-version-min=14.0 -arch arm64 -arch x86_64 -fobjc-arc -O2 -Wall -Wextra -Werror)
     $CC "''${hostFlags[@]}" -dynamiclib -framework Foundation Sources/RuriGameHost/WorkingDirectory.m \
@@ -80,10 +81,6 @@ stdenv.mkDerivation (finalAttrs: {
     $CC "''${hostFlags[@]}" -framework AppKit -framework ImageIO \
       Sources/RuriGameHost/main.m Sources/RuriGameHost/HostProtocol.m Sources/RuriGameHost/GameApplication.m \
       -Lbuild/game-host -lRuriGameSupport -Wl,-rpath,@executable_path/../Frameworks -o build/game-host/ruri-game
-
-    # actool compiles Icon Composer documents only inside Xcode.
-    python3 scripts/lib/icon.py Resources/AppIcon.icon build/icons/AppIcon.icns
-    python3 scripts/lib/icon.py Resources/GameHostIcon.icon build/icons/GameHostIcon.icns
   '';
 
   installPhase = ''
@@ -94,7 +91,9 @@ stdenv.mkDerivation (finalAttrs: {
     mkdir -p "$app/Contents/MacOS" "$app/Contents/Helpers" "$app/Contents/Resources"
 
     cp Resources/Info.plist "$app/Contents/Info.plist"
-    cp Resources/ThirdPartyNotices.txt build/icons/AppIcon.icns "$app/Contents/Resources/"
+    # actool compiles Icon Composer documents only inside Xcode, so the icons
+    # come prebuilt by scripts/dev/build-nix-icons.sh.
+    cp Resources/ThirdPartyNotices.txt nix/icons/AppIcon/* "$app/Contents/Resources/"
     python3 scripts/lib/app.py bundle "$app"
 
     install -m755 "$binPath/Ruri" "$app/Contents/MacOS/Ruri"
@@ -109,7 +108,7 @@ stdenv.mkDerivation (finalAttrs: {
     install -Dm644 Resources/GameHost-Info.plist "$host/Contents/Info.plist"
     install -Dm755 build/game-host/ruri-game "$host/Contents/MacOS/ruri-game"
     install -Dm755 build/game-host/libRuriGameSupport.dylib "$host/Contents/Frameworks/libRuriGameSupport.dylib"
-    install -Dm644 build/icons/GameHostIcon.icns "$host/Contents/Resources/GameHostIcon.icns"
+    install -Dm644 -t "$host/Contents/Resources" nix/icons/GameHostIcon/*
 
     mkdir -p "$out/bin"
     ln -s "$app/Contents/Helpers/ruri-cli" "$out/bin/ruri"
