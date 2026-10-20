@@ -4,72 +4,88 @@ import RuriCore
 import RuriLocalization
 
 public enum CLIApplication {
-    @MainActor public static func run(_ arguments: [String], write: @escaping @Sendable (Data, Bool) -> Void = { data, error in
-        try? (error ? FileHandle.standardError : FileHandle.standardOutput).write(contentsOf: data)
-    }) async -> Int32 {
-        let args = normalizeGlobals(arguments)
-        let options = Array(args.prefix { $0 != "--" })
-        var language: String?
-        for (index, argument) in options.enumerated() {
-            if argument.hasPrefix("--language=") { language = String(argument.dropFirst(11)) }
-            else if argument == "--language" { language = options[safe: index + 1] }
-        }
-        let context = LocalizationContext.commandLine(language: language)
+    /// Without a custom sink, output goes to stdout and stderr and adapts to
+    /// whether they are terminals. A custom sink is treated as a pipe.
+    @MainActor public static func run(_ arguments: [String], write custom: (@Sendable (Data, Bool) -> Void)? = nil) async -> Int32 {
+        await run(arguments, write: custom, terminal: custom == nil ? .current() : .pipe)
+    }
+
+    @MainActor static func run(_ arguments: [String], write custom: (@Sendable (Data, Bool) -> Void)?, terminal: TerminalProfile) async -> Int32 {
+        let write = custom ?? { data, error in try? (error ? FileHandle.standardError : FileHandle.standardOutput).write(contentsOf: data) }
+        // The shell completion protocol bypasses every presentation layer.
+        if arguments.first == "---completion" { return complete(arguments, write: write) }
+        let invocation = CommandLineInvocation(arguments)
+        let context = LocalizationContext.commandLine(language: invocation.language)
         return await LocalizationContext.$current.withValue(context) {
-            await runLocalized(args, write: write)
+            await runLocalized(invocation, write: write, terminal: terminal)
         }
     }
 
-    @MainActor private static func runLocalized(_ args: [String], write: @escaping @Sendable (Data, Bool) -> Void) async -> Int32 {
-        var output = CommandOutput(format: requestedFormat(args), quiet: args.contains("--quiet"), write: write)
+    private static func complete(_ arguments: [String], write: @Sendable (Data, Bool) -> Void) -> Int32 {
+        do { _ = try RuriCommand.parseAsRoot(arguments); return 1 }
+        catch {
+            let code = RuriCommand.exitCode(for: error).rawValue
+            write(Data((RuriCommand.message(for: error) + "\n").utf8), code != 0)
+            return code
+        }
+    }
+
+    @MainActor private static func runLocalized(_ invocation: CommandLineInvocation, write: @escaping @Sendable (Data, Bool) -> Void, terminal: TerminalProfile) async -> Int32 {
+        let args = invocation.arguments
+        var output = CommandOutput(format: invocation.format, quiet: invocation.quiet, write: write, terminal: terminal)
+        output.setUsage(invocation.path)
         var activeRequest: CommandRequest?
         do {
-            if args.first == "help" {
+            if invocation.path.isEmpty && invocation.rest.first == "help" {
                 let query: CommandHelp.Query
-                do { query = try CommandHelp.Query.parse(Array(args.dropFirst())) }
+                do { query = try CommandHelp.Query.parse(Array(invocation.rest.dropFirst())) }
                 catch {
                     if CommandHelp.Query.exitCode(for: error).rawValue == 0 {
-                        output.help(try CommandHelp.render(path: [])); return 0
+                        output.help(try CommandHelp.render(path: [], width: terminal.output.width)); return 0
                     }
-                    throw OperationFailure("INVALID_ARGUMENT", CommandHelp.Query.message(for: error))
+                    throw OperationFailure("INVALID_ARGUMENT", CommandHelp.Query.message(for: error), nextActions: [.init(["help"])])
                 }
                 guard ["text", "json", "ndjson"].contains(query.common.output), !query.common.json || ["text", "json"].contains(query.common.output) else {
                     throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidOutputFormatCombination.localized)
                 }
-                let help = try CommandHelp.render(path: query.path, all: query.all)
-                if requestedFormat(args) == .text { output.help(help) }
-                else { output.result(.string(help)) }
+                output.setUsage(CommandHelp.prefix(in: query.path))
+                if invocation.format == .text { output.help(try CommandHelp.render(path: query.path, all: query.all, full: query.full, width: terminal.output.width)) }
+                else { output.result(.string(try CommandHelp.render(path: query.path, all: query.all, full: query.full))) }
                 return 0
+            }
+            if invocation.path.isEmpty && args.prefix(while: { $0 != "--" }).contains("--version") {
+                output.help(BuildConfiguration().version); return 0
+            }
+            let passthrough = args.prefix { $0 != "--" }.contains { ["--version", "--generate-completion-script", "--experimental-dump-help"].contains(CommandLineInvocation.optionName($0)) }
+            if !passthrough {
+                // --help and --version always print text.
+                if invocation.helpRequested || (!invocation.isLeaf && invocation.hasOnlyGlobals) {
+                    output.help(try CommandHelp.render(path: invocation.path, width: terminal.output.width)); return 0
+                }
+                if let problem = invocation.problem() { throw problem }
             }
             let command: any ExecutableCommand
             do {
-                var parsed = try RuriCommand.parseAsRoot(args)
-                if let executable = parsed as? any ExecutableCommand { command = executable }
-                else {
-                    // ArgumentParser returns a built-in help command carrying
-                    // the requested command stack. Running it produces the
-                    // correct help request, including the root command name.
-                    try parsed.run()
-                    return 0
+                guard let executable = try RuriCommand.parseAsRoot(args) as? any ExecutableCommand else {
+                    output.help(try CommandHelp.render(path: invocation.path, width: terminal.output.width)); return 0
                 }
+                command = executable
             }
             catch {
                 let code = RuriCommand.exitCode(for: error).rawValue
                 if code == 0 {
-                    let options = args.prefix { $0 != "--" }
-                    if options.contains("--version") || options.contains("--experimental-dump-help") {
-                        output.help(RuriCommand.message(for: error))
-                    } else {
-                        output.help(try CommandHelp.render(path: CommandHelp.prefix(in: args)))
-                    }
+                    // Completion scripts and the help dump print as they are.
+                    let message = RuriCommand.message(for: error)
+                    write(Data((message + (message.hasSuffix("\n") ? "" : "\n")).utf8), false)
                     return 0
                 }
-                throw OperationFailure("INVALID_ARGUMENT", RuriCommand.message(for: error))
+                throw CommandLineInvocation.failure(RuriCommand.message(for: error), path: invocation.path)
             }
             let request = command.request
             try request.validate()
             activeRequest = request
-            output = CommandOutput(format: request.common.json ? .json : .init(rawValue: request.common.output)!, quiet: request.common.quiet, write: write)
+            output = CommandOutput(format: request.common.json ? .json : .init(rawValue: request.common.output)!, quiet: request.common.quiet, write: write, terminal: terminal)
+            output.setUsage(request.spec.path)
             output.setRequest(request)
             let result = try await OperationReadPolicy.$protectedDataRoot.withValue(request.dryRun || !request.spec.mutation ? basePaths(request).root : nil) {
                 try await execute(request, output: output)
@@ -121,6 +137,13 @@ public enum CLIApplication {
         switch request.path {
         case "schema":
             return try CommandDiscovery.schema(request)
+        case "completions":
+            // Generated from the command tree alone; no state is read.
+            let shell = try request.operand()
+            guard let selected = CompletionShell(rawValue: shell) else {
+                throw CommandLineInvocation.failure(Messages.CLIExperience.invalidArgumentChoice(shell, request.spec.operands[0].values.joined(separator: ", ")).localized, path: request.spec.path)
+            }
+            return .object(["shell": .string(shell), "script": .string(RuriCommand.completionScript(for: selected))])
         case "app info":
             return .object(["version": .string(BuildConfiguration().version), "schemaVersion": .integer(1), "application": .text(RuriInstallation.application()?.path),
                 "cli": .text(RuriInstallation.cliExecutable?.path), "dataDirectory": .string(basePaths(request).root.path)])
@@ -152,28 +175,5 @@ public enum CLIApplication {
     }
     static func basePaths(_ request: CommandRequest) -> LauncherPaths {
         LauncherPaths(root: (request.common.dataDir ?? ProcessInfo.processInfo.environment["RURI_DATA_DIR"]).map { URL(fileURLWithPath: $0) })
-    }
-    private static func requestedFormat(_ args: [String]) -> CommandOutput.Format {
-        let options = Array(args.prefix { $0 != "--" })
-        if options.contains("--json") { return .json }
-        if let item = options.first(where: { $0.hasPrefix("--output=") }), let format = CommandOutput.Format(rawValue: String(item.dropFirst(9))) { return format }
-        if let index = options.firstIndex(of: "--output"), let name = options[safe: index + 1], let format = CommandOutput.Format(rawValue: name) { return format }
-        return .text
-    }
-    /// Leading global options, including help, move to the leaf command.
-    /// Options after `--` remain literal operands.
-    static func normalizeGlobals(_ args: [String]) -> [String] {
-        var prefix: [String] = [], remaining = args
-        while let first = remaining.first {
-            let name = first.split(separator: "=", maxSplits: 1).first.map(String.init) ?? first
-            if ["--json", "--quiet", "--help", "-h", "--help-hidden"].contains(name) { prefix.append(remaining.removeFirst()) }
-            else if ["--output", "--data-dir", "--language"].contains(name) {
-                prefix.append(remaining.removeFirst())
-                if !first.contains("="), let next = remaining.first, !next.hasPrefix("--") { prefix.append(remaining.removeFirst()) }
-            } else { break }
-        }
-        if let index = remaining.firstIndex(of: "--") { remaining.insert(contentsOf: prefix, at: index) }
-        else { remaining.append(contentsOf: prefix) }
-        return remaining
     }
 }

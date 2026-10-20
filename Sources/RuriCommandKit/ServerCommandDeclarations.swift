@@ -4,84 +4,84 @@ import RuriCore
 import RuriLocalization
 
 struct ServerListCommand: ExecutableCommand {
-    static var spec: CommandSpec { .init(path: ["server", "list"], summary: Messages.Servers.all.localized, operands: [
+    static var spec: CommandSpec { .init(path: ["server", "list"], summary: Messages.CLIInterface.serverListHelp.localized, operands: [
     ], options: [
-        .init(name: "instance", type: "string", required: false, help: Messages.Servers.instanceName.localized, values: []),
-        .init(name: "search", type: "string", required: false, help: Messages.Servers.search.localized, values: []),
-        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: []),
-        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: []),
-        .init(name: "all", type: "bool", required: false, help: Messages.Servers.all.localized, values: [])
-    ], mutation: false, confirmation: false) }
+        .init(name: "instance", type: "string", required: false, help: Messages.CLIInterface.serverInstanceOptionHelp.localized, values: [], role: .instance),
+        .init(name: "search", type: "string", required: false, help: Messages.CLIInterface.serverSearchHelp.localized, values: []),
+        .init(name: "limit", type: "int", required: false, help: Messages.CLIInterface.resultLimitHelp.localized, values: [], defaultValue: "50", minimum: 1, maximum: 1000),
+        .init(name: "offset", type: "int", required: false, help: Messages.CLIInterface.resultOffsetHelp.localized, values: [], defaultValue: "0", minimum: 0),
+        .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
+    ], mutation: false, confirmation: false, examples: ["ruri server list", "ruri server list --instance Survival"]) }
     @OptionGroup var common: CommonOptions
     @Argument var operands: [String] = []
-    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.Servers.instanceName.localized)) var optionInstance: String?
-    @Option(name: .customLong("search"), help: ArgumentHelp(Messages.Servers.search.localized)) var optionSearch: String?
+    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.serverInstanceOptionHelp.localized)) var optionInstance: String?
+    @Option(name: .customLong("search"), help: ArgumentHelp(Messages.CLIInterface.serverSearchHelp.localized)) var optionSearch: String?
     @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
     @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
-    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.Servers.all.localized)) var optionAll = false
+    @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { ["instance": .text(optionInstance), "search": .text(optionSearch), "limit": optionLimit.map(Value.integer) ?? .null, "offset": optionOffset.map(Value.integer) ?? .null, "all": .bool(optionAll)].filter { $0.value != .null } }
 }
 
 struct ServerAddCommand: ExecutableCommand {
-    static var spec: CommandSpec { .init(path: ["server", "add"], summary: Messages.Servers.add.localized, operands: [
-        .init(name: "address", type: "string", required: true, help: "address")
+    static var spec: CommandSpec { .init(path: ["server", "add"], summary: Messages.CLIInterface.serverAddHelp.localized, operands: [
+        .init(name: "address", type: "string", required: true, help: Messages.CLIInterface.argumentServerAddress.localized, values: [], role: .text)
     ], options: [
-        .init(name: "name", type: "string", required: false, help: Messages.Servers.name.localized, values: []),
-        .init(name: "instance", type: "string", required: false, help: Messages.Servers.instanceName.localized, values: []),
-        .init(name: "resource-packs", type: "string", required: false, help: Messages.Servers.resourcePacks.localized, values: ["ask", "always", "never"]),
+        .init(name: "name", type: "string", required: false, help: Messages.CLIInterface.serverNameHelp.localized, values: []),
+        .init(name: "instance", type: "string", required: false, help: Messages.CLIInterface.serverInstanceOptionHelp.localized, values: [], role: .instance),
+        .init(name: "resource-packs", type: "string", required: false, help: Messages.CLIInterface.serverResourcePacksHelp.localized, values: ["ask", "always", "never"], defaultValue: "ask"),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
-    ], mutation: true, confirmation: false) }
+    ], mutation: true, confirmation: false, examples: ["ruri server add play.example.com --name Example", "ruri server add play.example.com --instance Survival"]) }
     @OptionGroup var common: CommonOptions
     @Argument var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.Servers.name.localized)) var optionName: String?
-    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.Servers.instanceName.localized)) var optionInstance: String?
-    @Option(name: .customLong("resource-packs"), help: ArgumentHelp(Messages.Servers.resourcePacks.localized)) var optionResourcePacks: String?
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.serverNameHelp.localized)) var optionName: String?
+    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.serverInstanceOptionHelp.localized)) var optionInstance: String?
+    @Option(name: .customLong("resource-packs"), help: ArgumentHelp(Messages.CLIInterface.serverResourcePacksHelp.localized)) var optionResourcePacks: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { ["name": .text(optionName), "instance": .text(optionInstance), "resource-packs": .text(optionResourcePacks), "dry-run": .bool(optionDryRun)].filter { $0.value != .null } }
 }
 
 struct ServerEditCommand: ExecutableCommand {
-    static var spec: CommandSpec { .init(path: ["server", "edit"], summary: Messages.Servers.edit.localized, operands: [
-        .init(name: "instance", type: "string", required: true, help: "instance"),
-        .init(name: "entry", type: "string", required: true, help: "entry")
+    static var spec: CommandSpec { .init(path: ["server", "edit"], summary: Messages.CLIInterface.serverEditHelp.localized, operands: [
+        .init(name: "instance", type: "string", required: true, help: Messages.CLIInterface.argumentInstance.localized, values: [], role: .instance),
+        .init(name: "entry", type: "string", required: true, help: Messages.CLIInterface.argumentServerEntry.localized, values: [], role: .text)
     ], options: [
-        .init(name: "name", type: "string", required: false, help: Messages.Servers.name.localized, values: []),
-        .init(name: "address", type: "string", required: false, help: Messages.Servers.address.localized, values: []),
-        .init(name: "resource-packs", type: "string", required: false, help: Messages.Servers.resourcePacks.localized, values: ["ask", "always", "never"]),
+        .init(name: "name", type: "string", required: false, help: Messages.CLIInterface.serverNameHelp.localized, values: []),
+        .init(name: "address", type: "string", required: false, help: Messages.CLIInterface.serverAddressHelp.localized, values: []),
+        .init(name: "resource-packs", type: "string", required: false, help: Messages.CLIInterface.serverResourcePacksHelp.localized, values: ["ask", "always", "never"]),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
-    ], mutation: true, confirmation: false) }
+    ], mutation: true, confirmation: false, examples: ["ruri server edit Survival 0 --name Lobby"]) }
     @OptionGroup var common: CommonOptions
     @Argument var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.Servers.name.localized)) var optionName: String?
-    @Option(name: .customLong("address"), help: ArgumentHelp(Messages.Servers.address.localized)) var optionAddress: String?
-    @Option(name: .customLong("resource-packs"), help: ArgumentHelp(Messages.Servers.resourcePacks.localized)) var optionResourcePacks: String?
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.serverNameHelp.localized)) var optionName: String?
+    @Option(name: .customLong("address"), help: ArgumentHelp(Messages.CLIInterface.serverAddressHelp.localized)) var optionAddress: String?
+    @Option(name: .customLong("resource-packs"), help: ArgumentHelp(Messages.CLIInterface.serverResourcePacksHelp.localized)) var optionResourcePacks: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { ["name": .text(optionName), "address": .text(optionAddress), "resource-packs": .text(optionResourcePacks), "dry-run": .bool(optionDryRun)].filter { $0.value != .null } }
 }
 
 struct ServerRemoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { .init(path: ["server", "remove"], summary: Messages.Servers.remove.localized, operands: [
-        .init(name: "instance", type: "string", required: true, help: "instance"),
-        .init(name: "entry", type: "string", required: true, help: "entry")
+    static var spec: CommandSpec { .init(path: ["server", "remove"], summary: Messages.CLIInterface.serverRemoveHelp.localized, operands: [
+        .init(name: "instance", type: "string", required: true, help: Messages.CLIInterface.argumentInstance.localized, values: [], role: .instance),
+        .init(name: "entry", type: "string", required: true, help: Messages.CLIInterface.argumentServerEntry.localized, values: [], role: .text)
     ], options: [
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: []),
-        .init(name: "yes", type: "bool", required: false, help: Messages.Servers.confirmRemove.localized, values: [])
-    ], mutation: true, confirmation: true) }
+        .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
+    ], mutation: true, confirmation: true, examples: ["ruri server remove Survival 0 --yes"]) }
     @OptionGroup var common: CommonOptions
     @Argument var operands: [String] = []
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
-    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.Servers.confirmRemove.localized)) var optionYes = false
+    @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { ["dry-run": .bool(optionDryRun), "yes": .bool(optionYes)].filter { $0.value != .null } }
 }
 
 struct ServerMoveCommand: ExecutableCommand {
-    static var spec: CommandSpec { .init(path: ["server", "move"], summary: Messages.Servers.manage.localized, operands: [
-        .init(name: "instance", type: "string", required: true, help: "instance"),
-        .init(name: "entry", type: "string", required: true, help: "entry"),
-        .init(name: "position", type: "string", required: true, help: "position")
+    static var spec: CommandSpec { .init(path: ["server", "move"], summary: Messages.CLIInterface.serverMoveHelp.localized, operands: [
+        .init(name: "instance", type: "string", required: true, help: Messages.CLIInterface.argumentInstance.localized, values: [], role: .instance),
+        .init(name: "entry", type: "string", required: true, help: Messages.CLIInterface.argumentServerEntry.localized, values: [], role: .text),
+        .init(name: "position", type: "string", required: true, help: Messages.CLIInterface.argumentServerPosition.localized, values: [], role: .text)
     ], options: [
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
-    ], mutation: true, confirmation: false) }
+    ], mutation: true, confirmation: false, examples: ["ruri server move Survival 2 0"]) }
     @OptionGroup var common: CommonOptions
     @Argument var operands: [String] = []
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
@@ -89,49 +89,49 @@ struct ServerMoveCommand: ExecutableCommand {
 }
 
 struct ServerFavoriteCommand: ExecutableCommand {
-    static var spec: CommandSpec { .init(path: ["server", "favorite"], summary: Messages.Servers.favorite.localized, operands: [
-        .init(name: "address", type: "string", required: true, help: "address")
+    static var spec: CommandSpec { .init(path: ["server", "favorite"], summary: Messages.CLIInterface.serverFavoriteHelp.localized, operands: [
+        .init(name: "address", type: "string", required: true, help: Messages.CLIInterface.argumentServerAddress.localized, values: [], role: .text)
     ], options: [
-        .init(name: "value", type: "string", required: true, help: Messages.Servers.favorite.localized, values: ["true", "false"]),
+        .init(name: "value", type: "string", required: true, help: Messages.CLIInterface.serverFavoriteValueHelp.localized, values: ["true", "false"]),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
-    ], mutation: true, confirmation: false) }
+    ], mutation: true, confirmation: false, examples: ["ruri server favorite play.example.com --value true"]) }
     @OptionGroup var common: CommonOptions
     @Argument var operands: [String] = []
-    @Option(name: .customLong("value"), help: ArgumentHelp(Messages.Servers.favorite.localized)) var optionValue: String?
+    @Option(name: .customLong("value"), help: ArgumentHelp(Messages.CLIInterface.serverFavoriteValueHelp.localized)) var optionValue: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { ["value": .text(optionValue), "dry-run": .bool(optionDryRun)].filter { $0.value != .null } }
 }
 
 struct ServerPreferencesCommand: ExecutableCommand {
-    static var spec: CommandSpec { .init(path: ["server", "preferences"], summary: Messages.Servers.globalSettings.localized, operands: [
-        .init(name: "address", type: "string", required: true, help: "address")
+    static var spec: CommandSpec { .init(path: ["server", "preferences"], summary: Messages.CLIInterface.serverPreferencesHelp.localized, operands: [
+        .init(name: "address", type: "string", required: true, help: Messages.CLIInterface.argumentServerAddress.localized, values: [], role: .text)
     ], options: [
-        .init(name: "alias", type: "string", required: false, help: Messages.Servers.alias.localized, values: []),
-        .init(name: "notes", type: "string", required: false, help: Messages.Servers.notes.localized, values: []),
-        .init(name: "preferred-instance", type: "string", required: false, help: Messages.Servers.preferredInstance.localized, values: []),
-        .init(name: "saved", type: "string", required: false, help: Messages.Servers.savedInLibrary.localized, values: ["true", "false"]),
+        .init(name: "alias", type: "string", required: false, help: Messages.CLIInterface.serverAliasHelp.localized, values: []),
+        .init(name: "notes", type: "string", required: false, help: Messages.CLIInterface.serverNotesHelp.localized, values: []),
+        .init(name: "preferred-instance", type: "string", required: false, help: Messages.CLIInterface.serverPreferredInstanceHelp.localized, values: [], role: .preferredInstance),
+        .init(name: "saved", type: "string", required: false, help: Messages.CLIInterface.serverSavedHelp.localized, values: ["true", "false"]),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
-    ], mutation: true, confirmation: false) }
+    ], mutation: true, confirmation: false, examples: ["ruri server preferences play.example.com --preferred-instance Survival"]) }
     @OptionGroup var common: CommonOptions
     @Argument var operands: [String] = []
-    @Option(name: .customLong("alias"), help: ArgumentHelp(Messages.Servers.alias.localized)) var optionAlias: String?
-    @Option(name: .customLong("notes"), help: ArgumentHelp(Messages.Servers.notes.localized)) var optionNotes: String?
-    @Option(name: .customLong("preferred-instance"), help: ArgumentHelp(Messages.Servers.preferredInstance.localized)) var optionPreferredInstance: String?
-    @Option(name: .customLong("saved"), help: ArgumentHelp(Messages.Servers.savedInLibrary.localized)) var optionSaved: String?
+    @Option(name: .customLong("alias"), help: ArgumentHelp(Messages.CLIInterface.serverAliasHelp.localized)) var optionAlias: String?
+    @Option(name: .customLong("notes"), help: ArgumentHelp(Messages.CLIInterface.serverNotesHelp.localized)) var optionNotes: String?
+    @Option(name: .customLong("preferred-instance"), help: ArgumentHelp(Messages.CLIInterface.serverPreferredInstanceHelp.localized)) var optionPreferredInstance: String?
+    @Option(name: .customLong("saved"), help: ArgumentHelp(Messages.CLIInterface.serverSavedHelp.localized)) var optionSaved: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { ["alias": .text(optionAlias), "notes": .text(optionNotes), "preferred-instance": .text(optionPreferredInstance), "saved": .text(optionSaved), "dry-run": .bool(optionDryRun)].filter { $0.value != .null } }
 }
 
 struct ServerQueryCommand: ExecutableCommand {
-    static var spec: CommandSpec { .init(path: ["server", "query"], summary: Messages.Servers.probe.localized, operands: [
-        .init(name: "address", type: "string", required: true, help: "address")
+    static var spec: CommandSpec { .init(path: ["server", "query"], summary: Messages.CLIInterface.serverQueryHelp.localized, operands: [
+        .init(name: "address", type: "string", required: true, help: Messages.CLIInterface.argumentServerAddress.localized, values: [], role: .text)
     ], options: [
-    ], mutation: false, confirmation: false) }
+    ], mutation: false, confirmation: false, examples: ["ruri server query play.example.com"]) }
     @OptionGroup var common: CommonOptions
     @Argument var operands: [String] = []
     var parameters: [String: Value] { [:].filter { $0.value != .null } }
 }
 
 struct ServerGroup: ParsableCommand {
-    static var configuration: CommandConfiguration { .init(commandName: "server", abstract: Messages.Servers.page.localized, subcommands: [ServerListCommand.self, ServerAddCommand.self, ServerEditCommand.self, ServerRemoveCommand.self, ServerMoveCommand.self, ServerFavoriteCommand.self, ServerPreferencesCommand.self, ServerQueryCommand.self]) }
+    static var configuration: CommandConfiguration { .init(commandName: "server", abstract: Messages.CLIInterface.serverCommands.localized, subcommands: [ServerListCommand.self, ServerAddCommand.self, ServerEditCommand.self, ServerRemoveCommand.self, ServerMoveCommand.self, ServerFavoriteCommand.self, ServerPreferencesCommand.self, ServerQueryCommand.self]) }
 }

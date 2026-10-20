@@ -103,10 +103,15 @@ enum CommandSchemas {
     static func payload(_ spec: CommandSpec) -> Value {
         let p = spec.path, action = p.last!, path = p.joined(separator: " ")
         if p.first == "config" {
+            if action == "fields" {
+                let field = object(fields("name,type,unit,group", type: nullable(string)).merging(["nullable": boolean, "sensitive": boolean, "values": array(string), "scopes": array(string), "minimum": nullable(integer), "maximum": nullable(integer)]) { _, n in n })
+                return object(["scope": nullable(string), "prefix": nullable(string), "fields": array(field)])
+            }
             return action == "get" ? configReport : object(["changed": boolean, "dryRun": boolean, "before": configReport, "after": configReport])
         }
         if path == "app info" { return object(fields("version,application,cli,dataDirectory", type: nullable(string)).merging(["schemaVersion": integer]) { _, n in n }) }
         if p.starts(with: ["app", "language"]) { return object(["language": string, "supported": array(string), "restartRequired": boolean, "dryRun": boolean]) }
+        if path == "completions" { return object(["shell": string, "script": string]) }
         if p.first == "cli" { return action == "status" ? installation : object(["changed": boolean, "dryRun": boolean, "status": installation]) }
         if p.first == "cache" { return object(["bytes": integer, "files": integer].merging(action == "clean" ? ["dryRun": boolean] : [:]) { _, n in n }) }
         if path == "schema" { return object(["commands": array(object([:])), "output": object([:]), "globalOptions": array(string), "configuration": object([:])]) }

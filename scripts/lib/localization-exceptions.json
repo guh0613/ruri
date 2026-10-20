@@ -918,54 +918,6 @@
     "reason": "Public command path or invocation syntax; not a translated message."
   },
   {
-    "file": "Sources/RuriCommandKit/Commands.swift",
-    "literal": "\"ruri config set memory.maximumMB 6144 --scope defaults --json\"",
-    "line": 136,
-    "reason": "Public command path or invocation syntax; not a translated message."
-  },
-  {
-    "file": "Sources/RuriCommandKit/Commands.swift",
-    "literal": "\"ruri config apply --scope instance:<uuid> --file patch.json --dry-run --json\"",
-    "line": 157,
-    "reason": "Public command path or invocation syntax; not a translated message."
-  },
-  {
-    "file": "Sources/RuriCommandKit/Commands.swift",
-    "literal": "\"ruri config inherit memory --scope instance:<uuid> --json\"",
-    "line": 199,
-    "reason": "Public command path or invocation syntax; not a translated message."
-  },
-  {
-    "file": "Sources/RuriCommandKit/Commands.swift",
-    "literal": "\"ruri instance create --name Survival --game 1.21.1 --directory default --json\"",
-    "line": 298,
-    "reason": "Public command path or invocation syntax; not a translated message."
-  },
-  {
-    "file": "Sources/RuriCommandKit/Commands.swift",
-    "literal": "\"ruri account login start --provider microsoft --json\"",
-    "line": 1073,
-    "reason": "Public command path or invocation syntax; not a translated message."
-  },
-  {
-    "file": "Sources/RuriCommandKit/Commands.swift",
-    "literal": "\"ruri launch start <instance-uuid> --account <account-uuid> --json\"",
-    "line": 1194,
-    "reason": "Public command path or invocation syntax; not a translated message."
-  },
-  {
-    "file": "Sources/RuriCommandKit/Commands.swift",
-    "literal": "\"ruri session logs <instance-uuid> <session-uuid> --follow --output ndjson\"",
-    "line": 1305,
-    "reason": "Public command path or invocation syntax; not a translated message."
-  },
-  {
-    "file": "Sources/RuriCommandKit/Commands.swift",
-    "literal": "\"ruri content install <instance-uuid> sodium --provider modrinth --dry-run --json\"",
-    "line": 1502,
-    "reason": "Public command path or invocation syntax; not a translated message."
-  },
-  {
     "file": "Sources/RuriCommandKit/AccountCommands.swift",
     "literal": "\"login start\"",
     "reason": "Stable command action; independent of display language."
@@ -1082,17 +1034,7 @@
   },
   {
     "file": "Sources/RuriCommandKit/CommandHelp.swift",
-    "literal": "\"USAGE: \"",
-    "reason": "CLI usage syntax and stable command/parameter identifiers."
-  },
-  {
-    "file": "Sources/RuriCommandKit/CommandHelp.swift",
     "literal": "\" [options]\"",
-    "reason": "CLI usage syntax and stable command/parameter identifiers."
-  },
-  {
-    "file": "Sources/RuriCommandKit/CommandHelp.swift",
-    "literal": "\"defaults / instance:<uuid>\"",
     "reason": "CLI usage syntax and stable command/parameter identifiers."
   },
   {
@@ -1384,5 +1326,710 @@
     "file": "Sources/RuriSessionKit/Storage/SessionRecordWriter.swift",
     "literal": "\"[Ruri] \\(cancelled ? Messages.CoreGameSession.launchCancelled.localized : record.failure ?? Messages.CoreGameSession.launchFailed.localized)\"",
     "reason": "Stable log prefix around already localized text or verbatim process output."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandHelp.swift",
+    "literal": "\"ruri instance list\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandHelp.swift",
+    "literal": "\"ruri launch start Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandProtocol.swift",
+    "literal": "\"--output text|json|ndjson\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandProtocol.swift",
+    "literal": "\"--data-dir <path>\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandProtocol.swift",
+    "literal": "\"--language \"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri schema instance\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri app language set zh-Hans\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri cli install\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri cli install --bin-dir ~/.local/bin\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri cli uninstall --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config get --scope defaults\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config get memory --scope instance:Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config set memory.maximumMB 6144 --scope defaults\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config set memory.mode manual --scope instance:Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config set java.path \\\"/Library/Java/JavaVirtualMachines/zulu-21.jdk\\\" --scope defaults\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config apply --scope instance:Survival --file patch.json --dry-run\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"printf '{\\\"set\\\":{\\\"concurrentDownloads\\\":8}}' | ruri config apply --scope app --file -\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config reset window --scope defaults\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config inherit memory --scope instance:Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance list\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance list --directory default --all\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance show Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance show 3f2a1b4c\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance versions --limit 10\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance versions --snapshots\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance create --name Survival --game 1.21.1 --directory default\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance create --name Fabric --game 1.21.1 --directory default --component fabric=0.16.9\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance create --name Survival --game 1.21.1 --directory default --no-install --json\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance install Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance repair Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance select Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance rename Survival \\\"Survival 1.21\\\"\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance favorite Survival true\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance remove Survival --dry-run\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance remove Survival --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance icon Survival --glyph tree --tint green\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance icon Survival --file icon.png\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance icon Survival --reset\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance copy Survival --name \\\"Survival copy\\\" --directory default\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance move Survival --directory Games --dry-run\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance export Survival ~/Desktop/Survival.mrpack --format mrpack\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance component list Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance component versions Survival fabric --limit 5\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance component set Survival --component fabric=0.16.9 --dry-run\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance component restore Survival --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory scan \\\"$HOME/Library/Application Support/minecraft\\\"\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory add \\\"$HOME/Library/Application Support/minecraft\\\" --name Official\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory add ~/Games/Ruri --name Games --layout managed\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory select Games\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory remove Official --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory rename Official Vanilla\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory relocate Games /Volumes/External/Ruri\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory run get Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory run set Survival shared\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory run set Survival custom --path ~/Games/Survival --copy\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri directory run relocate Survival /Volumes/External/Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri java available --major 21\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri java add /Library/Java/JavaVirtualMachines/zulu-21.jdk\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri java default automatic\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri account add-offline Steve\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri account select Steve\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri account login start --provider microsoft\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri account login start --provider external --server https://example.com/api/yggdrasil --username alex@example.com --password-stdin < password.txt\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri account login complete <flow>\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri account service-key set --stdin < key.txt\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri launch preflight Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri launch start Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri launch start Survival --account Steve --world \\\"New World\\\"\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri launch start Survival --server play.example.com\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session list --instance Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session list --problems\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session show Survival 3f2a1b4c\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session wait Survival 3f2a1b4c\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session quit Survival 3f2a1b4c\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session stop Survival 3f2a1b4c --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session logs Survival 3f2a1b4c --follow\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session logs Survival 3f2a1b4c --source latest --lines 100\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session logs <instance> <session> --follow --output ndjson\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session diagnose Survival 3f2a1b4c\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri session export Survival 3f2a1b4c ~/Desktop/Report.zip\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri catalog search sodium --loader fabric --game 1.21.1\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri catalog search --type modpack --sort downloads\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri catalog show sodium\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri catalog versions sodium --game 1.21.1 --loader fabric\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri catalog categories --provider curseforge\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content list Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content list Survival --kind shader\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content import Survival ~/Downloads/example.jar\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content install Survival sodium --dry-run\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content install Survival sodium\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content enable Survival --file example.jar\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content disable Survival --file example.jar\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content remove Survival --file example.jar --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content update-check Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri content update Survival --all --dry-run\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri world list Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri world show Survival \\\"New World\\\"\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri world import Survival ~/Downloads/World.zip\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri world export Survival \\\"New World\\\" ~/Desktop/World.zip\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri world remove Survival \\\"New World\\\" --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri world backup create Survival \\\"New World\\\" --reason \\\"Before update\\\"\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri world backup list Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri world backup restore Survival <backup> --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri datapack list Survival \\\"New World\\\"\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri datapack import Survival \\\"New World\\\" ~/Downloads/example.zip\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri datapack search Survival terralith\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri datapack install Survival \\\"New World\\\" terralith\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri schematic list Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri schematic info Survival house.litematic\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri schematic import Survival ~/Downloads/house.litematic\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri schematic mkdir Survival Builds\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri instance import ~/Downloads/Pack.mrpack --name Pack --directory default\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri pack import ~/Downloads/Pack.mrpack --name Pack --directory default\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri pack install fabulously-optimized --name \\\"Fabulously Optimized\\\" --directory default\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri pack show \\\"Fabulously Optimized\\\"\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri pack update-check \\\"Fabulously Optimized\\\"\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri pack update \\\"Fabulously Optimized\\\" --version <release> --dry-run\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri pack rollback \\\"Fabulously Optimized\\\" --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri download fetch https://example.com/example.jar example.jar --sha1 <sha1> --size 1024\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri recovery list\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri recovery apply content Survival --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri doctor\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri doctor --instance Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri cache clean --dry-run\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri completions zsh > ~/.zfunc/_ruri\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri completions bash > ~/.local/share/bash-completion/completions/ruri\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri completions fish > ~/.config/fish/completions/ruri.fish\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server list\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server list --instance Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server add play.example.com --name Example\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server add play.example.com --instance Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server edit Survival 0 --name Lobby\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server remove Survival 0 --yes\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server move Survival 2 0\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server favorite play.example.com --value true\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server preferences play.example.com --preferred-instance Survival\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/ServerCommandDeclarations.swift",
+    "literal": "\"ruri server query play.example.com\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config fields memory\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/Commands.swift",
+    "literal": "\"ruri config fields --scope app\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandHelp.swift",
+    "literal": "\"ruri <command> --help\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandHelp.swift",
+    "literal": "\"ruri help --all\"",
+    "reason": "Public command path or invocation syntax; not a translated message."
   }
 ]

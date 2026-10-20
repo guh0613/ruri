@@ -5,9 +5,12 @@ import RuriLocalization
 /// Text is a presentation of the public DTO, never a second execution path.
 struct CommandTextRenderer {
     var request: CommandRequest?
+    var usagePath: [String]? = nil
 
     func result(_ value: Value) -> String {
         if request?.path == "session logs" { return value["text"].string ?? "" }
+        if request?.spec.path == ["completions"] { return value["script"].string ?? "" }
+        if request?.spec.path == ["config", "fields"] { return configurationFields(value) }
         if value["before"]["effective"] != .null, value["after"]["effective"] != .null { return configurationChange(value) }
         if value["scope"] != .null, value.object?["effective"] != nil { return configuration(value) }
         if case .array(let items) = value["items"] { return page(value, items: items) }
@@ -34,7 +37,10 @@ struct CommandTextRenderer {
     }
 
     func error(_ value: Value) -> String {
-        var lines = [Self.atom(value["code"]) + ": " + (value["message"].string ?? "")]
+        var lines = [Messages.CLIExperience.errorHeadline(Self.atom(value["code"]), value["message"].string ?? "").localized]
+        if value["code"] == .string("INVALID_ARGUMENT"), let path = usagePath ?? request?.spec.path {
+            lines.append(Messages.CLIExperience.usageLine(CommandHelp.usage(path)).localized)
+        }
         if value["details"] != .null { lines += Self.details(value["details"]) }
         if value["retryable"] == .bool(true) { lines.append(Messages.CLIExperience.retryable.localized) }
         if case .array(let actions) = value["nextActions"] {
@@ -54,6 +60,46 @@ struct CommandTextRenderer {
             return ([stage + counter] + Self.details(.object(remaining))).joined(separator: " ")
         }
         return ([type + ":"] + Self.details(value)).joined(separator: "\n")
+    }
+
+    private func configurationFields(_ value: Value) -> String {
+        guard case .array(let fields) = value["fields"] else { return "" }
+        var lines: [String] = []
+        for (scope, title) in [("app", Messages.CLIExperience.fieldScopeApp.localized), ("defaults", Messages.CLIExperience.fieldScopeLaunch.localized)] {
+            let rows = fields.filter { field in (try? field["scopes"].decode([String].self))?.contains(scope) == true }
+            guard !rows.isEmpty else { continue }
+            if !lines.isEmpty { lines.append("") }
+            lines.append(title)
+            lines += TerminalText.columns(rows.map { field in (field["name"].string ?? "", Self.fieldDescription(field)) }, maximumLabel: 30, width: 80)
+        }
+        if fields.contains(where: { $0["group"] != .null }) {
+            let groups = Array(Set(fields.compactMap { $0["group"].string })).sorted()
+            lines += [""] + TerminalText.wrap(Messages.CLIExperience.fieldInheritance(groups.joined(separator: ", ")).localized, width: 80)
+        }
+        return lines.joined(separator: "\n")
+    }
+
+    static func fieldDescription(_ field: Value) -> String {
+        let values = (try? field["values"].decode([String].self)) ?? []
+        var parts: [String]
+        switch field["type"].string {
+        case "integer":
+            var text = Messages.CLIExperience.fieldTypeInteger.localized
+            if let minimum = field["minimum"].int, let maximum = field["maximum"].int { text += " \(minimum)–\(maximum)" }
+            parts = [text]
+        case "boolean": parts = [Messages.CLIExperience.fieldTypeBoolean.localized]
+        default: parts = [values.isEmpty ? Messages.CLIExperience.fieldTypeText.localized : values.joined(separator: " | ")]
+        }
+        switch field["unit"].string {
+        case "MB": parts.append("MB")
+        case "seconds": parts.append(Messages.CLIExperience.unitSeconds.localized)
+        case "pixels": parts.append(Messages.CLIExperience.unitPixels.localized)
+        default: break
+        }
+        var text = parts.joined(separator: " ")
+        if field["nullable"] == .bool(true) { text = Messages.CLIExperience.fieldNullable(text).localized }
+        if field["sensitive"] == .bool(true) { text = Messages.CLIExperience.fieldSensitive(text).localized }
+        return text
     }
 
     private func configuration(_ value: Value) -> String {

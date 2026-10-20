@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import RuriCommandKit
+import RuriCore
 
 @MainActor struct DiscoveryTests {
     @Test func completeCheatSheetIsBoundedAndContainsEverySignature() async throws {
@@ -12,19 +13,29 @@ import Testing
         #expect(!text.contains("resultSchema"))
         #expect(text.components(separatedBy: "--data-dir").count == 2)
     }
-    @Test func groupedHelpIncludesNestedCommandsOptionsEnumsAndExamples() async throws {
-        let output = CommandCapture()
-        #expect(await CLIApplication.run(["help", "instance"], write: output.write) == 0)
-        let text = String(decoding: output.output, as: UTF8.self)
-        for spec in CommandRegistry.commands where spec.path.first == "instance" {
-            #expect(text.contains(CommandHelp.signature(spec)))
-            for option in spec.options { #expect(text.contains("--" + option.name)) }
-            for example in spec.examples { #expect(text.contains(example)) }
-        }
-        #expect(!text.contains("ruri account add-offline"))
-        let config = CommandCapture()
-        #expect(await CLIApplication.run(["help", "config"], write: config.write) == 0)
-        #expect(String(decoding: config.output, as: UTF8.self).contains("memory.maximumMB: integer (512…131072)"))
+    @Test func configurationFieldsDescribeTypesRangesAndUnitsWithoutState() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        try Data("broken".utf8).write(to: root.appendingPathComponent("state.json"))
+        let text = CommandCapture()
+        #expect(await CLIApplication.run(["config", "fields", "memory", "--data-dir", root.path], write: text.write) == 0)
+        let rendered = String(decoding: text.output, as: UTF8.self)
+        #expect(rendered.contains("memory.maximumMB") && rendered.contains("512–131072 MB") && rendered.contains("or null"))
+        #expect(!rendered.contains("appearance"))
+        let json = CommandCapture()
+        #expect(await CLIApplication.run(["config", "fields", "--scope", "app", "--json", "--data-dir", root.path], write: json.write) == 0)
+        let fields = try json.value["data"]["fields"].decode([Value].self)
+        #expect(fields.map { $0["name"].string } == ConfigurationService.appFields.map(\.name))
+        #expect(fields.first { $0["name"] == .string("concurrentDownloads") }?["maximum"] == .integer(16))
+        let launch = CommandCapture()
+        #expect(await CLIApplication.run(["config", "fields", "commands.", "--scope", "instance", "--json"], write: launch.write) == 0)
+        #expect(try launch.value["data"]["fields"].decode([Value].self).allSatisfy { $0["group"] == .string("commands") })
+        #expect(try launch.value["data"]["fields"].decode([Value].self).contains { $0["unit"] == .string("seconds") })
+        let unknown = CommandCapture()
+        #expect(await CLIApplication.run(["config", "fields", "memroy", "--json"], write: unknown.write) == 2)
+        #expect(try unknown.value["error"]["message"].string?.contains("memory") == true)
+        #expect(try String(contentsOf: root.appendingPathComponent("state.json"), encoding: .utf8) == "broken")
     }
     @Test func schemaIndexAndLeafExcludeUnrelatedDefinitions() async throws {
         let index = CommandCapture()

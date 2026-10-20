@@ -6,7 +6,8 @@ import RuriLocalization
 
 @MainActor struct CLILanguageTests {
     private func containsChinese(_ text: String) -> Bool {
-        text.range(of: #"\p{Han}"#, options: .regularExpression) != nil
+        // \p{Han} also matches the Latin middle dot through its script extensions.
+        text.range(of: "[\u{3400}-\u{9FFF}]", options: .regularExpression) != nil
     }
     private func run(_ arguments: [String]) async -> (Int32, CommandCapture) {
         let capture = CommandCapture()
@@ -19,7 +20,6 @@ import RuriLocalization
         #expect(initial.0 == 0)
         let english = String(decoding: initial.1.output, as: UTF8.self)
         #expect(english.contains("Show saved and effective settings"))
-        #expect(english.contains("Configuration fields"))
         #expect(!containsChinese(english))
         let explicit = await run(["--language", "zh-Hans", "help", "config"])
         #expect(explicit.0 == 0)
@@ -29,7 +29,10 @@ import RuriLocalization
         #expect(again.1.output == initial.1.output)
         #expect(LocalizationContext(language: "zh-Hans").string(Messages.CLISetup.title) == "命令行工具")
         #expect(LocalizationContext.supportedLanguages.contains("en"))
-        #expect(english.contains("--language " + LocalizationContext.commandLineLanguages.joined(separator: "|")))
+        let leaf = await run(["config", "set", "--help"])
+        #expect(String(decoding: leaf.1.output, as: UTF8.self).contains("--language " + LocalizationContext.commandLineLanguages.joined(separator: "|")))
+        let fields = await run(["--language", "zh-Hans", "config", "fields", "memory"])
+        #expect(containsChinese(String(decoding: fields.1.output, as: UTF8.self)))
     }
     @Test func everyHelpAndSchemaDescriptionUsesEnglishByDefault() async throws {
         for spec in CommandRegistry.commands {
@@ -38,10 +41,10 @@ import RuriLocalization
             let text = String(decoding: result.1.output, as: UTF8.self)
             #expect(!containsChinese(text), "\(spec.path): \(text)")
         }
-        for arguments in [["--help"], ["help", "--all"], ["schema", "--full", "--json"]] {
+        for arguments in [["--help"], ["help", "--all"], ["help", "--full"], ["schema", "--full", "--json"], ["config", "fields"], ["instance", "lst"]] {
             let result = await run(arguments)
-            #expect(result.0 == 0)
-            #expect(!containsChinese(String(decoding: result.1.output, as: UTF8.self)))
+            #expect(result.0 == 0 || arguments == ["instance", "lst"])
+            #expect(!containsChinese(String(decoding: result.1.output + result.1.errors, as: UTF8.self)))
         }
     }
     @Test func resultsErrorsAndWarningsUseTheInvocationLanguage() async throws {

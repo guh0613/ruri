@@ -11,14 +11,57 @@ struct CommonOptions: ParsableArguments {
     @Option(help: ArgumentHelp(Messages.CLIInterface.dataDirectoryHelp.localized)) var dataDir: String?
     @Option(help: ArgumentHelp(Messages.CLIInterface.messageLanguageHelp.localized)) var language: String?
     @Flag(help: ArgumentHelp(Messages.CLIInterface.quietProgressHelp.localized)) var quiet = false
+
+    /// Options every command accepts, before, between or after command names.
+    static let flags: Set<String> = ["--json", "--quiet", "--help", "-h", "--help-hidden"]
+    static let valued: Set<String> = ["--output", "--data-dir", "--language"]
+    static var synopsis: [String] {
+        ["--json", "--output text|json|ndjson", "--data-dir <path>", "--language " + LocalizationContext.commandLineLanguages.joined(separator: "|"), "--quiet", "--help"]
+    }
 }
 
-struct ParameterSpec: Codable, Sendable {
+/// What a parameter refers to. Help, target resolution and completion all read
+/// the role, so they cannot disagree about a parameter.
+enum ParameterRole: Sendable, Equatable {
+    case text
+    case instance, directory, account
+    /// A session within the instance named by the command's instance operand.
+    case session
+    /// app, defaults or instance:<instance>.
+    case scope
+    /// An instance, or none.
+    case preferredInstance
+    /// An instance or a directory, depending on the recovery kind before it.
+    case recoveryTarget
+    case configKey, configGroup
+    /// An existing file or folder to read, a file to create, or a folder.
+    case file, newFile, folder
+    case commandPath
+}
+
+struct ParameterSpec: Encodable, Sendable {
     let name: String
     let type: String
     let required: Bool
     let help: String
     var values: [String] = []
+    var role: ParameterRole = .text
+    var defaultValue: String? = nil
+    var minimum: Int? = nil
+    var maximum: Int? = nil
+    // Presentation metadata stays out of the published descriptor.
+    enum CodingKeys: String, CodingKey { case name, type, required, help, values }
+    /// The value name shown in usage, such as `--directory <directory>`.
+    var placeholder: String {
+        switch role {
+        case .instance, .preferredInstance: return "instance"
+        case .directory, .account, .session, .scope: return String(describing: role)
+        case .file, .newFile: return "file"
+        case .folder: return "path"
+        default: return ["if-revision": "revision", "game": "version", "component": "loader=version", "manual": "fileID=path"][name] ?? name
+        }
+    }
+    var isTarget: Bool { [.instance, .directory, .account, .session, .scope, .preferredInstance, .recoveryTarget].contains(role) }
 }
 
 struct CommandSpec: Encodable, Sendable {
@@ -78,8 +121,12 @@ struct CommandRequest: Sendable {
     }
     func validate() throws {
         let minimum = spec.operands.filter(\.required).count
-        guard operands.count >= minimum, operands.count <= spec.operands.count else {
-            throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.positionalArgumentCountMismatch(String(describing: spec.operands.map(\.name).joined(separator: " ")), String(describing: operands.count)).localized)
+        guard operands.count >= minimum else {
+            let missing = spec.operands.dropFirst(operands.count).filter(\.required).map(CommandHelp.operandUsage).joined(separator: " ")
+            throw CommandLineInvocation.failure(Messages.CLIExperience.missingArguments(missing).localized, path: spec.path)
+        }
+        guard operands.count <= spec.operands.count else {
+            throw CommandLineInvocation.failure(Messages.CLIExperience.unexpectedArgument(operands[spec.operands.count]).localized, path: spec.path)
         }
         guard ["text", "json", "ndjson"].contains(common.output), !common.json || ["text", "json"].contains(common.output) else {
             throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidOutputFormatCombination.localized)
@@ -92,10 +139,10 @@ struct CommandRequest: Sendable {
                 case "strings": missing = options[option.name] == nil || options[option.name] == .array([])
                 default: missing = options[option.name] == nil || options[option.name] == .string("")
                 }
-                if missing { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.missingOption(String(describing: option.name)).localized) }
+                if missing { throw CommandLineInvocation.failure(Messages.CLIInterface.missingOption(String(describing: option.name)).localized, path: spec.path) }
             }
             if !option.values.isEmpty, let value = string(option.name), !option.values.contains(value) {
-                throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidOptionChoice(String(describing: option.name), String(describing: option.values.joined(separator: ", "))).localized)
+                throw CommandLineInvocation.failure(Messages.CLIInterface.invalidOptionChoice(String(describing: option.name), String(describing: option.values.joined(separator: ", "))).localized, path: spec.path)
             }
         }
         if let limit = integer("limit"), !(1...1000).contains(limit) { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.limitOutOfRange.localized) }

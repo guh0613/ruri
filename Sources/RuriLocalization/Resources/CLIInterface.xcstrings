@@ -26,13 +26,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "account commands"
+            "value" : "Accounts and sign-in"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账号管理与登录"
+            "value" : "账号与登录"
           }
         }
       }
@@ -98,7 +98,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "account login commands"
+            "value" : "Microsoft and third-party sign-in"
           }
         },
         "zh-Hans" : {
@@ -332,13 +332,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "account service-key commands"
+            "value" : "CurseForge API key"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "平台服务凭据"
+            "value" : "CurseForge API Key"
           }
         }
       }
@@ -386,7 +386,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Return all results."
+            "value" : "Return every result."
           }
         },
         "zh-Hans" : {
@@ -458,13 +458,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "app commands"
+            "value" : "Version, paths and interface language"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "应用信息与语言设置"
+            "value" : "版本、路径与界面语言"
           }
         }
       }
@@ -476,13 +476,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "app language commands"
+            "value" : "Interface language"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "应用界面语言"
+            "value" : "界面语言"
           }
         }
       }
@@ -537,6 +537,822 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "显示应用及命令行工具的版本和路径。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account username, short ID or full ID."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号用户名、短 ID 或完整 ID。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentArchiveToCreate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archive to create. It must not exist yet."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要创建的归档文件，不能已存在。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentBackup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup ID from world backup list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "world backup list 中的备份 ID。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentCommandPath" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Command group or subcommand."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "命令组或子命令。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentConfigGroup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setting group, such as memory."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置组，例如 memory。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentConfigKey" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field or group, such as memory.maximumMB or memory."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置字段或组，例如 memory.maximumMB 或 memory。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentConfigPrefix" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field name or prefix, such as memory."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "字段名称或前缀，例如 memory。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentConfigValue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New value: JSON, or plain text for text and choice fields."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新值：JSON；文本和选项字段也可直接输入普通文本。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentContentFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mod, resource pack or shader file or folder."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要导入的模组、资源包或光影包文件或文件夹。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentCustomRunDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where the custom game directory is now."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义游戏目录现在的位置。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentDataPack" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data pack ID from datapack list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "datapack list 中的数据包 ID。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentDataPackFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data pack archive or folder."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据包压缩包或文件夹。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentDetachedLocation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where the folder to restore is now."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要恢复的文件夹现在的位置。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentDirectory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Directory name, short ID, full ID or default."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目录名称、短 ID、完整 ID 或 default。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentDownloadFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where to save the file."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件的保存位置。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentDownloadURL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTP or HTTPS address to download."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要下载的 HTTP 或 HTTPS 地址。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentFileToCreate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File to create. It must not exist yet."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要创建的文件，不能已存在。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentFolderName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name of the folder to create."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要创建的文件夹名称。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentFolderToAdd" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Existing folder to add."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要添加的已有文件夹。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentImportArchive" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance or modpack archive to import."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要导入的实例或整合包归档。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentInstance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance name, short ID or full ID."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例名称、短 ID 或完整 ID。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentJavaCatalogID" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runtime ID from java available."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "java available 中的 Java ID。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentJavaDefault" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java home folder or executable, or automatic."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 主目录或可执行文件，或 automatic。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentJavaPath" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java home folder or java executable."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java 主目录或 java 可执行文件。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentLanguage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interface language."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "界面语言。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentLoader" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loader kind."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载器类型。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentLoginFlow" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login flow ID returned by account login start."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "account login start 返回的登录流程 ID。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentManagedJava" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Managed runtime ID from java list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "java list 中托管 Java 的 ID。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentMinecraftFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minecraft folder to inspect."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要检查的 Minecraft 文件夹。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentModpackArchive" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modpack archive to import."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要导入的整合包归档。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentNewLocation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where the folder is now."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件夹现在的位置。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentNewName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New name."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新名称。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentOfflineUsername" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player name for the offline account."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "离线账号的玩家名称。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentPinned" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whether to pin the instance to Home."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是否将实例固定到主页。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentProject" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project ID or slug on the provider."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内容平台上的项目 ID 或 slug。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentRecoveryKind" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recovery kind from recovery list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "recovery list 中的恢复类型。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentRecoveryTarget" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance or directory from recovery list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "recovery list 中的实例或目录。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentRunMode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run directory mode."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行目录模式。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentSchematicFile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schematic file to import."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要导入的投影文件。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentSchematicPath" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schematic path from schematic list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "schematic list 中的投影路径。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentSearchQuery" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search text."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索内容。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentServerAddress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server address: host or host:port."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器地址：host 或 host:port。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentServerEntry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Row number from server list --instance."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "server list --instance 中的行号。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentServerPosition" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New row number."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动后的行号。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentSession" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session short ID or full ID, within the instance."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该实例中运行记录的短 ID 或完整 ID。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentShell" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shell to generate the script for."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要生成脚本的 shell。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentWorldArchive" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "World archive or folder to import."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要导入的存档压缩包或文件夹。"
+          }
+        }
+      }
+    },
+    "CLIInterface.argumentWorldFolder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "World folder name from world list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "world list 中的存档文件夹名称。"
           }
         }
       }
@@ -602,13 +1418,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "cache commands"
+            "value" : "Download cache usage and cleanup"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下载缓存的空间清理"
+            "value" : "下载缓存占用与清理"
           }
         }
       }
@@ -674,13 +1490,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "catalog commands"
+            "value" : "Search Modrinth and CurseForge"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "内容搜索与版本查询"
+            "value" : "搜索 Modrinth 与 CurseForge"
           }
         }
       }
@@ -782,13 +1598,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "cli commands"
+            "value" : "Install and remove the ruri command"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "命令行工具的安装与卸载"
+            "value" : "安装与卸载 ruri 命令"
           }
         }
       }
@@ -1063,6 +1879,23 @@
         }
       }
     },
+    "CLIInterface.completionsHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Print a shell completion script."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输出 shell 补全脚本。"
+          }
+        }
+      }
+    },
     "CLIInterface.configApplyHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri config apply`.",
       "extractionState" : "manual",
@@ -1088,7 +1921,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "config commands"
+            "value" : "Settings, defaults and instance overrides"
           }
         },
         "zh-Hans" : {
@@ -1131,6 +1964,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "配置字段及 JSON 值。"
+          }
+        }
+      }
+    },
+    "CLIInterface.configFieldsHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List configuration fields with their types, values and ranges."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "列出配置字段的类型、可选值和范围。"
           }
         }
       }
@@ -1250,13 +2100,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "app, defaults, or instance:<uuid>."
+            "value" : "app, defaults or instance:<instance>."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "配置作用域：app、defaults 或 instance:<uuid>。"
+            "value" : "配置作用域：app、defaults 或 instance:<实例>。"
           }
         }
       }
@@ -1268,13 +2118,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Set one field using a JSON value."
+            "value" : "Set one field."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用 JSON 值设置一个配置字段。"
+            "value" : "设置一个配置字段。"
           }
         }
       }
@@ -1430,13 +2280,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "content commands"
+            "value" : "Mods, resource packs and shaders"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模组、资源包与光影包管理"
+            "value" : "模组、资源包与光影包"
           }
         }
       }
@@ -1808,13 +2658,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "datapack commands"
+            "value" : "Data packs and their order"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "数据包管理与排序"
+            "value" : "数据包及其顺序"
           }
         }
       }
@@ -1952,7 +2802,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "datapack order commands"
+            "value" : "Data pack priority"
           }
         },
         "zh-Hans" : {
@@ -2186,13 +3036,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "directory commands"
+            "value" : "Game folders and run directories"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏目录的添加、移动与恢复"
+            "value" : "游戏目录与运行目录"
           }
         }
       }
@@ -2204,13 +3054,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter by directory UUID or default."
+            "value" : "Only instances in this directory: name, short ID or default."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按目录 UUID 或 default 筛选。"
+            "value" : "只显示该目录中的实例：名称、短 ID 或 default。"
           }
         }
       }
@@ -2474,13 +3324,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check state, paths, Java, account credentials and bundled helpers."
+            "value" : "Check data, Java, accounts and helpers."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检查状态、路径、Java、账号凭据及内置辅助程序。"
+            "value" : "检查数据、Java、账号和辅助程序。"
           }
         }
       }
@@ -2492,13 +3342,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inspect a particular instance."
+            "value" : "Check only this instance."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "检查指定实例。"
+            "value" : "只检查指定实例。"
           }
         }
       }
@@ -2510,13 +3360,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "download commands"
+            "value" : "Download a file and verify it"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "文件下载与校验"
+            "value" : "下载并校验文件"
           }
         }
       }
@@ -2906,13 +3756,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ruri, complete, multimc, mcbbs, or mrpack."
+            "value" : "Archive format."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "归档格式：ruri、complete、multimc、mcbbs 或 mrpack。"
+            "value" : "归档格式。"
           }
         }
       }
@@ -2924,13 +3774,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "instance commands"
+            "value" : "Create, install and manage instances"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例管理与游戏安装"
+            "value" : "实例的创建、安装与管理"
           }
         }
       }
@@ -2942,13 +3792,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "instance component commands"
+            "value" : "Loaders and components"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例加载器与组件"
+            "value" : "加载器与组件"
           }
         }
       }
@@ -3050,13 +3900,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create a named copy of an instance in the selected directory."
+            "value" : "Copy an instance into a directory under a new name."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将实例复制到指定目录并命名。"
+            "value" : "将实例以新名称复制到指定目录。"
           }
         }
       }
@@ -3266,13 +4116,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Destination directory UUID or default."
+            "value" : "Destination directory: name, short ID or default."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目标目录 UUID 或 default。"
+            "value" : "目标目录：名称、短 ID 或 default。"
           }
         }
       }
@@ -3302,13 +4152,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install the game in an existing instance that hasn't been installed yet."
+            "value" : "Download and install an instance's game files."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "完成实例的安装。"
+            "value" : "下载并安装实例的游戏文件。"
           }
         }
       }
@@ -3428,13 +4278,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resolve an exact name instead of a UUID."
+            "value" : "Find the instance by its exact name."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通过完整名称查找实例，代替 UUID。"
+            "value" : "按完整名称查找实例。"
           }
         }
       }
@@ -3608,13 +4458,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "directory run commands"
+            "value" : "Where an instance runs the game"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实例运行目录"
+            "value" : "实例运行游戏的目录"
           }
         }
       }
@@ -3770,13 +4620,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Explicit destination directory UUID, or default."
+            "value" : "Destination directory: name, short ID or default."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "明确指定目标目录 UUID 或 default。"
+            "value" : "目标目录：名称、短 ID 或 default。"
           }
         }
       }
@@ -4148,13 +4998,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "java commands"
+            "value" : "Find, install and choose Java"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Java 查找、安装与管理"
+            "value" : "Java 的查找、安装与选择"
           }
         }
       }
@@ -4202,13 +5052,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install a Java runtime by catalog ID."
+            "value" : "Install a Java runtime by its ID from java available."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用 java catalog 返回的 ID 安装 Java。"
+            "value" : "使用 java available 返回的 ID 安装 Java。"
           }
         }
       }
@@ -4418,13 +5268,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Account UUID; defaults to the active account."
+            "value" : "Account to play with. Defaults to the active account."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账号 UUID，默认使用当前账号。"
+            "value" : "使用的账号，默认使用当前账号。"
           }
         }
       }
@@ -4472,13 +5322,30 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "launch commands"
+            "value" : "Check and start an instance"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启动检查与游戏启动"
+            "value" : "启动检查与启动游戏"
+          }
+        }
+      }
+    },
+    "CLIInterface.launchServerHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server to join after launch."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动后直接加入的服务器。"
           }
         }
       }
@@ -4958,13 +5825,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "pack commands"
+            "value" : "Install, update and roll back modpacks"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "整合包安装、更新与回退"
+            "value" : "整合包的安装、更新与回退"
           }
         }
       }
@@ -5329,24 +6196,6 @@
         }
       }
     },
-    "CLIInterface.positionalArgumentCountMismatch" : {
-      "comment" : "CLI operand-count error. %1$@ is the space-separated expected operand names; %2$@ is the actual operand count formatted as text.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Expected %1$@; received %2$@ positional arguments."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "需要位置参数 %1$@，实际收到 %2$@ 个。"
-          }
-        }
-      }
-    },
     "CLIInterface.problemSessionsOnlyHelp" : {
       "comment" : "Help text for `--problems` in `ruri session list`.",
       "extractionState" : "manual",
@@ -5444,13 +6293,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "recovery commands"
+            "value" : "Finish interrupted operations"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未完成操作的查询与恢复"
+            "value" : "恢复未完成的操作"
           }
         }
       }
@@ -5516,13 +6365,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Transaction UUID, or session UUID."
+            "value" : "Transaction or session ID from recovery list."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "事务 UUID 或运行记录 UUID。"
+            "value" : "recovery list 中的事务 ID 或运行记录 ID。"
           }
         }
       }
@@ -5588,13 +6437,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maximum results (1...1000; default 50)."
+            "value" : "Maximum number of results."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最多返回的数量，范围为 1 至 1000，默认 50。"
+            "value" : "最多返回的结果数量。"
           }
         }
       }
@@ -5606,13 +6455,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Result offset (default 0)."
+            "value" : "Number of results to skip."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "跳过的结果数量，默认 0。"
+            "value" : "跳过的结果数量。"
           }
         }
       }
@@ -5642,7 +6491,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show commands and their input and output schemas."
+            "value" : "Show machine-readable command schemas."
           }
         },
         "zh-Hans" : {
@@ -5660,13 +6509,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "schematic commands"
+            "value" : "Schematic files and folders"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "投影文件管理"
+            "value" : "投影文件与文件夹"
           }
         }
       }
@@ -5923,6 +6772,329 @@
         }
       }
     },
+    "CLIInterface.serverAddHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save a server, or add it to an instance's server list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存服务器，或将其添加到实例的服务器列表。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverAddressHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New server address."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新的服务器地址。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverAliasHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display name in Ruri."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Ruri 中显示的名称。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverCommands" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved servers and status queries"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器管理与状态查询"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverEditHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit a server in an instance's server list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑实例服务器列表中的服务器。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverFavoriteHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pin a server to Home, or unpin it."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将服务器固定到主页或取消固定。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverFavoriteValueHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pin to Home."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是否固定到主页。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverInstanceOptionHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use this instance's server list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用该实例的服务器列表。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverListHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List saved servers, or one instance's server list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "列出已保存的服务器，或某个实例的服务器列表。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverMoveHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move a server within an instance's server list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调整服务器在实例列表中的位置。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverNameHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display name."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示名称。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverNotesHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notes."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备注。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverPreferencesHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change a server's display name, notes and preferred instance."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改服务器的显示名称、备注和首选实例。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverPreferredInstanceHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance to play this server with, or none."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游玩该服务器时使用的实例，或 none。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverQueryHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Query a server's status and players."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查询服务器状态和在线玩家。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverRemoveHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove a server from an instance's server list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从实例的服务器列表中移除服务器。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverResourcePacksHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whether to accept server resource packs."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是否接受服务器资源包。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverSavedHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep the server in Ruri even if no instance lists it."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未添加到任何实例时仍保存在 Ruri 中。"
+          }
+        }
+      }
+    },
+    "CLIInterface.serverSearchHelp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search names and addresses."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索名称和地址。"
+          }
+        }
+      }
+    },
     "CLIInterface.sessionAnalyzeHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri session diagnose`.",
       "extractionState" : "manual",
@@ -5948,13 +7120,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "session commands"
+            "value" : "Game sessions, logs and diagnosis"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏运行记录、日志与诊断"
+            "value" : "运行记录、日志与诊断"
           }
         }
       }
@@ -6002,13 +7174,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter by instance UUID."
+            "value" : "Only sessions of this instance."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按实例 UUID 筛选。"
+            "value" : "只显示该实例的运行记录。"
           }
         }
       }
@@ -6020,13 +7192,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter by instance name."
+            "value" : "Search instance, version and world names."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按实例名称筛选。"
+            "value" : "搜索实例、版本和存档名称。"
           }
         }
       }
@@ -6092,13 +7264,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maximum number of lines from the end of the log (default 200)."
+            "value" : "Lines to read from the end of the log."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最多读取的末尾行数，默认 200。"
+            "value" : "从日志末尾读取的行数。"
           }
         }
       }
@@ -6722,13 +7894,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "world backup commands"
+            "value" : "World backups"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "存档备份与恢复"
+            "value" : "存档备份"
           }
         }
       }
@@ -6866,13 +8038,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "world commands"
+            "value" : "Worlds, imports and backups"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "存档管理、导入导出与备份"
+            "value" : "存档、导入导出与备份"
           }
         }
       }

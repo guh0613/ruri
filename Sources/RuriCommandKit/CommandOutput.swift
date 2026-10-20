@@ -2,8 +2,8 @@ import Foundation
 import RuriCore
 import RuriLocalization
 
-public final class CommandOutput: @unchecked Sendable {
-    public enum Format: String, Sendable { case text, json, ndjson }
+final class CommandOutput: @unchecked Sendable {
+    enum Format: String, Sendable { case text, json, ndjson }
     private let lock = NSLock()
     private let write: @Sendable (Data, Bool) -> Void
     private let format: Format
@@ -12,12 +12,16 @@ public final class CommandOutput: @unchecked Sendable {
     private var finished = false
     private var redactor = GameLogRedactor()
     private var request: CommandRequest?
+    private var usagePath: [String]?
+    let terminal: TerminalProfile
     private var lastProgress: Value?
     private var lastProgressTime = Date.distantPast
     func setRequest(_ request: CommandRequest) { withOutputContext { self.request = request } }
-    public init(format: Format, quiet: Bool = false, write: @escaping @Sendable (Data, Bool) -> Void = { data, error in
+    /// The command whose usage an argument error shows.
+    func setUsage(_ path: [String]) { withOutputContext { usagePath = path } }
+    init(format: Format, quiet: Bool = false, write: @escaping @Sendable (Data, Bool) -> Void = { data, error in
         try? (error ? FileHandle.standardError : FileHandle.standardOutput).write(contentsOf: data)
-    }) { self.format = format; self.quiet = quiet; self.write = write }
+    }, terminal: TerminalProfile = .pipe) { self.format = format; self.quiet = quiet; self.write = write; self.terminal = terminal }
     public func addSecrets(_ values: [String]) { withOutputContext { redactor.addSecrets(values) } }
     public func event(_ type: String, _ value: Value) {
         withOutputContext {
@@ -43,7 +47,7 @@ public final class CommandOutput: @unchecked Sendable {
             let value: Value = .object(["schemaVersion": .integer(1), "ok": .bool(error == nil), "data": clean(data),
                 "warnings": .array(warnings.map { .string(redactor.redact($0)) }), "error": error.flatMap { try? Value.encode($0) }.map(clean) ?? .null])
             if format == .text {
-                let renderer = CommandTextRenderer(request: request)
+                let renderer = CommandTextRenderer(request: request, usagePath: usagePath)
                 let text = error != nil ? renderer.error(value["error"]) : renderer.result(clean(data))
                 if !text.isEmpty { write(Data((text + (text.hasSuffix("\n") ? "" : "\n")).utf8), error != nil) }
                 for warning in warnings {

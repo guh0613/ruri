@@ -48,22 +48,22 @@ def validate(app):
 
         assert command([executable, "--version"], env=environment).decode().strip() == info.get("RuriVersion", info["CFBundleShortVersionString"])
         for arguments, usage in [
-            (["--help"], "USAGE: ruri <subcommand>"),
-            (["--help", "app"], "USAGE: ruri app <subcommand>"),
-            (["app", "--help"], "USAGE: ruri app <subcommand>"),
-            (["help", "app"], "USAGE: ruri app <subcommand>"),
-            (["app"], "USAGE: ruri app <subcommand>"),
+            (["--help"], "Usage: ruri <command>"),
+            (["--help", "app"], "Usage: ruri app <subcommand>"),
+            (["app", "--help"], "Usage: ruri app <subcommand>"),
+            (["help", "app"], "Usage: ruri app <subcommand>"),
+            (["app"], "Usage: ruri app <subcommand>"),
         ]:
             help_text = command([executable, *arguments], env=environment).decode()
-            assert usage in help_text and "USAGE: help " not in help_text, help_text
-        grouped = command([executable, "help", "instance"], env=environment).decode()
-        assert "ruri instance component set <id>" in grouped and "--component" in grouped
+            assert usage in help_text and "Usage: help " not in help_text, help_text
+        grouped = command([executable, "help", "instance", "--full"], env=environment).decode()
+        assert "ruri instance component set <instance>" in grouped and "--component" in grouped
         assert not re.search(r"[\u3400-\u9fff]", grouped), "CLI help must default to English"
         chinese = command([executable, "help", "instance", "--language", "zh-Hans"], env=environment).decode()
         assert re.search(r"[\u3400-\u9fff]", chinese), "Explicit zh-Hans help must contain Chinese"
         catalog_path = Path(__file__).resolve().parents[1] / "Sources/RuriLocalization/Resources/CLIInterface.xcstrings"
         catalog = json.loads(catalog_path.read_text())
-        expected = catalog["strings"]["CLIInterface.instanceListHelp"]["localizations"]["zh-Hans"]["stringUnit"]["value"]
+        expected = catalog["strings"]["CLIInterface.instanceListHelp"]["localizations"]["zh-Hans"]["stringUnit"]["value"].rstrip("。")
         assert expected in chinese, chinese
         complete = command([executable, "help", "--all"], env=environment)
         assert len(complete) < 35_000
@@ -122,7 +122,7 @@ def validate(app):
             link = bin_dir / "ruri"
             assert Path(invoke(link, "app", "info")["application"]).resolve() == copied.resolve()
             command([link, "--localization-check"])
-            assert "USAGE: ruri app <subcommand>" in command([link, "--help", "app"], env=environment).decode()
+            assert "Usage: ruri app <subcommand>" in command([link, "--help", "app"], env=environment).decode()
             moved = root / "Moved Ruri.app"
             shutil.move(copied, moved)
             relocated = moved / "Contents/Helpers/ruri-cli"
