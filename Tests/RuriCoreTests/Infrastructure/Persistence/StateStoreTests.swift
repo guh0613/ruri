@@ -1,4 +1,5 @@
 import Foundation
+import Darwin
 import Testing
 @testable import RuriCore
 
@@ -64,6 +65,45 @@ struct StateStoreTests {
         }
         #expect(try StateStore.load(paths).settings.defaultMemorySettings?.maximumMB == 6144)
         #expect(try StateStore.load(paths).settings.appearance == "system")
+    }
+
+    @Test(arguments: [false, true], [false, true])
+    func completedTransactionReleasesInheritedLock(onlyIfChanged: Bool, fails: Bool) throws {
+        let paths = paths(); defer { try? FileManager.default.removeItem(at: paths.root) }
+        enum FixtureFailure: Error { case cancelled }
+        var inherited: Int32?
+        defer { if let inherited { close(inherited) } }
+        let mutation: (inout PersistentState) throws -> Void = { state in
+            // posix_spawn can temporarily retain this open file description,
+            // even with O_CLOEXEC. A duplicate reproduces that without timing.
+            inherited = try duplicateStateLock(paths)
+            state.settings.appearance = "dark"
+            if fails { throw FixtureFailure.cancelled }
+        }
+        do {
+            if onlyIfChanged { try StateStore.updateIfChanged(paths, mutation) }
+            else { try StateStore.update(paths, mutation) }
+            #expect(!fails)
+        } catch FixtureFailure.cancelled {
+            #expect(fails)
+        }
+        #expect(try StateStore.load(paths).settings.appearance == (fails ? "system" : "dark"))
+        let service = InstanceService(paths: paths)
+        _ = try service.create(name: "First", game: "1.21.1", selections: [], directoryID: GameDirectory.defaultID)
+        _ = try service.create(name: "Second", game: "1.21.1", selections: [], directoryID: GameDirectory.defaultID)
+        #expect(try StateStore.load(paths).instances.map(\.name) == ["First", "Second"])
+    }
+
+    private func duplicateStateLock(_ paths: LauncherPaths) throws -> Int32 {
+        var expected = stat()
+        try #require(stat(paths.root.appendingPathComponent(".ruri-state.lock").path, &expected) == 0)
+        let descriptor = try #require(try FileManager.default.contentsOfDirectory(atPath: "/dev/fd").compactMap(Int32.init).first { fd in
+            var info = stat()
+            return fstat(fd, &info) == 0 && info.st_dev == expected.st_dev && info.st_ino == expected.st_ino
+        })
+        let duplicate = fcntl(descriptor, F_DUPFD_CLOEXEC, 3)
+        try #require(duplicate >= 0)
+        return duplicate
     }
 
     @Test func upgradesEarlierStatesWithoutInventingLocalInstallationsAndRejectsFutureSchemas() throws {

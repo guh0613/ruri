@@ -15,7 +15,7 @@ public enum StateStore {
     /// Compare-and-swap by default. A known baseline also permits disjoint
     /// edits from another client, without overwriting its accounts or instances.
     @discardableResult public static func save(_ state: PersistentState, to paths: LauncherPaths, basedOn baseline: PersistentState? = nil) throws -> PersistentState {
-        let fd = try acquire(paths); defer { close(fd) }
+        let fd = try acquire(paths); defer { release(fd) }
         let current = try load(paths)
         let result: PersistentState
         if current.revision == state.revision { result = state }
@@ -29,14 +29,14 @@ public enum StateStore {
     /// A small synchronous mutation of the latest state under one process lock.
     /// No downloads or external processes belong inside this closure.
     @discardableResult public static func update(_ paths: LauncherPaths, _ mutation: (inout PersistentState) throws -> Void) throws -> PersistentState {
-        let fd = try acquire(paths); defer { close(fd) }
+        let fd = try acquire(paths); defer { release(fd) }
         var state = try load(paths)
         try mutation(&state)
         return try write(state, paths: paths)
     }
     /// CLI and shared services use this for idempotent, revision-checked edits.
     @discardableResult public static func updateIfChanged(_ paths: LauncherPaths, expectedRevision: UUID? = nil, _ mutation: (inout PersistentState) throws -> Void) throws -> PersistentState {
-        let fd = try acquire(paths); defer { close(fd) }
+        let fd = try acquire(paths); defer { release(fd) }
         let original = try load(paths)
         if let expectedRevision, original.revision != expectedRevision {
             throw OperationFailure("STATE_CONFLICT", Messages.CLIInterface.stateChangedSinceRead.localized, retryable: true)
@@ -86,6 +86,14 @@ public enum StateStore {
             close(fd); throw OperationFailure("RESOURCE_BUSY", Messages.CoreStateStore.saveInProgress.localized, retryable: true)
         }
         return fd
+    }
+    private static func release(_ fd: Int32) {
+        // A concurrent posix_spawn can temporarily retain the open file
+        // description despite O_CLOEXEC. End the transaction's OFD lock now,
+        // rather than waiting for the last inherited descriptor to close.
+        var lock = flock(); lock.l_type = Int16(F_UNLCK); lock.l_whence = Int16(SEEK_SET)
+        while fcntl(fd, F_OFD_SETLK, &lock) != 0 && errno == EINTR {}
+        close(fd)
     }
     private static func conflict(_ field: String) -> OperationFailure {
         let parts = field.split(separator: ".").map(String.init)
