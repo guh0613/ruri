@@ -7,36 +7,26 @@ struct CommandTextRenderer {
     var request: CommandRequest?
     var usagePath: [String]? = nil
     var layout = TextLayout()
+    /// The request's targets as they were before it ran, so a removed or
+    /// renamed resource is still named as it was.
+    var targetRows: [(String, String)]? = nil
 
     var path: [String] { request?.spec.path ?? [] }
     var style: TextStyle { layout.style }
 
     func result(_ value: Value) -> String {
-        if request?.path == "session logs" { return value["text"].string ?? "" }
-        if path == ["completions"] { return value["script"].string ?? "" }
-        if path == ["config", "fields"] { return configurationFields(value) }
-        if let text = presentation(value) { return text.joined(separator: "\n") }
+        if let presenter = Self.presenter(path) { return presenter.render(self, value).joined(separator: "\n") }
+        // Without a known command, the shape of the value decides.
         if value["before"]["effective"] != .null, value["after"]["effective"] != .null { return configurationChange(value).joined(separator: "\n") }
         if value["scope"] != .null, value.object?["effective"] != nil { return configuration(value).joined(separator: "\n") }
         if case .array(let items) = value["items"] { return page(value, items: items).joined(separator: "\n") }
-        if request?.path == "schema", case .array(let commands) = value["commands"], commands.allSatisfy({ $0["usage"].string != nil }) {
-            return commands.map { ($0["usage"].string ?? "") + "  — " + ($0["summary"].string ?? "") }.joined(separator: "\n")
-        }
-        var lines: [String] = []
-        if request?.spec.mutation == true || value["dryRun"] == .bool(true) {
-            lines.append(status(value) + (request.map { ": " + $0.path } ?? ""))
-        }
-        var data = value
+        var lines: [String] = [], data = value
+        if value["dryRun"] == .bool(true) || value["changed"] != .null { lines.append(status(value)) }
         if var object = value.object {
             for key in ["dryRun", "warnings", "schemaVersion"] { object.removeValue(forKey: key) }
-            if request?.spec.path.first == "instance", !((request?.dryRun) ?? false), let instance = object["instance"]?.object {
-                let keys = Set(["id", "name", "gameVersion", "installed", "components", "directoryID", "gameDirectory", "issue"])
-                object["instance"] = .object(instance.filter { keys.contains($0.key) && $0.value != .null })
-            }
             data = .object(object)
         }
-        lines += Self.details(data)
-        return lines.joined(separator: "\n")
+        return (lines + Self.details(data)).joined(separator: "\n")
     }
 
     /// Preview, unchanged or completed, styled so the outcome reads first.
@@ -68,7 +58,7 @@ struct CommandTextRenderer {
                 lines += TerminalText.columns(items.map { item in (item["kind"].string ?? "", Self.plain(item["explanation"] != .null ? item["explanation"] : item["status"])) }, width: layout.width)
             }
             var preserved: [String] = []
-            for key in ["preservedFiles", "preservedCopy", "workspace", "path"] {
+            for key in ["preservedFiles", "preservedCopy"] {
                 switch fields.removeValue(forKey: key) ?? .null {
                 case .string(let path): preserved.append(path)
                 case .array(let paths): preserved += paths.compactMap(\.string)
@@ -78,6 +68,14 @@ struct CommandTextRenderer {
             if !preserved.isEmpty {
                 lines += layout.prose(Messages.CLIExperience.preservedFiles.localized, style.bold)
                 lines += preserved.map { "  " + $0 }
+            }
+            // The file in the way, or the one that could not be read.
+            if let path = fields.removeValue(forKey: "path")?.string { lines += layout.fields([(Messages.CLIExperience.labelPath.localized, path)]) }
+            if case .array(let files) = fields["files"] ?? .null, files.allSatisfy({ $0["fileID"] != .null }) {
+                fields.removeValue(forKey: "files"); lines += manualFiles(.array(files))
+            }
+            if case .array = fields["checks"] ?? .null {
+                lines += checks(.object(fields)); fields = [:]
             }
             details = fields.isEmpty ? .null : .object(fields)
         }
@@ -99,15 +97,17 @@ struct CommandTextRenderer {
         return lines.joined(separator: "\n")
     }
 
-    /// The resolved targets of the request, by name and short ID.
-    private func targets() -> [(String, String)] {
+    func targets() -> [(String, String)] { targetRows ?? Self.targets(of: request, details: layout.details) }
+
+    /// The resolved targets of a request, by name and short ID.
+    static func targets(of request: CommandRequest?, details: Bool) -> [(String, String)] {
         guard let request else { return [] }
         let catalog = TargetCatalog(paths: CLIApplication.basePaths(request))
         var rows: [(String, String)] = []
         func add(_ label: String, _ value: String, _ kind: TargetIndex.Kind, instance: UUID? = nil) {
             guard let id = UUID(uuidString: value), let index = try? catalog.index(kind, instance: instance),
                   let entry = index.entries.first(where: { $0.id == id }) else { return }
-            rows.append((label, Self.reference(entry, in: index, details: layout.details)))
+            rows.append((label, reference(entry, in: index, details: details)))
         }
         var instance: UUID?
         for (index, parameter) in request.spec.operands.enumerated() {
@@ -117,6 +117,8 @@ struct CommandTextRenderer {
             case .directory: add(Messages.CLIExperience.labelDirectory.localized, value, .directory)
             case .account: add(Messages.CLIExperience.labelAccount.localized, value, .account)
             case .session: add(Messages.CLIExperience.labelSession.localized, value, .session, instance: instance)
+            case .recoveryTarget where request.operands.first == "repository-import": add(Messages.CLIExperience.labelDirectory.localized, value, .directory)
+            case .recoveryTarget: add(Messages.CLIExperience.labelInstance.localized, value, .instance)
             default: break
             }
         }
@@ -196,30 +198,27 @@ struct CommandTextRenderer {
 
     // MARK: Lists
 
-    /// Rows, the pages around them and an explanation when there are none.
-    func page(_ value: Value, items: [Value], columns: [ListColumn]? = nil) -> [String] {
+    /// Rows, the problems they have, the pages around them and an explanation
+    /// when there are none. Problems stay visible however compact the table is.
+    func page(_ value: Value, items: [Value], columns: [ListColumn]? = nil, problems: [(String, String)] = []) -> [String] {
         guard !items.isEmpty else { return empty(value) }
         var lines: [String]
         if let columns {
             let table = layout.table(columns, items)
             lines = table.lines
             if table.hidden { lines += layout.paragraph(Messages.CLIExperience.hiddenColumns.localized).map(style.dim) }
+            if !problems.isEmpty { lines += [""] + layout.prose(Messages.CLIExperience.needsAttention.localized, style.warning) + layout.fields(problems) }
         } else if items.allSatisfy({ $0.object != nil }) {
-            let available = Set(items.flatMap { Self.flatten($0).keys })
-            var keys = genericColumns.filter { available.contains($0) }
-            if keys.isEmpty { keys = available.sorted() }
-            // Problems must remain visible even when a resource has a compact column set.
-            for key in available.sorted() where ["issue", "error", "failure", "warning", "warnings", "nextAction", "nextActions"].contains(key.split(separator: ".").last.map(String.init) ?? "") && !keys.contains(key) {
-                if items.contains(where: { let field = ConfigurationService.get($0, key); return field != .null && field != .array([]) && field != .string("") }) { keys.append(key) }
-            }
+            // Without fixed columns, each field is one, in name order.
+            let keys = Set(items.flatMap { Self.flatten($0).keys }).sorted()
             let table = layout.table(keys.enumerated().map { position, key in
                 ListColumn(header: key, priority: position) { Self.atom(ConfigurationService.get($0, key)) }
             }, items)
             lines = table.lines
-            if table.hidden || !available.isSubset(of: Set(keys)) { lines += layout.paragraph(Messages.CLIExperience.fullDetails.localized).map(style.dim) }
+            if table.hidden { lines += layout.paragraph(Messages.CLIExperience.fullDetails.localized).map(style.dim) }
         } else { lines = items.flatMap { Self.details($0) } }
         lines += pageFooter(value, count: items.count)
-        let extra = value.object?.filter { !["items", "offset", "total", "hasMore", "warnings"].contains($0.key) } ?? [:]
+        let extra = value.object?.filter { !["items", "offset", "total", "providerTotal", "hasMore", "warnings"].contains($0.key) } ?? [:]
         if !extra.isEmpty { lines += Self.details(.object(extra)) }
         return lines
     }
@@ -270,33 +269,14 @@ struct CommandTextRenderer {
 
     /// Where to start when a resource has nothing yet.
     private var emptyHints: [[String]: [String]] {
-        [["instance", "list"]: ["instance", "create", "--help"]]
-    }
-
-    private var genericColumns: [String] {
-        switch path.first {
-        case "instance":
-            if path.last == "versions" { return ["id", "version", "type", "releaseTime", "loader"] }
-            return ["id", "name", "gameVersion", "components", "installed", "favorite"]
-        case "account": return ["id", "username", "kind", "server"]
-        case "directory": return ["id", "name", "path", "layout", "available", "detached", "gameVersion"]
-        case "java": return ["id", "managedID", "path", "runtime.version", "version", "runtime.architecture", "architecture", "source"]
-        case "catalog": return ["id", "provider", "title", "name", "number", "type", "gameVersions", "loaders", "channel"]
-        case "content": return ["filename", "title", "version", "enabled", "kind"]
-        case "server": return ["id", "name", "address", "resourcePacks", "favorite", "instanceIDs", "online", "maximum", "latencyMilliseconds", "description"]
-        case "world": return ["id", "folder", "name", "world", "worldName", "version", "lastPlayed", "createdAt", "bytes"]
-        case "datapack": return ["id", "title", "name", "number", "enabled", "description"]
-        case "schematic": return ["path", "directory", "bytes", "modifiedAt"]
-        case "session": return ["id", "instanceID", "instanceName", "state", "activity", "gameExitCode"]
-        case "recovery": return ["kind", "target", "transaction", "status", "nextAction"]
-        default: return []
-        }
+        [["instance", "list"]: ["instance", "create", "--help"], ["account", "list"]: ["account", "login", "start", "--help"],
+         ["java", "list"]: ["java", "available"], ["server", "list"]: ["server", "add", "--help"]]
     }
 
     // MARK: Configuration
 
-    private func configurationFields(_ value: Value) -> String {
-        guard case .array(let fields) = value["fields"] else { return "" }
+    func configurationFields(_ value: Value) -> [String] {
+        guard case .array(let fields) = value["fields"] else { return [] }
         var lines: [String] = []
         for (scope, title) in [("app", Messages.CLIExperience.fieldScopeApp.localized), ("defaults", Messages.CLIExperience.fieldScopeLaunch.localized)] {
             let rows = fields.filter { field in (try? field["scopes"].decode([String].self))?.contains(scope) == true }
@@ -309,7 +289,7 @@ struct CommandTextRenderer {
             let groups = Array(Set(fields.compactMap { $0["group"].string })).sorted()
             lines += [""] + TerminalText.wrap(Messages.CLIExperience.fieldInheritance(groups.joined(separator: ", ")).localized, width: layout.width)
         }
-        return lines.joined(separator: "\n")
+        return lines
     }
 
     static func fieldDescription(_ field: Value) -> String {
@@ -351,7 +331,7 @@ struct CommandTextRenderer {
     }
 
     /// Fields with their effective value and where it comes from.
-    private func configuration(_ value: Value) -> [String] {
+    func configuration(_ value: Value) -> [String] {
         let prefix = value["key"].string ?? ""
         let rows = Self.flatten(value["effective"], prefix: prefix).sorted { $0.key < $1.key }.map { key, field -> Value in
             let group = String(key.split(separator: ".").first ?? "")
@@ -368,7 +348,7 @@ struct CommandTextRenderer {
     }
 
     /// The outcome first, then each changed field as before → after.
-    private func configurationChange(_ value: Value) -> [String] {
+    func configurationChange(_ value: Value) -> [String] {
         let before = value["before"], after = value["after"], changed = value["changed"] == .bool(true)
         let preview = value["dryRun"] == .bool(true), scope = scopeTitle(after["scope"])
         let status = changed ? (preview ? Messages.CLIExperience.configPreviewOf(scope).localized : Messages.CLIExperience.configUpdatedOf(scope).localized)

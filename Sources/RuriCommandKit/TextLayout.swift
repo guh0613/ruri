@@ -33,11 +33,18 @@ struct TextLayout: Sendable {
     /// Aligned `label  value` rows without empty values. Values wrap in their
     /// column; words that cannot break, such as paths, stay whole.
     func fields(_ rows: [(String, String)], indent: Int = 2) -> [String] {
-        // A path keeps its spaces on one line, so it can be copied whole.
-        let rows = rows.filter { !$0.1.isEmpty }.map { label, value in
-            (label, value.hasPrefix("/") || value.hasPrefix("~/") ? value.replacingOccurrences(of: " ", with: "\u{A0}") : value)
-        }
+        let rows = rows.filter { !$0.1.isEmpty }.map { ($0.0, Self.keepingPathsWhole($0.1)) }
         return TerminalText.columns(rows, indent: indent, maximumLabel: 20, width: width).map { $0.replacingOccurrences(of: "\u{A0}", with: " ") }
+    }
+
+    /// A path keeps its spaces on one line, so it can be copied whole, also
+    /// when it is one part of a value such as `21 · /path` or `old → "/path"`.
+    private static func keepingPathsWhole(_ value: String) -> String {
+        for separator in [" → ", " · "] where value.contains(separator) {
+            return value.components(separatedBy: separator).map(keepingPathsWhole).joined(separator: separator)
+        }
+        let path = value.hasPrefix("/") || value.hasPrefix("~/") || value.hasPrefix("\"/")
+        return path ? value.replacingOccurrences(of: " ", with: "\u{A0}") : value
     }
 
     /// A titled group of fields, or nothing when every value is empty.
@@ -46,13 +53,31 @@ struct TextLayout: Sendable {
         return rows.isEmpty ? [] : [style.bold(title)] + fields(rows)
     }
 
-    func paragraph(_ text: String) -> [String] { TerminalText.wrap(text, width: width) }
+    func paragraph(_ text: String) -> [String] { TerminalText.wrap(text, width: width).map(Self.restoringSpaces) }
+
+    /// A paragraph indented as a whole, wrapped to the space left.
+    func paragraph(_ text: String, indent: Int) -> [String] {
+        let pad = String(repeating: " ", count: indent)
+        return text.components(separatedBy: "\n").flatMap { TerminalText.wrap($0, width: max(20, width - indent)) }.map { $0.isEmpty ? "" : pad + Self.restoringSpaces($0) }
+    }
+
+    /// Text, such as a path inside a sentence, that wrapping must not split.
+    static func unbroken(_ text: String) -> String { text.replacingOccurrences(of: " ", with: "\u{A0}") }
+    private static func restoringSpaces(_ line: String) -> String { line.replacingOccurrences(of: "\u{A0}", with: " ") }
+
+    /// Items that each start with a bullet and wrap under their own text.
+    func bullets(_ items: [String], indent: Int = 2) -> [String] {
+        let pad = String(repeating: " ", count: indent)
+        return items.flatMap { item in
+            TerminalText.wrap(item, width: max(20, width - indent - 2)).enumerated().map { pad + ($0.offset == 0 ? "• " : "  ") + $0.element }
+        }
+    }
 
     /// A sentence wrapped to the width, each line styled on its own.
     func prose(_ text: String, _ paint: (String) -> String = { $0 }) -> [String] { paragraph(text).map(paint) }
 
     /// A table when the essential columns fit, otherwise one block per item.
-    /// Reports whether columns were hidden to fit.
+    /// Reports whether columns were hidden to fit; --details hides none.
     func table(_ columns: [ListColumn], _ items: [Value]) -> (lines: [String], hidden: Bool) {
         let columns = columns.filter { details || !$0.detailOnly }
         let cells = items.map { item in columns.map { $0.cell(item) } }
@@ -61,7 +86,7 @@ struct TextLayout: Sendable {
         let widths = columns.indices.map { index in ([columns[index].header] + cells.map { $0[index] }).map(TerminalText.width).max() ?? 0 }
         func total(_ indices: [Int]) -> Int { indices.map { widths[$0] }.reduce(0, +) + 2 * max(0, indices.count - 1) }
         let available = visible
-        while total(visible) > width, let drop = visible.filter({ columns[$0].priority > 0 }).max(by: { (columns[$0].priority, $0) < (columns[$1].priority, $1) }) {
+        while !details, total(visible) > width, let drop = visible.filter({ columns[$0].priority > 0 }).max(by: { (columns[$0].priority, $0) < (columns[$1].priority, $1) }) {
             visible.removeAll { $0 == drop }
         }
         guard total(visible) <= width else { return (vertical(columns, cells, shown: available), false) }
@@ -92,10 +117,23 @@ extension String {
     }
 }
 
+extension Value {
+    /// The values of an array, or none.
+    var elements: [Value] { if case .array(let values) = self { values } else { [] } }
+    var strings: [String] { elements.compactMap(\.string) }
+}
+
 /// Readable sizes, durations and dates. Exact values remain in --details and JSON.
 enum TextFormat {
     static func bytes(_ count: Int64) -> String {
-        ByteCountFormatter.string(fromByteCount: count, countStyle: .file)
+        count.formatted(.byteCount(style: .file, spellsOutZero: false).locale(locale))
+    }
+
+    static func bytes(_ value: Value) -> String { value.int.map { bytes(Int64($0)) } ?? "" }
+
+    /// A file count with the size of those files.
+    static func contents(files: Value, bytes size: Value) -> String {
+        [files.int.map { Messages.CLIExperience.fileCount(Int64($0)).localized }, size.int.map { bytes(Int64($0)) }].compactMap { $0 }.joined(separator: " · ")
     }
 
     static func duration(_ seconds: Double) -> String {

@@ -62,6 +62,14 @@ import RuriLocalization
             let text = String(decoding: result.1.output + result.1.errors, as: UTF8.self)
             #expect(!containsChinese(text), "\(arguments): \(text)")
         }
+        // Every family's labels follow the invocation language; values stay as they are.
+        for arguments in [["directory", "list"], ["account", "list"], ["session", "list"], ["server", "list"], ["recovery", "list"],
+                          ["cache", "status"], ["app", "language", "get"], ["account", "add-offline", "Steve", "--dry-run"], ["directory", "select", "default", "--dry-run"]] {
+            let english = await run(arguments + suffix), chinese = await run(arguments + suffix + ["--language", "zh-Hans"])
+            #expect(english.0 == 0 && chinese.0 == 0, "\(arguments)")
+            #expect(!containsChinese(String(decoding: english.1.output + english.1.errors, as: UTF8.self)), "\(arguments)")
+            #expect(containsChinese(String(decoding: chinese.1.output, as: UTF8.self)), "\(arguments): \(String(decoding: chinese.1.output, as: UTF8.self))")
+        }
         let englishError = await run(["config", "get", "--json"])
         let chineseError = await run(["config", "get", "--json", "--language=zh-Hans"])
         #expect(englishError.0 == 2 && chineseError.0 == 2)

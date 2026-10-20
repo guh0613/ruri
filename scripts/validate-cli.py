@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import plistlib
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -16,6 +17,60 @@ def command(arguments, **kwargs):
     if result.returncode:
         raise RuntimeError(f"CLI package check failed ({result.returncode}): {result.stderr.decode(errors='replace')[:1000]}")
     return result.stdout
+
+
+def pasted(line, executable, environment):
+    """Runs a command the CLI printed, as a person pasting it into a shell would."""
+    shell = 'ruri() { "$RURI_UNDER_TEST" "$@"; }; ' + line
+    return command(["/bin/sh", "-c", shell], env=dict(environment, RURI_UNDER_TEST=str(executable))).decode()
+
+
+def printed(prefix, text):
+    for line in text.splitlines():
+        if line.startswith(prefix):
+            return line[len(prefix):]
+    raise RuntimeError(f"Missing {prefix!r} in {text}")
+
+
+ZSH_HARNESS = r'''
+zmodload zsh/zpty
+zpty -b z zsh -f -i
+zpty -w z "PS1='> '; fpath=(${(q)1} \$fpath); autoload -U compinit; compinit -u -D; zstyle ':completion:*' list-grouped no; LISTMAX=1000; setopt nobeep"
+zpty -w z "print -r -- READY"
+zpty -r z out '*READY*'
+zpty -w -n z "$2"$'\t'
+sleep 1.5
+zpty -w -n z $'\C-u'
+zpty -w z "print -r -- DONE"
+zpty -r z out '*DONE*'
+print -r -- "${out}"
+zpty -d z
+'''
+
+BASH_HARNESS = r'''
+source "$1"; line="$2"
+COMP_LINE="$line"; COMP_POINT=${#line}
+read -ra COMP_WORDS <<< "$line"
+if [[ "$line" == *" " ]]; then COMP_WORDS+=(""); fi
+COMP_CWORD=$(( ${#COMP_WORDS[@]} - 1 ))
+_ruri ruri "${COMP_WORDS[COMP_CWORD]}" "${COMP_WORDS[COMP_CWORD-1]}"
+printf '%s\n' "${COMPREPLY[@]}"
+'''
+
+
+def completion_output(shell, script, line, environment, fish=None):
+    """What a real shell offers after line, with the generated script loaded and nothing else."""
+    with tempfile.TemporaryDirectory(prefix="ruri completion ") as temporary:
+        directory = Path(temporary)
+        if shell == "zsh":
+            (directory / "_ruri").write_bytes(script)
+            return command(["/bin/zsh", "-f", "-c", ZSH_HARNESS, "zsh", directory, line], env=environment).decode(errors="replace")
+        if shell == "bash":
+            (directory / "ruri.bash").write_bytes(script)
+            return command(["/bin/bash", "-c", BASH_HARNESS, "bash", directory / "ruri.bash", line], env=environment).decode()
+        (directory / "ruri.fish").write_bytes(script)
+        source = "source " + shlex.quote(str(directory / "ruri.fish")) + "; complete -C " + shlex.quote(line)
+        return command([fish, "--no-config", "-c", source], env=environment).decode()
 
 
 def designated_requirement(path):
@@ -111,6 +166,51 @@ def validate(app):
         bad = subprocess.run([executable, "unknown-command"], env=environment, capture_output=True, timeout=45)
         assert bad.returncode == 2 and not bad.stdout and b"INVALID_ARGUMENT" in bad.stderr
 
+        # Select, configure and preview using only the short IDs and commands the text printed.
+        def text(*arguments):
+            return command([executable, *arguments, "--data-dir", data], env=environment).decode()
+        invoke(executable, "instance", "create", "--name", "生存 世界", "--game", "1.21.1", "--directory", "default", "--no-install")
+        assert text("instance", "select", short).startswith("Completed: Select an instance.")
+        preview = text("config", "set", "memory.maximumMB", "6144", "--scope", f"instance:{short}", "--dry-run")
+        applied = pasted(printed("Apply: ", preview), executable, environment)
+        assert applied.startswith("Updated the configuration of instance Package fixture"), applied
+        blocked = subprocess.run([executable, "launch", "preflight", short, "--data-dir", data], env=environment, capture_output=True, timeout=45)
+        failure = blocked.stderr.decode()
+        assert blocked.returncode == 1 and not blocked.stdout and failure.startswith("Error [INSTALLATION_REQUIRED]"), failure
+        assert f"Package fixture ({short})" in failure, failure
+        assert shlex.split(printed("Next: ", failure)) == ["ruri", "instance", "install", created["instance"]["id"], "--data-dir", str(data)], failure
+        assert "名称" in text("instance", "list", "--language", "zh-Hans")
+        assert "\x1b[" in text("instance", "list", "--color", "always") and "\x1b" not in readable
+        assert text("recovery", "list") == "Nothing needs recovery.\n"
+
+        # Completion scripts load in each shell and offer local targets, read
+        # from the data directory the line names, or from RURI_DATA_DIR.
+        completion_bin = root / "completion bin"
+        completion_bin.mkdir()
+        (completion_bin / "ruri").symlink_to(executable)
+        shells = dict(environment, PATH=f"{completion_bin}:{os.environ['PATH']}")
+        located = dict(shells, RURI_DATA_DIR=str(data))
+        fish = os.environ.get("RURI_FISH") or shutil.which("fish")
+        for shell in ["zsh", "bash", "fish"]:
+            script = command([executable, "completions", shell], env=environment)
+            assert invoke(executable, "completions", shell)["shell"] == shell and b"---completion" in script, shell
+            checker = {"zsh": ["/bin/zsh", "-n"], "bash": ["/bin/bash", "-n"], "fish": [fish, "--no-config", "--no-execute"] if fish else None}[shell]
+            if checker is None:
+                print("CLI: fish not found; set RURI_FISH to an isolated fish to check its candidates")
+                continue
+            with tempfile.NamedTemporaryFile(suffix="." + shell) as file:
+                file.write(script); file.flush()
+                command([*checker, file.name])
+            offered = completion_output(shell, script, "ruri instance show ", located, fish)
+            for name in ["Package fixture", "生存 世界"]:
+                assert name in offered or name.replace(" ", "\\ ") in offered, f"{shell}: {offered}"
+            assert "memory.maximumMB" in completion_output(shell, script, "ruri config set memory.", located, fish), shell
+            # Unreadable state offers nothing rather than failing.
+            assert "Package fixture" not in completion_output(shell, script, "ruri instance show ", shells, fish), shell
+            if shell == "fish":
+                named = completion_output(shell, script, f"ruri instance show --data-dir {shlex.quote(str(data))} ", shells, fish)
+                assert "Package fixture" in named, named
+
         if info.get("RuriPackageManager"):
             # The package manager links ruri itself, so Ruri refuses to.
             refused = subprocess.run([executable, "cli", "install", "--bin-dir", root / "user bin", "--json", "--quiet"],
@@ -127,6 +227,9 @@ def validate(app):
             assert invoke(bundled, "cli", "install", "--bin-dir", bin_dir)["status"]["installed"]
             link = bin_dir / "ruri"
             assert Path(invoke(link, "app", "info")["application"]).resolve() == copied.resolve()
+            status = command([link, "cli", "status", "--bin-dir", bin_dir], env=environment).decode()
+            # The sentence may wrap before the path, never inside it.
+            assert " ".join(status.splitlines()[:2]).startswith(f"ruri is installed at {link}."), status
             command([link, "--localization-check"])
             assert "Usage: ruri app <subcommand>" in command([link, "--help", "app"], env=environment).decode()
             moved = root / "Moved Ruri.app"
@@ -140,10 +243,11 @@ def validate(app):
         clean_data = root / "doctor data"
         result = json.loads(command([link, "doctor", "--data-dir", clean_data, "--json"], env=environment))
         assert result["ok"] and result["data"]["healthy"], result
+        assert command([link, "doctor", "--data-dir", clean_data], env=environment).decode().startswith("Every check passed.\n  ✓ ")
         if not info.get("RuriPackageManager"):
             assert invoke(link, "cli", "uninstall", "--bin-dir", bin_dir, "--yes")["changed"]
             assert not link.is_symlink()
-    print("CLI: discovery budgets, text/JSON/NDJSON, stdin, configuration, helpers, relocation and link repair verified")
+    print("CLI: discovery budgets, text/JSON/NDJSON, stdin, configuration, pasted commands, shell completion, helpers, relocation and link repair verified")
 
 
 if __name__ == "__main__":

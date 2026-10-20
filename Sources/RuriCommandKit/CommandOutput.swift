@@ -28,7 +28,16 @@ final class CommandOutput: @unchecked Sendable {
         var lineShown = false
     }
 
-    func setRequest(_ request: CommandRequest) { withOutputContext { self.request = request } }
+    private var targets: [(String, String)]?
+
+    /// Text names the request's targets as they are now, before it can rename
+    /// or remove them.
+    func setRequest(_ request: CommandRequest) {
+        withOutputContext {
+            self.request = request
+            targets = format == .text ? CommandTextRenderer.targets(of: request, details: details) : nil
+        }
+    }
     /// The command whose usage an argument error shows.
     func setUsage(_ path: [String]) { withOutputContext { usagePath = path } }
     init(format: Format, quiet: Bool = false, details: Bool = false, color: String? = nil, write: @escaping @Sendable (Data, Bool) -> Void = { data, error in
@@ -75,7 +84,7 @@ final class CommandOutput: @unchecked Sendable {
 
     private func renderer(_ stream: TerminalProfile.Stream) -> CommandTextRenderer {
         CommandTextRenderer(request: request, usagePath: usagePath,
-                            layout: .init(width: stream.width, style: .init(colors: terminal.colors(stream, mode: color)), details: details))
+                            layout: .init(width: stream.width, style: .init(colors: terminal.colors(stream, mode: color)), details: details), targetRows: targets)
     }
 
     private func showProgress(_ type: String, _ value: Value) {

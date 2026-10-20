@@ -111,6 +111,9 @@ private final class TestClock: @unchecked Sendable {
             #expect(list.hasPrefix("Name"))
             #expect(list.contains("Components") == (width >= 80) && list.contains("Status") == (width >= 80), "\(width): \(list)")
             #expect(list.contains("Some columns are hidden") == (width < 80), "\(width): \(list)")
+            // --details shows every column, or every value in blocks.
+            let detailed = await run(["instance", "list", "--details"], root, profile: terminal).output
+            #expect(!detailed.contains("Some columns are hidden") && detailed.contains(root.path), "\(width): \(detailed)")
         }
         // Too narrow for a table, entries become blocks that keep every value.
         let narrow = await run(["instance", "list", "--details"], root, profile: profile(width: 40, terminal: true)).output
