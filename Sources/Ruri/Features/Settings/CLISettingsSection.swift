@@ -13,7 +13,7 @@ struct CLISettingsSection: View {
                     .font(.title2).foregroundStyle(setup.ready ? Color.green : Color.accentColor)
                     .padding(.top, 2).accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(CLISetupModel.packageManager.map { Messages.CLISetup.provided($0).localized }
+                    Text(setup.packageManager.map { Messages.CLISetup.provided($0).localized }
                          ?? (setup.ready ? Messages.CLISetup.ready.localized : setup.repair ? Messages.CLISetup.repairTitle.localized : Messages.CLISetup.title.localized))
                         .font(.headline)
                     Text(setup.ready ? Messages.CLISetup.readyDetail.localized : setup.repair ? Messages.CLISetup.repairDetail.localized : Messages.CLISetup.introduction.localized)
@@ -36,40 +36,8 @@ struct CLISettingsSection: View {
                 }
             }
             if let issue = setup.issue { Text(issue).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
-            DisclosureGroup(Messages.CLISetup.details.localized) {
-                VStack(alignment: .leading, spacing: 16) {
-                    if !setup.link.isEmpty && managesLink {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(Messages.CLISetup.location.localized)
-                                .font(.caption).foregroundStyle(.secondary)
-                            Text(verbatim: setup.link)
-                                .font(.system(.callout, design: .monospaced))
-                                .textSelection(.enabled)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                    }
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack(spacing: 8) {
-                            Button(Messages.CLISetup.copyDirectCommand.localized) {
-                                if let executable = RuriInstallation.cliExecutable { CLISetupModel.copy(CLIInstallation.shellQuote(executable.path) + " --help") }
-                            }
-                            if setup.ready && CLISetupModel.packageManager == nil { Button(Messages.CLISetup.reinstall.localized) { setup.change(.install) } }
-                            if setup.owned || setup.legacyLink != nil {
-                                Button(Messages.CLIInterface.uninstallAction.localized, role: .destructive) { setup.change(.uninstall) }
-                            }
-                        }
-                        .controlSize(.small)
-                        if managesLink {
-                            Text(Messages.CLISetup.authorizationHint.localized)
-                                .font(.caption).foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 12)
-                .padding(.bottom, 8)
-            }
+            // A package manager provides ruri, so only Ruri's earlier links are left to remove.
+            if setup.packageManager == nil || setup.repair { details }
         } header: { Text(Messages.CLIInterface.commandLineAndAutomationTitle.localized) } footer: {
             Text(Messages.CLISetup.footer.localized)
         }
@@ -78,7 +46,45 @@ struct CLISettingsSection: View {
         .onChange(of: scenePhase) { if scenePhase == .active && !setup.working { setup.refresh() } }
     }
 
-    /// When a package manager provides `ruri`, only a link left by an earlier
-    /// installation of the app remains to be managed here.
-    private var managesLink: Bool { CLISetupModel.packageManager == nil || setup.repair }
+    /// Under a package manager, the link shown is the earlier one left to remove.
+    private var location: String {
+        setup.packageManager == nil || setup.owned ? setup.link : setup.legacyLink ?? setup.link
+    }
+
+    private var details: some View {
+        DisclosureGroup(Messages.CLISetup.details.localized) {
+            VStack(alignment: .leading, spacing: 16) {
+                if !location.isEmpty {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(Messages.CLISetup.location.localized)
+                            .font(.caption).foregroundStyle(.secondary)
+                        Text(verbatim: location)
+                            .font(.system(.callout, design: .monospaced))
+                            .textSelection(.enabled)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(spacing: 8) {
+                        if setup.packageManager == nil {
+                            Button(Messages.CLISetup.copyDirectCommand.localized) {
+                                if let executable = RuriInstallation.cliExecutable { CLISetupModel.copy(CLIInstallation.shellQuote(executable.path) + " --help") }
+                            }
+                            if setup.ready { Button(Messages.CLISetup.reinstall.localized) { setup.change(.install) } }
+                        }
+                        if setup.owned || setup.legacyLink != nil {
+                            Button(Messages.CLIInterface.uninstallAction.localized, role: .destructive) { setup.change(.uninstall) }
+                        }
+                    }
+                    .controlSize(.small)
+                    Text(Messages.CLISetup.authorizationHint.localized)
+                        .font(.caption).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 12)
+            .padding(.bottom, 8)
+        }
+    }
 }

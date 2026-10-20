@@ -167,6 +167,7 @@
     "CLIInterface:CLIInterface.cliLinkChangedDuringUninstall": "444c90ac85f6",
     "CLIInterface:CLIInterface.cliLinkInstallFailed": "7d83422bcfa7",
     "CLIInterface:CLIInterface.cliLinkNotOwnedByRuri": "ffce4f76ba46",
+    "CLIInterface:CLIInterface.cliManagedByPackageManager": "ff85061985f9",
     "CLIInterface:CLIInterface.cliStatusHelp": "18408aa6938e",
     "CLIInterface:CLIInterface.cliUninstallDirectoryHelp": "d72c46092abc",
     "CLIInterface:CLIInterface.cliUninstallHelp": "164ca632390e",

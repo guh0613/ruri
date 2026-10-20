@@ -12,6 +12,8 @@ public enum RuriInstallation {
         return nil
     }
     public static var info: [String: Any] { application().flatMap { Bundle(url: $0)?.infoDictionary } ?? Bundle.main.infoDictionary ?? [:] }
+    /// The package manager that put `ruri` on PATH, such as Nix, if any.
+    public static var packageManager: String? { (info["RuriPackageManager"] as? String).flatMap { $0.isEmpty ? nil : $0 } }
     public static var cliExecutable: URL? {
         if let app = application() { return app.appendingPathComponent("Contents/Helpers/ruri-cli") }
         return Bundle.main.executableURL?.resolvingSymlinksInPath().deletingLastPathComponent().appendingPathComponent("ruri-cli")
@@ -27,16 +29,21 @@ public struct CLIInstallation: Sendable {
     public static let defaultBinDirectory = URL(fileURLWithPath: "/usr/local/bin", isDirectory: true)
     public let executable: URL
     public let binDirectory: URL
+    /// When set, this package manager provides `ruri`, and only Ruri's earlier
+    /// links can be removed.
+    public let packageManager: String?
     private let homeDirectory: URL
     private let migrateLegacyLink: Bool
     public var link: URL { binDirectory.appendingPathComponent("ruri") }
     private var receipt: URL { binDirectory.appendingPathComponent(".ruri-cli-install.json") }
     private var lockFile: URL { binDirectory.appendingPathComponent(".ruri-cli-install.lock") }
     public init(executable: URL? = RuriInstallation.cliExecutable, binDirectory: URL? = nil,
+                packageManager: String? = RuriInstallation.packageManager,
                 homeDirectory: URL = FileManager.default.homeDirectoryForCurrentUser) throws {
         guard let executable else { throw OperationFailure("CLI_UNAVAILABLE", Messages.CLIInterface.bundledCliNotFound.localized) }
         self.executable = executable.resolvingSymlinksInPath()
         self.binDirectory = (binDirectory ?? Self.defaultBinDirectory).standardizedFileURL
+        self.packageManager = packageManager
         self.homeDirectory = homeDirectory
         self.migrateLegacyLink = binDirectory == nil
     }
@@ -63,6 +70,7 @@ public struct CLIInstallation: Sendable {
         let installed = owned && destination == executable.path && FileManager.default.isExecutableFile(atPath: executable.path)
         return .object(["executable": .string(executable.path), "link": .string(link.path), "target": .text(destination),
                  "installed": .bool(installed), "owned": .bool(owned), "legacyLink": .text(legacy?.link.path),
+                 "packageManager": .text(packageManager),
                  "requiresAuthorization": .bool(!installed && needsAuthorization),
                  "onPath": .bool((environment["PATH"] ?? "").split(separator: ":").contains { URL(fileURLWithPath: String($0)).standardizedFileURL == binDirectory })])
     }
@@ -75,6 +83,10 @@ public struct CLIInstallation: Sendable {
         }
     }
     public func install(dryRun: Bool = false) throws -> OperationValue {
+        if let packageManager {
+            throw OperationFailure("MANAGED_BY_PACKAGE_MANAGER", Messages.CLIInterface.cliManagedByPackageManager(packageManager).localized,
+                                   details: .object(["packageManager": .string(packageManager)]))
+        }
         guard FileManager.default.isExecutableFile(atPath: executable.path) else { throw OperationFailure("CLI_UNAVAILABLE", Messages.CLIInterface.cliExecutableNotFound.localized) }
         try validateOwnership()
         let needsLink = destination != executable.path, oldLink = legacy

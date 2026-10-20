@@ -121,7 +121,7 @@ struct RootView: View {
                     do { try await Task.sleep(for: .milliseconds(250)) } catch { return }
                     continue
                 }
-                guard let service = try? CLIInstallation(),
+                guard let service = try? CLIInstallation(), service.packageManager == nil,
                       FileManager.default.isExecutableFile(atPath: service.executable.path) else { return }
                 cliSetupSeen = true
                 if service.status()["installed"] != .bool(true) { model.showCLISetup = true }
@@ -131,7 +131,7 @@ struct RootView: View {
     }
 
     private var canOfferCLISetup: Bool {
-        !cliSetupSeen && CLISetupModel.packageManager == nil && scenePhase == .active && model.page == .home && !model.busy && !model.readOnly
+        !cliSetupSeen && scenePhase == .active && model.page == .home && !model.busy && !model.readOnly
             && !model.isPresentingSheet && model.error == nil && model.pendingOpenURLs.isEmpty
     }
 }

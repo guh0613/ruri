@@ -303,6 +303,12 @@ extension Messages {
         public static var cliLinkNotOwnedByRuri: LocalizedMessage {
             .init(key: "CLIInterface.cliLinkNotOwnedByRuri", table: "CLIInterface", fallback: "目标位置不是 Ruri 创建的链接。")
         }
+        /// ruri 已由 %@ 提供，无需单独安装。
+        ///
+        /// Resource: `CLIInterface.CLIInterface.cliManagedByPackageManager`.
+        public static func cliManagedByPackageManager(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIInterface.cliManagedByPackageManager", table: "CLIInterface", fallback: "ruri 已由 %@ 提供，无需单独安装。", arguments: [.text(value0)])
+        }
         /// 检查命令行工具及 PATH。
         ///
         /// Resource: `CLIInterface.CLIInterface.cliStatusHelp`.
@@ -2388,6 +2394,7 @@ extension Messages {
             "CLIInterface:CLIInterface.cliLinkChangedDuringUninstall": .init("卸载期间命令行工具链接发生了变化。", []),
             "CLIInterface:CLIInterface.cliLinkInstallFailed": .init("无法安装命令行工具链接。", []),
             "CLIInterface:CLIInterface.cliLinkNotOwnedByRuri": .init("目标位置不是 Ruri 创建的链接。", []),
+            "CLIInterface:CLIInterface.cliManagedByPackageManager": .init("ruri 已由 %@ 提供，无需单独安装。", [.text]),
             "CLIInterface:CLIInterface.cliStatusHelp": .init("检查命令行工具及 PATH。", []),
             "CLIInterface:CLIInterface.cliUninstallDirectoryHelp": .init("命令安装目录，默认为 /usr/local/bin。", []),
             "CLIInterface:CLIInterface.cliUninstallHelp": .init("卸载命令链接，仅移除属于 Ruri 的链接。", []),

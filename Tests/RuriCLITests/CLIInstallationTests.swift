@@ -49,6 +49,17 @@ struct CLIInstallationTests {
         catch let error as OperationFailure { #expect(error.code == "AUTHORIZATION_REQUIRED") }
         #expect(FileManager.default.fileExists(atPath: service.link.path))
     }
+    @Test func packageManagerInstallsOnlyAllowRemovingEarlierLinks() throws {
+        let (root, executable) = try fixture(); defer { try? FileManager.default.removeItem(at: root) }
+        let bin = root.appendingPathComponent("bin")
+        _ = try CLIInstallation(executable: executable, binDirectory: bin, packageManager: nil).install()
+        let service = try CLIInstallation(executable: executable, binDirectory: bin, packageManager: "Nix")
+        #expect(service.status()["packageManager"] == .string("Nix"))
+        do { _ = try service.install(dryRun: true); Issue.record("Expected the package manager to own installation") }
+        catch let error as OperationFailure { #expect(error.code == "MANAGED_BY_PACKAGE_MANAGER") }
+        _ = try service.uninstall()
+        #expect((try? FileManager.default.destinationOfSymbolicLink(atPath: service.link.path)) == nil)
+    }
     @Test func legacyMigrationFindsMovedAppAndOnlyRemovesOwnedLink() throws {
         let (root, executable) = try fixture(); defer { try? FileManager.default.removeItem(at: root) }
         let home = root.appendingPathComponent("home"), bin = home.appendingPathComponent(".local/bin")

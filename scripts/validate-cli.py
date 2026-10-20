@@ -105,30 +105,38 @@ def validate(app):
         bad = subprocess.run([executable, "unknown-command"], env=environment, capture_output=True, timeout=45)
         assert bad.returncode == 2 and not bad.stdout and b"INVALID_ARGUMENT" in bad.stderr
 
-        copied = root / "App with spaces" / "Ruri.app"
-        copied.parent.mkdir()
-        # ditto preserves bundle symlinks, executable modes and signatures.
-        command(["ditto", app, copied])
-        bundled = copied / "Contents/Helpers/ruri-cli"
-        bin_dir = root / "user bin"
-        assert invoke(bundled, "cli", "install", "--bin-dir", bin_dir)["status"]["installed"]
-        link = bin_dir / "ruri"
-        assert Path(invoke(link, "app", "info")["application"]).resolve() == copied.resolve()
-        command([link, "--localization-check"])
-        assert "USAGE: ruri app <subcommand>" in command([link, "--help", "app"], env=environment).decode()
-        moved = root / "Moved Ruri.app"
-        shutil.move(copied, moved)
-        relocated = moved / "Contents/Helpers/ruri-cli"
-        assert not invoke(relocated, "cli", "status", "--bin-dir", bin_dir)["installed"]
-        assert invoke(relocated, "cli", "install", "--bin-dir", bin_dir)["status"]["installed"]
-        assert Path(invoke(link, "app", "info")["application"]).resolve() == moved.resolve()
+        if info.get("RuriPackageManager"):
+            # The package manager links ruri itself, so Ruri refuses to.
+            refused = subprocess.run([executable, "cli", "install", "--bin-dir", root / "user bin", "--json", "--quiet"],
+                                     env=environment, capture_output=True, timeout=45)
+            assert refused.returncode and json.loads(refused.stdout)["error"]["code"] == "MANAGED_BY_PACKAGE_MANAGER", refused
+            link = executable
+        else:
+            copied = root / "App with spaces" / "Ruri.app"
+            copied.parent.mkdir()
+            # ditto preserves bundle symlinks, executable modes and signatures.
+            command(["ditto", app, copied])
+            bundled = copied / "Contents/Helpers/ruri-cli"
+            bin_dir = root / "user bin"
+            assert invoke(bundled, "cli", "install", "--bin-dir", bin_dir)["status"]["installed"]
+            link = bin_dir / "ruri"
+            assert Path(invoke(link, "app", "info")["application"]).resolve() == copied.resolve()
+            command([link, "--localization-check"])
+            assert "USAGE: ruri app <subcommand>" in command([link, "--help", "app"], env=environment).decode()
+            moved = root / "Moved Ruri.app"
+            shutil.move(copied, moved)
+            relocated = moved / "Contents/Helpers/ruri-cli"
+            assert not invoke(relocated, "cli", "status", "--bin-dir", bin_dir)["installed"]
+            assert invoke(relocated, "cli", "install", "--bin-dir", bin_dir)["status"]["installed"]
+            assert Path(invoke(link, "app", "info")["application"]).resolve() == moved.resolve()
         # Check helpers with fresh data so doctor needs no Java installation,
         # network access, credentials, or game download.
         clean_data = root / "doctor data"
         result = json.loads(command([link, "doctor", "--data-dir", clean_data, "--json"], env=environment))
         assert result["ok"] and result["data"]["healthy"], result
-        assert invoke(link, "cli", "uninstall", "--bin-dir", bin_dir, "--yes")["changed"]
-        assert not link.is_symlink()
+        if not info.get("RuriPackageManager"):
+            assert invoke(link, "cli", "uninstall", "--bin-dir", bin_dir, "--yes")["changed"]
+            assert not link.is_symlink()
     print("CLI: discovery budgets, text/JSON/NDJSON, stdin, configuration, helpers, relocation and link repair verified")
 
 

@@ -6,18 +6,16 @@ import RuriLocalization
 @MainActor @Observable final class CLISetupModel {
     static let onboardingSeenKey = "RuriCLIOnboardingSeen"
     static let helpCommand = "ruri --help"
-    /// Package managers that put `ruri` on PATH themselves, such as Nix, name
-    /// themselves here so the app does not offer its own link.
-    static let packageManager = Bundle.main.object(forInfoDictionaryKey: "RuriPackageManager") as? String
 
     private(set) var installed = false
     private(set) var owned = false
     private(set) var legacyLink: String?
     private(set) var link = ""
+    private(set) var packageManager: String?
     private(set) var working = false
     private(set) var issue: String?
     var copied = false
-    var ready: Bool { Self.packageManager != nil || installed && legacyLink == nil }
+    var ready: Bool { packageManager != nil || (installed && legacyLink == nil) }
     var repair: Bool { owned || legacyLink != nil }
     private let installation: CLIInstallation?
 
@@ -43,6 +41,7 @@ import RuriLocalization
             owned = status["owned"].bool ?? false
             legacyLink = status["legacyLink"].string
             link = status["link"].string ?? ""
+            packageManager = status["packageManager"].string
         } catch { issue = error.localizedDescription }
     }
 

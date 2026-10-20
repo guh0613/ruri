@@ -42,9 +42,11 @@ def configure_metadata(path: Path) -> None:
     else:
         info.pop("RuriMicrosoftClientID", None)
     # Package managers that put ruri on PATH themselves, such as Nix, name
-    # themselves so the app does not offer its own command-line link.
+    # themselves so the app and CLI do not offer their own command-line link.
     package_manager = os.environ.get("RURI_PACKAGE_MANAGER", "").strip()
     if package_manager:
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9 .+-]{0,31}", package_manager):
+            raise ValueError("RURI_PACKAGE_MANAGER must be a short name such as Nix.")
         info["RuriPackageManager"] = package_manager
     else:
         info.pop("RuriPackageManager", None)

@@ -46,6 +46,10 @@ class ConfigureAppTests(unittest.TestCase):
             with self.subTest(environment=environment):
                 self.assertNotIn("RuriPackageManager", self.configure(environment))
 
+    def test_package_manager_must_be_a_short_name(self):
+        with self.assertRaises(ValueError):
+            self.configure({"RURI_PACKAGE_MANAGER": "<Nix>"})
+
     def test_invalid_override_does_not_silently_ship_a_broken_login(self):
         with self.assertRaises(ValueError):
             self.configure({"RURI_MICROSOFT_CLIENT_ID": "not-a-client-id"})

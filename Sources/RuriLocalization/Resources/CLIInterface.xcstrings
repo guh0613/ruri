@@ -901,6 +901,24 @@
         }
       }
     },
+    "CLIInterface.cliManagedByPackageManager" : {
+      "comment" : "CLI installation error when a package manager already provides the ruri command. %@ is the package manager's name, such as Nix.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ruri is provided by %@ and doesn't need to be installed separately."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ruri 已由 %@ 提供，无需单独安装。"
+          }
+        }
+      }
+    },
     "CLIInterface.cliStatusHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri cli status`.",
       "extractionState" : "manual",
