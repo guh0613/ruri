@@ -82,6 +82,23 @@ public struct GameHistoryOverview: Sendable {
 /// never enter this database. The GameSession payload is the versioned snapshot
 /// used to inspect a historical run, not a live process/liveness authority.
 extension GameHistoryStore {
+    public struct SessionReference: Sendable {
+        public let id: UUID
+        public let createdAt: Date
+        public let finished: Bool
+    }
+    /// Every session of an instance, newest first, read without creating or
+    /// migrating the history; for finding sessions by a short ID.
+    public static func references(paths: LauncherPaths, instanceID: UUID) throws -> [SessionReference] {
+        guard let db = try HistoryDatabase(readingExisting: paths) else { return [] }
+        var result: [SessionReference] = []
+        try db.rows("SELECT id, created, finished FROM sessions WHERE instance_id = ? ORDER BY created DESC", [.text(instanceID.uuidString)]) { statement in
+            guard let id = HistoryDatabase.text(statement, 0).flatMap(UUID.init(uuidString:)) else { return }
+            result.append(.init(id: id, createdAt: Date(timeIntervalSince1970: sqlite3_column_double(statement, 1)), finished: sqlite3_column_int64(statement, 2) != 0))
+        }
+        return result
+    }
+
     public static func list(paths: LauncherPaths, query: GameHistoryQuery = .init()) throws -> [GameSession] {
         return try withDatabase(paths: paths) { db in
             var clauses: [String] = [], values: [HistoryDatabase.Value] = []

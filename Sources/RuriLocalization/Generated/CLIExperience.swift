@@ -3,6 +3,30 @@ import Foundation
 
 extension Messages {
     public enum CLIExperience {
+        /// “%@”匹配到多个账户，请改用下列 ID 之一。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.ambiguousAccountTarget`.
+        public static func ambiguousAccountTarget(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.ambiguousAccountTarget", table: "CLIExperience", fallback: "“%@”匹配到多个账户，请改用下列 ID 之一。", arguments: [.text(value0)])
+        }
+        /// “%@”匹配到多个游戏目录，请改用下列 ID 之一。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.ambiguousDirectoryTarget`.
+        public static func ambiguousDirectoryTarget(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.ambiguousDirectoryTarget", table: "CLIExperience", fallback: "“%@”匹配到多个游戏目录，请改用下列 ID 之一。", arguments: [.text(value0)])
+        }
+        /// “%@”匹配到多个实例，请改用下列 ID 之一。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.ambiguousInstanceTarget`.
+        public static func ambiguousInstanceTarget(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.ambiguousInstanceTarget", table: "CLIExperience", fallback: "“%@”匹配到多个实例，请改用下列 ID 之一。", arguments: [.text(value0)])
+        }
+        /// “%@”匹配到多个会话，请使用更长的 ID。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.ambiguousSessionTarget`.
+        public static func ambiguousSessionTarget(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.ambiguousSessionTarget", table: "CLIExperience", fallback: "“%@”匹配到多个会话，请使用更长的 ID。", arguments: [.text(value0)])
+        }
         /// 已完成
         ///
         /// Resource: `CLIExperience.CLIExperience.completed`.
@@ -195,6 +219,12 @@ extension Messages {
         public static var hiddenChanges: LocalizedMessage {
             .init(key: "CLIExperience.hiddenChanges", table: "CLIExperience", fallback: "隐藏敏感信息后，没有可显示的差异。")
         }
+        /// “%@”作为 ID 前缀太短，至少需要 8 个字符。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.idPrefixTooShort`.
+        public static func idPrefixTooShort(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.idPrefixTooShort", table: "CLIExperience", fallback: "“%@”作为 ID 前缀太短，至少需要 8 个字符。", arguments: [.text(value0)])
+        }
         /// 只返回命令输入结构；config apply 同时包含补丁结构
         ///
         /// Resource: `CLIExperience.CLIExperience.inputSchema`.
@@ -236,6 +266,30 @@ extension Messages {
         /// Resource: `CLIExperience.CLIExperience.nextAction`.
         public static func nextAction(_ value0: String) -> LocalizedMessage {
             .init(key: "CLIExperience.nextAction", table: "CLIExperience", fallback: "下一步：%@", arguments: [.text(value0)])
+        }
+        /// 没有与“%@”匹配的账户。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.noAccountMatches`.
+        public static func noAccountMatches(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.noAccountMatches", table: "CLIExperience", fallback: "没有与“%@”匹配的账户。", arguments: [.text(value0)])
+        }
+        /// 没有与“%@”匹配的游戏目录。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.noDirectoryMatches`.
+        public static func noDirectoryMatches(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.noDirectoryMatches", table: "CLIExperience", fallback: "没有与“%@”匹配的游戏目录。", arguments: [.text(value0)])
+        }
+        /// 没有与“%@”匹配的实例。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.noInstanceMatches`.
+        public static func noInstanceMatches(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.noInstanceMatches", table: "CLIExperience", fallback: "没有与“%@”匹配的实例。", arguments: [.text(value0)])
+        }
+        /// 该实例没有与“%@”匹配的会话。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.noSessionMatches`.
+        public static func noSessionMatches(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.noSessionMatches", table: "CLIExperience", fallback: "该实例没有与“%@”匹配的会话。", arguments: [.text(value0)])
         }
         /// Microsoft 登录需在浏览器中继续，完成后运行 ruri account login complete <flow>。
         ///
@@ -454,6 +508,10 @@ extension Messages {
             .init(key: "CLIExperience.withSuggestion", table: "CLIExperience", fallback: "%1$@是否要输入“%2$@”？", arguments: [.text(value0), .text(value1)])
         }
         static let definitions: [String: MessageDefinition] = [
+            "CLIExperience:CLIExperience.ambiguousAccountTarget": .init("“%@”匹配到多个账户，请改用下列 ID 之一。", [.text]),
+            "CLIExperience:CLIExperience.ambiguousDirectoryTarget": .init("“%@”匹配到多个游戏目录，请改用下列 ID 之一。", [.text]),
+            "CLIExperience:CLIExperience.ambiguousInstanceTarget": .init("“%@”匹配到多个实例，请改用下列 ID 之一。", [.text]),
+            "CLIExperience:CLIExperience.ambiguousSessionTarget": .init("“%@”匹配到多个会话，请使用更长的 ID。", [.text]),
             "CLIExperience:CLIExperience.completed": .init("已完成", []),
             "CLIExperience:CLIExperience.configPreview": .init("预览：即将更新的配置", []),
             "CLIExperience:CLIExperience.configUnchanged": .init("配置未更改", []),
@@ -486,6 +544,7 @@ extension Messages {
             "CLIExperience:CLIExperience.helpSubcommands": .init("子命令：", []),
             "CLIExperience:CLIExperience.helpValues": .init("可选值：%@。", [.text]),
             "CLIExperience:CLIExperience.hiddenChanges": .init("隐藏敏感信息后，没有可显示的差异。", []),
+            "CLIExperience:CLIExperience.idPrefixTooShort": .init("“%@”作为 ID 前缀太短，至少需要 8 个字符。", [.text]),
             "CLIExperience:CLIExperience.inputSchema": .init("只返回命令输入结构；config apply 同时包含补丁结构", []),
             "CLIExperience:CLIExperience.invalidArgumentChoice": .init("“%1$@”不是可选值之一：%2$@。", [.text, .text]),
             "CLIExperience:CLIExperience.missingArguments": .init("缺少 %@。", [.text]),
@@ -493,6 +552,10 @@ extension Messages {
             "CLIExperience:CLIExperience.more": .init("还有更多：%@", [.text]),
             "CLIExperience:CLIExperience.moreLine": .init("更多：%@", [.text]),
             "CLIExperience:CLIExperience.nextAction": .init("下一步：%@", [.text]),
+            "CLIExperience:CLIExperience.noAccountMatches": .init("没有与“%@”匹配的账户。", [.text]),
+            "CLIExperience:CLIExperience.noDirectoryMatches": .init("没有与“%@”匹配的游戏目录。", [.text]),
+            "CLIExperience:CLIExperience.noInstanceMatches": .init("没有与“%@”匹配的实例。", [.text]),
+            "CLIExperience:CLIExperience.noSessionMatches": .init("该实例没有与“%@”匹配的会话。", [.text]),
             "CLIExperience:CLIExperience.noteBrowserSignIn": .init("Microsoft 登录需在浏览器中继续，完成后运行 ruri account login complete <flow>。", []),
             "CLIExperience:CLIExperience.noteCompletions": .init("将脚本保存到 shell 加载补全的位置。Ruri 不会修改 shell 配置。", []),
             "CLIExperience:CLIExperience.noteConfigFields": .init("使用 ruri config fields 查看全部字段。", []),

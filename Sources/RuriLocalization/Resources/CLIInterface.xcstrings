@@ -1807,24 +1807,6 @@
         }
       }
     },
-    "CLIInterface.commandPathArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri schema`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "resource? action? subaction?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "可选的资源、动作和子动作。"
-          }
-        }
-      }
-    },
     "CLIInterface.compatibleDataPackVersionNotFound" : {
       "comment" : "CLI data-pack install error when no compatible version is available.",
       "extractionState" : "manual",
@@ -1946,24 +1928,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "配置字段或组的名称"
-          }
-        }
-      }
-    },
-    "CLIInterface.configFieldValueArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri config set`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "key value"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "配置字段及 JSON 值。"
           }
         }
       }
@@ -2148,19 +2112,19 @@
       }
     },
     "CLIInterface.configValueMustBeJson" : {
-      "comment" : "CLI config set error: the value must be a JSON literal, including quotes around strings.",
+      "comment" : "CLI config set error: the value is not valid JSON and the field does not accept plain text.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The value must be JSON; quote string values."
+            "value" : "This field takes a JSON value; only text fields accept plain text."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "配置值必须是 JSON；字符串值需要保留双引号。"
+            "value" : "该字段需要 JSON 值；只有文本字段可以直接写文本。"
           }
         }
       }
@@ -2363,24 +2327,6 @@
         }
       }
     },
-    "CLIInterface.contentImportArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri content import`. Combined positional-argument help for `ruri world import`. Combined positional-argument help for `ruri schematic import`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance file"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和文件路径。"
-          }
-        }
-      }
-    },
     "CLIInterface.contentImportHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri content import`.",
       "extractionState" : "manual",
@@ -2449,24 +2395,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "列出已安装的模组、资源包或光影包。"
-          }
-        }
-      }
-    },
-    "CLIInterface.contentProjectArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri content install`. Combined positional-argument help for `ruri datapack versions`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance project"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和项目 ID。"
           }
         }
       }
@@ -2705,24 +2633,6 @@
         }
       }
     },
-    "CLIInterface.dataPackImportArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri datapack import`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance world file"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID、存档名称和文件路径。"
-          }
-        }
-      }
-    },
     "CLIInterface.dataPackImportHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri datapack import`.",
       "extractionState" : "manual",
@@ -2867,24 +2777,6 @@
         }
       }
     },
-    "CLIInterface.dataPackProjectArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri datapack install`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance world project"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID、存档名称和项目 ID。"
-          }
-        }
-      }
-    },
     "CLIInterface.dataPackRemoveHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri datapack remove`.",
       "extractionState" : "manual",
@@ -2903,24 +2795,6 @@
         }
       }
     },
-    "CLIInterface.dataPackSearchArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri datapack search`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance query"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和搜索关键词。"
-          }
-        }
-      }
-    },
     "CLIInterface.dataPackSearchHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri datapack search`.",
       "extractionState" : "manual",
@@ -2935,24 +2809,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "搜索兼容的 Modrinth 数据包。"
-          }
-        }
-      }
-    },
-    "CLIInterface.dataPackTargetArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri datapack enable`. Combined positional-argument help for `ruri datapack disable`. Combined positional-argument help for `ruri datapack remove`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance world name"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID、存档名称和数据包名称。"
           }
         }
       }
@@ -2989,24 +2845,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "列出兼容的数据包版本。"
-          }
-        }
-      }
-    },
-    "CLIInterface.dataPackWorldArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri datapack list`. Combined positional-argument help for `ruri datapack order get`. Combined positional-argument help for `ruri datapack order set`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance world"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和存档名称。"
           }
         }
       }
@@ -3151,24 +2989,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "找不到目录。"
-          }
-        }
-      }
-    },
-    "CLIInterface.directoryPathArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri directory relocate`. Combined positional-argument help for `ruri directory restore`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "id path"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目录 ID 和文件路径。"
           }
         }
       }
@@ -3421,24 +3241,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "预期的字节数。"
-          }
-        }
-      }
-    },
-    "CLIInterface.downloadTargetArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri download fetch`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "url file"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "下载地址和文件路径。"
           }
         }
       }
@@ -3947,24 +3749,6 @@
         }
       }
     },
-    "CLIInterface.instanceExportArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri instance export`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "id file"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和文件路径。"
-          }
-        }
-      }
-    },
     "CLIInterface.instanceExportHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri instance export`.",
       "extractionState" : "manual",
@@ -4092,19 +3876,19 @@
       }
     },
     "CLIInterface.instanceIdOrNameRequired" : {
-      "comment" : "CLI instance-target error requiring exactly one UUID operand or --name option.",
+      "comment" : "CLI instance-target error requiring exactly one instance operand or the --name option.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Specify either an instance UUID or --name."
+            "value" : "Specify an instance or --name, not both."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请指定实例 UUID 或 --name，两者只能选一个。"
+            "value" : "请指定实例或 --name，两者只能选一个。"
           }
         }
       }
@@ -4199,24 +3983,6 @@
         }
       }
     },
-    "CLIInterface.instanceLoaderArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri instance component versions`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "id loader"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和加载器类型。"
-          }
-        }
-      }
-    },
     "CLIInterface.instanceLocationChanged" : {
       "comment" : "CLI mutation conflict when the instance's registered location changes.",
       "extractionState" : "manual",
@@ -4307,24 +4073,6 @@
         }
       }
     },
-    "CLIInterface.instancePinArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri instance favorite`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "id enabled"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和固定状态，状态为 true 或 false。"
-          }
-        }
-      }
-    },
     "CLIInterface.instancePinHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri instance favorite`.",
       "extractionState" : "manual",
@@ -4397,24 +4145,6 @@
         }
       }
     },
-    "CLIInterface.instanceRenameArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri instance rename`. Combined positional-argument help for `ruri directory rename`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "id name"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和新名称。"
-          }
-        }
-      }
-    },
     "CLIInterface.instanceRenameHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri instance rename`.",
       "extractionState" : "manual",
@@ -4465,42 +4195,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "实例运行游戏的目录"
-          }
-        }
-      }
-    },
-    "CLIInterface.instanceRunDirectoryModeArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri directory run set`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance mode"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和目录模式。"
-          }
-        }
-      }
-    },
-    "CLIInterface.instanceRunDirectoryPathArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri directory run relocate`. Combined positional-argument help for `ruri schematic info`. Combined positional-argument help for `ruri schematic remove`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance path"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和目录路径。"
           }
         }
       }
@@ -4686,19 +4380,19 @@
       }
     },
     "CLIInterface.invalidConfigScope" : {
-      "comment" : "CLI configuration scope error. app, defaults, and instance:<uuid> are literal scope formats.",
+      "comment" : "CLI configuration scope error. app, defaults and instance: are literal scope formats; <instance> is a placeholder for an instance name or ID.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use app, defaults or instance:<uuid> as the scope."
+            "value" : "Use app, defaults or instance:<instance> as the scope."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "配置作用域必须为 app、defaults 或 instance:<uuid>。"
+            "value" : "配置作用域必须为 app、defaults 或 instance:<实例>。"
           }
         }
       }
@@ -6340,24 +6034,6 @@
         }
       }
     },
-    "CLIInterface.recoveryTargetArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri recovery apply`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "kind target"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复类型和目标 ID。"
-          }
-        }
-      }
-    },
     "CLIInterface.recoveryTransactionHelp" : {
       "comment" : "Help text for `--transaction` in `ruri recovery apply`.",
       "extractionState" : "manual",
@@ -6538,24 +6214,6 @@
         }
       }
     },
-    "CLIInterface.schematicExportArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri schematic export`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance path file"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID、投影路径和导出文件路径。"
-          }
-        }
-      }
-    },
     "CLIInterface.schematicExportHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri schematic export`.",
       "extractionState" : "manual",
@@ -6570,24 +6228,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导出投影文件。"
-          }
-        }
-      }
-    },
-    "CLIInterface.schematicFolderArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri schematic mkdir`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance name"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和文件夹名称。"
           }
         }
       }
@@ -7131,24 +6771,6 @@
         }
       }
     },
-    "CLIInterface.sessionExportArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri session export`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance session file"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID、运行记录 ID 和文件路径。"
-          }
-        }
-      }
-    },
     "CLIInterface.sessionExportHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri session export`.",
       "extractionState" : "manual",
@@ -7361,24 +6983,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请求游戏正常退出。"
-          }
-        }
-      }
-    },
-    "CLIInterface.sessionTargetArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri session show`. Combined positional-argument help for `ruri session wait`. Combined positional-argument help for `ruri session quit`. Combined positional-argument help for `ruri session stop`. Combined positional-argument help for `ruri session logs`. Combined positional-argument help for `ruri session diagnose`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance session"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和运行记录 ID。"
           }
         }
       }
@@ -7869,24 +7473,6 @@
         }
       }
     },
-    "CLIInterface.worldBackupArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri world backup restore`. Combined positional-argument help for `ruri world backup remove`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance backup"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和备份 ID。"
-          }
-        }
-      }
-    },
     "CLIInterface.worldBackupCommands" : {
       "comment" : "Command-group description in CLI help for `ruri world backup`.",
       "extractionState" : "manual",
@@ -8049,24 +7635,6 @@
         }
       }
     },
-    "CLIInterface.worldExportArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri world export`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance folder file"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID、存档文件夹和文件路径。"
-          }
-        }
-      }
-    },
     "CLIInterface.worldExportHelp" : {
       "comment" : "Command summary shown in CLI help and discovery for `ruri world export`.",
       "extractionState" : "manual",
@@ -8081,24 +7649,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导出存档压缩包。"
-          }
-        }
-      }
-    },
-    "CLIInterface.worldFolderArgumentsHelp" : {
-      "comment" : "Combined positional-argument help for `ruri world show`. Combined positional-argument help for `ruri world remove`. Combined positional-argument help for `ruri world backup create`.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "instance folder"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "实例 ID 和存档文件夹。"
           }
         }
       }

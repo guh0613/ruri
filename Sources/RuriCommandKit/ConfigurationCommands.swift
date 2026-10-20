@@ -19,9 +19,13 @@ extension CLIApplication {
         let patch: ConfigurationPatch
         switch request.spec.path.last {
         case "set":
-            let raw = try request.operand(1)
-            guard let value = try? JSONDecoder().decode(Value.self, from: Data(raw.utf8)) else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.configValueMustBeJson.localized) }
-            patch = .init(set: [try request.operand(): value])
+            let key = try request.operand(), raw = try request.operand(1)
+            // Valid JSON keeps its meaning; other text is a string where the field takes one.
+            let value: Value
+            if let decoded = try? JSONDecoder().decode(Value.self, from: Data(raw.utf8)) { value = decoded }
+            else if (scope == "app" ? ConfigurationService.appFields : ConfigurationService.launchFields).contains(where: { $0.name == key && $0.type == "string" }) { value = .string(raw) }
+            else { throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.configValueMustBeJson.localized) }
+            patch = .init(set: [key: value])
         case "reset": patch = .init(reset: [try request.operand()])
         case "inherit": patch = .init(inherit: [try request.operand()])
         default:

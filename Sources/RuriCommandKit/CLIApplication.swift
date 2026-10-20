@@ -81,11 +81,13 @@ public enum CLIApplication {
                 }
                 throw CommandLineInvocation.failure(RuriCommand.message(for: error), path: invocation.path)
             }
-            let request = command.request
-            try request.validate()
+            let parsed = command.request
+            try parsed.validate()
+            output = CommandOutput(format: parsed.common.json ? .json : .init(rawValue: parsed.common.output)!, quiet: parsed.common.quiet, write: write, terminal: terminal)
+            output.setUsage(parsed.spec.path)
+            output.setRequest(parsed)
+            let request = try CommandTargets.resolve(parsed)
             activeRequest = request
-            output = CommandOutput(format: request.common.json ? .json : .init(rawValue: request.common.output)!, quiet: request.common.quiet, write: write, terminal: terminal)
-            output.setUsage(request.spec.path)
             output.setRequest(request)
             let result = try await OperationReadPolicy.$protectedDataRoot.withValue(request.dryRun || !request.spec.mutation ? basePaths(request).root : nil) {
                 try await execute(request, output: output)

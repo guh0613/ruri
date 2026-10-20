@@ -129,6 +129,21 @@ package final class HistoryDatabase: @unchecked Sendable {
             try execute("PRAGMA synchronous=FULL")
         } catch { sqlite3_close(connection); connection = nil; throw error }
     }
+    /// Opens an existing history for reading only, so lookups never create,
+    /// migrate or repair it. A history that does not exist yet returns nil.
+    package init?(readingExisting paths: any SessionPaths) throws {
+        let directory = try SessionFileSystem.safePath("records", within: paths.root)
+        file = try SessionFileSystem.safePath("records.sqlite", within: directory)
+        var info = stat()
+        guard lstat(file.path, &info) == 0 else { return nil }
+        guard info.st_mode & S_IFMT == S_IFREG, let resolved = realpath(directory.path, nil) else { throw POSIXError(.EINVAL) }
+        let databasePath = String(cString: resolved) + "/records.sqlite"
+        free(resolved)
+        guard sqlite3_open_v2(databasePath, &connection, SQLITE_OPEN_READONLY | SQLITE_OPEN_FULLMUTEX | SQLITE_OPEN_NOFOLLOW, nil) == SQLITE_OK else {
+            let error = failure(); sqlite3_close(connection); connection = nil; throw error
+        }
+        sqlite3_busy_timeout(connection, 500)
+    }
     deinit { sqlite3_close(connection) }
 
     package func transaction(_ work: () throws -> Void) throws {

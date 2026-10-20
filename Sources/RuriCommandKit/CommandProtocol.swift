@@ -7,9 +7,9 @@ public typealias Value = OperationValue
 
 struct CommonOptions: ParsableArguments {
     @Flag(help: ArgumentHelp(Messages.CLIInterface.jsonOutputHelp.localized)) var json = false
-    @Option(help: ArgumentHelp(Messages.CLIInterface.outputFormatHelp.localized)) var output: String = "text"
-    @Option(help: ArgumentHelp(Messages.CLIInterface.dataDirectoryHelp.localized)) var dataDir: String?
-    @Option(help: ArgumentHelp(Messages.CLIInterface.messageLanguageHelp.localized)) var language: String?
+    @Option(help: ArgumentHelp(Messages.CLIInterface.outputFormatHelp.localized), completion: .list(["text", "json", "ndjson"])) var output: String = "text"
+    @Option(help: ArgumentHelp(Messages.CLIInterface.dataDirectoryHelp.localized), completion: .directory) var dataDir: String?
+    @Option(help: ArgumentHelp(Messages.CLIInterface.messageLanguageHelp.localized), completion: .list(LocalizationContext.commandLineLanguages)) var language: String?
     @Flag(help: ArgumentHelp(Messages.CLIInterface.quietProgressHelp.localized)) var quiet = false
 
     /// Options every command accepts, before, between or after command names.
@@ -34,6 +34,8 @@ enum ParameterRole: Sendable, Equatable {
     /// An instance or a directory, depending on the recovery kind before it.
     case recoveryTarget
     case configKey, configGroup
+    /// A value for the configuration field named by the operand before it.
+    case configValue
     /// An existing file or folder to read, a file to create, or a folder.
     case file, newFile, folder
     case commandPath
@@ -99,6 +101,12 @@ protocol ExecutableCommand: ParsableCommand {
 extension ExecutableCommand {
     static var configuration: CommandConfiguration { spec.configuration }
     var request: CommandRequest { .init(spec: Self.spec, common: common, operands: operands, options: parameters) }
+    static func help(operand index: Int) -> ArgumentHelp {
+        let operand = spec.operands[index]
+        return ArgumentHelp(operand.help, valueName: operand.name)
+    }
+    static func completion(operand index: Int) -> CompletionKind? { CommandCompletion.kind(for: .operand(index), in: spec) }
+    static func completion(option name: String) -> CompletionKind? { CommandCompletion.kind(for: .option(name), in: spec) }
 }
 
 struct CommandRequest: Sendable {

@@ -15,10 +15,13 @@ struct SchemaCommand: ExecutableCommand {
         .init(name: "full", type: "bool", required: false, help: Messages.CLIExperience.fullSchema.localized)
     ], examples: ["ruri schema instance", "ruri schema config apply --input --scope instance --json"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.commandPathArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentResource: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentAction: String?
+    @Argument(help: Self.help(operand: 2), completion: Self.completion(operand: 2)) var argumentSubaction: String?
+    var operands: [String] { [argumentResource, argumentAction, argumentSubaction].compactMap { $0 } }
     @Flag(help: ArgumentHelp(Messages.CLIExperience.inputSchema.localized)) var input = false
     @Flag(name: .customLong("output-schema"), help: ArgumentHelp(Messages.CLIExperience.outputSchema.localized)) var outputSchema = false
-    @Option(help: ArgumentHelp(Messages.CLIExperience.schemaScope.localized)) var scope: String?
+    @Option(help: ArgumentHelp(Messages.CLIExperience.schemaScope.localized), completion: Self.completion(option: "scope")) var scope: String?
     @Flag(help: ArgumentHelp(Messages.CLIExperience.fullSchema.localized)) var full = false
     var parameters: [String: Value] { ["input": .bool(input), "output-schema": .bool(outputSchema), "scope": .text(scope), "full": .bool(full)].filter { $0.value != .null } }
 }
@@ -30,7 +33,7 @@ struct AppInfoCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -43,7 +46,7 @@ struct AppLanguageGetCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -56,7 +59,8 @@ struct AppLanguageSetCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri app language set zh-Hans"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "language") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentLanguage: String?
+    var operands: [String] { [argumentLanguage].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -70,8 +74,8 @@ struct CliStatusCommand: ExecutableCommand {
         .init(name: "bin-dir", type: "string", required: false, help: Messages.CLIInterface.cliUninstallDirectoryHelp.localized, values: [], role: .folder)
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.cliUninstallDirectoryHelp.localized)) var optionBinDir: String?
+    var operands: [String] { [] }
+    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.cliUninstallDirectoryHelp.localized), completion: Self.completion(option: "bin-dir")) var optionBinDir: String?
     var parameters: [String: Value] { [
         "bin-dir": .text(optionBinDir)
     ].filter { $0.value != .null } }
@@ -85,8 +89,8 @@ struct CliInstallCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: true, examples: ["ruri cli install", "ruri cli install --bin-dir ~/.local/bin"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.cliInstallDirectoryHelp.localized)) var optionBinDir: String?
+    var operands: [String] { [] }
+    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.cliInstallDirectoryHelp.localized), completion: Self.completion(option: "bin-dir")) var optionBinDir: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "bin-dir": .text(optionBinDir),
@@ -103,8 +107,8 @@ struct CliUninstallCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: true, examples: ["ruri cli uninstall --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.cliUninstallDirectoryHelp.localized)) var optionBinDir: String?
+    var operands: [String] { [] }
+    @Option(name: .customLong("bin-dir"), help: ArgumentHelp(Messages.CLIInterface.cliUninstallDirectoryHelp.localized), completion: Self.completion(option: "bin-dir")) var optionBinDir: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -122,8 +126,9 @@ struct ConfigGetCommand: ExecutableCommand {
         .init(name: "show-secrets", type: "bool", required: false, help: Messages.CLIInterface.showEnvironmentValuesHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri config get --scope defaults", "ruri config get memory --scope instance:Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "key?") var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentKey: String?
+    var operands: [String] { [argumentKey].compactMap { $0 } }
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized), completion: Self.completion(option: "scope")) var optionScope: String?
     @Flag(name: .customLong("show-secrets"), help: ArgumentHelp(Messages.CLIInterface.showEnvironmentValuesHelp.localized)) var optionShowSecrets = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
@@ -134,16 +139,18 @@ struct ConfigGetCommand: ExecutableCommand {
 struct ConfigSetCommand: ExecutableCommand {
     static var spec: CommandSpec { CommandSpec(path: ["config","set"], summary: Messages.CLIInterface.configSetHelp.localized, operands: [
         .init(name: "key", type: "string", required: true, help: Messages.CLIInterface.argumentConfigKey.localized, values: [], role: .configKey),
-        .init(name: "value", type: "string", required: true, help: Messages.CLIInterface.argumentConfigValue.localized, values: [], role: .text)
+        .init(name: "value", type: "string", required: true, help: Messages.CLIInterface.argumentConfigValue.localized, values: [], role: .configValue)
     ], options: [
         .init(name: "scope", type: "string", required: true, help: Messages.CLIInterface.configScopeHelp.localized, values: [], role: .scope),
         .init(name: "if-revision", type: "string", required: false, help: Messages.CLIInterface.ifRevisionHelp.localized, values: []),
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config set memory.maximumMB 6144 --scope defaults", "ruri config set memory.mode manual --scope instance:Survival", "ruri config set java.path \"/Library/Java/JavaVirtualMachines/zulu-21.jdk\" --scope defaults"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.configFieldValueArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
-    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized)) var optionIfRevision: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentKey: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentValue: String?
+    var operands: [String] { [argumentKey, argumentValue].compactMap { $0 } }
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized), completion: Self.completion(option: "scope")) var optionScope: String?
+    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized), completion: Self.completion(option: "if-revision")) var optionIfRevision: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
@@ -162,10 +169,10 @@ struct ConfigApplyCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config apply --scope instance:Survival --file patch.json --dry-run", "printf '{\"set\":{\"concurrentDownloads\":8}}' | ruri config apply --scope app --file -"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.configPatchFileHelp.localized)) var optionFile: String?
-    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized)) var optionIfRevision: String?
+    var operands: [String] { [] }
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized), completion: Self.completion(option: "scope")) var optionScope: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.configPatchFileHelp.localized), completion: Self.completion(option: "file")) var optionFile: String?
+    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized), completion: Self.completion(option: "if-revision")) var optionIfRevision: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
@@ -184,9 +191,10 @@ struct ConfigResetCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config reset window --scope defaults"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "key") var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
-    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized)) var optionIfRevision: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentKey: String?
+    var operands: [String] { [argumentKey].compactMap { $0 } }
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized), completion: Self.completion(option: "scope")) var optionScope: String?
+    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized), completion: Self.completion(option: "if-revision")) var optionIfRevision: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
@@ -204,9 +212,10 @@ struct ConfigInheritCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri config inherit memory --scope instance:Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "key") var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized)) var optionScope: String?
-    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized)) var optionIfRevision: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentGroup: String?
+    var operands: [String] { [argumentGroup].compactMap { $0 } }
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIInterface.configScopeHelp.localized), completion: Self.completion(option: "scope")) var optionScope: String?
+    @Option(name: .customLong("if-revision"), help: ArgumentHelp(Messages.CLIInterface.ifRevisionHelp.localized), completion: Self.completion(option: "if-revision")) var optionIfRevision: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "scope": .text(optionScope),
@@ -222,8 +231,9 @@ struct ConfigFieldsCommand: ExecutableCommand {
         .init(name: "scope", type: "string", required: false, help: Messages.CLIExperience.schemaScope.localized, values: ["app", "defaults", "instance"])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri config fields memory", "ruri config fields --scope app"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.argumentConfigPrefix.localized)) var operands: [String] = []
-    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIExperience.schemaScope.localized)) var optionScope: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentPrefix: String?
+    var operands: [String] { [argumentPrefix].compactMap { $0 } }
+    @Option(name: .customLong("scope"), help: ArgumentHelp(Messages.CLIExperience.schemaScope.localized), completion: Self.completion(option: "scope")) var optionScope: String?
     var parameters: [String: Value] { ["scope": .text(optionScope)].filter { $0.value != .null } }
 }
 
@@ -238,11 +248,11 @@ struct InstanceListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri instance list", "ruri instance list --directory default --all"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.exactNameFilterHelp.localized)) var optionName: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.directoryFilterHelp.localized)) var optionDirectory: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    var operands: [String] { [] }
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.exactNameFilterHelp.localized), completion: Self.completion(option: "name")) var optionName: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.directoryFilterHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "name": .text(optionName),
@@ -260,7 +270,7 @@ struct InstanceSelectedCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -273,8 +283,9 @@ struct InstanceShowCommand: ExecutableCommand {
         .init(name: "name", type: "string", required: false, help: Messages.CLIInterface.instanceNameLookupHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri instance show Survival", "ruri instance show 3f2a1b4c"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id?") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.instanceNameLookupHelp.localized)) var optionName: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.instanceNameLookupHelp.localized), completion: Self.completion(option: "name")) var optionName: String?
     var parameters: [String: Value] { [
         "name": .text(optionName)
     ].filter { $0.value != .null } }
@@ -290,10 +301,10 @@ struct InstanceVersionsCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri instance versions --limit 10", "ruri instance versions --snapshots"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     @Flag(name: .customLong("snapshots"), help: ArgumentHelp(Messages.CLIInterface.includeSnapshotsHelp.localized)) var optionSnapshots = false
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "snapshots": .bool(optionSnapshots),
@@ -315,11 +326,11 @@ struct InstanceCreateCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance create --name Survival --game 1.21.1 --directory default", "ruri instance create --name Fabric --game 1.21.1 --directory default --component fabric=0.16.9", "ruri instance create --name Survival --game 1.21.1 --directory default --no-install --json"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.instanceNameHelp.localized)) var optionName: String?
-    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.minecraftVersionHelp.localized)) var optionGame: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceTargetDirectoryHelp.localized)) var optionDirectory: String?
-    @Option(name: .customLong("component"), help: ArgumentHelp(Messages.CLIInterface.instanceCreateLoadersHelp.localized)) var optionComponent: [String] = []
+    var operands: [String] { [] }
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.instanceNameHelp.localized), completion: Self.completion(option: "name")) var optionName: String?
+    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.minecraftVersionHelp.localized), completion: Self.completion(option: "game")) var optionGame: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceTargetDirectoryHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
+    @Option(name: .customLong("component"), help: ArgumentHelp(Messages.CLIInterface.instanceCreateLoadersHelp.localized), completion: Self.completion(option: "component")) var optionComponent: [String] = []
     @Flag(name: .customLong("no-install"), help: ArgumentHelp(Messages.CLIInterface.instanceRecordOnlyHelp.localized)) var optionNoInstall = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -339,7 +350,8 @@ struct InstanceInstallCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance install Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -353,7 +365,8 @@ struct InstanceRepairCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance repair Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -367,7 +380,8 @@ struct InstanceSelectCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance select Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -382,7 +396,9 @@ struct InstanceRenameCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance rename Survival \"Survival 1.21\""]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRenameArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentName: String?
+    var operands: [String] { [argumentInstance, argumentName].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -397,7 +413,9 @@ struct InstanceFavoriteCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance favorite Survival true"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.instancePinArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentEnabled: String?
+    var operands: [String] { [argumentInstance, argumentEnabled].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -412,7 +430,8 @@ struct InstanceRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: ["ruri instance remove Survival --dry-run", "ruri instance remove Survival --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -432,10 +451,11 @@ struct InstanceIconCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance icon Survival --glyph tree --tint green", "ruri instance icon Survival --file icon.png", "ruri instance icon Survival --reset"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.instanceIconFileHelp.localized)) var optionFile: String?
-    @Option(name: .customLong("glyph"), help: ArgumentHelp(Messages.CLIInterface.instanceIconGlyphHelp.localized)) var optionGlyph: String?
-    @Option(name: .customLong("tint"), help: ArgumentHelp(Messages.CLIInterface.instanceIconTintHelp.localized)) var optionTint: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.instanceIconFileHelp.localized), completion: Self.completion(option: "file")) var optionFile: String?
+    @Option(name: .customLong("glyph"), help: ArgumentHelp(Messages.CLIInterface.instanceIconGlyphHelp.localized), completion: Self.completion(option: "glyph")) var optionGlyph: String?
+    @Option(name: .customLong("tint"), help: ArgumentHelp(Messages.CLIInterface.instanceIconTintHelp.localized), completion: Self.completion(option: "tint")) var optionTint: String?
     @Flag(name: .customLong("reset"), help: ArgumentHelp(Messages.CLIInterface.instanceIconResetHelp.localized)) var optionReset = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -458,9 +478,10 @@ struct InstanceCopyCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance copy Survival --name \"Survival copy\" --directory default"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceTargetDirectoryHelp.localized)) var optionDirectory: String?
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized)) var optionName: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceTargetDirectoryHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized), completion: Self.completion(option: "name")) var optionName: String?
     @Flag(name: .customLong("without-worlds"), help: ArgumentHelp(Messages.CLIInterface.excludeWorldsHelp.localized)) var optionWithoutWorlds = false
     @Flag(name: .customLong("with-backups"), help: ArgumentHelp(Messages.CLIInterface.includeWorldBackupsHelp.localized)) var optionWithBackups = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
@@ -481,8 +502,9 @@ struct InstanceMoveCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance move Survival --directory Games --dry-run"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceTargetDirectoryHelp.localized)) var optionDirectory: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceTargetDirectoryHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "directory": .text(optionDirectory),
@@ -500,8 +522,10 @@ struct InstanceExportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance export Survival ~/Desktop/Survival.mrpack --format mrpack"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceExportArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("format"), help: ArgumentHelp(Messages.CLIInterface.instanceArchiveFormatHelp.localized)) var optionFormat: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentFile: String?
+    var operands: [String] { [argumentInstance, argumentFile].compactMap { $0 } }
+    @Option(name: .customLong("format"), help: ArgumentHelp(Messages.CLIInterface.instanceArchiveFormatHelp.localized), completion: Self.completion(option: "format")) var optionFormat: String?
     @Flag(name: .customLong("without-worlds"), help: ArgumentHelp(Messages.CLIInterface.excludeWorldsHelp.localized)) var optionWithoutWorlds = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -518,7 +542,8 @@ struct InstanceComponentListCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri instance component list Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -534,9 +559,11 @@ struct InstanceComponentVersionsCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri instance component versions Survival fabric --limit 5"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceLoaderArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentLoader: String?
+    var operands: [String] { [argumentInstance, argumentLoader].compactMap { $0 } }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -553,8 +580,9 @@ struct InstanceComponentSetCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance component set Survival --component fabric=0.16.9 --dry-run"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
-    @Option(name: .customLong("component"), help: ArgumentHelp(Messages.CLIInterface.instanceComponentLoadersHelp.localized)) var optionComponent: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("component"), help: ArgumentHelp(Messages.CLIInterface.instanceComponentLoadersHelp.localized), completion: Self.completion(option: "component")) var optionComponent: [String] = []
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "component": .array(optionComponent.map(Value.string)),
@@ -570,7 +598,8 @@ struct InstanceComponentRestoreCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: ["ruri instance component restore Survival --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -588,9 +617,9 @@ struct DirectoryListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    var operands: [String] { [] }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -606,7 +635,7 @@ struct DirectorySelectedCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -621,9 +650,10 @@ struct DirectoryScanCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri directory scan \"$HOME/Library/Application Support/minecraft\""]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "path") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentPath: String?
+    var operands: [String] { [argumentPath].compactMap { $0 } }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -641,9 +671,10 @@ struct DirectoryAddCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri directory add \"$HOME/Library/Application Support/minecraft\" --name Official", "ruri directory add ~/Games/Ruri --name Games --layout managed"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "path") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.directoryNameHelp.localized)) var optionName: String?
-    @Option(name: .customLong("layout"), help: ArgumentHelp(Messages.CLIInterface.directoryLayoutHelp.localized)) var optionLayout: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentPath: String?
+    var operands: [String] { [argumentPath].compactMap { $0 } }
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.directoryNameHelp.localized), completion: Self.completion(option: "name")) var optionName: String?
+    @Option(name: .customLong("layout"), help: ArgumentHelp(Messages.CLIInterface.directoryLayoutHelp.localized), completion: Self.completion(option: "layout")) var optionLayout: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "name": .text(optionName),
@@ -659,7 +690,8 @@ struct DirectorySelectCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri directory select Games"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentDirectory: String?
+    var operands: [String] { [argumentDirectory].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -673,7 +705,8 @@ struct DirectoryRefreshCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentDirectory: String?
+    var operands: [String] { [argumentDirectory].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -688,7 +721,8 @@ struct DirectoryRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: ["ruri directory remove Official --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentDirectory: String?
+    var operands: [String] { [argumentDirectory].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -705,7 +739,9 @@ struct DirectoryRenameCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri directory rename Official Vanilla"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRenameArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentDirectory: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentName: String?
+    var operands: [String] { [argumentDirectory, argumentName].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -720,7 +756,9 @@ struct DirectoryRelocateCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri directory relocate Games /Volumes/External/Ruri"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.directoryPathArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentDirectory: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentPath: String?
+    var operands: [String] { [argumentDirectory, argumentPath].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -735,7 +773,9 @@ struct DirectoryRestoreCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.directoryPathArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentDirectory: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentPath: String?
+    var operands: [String] { [argumentDirectory, argumentPath].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -749,7 +789,8 @@ struct DirectoryRunGetCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri directory run get Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -765,8 +806,10 @@ struct DirectoryRunSetCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri directory run set Survival shared", "ruri directory run set Survival custom --path ~/Games/Survival --copy"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRunDirectoryModeArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("path"), help: ArgumentHelp(Messages.CLIInterface.customRunDirectoryPathHelp.localized)) var optionPath: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentMode: String?
+    var operands: [String] { [argumentInstance, argumentMode].compactMap { $0 } }
+    @Option(name: .customLong("path"), help: ArgumentHelp(Messages.CLIInterface.customRunDirectoryPathHelp.localized), completion: Self.completion(option: "path")) var optionPath: String?
     @Flag(name: .customLong("copy"), help: ArgumentHelp(Messages.CLIInterface.copyGameFilesHelp.localized)) var optionCopy = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -784,7 +827,9 @@ struct DirectoryRunRelocateCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri directory run relocate Survival /Volumes/External/Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRunDirectoryPathArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentPath: String?
+    var operands: [String] { [argumentInstance, argumentPath].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -800,9 +845,9 @@ struct JavaListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    var operands: [String] { [] }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -822,11 +867,11 @@ struct JavaAvailableCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri java available --major 21"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("major"), help: ArgumentHelp(Messages.CLIInterface.javaMajorFilterHelp.localized)) var optionMajor: Int?
-    @Option(name: .customLong("architecture"), help: ArgumentHelp(Messages.CLIInterface.javaArchitectureFilterHelp.localized)) var optionArchitecture: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    var operands: [String] { [] }
+    @Option(name: .customLong("major"), help: ArgumentHelp(Messages.CLIInterface.javaMajorFilterHelp.localized), completion: Self.completion(option: "major")) var optionMajor: Int?
+    @Option(name: .customLong("architecture"), help: ArgumentHelp(Messages.CLIInterface.javaArchitectureFilterHelp.localized), completion: Self.completion(option: "architecture")) var optionArchitecture: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "major": optionMajor.map(Value.integer) ?? .null,
@@ -844,7 +889,8 @@ struct JavaAddCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri java add /Library/Java/JavaVirtualMachines/zulu-21.jdk"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "path") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentPath: String?
+    var operands: [String] { [argumentPath].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -858,7 +904,8 @@ struct JavaForgetCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "path") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentPath: String?
+    var operands: [String] { [argumentPath].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -872,7 +919,8 @@ struct JavaDefaultCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri java default automatic"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "path-or-automatic") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentPathOrAutomatic: String?
+    var operands: [String] { [argumentPathOrAutomatic].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -889,10 +937,11 @@ struct JavaReferencesCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentId: String?
+    var operands: [String] { [argumentId].compactMap { $0 } }
     @Flag(name: .customLong("partial"), help: ArgumentHelp(Messages.CLIInterface.javaCheckIncompleteInstallationsHelp.localized)) var optionPartial = false
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "partial": .bool(optionPartial),
@@ -909,7 +958,8 @@ struct JavaInstallCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentId: String?
+    var operands: [String] { [argumentId].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -923,7 +973,8 @@ struct JavaRepairCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentId: String?
+    var operands: [String] { [argumentId].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -940,7 +991,8 @@ struct JavaRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentId: String?
+    var operands: [String] { [argumentId].compactMap { $0 } }
     @Flag(name: .customLong("reset-references"), help: ArgumentHelp(Messages.CLIInterface.javaResetReferencesHelp.localized)) var optionResetReferences = false
     @Flag(name: .customLong("partial"), help: ArgumentHelp(Messages.CLIInterface.javaCleanIncompleteInstallationHelp.localized)) var optionPartial = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
@@ -962,9 +1014,9 @@ struct AccountListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    var operands: [String] { [] }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -980,7 +1032,7 @@ struct AccountSelectedCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -993,7 +1045,8 @@ struct AccountShowCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentAccount: String?
+    var operands: [String] { [argumentAccount].compactMap { $0 } }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -1007,7 +1060,8 @@ struct AccountAddOfflineCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri account add-offline Steve"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "username") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentUsername: String?
+    var operands: [String] { [argumentUsername].compactMap { $0 } }
     @Flag(name: .customLong("no-select"), help: ArgumentHelp(Messages.CLIInterface.keepCurrentAccountHelp.localized)) var optionNoSelect = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -1023,7 +1077,8 @@ struct AccountSelectCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri account select Steve"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentAccount: String?
+    var operands: [String] { [argumentAccount].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1037,7 +1092,8 @@ struct AccountRefreshCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentAccount: String?
+    var operands: [String] { [argumentAccount].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1052,7 +1108,8 @@ struct AccountRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentAccount: String?
+    var operands: [String] { [argumentAccount].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -1069,7 +1126,8 @@ struct AccountLogoutCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "id") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentAccount: String?
+    var operands: [String] { [argumentAccount].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -1090,11 +1148,11 @@ struct AccountLoginStartCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: true, examples: ["ruri account login start --provider microsoft", "ruri account login start --provider external --server https://example.com/api/yggdrasil --username alex@example.com --password-stdin < password.txt"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.loginProviderHelp.localized)) var optionProvider: String?
-    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.reauthenticateAccountHelp.localized)) var optionAccount: String?
-    @Option(name: .customLong("server"), help: ArgumentHelp(Messages.CLIInterface.externalLoginServerHelp.localized)) var optionServer: String?
-    @Option(name: .customLong("username"), help: ArgumentHelp(Messages.CLIInterface.externalLoginIdentityHelp.localized)) var optionUsername: String?
+    var operands: [String] { [] }
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.loginProviderHelp.localized), completion: Self.completion(option: "provider")) var optionProvider: String?
+    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.reauthenticateAccountHelp.localized), completion: Self.completion(option: "account")) var optionAccount: String?
+    @Option(name: .customLong("server"), help: ArgumentHelp(Messages.CLIInterface.externalLoginServerHelp.localized), completion: Self.completion(option: "server")) var optionServer: String?
+    @Option(name: .customLong("username"), help: ArgumentHelp(Messages.CLIInterface.externalLoginIdentityHelp.localized), completion: Self.completion(option: "username")) var optionUsername: String?
     @Flag(name: .customLong("password-stdin"), help: ArgumentHelp(Messages.CLIInterface.passwordStdinHelp.localized)) var optionPasswordStdin = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -1115,8 +1173,9 @@ struct AccountLoginCompleteCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: true, examples: ["ruri account login complete <flow>"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "flow") var operands: [String] = []
-    @Option(name: .customLong("profile"), help: ArgumentHelp(Messages.CLIInterface.externalLoginProfileIdHelp.localized)) var optionProfile: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentFlow: String?
+    var operands: [String] { [argumentFlow].compactMap { $0 } }
+    @Option(name: .customLong("profile"), help: ArgumentHelp(Messages.CLIInterface.externalLoginProfileIdHelp.localized), completion: Self.completion(option: "profile")) var optionProfile: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "profile": .text(optionProfile),
@@ -1131,7 +1190,8 @@ struct AccountLoginCancelCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "flow") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentFlow: String?
+    var operands: [String] { [argumentFlow].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1145,7 +1205,7 @@ struct AccountServiceKeyStatusCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -1159,7 +1219,7 @@ struct AccountServiceKeySetCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri account service-key set --stdin < key.txt"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     @Flag(name: .customLong("stdin"), help: ArgumentHelp(Messages.CLIInterface.apiKeyStdinHelp.localized)) var optionStdin = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -1176,7 +1236,7 @@ struct AccountServiceKeyRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -1194,10 +1254,11 @@ struct LaunchPreflightCommand: ExecutableCommand {
         .init(name: "world", type: "string", required: false, help: Messages.CLIInterface.quickPlayWorldHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri launch preflight Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("server"), help: ArgumentHelp(Messages.CLIInterface.launchServerHelp.localized)) var optionServer: String?
-    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.launchAccountHelp.localized)) var optionAccount: String?
-    @Option(name: .customLong("world"), help: ArgumentHelp(Messages.CLIInterface.quickPlayWorldHelp.localized)) var optionWorld: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("server"), help: ArgumentHelp(Messages.CLIInterface.launchServerHelp.localized), completion: Self.completion(option: "server")) var optionServer: String?
+    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.launchAccountHelp.localized), completion: Self.completion(option: "account")) var optionAccount: String?
+    @Option(name: .customLong("world"), help: ArgumentHelp(Messages.CLIInterface.quickPlayWorldHelp.localized), completion: Self.completion(option: "world")) var optionWorld: String?
     var parameters: [String: Value] { [
         "server": .text(optionServer),
         "account": .text(optionAccount),
@@ -1215,10 +1276,11 @@ struct LaunchStartCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri launch start Survival", "ruri launch start Survival --account Steve --world \"New World\"", "ruri launch start Survival --server play.example.com"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("server"), help: ArgumentHelp(Messages.CLIInterface.launchServerHelp.localized)) var optionServer: String?
-    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.launchAccountHelp.localized)) var optionAccount: String?
-    @Option(name: .customLong("world"), help: ArgumentHelp(Messages.CLIInterface.quickPlayWorldHelp.localized)) var optionWorld: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("server"), help: ArgumentHelp(Messages.CLIInterface.launchServerHelp.localized), completion: Self.completion(option: "server")) var optionServer: String?
+    @Option(name: .customLong("account"), help: ArgumentHelp(Messages.CLIInterface.launchAccountHelp.localized), completion: Self.completion(option: "account")) var optionAccount: String?
+    @Option(name: .customLong("world"), help: ArgumentHelp(Messages.CLIInterface.quickPlayWorldHelp.localized), completion: Self.completion(option: "world")) var optionWorld: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "server": .text(optionServer),
@@ -1240,12 +1302,12 @@ struct SessionListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri session list --instance Survival", "ruri session list --problems"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.sessionInstanceIdFilterHelp.localized)) var optionInstance: String?
-    @Option(name: .customLong("search"), help: ArgumentHelp(Messages.CLIInterface.sessionInstanceNameFilterHelp.localized)) var optionSearch: String?
+    var operands: [String] { [] }
+    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.sessionInstanceIdFilterHelp.localized), completion: Self.completion(option: "instance")) var optionInstance: String?
+    @Option(name: .customLong("search"), help: ArgumentHelp(Messages.CLIInterface.sessionInstanceNameFilterHelp.localized), completion: Self.completion(option: "search")) var optionSearch: String?
     @Flag(name: .customLong("problems"), help: ArgumentHelp(Messages.CLIInterface.problemSessionsOnlyHelp.localized)) var optionProblems = false
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "instance": .text(optionInstance),
@@ -1265,7 +1327,9 @@ struct SessionShowCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri session show Survival 3f2a1b4c"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentSession: String?
+    var operands: [String] { [argumentInstance, argumentSession].compactMap { $0 } }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -1279,7 +1343,9 @@ struct SessionWaitCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri session wait Survival 3f2a1b4c"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentSession: String?
+    var operands: [String] { [argumentInstance, argumentSession].compactMap { $0 } }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -1293,7 +1359,9 @@ struct SessionQuitCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri session quit Survival 3f2a1b4c"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentSession: String?
+    var operands: [String] { [argumentInstance, argumentSession].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1309,7 +1377,9 @@ struct SessionStopCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: ["ruri session stop Survival 3f2a1b4c --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentSession: String?
+    var operands: [String] { [argumentInstance, argumentSession].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -1328,10 +1398,12 @@ struct SessionLogsCommand: ExecutableCommand {
         .init(name: "lines", type: "int", required: false, help: Messages.CLIInterface.sessionLogLineLimitHelp.localized, values: [], defaultValue: "200", minimum: 1, maximum: 10000)
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri session logs Survival 3f2a1b4c --follow", "ruri session logs Survival 3f2a1b4c --source latest --lines 100", "ruri session logs <instance> <session> --follow --output ndjson"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentSession: String?
+    var operands: [String] { [argumentInstance, argumentSession].compactMap { $0 } }
     @Flag(name: .customLong("follow"), help: ArgumentHelp(Messages.CLIInterface.sessionLogFollowHelp.localized)) var optionFollow = false
-    @Option(name: .customLong("source"), help: ArgumentHelp(Messages.CLIInterface.sessionLogSourceHelp.localized)) var optionSource: String?
-    @Option(name: .customLong("lines"), help: ArgumentHelp(Messages.CLIInterface.sessionLogLineLimitHelp.localized)) var optionLines: Int?
+    @Option(name: .customLong("source"), help: ArgumentHelp(Messages.CLIInterface.sessionLogSourceHelp.localized), completion: Self.completion(option: "source")) var optionSource: String?
+    @Option(name: .customLong("lines"), help: ArgumentHelp(Messages.CLIInterface.sessionLogLineLimitHelp.localized), completion: Self.completion(option: "lines")) var optionLines: Int?
     var parameters: [String: Value] { [
         "follow": .bool(optionFollow),
         "source": .text(optionSource),
@@ -1347,7 +1419,9 @@ struct SessionDiagnoseCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri session diagnose Survival 3f2a1b4c"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentSession: String?
+    var operands: [String] { [argumentInstance, argumentSession].compactMap { $0 } }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -1362,7 +1436,10 @@ struct SessionExportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri session export Survival 3f2a1b4c ~/Desktop/Report.zip"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.sessionExportArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentSession: String?
+    @Argument(help: Self.help(operand: 2), completion: Self.completion(operand: 2)) var argumentFile: String?
+    var operands: [String] { [argumentInstance, argumentSession, argumentFile].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1384,15 +1461,16 @@ struct CatalogSearchCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri catalog search sodium --loader fabric --game 1.21.1", "ruri catalog search --type modpack --sort downloads"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "query?") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
-    @Option(name: .customLong("type"), help: ArgumentHelp(Messages.CLIInterface.catalogProjectTypeHelp.localized)) var optionType: String?
-    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.minecraftVersionFilterHelp.localized)) var optionGame: String?
-    @Option(name: .customLong("loader"), help: ArgumentHelp(Messages.CLIInterface.loaderFilterHelp.localized)) var optionLoader: String?
-    @Option(name: .customLong("category"), help: ArgumentHelp(Messages.CLIInterface.catalogCategoryHelp.localized)) var optionCategory: String?
-    @Option(name: .customLong("sort"), help: ArgumentHelp(Messages.CLIInterface.catalogSortHelp.localized)) var optionSort: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentQuery: String?
+    var operands: [String] { [argumentQuery].compactMap { $0 } }
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized), completion: Self.completion(option: "provider")) var optionProvider: String?
+    @Option(name: .customLong("type"), help: ArgumentHelp(Messages.CLIInterface.catalogProjectTypeHelp.localized), completion: Self.completion(option: "type")) var optionType: String?
+    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.minecraftVersionFilterHelp.localized), completion: Self.completion(option: "game")) var optionGame: String?
+    @Option(name: .customLong("loader"), help: ArgumentHelp(Messages.CLIInterface.loaderFilterHelp.localized), completion: Self.completion(option: "loader")) var optionLoader: String?
+    @Option(name: .customLong("category"), help: ArgumentHelp(Messages.CLIInterface.catalogCategoryHelp.localized), completion: Self.completion(option: "category")) var optionCategory: String?
+    @Option(name: .customLong("sort"), help: ArgumentHelp(Messages.CLIInterface.catalogSortHelp.localized), completion: Self.completion(option: "sort")) var optionSort: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
@@ -1414,8 +1492,9 @@ struct CatalogShowCommand: ExecutableCommand {
         .init(name: "provider", type: "string", required: false, help: Messages.CLIInterface.contentProviderHelp.localized, values: ["modrinth","curseforge"], defaultValue: "modrinth")
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri catalog show sodium"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "project") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentProject: String?
+    var operands: [String] { [argumentProject].compactMap { $0 } }
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized), completion: Self.completion(option: "provider")) var optionProvider: String?
     var parameters: [String: Value] { [
         "provider": .text(optionProvider)
     ].filter { $0.value != .null } }
@@ -1433,12 +1512,13 @@ struct CatalogVersionsCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri catalog versions sodium --game 1.21.1 --loader fabric"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "project") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
-    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.minecraftVersionFilterHelp.localized)) var optionGame: String?
-    @Option(name: .customLong("loader"), help: ArgumentHelp(Messages.CLIInterface.loaderFilterHelp.localized)) var optionLoader: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentProject: String?
+    var operands: [String] { [argumentProject].compactMap { $0 } }
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized), completion: Self.completion(option: "provider")) var optionProvider: String?
+    @Option(name: .customLong("game"), help: ArgumentHelp(Messages.CLIInterface.minecraftVersionFilterHelp.localized), completion: Self.completion(option: "game")) var optionGame: String?
+    @Option(name: .customLong("loader"), help: ArgumentHelp(Messages.CLIInterface.loaderFilterHelp.localized), completion: Self.completion(option: "loader")) var optionLoader: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
@@ -1460,10 +1540,10 @@ struct CatalogCategoriesCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri catalog categories --provider curseforge"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    var operands: [String] { [] }
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized), completion: Self.completion(option: "provider")) var optionProvider: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
@@ -1483,10 +1563,11 @@ struct ContentListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri content list Survival", "ruri content list Survival --kind shader"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized), completion: Self.completion(option: "kind")) var optionKind: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
@@ -1505,8 +1586,10 @@ struct ContentImportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri content import Survival ~/Downloads/example.jar"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentImportArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentFile: String?
+    var operands: [String] { [argumentInstance, argumentFile].compactMap { $0 } }
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized), completion: Self.completion(option: "kind")) var optionKind: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
@@ -1525,10 +1608,12 @@ struct ContentInstallCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri content install Survival sodium --dry-run", "ruri content install Survival sodium"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentProjectArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
-    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.contentVersionIdHelp.localized)) var optionVersion: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentProject: String?
+    var operands: [String] { [argumentInstance, argumentProject].compactMap { $0 } }
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized), completion: Self.completion(option: "provider")) var optionProvider: String?
+    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.contentVersionIdHelp.localized), completion: Self.completion(option: "version")) var optionVersion: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized), completion: Self.completion(option: "manual")) var optionManual: [String] = []
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "provider": .text(optionProvider),
@@ -1548,9 +1633,10 @@ struct ContentEnableCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri content enable Survival --file example.jar"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized), completion: Self.completion(option: "kind")) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized), completion: Self.completion(option: "file")) var optionFile: [String] = []
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allContentFilesHelp.localized)) var optionAll = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -1571,9 +1657,10 @@ struct ContentDisableCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri content disable Survival --file example.jar"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized), completion: Self.completion(option: "kind")) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized), completion: Self.completion(option: "file")) var optionFile: [String] = []
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allContentFilesHelp.localized)) var optionAll = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -1595,9 +1682,10 @@ struct ContentRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: ["ruri content remove Survival --file example.jar --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized), completion: Self.completion(option: "kind")) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized), completion: Self.completion(option: "file")) var optionFile: [String] = []
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allContentFilesHelp.localized)) var optionAll = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
@@ -1618,9 +1706,10 @@ struct ContentUpdateCheckCommand: ExecutableCommand {
         .init(name: "file", type: "strings", required: false, help: Messages.CLIInterface.contentFileSelectionHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri content update-check Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized), completion: Self.completion(option: "kind")) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized), completion: Self.completion(option: "file")) var optionFile: [String] = []
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
         "file": .array(optionFile.map(Value.string))
@@ -1638,11 +1727,12 @@ struct ContentUpdateCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri content update Survival --all --dry-run"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized)) var optionKind: String?
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized)) var optionFile: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("kind"), help: ArgumentHelp(Messages.CLIInterface.contentKindHelp.localized), completion: Self.completion(option: "kind")) var optionKind: String?
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.contentFileSelectionHelp.localized), completion: Self.completion(option: "file")) var optionFile: [String] = []
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.updateAllContentFilesHelp.localized)) var optionAll = false
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized), completion: Self.completion(option: "manual")) var optionManual: [String] = []
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "kind": .text(optionKind),
@@ -1662,9 +1752,10 @@ struct WorldListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri world list Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -1681,7 +1772,9 @@ struct WorldShowCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri world show Survival \"New World\""]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldFolderArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentFolder: String?
+    var operands: [String] { [argumentInstance, argumentFolder].compactMap { $0 } }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -1695,7 +1788,9 @@ struct WorldImportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri world import Survival ~/Downloads/World.zip"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentImportArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentFile: String?
+    var operands: [String] { [argumentInstance, argumentFile].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1711,7 +1806,10 @@ struct WorldExportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri world export Survival \"New World\" ~/Desktop/World.zip"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldExportArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentFolder: String?
+    @Argument(help: Self.help(operand: 2), completion: Self.completion(operand: 2)) var argumentFile: String?
+    var operands: [String] { [argumentInstance, argumentFolder, argumentFile].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1727,7 +1825,9 @@ struct WorldRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: ["ruri world remove Survival \"New World\" --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldFolderArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentFolder: String?
+    var operands: [String] { [argumentInstance, argumentFolder].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -1745,8 +1845,10 @@ struct WorldBackupCreateCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri world backup create Survival \"New World\" --reason \"Before update\""]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldFolderArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("reason"), help: ArgumentHelp(Messages.CLIInterface.worldBackupReasonHelp.localized)) var optionReason: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentFolder: String?
+    var operands: [String] { [argumentInstance, argumentFolder].compactMap { $0 } }
+    @Option(name: .customLong("reason"), help: ArgumentHelp(Messages.CLIInterface.worldBackupReasonHelp.localized), completion: Self.completion(option: "reason")) var optionReason: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "reason": .text(optionReason),
@@ -1763,9 +1865,10 @@ struct WorldBackupListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri world backup list Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -1784,7 +1887,9 @@ struct WorldBackupRestoreCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: ["ruri world backup restore Survival <backup> --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldBackupArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentBackup: String?
+    var operands: [String] { [argumentInstance, argumentBackup].compactMap { $0 } }
     @Flag(name: .customLong("replace"), help: ArgumentHelp(Messages.CLIInterface.worldBackupReplaceHelp.localized)) var optionReplace = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
@@ -1804,7 +1909,9 @@ struct WorldBackupRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.worldBackupArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentBackup: String?
+    var operands: [String] { [argumentInstance, argumentBackup].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -1823,9 +1930,11 @@ struct DatapackListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri datapack list Survival \"New World\""]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackWorldArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentWorld: String?
+    var operands: [String] { [argumentInstance, argumentWorld].compactMap { $0 } }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -1842,7 +1951,9 @@ struct DatapackOrderGetCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackWorldArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentWorld: String?
+    var operands: [String] { [argumentInstance, argumentWorld].compactMap { $0 } }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -1857,8 +1968,10 @@ struct DatapackOrderSetCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackWorldArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("key"), help: ArgumentHelp(Messages.CLIInterface.dataPackPriorityListHelp.localized)) var optionKey: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentWorld: String?
+    var operands: [String] { [argumentInstance, argumentWorld].compactMap { $0 } }
+    @Option(name: .customLong("key"), help: ArgumentHelp(Messages.CLIInterface.dataPackPriorityListHelp.localized), completion: Self.completion(option: "key")) var optionKey: [String] = []
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "key": .array(optionKey.map(Value.string)),
@@ -1875,7 +1988,10 @@ struct DatapackImportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri datapack import Survival \"New World\" ~/Downloads/example.zip"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackImportArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentWorld: String?
+    @Argument(help: Self.help(operand: 2), completion: Self.completion(operand: 2)) var argumentFile: String?
+    var operands: [String] { [argumentInstance, argumentWorld, argumentFile].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1891,7 +2007,10 @@ struct DatapackEnableCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentWorld: String?
+    @Argument(help: Self.help(operand: 2), completion: Self.completion(operand: 2)) var argumentName: String?
+    var operands: [String] { [argumentInstance, argumentWorld, argumentName].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1907,7 +2026,10 @@ struct DatapackDisableCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentWorld: String?
+    @Argument(help: Self.help(operand: 2), completion: Self.completion(operand: 2)) var argumentName: String?
+    var operands: [String] { [argumentInstance, argumentWorld, argumentName].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -1924,7 +2046,10 @@ struct DatapackRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackTargetArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentWorld: String?
+    @Argument(help: Self.help(operand: 2), completion: Self.completion(operand: 2)) var argumentName: String?
+    var operands: [String] { [argumentInstance, argumentWorld, argumentName].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -1943,9 +2068,11 @@ struct DatapackSearchCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri datapack search Survival terralith"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackSearchArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentQuery: String?
+    var operands: [String] { [argumentInstance, argumentQuery].compactMap { $0 } }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -1964,9 +2091,11 @@ struct DatapackVersionsCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentProjectArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentProject: String?
+    var operands: [String] { [argumentInstance, argumentProject].compactMap { $0 } }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -1985,8 +2114,11 @@ struct DatapackInstallCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri datapack install Survival \"New World\" terralith"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.dataPackProjectArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.dataPackVersionIdHelp.localized)) var optionVersion: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentWorld: String?
+    @Argument(help: Self.help(operand: 2), completion: Self.completion(operand: 2)) var argumentProject: String?
+    var operands: [String] { [argumentInstance, argumentWorld, argumentProject].compactMap { $0 } }
+    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.dataPackVersionIdHelp.localized), completion: Self.completion(option: "version")) var optionVersion: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "version": .text(optionVersion),
@@ -2005,12 +2137,13 @@ struct SchematicListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri schematic list Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.schematicRelativePathHelp.localized)) var optionDirectory: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.schematicRelativePathHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
-    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized)) var optionLocation: String?
+    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized), completion: Self.completion(option: "location")) var optionLocation: String?
     var parameters: [String: Value] { [
         "location": .text(optionLocation),
         "directory": .text(optionDirectory),
@@ -2028,8 +2161,10 @@ struct SchematicInfoCommand: ExecutableCommand {
         .init(name: "location", type: "string", required: false, help: Messages.CLIInterface.schematicLocationHelp.localized, values: ["schematics","worldedit"], defaultValue: "schematics")
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri schematic info Survival house.litematic"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRunDirectoryPathArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized)) var optionLocation: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentPath: String?
+    var operands: [String] { [argumentInstance, argumentPath].compactMap { $0 } }
+    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized), completion: Self.completion(option: "location")) var optionLocation: String?
     var parameters: [String: Value] { [
         "location": .text(optionLocation)
     ].filter { $0.value != .null } }
@@ -2045,10 +2180,12 @@ struct SchematicImportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri schematic import Survival ~/Downloads/house.litematic"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.contentImportArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.schematicRelativePathHelp.localized)) var optionDirectory: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentFile: String?
+    var operands: [String] { [argumentInstance, argumentFile].compactMap { $0 } }
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.schematicRelativePathHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
-    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized)) var optionLocation: String?
+    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized), completion: Self.completion(option: "location")) var optionLocation: String?
     var parameters: [String: Value] { [
         "location": .text(optionLocation),
         "directory": .text(optionDirectory),
@@ -2066,10 +2203,12 @@ struct SchematicMkdirCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri schematic mkdir Survival Builds"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.schematicFolderArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.schematicParentDirectoryHelp.localized)) var optionDirectory: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentName: String?
+    var operands: [String] { [argumentInstance, argumentName].compactMap { $0 } }
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.schematicParentDirectoryHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
-    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized)) var optionLocation: String?
+    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized), completion: Self.completion(option: "location")) var optionLocation: String?
     var parameters: [String: Value] { [
         "location": .text(optionLocation),
         "directory": .text(optionDirectory),
@@ -2087,9 +2226,12 @@ struct SchematicExportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.schematicExportArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentPath: String?
+    @Argument(help: Self.help(operand: 2), completion: Self.completion(operand: 2)) var argumentFile: String?
+    var operands: [String] { [argumentInstance, argumentPath, argumentFile].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
-    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized)) var optionLocation: String?
+    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized), completion: Self.completion(option: "location")) var optionLocation: String?
     var parameters: [String: Value] { [
         "location": .text(optionLocation),
         "dry-run": .bool(optionDryRun)
@@ -2106,10 +2248,12 @@ struct SchematicRemoveCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.instanceRunDirectoryPathArgumentsHelp.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentPath: String?
+    var operands: [String] { [argumentInstance, argumentPath].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
-    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized)) var optionLocation: String?
+    @Option(name: .customLong("location"), help: ArgumentHelp(Messages.CLIInterface.schematicLocationHelp.localized), completion: Self.completion(option: "location")) var optionLocation: String?
     var parameters: [String: Value] { [
         "location": .text(optionLocation),
         "dry-run": .bool(optionDryRun),
@@ -2128,10 +2272,11 @@ struct InstanceImportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri instance import ~/Downloads/Pack.mrpack --name Pack --directory default"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "file") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized)) var optionName: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceImportDirectoryHelp.localized)) var optionDirectory: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentFile: String?
+    var operands: [String] { [argumentFile].compactMap { $0 } }
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized), completion: Self.completion(option: "name")) var optionName: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceImportDirectoryHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized), completion: Self.completion(option: "manual")) var optionManual: [String] = []
     @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.importModpackJvmArgumentsHelp.localized)) var optionImportJvmArguments = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -2154,10 +2299,11 @@ struct PackImportCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri pack import ~/Downloads/Pack.mrpack --name Pack --directory default"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "file") var operands: [String] = []
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized)) var optionName: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceImportDirectoryHelp.localized)) var optionDirectory: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentFile: String?
+    var operands: [String] { [argumentFile].compactMap { $0 } }
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized), completion: Self.completion(option: "name")) var optionName: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceImportDirectoryHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized), completion: Self.completion(option: "manual")) var optionManual: [String] = []
     @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.importModpackJvmArgumentsHelp.localized)) var optionImportJvmArguments = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -2183,13 +2329,14 @@ struct PackInstallCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri pack install fabulously-optimized --name \"Fabulously Optimized\" --directory default"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "project") var operands: [String] = []
-    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized)) var optionProvider: String?
-    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.contentVersionIdHelp.localized)) var optionVersion: String?
-    @Option(name: .customLong("archive"), help: ArgumentHelp(Messages.CLIInterface.manualModpackArchiveHelp.localized)) var optionArchive: String?
-    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized)) var optionName: String?
-    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceImportDirectoryHelp.localized)) var optionDirectory: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentProject: String?
+    var operands: [String] { [argumentProject].compactMap { $0 } }
+    @Option(name: .customLong("provider"), help: ArgumentHelp(Messages.CLIInterface.contentProviderHelp.localized), completion: Self.completion(option: "provider")) var optionProvider: String?
+    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.contentVersionIdHelp.localized), completion: Self.completion(option: "version")) var optionVersion: String?
+    @Option(name: .customLong("archive"), help: ArgumentHelp(Messages.CLIInterface.manualModpackArchiveHelp.localized), completion: Self.completion(option: "archive")) var optionArchive: String?
+    @Option(name: .customLong("name"), help: ArgumentHelp(Messages.CLIInterface.newInstanceNameHelp.localized), completion: Self.completion(option: "name")) var optionName: String?
+    @Option(name: .customLong("directory"), help: ArgumentHelp(Messages.CLIInterface.instanceImportDirectoryHelp.localized), completion: Self.completion(option: "directory")) var optionDirectory: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized), completion: Self.completion(option: "manual")) var optionManual: [String] = []
     @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.importModpackJvmArgumentsHelp.localized)) var optionImportJvmArguments = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
@@ -2211,7 +2358,8 @@ struct PackShowCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri pack show \"Fabulously Optimized\""]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -2226,9 +2374,10 @@ struct PackUpdateCheckCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri pack update-check \"Fabulously Optimized\""]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "limit": optionLimit.map(Value.integer) ?? .null,
@@ -2251,11 +2400,12 @@ struct PackUpdateCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri pack update \"Fabulously Optimized\" --version <release> --dry-run"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
-    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.modpackUpdateFileHelp.localized)) var optionFile: String?
-    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.modpackUpdateVersionHelp.localized)) var optionVersion: String?
-    @Option(name: .customLong("archive"), help: ArgumentHelp(Messages.CLIInterface.manualModpackUpdateArchiveHelp.localized)) var optionArchive: String?
-    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized)) var optionManual: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
+    @Option(name: .customLong("file"), help: ArgumentHelp(Messages.CLIInterface.modpackUpdateFileHelp.localized), completion: Self.completion(option: "file")) var optionFile: String?
+    @Option(name: .customLong("version"), help: ArgumentHelp(Messages.CLIInterface.modpackUpdateVersionHelp.localized), completion: Self.completion(option: "version")) var optionVersion: String?
+    @Option(name: .customLong("archive"), help: ArgumentHelp(Messages.CLIInterface.manualModpackUpdateArchiveHelp.localized), completion: Self.completion(option: "archive")) var optionArchive: String?
+    @Option(name: .customLong("manual"), help: ArgumentHelp(Messages.CLIInterface.manualCurseForgeFileHelp.localized), completion: Self.completion(option: "manual")) var optionManual: [String] = []
     @Flag(name: .customLong("replace"), help: ArgumentHelp(Messages.CLIInterface.replaceLocalModificationsHelp.localized)) var optionReplace = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmLocalModificationsReplacementHelp.localized)) var optionYes = false
     @Flag(name: .customLong("import-jvm-arguments"), help: ArgumentHelp(Messages.CLIInterface.importModpackJvmArgumentsHelp.localized)) var optionImportJvmArguments = false
@@ -2280,7 +2430,8 @@ struct PackRollbackCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: ["ruri pack rollback \"Fabulously Optimized\" --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "instance") var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentInstance: String?
+    var operands: [String] { [argumentInstance].compactMap { $0 } }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     @Flag(name: .customLong("yes"), help: ArgumentHelp(Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized)) var optionYes = false
     var parameters: [String: Value] { [
@@ -2299,9 +2450,11 @@ struct DownloadFetchCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri download fetch https://example.com/example.jar example.jar --sha1 <sha1> --size 1024"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.downloadTargetArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("sha1"), help: ArgumentHelp(Messages.CLIInterface.downloadSha1Help.localized)) var optionSha1: String?
-    @Option(name: .customLong("size"), help: ArgumentHelp(Messages.CLIInterface.downloadSizeHelp.localized)) var optionSize: Int?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentUrl: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentFile: String?
+    var operands: [String] { [argumentUrl, argumentFile].compactMap { $0 } }
+    @Option(name: .customLong("sha1"), help: ArgumentHelp(Messages.CLIInterface.downloadSha1Help.localized), completion: Self.completion(option: "sha1")) var optionSha1: String?
+    @Option(name: .customLong("size"), help: ArgumentHelp(Messages.CLIInterface.downloadSizeHelp.localized), completion: Self.completion(option: "size")) var optionSize: Int?
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "sha1": .text(optionSha1),
@@ -2320,10 +2473,10 @@ struct RecoveryListCommand: ExecutableCommand {
         .init(name: "all", type: "bool", required: false, help: Messages.CLIInterface.allResultsHelp.localized, values: [])
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri recovery list"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.recoveryInstanceFilterHelp.localized)) var optionInstance: String?
-    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized)) var optionLimit: Int?
-    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized)) var optionOffset: Int?
+    var operands: [String] { [] }
+    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.recoveryInstanceFilterHelp.localized), completion: Self.completion(option: "instance")) var optionInstance: String?
+    @Option(name: .customLong("limit"), help: ArgumentHelp(Messages.CLIInterface.resultLimitHelp.localized), completion: Self.completion(option: "limit")) var optionLimit: Int?
+    @Option(name: .customLong("offset"), help: ArgumentHelp(Messages.CLIInterface.resultOffsetHelp.localized), completion: Self.completion(option: "offset")) var optionOffset: Int?
     @Flag(name: .customLong("all"), help: ArgumentHelp(Messages.CLIInterface.allResultsHelp.localized)) var optionAll = false
     var parameters: [String: Value] { [
         "instance": .text(optionInstance),
@@ -2346,9 +2499,11 @@ struct RecoveryApplyCommand: ExecutableCommand {
         .init(name: "yes", type: "bool", required: false, help: Messages.CLIInterface.confirmDeleteOrReplaceHelp.localized, values: [])
     ], mutation: true, confirmation: true, userParticipation: false, examples: ["ruri recovery apply content Survival --yes"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.recoveryTargetArgumentsHelp.localized)) var operands: [String] = []
-    @Option(name: .customLong("transaction"), help: ArgumentHelp(Messages.CLIInterface.recoveryTransactionHelp.localized)) var optionTransaction: String?
-    @Option(name: .customLong("mode"), help: ArgumentHelp(Messages.CLIInterface.libraryImportRecoveryModeHelp.localized)) var optionMode: String?
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentKind: String?
+    @Argument(help: Self.help(operand: 1), completion: Self.completion(operand: 1)) var argumentTarget: String?
+    var operands: [String] { [argumentKind, argumentTarget].compactMap { $0 } }
+    @Option(name: .customLong("transaction"), help: ArgumentHelp(Messages.CLIInterface.recoveryTransactionHelp.localized), completion: Self.completion(option: "transaction")) var optionTransaction: String?
+    @Option(name: .customLong("mode"), help: ArgumentHelp(Messages.CLIInterface.libraryImportRecoveryModeHelp.localized), completion: Self.completion(option: "mode")) var optionMode: String?
     @Flag(name: .customLong("keep-source"), help: ArgumentHelp(Messages.CLIInterface.keepSourceAfterMoveHelp.localized)) var optionKeepSource = false
     @Flag(name: .customLong("confirm-game-ended"), help: ArgumentHelp(Messages.CLIInterface.confirmUnmonitoredGameExitHelp.localized)) var optionConfirmGameEnded = false
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
@@ -2370,8 +2525,8 @@ struct DoctorCommand: ExecutableCommand {
         .init(name: "instance", type: "string", required: false, help: Messages.CLIInterface.doctorInstanceHelp.localized, values: [], role: .instance)
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri doctor", "ruri doctor --instance Survival"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
-    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.doctorInstanceHelp.localized)) var optionInstance: String?
+    var operands: [String] { [] }
+    @Option(name: .customLong("instance"), help: ArgumentHelp(Messages.CLIInterface.doctorInstanceHelp.localized), completion: Self.completion(option: "instance")) var optionInstance: String?
     var parameters: [String: Value] { [
         "instance": .text(optionInstance)
     ].filter { $0.value != .null } }
@@ -2384,7 +2539,7 @@ struct CacheStatusCommand: ExecutableCommand {
 
     ], mutation: false, confirmation: false, userParticipation: false, examples: []) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     var parameters: [String: Value] { [
         :
     ].filter { $0.value != .null } }
@@ -2397,7 +2552,7 @@ struct CacheCleanCommand: ExecutableCommand {
         .init(name: "dry-run", type: "bool", required: false, help: Messages.CLIInterface.dryRunHelp.localized, values: [])
     ], mutation: true, confirmation: false, userParticipation: false, examples: ["ruri cache clean --dry-run"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: "") var operands: [String] = []
+    var operands: [String] { [] }
     @Flag(name: .customLong("dry-run"), help: ArgumentHelp(Messages.CLIInterface.dryRunHelp.localized)) var optionDryRun = false
     var parameters: [String: Value] { [
         "dry-run": .bool(optionDryRun)
@@ -2410,111 +2565,164 @@ struct CompletionsCommand: ExecutableCommand {
     ], options: [
     ], mutation: false, confirmation: false, userParticipation: false, examples: ["ruri completions zsh > ~/.zfunc/_ruri", "ruri completions bash > ~/.local/share/bash-completion/completions/ruri", "ruri completions fish > ~/.config/fish/completions/ruri.fish"]) }
     @OptionGroup var common: CommonOptions
-    @Argument(help: ArgumentHelp(Messages.CLIInterface.argumentShell.localized)) var operands: [String] = []
+    @Argument(help: Self.help(operand: 0), completion: Self.completion(operand: 0)) var argumentShell: String?
+    var operands: [String] { [argumentShell].compactMap { $0 } }
     var parameters: [String: Value] { [:] }
 }
 
 struct CacheGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "cache", abstract: Messages.CLIInterface.cacheCommands.localized, subcommands: [CacheStatusCommand.self, CacheCleanCommand.self]) }
 }
 
 struct AccountServiceKeyGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "service-key", abstract: Messages.CLIInterface.accountServiceKeyCommands.localized, subcommands: [AccountServiceKeyStatusCommand.self, AccountServiceKeySetCommand.self, AccountServiceKeyRemoveCommand.self]) }
 }
 
 struct InstanceComponentGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "component", abstract: Messages.CLIInterface.instanceComponentCommands.localized, subcommands: [InstanceComponentListCommand.self, InstanceComponentVersionsCommand.self, InstanceComponentSetCommand.self, InstanceComponentRestoreCommand.self]) }
 }
 
 struct DatapackOrderGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "order", abstract: Messages.CLIInterface.dataPackOrderCommands.localized, subcommands: [DatapackOrderGetCommand.self, DatapackOrderSetCommand.self]) }
 }
 
 struct DirectoryRunGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "run", abstract: Messages.CLIInterface.instanceRunDirectoryCommands.localized, subcommands: [DirectoryRunGetCommand.self, DirectoryRunSetCommand.self, DirectoryRunRelocateCommand.self]) }
 }
 
 struct AccountLoginGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "login", abstract: Messages.CLIInterface.accountLoginCommands.localized, subcommands: [AccountLoginStartCommand.self, AccountLoginCompleteCommand.self, AccountLoginCancelCommand.self]) }
 }
 
 struct AppLanguageGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "language", abstract: Messages.CLIInterface.appLanguageCommands.localized, subcommands: [AppLanguageGetCommand.self, AppLanguageSetCommand.self]) }
 }
 
 struct WorldBackupGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "backup", abstract: Messages.CLIInterface.worldBackupCommands.localized, subcommands: [WorldBackupCreateCommand.self, WorldBackupListCommand.self, WorldBackupRestoreCommand.self, WorldBackupRemoveCommand.self]) }
 }
 
 struct DirectoryGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "directory", abstract: Messages.CLIInterface.directoryCommands.localized, subcommands: [DirectoryListCommand.self, DirectorySelectedCommand.self, DirectoryScanCommand.self, DirectoryAddCommand.self, DirectorySelectCommand.self, DirectoryRefreshCommand.self, DirectoryRemoveCommand.self, DirectoryRenameCommand.self, DirectoryRelocateCommand.self, DirectoryRestoreCommand.self, DirectoryRunGroup.self]) }
 }
 
 struct SchematicGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "schematic", abstract: Messages.CLIInterface.schematicCommands.localized, subcommands: [SchematicListCommand.self, SchematicInfoCommand.self, SchematicImportCommand.self, SchematicMkdirCommand.self, SchematicExportCommand.self, SchematicRemoveCommand.self]) }
 }
 
 struct InstanceGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "instance", abstract: Messages.CLIInterface.instanceCommands.localized, subcommands: [InstanceListCommand.self, InstanceSelectedCommand.self, InstanceShowCommand.self, InstanceVersionsCommand.self, InstanceCreateCommand.self, InstanceInstallCommand.self, InstanceRepairCommand.self, InstanceSelectCommand.self, InstanceRenameCommand.self, InstanceFavoriteCommand.self, InstanceRemoveCommand.self, InstanceIconCommand.self, InstanceCopyCommand.self, InstanceMoveCommand.self, InstanceExportCommand.self, InstanceComponentGroup.self, InstanceImportCommand.self]) }
 }
 
 struct DatapackGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "datapack", abstract: Messages.CLIInterface.dataPackCommands.localized, subcommands: [DatapackListCommand.self, DatapackOrderGroup.self, DatapackImportCommand.self, DatapackEnableCommand.self, DatapackDisableCommand.self, DatapackRemoveCommand.self, DatapackSearchCommand.self, DatapackVersionsCommand.self, DatapackInstallCommand.self]) }
 }
 
 struct DownloadGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "download", abstract: Messages.CLIInterface.downloadCommands.localized, subcommands: [DownloadFetchCommand.self]) }
 }
 
 struct RecoveryGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "recovery", abstract: Messages.CLIInterface.recoveryCommands.localized, subcommands: [RecoveryListCommand.self, RecoveryApplyCommand.self]) }
 }
 
 struct AccountGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "account", abstract: Messages.CLIInterface.accountCommands.localized, subcommands: [AccountListCommand.self, AccountSelectedCommand.self, AccountShowCommand.self, AccountAddOfflineCommand.self, AccountSelectCommand.self, AccountRefreshCommand.self, AccountRemoveCommand.self, AccountLogoutCommand.self, AccountLoginGroup.self, AccountServiceKeyGroup.self]) }
 }
 
 struct SessionGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "session", abstract: Messages.CLIInterface.sessionCommands.localized, subcommands: [SessionListCommand.self, SessionShowCommand.self, SessionWaitCommand.self, SessionQuitCommand.self, SessionStopCommand.self, SessionLogsCommand.self, SessionDiagnoseCommand.self, SessionExportCommand.self]) }
 }
 
 struct CatalogGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "catalog", abstract: Messages.CLIInterface.catalogCommands.localized, subcommands: [CatalogSearchCommand.self, CatalogShowCommand.self, CatalogVersionsCommand.self, CatalogCategoriesCommand.self]) }
 }
 
 struct ContentGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "content", abstract: Messages.CLIInterface.contentCommands.localized, subcommands: [ContentListCommand.self, ContentImportCommand.self, ContentInstallCommand.self, ContentEnableCommand.self, ContentDisableCommand.self, ContentRemoveCommand.self, ContentUpdateCheckCommand.self, ContentUpdateCommand.self]) }
 }
 
 struct ConfigGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "config", abstract: Messages.CLIInterface.configCommands.localized, subcommands: [ConfigGetCommand.self, ConfigSetCommand.self, ConfigApplyCommand.self, ConfigResetCommand.self, ConfigInheritCommand.self, ConfigFieldsCommand.self]) }
 }
 
 struct LaunchGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "launch", abstract: Messages.CLIInterface.launchCommands.localized, subcommands: [LaunchPreflightCommand.self, LaunchStartCommand.self]) }
 }
 
 struct WorldGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "world", abstract: Messages.CLIInterface.worldCommands.localized, subcommands: [WorldListCommand.self, WorldShowCommand.self, WorldImportCommand.self, WorldExportCommand.self, WorldRemoveCommand.self, WorldBackupGroup.self]) }
 }
 
 struct JavaGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "java", abstract: Messages.CLIInterface.javaCommands.localized, subcommands: [JavaListCommand.self, JavaAvailableCommand.self, JavaAddCommand.self, JavaForgetCommand.self, JavaDefaultCommand.self, JavaReferencesCommand.self, JavaInstallCommand.self, JavaRepairCommand.self, JavaRemoveCommand.self]) }
 }
 
 struct PackGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "pack", abstract: Messages.CLIInterface.modpackCommands.localized, subcommands: [PackImportCommand.self, PackInstallCommand.self, PackShowCommand.self, PackUpdateCheckCommand.self, PackUpdateCommand.self, PackRollbackCommand.self]) }
 }
 
 struct AppGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "app", abstract: Messages.CLIInterface.appCommands.localized, subcommands: [AppInfoCommand.self, AppLanguageGroup.self]) }
 }
 
 struct CliGroup: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "cli", abstract: Messages.CLIInterface.cliCommands.localized, subcommands: [CliStatusCommand.self, CliInstallCommand.self, CliUninstallCommand.self]) }
 }
 
 struct RuriCommand: ParsableCommand {
+    // Global options are accepted here too, so shell completion can skip them.
+    @OptionGroup var common: CommonOptions
     // Ordered as the root help groups them.
     static var configuration: CommandConfiguration { CommandConfiguration(commandName: "ruri", abstract: Messages.CLIInterface.rootCommandHelp.localized, version: BuildConfiguration().version, subcommands: [LaunchGroup.self, SessionGroup.self, ServerGroup.self, InstanceGroup.self, DirectoryGroup.self, JavaGroup.self, AccountGroup.self, CatalogGroup.self, ContentGroup.self, PackGroup.self, DownloadGroup.self, WorldGroup.self, DatapackGroup.self, SchematicGroup.self, ConfigGroup.self, AppGroup.self, CliGroup.self, CompletionsCommand.self, DoctorCommand.self, RecoveryGroup.self, CacheGroup.self, SchemaCommand.self]) }
 }

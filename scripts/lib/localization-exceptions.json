@@ -2031,5 +2031,10 @@
     "file": "Sources/RuriCommandKit/CommandHelp.swift",
     "literal": "\"ruri help --all\"",
     "reason": "Public command path or invocation syntax; not a translated message."
+  },
+  {
+    "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
+    "literal": "\"SELECT id, created, finished FROM sessions WHERE instance_id = ? ORDER BY created DESC\"",
+    "reason": "SQLite syntax and schema, not user-facing prose."
   }
 ]

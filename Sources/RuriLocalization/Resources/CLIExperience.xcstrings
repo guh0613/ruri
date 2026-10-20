@@ -1,6 +1,78 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "CLIExperience.ambiguousAccountTarget" : {
+      "comment" : "CLI target error followed by the matching accounts. %@ is the username or ID prefix the user typed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” matches more than one account; use one of these IDs."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”匹配到多个账户，请改用下列 ID 之一。"
+          }
+        }
+      }
+    },
+    "CLIExperience.ambiguousDirectoryTarget" : {
+      "comment" : "CLI target error followed by the matching game directories. %@ is the name or ID prefix the user typed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” matches more than one game directory; use one of these IDs."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”匹配到多个游戏目录，请改用下列 ID 之一。"
+          }
+        }
+      }
+    },
+    "CLIExperience.ambiguousInstanceTarget" : {
+      "comment" : "CLI target error followed by the matching instances. %@ is the name or ID prefix the user typed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” matches more than one instance; use one of these IDs."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”匹配到多个实例，请改用下列 ID 之一。"
+          }
+        }
+      }
+    },
+    "CLIExperience.ambiguousSessionTarget" : {
+      "comment" : "CLI target error followed by the matching sessions. %@ is the ID prefix the user typed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” matches more than one session; use a longer ID."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”匹配到多个会话，请使用更长的 ID。"
+          }
+        }
+      }
+    },
     "CLIExperience.completed" : {
       "comment" : "Status label in CLI mutation text output after successful completion.",
       "extractionState" : "manual",
@@ -561,6 +633,24 @@
         }
       }
     },
+    "CLIExperience.idPrefixTooShort" : {
+      "comment" : "CLI target error for id:<prefix> with fewer than eight characters. %@ is what the user typed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” is too short for an ID prefix; use at least 8 characters."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”作为 ID 前缀太短，至少需要 8 个字符。"
+          }
+        }
+      }
+    },
     "CLIExperience.inputSchema" : {
       "comment" : "Help for ruri schema --input, including the config apply patch schema.",
       "extractionState" : "manual",
@@ -683,6 +773,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "下一步：%@"
+          }
+        }
+      }
+    },
+    "CLIExperience.noAccountMatches" : {
+      "comment" : "CLI target error. %@ is the account username or ID prefix the user typed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No account matches “%@”."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有与“%@”匹配的账户。"
+          }
+        }
+      }
+    },
+    "CLIExperience.noDirectoryMatches" : {
+      "comment" : "CLI target error. %@ is the game directory name or ID prefix the user typed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No game directory matches “%@”."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有与“%@”匹配的游戏目录。"
+          }
+        }
+      }
+    },
+    "CLIExperience.noInstanceMatches" : {
+      "comment" : "CLI target error. %@ is the instance name or ID prefix the user typed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No instance matches “%@”."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有与“%@”匹配的实例。"
+          }
+        }
+      }
+    },
+    "CLIExperience.noSessionMatches" : {
+      "comment" : "CLI target error. %@ is the session ID prefix the user typed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No session of this instance matches “%@”."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该实例没有与“%@”匹配的会话。"
           }
         }
       }

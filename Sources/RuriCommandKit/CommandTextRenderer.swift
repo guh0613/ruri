@@ -46,7 +46,10 @@ struct CommandTextRenderer {
         if case .array(let actions) = value["nextActions"] {
             for action in actions {
                 if case .array(let command) = action["command"] {
-                    lines.append(Messages.CLIExperience.nextAction(Self.shell(["ruri"] + command.compactMap(\.string))).localized)
+                    var words = command.compactMap(\.string)
+                    // A command to copy must reach the same data as this one.
+                    if words.first != "help", !words.contains("--data-dir"), let directory = request?.common.dataDir { words += ["--data-dir", directory] }
+                    lines.append(Messages.CLIExperience.nextAction(Self.shell(["ruri"] + words)).localized)
                 }
             }
         }
