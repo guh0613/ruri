@@ -27,35 +27,131 @@ extension Messages {
         public static func ambiguousSessionTarget(_ value0: String) -> LocalizedMessage {
             .init(key: "CLIExperience.ambiguousSessionTarget", table: "CLIExperience", fallback: "“%@”匹配到多个会话，请使用更长的 ID。", arguments: [.text(value0)])
         }
+        /// 执行：%@
+        ///
+        /// Resource: `CLIExperience.CLIExperience.applyWith`.
+        public static func applyWith(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.applyWith", table: "CLIExperience", fallback: "执行：%@", arguments: [.text(value0)])
+        }
+        /// 文本输出颜色：auto、always 或 never。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.colorHelp`.
+        public static var colorHelp: LocalizedMessage {
+            .init(key: "CLIExperience.colorHelp", table: "CLIExperience", fallback: "文本输出颜色：auto、always 或 never。")
+        }
+        /// 组件
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnComponents`.
+        public static var columnComponents: LocalizedMessage {
+            .init(key: "CLIExperience.columnComponents", table: "CLIExperience", fallback: "组件")
+        }
+        /// 目录
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnDirectory`.
+        public static var columnDirectory: LocalizedMessage {
+            .init(key: "CLIExperience.columnDirectory", table: "CLIExperience", fallback: "目录")
+        }
+        /// 字段
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnField`.
+        public static var columnField: LocalizedMessage {
+            .init(key: "CLIExperience.columnField", table: "CLIExperience", fallback: "字段")
+        }
+        /// ID
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnID`.
+        public static var columnID: LocalizedMessage {
+            .init(key: "CLIExperience.columnID", table: "CLIExperience", fallback: "ID")
+        }
+        /// 名称
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnName`.
+        public static var columnName: LocalizedMessage {
+            .init(key: "CLIExperience.columnName", table: "CLIExperience", fallback: "名称")
+        }
+        /// 路径
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnPath`.
+        public static var columnPath: LocalizedMessage {
+            .init(key: "CLIExperience.columnPath", table: "CLIExperience", fallback: "路径")
+        }
+        /// 来源
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnSource`.
+        public static var columnSource: LocalizedMessage {
+            .init(key: "CLIExperience.columnSource", table: "CLIExperience", fallback: "来源")
+        }
+        /// 状态
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnStatus`.
+        public static var columnStatus: LocalizedMessage {
+            .init(key: "CLIExperience.columnStatus", table: "CLIExperience", fallback: "状态")
+        }
+        /// 值
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnValue`.
+        public static var columnValue: LocalizedMessage {
+            .init(key: "CLIExperience.columnValue", table: "CLIExperience", fallback: "值")
+        }
+        /// 版本
+        ///
+        /// Resource: `CLIExperience.CLIExperience.columnVersion`.
+        public static var columnVersion: LocalizedMessage {
+            .init(key: "CLIExperience.columnVersion", table: "CLIExperience", fallback: "版本")
+        }
         /// 已完成
         ///
         /// Resource: `CLIExperience.CLIExperience.completed`.
         public static var completed: LocalizedMessage {
             .init(key: "CLIExperience.completed", table: "CLIExperience", fallback: "已完成")
         }
-        /// 预览：即将更新的配置
+        /// 预览：%@的配置变更
         ///
-        /// Resource: `CLIExperience.CLIExperience.configPreview`.
-        public static var configPreview: LocalizedMessage {
-            .init(key: "CLIExperience.configPreview", table: "CLIExperience", fallback: "预览：即将更新的配置")
+        /// Resource: `CLIExperience.CLIExperience.configPreviewOf`.
+        public static func configPreviewOf(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.configPreviewOf", table: "CLIExperience", fallback: "预览：%@的配置变更", arguments: [.text(value0)])
         }
-        /// 配置未更改
+        /// %@的配置未改变。
         ///
-        /// Resource: `CLIExperience.CLIExperience.configUnchanged`.
-        public static var configUnchanged: LocalizedMessage {
-            .init(key: "CLIExperience.configUnchanged", table: "CLIExperience", fallback: "配置未更改")
+        /// Resource: `CLIExperience.CLIExperience.configUnchangedOf`.
+        public static func configUnchangedOf(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.configUnchangedOf", table: "CLIExperience", fallback: "%@的配置未改变。", arguments: [.text(value0)])
         }
-        /// 配置已更新
+        /// 已更新%@的配置。
         ///
-        /// Resource: `CLIExperience.CLIExperience.configUpdated`.
-        public static var configUpdated: LocalizedMessage {
-            .init(key: "CLIExperience.configUpdated", table: "CLIExperience", fallback: "配置已更新")
+        /// Resource: `CLIExperience.CLIExperience.configUpdatedOf`.
+        public static func configUpdatedOf(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.configUpdatedOf", table: "CLIExperience", fallback: "已更新%@的配置。", arguments: [.text(value0)])
         }
-        /// 没有匹配的结果。
+        /// %@的配置
+        ///
+        /// Resource: `CLIExperience.CLIExperience.configurationOf`.
+        public static func configurationOf(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.configurationOf", table: "CLIExperience", fallback: "%@的配置", arguments: [.text(value0)])
+        }
+        /// 自定义图片
+        ///
+        /// Resource: `CLIExperience.CLIExperience.customIcon`.
+        public static var customIcon: LocalizedMessage {
+            .init(key: "CLIExperience.customIcon", table: "CLIExperience", fallback: "自定义图片")
+        }
+        /// 显示全部细节，包括完整 ID。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.detailsHelp`.
+        public static var detailsHelp: LocalizedMessage {
+            .init(key: "CLIExperience.detailsHelp", table: "CLIExperience", fallback: "显示全部细节，包括完整 ID。")
+        }
+        /// 这里还没有内容。
         ///
         /// Resource: `CLIExperience.CLIExperience.empty`.
         public static var empty: LocalizedMessage {
-            .init(key: "CLIExperience.empty", table: "CLIExperience", fallback: "没有匹配的结果。")
+            .init(key: "CLIExperience.empty", table: "CLIExperience", fallback: "这里还没有内容。")
+        }
+        /// 没有符合筛选条件的结果。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.emptyFiltered`.
+        public static var emptyFiltered: LocalizedMessage {
+            .init(key: "CLIExperience.emptyFiltered", table: "CLIExperience", fallback: "没有符合筛选条件的结果。")
         }
         /// 错误 [%1$@]：%2$@
         ///
@@ -117,11 +213,11 @@ extension Messages {
         public static var fullAndAllExclusive: LocalizedMessage {
             .init(key: "CLIExperience.fullAndAllExclusive", table: "CLIExperience", fallback: "--full 和 --all 不能同时使用。")
         }
-        /// 使用 --json 查看完整字段。
+        /// 使用 --details 或 --json 查看全部字段。
         ///
         /// Resource: `CLIExperience.CLIExperience.fullDetails`.
         public static var fullDetails: LocalizedMessage {
-            .init(key: "CLIExperience.fullDetails", table: "CLIExperience", fallback: "使用 --json 查看完整字段。")
+            .init(key: "CLIExperience.fullDetails", table: "CLIExperience", fallback: "使用 --details 或 --json 查看全部字段。")
         }
         /// 显示所有命令的完整结构，输出可能较长
         ///
@@ -219,6 +315,12 @@ extension Messages {
         public static var hiddenChanges: LocalizedMessage {
             .init(key: "CLIExperience.hiddenChanges", table: "CLIExperience", fallback: "隐藏敏感信息后，没有可显示的差异。")
         }
+        /// 部分列因宽度不足而隐藏；使用 --details 或加宽终端查看。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.hiddenColumns`.
+        public static var hiddenColumns: LocalizedMessage {
+            .init(key: "CLIExperience.hiddenColumns", table: "CLIExperience", fallback: "部分列因宽度不足而隐藏；使用 --details 或加宽终端查看。")
+        }
         /// “%@”作为 ID 前缀太短，至少需要 8 个字符。
         ///
         /// Resource: `CLIExperience.CLIExperience.idPrefixTooShort`.
@@ -237,6 +339,150 @@ extension Messages {
         public static func invalidArgumentChoice(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "CLIExperience.invalidArgumentChoice", table: "CLIExperience", fallback: "“%1$@”不是可选值之一：%2$@。", arguments: [.text(value0), .text(value1)])
         }
+        /// 账户
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelAccount`.
+        public static var labelAccount: LocalizedMessage {
+            .init(key: "CLIExperience.labelAccount", table: "CLIExperience", fallback: "账户")
+        }
+        /// 目录
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelDirectory`.
+        public static var labelDirectory: LocalizedMessage {
+            .init(key: "CLIExperience.labelDirectory", table: "CLIExperience", fallback: "目录")
+        }
+        /// 环境变量
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelEnvironment`.
+        public static var labelEnvironment: LocalizedMessage {
+            .init(key: "CLIExperience.labelEnvironment", table: "CLIExperience", fallback: "环境变量")
+        }
+        /// 退出码
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelExitCode`.
+        public static var labelExitCode: LocalizedMessage {
+            .init(key: "CLIExperience.labelExitCode", table: "CLIExperience", fallback: "退出码")
+        }
+        /// 游戏文件夹
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelGameFolder`.
+        public static var labelGameFolder: LocalizedMessage {
+            .init(key: "CLIExperience.labelGameFolder", table: "CLIExperience", fallback: "游戏文件夹")
+        }
+        /// ID
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelID`.
+        public static var labelID: LocalizedMessage {
+            .init(key: "CLIExperience.labelID", table: "CLIExperience", fallback: "ID")
+        }
+        /// 图标
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelIcon`.
+        public static var labelIcon: LocalizedMessage {
+            .init(key: "CLIExperience.labelIcon", table: "CLIExperience", fallback: "图标")
+        }
+        /// 实例
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelInstance`.
+        public static var labelInstance: LocalizedMessage {
+            .init(key: "CLIExperience.labelInstance", table: "CLIExperience", fallback: "实例")
+        }
+        /// 实例文件夹
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelInstanceFolder`.
+        public static var labelInstanceFolder: LocalizedMessage {
+            .init(key: "CLIExperience.labelInstanceFolder", table: "CLIExperience", fallback: "实例文件夹")
+        }
+        /// 问题
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelIssue`.
+        public static var labelIssue: LocalizedMessage {
+            .init(key: "CLIExperience.labelIssue", table: "CLIExperience", fallback: "问题")
+        }
+        /// Java
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelJava`.
+        public static var labelJava: LocalizedMessage {
+            .init(key: "CLIExperience.labelJava", table: "CLIExperience", fallback: "Java")
+        }
+        /// 问题
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelProblem`.
+        public static var labelProblem: LocalizedMessage {
+            .init(key: "CLIExperience.labelProblem", table: "CLIExperience", fallback: "问题")
+        }
+        /// 修订
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelRevision`.
+        public static var labelRevision: LocalizedMessage {
+            .init(key: "CLIExperience.labelRevision", table: "CLIExperience", fallback: "修订")
+        }
+        /// 运行目录
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelRunDirectory`.
+        public static var labelRunDirectory: LocalizedMessage {
+            .init(key: "CLIExperience.labelRunDirectory", table: "CLIExperience", fallback: "运行目录")
+        }
+        /// 会话
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelSession`.
+        public static var labelSession: LocalizedMessage {
+            .init(key: "CLIExperience.labelSession", table: "CLIExperience", fallback: "会话")
+        }
+        /// 登录
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelSignIn`.
+        public static var labelSignIn: LocalizedMessage {
+            .init(key: "CLIExperience.labelSignIn", table: "CLIExperience", fallback: "登录")
+        }
+        /// 开始时间
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelStarted`.
+        public static var labelStarted: LocalizedMessage {
+            .init(key: "CLIExperience.labelStarted", table: "CLIExperience", fallback: "开始时间")
+        }
+        /// 状态
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelStatus`.
+        public static var labelStatus: LocalizedMessage {
+            .init(key: "CLIExperience.labelStatus", table: "CLIExperience", fallback: "状态")
+        }
+        /// 版本
+        ///
+        /// Resource: `CLIExperience.CLIExperience.labelVersion`.
+        public static var labelVersion: LocalizedMessage {
+            .init(key: "CLIExperience.labelVersion", table: "CLIExperience", fallback: "版本")
+        }
+        /// %@已退出。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.launchEnded`.
+        public static func launchEnded(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.launchEnded", table: "CLIExperience", fallback: "%@已退出。", arguments: [.text(value0)])
+        }
+        /// %@未能启动。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.launchFailed`.
+        public static func launchFailed(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.launchFailed", table: "CLIExperience", fallback: "%@未能启动。", arguments: [.text(value0)])
+        }
+        /// %@可以启动。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.launchReady`.
+        public static func launchReady(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.launchReady", table: "CLIExperience", fallback: "%@可以启动。", arguments: [.text(value0)])
+        }
+        /// 已启动 %@。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.launchStarted`.
+        public static func launchStarted(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.launchStarted", table: "CLIExperience", fallback: "已启动 %@。", arguments: [.text(value0)])
+        }
+        /// 将启动 %@
+        ///
+        /// Resource: `CLIExperience.CLIExperience.launchWouldStart`.
+        public static func launchWouldStart(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.launchWouldStart", table: "CLIExperience", fallback: "将启动 %@", arguments: [.text(value0)])
+        }
         /// 缺少 %@。
         ///
         /// Resource: `CLIExperience.CLIExperience.missingArguments`.
@@ -249,23 +495,35 @@ extension Messages {
         public static func missingValue(_ value0: String) -> LocalizedMessage {
             .init(key: "CLIExperience.missingValue", table: "CLIExperience", fallback: "%@ 需要一个值。", arguments: [.text(value0)])
         }
-        /// 还有更多：%@
-        ///
-        /// Resource: `CLIExperience.CLIExperience.more`.
-        public static func more(_ value0: String) -> LocalizedMessage {
-            .init(key: "CLIExperience.more", table: "CLIExperience", fallback: "还有更多：%@", arguments: [.text(value0)])
-        }
         /// 更多：%@
         ///
         /// Resource: `CLIExperience.CLIExperience.moreLine`.
         public static func moreLine(_ value0: String) -> LocalizedMessage {
             .init(key: "CLIExperience.moreLine", table: "CLIExperience", fallback: "更多：%@", arguments: [.text(value0)])
         }
+        /// 使用 --details 查看更多信息。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.moreWithDetails`.
+        public static var moreWithDetails: LocalizedMessage {
+            .init(key: "CLIExperience.moreWithDetails", table: "CLIExperience", fallback: "使用 --details 查看更多信息。")
+        }
+        /// 需要处理：
+        ///
+        /// Resource: `CLIExperience.CLIExperience.needsAttention`.
+        public static var needsAttention: LocalizedMessage {
+            .init(key: "CLIExperience.needsAttention", table: "CLIExperience", fallback: "需要处理：")
+        }
         /// 下一步：%@
         ///
         /// Resource: `CLIExperience.CLIExperience.nextAction`.
         public static func nextAction(_ value0: String) -> LocalizedMessage {
             .init(key: "CLIExperience.nextAction", table: "CLIExperience", fallback: "下一步：%@", arguments: [.text(value0)])
+        }
+        /// 下一页：%@
+        ///
+        /// Resource: `CLIExperience.CLIExperience.nextPage`.
+        public static func nextPage(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.nextPage", table: "CLIExperience", fallback: "下一页：%@", arguments: [.text(value0)])
         }
         /// 没有与“%@”匹配的账户。
         ///
@@ -369,6 +627,36 @@ extension Messages {
         public static func page(_ value0: Int64, _ value1: Int64) -> LocalizedMessage {
             .init(key: "CLIExperience.page", table: "CLIExperience", fallback: "显示 %1$lld 项；起始位置 %2$lld。", arguments: [.integer(value0), .integer(value1)])
         }
+        /// 此位置之后没有结果；共 %@ 项。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.pagePastEnd`.
+        public static func pagePastEnd(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.pagePastEnd", table: "CLIExperience", fallback: "此位置之后没有结果；共 %@ 项。", arguments: [.text(value0)])
+        }
+        /// 显示第 %1$@–%2$@ 项，共 %3$@ 项。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.pageRange`.
+        public static func pageRange(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.pageRange", table: "CLIExperience", fallback: "显示第 %1$@–%2$@ 项，共 %3$@ 项。", arguments: [.text(value0), .text(value1), .text(value2)])
+        }
+        /// 显示第 %1$@–%2$@ 项。
+        ///
+        /// Resource: `CLIExperience.CLIExperience.pageRangeOpen`.
+        public static func pageRangeOpen(_ value0: String, _ value1: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.pageRangeOpen", table: "CLIExperience", fallback: "显示第 %1$@–%2$@ 项。", arguments: [.text(value0), .text(value1)])
+        }
+        /// 待恢复事项：
+        ///
+        /// Resource: `CLIExperience.CLIExperience.pendingRecovery`.
+        public static var pendingRecovery: LocalizedMessage {
+            .init(key: "CLIExperience.pendingRecovery", table: "CLIExperience", fallback: "待恢复事项：")
+        }
+        /// 保留的文件：
+        ///
+        /// Resource: `CLIExperience.CLIExperience.preservedFiles`.
+        public static var preservedFiles: LocalizedMessage {
+            .init(key: "CLIExperience.preservedFiles", table: "CLIExperience", fallback: "保留的文件：")
+        }
         /// 预览（未执行）
         ///
         /// Resource: `CLIExperience.CLIExperience.preview`.
@@ -380,6 +668,60 @@ extension Messages {
         /// Resource: `CLIExperience.CLIExperience.previewMessage`.
         public static func previewMessage(_ value0: String) -> LocalizedMessage {
             .init(key: "CLIExperience.previewMessage", table: "CLIExperience", fallback: "预览（未执行）：%1$@", arguments: [.text(value0)])
+        }
+        /// 正在清理
+        ///
+        /// Resource: `CLIExperience.CLIExperience.progressCleaning`.
+        public static var progressCleaning: LocalizedMessage {
+            .init(key: "CLIExperience.progressCleaning", table: "CLIExperience", fallback: "正在清理")
+        }
+        /// 正在复制
+        ///
+        /// Resource: `CLIExperience.CLIExperience.progressCopying`.
+        public static var progressCopying: LocalizedMessage {
+            .init(key: "CLIExperience.progressCopying", table: "CLIExperience", fallback: "正在复制")
+        }
+        /// 正在下载
+        ///
+        /// Resource: `CLIExperience.CLIExperience.progressDownloading`.
+        public static var progressDownloading: LocalizedMessage {
+            .init(key: "CLIExperience.progressDownloading", table: "CLIExperience", fallback: "正在下载")
+        }
+        /// 正在完成
+        ///
+        /// Resource: `CLIExperience.CLIExperience.progressFinishing`.
+        public static var progressFinishing: LocalizedMessage {
+            .init(key: "CLIExperience.progressFinishing", table: "CLIExperience", fallback: "正在完成")
+        }
+        /// %1$@ / %2$@（%3$@）
+        ///
+        /// Resource: `CLIExperience.CLIExperience.progressOf`.
+        public static func progressOf(_ value0: String, _ value1: String, _ value2: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.progressOf", table: "CLIExperience", fallback: "%1$@ / %2$@（%3$@）", arguments: [.text(value0), .text(value1), .text(value2)])
+        }
+        /// 正在写入
+        ///
+        /// Resource: `CLIExperience.CLIExperience.progressPublishing`.
+        public static var progressPublishing: LocalizedMessage {
+            .init(key: "CLIExperience.progressPublishing", table: "CLIExperience", fallback: "正在写入")
+        }
+        /// 正在恢复
+        ///
+        /// Resource: `CLIExperience.CLIExperience.progressRecovering`.
+        public static var progressRecovering: LocalizedMessage {
+            .init(key: "CLIExperience.progressRecovering", table: "CLIExperience", fallback: "正在恢复")
+        }
+        /// 正在校验
+        ///
+        /// Resource: `CLIExperience.CLIExperience.progressVerifying`.
+        public static var progressVerifying: LocalizedMessage {
+            .init(key: "CLIExperience.progressVerifying", table: "CLIExperience", fallback: "正在校验")
+        }
+        /// 正在处理
+        ///
+        /// Resource: `CLIExperience.CLIExperience.progressWorking`.
+        public static var progressWorking: LocalizedMessage {
+            .init(key: "CLIExperience.progressWorking", table: "CLIExperience", fallback: "正在处理")
         }
         /// 此操作可以重试。
         ///
@@ -399,6 +741,36 @@ extension Messages {
         public static var schemaSelection: LocalizedMessage {
             .init(key: "CLIExperience.schemaSelection", table: "CLIExperience", fallback: "--input、--output-schema 和 --scope 需要指定完整命令；--scope 仅适用于配置命令的输入。")
         }
+        /// 应用设置
+        ///
+        /// Resource: `CLIExperience.CLIExperience.scopeApp`.
+        public static var scopeApp: LocalizedMessage {
+            .init(key: "CLIExperience.scopeApp", table: "CLIExperience", fallback: "应用设置")
+        }
+        /// 所有实例的默认值
+        ///
+        /// Resource: `CLIExperience.CLIExperience.scopeDefaults`.
+        public static var scopeDefaults: LocalizedMessage {
+            .init(key: "CLIExperience.scopeDefaults", table: "CLIExperience", fallback: "所有实例的默认值")
+        }
+        /// 实例 %@
+        ///
+        /// Resource: `CLIExperience.CLIExperience.scopeInstance`.
+        public static func scopeInstance(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.scopeInstance", table: "CLIExperience", fallback: "实例 %@", arguments: [.text(value0)])
+        }
+        /// 外观
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sectionAppearance`.
+        public static var sectionAppearance: LocalizedMessage {
+            .init(key: "CLIExperience.sectionAppearance", table: "CLIExperience", fallback: "外观")
+        }
+        /// 命令
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sectionCommand`.
+        public static var sectionCommand: LocalizedMessage {
+            .init(key: "CLIExperience.sectionCommand", table: "CLIExperience", fallback: "命令")
+        }
         /// 内容
         ///
         /// Resource: `CLIExperience.CLIExperience.sectionContent`.
@@ -410,6 +782,18 @@ extension Messages {
         /// Resource: `CLIExperience.CLIExperience.sectionInstances`.
         public static var sectionInstances: LocalizedMessage {
             .init(key: "CLIExperience.sectionInstances", table: "CLIExperience", fallback: "实例")
+        }
+        /// JVM 调优
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sectionJVMTuning`.
+        public static var sectionJVMTuning: LocalizedMessage {
+            .init(key: "CLIExperience.sectionJVMTuning", table: "CLIExperience", fallback: "JVM 调优")
+        }
+        /// 位置
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sectionLocations`.
+        public static var sectionLocations: LocalizedMessage {
+            .init(key: "CLIExperience.sectionLocations", table: "CLIExperience", fallback: "位置")
         }
         /// 维护
         ///
@@ -434,6 +818,90 @@ extension Messages {
         /// Resource: `CLIExperience.CLIExperience.sectionWorlds`.
         public static var sectionWorlds: LocalizedMessage {
             .init(key: "CLIExperience.sectionWorlds", table: "CLIExperience", fallback: "存档")
+        }
+        /// 已取消
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sessionCancelled`.
+        public static var sessionCancelled: LocalizedMessage {
+            .init(key: "CLIExperience.sessionCancelled", table: "CLIExperience", fallback: "已取消")
+        }
+        /// 失败
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sessionFailed`.
+        public static var sessionFailed: LocalizedMessage {
+            .init(key: "CLIExperience.sessionFailed", table: "CLIExperience", fallback: "失败")
+        }
+        /// 已中断
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sessionInterrupted`.
+        public static var sessionInterrupted: LocalizedMessage {
+            .init(key: "CLIExperience.sessionInterrupted", table: "CLIExperience", fallback: "已中断")
+        }
+        /// 准备中
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sessionPreparing`.
+        public static var sessionPreparing: LocalizedMessage {
+            .init(key: "CLIExperience.sessionPreparing", table: "CLIExperience", fallback: "准备中")
+        }
+        /// 运行中
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sessionRunning`.
+        public static var sessionRunning: LocalizedMessage {
+            .init(key: "CLIExperience.sessionRunning", table: "CLIExperience", fallback: "运行中")
+        }
+        /// 已停止
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sessionStopped`.
+        public static var sessionStopped: LocalizedMessage {
+            .init(key: "CLIExperience.sessionStopped", table: "CLIExperience", fallback: "已停止")
+        }
+        /// 已结束
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sessionSucceeded`.
+        public static var sessionSucceeded: LocalizedMessage {
+            .init(key: "CLIExperience.sessionSucceeded", table: "CLIExperience", fallback: "已结束")
+        }
+        /// 启动游戏时检查
+        ///
+        /// Resource: `CLIExperience.CLIExperience.signInAtLaunch`.
+        public static var signInAtLaunch: LocalizedMessage {
+            .init(key: "CLIExperience.signInAtLaunch", table: "CLIExperience", fallback: "启动游戏时检查")
+        }
+        /// 已检查
+        ///
+        /// Resource: `CLIExperience.CLIExperience.signInChecked`.
+        public static var signInChecked: LocalizedMessage {
+            .init(key: "CLIExperience.signInChecked", table: "CLIExperience", fallback: "已检查")
+        }
+        /// %@ 来源
+        ///
+        /// Resource: `CLIExperience.CLIExperience.sourceOf`.
+        public static func sourceOf(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.sourceOf", table: "CLIExperience", fallback: "%@ 来源", arguments: [.text(value0)])
+        }
+        /// 已收藏
+        ///
+        /// Resource: `CLIExperience.CLIExperience.statusFavorite`.
+        public static var statusFavorite: LocalizedMessage {
+            .init(key: "CLIExperience.statusFavorite", table: "CLIExperience", fallback: "已收藏")
+        }
+        /// 已安装
+        ///
+        /// Resource: `CLIExperience.CLIExperience.statusInstalled`.
+        public static var statusInstalled: LocalizedMessage {
+            .init(key: "CLIExperience.statusInstalled", table: "CLIExperience", fallback: "已安装")
+        }
+        /// 需要处理
+        ///
+        /// Resource: `CLIExperience.CLIExperience.statusNeedsAttention`.
+        public static var statusNeedsAttention: LocalizedMessage {
+            .init(key: "CLIExperience.statusNeedsAttention", table: "CLIExperience", fallback: "需要处理")
+        }
+        /// 未安装
+        ///
+        /// Resource: `CLIExperience.CLIExperience.statusNotInstalled`.
+        public static var statusNotInstalled: LocalizedMessage {
+            .init(key: "CLIExperience.statusNotInstalled", table: "CLIExperience", fallback: "未安装")
         }
         /// 共 %lld 项。
         ///
@@ -507,16 +975,38 @@ extension Messages {
         public static func withSuggestion(_ value0: String, _ value1: String) -> LocalizedMessage {
             .init(key: "CLIExperience.withSuggestion", table: "CLIExperience", fallback: "%1$@是否要输入“%2$@”？", arguments: [.text(value0), .text(value1)])
         }
+        /// 不加筛选：%@
+        ///
+        /// Resource: `CLIExperience.CLIExperience.withoutFilters`.
+        public static func withoutFilters(_ value0: String) -> LocalizedMessage {
+            .init(key: "CLIExperience.withoutFilters", table: "CLIExperience", fallback: "不加筛选：%@", arguments: [.text(value0)])
+        }
         static let definitions: [String: MessageDefinition] = [
             "CLIExperience:CLIExperience.ambiguousAccountTarget": .init("“%@”匹配到多个账户，请改用下列 ID 之一。", [.text]),
             "CLIExperience:CLIExperience.ambiguousDirectoryTarget": .init("“%@”匹配到多个游戏目录，请改用下列 ID 之一。", [.text]),
             "CLIExperience:CLIExperience.ambiguousInstanceTarget": .init("“%@”匹配到多个实例，请改用下列 ID 之一。", [.text]),
             "CLIExperience:CLIExperience.ambiguousSessionTarget": .init("“%@”匹配到多个会话，请使用更长的 ID。", [.text]),
+            "CLIExperience:CLIExperience.applyWith": .init("执行：%@", [.text]),
+            "CLIExperience:CLIExperience.colorHelp": .init("文本输出颜色：auto、always 或 never。", []),
+            "CLIExperience:CLIExperience.columnComponents": .init("组件", []),
+            "CLIExperience:CLIExperience.columnDirectory": .init("目录", []),
+            "CLIExperience:CLIExperience.columnField": .init("字段", []),
+            "CLIExperience:CLIExperience.columnID": .init("ID", []),
+            "CLIExperience:CLIExperience.columnName": .init("名称", []),
+            "CLIExperience:CLIExperience.columnPath": .init("路径", []),
+            "CLIExperience:CLIExperience.columnSource": .init("来源", []),
+            "CLIExperience:CLIExperience.columnStatus": .init("状态", []),
+            "CLIExperience:CLIExperience.columnValue": .init("值", []),
+            "CLIExperience:CLIExperience.columnVersion": .init("版本", []),
             "CLIExperience:CLIExperience.completed": .init("已完成", []),
-            "CLIExperience:CLIExperience.configPreview": .init("预览：即将更新的配置", []),
-            "CLIExperience:CLIExperience.configUnchanged": .init("配置未更改", []),
-            "CLIExperience:CLIExperience.configUpdated": .init("配置已更新", []),
-            "CLIExperience:CLIExperience.empty": .init("没有匹配的结果。", []),
+            "CLIExperience:CLIExperience.configPreviewOf": .init("预览：%@的配置变更", [.text]),
+            "CLIExperience:CLIExperience.configUnchangedOf": .init("%@的配置未改变。", [.text]),
+            "CLIExperience:CLIExperience.configUpdatedOf": .init("已更新%@的配置。", [.text]),
+            "CLIExperience:CLIExperience.configurationOf": .init("%@的配置", [.text]),
+            "CLIExperience:CLIExperience.customIcon": .init("自定义图片", []),
+            "CLIExperience:CLIExperience.detailsHelp": .init("显示全部细节，包括完整 ID。", []),
+            "CLIExperience:CLIExperience.empty": .init("这里还没有内容。", []),
+            "CLIExperience:CLIExperience.emptyFiltered": .init("没有符合筛选条件的结果。", []),
             "CLIExperience:CLIExperience.errorHeadline": .init("错误 [%1$@]：%2$@", [.text, .text]),
             "CLIExperience:CLIExperience.fieldInheritance": .init("实例的每个配置组在设置其中的字段前，都继承 defaults：%@。", [.text]),
             "CLIExperience:CLIExperience.fieldNullable": .init("%@，或 null", [.text]),
@@ -527,7 +1017,7 @@ extension Messages {
             "CLIExperience:CLIExperience.fieldTypeInteger": .init("整数", []),
             "CLIExperience:CLIExperience.fieldTypeText": .init("文本", []),
             "CLIExperience:CLIExperience.fullAndAllExclusive": .init("--full 和 --all 不能同时使用。", []),
-            "CLIExperience:CLIExperience.fullDetails": .init("使用 --json 查看完整字段。", []),
+            "CLIExperience:CLIExperience.fullDetails": .init("使用 --details 或 --json 查看全部字段。", []),
             "CLIExperience:CLIExperience.fullSchema": .init("显示所有命令的完整结构，输出可能较长", []),
             "CLIExperience:CLIExperience.helpAll": .init("列出全部命令及其用法。", []),
             "CLIExperience:CLIExperience.helpArguments": .init("参数：", []),
@@ -544,14 +1034,41 @@ extension Messages {
             "CLIExperience:CLIExperience.helpSubcommands": .init("子命令：", []),
             "CLIExperience:CLIExperience.helpValues": .init("可选值：%@。", [.text]),
             "CLIExperience:CLIExperience.hiddenChanges": .init("隐藏敏感信息后，没有可显示的差异。", []),
+            "CLIExperience:CLIExperience.hiddenColumns": .init("部分列因宽度不足而隐藏；使用 --details 或加宽终端查看。", []),
             "CLIExperience:CLIExperience.idPrefixTooShort": .init("“%@”作为 ID 前缀太短，至少需要 8 个字符。", [.text]),
             "CLIExperience:CLIExperience.inputSchema": .init("只返回命令输入结构；config apply 同时包含补丁结构", []),
             "CLIExperience:CLIExperience.invalidArgumentChoice": .init("“%1$@”不是可选值之一：%2$@。", [.text, .text]),
+            "CLIExperience:CLIExperience.labelAccount": .init("账户", []),
+            "CLIExperience:CLIExperience.labelDirectory": .init("目录", []),
+            "CLIExperience:CLIExperience.labelEnvironment": .init("环境变量", []),
+            "CLIExperience:CLIExperience.labelExitCode": .init("退出码", []),
+            "CLIExperience:CLIExperience.labelGameFolder": .init("游戏文件夹", []),
+            "CLIExperience:CLIExperience.labelID": .init("ID", []),
+            "CLIExperience:CLIExperience.labelIcon": .init("图标", []),
+            "CLIExperience:CLIExperience.labelInstance": .init("实例", []),
+            "CLIExperience:CLIExperience.labelInstanceFolder": .init("实例文件夹", []),
+            "CLIExperience:CLIExperience.labelIssue": .init("问题", []),
+            "CLIExperience:CLIExperience.labelJava": .init("Java", []),
+            "CLIExperience:CLIExperience.labelProblem": .init("问题", []),
+            "CLIExperience:CLIExperience.labelRevision": .init("修订", []),
+            "CLIExperience:CLIExperience.labelRunDirectory": .init("运行目录", []),
+            "CLIExperience:CLIExperience.labelSession": .init("会话", []),
+            "CLIExperience:CLIExperience.labelSignIn": .init("登录", []),
+            "CLIExperience:CLIExperience.labelStarted": .init("开始时间", []),
+            "CLIExperience:CLIExperience.labelStatus": .init("状态", []),
+            "CLIExperience:CLIExperience.labelVersion": .init("版本", []),
+            "CLIExperience:CLIExperience.launchEnded": .init("%@已退出。", [.text]),
+            "CLIExperience:CLIExperience.launchFailed": .init("%@未能启动。", [.text]),
+            "CLIExperience:CLIExperience.launchReady": .init("%@可以启动。", [.text]),
+            "CLIExperience:CLIExperience.launchStarted": .init("已启动 %@。", [.text]),
+            "CLIExperience:CLIExperience.launchWouldStart": .init("将启动 %@", [.text]),
             "CLIExperience:CLIExperience.missingArguments": .init("缺少 %@。", [.text]),
             "CLIExperience:CLIExperience.missingValue": .init("%@ 需要一个值。", [.text]),
-            "CLIExperience:CLIExperience.more": .init("还有更多：%@", [.text]),
             "CLIExperience:CLIExperience.moreLine": .init("更多：%@", [.text]),
+            "CLIExperience:CLIExperience.moreWithDetails": .init("使用 --details 查看更多信息。", []),
+            "CLIExperience:CLIExperience.needsAttention": .init("需要处理：", []),
             "CLIExperience:CLIExperience.nextAction": .init("下一步：%@", [.text]),
+            "CLIExperience:CLIExperience.nextPage": .init("下一页：%@", [.text]),
             "CLIExperience:CLIExperience.noAccountMatches": .init("没有与“%@”匹配的账户。", [.text]),
             "CLIExperience:CLIExperience.noDirectoryMatches": .init("没有与“%@”匹配的游戏目录。", [.text]),
             "CLIExperience:CLIExperience.noInstanceMatches": .init("没有与“%@”匹配的实例。", [.text]),
@@ -569,17 +1086,52 @@ extension Messages {
             "CLIExperience:CLIExperience.noteTargets": .init("目标可以是区分大小写的完整名称、至少 8 位的短 ID 或完整 ID。名称与 ID 形式冲突时，使用 name:<名称> 或 id:<ID>。", []),
             "CLIExperience:CLIExperience.outputSchema": .init("只返回命令结果结构", []),
             "CLIExperience:CLIExperience.page": .init("显示 %1$lld 项；起始位置 %2$lld。", [.integer, .integer]),
+            "CLIExperience:CLIExperience.pagePastEnd": .init("此位置之后没有结果；共 %@ 项。", [.text]),
+            "CLIExperience:CLIExperience.pageRange": .init("显示第 %1$@–%2$@ 项，共 %3$@ 项。", [.text, .text, .text]),
+            "CLIExperience:CLIExperience.pageRangeOpen": .init("显示第 %1$@–%2$@ 项。", [.text, .text]),
+            "CLIExperience:CLIExperience.pendingRecovery": .init("待恢复事项：", []),
+            "CLIExperience:CLIExperience.preservedFiles": .init("保留的文件：", []),
             "CLIExperience:CLIExperience.preview": .init("预览（未执行）", []),
             "CLIExperience:CLIExperience.previewMessage": .init("预览（未执行）：%1$@", [.text]),
+            "CLIExperience:CLIExperience.progressCleaning": .init("正在清理", []),
+            "CLIExperience:CLIExperience.progressCopying": .init("正在复制", []),
+            "CLIExperience:CLIExperience.progressDownloading": .init("正在下载", []),
+            "CLIExperience:CLIExperience.progressFinishing": .init("正在完成", []),
+            "CLIExperience:CLIExperience.progressOf": .init("%1$@ / %2$@（%3$@）", [.text, .text, .text]),
+            "CLIExperience:CLIExperience.progressPublishing": .init("正在写入", []),
+            "CLIExperience:CLIExperience.progressRecovering": .init("正在恢复", []),
+            "CLIExperience:CLIExperience.progressVerifying": .init("正在校验", []),
+            "CLIExperience:CLIExperience.progressWorking": .init("正在处理", []),
             "CLIExperience:CLIExperience.retryable": .init("此操作可以重试。", []),
             "CLIExperience:CLIExperience.schemaScope": .init("只查询指定配置作用域的字段：app、defaults 或 instance", []),
             "CLIExperience:CLIExperience.schemaSelection": .init("--input、--output-schema 和 --scope 需要指定完整命令；--scope 仅适用于配置命令的输入。", []),
+            "CLIExperience:CLIExperience.scopeApp": .init("应用设置", []),
+            "CLIExperience:CLIExperience.scopeDefaults": .init("所有实例的默认值", []),
+            "CLIExperience:CLIExperience.scopeInstance": .init("实例 %@", [.text]),
+            "CLIExperience:CLIExperience.sectionAppearance": .init("外观", []),
+            "CLIExperience:CLIExperience.sectionCommand": .init("命令", []),
             "CLIExperience:CLIExperience.sectionContent": .init("内容", []),
             "CLIExperience:CLIExperience.sectionInstances": .init("实例", []),
+            "CLIExperience:CLIExperience.sectionJVMTuning": .init("JVM 调优", []),
+            "CLIExperience:CLIExperience.sectionLocations": .init("位置", []),
             "CLIExperience:CLIExperience.sectionMaintenance": .init("维护", []),
             "CLIExperience:CLIExperience.sectionPlay": .init("游戏", []),
             "CLIExperience:CLIExperience.sectionSettings": .init("设置", []),
             "CLIExperience:CLIExperience.sectionWorlds": .init("存档", []),
+            "CLIExperience:CLIExperience.sessionCancelled": .init("已取消", []),
+            "CLIExperience:CLIExperience.sessionFailed": .init("失败", []),
+            "CLIExperience:CLIExperience.sessionInterrupted": .init("已中断", []),
+            "CLIExperience:CLIExperience.sessionPreparing": .init("准备中", []),
+            "CLIExperience:CLIExperience.sessionRunning": .init("运行中", []),
+            "CLIExperience:CLIExperience.sessionStopped": .init("已停止", []),
+            "CLIExperience:CLIExperience.sessionSucceeded": .init("已结束", []),
+            "CLIExperience:CLIExperience.signInAtLaunch": .init("启动游戏时检查", []),
+            "CLIExperience:CLIExperience.signInChecked": .init("已检查", []),
+            "CLIExperience:CLIExperience.sourceOf": .init("%@ 来源", [.text]),
+            "CLIExperience:CLIExperience.statusFavorite": .init("已收藏", []),
+            "CLIExperience:CLIExperience.statusInstalled": .init("已安装", []),
+            "CLIExperience:CLIExperience.statusNeedsAttention": .init("需要处理", []),
+            "CLIExperience:CLIExperience.statusNotInstalled": .init("未安装", []),
             "CLIExperience:CLIExperience.total": .init("共 %lld 项。", [.integer]),
             "CLIExperience:CLIExperience.unchanged": .init("未更改", []),
             "CLIExperience:CLIExperience.unexpectedArgument": .init("多余的参数“%@”。", [.text]),
@@ -592,6 +1144,7 @@ extension Messages {
             "CLIExperience:CLIExperience.usageLine": .init("用法：%@", [.text]),
             "CLIExperience:CLIExperience.warning": .init("警告：%@", [.text]),
             "CLIExperience:CLIExperience.withSuggestion": .init("%1$@是否要输入“%2$@”？", [.text, .text]),
+            "CLIExperience:CLIExperience.withoutFilters": .init("不加筛选：%@", [.text]),
         ]
     }
 }

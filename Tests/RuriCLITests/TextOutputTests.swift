@@ -28,10 +28,13 @@ struct TextOutputTests {
         #expect(!text(preview).contains("java"))
         let saved = CommandCapture()
         #expect(await CLIApplication.run(set, write: saved.write) == 0)
-        #expect(text(saved).contains(try #require(StateStore.load(paths).revision).uuidString))
+        // The outcome comes first; the revision is a technical detail.
+        #expect(text(saved).hasPrefix("Updated the configuration of instance Fixture"))
+        #expect(!text(saved).contains(try #require(StateStore.load(paths).revision).uuidString))
         let noOp = CommandCapture()
-        #expect(await CLIApplication.run(set, write: noOp.write) == 0)
+        #expect(await CLIApplication.run(set + ["--details"], write: noOp.write) == 0)
         #expect(!text(noOp).contains(" → "))
+        #expect(text(noOp).contains(try #require(StateStore.load(paths).revision).uuidString))
         let inherited = CommandCapture()
         #expect(await CLIApplication.run(["config", "inherit", "window", "--scope", scope, "--data-dir", paths.root.path], write: inherited.write) == 0)
         #expect(text(inherited).contains("instance → defaults"))
@@ -55,7 +58,7 @@ struct TextOutputTests {
         #expect(rendered.contains("Needs repair"))
         #expect(rendered.contains("Access denied"))
         #expect(rendered.contains("--name 'Two words'"))
-        #expect(rendered.contains("--data-dir '/tmp/ruri fixture' --offset 4"))
+        #expect(rendered.contains("--offset 4") && rendered.contains("--data-dir '/tmp/ruri fixture'"))
         #expect(!rendered.contains("\"items\""))
     }
     @Test func errorsKeepRecoveryDetailsAndRedactEveryChannel() {

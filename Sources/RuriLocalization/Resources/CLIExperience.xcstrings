@@ -73,6 +73,222 @@
         }
       }
     },
+    "CLIExperience.applyWith" : {
+      "comment" : "CLI preview hint. %@ is the command that applies the previewed change.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "执行：%@"
+          }
+        }
+      }
+    },
+    "CLIExperience.colorHelp" : {
+      "comment" : "CLI global option help for --color; auto, always and never are literal values.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color text output: auto, always or never."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文本输出颜色：auto、always 或 never。"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnComponents" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Components"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "组件"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnDirectory" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Directory"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目录"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnField" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "字段"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnID" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnName" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnPath" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Path"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "路径"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnSource" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来源"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnStatus" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "状态"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnValue" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Value"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值"
+          }
+        }
+      }
+    },
+    "CLIExperience.columnVersion" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本"
+          }
+        }
+      }
+    },
     "CLIExperience.completed" : {
       "comment" : "Status label in CLI mutation text output after successful completion.",
       "extractionState" : "manual",
@@ -91,74 +307,146 @@
         }
       }
     },
-    "CLIExperience.configPreview" : {
-      "comment" : "Status heading in CLI configuration text output for a dry run that would change settings.",
+    "CLIExperience.configPreviewOf" : {
+      "comment" : "CLI configuration preview heading. %@ is a scope name.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Preview: configuration changes"
+            "value" : "Preview: configuration changes for %@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "预览：即将更新的配置"
+            "value" : "预览：%@的配置变更"
           }
         }
       }
     },
-    "CLIExperience.configUnchanged" : {
-      "comment" : "Status heading in CLI configuration text output when settings are unchanged.",
+    "CLIExperience.configUnchangedOf" : {
+      "comment" : "CLI configuration result. %@ is a scope name.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configuration unchanged"
+            "value" : "The configuration of %@ is unchanged."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "配置未更改"
+            "value" : "%@的配置未改变。"
           }
         }
       }
     },
-    "CLIExperience.configUpdated" : {
-      "comment" : "Status heading in CLI configuration text output after settings change.",
+    "CLIExperience.configUpdatedOf" : {
+      "comment" : "CLI configuration result. %@ is a scope name.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configuration updated"
+            "value" : "Updated the configuration of %@."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "配置已更新"
+            "value" : "已更新%@的配置。"
+          }
+        }
+      }
+    },
+    "CLIExperience.configurationOf" : {
+      "comment" : "CLI configuration heading. %@ is a scope name such as app settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuration of %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@的配置"
+          }
+        }
+      }
+    },
+    "CLIExperience.customIcon" : {
+      "comment" : "CLI instance icon value.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom image"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义图片"
+          }
+        }
+      }
+    },
+    "CLIExperience.detailsHelp" : {
+      "comment" : "CLI global option help for --details.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show every detail, including full IDs."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示全部细节，包括完整 ID。"
           }
         }
       }
     },
     "CLIExperience.empty" : {
-      "comment" : "Empty-state message in human-readable CLI list output when no items match.",
+      "comment" : "CLI list message when the resource has no entries at all.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No matching results."
+            "value" : "There is nothing here yet."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "没有匹配的结果。"
+            "value" : "这里还没有内容。"
+          }
+        }
+      }
+    },
+    "CLIExperience.emptyFiltered" : {
+      "comment" : "CLI list message when filters match nothing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing matches these filters."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有符合筛选条件的结果。"
           }
         }
       }
@@ -338,19 +626,19 @@
       }
     },
     "CLIExperience.fullDetails" : {
-      "comment" : "Hint in CLI text output when only some available fields are displayed; --json returns every field.",
+      "comment" : "CLI list hint when fields are not shown.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use --json to see all fields."
+            "value" : "Use --details or --json to see every field."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用 --json 查看完整字段。"
+            "value" : "使用 --details 或 --json 查看全部字段。"
           }
         }
       }
@@ -633,6 +921,24 @@
         }
       }
     },
+    "CLIExperience.hiddenColumns" : {
+      "comment" : "CLI list hint when narrow terminals hide columns.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Some columns are hidden to fit; use --details or a wider terminal."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "部分列因宽度不足而隐藏；使用 --details 或加宽终端查看。"
+          }
+        }
+      }
+    },
     "CLIExperience.idPrefixTooShort" : {
       "comment" : "CLI target error for id:<prefix> with fewer than eight characters. %@ is what the user typed.",
       "extractionState" : "manual",
@@ -687,6 +993,438 @@
         }
       }
     },
+    "CLIExperience.labelAccount" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账户"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelDirectory" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Directory"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目录"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelEnvironment" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Environment"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "环境变量"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelExitCode" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit code"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出码"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelGameFolder" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game folder"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏文件夹"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelID" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelIcon" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Icon"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图标"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelInstance" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelInstanceFolder" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance folder"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例文件夹"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelIssue" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Issue"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "问题"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelJava" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Java"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelProblem" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Problem"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "问题"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelRevision" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Revision"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修订"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelRunDirectory" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run directory"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行目录"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelSession" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会话"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelSignIn" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign-in"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelStarted" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Started"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始时间"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelStatus" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "状态"
+          }
+        }
+      }
+    },
+    "CLIExperience.labelVersion" : {
+      "comment" : "CLI text output label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本"
+          }
+        }
+      }
+    },
+    "CLIExperience.launchEnded" : {
+      "comment" : "CLI launch result when the game already ended. %@ is the instance name and short ID.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ has exited."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@已退出。"
+          }
+        }
+      }
+    },
+    "CLIExperience.launchFailed" : {
+      "comment" : "CLI launch result. %@ is the instance name and short ID.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ did not start."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@未能启动。"
+          }
+        }
+      }
+    },
+    "CLIExperience.launchReady" : {
+      "comment" : "CLI launch check result. %@ is the instance name and short ID.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready to launch %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@可以启动。"
+          }
+        }
+      }
+    },
+    "CLIExperience.launchStarted" : {
+      "comment" : "CLI launch result. %@ is the instance name and short ID.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Started %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已启动 %@。"
+          }
+        }
+      }
+    },
+    "CLIExperience.launchWouldStart" : {
+      "comment" : "CLI launch preview, completing a 'Preview (not executed): …' sentence. %@ is the instance name and short ID.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "would launch %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将启动 %@"
+          }
+        }
+      }
+    },
     "CLIExperience.missingArguments" : {
       "comment" : "CLI parse error. %@ lists the missing positional arguments, such as <instance> <name>.",
       "extractionState" : "manual",
@@ -723,24 +1461,6 @@
         }
       }
     },
-    "CLIExperience.more" : {
-      "comment" : "Pagination continuation hint in CLI list output. %@ is the shell-quoted ruri command for retrieving the next page.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "More results: %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "还有更多：%@"
-          }
-        }
-      }
-    },
     "CLIExperience.moreLine" : {
       "comment" : "Last line of CLI group help. %@ lists the commands that show more help.",
       "extractionState" : "manual",
@@ -759,6 +1479,42 @@
         }
       }
     },
+    "CLIExperience.moreWithDetails" : {
+      "comment" : "CLI error hint when some diagnostic details are hidden.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use --details for more information."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 --details 查看更多信息。"
+          }
+        }
+      }
+    },
+    "CLIExperience.needsAttention" : {
+      "comment" : "CLI list section listing entries with problems.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Needs attention:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要处理："
+          }
+        }
+      }
+    },
     "CLIExperience.nextAction" : {
       "comment" : "Suggested follow-up action in CLI failure text output. %@ is a shell-quoted ruri command assembled from the suggested command arguments.",
       "extractionState" : "manual",
@@ -773,6 +1529,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "下一步：%@"
+          }
+        }
+      }
+    },
+    "CLIExperience.nextPage" : {
+      "comment" : "CLI list footer. %@ is the shell command for the next page.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next page: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一页：%@"
           }
         }
       }
@@ -1110,6 +1884,96 @@
         }
       }
     },
+    "CLIExperience.pagePastEnd" : {
+      "comment" : "CLI list message when the offset is past the end. %@ is the total.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing at this offset; there are %@ results in total."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此位置之后没有结果；共 %@ 项。"
+          }
+        }
+      }
+    },
+    "CLIExperience.pageRange" : {
+      "comment" : "CLI list footer. %1$@ and %2$@ are the first and last positions shown; %3$@ is the total.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Showing %1$@–%2$@ of %3$@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示第 %1$@–%2$@ 项，共 %3$@ 项。"
+          }
+        }
+      }
+    },
+    "CLIExperience.pageRangeOpen" : {
+      "comment" : "CLI list footer without a known total. %1$@ and %2$@ are the first and last positions shown.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Showing %1$@–%2$@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示第 %1$@–%2$@ 项。"
+          }
+        }
+      }
+    },
+    "CLIExperience.pendingRecovery" : {
+      "comment" : "CLI error section listing interrupted operations that can be recovered.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pending recovery:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "待恢复事项："
+          }
+        }
+      }
+    },
+    "CLIExperience.preservedFiles" : {
+      "comment" : "CLI error section listing files kept after a failed operation.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preserved files:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留的文件："
+          }
+        }
+      }
+    },
     "CLIExperience.preview" : {
       "comment" : "Status label in CLI mutation/configuration text output for a dry-run preview that was not executed.",
       "extractionState" : "manual",
@@ -1142,6 +2006,168 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "预览（未执行）：%1$@"
+          }
+        }
+      }
+    },
+    "CLIExperience.progressCleaning" : {
+      "comment" : "CLI progress stage.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cleaning up"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在清理"
+          }
+        }
+      }
+    },
+    "CLIExperience.progressCopying" : {
+      "comment" : "CLI progress stage.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copying"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在复制"
+          }
+        }
+      }
+    },
+    "CLIExperience.progressDownloading" : {
+      "comment" : "CLI progress stage.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloading"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在下载"
+          }
+        }
+      }
+    },
+    "CLIExperience.progressFinishing" : {
+      "comment" : "CLI progress stage.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finishing"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在完成"
+          }
+        }
+      }
+    },
+    "CLIExperience.progressOf" : {
+      "comment" : "CLI progress amount. %1$@ is the amount done, %2$@ the total and %3$@ the percentage, such as 1.2 MB of 3.4 MB (35%).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ of %2$@ (%3$@)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ / %2$@（%3$@）"
+          }
+        }
+      }
+    },
+    "CLIExperience.progressPublishing" : {
+      "comment" : "CLI progress stage while files are written to their destination.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Writing"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在写入"
+          }
+        }
+      }
+    },
+    "CLIExperience.progressRecovering" : {
+      "comment" : "CLI progress stage.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recovering"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在恢复"
+          }
+        }
+      }
+    },
+    "CLIExperience.progressVerifying" : {
+      "comment" : "CLI progress stage.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifying"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在校验"
+          }
+        }
+      }
+    },
+    "CLIExperience.progressWorking" : {
+      "comment" : "CLI progress stage when no stage name is known.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Working"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在处理"
           }
         }
       }
@@ -1200,6 +2226,96 @@
         }
       }
     },
+    "CLIExperience.scopeApp" : {
+      "comment" : "CLI configuration scope name for the app scope, used inside sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "app settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用设置"
+          }
+        }
+      }
+    },
+    "CLIExperience.scopeDefaults" : {
+      "comment" : "CLI configuration scope name for the defaults scope, used inside sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "defaults for every instance"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有实例的默认值"
+          }
+        }
+      }
+    },
+    "CLIExperience.scopeInstance" : {
+      "comment" : "CLI configuration scope name. %@ is the instance name and short ID.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "instance %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例 %@"
+          }
+        }
+      }
+    },
+    "CLIExperience.sectionAppearance" : {
+      "comment" : "CLI detail section heading.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外观"
+          }
+        }
+      }
+    },
+    "CLIExperience.sectionCommand" : {
+      "comment" : "CLI detail section heading for the launch command line.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Command"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "命令"
+          }
+        }
+      }
+    },
     "CLIExperience.sectionContent" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1230,6 +2346,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "实例"
+          }
+        }
+      }
+    },
+    "CLIExperience.sectionJVMTuning" : {
+      "comment" : "CLI detail section heading.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM tuning"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JVM 调优"
+          }
+        }
+      }
+    },
+    "CLIExperience.sectionLocations" : {
+      "comment" : "CLI detail section heading.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Locations"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "位置"
           }
         }
       }
@@ -1298,6 +2450,258 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "存档"
+          }
+        }
+      }
+    },
+    "CLIExperience.sessionCancelled" : {
+      "comment" : "CLI game session state.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelled"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已取消"
+          }
+        }
+      }
+    },
+    "CLIExperience.sessionFailed" : {
+      "comment" : "CLI game session state.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "失败"
+          }
+        }
+      }
+    },
+    "CLIExperience.sessionInterrupted" : {
+      "comment" : "CLI game session state.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interrupted"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已中断"
+          }
+        }
+      }
+    },
+    "CLIExperience.sessionPreparing" : {
+      "comment" : "CLI game session state.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "准备中"
+          }
+        }
+      }
+    },
+    "CLIExperience.sessionRunning" : {
+      "comment" : "CLI game session state.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Running"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行中"
+          }
+        }
+      }
+    },
+    "CLIExperience.sessionStopped" : {
+      "comment" : "CLI game session state.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopped"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已停止"
+          }
+        }
+      }
+    },
+    "CLIExperience.sessionSucceeded" : {
+      "comment" : "CLI game session state.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finished"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已结束"
+          }
+        }
+      }
+    },
+    "CLIExperience.signInAtLaunch" : {
+      "comment" : "CLI launch check value for an online account.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checked when the game starts"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动游戏时检查"
+          }
+        }
+      }
+    },
+    "CLIExperience.signInChecked" : {
+      "comment" : "CLI launch check value for an account that needs no sign-in check.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checked"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已检查"
+          }
+        }
+      }
+    },
+    "CLIExperience.sourceOf" : {
+      "comment" : "CLI configuration change row for where a group's value comes from. %@ is a configuration group name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ source"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 来源"
+          }
+        }
+      }
+    },
+    "CLIExperience.statusFavorite" : {
+      "comment" : "CLI instance status.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favorite"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已收藏"
+          }
+        }
+      }
+    },
+    "CLIExperience.statusInstalled" : {
+      "comment" : "CLI instance status.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已安装"
+          }
+        }
+      }
+    },
+    "CLIExperience.statusNeedsAttention" : {
+      "comment" : "CLI instance status.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Needs attention"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要处理"
+          }
+        }
+      }
+    },
+    "CLIExperience.statusNotInstalled" : {
+      "comment" : "CLI instance status.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not installed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未安装"
           }
         }
       }
@@ -1530,6 +2934,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@是否要输入“%2$@”？"
+          }
+        }
+      }
+    },
+    "CLIExperience.withoutFilters" : {
+      "comment" : "CLI list hint. %@ is the same command without its filters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without filters: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不加筛选：%@"
           }
         }
       }

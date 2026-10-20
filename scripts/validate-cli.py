@@ -87,19 +87,25 @@ def validate(app):
 
         # Default text must be independently usable; JSON/NDJSON retain their contract.
         readable = command([executable, "instance", "list", "--data-dir", data], env=environment).decode()
-        assert created["instance"]["id"] in readable and "Package fixture" in readable
+        short = created["instance"]["id"].replace("-", "").lower()[:8]
+        assert short in readable and "Package fixture" in readable, readable
         assert not readable.lstrip().startswith("{")
+        detailed = command([executable, "instance", "list", "--details", "--data-dir", data], env=environment).decode()
+        assert created["instance"]["id"] in detailed
+        assert invoke(executable, "instance", "show", short)["name"] == "Package fixture"
         original_state = (data / "state.json").read_bytes()
         preview = command([executable, "config", "set", "concurrentDownloads", "9", "--scope", "app",
                            "--dry-run", "--data-dir", data], env=environment).decode()
-        assert "7 → 9" in preview and "revision:" in preview
+        assert "7 → 9" in preview and "Revision" not in preview
         assert "before" not in preview and "after" not in preview
         assert "Preview: configuration changes" in preview
         assert not re.search(r"[\u3400-\u9fff]", preview)
+        assert "Revision" in command([executable, "config", "set", "concurrentDownloads", "9", "--scope", "app",
+                                      "--dry-run", "--details", "--data-dir", data], env=environment).decode()
         assert (data / "state.json").read_bytes() == original_state
         current = command([executable, "config", "get", "concurrentDownloads", "--scope", "app",
                            "--data-dir", data], env=environment).decode()
-        assert "concurrentDownloads" in current and "7" in current and "source" in current
+        assert "concurrentDownloads" in current and "7" in current and "Source" in current
         events = command([executable, "app", "info", "--output", "ndjson", "--data-dir", data], env=environment).splitlines()
         assert len(events) == 1 and json.loads(events[0])["type"] == "result"
         bad = subprocess.run([executable, "unknown-command"], env=environment, capture_output=True, timeout=45)

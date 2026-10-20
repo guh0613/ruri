@@ -20,7 +20,7 @@ struct SchemaContractTests {
             try command.request.validate()
             let descriptor = try Value.encode(spec)
             let input = descriptor["inputSchema"]["properties"]["options"]["properties"]
-            #expect(Set(input.object!.keys) == Set(spec.options.map(\.name) + ["json", "output", "data-dir", "language", "quiet"]))
+            #expect(Set(input.object!.keys) == Set(spec.options.map(\.name) + ["json", "output", "data-dir", "language", "quiet", "details", "color"]))
             #expect(descriptor["resultSchema"]["properties"]["schemaVersion"]["const"] == .integer(1))
             #expect(descriptor["resultSchema"]["properties"]["error"]["anyOf"] != .null)
             if spec.operands.isEmpty { #expect(descriptor["inputSchema"]["properties"]["operands"]["prefixItems"] == .null) }

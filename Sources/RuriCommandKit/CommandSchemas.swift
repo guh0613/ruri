@@ -78,7 +78,8 @@ enum CommandSchemas {
 
     static func input(_ spec: CommandSpec) -> Value {
         var options = Dictionary(uniqueKeysWithValues: spec.options.map { ($0.name, parameter($0)) })
-        options.merge(["json": boolean, "output": .object(["enum": .array(["text", "json", "ndjson"].map(Value.string))]), "data-dir": string, "language": string, "quiet": boolean]) { old, _ in old }
+        options.merge(["json": boolean, "output": .object(["enum": .array(["text", "json", "ndjson"].map(Value.string))]), "data-dir": string, "language": string, "quiet": boolean, "details": boolean,
+                       "color": .object(["enum": .array(CommonOptions.colorModes.map(Value.string))])]) { old, _ in old }
         var optionSchema = object(options, required: spec.options.filter(\.required).map(\.name)).object!
         optionSchema["additionalProperties"] = .bool(false)
         var operands: [String: Value] = ["type": .string("array"), "minItems": .integer(spec.operands.filter(\.required).count), "maxItems": .integer(spec.operands.count)]

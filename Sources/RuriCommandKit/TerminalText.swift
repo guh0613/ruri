@@ -136,7 +136,11 @@ enum TerminalText {
         }
         for (label, text) in rows {
             let wrapped = text.isEmpty ? [] : wrap(text, width: max(20, total - textColumn))
-            if width(label) > labelWidth {
+            // A word too long for the column, such as an ID, gets a line of its own.
+            if wrapped.contains(where: { width($0) > total - textColumn }) {
+                lines.append(margin + label)
+                lines += wrap(text, width: total - indent - 2).map { margin + "  " + $0 }
+            } else if width(label) > labelWidth {
                 lines.append(margin + label)
                 lines += wrapped.map { hanging + $0 }
             } else if let first = wrapped.first {

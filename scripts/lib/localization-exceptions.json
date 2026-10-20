@@ -1048,21 +1048,6 @@
     "reason": "Stable CLI command or configuration field identifier in text output."
   },
   {
-    "file": "Sources/RuriCommandKit/CommandTextRenderer.swift",
-    "literal": "\"scope: \"",
-    "reason": "Stable CLI command or configuration field identifier in text output."
-  },
-  {
-    "file": "Sources/RuriCommandKit/CommandTextRenderer.swift",
-    "literal": "\"revision: \"",
-    "reason": "Stable CLI command or configuration field identifier in text output."
-  },
-  {
-    "file": "Sources/RuriCommandKit/CommandTextRenderer.swift",
-    "literal": "\".source: \"",
-    "reason": "Stable CLI command or configuration field identifier in text output."
-  },
-  {
     "file": "Sources/RuriMonitorRuntime/Sessions/GameActivityEvidence.swift",
     "literal": "#\"^(?:\\[[0-9:]+\\] )?\\[(?:Render thread|Client thread)/(?:INFO|WARN|ERROR)\\](?: \\[[^\\]]+\\])?:? (.*)$\"#",
     "reason": "SQL syntax and fixed game log protocol patterns; not user-facing text."
@@ -2036,5 +2021,10 @@
     "file": "Sources/RuriCore/Sessions/GameHistoryStore.swift",
     "literal": "\"SELECT id, created, finished FROM sessions WHERE instance_id = ? ORDER BY created DESC\"",
     "reason": "SQLite syntax and schema, not user-facing prose."
+  },
+  {
+    "file": "Sources/RuriCommandKit/CommandProtocol.swift",
+    "literal": "\"--color \"",
+    "reason": "Public command path or invocation syntax; not a translated message."
   }
 ]

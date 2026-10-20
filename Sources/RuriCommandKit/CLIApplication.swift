@@ -32,7 +32,7 @@ public enum CLIApplication {
 
     @MainActor private static func runLocalized(_ invocation: CommandLineInvocation, write: @escaping @Sendable (Data, Bool) -> Void, terminal: TerminalProfile) async -> Int32 {
         let args = invocation.arguments
-        var output = CommandOutput(format: invocation.format, quiet: invocation.quiet, write: write, terminal: terminal)
+        var output = CommandOutput(format: invocation.format, quiet: invocation.quiet, details: invocation.details, color: invocation.color, write: write, terminal: terminal)
         output.setUsage(invocation.path)
         var activeRequest: CommandRequest?
         do {
@@ -83,7 +83,8 @@ public enum CLIApplication {
             }
             let parsed = command.request
             try parsed.validate()
-            output = CommandOutput(format: parsed.common.json ? .json : .init(rawValue: parsed.common.output)!, quiet: parsed.common.quiet, write: write, terminal: terminal)
+            output = CommandOutput(format: parsed.common.json ? .json : .init(rawValue: parsed.common.output)!, quiet: parsed.common.quiet, details: parsed.common.details,
+                                   color: parsed.common.color, write: write, terminal: terminal)
             output.setUsage(parsed.spec.path)
             output.setRequest(parsed)
             let request = try CommandTargets.resolve(parsed)

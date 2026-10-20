@@ -11,12 +11,16 @@ struct CommonOptions: ParsableArguments {
     @Option(help: ArgumentHelp(Messages.CLIInterface.dataDirectoryHelp.localized), completion: .directory) var dataDir: String?
     @Option(help: ArgumentHelp(Messages.CLIInterface.messageLanguageHelp.localized), completion: .list(LocalizationContext.commandLineLanguages)) var language: String?
     @Flag(help: ArgumentHelp(Messages.CLIInterface.quietProgressHelp.localized)) var quiet = false
+    @Flag(help: ArgumentHelp(Messages.CLIExperience.detailsHelp.localized)) var details = false
+    @Option(help: ArgumentHelp(Messages.CLIExperience.colorHelp.localized), completion: .list(Self.colorModes)) var color: String = "auto"
 
     /// Options every command accepts, before, between or after command names.
-    static let flags: Set<String> = ["--json", "--quiet", "--help", "-h", "--help-hidden"]
-    static let valued: Set<String> = ["--output", "--data-dir", "--language"]
+    static let flags: Set<String> = ["--json", "--quiet", "--details", "--help", "-h", "--help-hidden"]
+    static let valued: Set<String> = ["--output", "--data-dir", "--language", "--color"]
+    static let colorModes = ["auto", "always", "never"]
     static var synopsis: [String] {
-        ["--json", "--output text|json|ndjson", "--data-dir <path>", "--language " + LocalizationContext.commandLineLanguages.joined(separator: "|"), "--quiet", "--help"]
+        ["--json", "--output text|json|ndjson", "--data-dir <path>", "--language " + LocalizationContext.commandLineLanguages.joined(separator: "|"),
+         "--details", "--color " + colorModes.joined(separator: "|"), "--quiet", "--help"]
     }
 }
 
@@ -138,6 +142,9 @@ struct CommandRequest: Sendable {
         }
         guard ["text", "json", "ndjson"].contains(common.output), !common.json || ["text", "json"].contains(common.output) else {
             throw OperationFailure("INVALID_ARGUMENT", Messages.CLIInterface.invalidOutputFormatCombination.localized)
+        }
+        guard CommonOptions.colorModes.contains(common.color) else {
+            throw CommandLineInvocation.failure(Messages.CLIInterface.invalidOptionChoice("color", CommonOptions.colorModes.joined(separator: ", ")).localized, path: spec.path)
         }
         for option in spec.options {
             if option.required {

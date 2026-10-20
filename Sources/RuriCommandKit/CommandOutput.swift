@@ -8,35 +8,46 @@ final class CommandOutput: @unchecked Sendable {
     private let write: @Sendable (Data, Bool) -> Void
     private let format: Format
     private let quiet: Bool
+    private let details: Bool
+    private let color: String?
     private let localization = LocalizationContext.current
     private var finished = false
     private var redactor = GameLogRedactor()
     private var request: CommandRequest?
     private var usagePath: [String]?
     let terminal: TerminalProfile
-    private var lastProgress: Value?
-    private var lastProgressTime = Date.distantPast
+    private var progress = Progress()
+    private let clock: @Sendable () -> Date
+
+    /// Text progress on stderr: rewritten in place on a terminal, otherwise
+    /// printed at each new stage, at completion and at most every 10 seconds.
+    private struct Progress {
+        var stage: String?
+        var stageStarted = Date.distantPast
+        var lastWrite = Date.distantPast
+        var lineShown = false
+    }
+
     func setRequest(_ request: CommandRequest) { withOutputContext { self.request = request } }
     /// The command whose usage an argument error shows.
     func setUsage(_ path: [String]) { withOutputContext { usagePath = path } }
-    init(format: Format, quiet: Bool = false, write: @escaping @Sendable (Data, Bool) -> Void = { data, error in
+    init(format: Format, quiet: Bool = false, details: Bool = false, color: String? = nil, write: @escaping @Sendable (Data, Bool) -> Void = { data, error in
         try? (error ? FileHandle.standardError : FileHandle.standardOutput).write(contentsOf: data)
-    }, terminal: TerminalProfile = .pipe) { self.format = format; self.quiet = quiet; self.write = write; self.terminal = terminal }
+    }, terminal: TerminalProfile = .pipe, clock: @escaping @Sendable () -> Date = { Date() }) {
+        self.format = format; self.quiet = quiet; self.details = details; self.color = color; self.write = write; self.terminal = terminal; self.clock = clock
+    }
     public func addSecrets(_ values: [String]) { withOutputContext { redactor.addSecrets(values) } }
     public func event(_ type: String, _ value: Value) {
         withOutputContext {
             guard !finished else { return }
             if format == .ndjson { emit(.object(["schemaVersion": .integer(1), "type": .string(type), "data": clean(value)])) }
-            else if format == .text && type == "log" { write(Data((clean(value)["text"].string ?? "").utf8), false) }
-            else if !quiet {
-                if type == "progress" {
-                    let stage = value["stage"] != .null ? value["stage"] : value["phase"]
-                    let oldStage = lastProgress?["stage"] != nil && lastProgress?["stage"] != .null ? lastProgress?["stage"] : lastProgress?["phase"]
-                    let complete = value["total"].int.map { $0 > 0 && (value["completed"].int ?? 0) >= $0 } ?? false
-                    guard lastProgress == nil || stage != oldStage || (complete && value != lastProgress) || Date().timeIntervalSince(lastProgressTime) >= 1 else { return }
-                    lastProgress = value; lastProgressTime = Date()
-                }
-                write(Data((CommandTextRenderer(request: request).event(type, clean(value)) + "\n").utf8), true)
+            else if format == .text && type == "log" { clearProgress(); write(Data((clean(value)["text"].string ?? "").utf8), false) }
+            else if format == .text && !quiet {
+                if type == "progress" || type == "session" { showProgress(type, clean(value)); return }
+                // The result reports what other events announce.
+                if type == "instanceCreated" { return }
+                clearProgress()
+                write(Data((renderer(terminal.error).event(type, clean(value)) + "\n").utf8), true)
             }
         }
     }
@@ -47,11 +58,12 @@ final class CommandOutput: @unchecked Sendable {
             let value: Value = .object(["schemaVersion": .integer(1), "ok": .bool(error == nil), "data": clean(data),
                 "warnings": .array(warnings.map { .string(redactor.redact($0)) }), "error": error.flatMap { try? Value.encode($0) }.map(clean) ?? .null])
             if format == .text {
-                let renderer = CommandTextRenderer(request: request, usagePath: usagePath)
-                let text = error != nil ? renderer.error(value["error"]) : renderer.result(clean(data))
+                clearProgress()
+                let text = error != nil ? renderer(terminal.error).error(value["error"]) : renderer(terminal.output).result(clean(data))
                 if !text.isEmpty { write(Data((text + (text.hasSuffix("\n") ? "" : "\n")).utf8), error != nil) }
+                let style = renderer(terminal.error).style
                 for warning in warnings {
-                    var line = Data(Messages.CLIExperience.warning(redactor.redact(warning)).localized.utf8)
+                    var line = Data(style.warning(Messages.CLIExperience.warning(redactor.redact(warning)).localized).utf8)
                     line.append(10)
                     write(line, true)
                 }
@@ -60,6 +72,38 @@ final class CommandOutput: @unchecked Sendable {
         }
     }
     func help(_ text: String) { withOutputContext { write(Data((text + "\n").utf8), false) } }
+
+    private func renderer(_ stream: TerminalProfile.Stream) -> CommandTextRenderer {
+        CommandTextRenderer(request: request, usagePath: usagePath,
+                            layout: .init(width: stream.width, style: .init(colors: terminal.colors(stream, mode: color)), details: details))
+    }
+
+    private func showProgress(_ type: String, _ value: Value) {
+        let now = clock(), stage = CommandTextRenderer.progressStage(type, value)
+        let changed = stage != progress.stage
+        if changed { progress.stage = stage; progress.stageStarted = now }
+        let complete = value["total"].int.map { $0 > 0 && (value["completed"].int ?? 0) >= $0 } ?? false
+            || value["totalBytes"].int.map { $0 > 0 && (value["bytesCopied"].int ?? value["receivedBytes"].int ?? 0) >= $0 } ?? false
+        let interval: TimeInterval = terminal.error.isTerminal ? 0.1 : 10
+        guard changed || complete || now.timeIntervalSince(progress.lastWrite) >= interval else { return }
+        progress.lastWrite = now
+        let line = renderer(terminal.error).progress(type, value, elapsed: now.timeIntervalSince(progress.stageStarted))
+        if terminal.error.isTerminal {
+            // One line, rewritten in place; it must not wrap or it cannot be cleared.
+            write(Data(("\r\u{1B}[2K" + TerminalText.truncate(line, to: max(1, terminal.error.width - 1))).utf8), true)
+            progress.lineShown = true
+        } else {
+            write(Data((line + "\n").utf8), true)
+        }
+    }
+
+    /// Removes the in-place progress line before anything else is written.
+    private func clearProgress() {
+        guard progress.lineShown else { return }
+        write(Data("\r\u{1B}[2K".utf8), true)
+        progress.lineShown = false
+    }
+
     private func clean(_ value: Value) -> Value {
         switch value {
         case .string(let s): .string(redactor.redact(s))

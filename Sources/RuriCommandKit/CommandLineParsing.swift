@@ -17,6 +17,8 @@ struct CommandLineInvocation {
     var format: CommandOutput.Format = .text
     var quiet = false
     var language: String?
+    var details = false
+    var color: String?
 
     init(_ input: [String]) {
         var path: [String] = [], moved: [String] = [], index = 0
@@ -66,11 +68,13 @@ struct CommandLineInvocation {
             if ["--help", "-h", "--help-hidden"].contains(argument) { helpRequested = true }
             if argument == "--json" { format = .json }
             if argument == "--quiet" { quiet = true }
+            if argument == "--details" { details = true }
             guard CommonOptions.valued.contains(name) else { continue }
             var value: String?
             if let separator = argument.firstIndex(of: "=") { value = String(argument[argument.index(after: separator)...]) }
             else if index < options.count, !options[index].hasPrefix("--") { value = options[index]; index += 1 }
             if name == "--language" { language = value }
+            if name == "--color" { color = value }
             if name == "--output", format != .json, let value, let selected = CommandOutput.Format(rawValue: value) { format = selected }
         }
     }
