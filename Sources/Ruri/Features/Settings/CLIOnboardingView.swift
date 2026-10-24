@@ -29,12 +29,8 @@ struct CLIOnboardingView: View {
                     Text(verbatim: CLISetupModel.helpCommand)
                         .font(.system(.body, design: .monospaced)).textSelection(.enabled)
                     Spacer(minLength: 0)
-                    Button { setup.copyHelpCommand() } label: {
-                        Label(setup.copied ? Messages.CLISetup.copied.localized : Messages.CLISetup.copyCommand.localized,
-                              systemImage: setup.copied ? "checkmark" : "doc.on.doc")
-                    }
-                    .labelStyle(.iconOnly)
-                    .help(setup.copied ? Messages.CLISetup.copied.localized : Messages.CLISetup.copyCommand.localized)
+                    CopyButton(Messages.CLISetup.copyCommand.localized, text: CLISetupModel.helpCommand)
+                        .labelStyle(.iconOnly)
                 }
                 .padding(12)
                 .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 10))

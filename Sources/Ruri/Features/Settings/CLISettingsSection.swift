@@ -30,9 +30,7 @@ struct CLISettingsSection: View {
                 HStack {
                     Text(verbatim: CLISetupModel.helpCommand).font(.system(.body, design: .monospaced)).textSelection(.enabled)
                     Spacer()
-                    Button(setup.copied ? Messages.CLISetup.copied.localized : Messages.CLISetup.copyCommand.localized) {
-                        setup.copyHelpCommand()
-                    }
+                    CopyButton(Messages.CLISetup.copyCommand.localized, text: CLISetupModel.helpCommand).labelStyle(.titleOnly)
                 }
             }
             if let issue = setup.issue { Text(issue).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
@@ -67,8 +65,9 @@ struct CLISettingsSection: View {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 8) {
                         if setup.packageManager == nil {
-                            Button(Messages.CLISetup.copyDirectCommand.localized) {
-                                if let executable = RuriInstallation.cliExecutable { CLISetupModel.copy(CLIInstallation.shellQuote(executable.path) + " --help") }
+                            if let executable = RuriInstallation.cliExecutable {
+                                CopyButton(Messages.CLISetup.copyDirectCommand.localized, text: CLIInstallation.shellQuote(executable.path) + " --help")
+                                    .labelStyle(.titleOnly)
                             }
                             if setup.ready { Button(Messages.CLISetup.reinstall.localized) { setup.change(.install) } }
                         }

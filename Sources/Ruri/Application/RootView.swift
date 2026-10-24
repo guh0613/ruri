@@ -83,6 +83,7 @@ struct RootView: View {
                 }
             }
         }
+        .copyNotices()
         .frame(minWidth: minimumWindowWidth, minHeight: 600)
         .sheet(isPresented: Bindable(model).showCLISetup) { CLIOnboardingView() }
         .sheet(isPresented: Bindable(model).showCreate) { CreateInstanceView() }

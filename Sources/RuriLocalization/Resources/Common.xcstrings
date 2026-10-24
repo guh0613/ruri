@@ -19,6 +19,24 @@
         }
       }
     },
+    "Common.copied" : {
+      "comment" : "Brief confirmation after text is copied from a menu, shown at the bottom of the window and announced by VoiceOver.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copied"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已复制"
+          }
+        }
+      }
+    },
     "Common.done" : {
       "comment" : "Shared completion button.",
       "extractionState" : "manual",

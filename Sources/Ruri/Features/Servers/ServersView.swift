@@ -494,7 +494,7 @@ struct ServerContextActions: View {
             navigation.editor = .init(item: item, status: navigation.responses[item.id])
         }.disabled(model.readOnly)
         Divider()
-        Button(Messages.Servers.copyAddress.localized, systemImage: "doc.on.doc") { copyServerAddress(item.address) }
+        CopyMenuButton(Messages.Servers.copyAddress.localized, text: item.address.authority)
         Button(Messages.Servers.refreshStatus.localized, systemImage: "arrow.clockwise") { Task { await navigation.refresh(item.address) } }
             .disabled(navigation.querying.contains(item.id))
         if item.preference?.saved == true {
@@ -503,11 +503,6 @@ struct ServerContextActions: View {
                 .disabled(model.readOnly)
         }
     }
-}
-
-func copyServerAddress(_ address: ServerAddress) {
-    NSPasteboard.general.clearContents()
-    NSPasteboard.general.setString(address.authority, forType: .string)
 }
 
 /// The server's own 64-pixel favicon, drawn crisply, or a neutral tile.

@@ -1,4 +1,4 @@
-import AppKit
+import Foundation
 import Observation
 import RuriCore
 import RuriLocalization
@@ -14,7 +14,6 @@ import RuriLocalization
     private(set) var packageManager: String?
     private(set) var working = false
     private(set) var issue: String?
-    var copied = false
     var ready: Bool { packageManager != nil || (installed && legacyLink == nil) }
     var repair: Bool { owned || legacyLink != nil }
     private let installation: CLIInstallation?
@@ -22,16 +21,6 @@ import RuriLocalization
     init(installation: CLIInstallation? = nil) {
         self.installation = installation
         refresh()
-    }
-
-    func copyHelpCommand() {
-        Self.copy(Self.helpCommand)
-        copied = true
-    }
-
-    static func copy(_ command: String) {
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(command, forType: .string)
     }
 
     func refresh() {
@@ -47,7 +36,7 @@ import RuriLocalization
 
     func change(_ action: CLIInstallation.Action) {
         guard !working else { return }
-        working = true; issue = nil; copied = false
+        working = true; issue = nil
         Task {
             defer { working = false; refresh() }
             do {

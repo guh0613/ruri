@@ -174,7 +174,7 @@ private struct AccountDetailView: View {
                         }
                         Divider()
                     }
-                    Button(Messages.AccountCenter.copyUUID.localized, systemImage: "doc.on.doc") { copyUUID() }
+                    CopyMenuButton(Messages.AccountCenter.copyUUID.localized, text: account.uuid)
                     Divider()
                     if account.kind == .external {
                         Button(Messages.AppAccountsView.removeLogin.localized, systemImage: "rectangle.portrait.and.arrow.right", role: .destructive, action: logout)
@@ -198,8 +198,8 @@ private struct AccountDetailView: View {
                     detailRow("UUID") {
                         Text(account.uuid).font(.body.monospaced()).textSelection(.enabled)
                     } trailing: {
-                        Button { copyUUID() } label: { Image(systemName: "doc.on.doc") }
-                            .buttonStyle(.borderless).help(Messages.AccountCenter.copyUUID.localized).accessibilityLabel(Messages.AccountCenter.copyUUID.localized)
+                        CopyButton(Messages.AccountCenter.copyUUID.localized, text: account.uuid)
+                            .labelStyle(.iconOnly).buttonStyle(.borderless)
                     }
                     if let login = account.externalLogin {
                         Divider().padding(.leading, 20)
@@ -222,8 +222,5 @@ private struct AccountDetailView: View {
     }
     private func detailRow<Value: View>(_ label: String, @ViewBuilder value: () -> Value) -> some View {
         detailRow(label, value: value) { EmptyView() }
-    }
-    private func copyUUID() {
-        NSPasteboard.general.clearContents(); NSPasteboard.general.setString(account.uuid, forType: .string)
     }
 }

@@ -82,7 +82,7 @@ struct HomePinnedSection: View {
                 Button(Messages.Servers.unfavorite.localized, systemImage: "pin.slash") { servers.toggleFavorite(item, model: model) }
                     .disabled(model.readOnly)
                 Divider()
-                Button(Messages.Servers.copyAddress.localized, systemImage: "doc.on.doc") { copyServerAddress(item.address) }
+                CopyMenuButton(Messages.Servers.copyAddress.localized, text: item.address.authority)
             }.labelStyle(.titleAndIcon)
         }
     }

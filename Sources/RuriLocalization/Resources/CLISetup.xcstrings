@@ -91,24 +91,6 @@
         }
       }
     },
-    "CLISetup.copied" : {
-      "comment" : "Temporary feedback on the command-copy button after copying in settings or onboarding.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copied"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已复制"
-          }
-        }
-      }
-    },
     "CLISetup.copyCommand" : {
       "comment" : "Copy-example-command button label and tooltip in command-line settings and onboarding.",
       "extractionState" : "manual",

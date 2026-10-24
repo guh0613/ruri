@@ -33,12 +33,6 @@ extension Messages {
         public static var authorizeUninstall: LocalizedMessage {
             .init(key: "CLISetup.authorizeUninstall", table: "CLISetup", fallback: "Ruri 需要移除已安装的命令行链接。这不会删除应用或游戏数据。")
         }
-        /// 已复制
-        ///
-        /// Resource: `CLISetup.CLISetup.copied`.
-        public static var copied: LocalizedMessage {
-            .init(key: "CLISetup.copied", table: "CLISetup", fallback: "已复制")
-        }
         /// 复制命令
         ///
         /// Resource: `CLISetup.CLISetup.copyCommand`.
@@ -166,7 +160,6 @@ extension Messages {
             "CLISetup:CLISetup.authorizationRequired": .init("安装目录需要管理员权限。请打开 Ruri“设置”中的“命令行与自动化”，完成系统授权后安装或卸载。也可用 --bin-dir 指定已有且可写入的命令目录。", []),
             "CLISetup:CLISetup.authorizeInstall": .init("Ruri 将在 /usr/local/bin 安装命令行工具。安装后即可在终端使用 ruri，无需手动配置 PATH。", []),
             "CLISetup:CLISetup.authorizeUninstall": .init("Ruri 需要移除已安装的命令行链接。这不会删除应用或游戏数据。", []),
-            "CLISetup:CLISetup.copied": .init("已复制", []),
             "CLISetup:CLISetup.copyCommand": .init("复制命令", []),
             "CLISetup:CLISetup.copyDirectCommand": .init("复制完整命令", []),
             "CLISetup:CLISetup.details": .init("安装详情", []),

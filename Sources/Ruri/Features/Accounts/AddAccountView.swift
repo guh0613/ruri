@@ -86,7 +86,7 @@ struct AddAccountView: View {
                 HStack(spacing: 16) {
                     Text(code.user_code).font(.system(size: 32, weight: .semibold, design: .monospaced)).textSelection(.enabled)
                     Spacer()
-                    Button(Messages.AppAddAccountView.copyCode.localized) { copyCode(code) }
+                    CopyButton(Messages.AppAddAccountView.copyCode.localized, text: code.user_code).labelStyle(.titleOnly)
                 }.padding(16).background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
                 Button(Messages.AppAddAccountView.openMicrosoftLogin.localized, systemImage: "arrow.up.right.square") { openMicrosoftLogin(code) }
                 Text(Messages.AppAddAccountView.waitingMicrosoftLogin.localized).font(.callout).foregroundStyle(.secondary)
@@ -100,12 +100,8 @@ struct AddAccountView: View {
             }
         }
     }
-    private func copyCode(_ code: DeviceCode) {
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(code.user_code, forType: .string)
-    }
     private func openMicrosoftLogin(_ code: DeviceCode) {
-        copyCode(code)
+        Clipboard.copy(code.user_code)
         NSWorkspace.shared.open(code.verification_uri)
     }
     private func login() {

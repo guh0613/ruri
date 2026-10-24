@@ -104,6 +104,8 @@ struct LauncherEntryActions: View {
     @Environment(AppModel.self) private var model
     let entry: LauncherLogEntry
     var includesSession = true
+    /// Shown as menu commands rather than buttons that stay on screen.
+    var inMenu = true
     var body: some View {
         if entry.status == .running {
             Button(Messages.LauncherLog.cancelTask.localized) { model.operation?.cancel() }
@@ -113,10 +115,7 @@ struct LauncherEntryActions: View {
         if let url = entry.fileURL {
             Button(Messages.AppRootView.showInFinder.localized) { NSWorkspace.shared.activateFileViewerSelecting([url]) }
         }
-        Button {
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(GameShareRedactor().redact(entry.plainText), forType: .string)
-        } label: { Label(Messages.LauncherLog.copy.localized, systemImage: "doc.on.doc") }
-            .help(Messages.LauncherLog.copy.localized)
+        if inMenu { CopyMenuButton(Messages.LauncherLog.copy.localized, text: GameShareRedactor().redact(entry.plainText)) }
+        else { CopyButton(Messages.LauncherLog.copy.localized, text: GameShareRedactor().redact(entry.plainText)) }
     }
 }

@@ -90,9 +90,8 @@ struct ServerDetailView: View {
                 HStack(spacing: 6) {
                     Text(item.address.authority).font(.callout.monospaced()).foregroundStyle(.secondary)
                         .lineLimit(1).truncationMode(.middle).textSelection(.enabled)
-                    Button { copyServerAddress(item.address) } label: { Image(systemName: "doc.on.doc").font(.caption) }
-                        .buttonStyle(.borderless).foregroundStyle(.secondary)
-                        .help(Messages.Servers.copyAddress.localized).accessibilityLabel(Messages.Servers.copyAddress.localized)
+                    CopyButton(Messages.Servers.copyAddress.localized, text: item.address.authority)
+                        .labelStyle(.iconOnly).font(.caption).buttonStyle(.borderless).foregroundStyle(.secondary)
                 }
                 statusLine
             }
@@ -125,7 +124,7 @@ struct ServerDetailView: View {
             }.disabled(model.readOnly)
             Menu {
                 Group {
-                    Button(Messages.Servers.copyAddress.localized, systemImage: "doc.on.doc") { copyServerAddress(item.address) }
+                    CopyMenuButton(Messages.Servers.copyAddress.localized, text: item.address.authority)
                     Button(Messages.Servers.refreshStatus.localized, systemImage: "arrow.clockwise") { Task { await navigation.refresh(item.address) } }
                         .disabled(querying)
                     if let instance = selectedInstance {

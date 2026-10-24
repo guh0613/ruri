@@ -9,6 +9,12 @@ extension Messages {
         public static var cancel: LocalizedMessage {
             .init(key: "Common.cancel", table: "Common", fallback: "取消")
         }
+        /// 已复制
+        ///
+        /// Resource: `Common.Common.copied`.
+        public static var copied: LocalizedMessage {
+            .init(key: "Common.copied", table: "Common", fallback: "已复制")
+        }
         /// 完成
         ///
         /// Resource: `Common.Common.done`.
@@ -65,6 +71,7 @@ extension Messages {
         }
         static let definitions: [String: MessageDefinition] = [
             "Common:Common.cancel": .init("取消", []),
+            "Common:Common.copied": .init("已复制", []),
             "Common:Common.done": .init("完成", []),
             "Common:Common.fileCount": .init("%1$lld 个文件", [.integer]),
             "Common:Common.filesAndSize": .init("%1$lld 个文件 · %2$@", [.integer, .text]),

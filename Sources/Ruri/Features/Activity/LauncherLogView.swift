@@ -252,7 +252,7 @@ private struct LauncherLogDetail: View {
     private var actions: some View {
         HStack(spacing: 12) {
             if let id = entry.sessionID { LauncherSessionButton(sessionID: id).buttonStyle(.bordered) }
-            LauncherEntryActions(entry: entry, includesSession: false).buttonStyle(.borderless)
+            LauncherEntryActions(entry: entry, includesSession: false, inMenu: false).buttonStyle(.borderless)
         }.labelStyle(.titleAndIcon).controlSize(.small)
     }
 }

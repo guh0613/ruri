@@ -57,6 +57,7 @@ struct ServerManagerView: View {
                     DelayedProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
+            .copyNotices()
         } footer: {
             HStack(spacing: 12) {
                 if let snapshot, !snapshot.entries.isEmpty {
@@ -145,7 +146,7 @@ struct ServerManagerView: View {
             .disabled(readOnly || last)
         if let address = entry.endpoint {
             Divider()
-            Button(Messages.Servers.copyAddress.localized, systemImage: "doc.on.doc") { copyServerAddress(address) }
+            CopyMenuButton(Messages.Servers.copyAddress.localized, text: address.authority)
             Button(Messages.Servers.showInServers.localized, systemImage: "server.rack") { reveal = address; dismiss() }
         }
         Divider()
