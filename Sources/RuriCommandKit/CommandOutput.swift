@@ -2,7 +2,7 @@ import Foundation
 import RuriCore
 import RuriLocalization
 
-final class CommandOutput: @unchecked Sendable {
+package final class CommandOutput: @unchecked Sendable {
     enum Format: String, Sendable { case text, json, ndjson }
     private let lock = NSLock()
     private let write: @Sendable (Data, Bool) -> Void
@@ -57,6 +57,19 @@ final class CommandOutput: @unchecked Sendable {
                 if type == "instanceCreated" { return }
                 clearProgress()
                 write(Data((renderer(terminal.error).event(type, clean(value)) + "\n").utf8), true)
+            }
+        }
+    }
+    /// Required interaction stays visible; JSON keeps stdout for the final result.
+    package func interaction(_ type: String, _ value: Value) {
+        withOutputContext {
+            guard !finished else { return }
+            let type = redactor.redact(type), value = clean(value)
+            if format == .ndjson {
+                emit(.object(["schemaVersion": .integer(1), "type": .string(type), "data": value]))
+            } else {
+                clearProgress()
+                write(Data((renderer(terminal.error).event(type, value) + "\n").utf8), true)
             }
         }
     }
